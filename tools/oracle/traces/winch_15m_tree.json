@@ -1,0 +1,55 @@
+{
+ "id": "winch_15m_tree",
+ "about": "Pickup parked 15 m (hook to trunk) east of the lone oak (tree 1793), G at 1 s hooks the winch, then hold throttle (reel in) for 14 s",
+ "vehicle": "pickup",
+ "start": {
+  "x": -348.81407875025644,
+  "z": -37.410980586428195,
+  "yaw": -1.5707963267948966,
+  "note": "tree 1793 at (-366.63652534014545, -37.410980586428195), collider r 0.5224465898890048"
+ },
+ "steps": 1800,
+ "sampleEvery": 12,
+ "hits": [
+  {
+   "step": 120,
+   "key": "KeyG"
+  }
+ ],
+ "channels": {
+  "throttle": [
+   [
+    0,
+    121
+   ],
+   [
+    1,
+    1679
+   ]
+  ],
+  "brake": [
+   [
+    0,
+    1800
+   ]
+  ],
+  "steer": [
+   [
+    0,
+    1800
+   ]
+  ],
+  "handbrake": [
+   [
+    0,
+    1800
+   ]
+  ]
+ },
+ "channelNote": "run-length [value, steps] per 1/120 s step, applied through the gamepad path (throttle, brake 0..1; steer -1..1, + = right; handbrake 0/1)",
+ "teach": {
+  "throttle": 1,
+  "throttleFromStep": 121
+ },
+ "teachNote": "authoring only: how the channels were produced (goldenTraces.js &teach=1); replay ignores it"
+}
