@@ -105,6 +105,9 @@ namespace Backroads.Testing
             _sc = LoadScenario(id);
             if (_sc == null) { Fail($"no scenario StreamingAssets/Autotest/{id}.json"); Finish(); yield break; }
             _r.kind = _sc.kind;
+            // Autotests start from background scripts and often never get the foreground; by default the Input System
+            // disables the keyboard without focus and drops the simulated key events (lane I-b handoff).
+            InputSystem.settings.backgroundBehavior = InputSettings.BackgroundBehavior.IgnoreFocus;
             if (_sc.fpsCap > 0 && CommandLine.GetInt("-br-fps-cap", 0) == 0) { QualitySettings.vSyncCount = 0; Application.targetFrameRate = _sc.fpsCap; }
             _metrics = gameObject.AddComponent<MetricsRecorder>();
             Log.Info($"autotest {id} ({_sc.kind}) -> {_out}");
@@ -183,9 +186,17 @@ namespace Backroads.Testing
             }
         }
 
+        Keyboard _kb;
+
+        // A virtual keyboard of our own: the real one may already have been disabled by an earlier focus loss, and a
+        // disabled device drops queued events. Its events also make it Keyboard.current, which the client UI reads.
         IEnumerator PressKey(Key key)
         {
-            var kb = Keyboard.current ?? InputSystem.AddDevice<Keyboard>();
+            if (_kb == null) _kb = InputSystem.AddDevice<Keyboard>("AutotestKeyboard");
+            if (!_kb.enabled) InputSystem.EnableDevice(_kb);
+            _kb.MakeCurrent();
+            yield return null;
+            var kb = _kb;
             InputSystem.QueueStateEvent(kb, new KeyboardState(key));
             yield return null;
             yield return null;
@@ -231,7 +242,8 @@ namespace Backroads.Testing
             string data = Path.Combine(_out, "crash-data");
             if (Directory.Exists(data)) Directory.Delete(data, true);
             Directory.CreateDirectory(data);
-            string common = $"-batchmode -nographics -br-silent -br-data \"{data}\"";
+            // -br-ci marks the children as script-started, so the CI locks never mistake them for the user playing.
+            string common = $"-batchmode -nographics -br-silent -br-ci -br-data \"{data}\"";
 
             int code1 = 0;
             yield return RunChild(exe, $"{common} -br-crash-test -br-out \"{Path.Combine(_out, "phase1")}\" -logFile \"{Path.Combine(_out, "phase1.log")}\"", c => code1 = c);

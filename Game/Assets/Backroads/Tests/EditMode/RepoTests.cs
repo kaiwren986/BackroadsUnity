@@ -123,6 +123,8 @@ namespace Backroads.Tests.EditMode
                 Assert.Ignore("set BR_OWNERS_BASE=main (or BR_OWNERS_DIFF=<file of changed paths>) to check lane ownership");
                 return;
             }
+            // Nothing changed (for example the gate on main itself, where main...HEAD is empty): no lane to check.
+            if (changed.Count == 0) { Assert.Pass("no changed paths against the base"); return; }
 
             var lanesVar = Environment.GetEnvironmentVariable("BR_OWNERS_LANE");
             var lanes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
