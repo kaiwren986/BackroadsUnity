@@ -52,6 +52,18 @@ namespace Backroads.World
         public string source;
         public string sha256;
         public Model[] models;
+        /// <summary>glTF materials (suffix removed) and their baseColorFactor, linear as glTF stores it.</summary>
+        public string[] materialNames;
+        public Color[] materialColors;
+
+        /// <summary>The glTF default colour of a material, linear; white when unknown.</summary>
+        public Color DefaultColor(string material)
+        {
+            if (materialNames != null)
+                for (int i = 0; i < materialNames.Length; i++)
+                    if (materialNames[i] == material) return materialColors[i];
+            return Color.white;
+        }
 
         public Model Find(string name)
         {

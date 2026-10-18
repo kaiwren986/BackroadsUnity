@@ -34,12 +34,12 @@ namespace Backroads.World
             scale = new Vector3(t.s, t.s, t.s),
         };
 
-        /// <summary>A rock: mesh at y - 0.25 s, yaw -rot, scaled (1.15, 0.7, 1) * s (props.js buildRocks).</summary>
+        /// <summary>A rock: mesh at y - 0.25 s, yaw -rot, uniform scale s; the (1.15, 0.7, 1) stretch is in the mesh (props.js buildRocks).</summary>
         public static Pose Rock(in VegetationSet.Rock r) => new Pose
         {
             position = BrCoords.Pos(r.x, r.y - 0.25f * r.s, r.z),
             rotation = Quaternion.Euler(0f, BrCoords.YawDeg(r.rot), 0f),
-            scale = new Vector3(1.15f * r.s, 0.7f * r.s, r.s),
+            scale = new Vector3(r.s, r.s, r.s),
         };
 
         /// <summary>

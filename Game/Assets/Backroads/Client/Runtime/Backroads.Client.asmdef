@@ -13,7 +13,11 @@
         "Backroads.Net",
         "Backroads.Game",
         "Backroads.EngineSim",
-        "Backroads.Client.Rendering"
+        "Backroads.Client.Rendering",
+        "Unity.InputSystem",
+        "Unity.Mathematics",
+        "Unity.RenderPipelines.Core.Runtime",
+        "Unity.RenderPipelines.Universal.Runtime"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

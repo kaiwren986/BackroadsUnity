@@ -37,6 +37,10 @@ namespace Backroads.World
             public int keptVertices;
             /// <summary>Sum of all GLB positions (JS space, x y z as doubles) and of the kept + removed ones, to prove nothing was lost.</summary>
             public double[] sourceSum, splitSum;
+            /// <summary>Sum of the removed (building) positions, JS space.</summary>
+            public double[] buildingSum;
+            /// <summary>Building vertices this bucket should lose: buildings.glb parts per placed model (panes by lit flag).</summary>
+            public int expectedBuildingVertices;
         }
 
         public string glbSha256;

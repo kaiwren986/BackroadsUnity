@@ -112,6 +112,114 @@ namespace Backroads.Tests.EditMode.World
             }
         }
 
+        /// <summary>
+        /// Pane names resolve for all 11 models of buildings.glb (glTFast import, three.js-sanitised names in traverse
+        /// order): the counts of 03 section 3.3 (House_B 22), every placement's panes list equals its model's panes,
+        /// lit strings have one flag per pane, and BuildingSpawner gives exactly the lit panes the lit material.
+        /// </summary>
+        [Test]
+        public void PaneNamesResolve()
+        {
+            var a = WorldTestUtil.Canon();
+            var e = CanonJson.Obj(CanonJson.Get(WorldTestUtil.Expected(), "panes"));
+            var fails = new List<string>();
+            Assert.AreEqual(11, a.buildings.models.Length, "models in buildings.glb");
+            foreach (var kv in e)
+            {
+                var m = a.buildings.Find(kv.Key);
+                if (m == null) { fails.Add("model missing: " + kv.Key); continue; }
+                int want = (int)CanonJson.Num(kv.Value);
+                if (m.PaneCount != want) fails.Add($"{kv.Key}: {m.PaneCount} panes, expected {want}");
+                foreach (var p in m.parts.Where(p => p.isPane))
+                    if (!System.Text.RegularExpressions.Regex.IsMatch(p.node, @"^Glass(\.\d{3})?$")) fails.Add($"{kv.Key}: pane node {p.node}");
+            }
+            Assert.AreEqual(22, a.buildings.Find("House_B").PaneCount, "House_B panes");
+
+            int litFlags = 0;
+            foreach (var b in a.placements.buildings)
+            {
+                var m = a.buildings.Find(b.model);
+                var names = m.parts.Where(p => p.isPane).Select(p => p.threeName).ToArray();
+                if (!names.SequenceEqual(b.panes)) fails.Add($"{b.model} at ({b.x:F1}, {b.z:F1}): panes [{string.Join(",", b.panes.Take(4))}...] vs model [{string.Join(",", names.Take(4))}...]");
+                if (b.lit.Length != names.Length) fails.Add($"{b.model}: lit string {b.lit.Length} flags for {names.Length} panes");
+                litFlags += b.lit.Count(c => c == '1');
+            }
+
+            var look = ScriptableObject.CreateInstance<MillbrookLook>();
+            var sh = Shader.Find("Hidden/InternalErrorShader");
+            look.buildingPart = new Material(sh); look.buildingMetal = new Material(sh); look.bulb = new Material(sh); look.sign = new Material(sh);
+            look.glassLit = new Material(sh) { name = "lit" }; look.glassDark = new Material(sh) { name = "dark" };
+            var root = new GameObject("pane-test");
+            try
+            {
+                var spawner = new BuildingSpawner(a, look, root.transform);
+                Assert.AreEqual(72, spawner.Buildings);
+                int litRenderers = root.GetComponentsInChildren<MeshRenderer>().Count(r => r.sharedMaterial == look.glassLit);
+                Assert.AreEqual(litFlags, spawner.LitPanes, "lit panes counted");
+                Assert.AreEqual(litFlags, litRenderers, "renderers with the lit window material");
+                TestContext.WriteLine($"PaneNamesResolve: 11 models, {spawner.Panes} placed panes, {spawner.LitPanes} lit, {spawner.MaterialInstances} recolourable material instances");
+                spawner.Destroy();
+            }
+            finally
+            {
+                Object.DestroyImmediate(root);
+                foreach (var m in new[] { look.buildingPart, look.buildingMetal, look.bulb, look.sign, look.glassLit, look.glassDark }) Object.DestroyImmediate(m);
+                Object.DestroyImmediate(look);
+            }
+            Assert.IsEmpty(fails, string.Join("\n", fails.Take(30)));
+        }
+
+        /// <summary>
+        /// static_props.glb: the 7 bucket vertex counts and POSITION hashes (M0 gate, manifest staticProps), read again
+        /// from the GLB; the importer's split keeps every vertex (chunks + building vertices = bucket, position sums agree);
+        /// the removed building vertices equal what buildings.glb contributes.
+        /// </summary>
+        [Test]
+        public void StaticPropsBuckets()
+        {
+            var a = WorldTestUtil.Canon();
+            var glb = GlbReader.Load(System.IO.Path.Combine(CanonImporter.SourceDir, "reference", "static_props.glb"));
+            var manifest = CanonJson.Obj(CanonJson.Get(WorldTestUtil.Json("manifest.json"), "staticProps"));
+            var counts = CanonJson.Obj(CanonJson.Get(WorldTestUtil.Expected(), "staticPropsVertices"));
+            var fails = new List<string>();
+            var kept = new long[7];
+            var sums = new double[7, 3];
+            foreach (var c in a.staticProps.chunks)
+            {
+                var v = c.mesh.vertices;
+                for (int s = 0; s < c.buckets.Length; s++)
+                {
+                    var tri = c.mesh.GetTriangles(s);
+                    kept[c.buckets[s]] += tri.Length;
+                    foreach (var i in tri) { sums[c.buckets[s], 0] += -v[i].x; sums[c.buckets[s], 1] += v[i].y; sums[c.buckets[s], 2] += v[i].z; }
+                }
+            }
+            for (int b = 0; b < 7; b++)
+            {
+                var name = StaticPropsSet.BucketNames[b];
+                var node = glb.FindNode(name);
+                var prim = glb.Primitives((int)CanonJson.Num(glb.Node(node), "mesh"))[0];
+                int count = glb.Count(prim.position);
+                string sha;
+                using (var h = System.Security.Cryptography.SHA256.Create()) sha = CanonRuntime.Hex(h.ComputeHash(glb.RawBytes(prim.position)));
+                var want = CanonJson.Obj(manifest[name]);
+                if (count != (int)CanonJson.Num(counts, name)) fails.Add($"{name}: {count} vertices, expected {CanonJson.Num(counts, name)}");
+                if (sha != CanonJson.Str(want, "positionSha256")) fails.Add($"{name}: position hash {sha}");
+                var st = a.staticProps.buckets[b];
+                if (st.vertices != count || st.positionSha256 != sha) fails.Add($"{name}: imported stats differ");
+                if (st.buildingVertices + st.keptVertices != count) fails.Add($"{name}: {st.buildingVertices} + {st.keptVertices} != {count}");
+                if (kept[b] != st.keptVertices) fails.Add($"{name}: chunks hold {kept[b]} vertices, stats say {st.keptVertices}");
+                if (st.buildingVertices != st.expectedBuildingVertices) fails.Add($"{name}: removed {st.buildingVertices} building vertices, buildings.glb accounts for {st.expectedBuildingVertices}");
+                for (int k = 0; k < 3; k++)
+                {
+                    double whole = sums[b, k] + st.buildingSum[k];
+                    if (Math.Abs(whole - st.sourceSum[k]) > 1e-3 * Math.Max(1, Math.Abs(st.sourceSum[k]) / 1e5)) fails.Add($"{name}: position sum[{k}] {whole} vs GLB {st.sourceSum[k]}");
+                }
+                TestContext.WriteLine($"{name}: {count} vertices, sha {sha.Substring(0, 16)}, {st.buildingVertices} in buildings, {st.keptVertices} in chunks");
+            }
+            Assert.IsEmpty(fails, string.Join("\n", fails));
+        }
+
         static int Bits(float f) => BitConverter.SingleToInt32Bits(f);
     }
 }

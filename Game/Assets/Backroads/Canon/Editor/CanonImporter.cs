@@ -30,7 +30,7 @@ namespace Backroads.Canon.Editor
     public static class CanonImporter
     {
         /// <summary>Bump when the importer output changes, so cached imports are redone.</summary>
-        public const int ImporterVersion = 4;
+        public const int ImporterVersion = 6;
 
         public const string OutDir = "Assets/Backroads/World/Canon/v1";
         public const string ResourcesDir = OutDir + "/Resources";
@@ -288,7 +288,7 @@ namespace Backroads.Canon.Editor
             vegetation = SaveAsset(vegetation, $"{OutDir}/VegetationSet.asset");
             traffic = SaveAsset(traffic, $"{OutDir}/LegacyTrafficNetwork.asset");
 
-            var detail = SaveTexture(Path.Combine(SourceDir, "textures/detail.png"), $"{OutDir}/detail.asset", linear: true, TextureWrapMode.Repeat, 4);
+            var detail = SaveTexture(Path.Combine(SourceDir, "textures/detail.png"), $"{OutDir}/detail.asset", linear: true, TextureWrapMode.Repeat, 16);
             var waterN = SaveTexture(Path.Combine(SourceDir, "textures/water_n.png"), $"{OutDir}/water_n.asset", linear: true, TextureWrapMode.Repeat, 4);
             var dirt = SaveTexture(Path.Combine(SourceDir, "textures/dirt.png"), $"{OutDir}/dirt.asset", linear: true, TextureWrapMode.Repeat, 1);
             var map = SaveTexture(Path.Combine(SourceDir, "textures/map.png"), $"{OutDir}/map.asset", linear: false, TextureWrapMode.Clamp, 1);

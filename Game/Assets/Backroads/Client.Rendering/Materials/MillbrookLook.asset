@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab4426db09ab64840b1e230a40b275aa, type: 3}
+  m_Name: MillbrookLook
+  m_EditorClassIdentifier: Backroads.Client.Rendering::Backroads.Client.Rendering.MillbrookLook
+  terrain: {fileID: 2100000, guid: 87562efa1e360b84d97cdfa2fdd1dea2, type: 2}
+  road: {fileID: 2100000, guid: deaa118638224474894a7c243dcd3a5e, type: 2}
+  water: {fileID: 2100000, guid: 23f694924a972d04a980b1eb9bee01b5, type: 2}
+  sky: {fileID: 2100000, guid: 95769afcdd09eca4d925dc4676d6fa76, type: 2}
+  buildingPart: {fileID: 2100000, guid: 8440a8180f2a9bc48a34ee11133865f9, type: 2}
+  buildingMetal: {fileID: 2100000, guid: 732aa0664f9ac4147ac95cd083332c37, type: 2}
+  bulb: {fileID: 2100000, guid: a5988e4ca81d91845bab021def4038aa, type: 2}
+  sign: {fileID: 2100000, guid: ca2a0251d33328046a08025945e6277e, type: 2}
+  glassLit: {fileID: 2100000, guid: 0942c4e3ba886eb459a75c050d9fedf1, type: 2}
+  glassDark: {fileID: 2100000, guid: c40c2dac24e99f44fa672880feb9e172, type: 2}
+  propBuckets:
+  - {fileID: 2100000, guid: 1397622b795efd04aa9ab238fd358b4a, type: 2}
+  - {fileID: 2100000, guid: f3fe99024eba8d6428845216b623150a, type: 2}
+  - {fileID: 2100000, guid: 0942c4e3ba886eb459a75c050d9fedf1, type: 2}
+  - {fileID: 2100000, guid: c40c2dac24e99f44fa672880feb9e172, type: 2}
+  - {fileID: 2100000, guid: a5988e4ca81d91845bab021def4038aa, type: 2}
+  - {fileID: 2100000, guid: 75b260d8fe6b81d40af9e66142b16a7d, type: 2}
+  - {fileID: 2100000, guid: ca2a0251d33328046a08025945e6277e, type: 2}
+  tree: {fileID: 2100000, guid: 9025e71f142a3bf43861140bb100eea0, type: 2}
+  rock: {fileID: 2100000, guid: 75152581d22f0d4478b2be7a0d7163b5, type: 2}
+  volume: {fileID: 11400000, guid: cb016db0b6f4bfb4baf4507f432bc70c, type: 2}
+  sunScale: 0.318
+  ambientScale: 1
+  dayExposureEv: 0.66
+  lampIntensity: 10
+  lampRange: 26

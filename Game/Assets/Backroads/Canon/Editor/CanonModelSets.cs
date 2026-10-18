@@ -38,6 +38,21 @@ namespace Backroads.Canon.Editor
                 models.Add(new CanonModelSet.Model { name = top.name, parts = parts.ToArray(), bounds = bounds });
             }
             set.models = models.ToArray();
+            var glb = GlbReader.Load(CanonImporter.ToFull(glbAssetPath));
+            var names = new List<string>();
+            var colors = new List<Color>();
+            foreach (var mo in glb.Materials)
+            {
+                var m = CanonJson.Obj(mo);
+                var name = Suffix.Replace(CanonJson.Str(m, "name") ?? "", "");
+                if (names.Contains(name)) continue;
+                var pbr = CanonJson.Get(m, "pbrMetallicRoughness") as Dictionary<string, object>;
+                var f = CanonJson.Floats(CanonJson.Get(pbr, "baseColorFactor"));
+                names.Add(name);
+                colors.Add(f.Length >= 3 ? new Color(f[0], f[1], f[2], 1) : Color.white);
+            }
+            set.materialNames = names.ToArray();
+            set.materialColors = colors.ToArray();
             int meshes = 0;
             foreach (var m in set.models) meshes += m.parts.Length;
             notes.Add($"{System.IO.Path.GetFileName(glbAssetPath)}: {set.models.Length} models, {meshes} mesh nodes");

@@ -82,7 +82,7 @@ namespace Backroads.Canon.Editor
                     if (want.vertices != count) throw new CanonImportException($"static_props {name}: {count} vertices, manifest says {want.vertices}");
                     if (!string.Equals(want.positionSha256, sha, StringComparison.OrdinalIgnoreCase)) throw new CanonImportException($"static_props {name}: position hash {sha} != {want.positionSha256}");
                 }
-                var st = new StaticPropsSet.BucketStats { name = name, vertices = count, positionSha256 = sha, sourceSum = new double[3], splitSum = new double[3] };
+                var st = new StaticPropsSet.BucketStats { name = name, vertices = count, positionSha256 = sha, sourceSum = new double[3], splitSum = new double[3], buildingSum = new double[3], expectedBuildingVertices = (int)expected[bucket] };
                 for (int v = 0; v < count; v++) { st.sourceSum[0] += pos[v * 3]; st.sourceSum[1] += pos[v * 3 + 1]; st.sourceSum[2] += pos[v * 3 + 2]; }
 
                 for (int t = 0; t + 2 < count; t += 3)
@@ -91,7 +91,8 @@ namespace Backroads.Canon.Editor
                     if (isBuilding)
                     {
                         st.buildingVertices += 3;
-                        for (int c = 0; c < 3; c++) { st.splitSum[0] += pos[(t + c) * 3]; st.splitSum[1] += pos[(t + c) * 3 + 1]; st.splitSum[2] += pos[(t + c) * 3 + 2]; }
+                        for (int c = 0; c < 3; c++)
+                            for (int a = 0; a < 3; a++) { st.splitSum[a] += pos[(t + c) * 3 + a]; st.buildingSum[a] += pos[(t + c) * 3 + a]; }
                         continue;
                     }
                     // chunk by centroid, Unity space (x negated)
