@@ -1,0 +1,7 @@
+{
+  "id": "m0.playtest.f10",
+  "kind": "playtest-f10",
+  "seconds": 2,
+  "screenshot": true,
+  "notes": "Presses F10 through the Input System, checks the checklist opens with the M0 items, presses Yes on each, checks the answers file, presses F10 again. Needs a window (no -batchmode)."
+}

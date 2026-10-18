@@ -1,0 +1,24 @@
+{
+    "name": "Backroads.Game",
+    "rootNamespace": "Backroads.Game",
+    "references": [
+        "Backroads.Core",
+        "Backroads.World",
+        "Backroads.Deform",
+        "Backroads.Roads",
+        "Backroads.Vehicles",
+        "Backroads.Traffic",
+        "Backroads.Gameplay",
+        "Backroads.Persistence",
+        "Backroads.Net"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

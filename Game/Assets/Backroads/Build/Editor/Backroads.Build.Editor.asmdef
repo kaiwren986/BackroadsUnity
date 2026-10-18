@@ -1,0 +1,24 @@
+{
+    "name": "Backroads.Build.Editor",
+    "rootNamespace": "Backroads.Build.Editor",
+    "references": [
+        "Backroads.Core",
+        "Backroads.Game",
+        "Unity.RenderPipelines.Core.Runtime",
+        "Unity.RenderPipelines.GPUDriven.Runtime",
+        "Unity.RenderPipelines.Universal.Runtime",
+        "Unity.RenderPipelines.Core.Editor",
+        "Unity.RenderPipelines.Universal.Editor"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

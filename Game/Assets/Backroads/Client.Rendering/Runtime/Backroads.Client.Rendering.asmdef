@@ -1,0 +1,21 @@
+{
+    "name": "Backroads.Client.Rendering",
+    "rootNamespace": "Backroads.Client.Rendering",
+    "references": [
+        "Backroads.Core",
+        "Backroads.World",
+        "Backroads.Deform",
+        "Backroads.Roads"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "!UNITY_SERVER"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

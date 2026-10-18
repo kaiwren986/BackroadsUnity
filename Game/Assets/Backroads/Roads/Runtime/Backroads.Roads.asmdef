@@ -1,0 +1,17 @@
+{
+    "name": "Backroads.Roads",
+    "rootNamespace": "Backroads.Roads",
+    "references": [
+        "Backroads.Core",
+        "Backroads.World"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

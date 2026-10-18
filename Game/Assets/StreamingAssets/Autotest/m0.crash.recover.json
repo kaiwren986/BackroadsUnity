@@ -1,0 +1,8 @@
+{
+  "id": "m0.crash.recover",
+  "kind": "crash-recover",
+  "seconds": 0,
+  "screenshot": false,
+  "childTimeoutSeconds": 90,
+  "notes": "Runs this player twice on a private data folder: -br-crash-test (managed exception, then the process ends without a clean exit), then -br-smoke; the second boot must save crash-*/ with the previous log and report it. PLAN 1.9 [S5]."
+}

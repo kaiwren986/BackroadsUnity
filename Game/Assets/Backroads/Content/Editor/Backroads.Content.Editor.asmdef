@@ -1,0 +1,19 @@
+{
+    "name": "Backroads.Content.Editor",
+    "rootNamespace": "Backroads.Content.Editor",
+    "references": [
+        "Backroads.Core",
+        "Backroads.Vehicles"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
