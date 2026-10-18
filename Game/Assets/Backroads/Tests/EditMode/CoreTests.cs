@@ -55,5 +55,45 @@ namespace Backroads.Tests.EditMode
 
         /// <summary>q * v * q^-1 on raw numbers: the same formula three.js uses (it does not depend on handedness).</summary>
         static Vector3 RotateRightHanded(Quaternion q, Vector3 v) => q * v;
+
+        /// <summary>PLAN §4.3 and §3.8: -br-quality parses, each tier carries its table, and the default is High.</summary>
+        [Test]
+        public void QualityPresetTiers()
+        {
+            try
+            {
+                CommandLine.Override(new[] { "x" });
+                QualityPreset.Override(null);
+                Assert.IsFalse(QualityPreset.Requested, "no switch: not requested");
+                Assert.AreEqual(QualityTier.High, QualityPreset.Tier, "default tier");
+
+                CommandLine.Override(new[] { "x", QualityPreset.Flag, "Medium" });
+                QualityPreset.Override(null);
+                Assert.IsTrue(QualityPreset.Requested);
+                Assert.AreEqual(QualityTier.Mid, QualityPreset.Tier, "Medium = Mid");
+
+                CommandLine.Override(new[] { "x", QualityPreset.Flag, "ultra" });
+                QualityPreset.Override(null);
+                Assert.AreEqual(QualityTier.High, QualityPreset.Tier, "Ultra renders as High");
+                Assert.AreEqual(EngineAudioTier.Ultra, QualityPreset.Current.EngineAudio);
+
+                var low = QualityPreset.For(QualityTier.Low);
+                Assert.AreEqual(0.7f, low.RenderScale, 1e-6f);
+                Assert.IsTrue(low.Stp);
+                Assert.AreEqual(30, low.FpsCap);
+                Assert.AreEqual(120f, low.ShadowDistance);
+                Assert.AreEqual(EngineAudioTier.Low, low.EngineAudio);
+                Assert.AreEqual(EngineAudioTier.High, QualityPreset.For(QualityTier.Mid).EngineAudio);
+                var high = QualityPreset.For(QualityTier.High);
+                Assert.AreEqual(4096, high.ShadowResolution);
+                Assert.AreEqual(190f, high.TreeNearRadius);
+                Assert.AreEqual(78, high.LampLights);
+            }
+            finally
+            {
+                CommandLine.Override(null);
+                QualityPreset.Override(null);
+            }
+        }
     }
 }

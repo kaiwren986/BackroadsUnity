@@ -100,5 +100,21 @@ namespace Backroads.Tests.EditMode
 
             Assert.IsEmpty(problems, string.Join("\n", problems));
         }
+
+        /// <summary>
+        /// ODbL attribution [C8]: third-party.json ships the OpenStreetMap entry, and the in-game Credits screen always
+        /// shows the OSM credit with the licence and the copyright link, whether or not the notices file is present.
+        /// </summary>
+        [Test]
+        public void OsmAttribution()
+        {
+            var text = File.ReadAllText(RepoPaths.InRepo("third-party.json"));
+            Assert.IsTrue(Regex.IsMatch(text, "\"name\":\\s*\"OpenStreetMap[^\"]*\"[^}]*\"licence\":\\s*\"ODbL 1\\.0\"[^}]*\"shipped\":\\s*true"),
+                "third-party.json has no shipped OpenStreetMap entry under ODbL 1.0");
+            var credit = Backroads.Client.UI.CreditsPanel.OsmCredit;
+            StringAssert.Contains("OpenStreetMap contributors", credit);
+            StringAssert.Contains("Open Database License", credit);
+            StringAssert.Contains("https://www.openstreetmap.org/copyright", credit);
+        }
     }
 }

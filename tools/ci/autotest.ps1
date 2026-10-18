@@ -188,7 +188,6 @@ try {
             $gate.conditions.eCores = @($ci.e | Select-Object -First 6)
             $gate.conditions.coreMapSource = $ci.source
         }
-        Add-BrWarning $gate '-br-quality is not read by the player yet (QualityPreset, M1): this proxy run uses the default tier'
     }
     if ($mask -ne 0) { $gate.conditions.affinityMask = ('0x{0:X}' -f $mask) }
 

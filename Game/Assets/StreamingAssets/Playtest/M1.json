@@ -1,0 +1,21 @@
+{
+  "milestone": "M1",
+  "title": "Playtest checklist",
+  "summary": "M1 brings Millbrook into Unity from the frozen canon, and the Engine Bench, where engine-sim runs in the game for the first time.",
+  "tryThis": [
+    "Double-click Play.bat. Millbrook opens: fly with W A S D and the mouse.",
+    "Keys 1 to 0, minus and equals jump to the 12 views of the contact sheet. Open the browser game beside it and compare.",
+    "Press Esc for the menu and choose Engine Bench. Tap I for ignition, hold I to crank the flat-four, rev it with W, press Dyno sweep.",
+    "Esc, then Credits, lists every licence. F10 opens this checklist."
+  ],
+  "items": [
+    { "id": "m1.same-town", "text": "Is it the same town as the browser game?" },
+    { "id": "m1.most-different", "text": "Which view looks most different? (say which in the comment)" },
+    { "id": "m1.engine-real", "text": "Does the engine sound like a real engine?" },
+    { "id": "m1.crackles", "text": "Any crackles or dropouts in the engine sound?" }
+  ],
+  "knownIssues": [
+    "There is nothing to drive yet: driving arrives in M2.",
+    "The Esc menu is a stand-in; the full menu with settings and controls comes in M2."
+  ]
+}
