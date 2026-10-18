@@ -1,0 +1,477 @@
+{
+  "format": "backroads-canon",
+  "version": 1,
+  "source": {
+    "repo": "kaiwren986/Backroads",
+    "commit": "552f7807f4ad56547815c32a5e8407a7c324d556",
+    "worldSeed": 20251015,
+    "plannerSeed": 20279734,
+    "propsSeed": 4242,
+    "canonFrozen": "2026-10-18",
+    "three": "170",
+    "exportedAt": "2026-10-18T20:58:38.378Z",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0"
+  },
+  "coords": {
+    "space": "three.js right-handed, +Y up, metres",
+    "toUnity": "(-x, y, z); yawDeg = -yaw*180/PI; M' = S*M*S, S = diag(-1,1,1,1)"
+  },
+  "grid": {
+    "size": 1024,
+    "half": 512,
+    "cell": 0.5,
+    "N": 2048,
+    "VN": 2049,
+    "waterY": 0,
+    "tintN": 129,
+    "tintCell": 8,
+    "layout": "k = j*VN + i; x = i*cell - half; z = j*cell - half; tint: ((j*tintN + i)*2 + {0: tb, 1: td}), x = i*tintCell - half"
+  },
+  "prng": {
+    "kind": "mulberry32 (determinism.js)",
+    "seed": 20261018,
+    "callsAtFreeze": 57310,
+    "callsAfterSerialise": 57406,
+    "callsAtEnd": 77598
+  },
+  "clock": {
+    "frozenAtMs": 0,
+    "framesRun": 0
+  },
+  "renderer": {
+    "vendor": "WebKit",
+    "renderer": "WebKit WebGL",
+    "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+    "unmaskedVendor": "Google Inc. (NVIDIA)",
+    "unmaskedRenderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 Laptop GPU (0x00002C59) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "software": false
+  },
+  "threeModule": {
+    "url": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+    "sha256": "ce1fa418de16a19495a9f72495580e3015d7745c296d3ce0485897f902ddedfb"
+  },
+  "layers": {
+    "terrain/heights.f32": "a8908d7f740ec10b723aeedd778f16b00a38ef7502ac03374bb61d45aaf154a0",
+    "terrain/base.f32": "2eda40821238d55f73999ebee506d7ca8736df6a6c64e7f5e31f6d370926072a",
+    "terrain/surface.u8": "8788d405d310617ef951a652c24c4939dadda777c51a0ec4ca8445419739c22f",
+    "terrain/wear.u8": "85473f6f37e608431a5dadc307f14af862bade6a8729f44ec0f5c93f614080fb",
+    "terrain/roadd.u8": "8d31f10915e1a8c5d06622f10df7815e41f9465bbed953ea108ff089123fbf32",
+    "terrain/mud.u8": "2192f4c8fdf91e0c2566a3c176774e7f46a4950e9107752c27a539daae46d015",
+    "terrain/tint.f32": "08452b464b4608b3a3deb8be497b9747c0a19d55064bc6e906f3a576ea825dad"
+  },
+  "counts": {
+    "trees": 5265,
+    "treesBySpecies": {
+      "Pine": 933,
+      "Spruce": 447,
+      "Oak": 1005,
+      "Birch": 798,
+      "Poplar": 182,
+      "Maple": 140,
+      "Bush": 1491,
+      "Snag": 18,
+      "Reeds": 251
+    },
+    "colliders": 4013,
+    "collidersByKind": {
+      "circle:lamp": 77,
+      "box:building": 80,
+      "circle:building": 3,
+      "box:bale": 2,
+      "circle:post": 15,
+      "box:logs": 3,
+      "box:dock": 2,
+      "circle:pump": 4,
+      "box:fence": 39,
+      "circle:boat": 2,
+      "circle:tree": 3523,
+      "circle:rock": 263
+    },
+    "lamps": 78,
+    "lampPosts": 77,
+    "lots": 59,
+    "modelPlacements": 72,
+    "lotModelPlacements": 59,
+    "footprints": 87,
+    "rings": 7,
+    "parking": 5,
+    "boats": 2,
+    "roads": 24,
+    "roadPoints": 1722,
+    "nodes": 21,
+    "lanes": 53,
+    "conns": 108,
+    "loops": 5,
+    "carOnlyLoops": 1,
+    "rocks": 358,
+    "rngCalls": 1220
+  },
+  "staticProps": {
+    "bld": {
+      "vertices": 261066,
+      "positionSha256": "ec309c2c44fc8e542e2aa890ac56c42f0f9c4cd86f5bf278261291485e720f01",
+      "colorSha256": "cfa76a3704e26cbc0f89e2db900a8f2a3d21a19378b0bf6b8b5d568bd74d6eee"
+    },
+    "metal": {
+      "vertices": 27276,
+      "positionSha256": "f05adbe60b01ff6b9e76802b379d245b9cb420a8fd60d1e530333c31396ebf08",
+      "colorSha256": "8335038b2ce8ffc113d2ac9cffdd5f82172773e17ff824c0e29137f6679a68d5"
+    },
+    "winLit": {
+      "vertices": 14436,
+      "positionSha256": "4a81ee0e7373776515cd0217476fd0657d8c82ec422a44c97a0500619dbcc29d",
+      "colorSha256": "3a71819bc40b30e7fb74db5b4fb664a4af99823b24092c7dd2742720808d0ffd"
+    },
+    "winDark": {
+      "vertices": 11952,
+      "positionSha256": "5d04a8bbc1dfd71389f252e5c2bf2150a68e53707cbb5e6c1e62788a6a0520ba",
+      "colorSha256": "be50d3d45ff32eaeec3e569663e720704112955ca3a60934e6d0bb99892428b9"
+    },
+    "bulb": {
+      "vertices": 6228,
+      "positionSha256": "116d330188c23308862d7b2f3e686d8394daaafa7a9edf1a965923b37adfbb97",
+      "colorSha256": "d14eaba47208b518bb7b8ec9cbacf96d534903ef81345f3becc3ecce105e47c5"
+    },
+    "neon": {
+      "vertices": 216,
+      "positionSha256": "ba1b9986c922b082977f491876d2bea8bafa3a598c642197cdcc1c86c9e3ed68",
+      "colorSha256": "47dc70dd4af037d9fb4ff256df741d6f7f6c97d7283b095a7343b33d7acad09d"
+    },
+    "signRed": {
+      "vertices": 720,
+      "positionSha256": "2839cfb29bf0e372374cab6d3f51cf9df423038cc316b627992a9152cfa7f72f",
+      "colorSha256": "6828e5f05742943c86725f3cf5614e52b8d27aafe9b72841915b7d5bf9841319"
+    }
+  },
+  "shots": {
+    "width": 1600,
+    "height": 900,
+    "files": [
+      "reference/shots/poi_town_1000.png",
+      "reference/shots/poi_depot_1000.png",
+      "reference/shots/poi_farm_1000.png",
+      "reference/shots/poi_quarry_1000.png",
+      "reference/shots/poi_mill_1000.png",
+      "reference/shots/poi_harbor_1000.png",
+      "reference/shots/poi_fuel_1000.png",
+      "reference/shots/bog_1000.png",
+      "reference/shots/roundabout_1000.png",
+      "reference/shots/junction_1000.png",
+      "reference/shots/lake_1000.png",
+      "reference/shots/overview_1000.png",
+      "reference/shots/poi_town_2100.png",
+      "reference/shots/poi_depot_2100.png",
+      "reference/shots/poi_farm_2100.png",
+      "reference/shots/poi_quarry_2100.png",
+      "reference/shots/poi_mill_2100.png",
+      "reference/shots/poi_harbor_2100.png",
+      "reference/shots/poi_fuel_2100.png",
+      "reference/shots/bog_2100.png",
+      "reference/shots/roundabout_2100.png",
+      "reference/shots/junction_2100.png",
+      "reference/shots/lake_2100.png",
+      "reference/shots/overview_2100.png"
+    ]
+  },
+  "deform": {
+    "calls": 10000,
+    "changedHeights": 14565,
+    "changedWear": 13853,
+    "changedSurface": 82,
+    "sha256": {
+      "heights": "de32f70f93dab34ecb808ed523935288e0469e510f368f67906e5bd29e7cfddf",
+      "wear": "b921a73bbcd6f426c7a05f804664b21ff1cb80a6cf28585b8578a27f1e4b71b0",
+      "surface": "f01d81aa58b0b29f9842122dc9db939f8aa16b1cb201cd85dd25425d20ce16f9"
+    }
+  },
+  "snapshot": {
+    "commit": "552f7807f4ad56547815c32a5e8407a7c324d556",
+    "hooks": [
+      "treeList",
+      "rocks",
+      "allOps",
+      "placeModel__o",
+      "lamp__o",
+      "silo__o",
+      "dock__o",
+      "fuelStation__o",
+      "crusher__o",
+      "sawShed__o",
+      "modules"
+    ],
+    "hookedFiles": {
+      "js/props.js": "5f012f0cf105ec69d591e0a38fbafd41c6d3fe3c007c02c30c54eb6140db1eb7",
+      "index.html": "ac47a723203a07ba3dd3cc28e57e0885f13bfb2dbb96396fdccece45934cf30a"
+    },
+    "addedFiles": {
+      "js/determinism.js": "d430eae09af5645de425baf4e3374434b901e22d61838dec0d35ff464e62f6cb",
+      "js/exportUnity.js": "c53c13760487ea149205923b96c8a90f7a9560af1aba7ed52784c37e7ace3050",
+      "js/goldenTraces.js": "06251e394fe7173e7bba6672f9428d9b7f345d939d231272eb5b70713e135a6c"
+    }
+  },
+  "notes": [
+    "vegetation.json rocks[].v is the float32 instance colour red channel (the double is not kept by props.js)",
+    "textures/*.png: RGBA8 rows exactly as in the DataTexture data (row 0 = v 0, not flipped); map.png px = x + 512, py = z + 512",
+    "textures/map.png is hud.js buildMapImage() run from its source on a CPU-backed 2D canvas, so it is the same with every WebGL renderer"
+  ],
+  "timings": {
+    "bootS": 2.400099999964237,
+    "totalS": 15.536599999964237
+  },
+  "traces": {
+    "hatch_bog_10s": {
+      "inputSha256": "151e5691ddcd321ecfb596115c1e1cdfb11aeee718fcaf5feda8b5c43ef8a030",
+      "steps": 1200,
+      "samples": 101,
+      "randomCallsAtEnd": 72768
+    },
+    "pickup_0_100_route9": {
+      "inputSha256": "d7abd8c500e2f24d779205e4bce765a71e19c5227ed8285d6c7b02c1efe66e53",
+      "steps": 1080,
+      "samples": 91,
+      "randomCallsAtEnd": 58083
+    },
+    "pickup_brake_80": {
+      "inputSha256": "38c32c6c9d1ffb1ae7f9172f17f4f1135f181258639b3e018e251ca00165b6e9",
+      "steps": 1080,
+      "samples": 91,
+      "randomCallsAtEnd": 57990
+    },
+    "truck_0_80_route9": {
+      "inputSha256": "e0b0f83e3d59d03a6a834d31eadc04644e3a6bb6b4c0bd620cd18b632697da5f",
+      "steps": 2160,
+      "samples": 181,
+      "randomCallsAtEnd": 59561
+    },
+    "truck_quarry_low": {
+      "inputSha256": "36b81b5cebcd1cbddf582f8ebc8c171db944e2a1e250b90486817def0d1ecbf9",
+      "steps": 3600,
+      "samples": 301,
+      "randomCallsAtEnd": 59353
+    },
+    "winch_15m_tree": {
+      "inputSha256": "0ebd35504bcd9ce8b579b5fafd2f0422fabce15113ffcb5192b41c2554af5b6c",
+      "steps": 1800,
+      "samples": 151,
+      "randomCallsAtEnd": 83393
+    }
+  },
+  "files": {
+    "gameplay/jobs.json": {
+      "bytes": 2404,
+      "sha256": "d46976efeb1030aed42497390ef79f310d9d3c0b430152f06fc69696403ab992"
+    },
+    "gameplay/vehicles.json": {
+      "bytes": 27642,
+      "sha256": "52f92bb3d29b668e9c12291c5b9388a8441d49bdeec0afeedb351e862d857630"
+    },
+    "placements.json": {
+      "bytes": 759711,
+      "sha256": "33c8f3ba2a4d874971c2ebd38b32314570d0ed6d80f43920e63d0edea3ddaed1"
+    },
+    "reference/cameras.json": {
+      "bytes": 6397,
+      "sha256": "2c293162625cd8718425a9f0940a3eb4efd7f0e88c26ee2146678d0b19292bbe"
+    },
+    "reference/deform/calls.json": {
+      "bytes": 1608984,
+      "sha256": "b7f0b08a9da1d9f17633fcebaf815038b249f0aab190139736acf65e2ec74fff"
+    },
+    "reference/deform/final.json": {
+      "bytes": 592253,
+      "sha256": "e37009da4dea0c9004cb2583261378d4b5cb598139e345a45db85726cc61d0ad"
+    },
+    "reference/shots/bog_1000.png": {
+      "bytes": 2626734,
+      "sha256": "1b24d257f8869ef7709d90e297a1c4f5c17eb7940baa831021569d4c2aebbbcb"
+    },
+    "reference/shots/bog_2100.png": {
+      "bytes": 1557064,
+      "sha256": "b9cdddd46205ceb5d67e0052a6b4f6f94e3bb9f14a1b8e699692677bbe65c0cb"
+    },
+    "reference/shots/junction_1000.png": {
+      "bytes": 2644699,
+      "sha256": "cd815502c4675faf0bc4a3338ad9d1ad53a34245c77aa7acbf1aa30fb29371b8"
+    },
+    "reference/shots/junction_2100.png": {
+      "bytes": 1955173,
+      "sha256": "b272b7d5656eb56ac6c147f6a42f41c35bfd1edfa7d0ff7fb251b7479d907678"
+    },
+    "reference/shots/lake_1000.png": {
+      "bytes": 2511133,
+      "sha256": "d14ea7bebe556f1c6bcbdd216cfc394025a4c907c7fce0d75c7054e640abcd5e"
+    },
+    "reference/shots/lake_2100.png": {
+      "bytes": 1341983,
+      "sha256": "d301084874892e37a824ea314fabfe39fede7e7a4431c5b634271574e4cb6c9e"
+    },
+    "reference/shots/overview_1000.png": {
+      "bytes": 2191997,
+      "sha256": "3d866c70d75da5bee02d4b7d1c0f2394e8ccf3fabad8bce0d7939d0cdf520921"
+    },
+    "reference/shots/overview_2100.png": {
+      "bytes": 881752,
+      "sha256": "6d67660b5ac0c287eead417b749f360b9e5abca4c28e73d2ea1a52403aec18bd"
+    },
+    "reference/shots/poi_depot_1000.png": {
+      "bytes": 2565695,
+      "sha256": "70023259bb3fa34ffe644e5e2a27348d86d21640aee5387eff5766886f3e2c4f"
+    },
+    "reference/shots/poi_depot_2100.png": {
+      "bytes": 1870076,
+      "sha256": "578122d45f35968802111c5254ecdc3036bb6da099880e84b561bbafa97c5185"
+    },
+    "reference/shots/poi_farm_1000.png": {
+      "bytes": 2572155,
+      "sha256": "3f8497e161024b12fdde992d07b276f60d865594f5552df1d8679feb779fc7a7"
+    },
+    "reference/shots/poi_farm_2100.png": {
+      "bytes": 1684310,
+      "sha256": "da5b3392a7097652d0fdf44130456bc20120039c3c64ee3a9a1eb3da88ebff8e"
+    },
+    "reference/shots/poi_fuel_1000.png": {
+      "bytes": 2850650,
+      "sha256": "ccc61a97209056bcc2ab05609433e3708a7099e6057b20ccb131da9a122b4cb9"
+    },
+    "reference/shots/poi_fuel_2100.png": {
+      "bytes": 2047145,
+      "sha256": "792fe6339dc763bcbf87a3f03c18976c594f832ac89442ac8efc3fce2b42ff17"
+    },
+    "reference/shots/poi_harbor_1000.png": {
+      "bytes": 2538212,
+      "sha256": "ce8aaad6e7897bf8562edd3ef8b9b2499e10c003fc4e860f9e75fa037e36a02d"
+    },
+    "reference/shots/poi_harbor_2100.png": {
+      "bytes": 1742796,
+      "sha256": "c94f0ce17ff3b40652dcb3617edb1ba1eacf9dd8feef0fc611d8acc36d89eb6f"
+    },
+    "reference/shots/poi_mill_1000.png": {
+      "bytes": 2309955,
+      "sha256": "68c6be936215c1f5d803c27aa57fe167ed7f7b202dbe11b2aa8c08025271ada9"
+    },
+    "reference/shots/poi_mill_2100.png": {
+      "bytes": 1134728,
+      "sha256": "b214f535dfbe01a5a9a0e454a9541a64ea92611c2addb5aa5e0dd1d8b963be64"
+    },
+    "reference/shots/poi_quarry_1000.png": {
+      "bytes": 2255338,
+      "sha256": "9eab3bfa435504557a43e2e55a539a2c7bfdce2ba19afab5e31fa4016b18a1d4"
+    },
+    "reference/shots/poi_quarry_2100.png": {
+      "bytes": 1448463,
+      "sha256": "1a3561e344a8bd51e9b338da75cb57d829f4a42339f9bd5dc380ac1227687493"
+    },
+    "reference/shots/poi_town_1000.png": {
+      "bytes": 2281697,
+      "sha256": "d4f7dcbd5550c80d9ea938c1916f7c677132cba4da4e8515bd7fb6b77145f632"
+    },
+    "reference/shots/poi_town_2100.png": {
+      "bytes": 1693074,
+      "sha256": "076bba704fcca843fdcdd38c76bdf9324a71d5a5a33f97c7896aaf6ef1490726"
+    },
+    "reference/shots/roundabout_1000.png": {
+      "bytes": 2744598,
+      "sha256": "b5b255f7da38c173600c2bd8f29e513a8054151e481dd945c509e03f695ae8fa"
+    },
+    "reference/shots/roundabout_2100.png": {
+      "bytes": 2136444,
+      "sha256": "3290df7ed1e0c4f3b7678f941d9d73a7285de865864d9e70e4ccc7d07da445a2"
+    },
+    "reference/static_props.glb": {
+      "bytes": 11595764,
+      "sha256": "72fcf73646f6fab17e724cd084ca326ccd8f9cce5b0d5e52e3affcf46e669756"
+    },
+    "reference/traces/hatch_bog_10s.json": {
+      "bytes": 40558,
+      "sha256": "a481de1c4f96483efce960bb84e5889b4b16f6ac0f2dec944b7dce126e6fa697"
+    },
+    "reference/traces/pickup_0_100_route9.json": {
+      "bytes": 33218,
+      "sha256": "546742b2c6e18ac5c30608e35bfc8e66401b92c990e751879391bab2a177e963"
+    },
+    "reference/traces/pickup_brake_80.json": {
+      "bytes": 33664,
+      "sha256": "c7be00db1ee035152477299dbd65b29426a4a0e9b65c4b4ac511b08391f3c776"
+    },
+    "reference/traces/truck_0_80_route9.json": {
+      "bytes": 65756,
+      "sha256": "be1ec83789e8be48c969e992515ecbb14df0e8b7a111a755a5d2ef7b58ae94fd"
+    },
+    "reference/traces/truck_quarry_low.json": {
+      "bytes": 108763,
+      "sha256": "dda13d62e039e7d4ccdea4b3d3b0175f440d7001924e25b5c95a0b8ff67bf516"
+    },
+    "reference/traces/winch_15m_tree.json": {
+      "bytes": 54314,
+      "sha256": "60f9ce38ee8808643c77ff476f964df6285618ec6a9a5d587018dfdd47c5b9c9"
+    },
+    "source/canon.json": {
+      "bytes": 56963,
+      "sha256": "32c7fff93ad17b680dfc1c1b2bc1db9d1d0edafa97dbb18e02fb65d55b89e323"
+    },
+    "source/townProfile.json": {
+      "bytes": 8249,
+      "sha256": "91fadad75333db6c768a5a2584c4cfc711921600221a3142a6454a94867ac6e0"
+    },
+    "terrain/base.f32": {
+      "bytes": 16793604,
+      "sha256": "2eda40821238d55f73999ebee506d7ca8736df6a6c64e7f5e31f6d370926072a"
+    },
+    "terrain/heights.f32": {
+      "bytes": 16793604,
+      "sha256": "a8908d7f740ec10b723aeedd778f16b00a38ef7502ac03374bb61d45aaf154a0"
+    },
+    "terrain/mud.u8": {
+      "bytes": 4198401,
+      "sha256": "2192f4c8fdf91e0c2566a3c176774e7f46a4950e9107752c27a539daae46d015"
+    },
+    "terrain/probes.json": {
+      "bytes": 3779716,
+      "sha256": "6b1e7e3462327a542fdb7dd334600f9434dfd88e9f8e17aef1b4db201adf4d91"
+    },
+    "terrain/roadd.u8": {
+      "bytes": 4198401,
+      "sha256": "8d31f10915e1a8c5d06622f10df7815e41f9465bbed953ea108ff089123fbf32"
+    },
+    "terrain/surface.u8": {
+      "bytes": 4198401,
+      "sha256": "8788d405d310617ef951a652c24c4939dadda777c51a0ec4ca8445419739c22f"
+    },
+    "terrain/tint.f32": {
+      "bytes": 133128,
+      "sha256": "08452b464b4608b3a3deb8be497b9747c0a19d55064bc6e906f3a576ea825dad"
+    },
+    "terrain/wear.u8": {
+      "bytes": 4198401,
+      "sha256": "85473f6f37e608431a5dadc307f14af862bade6a8729f44ec0f5c93f614080fb"
+    },
+    "textures/detail.png": {
+      "bytes": 204942,
+      "sha256": "4985b97ff4b16bf50977b3dd5ffad90f57f5b6f8ae7e4862a3d6106478f6514c"
+    },
+    "textures/dirt.png": {
+      "bytes": 19196,
+      "sha256": "b20294f9cc4a5a1cc1e285e13e3ceb5edfdcdeb4b3d8d380a7f292dfdd5c892e"
+    },
+    "textures/map.png": {
+      "bytes": 1282378,
+      "sha256": "421f56f6850176948c186b9fbf07a6c38b06685b29c6c1f99bcfa5f5a236c8c4"
+    },
+    "textures/water_n.png": {
+      "bytes": 115755,
+      "sha256": "6376242a3f9c98fc475638c9b299901a5188e28c5838e4e7307ea906926d96de"
+    },
+    "traffic.json": {
+      "bytes": 552312,
+      "sha256": "5bf4ef9b3be7c7faba09cb5a579b6b329a67b369544a26d077426acc5e87eb2d"
+    },
+    "vegetation.json": {
+      "bytes": 756769,
+      "sha256": "c047f97a35976582859043796d4048a9f20a1c20a44c6812716d05a1f233fe7d"
+    },
+    "world.json": {
+      "bytes": 133844,
+      "sha256": "ec66e18af0ffac3fd529079784da6634fb13323933f6c64ed5533634f1ccaa80"
+    }
+  }
+}

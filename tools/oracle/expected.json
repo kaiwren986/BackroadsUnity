@@ -1,0 +1,176 @@
+{
+  "note": "Reference values the canon export must reproduce: docs/research/03-port-map.md section 3.2 and the PLAN section 6.1 M0 headline gate. Read by gen-hash.mjs and verify-canon.mjs.",
+  "oracleCommit": "552f7807f4ad56547815c32a5e8407a7c324d556",
+  "worldSeed": 20251015,
+  "layers": {
+    "terrain/heights.f32": {
+      "bytes": 16793604,
+      "sha256": "a8908d7f740ec10b723aeedd778f16b00a38ef7502ac03374bb61d45aaf154a0"
+    },
+    "terrain/base.f32": {
+      "bytes": 16793604,
+      "sha256": "2eda40821238d55f73999ebee506d7ca8736df6a6c64e7f5e31f6d370926072a"
+    },
+    "terrain/surface.u8": {
+      "bytes": 4198401,
+      "sha256": "8788d405d310617ef951a652c24c4939dadda777c51a0ec4ca8445419739c22f"
+    },
+    "terrain/roadd.u8": {
+      "bytes": 4198401,
+      "sha256": "8d31f10915e1a8c5d06622f10df7815e41f9465bbed953ea108ff089123fbf32"
+    },
+    "terrain/mud.u8": {
+      "bytes": 4198401,
+      "sha256": "2192f4c8fdf91e0c2566a3c176774e7f46a4950e9107752c27a539daae46d015"
+    },
+    "terrain/wear.u8": {
+      "bytes": 4198401,
+      "sha256": "85473f6f37e608431a5dadc307f14af862bade6a8729f44ec0f5c93f614080fb"
+    },
+    "terrain/tint.f32": {
+      "bytes": 133128,
+      "sha256": "08452b464b4608b3a3deb8be497b9747c0a19d55064bc6e906f3a576ea825dad"
+    }
+  },
+  "surfaceBeforePropsPrefix": "16d3b0e4a3e018e4",
+  "baseDiffersFromH": 2144,
+  "wearNonZero": 2168,
+  "heightRange": [
+    -8.81,
+    175.202
+  ],
+  "poiY": {
+    "town": 13.335,
+    "depot": 11.098,
+    "farm": 29.45,
+    "quarry": 44.381,
+    "mill": 20.912,
+    "harbor": 2.008,
+    "fuel": 9.386
+  },
+  "roads": {
+    "count": 24,
+    "points": 1722,
+    "km": 3.4,
+    "paved": 6,
+    "dirt": 3,
+    "streets": 15
+  },
+  "lots": 59,
+  "hamlets": 2,
+  "bogs": 1,
+  "fields": 2,
+  "canonOps": {
+    "model": 59,
+    "claim": 59,
+    "concrete": 51,
+    "fence": 39,
+    "mailbox": 34,
+    "tree": 22,
+    "box": 1,
+    "parking": 0
+  },
+  "canonModels": {
+    "houses": 34,
+    "shops": 17,
+    "warehouses": 2,
+    "sheds": 6
+  },
+  "rngCalls": 1220,
+  "trees": 5265,
+  "treesBySpecies": {
+    "Pine": 933,
+    "Spruce": 447,
+    "Oak": 1005,
+    "Birch": 798,
+    "Poplar": 182,
+    "Maple": 140,
+    "Bush": 1491,
+    "Snag": 18,
+    "Reeds": 251
+  },
+  "colliders": 4013,
+  "collidersByKind": {
+    "circle:tree": 3523,
+    "circle:rock": 263,
+    "circle:lamp": 77,
+    "circle:post": 15,
+    "circle:pump": 4,
+    "circle:boat": 2,
+    "circle:building": 3,
+    "box:building": 80,
+    "box:fence": 39,
+    "box:logs": 3,
+    "box:bale": 2,
+    "box:dock": 2
+  },
+  "lamps": 78,
+  "lampPosts": 77,
+  "lotModelPlacements": 59,
+  "parking": 5,
+  "footprints": 87,
+  "rings": 7,
+  "boats": 2,
+  "traffic": {
+    "nodes": 21,
+    "lanes": 53,
+    "conns": 108,
+    "loops": 5,
+    "carOnlyLoops": 1,
+    "roundabout": {
+      "x": -70,
+      "z": 30,
+      "R": 12.5
+    }
+  },
+  "trafficHeadless": {
+    "lanes": 52,
+    "conns": 104,
+    "roundabouts": 0
+  },
+  "staticPropsVertices": {
+    "bld": 261066,
+    "metal": 27276,
+    "winLit": 14436,
+    "winDark": 11952,
+    "bulb": 6228,
+    "neon": 216,
+    "signRed": 720
+  },
+  "panes": {
+    "House_A": 9,
+    "House_B": 22,
+    "House_C": 9,
+    "Shop_A": 10,
+    "Shop_B": 17,
+    "Warehouse_A": 15,
+    "Warehouse_B": 2,
+    "Warehouse_C": 0,
+    "Barn": 6,
+    "Garage": 1,
+    "Shed": 0
+  },
+  "shots": {
+    "cameras": 12,
+    "times": [
+      10,
+      21
+    ],
+    "width": 1600,
+    "height": 900
+  },
+  "probes": 1000,
+  "rays": {
+    "cameras": 12,
+    "perCamera": 4096
+  },
+  "deformCalls": 10000,
+  "traces": [
+    "hatch_bog_10s",
+    "pickup_0_100_route9",
+    "pickup_brake_80",
+    "truck_0_80_route9",
+    "truck_quarry_low",
+    "winch_15m_tree"
+  ]
+}
