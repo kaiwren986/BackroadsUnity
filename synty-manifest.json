@@ -1,0 +1,11 @@
+{
+  "note": "Packs the user owns and has downloaded. Agents must never open these files (AGENTS.md rule 3). The user imports them with tools\Synty-Import.bat once the conditions below are met.",
+  "packs": [
+    { "name": "POLYGON City", "unityPackage": "1.12.5", "built": "Unity 2022.3", "storefront": "syntystore.com", "localFile": "C:\Users\kaiwr\Downloads\POLYGON_City_Unity_2022_3_v1_12_5.unitypackage", "imported": false },
+    { "name": "POLYGON Explorer Kit", "unityPackage": "1.4.2", "built": "Unity 2022.3", "storefront": "syntystore.com", "localFile": "C:\Users\kaiwr\Downloads\POLYGON_Explorer_Kit_Unity_2022_3_v1_4_2.unitypackage", "imported": false },
+    { "name": "POLYGON Pro Racer", "unityPackage": "1.0.8", "built": "Unity 2022.3", "storefront": "syntystore.com", "localFile": "C:\Users\kaiwr\Downloads\POLYGON_Pro_Racer_Unity_2022_3_v1_0_8.unitypackage", "imported": false }
+  ],
+  "licenceType": null,
+  "trainingOffConfirmed": null,
+  "syntyWrittenReply": null
+}

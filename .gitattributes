@@ -1,0 +1,31 @@
+# Line endings: LF everywhere, CRLF only for Windows batch files.
+* text=auto eol=lf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Hashed trees: bytes are never converted (fingerprints must match on every checkout).
+CanonData/** -text
+native/EngineSimPlugin/vendor/** -text
+native/EngineSimPlugin/generated/** -text
+Game/Assets/StreamingAssets/** -text
+tools/oracle/traces/** -text
+
+# Large and binary files live in Git LFS.
+*.f32 filter=lfs diff=lfs merge=lfs -text
+*.u8 filter=lfs diff=lfs merge=lfs -text
+*.bytes filter=lfs diff=lfs merge=lfs -text
+*.blend filter=lfs diff=lfs merge=lfs -text
+*.fbx filter=lfs diff=lfs merge=lfs -text
+*.glb filter=lfs diff=lfs merge=lfs -text
+*.png filter=lfs diff=lfs merge=lfs -text
+*.jpg filter=lfs diff=lfs merge=lfs -text
+*.exr filter=lfs diff=lfs merge=lfs -text
+*.wav filter=lfs diff=lfs merge=lfs -text
+*.ogg filter=lfs diff=lfs merge=lfs -text
+*.dll filter=lfs diff=lfs merge=lfs -text
+*.roadbake filter=lfs diff=lfs merge=lfs -text
+
+# Unity YAML uses Unity's own merge driver (registered in the local git config).
+*.unity merge=unityyamlmerge
+*.prefab merge=unityyamlmerge
+*.asset merge=unityyamlmerge

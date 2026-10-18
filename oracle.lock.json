@@ -1,0 +1,7 @@
+{
+  "repo": "D:\Backroads",
+  "remote": "kaiwren986/Backroads",
+  "commit": "552f7807f4ad56547815c32a5e8407a7c324d556",
+  "seeds": { "world": 20251015, "planner": 20279734, "props": 4242 },
+  "three": "0.170.0"
+}

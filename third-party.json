@@ -1,0 +1,16 @@
+{
+  "note": "Licence registry. notices.ps1 turns the shipped entries into THIRD_PARTY_NOTICES.txt for every build; Licence.NoticesComplete checks it.",
+  "entries": [
+    { "name": "engine-sim", "version": "85f7c3b (2023-01-22)", "licence": "MIT", "copyright": "Copyright 2022 AngeTheGreat (Ange Yaghi)", "source": "https://github.com/ange-yaghi/engine-sim", "files": "native/EngineSimPlugin/vendor/engine-sim/**", "shipped": true },
+    { "name": "simple-2d-constraint-solver", "version": "e009f4f", "licence": "MIT", "copyright": "Copyright (c) 2022 Ange Yaghi", "source": "https://github.com/ange-yaghi/simple-2d-constraint-solver", "files": "native/EngineSimPlugin/vendor/simple-2d-constraint-solver/**", "shipped": true },
+    { "name": "piranha", "version": "432f0b1", "licence": "MIT (LICENSE file added upstream after this commit; see vendor/VENDOR.md)", "copyright": "Ange Yaghi", "source": "https://github.com/ange-yaghi/piranha", "files": "native/EngineSimPlugin/vendor/piranha/**", "shipped": false, "note": "Becomes shipped only if U3c (scripted engines) is approved." },
+    { "name": "flex (FlexLexer.h in generated scanners)", "version": "win_flex_bison 2.5.x", "licence": "BSD-style (flex licence; binary redistribution keeps the notice)", "source": "https://github.com/westes/flex", "files": "native/EngineSimPlugin/generated/piranha/**", "shipped": false, "note": "Only with U3c." },
+    { "name": "bison (generated parser)", "version": "win_flex_bison 3.x", "licence": "GPL-3.0 with the Bison special exception for generated parsers", "source": "https://www.gnu.org/software/bison/", "files": "native/EngineSimPlugin/generated/piranha/**", "shipped": false, "note": "Only with U3c." },
+    { "name": "Clipper2", "version": "to pin at M3", "licence": "BSL-1.0", "source": "https://github.com/AngusJohnson/Clipper2", "files": "Game/Assets/ThirdParty/Clipper2/**", "shipped": false, "note": "Editor-only road bake." },
+    { "name": "glTFast (com.unity.cloud.gltfast)", "version": "6.20.0 (from M1, after U3a)", "licence": "Apache-2.0", "source": "https://github.com/Unity-Technologies/com.unity.cloud.gltfast", "files": "Game/Packages", "shipped": true },
+    { "name": "Unity packages (URP, Burst, Collections, Mathematics, Input System, Test Framework)", "version": "bundled with 6000.3.20f1", "licence": "Unity Companion License", "source": "https://unity.com/legal/licenses/unity-companion-license", "files": "Game/Packages", "shipped": true },
+    { "name": "Barlow Condensed", "version": "Google Fonts", "licence": "SIL OFL 1.1", "source": "https://fonts.google.com/specimen/Barlow+Condensed", "files": "Game/Assets/Art/Fonts/**", "shipped": true },
+    { "name": "Inter", "version": "Google Fonts", "licence": "SIL OFL 1.1", "source": "https://fonts.google.com/specimen/Inter", "files": "Game/Assets/Art/Fonts/**", "shipped": true },
+    { "name": "OpenStreetMap data (town measurements behind Millbrook)", "version": "fetched 2026-10-18", "licence": "ODbL 1.0", "copyright": "(c) OpenStreetMap contributors", "source": "https://www.openstreetmap.org/copyright", "files": "CanonData/**, licenses/osm/**", "shipped": true }
+  ]
+}
