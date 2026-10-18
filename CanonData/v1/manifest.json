@@ -9,7 +9,7 @@
     "propsSeed": 4242,
     "canonFrozen": "2026-10-18",
     "three": "170",
-    "exportedAt": "2026-10-18T20:52:04.559Z",
+    "exportedAt": "2026-10-18T20:58:38.378Z",
     "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0"
   },
   "coords": {
@@ -215,8 +215,8 @@
     "textures/map.png is hud.js buildMapImage() run from its source on a CPU-backed 2D canvas, so it is the same with every WebGL renderer"
   ],
   "timings": {
-    "bootS": 1.4407000000476837,
-    "totalS": 9.3555
+    "bootS": 2.400099999964237,
+    "totalS": 15.536599999964237
   },
   "traces": {
     "hatch_bog_10s": {
@@ -250,10 +250,10 @@
       "randomCallsAtEnd": 59353
     },
     "winch_15m_tree": {
-      "inputSha256": "ccf9bc741e67f1fd779847067558c66498a4925ef42f9d53eefd01099ff0095c",
+      "inputSha256": "0ebd35504bcd9ce8b579b5fafd2f0422fabce15113ffcb5192b41c2554af5b6c",
       "steps": 1800,
       "samples": 151,
-      "randomCallsAtEnd": 90599
+      "randomCallsAtEnd": 83393
     }
   },
   "files": {
@@ -319,15 +319,15 @@
     },
     "reference/shots/poi_depot_2100.png": {
       "bytes": 1870076,
-      "sha256": "72eb7ad72a021d3ec48632d1f44509735d6ab5573aa0f8f471b7abbb812cb56b"
+      "sha256": "578122d45f35968802111c5254ecdc3036bb6da099880e84b561bbafa97c5185"
     },
     "reference/shots/poi_farm_1000.png": {
       "bytes": 2572155,
       "sha256": "3f8497e161024b12fdde992d07b276f60d865594f5552df1d8679feb779fc7a7"
     },
     "reference/shots/poi_farm_2100.png": {
-      "bytes": 1684311,
-      "sha256": "18cf163d9fecf273e0dd96bde10788d6fd0c387b14f1ee2d84703c86ecbda3cc"
+      "bytes": 1684310,
+      "sha256": "da5b3392a7097652d0fdf44130456bc20120039c3c64ee3a9a1eb3da88ebff8e"
     },
     "reference/shots/poi_fuel_1000.png": {
       "bytes": 2850650,
@@ -402,8 +402,8 @@
       "sha256": "dda13d62e039e7d4ccdea4b3d3b0175f440d7001924e25b5c95a0b8ff67bf516"
     },
     "reference/traces/winch_15m_tree.json": {
-      "bytes": 53570,
-      "sha256": "1181085a24feb95b723dfe317b6143541c2de3a2ced4c0fa40870d5df77c4208"
+      "bytes": 54314,
+      "sha256": "60f9ce38ee8808643c77ff476f964df6285618ec6a9a5d587018dfdd47c5b9c9"
     },
     "source/canon.json": {
       "bytes": 56963,
