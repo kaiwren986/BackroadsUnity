@@ -1,0 +1,223 @@
+# build-native.ps1: builds EngineSimPlugin.dll, runs ctest and installs the DLL into Game\Assets\Plugins\x86_64\
+# (PLAN 1.6, 1.9).
+#
+#   tools\ci\build-native.ps1          preset vs2022-x64 (native\build): configure, build Release, ctest, install
+#   tools\ci\build-native.ps1 -Asan    preset vs2022-x64-asan (native\build-asan): configure, build, ctest; installs nothing
+#   -Force        rebuild even if the cache already holds this source hash
+#   -Parallel N   build parallelism (default 16; at most 4 while artifacts\.user-playing exists)
+#
+# Cache: <main checkout>\artifacts\native-cache\<source hash>\, shared by every worktree. The source hash is SHA-256 over
+# every tracked or untracked-but-not-ignored file under native\EngineSimPlugin (probes\ excluded) plus this script.
+# Unchanged sources skip the build: the cached DLL and version file are installed and esp_smoke re-checks the copy.
+# Installed: EngineSimPlugin.dll and EngineSimPlugin.version.json {abi, git, sourceHash, built, piranha}; the abi, git and
+# sourceHash values are read back from the DLL's own esp_build_info(). Neither file is committed except at milestone tags.
+#
+# Exit: 0 green; 1 build or test failed; 3 a perf gate holds artifacts\machine.lock; 4 the installed DLL is locked.
+# Writes: artifacts\<yyyyMMdd-HHmm>\build-native.log, artifacts\gates\build-native.json
+param([switch]$Asan, [switch]$Force, [int]$Parallel = 16)
+
+. "$PSScriptRoot\env.ps1"
+$ErrorActionPreference = 'Stop'
+$sw = [Diagnostics.Stopwatch]::StartNew()
+
+$srcRel = 'native/EngineSimPlugin'
+$src = Join-Path $REPO 'native\EngineSimPlugin'
+$suffix = if ($Asan) { '-asan' } else { '' }
+$configurePreset = "vs2022-x64$suffix"
+$preset = "release$suffix"                     # build and test preset
+$outDir = Join-Path $REPO "native\build$suffix\Release"
+if (-not $CMAKE) { Write-Host 'build-native: cmake not found on PATH (see tools\ci\env-check.ps1)' -ForegroundColor Red; exit 1 }
+$CTEST = Join-Path (Split-Path $CMAKE) 'ctest.exe'
+
+# The main checkout holds what all worktrees share: the locks and the native cache.
+$commonGit = (& git -C $REPO rev-parse --path-format=absolute --git-common-dir).Trim()
+$commonRoot = Split-Path -Parent ($commonGit -replace '/', '\')
+$lockDirs = @($ART, (Join-Path $commonRoot 'artifacts')) | Select-Object -Unique
+foreach ($d in $lockDirs) {
+    if (Test-Path (Join-Path $d 'machine.lock')) {
+        Write-Host "build-native: a perf gate holds $d\machine.lock; nothing else may run. Try again when it is gone." -ForegroundColor Yellow
+        exit 3
+    }
+}
+if (@($lockDirs | Where-Object { Test-Path (Join-Path $_ '.user-playing') }).Count -gt 0) {
+    $Parallel = [Math]::Min($Parallel, 4)
+    Write-Host "build-native: the user is playing (artifacts\.user-playing); building with -Parallel $Parallel"
+}
+
+$runDir = Join-Path $ART (Get-Date -Format 'yyyyMMdd-HHmm')
+New-Item -ItemType Directory -Force $runDir | Out-Null
+$logPath = Join-Path $runDir "build-native$suffix.log"
+$log = New-Object IO.StreamWriter($logPath, $false, (New-Object Text.UTF8Encoding $false))
+$script:lastOutput = @()
+
+# Runs a native command; its output goes to the log (and to the console with -Echo). Throws on a non-zero exit.
+function Invoke-Logged([string]$Step, [string]$Exe, [string[]]$ArgList, [switch]$Echo) {
+    $line = "==> ${Step}: $Exe $($ArgList -join ' ')"
+    Write-Host $line
+    $log.WriteLine($line)
+    $lines = New-Object System.Collections.Generic.List[string]
+    $eap = $ErrorActionPreference
+    $ErrorActionPreference = 'Continue'   # Windows PowerShell turns native stderr lines into error records
+    try {
+        & $Exe @ArgList 2>&1 | ForEach-Object {
+            $l = if ($_ -is [Management.Automation.ErrorRecord]) { $_.Exception.Message } else { [string]$_ }
+            $log.WriteLine($l)
+            $lines.Add($l)
+            if ($Echo) { Write-Host "    $l" }
+        }
+        $code = $LASTEXITCODE
+    } finally {
+        $ErrorActionPreference = $eap
+        $log.Flush()
+    }
+    $script:lastOutput = $lines.ToArray()
+    if ($code -ne 0) {
+        if (-not $Echo) { $lines | Select-Object -Last 30 | ForEach-Object { Write-Host "    $_" } }
+        throw "$Step failed (exit $code); full log: $logPath"
+    }
+}
+
+function Get-Sha256Hex([byte[]]$Bytes) {
+    $sha = [Security.Cryptography.SHA256]::Create()
+    try { return ([BitConverter]::ToString($sha.ComputeHash($Bytes)) -replace '-', '').ToLowerInvariant() }
+    finally { $sha.Dispose() }
+}
+
+# SHA-256 over "<sha256 of file>  <path>\n" for every build input, sorted by path (ordinal).
+function Get-SourceHash {
+    $list = & git -c core.quotepath=off -C $REPO ls-files -co --exclude-standard -- $srcRel 'tools/ci/build-native.ps1'
+    if ($LASTEXITCODE -ne 0) { throw 'git ls-files failed' }
+    $set = New-Object 'System.Collections.Generic.HashSet[string]' ([StringComparer]::Ordinal)
+    foreach ($f in $list) { if ($f -and -not $f.StartsWith("$srcRel/probes/")) { [void]$set.Add($f) } }
+    $paths = New-Object string[] $set.Count
+    $set.CopyTo($paths)
+    [Array]::Sort($paths, [StringComparer]::Ordinal)
+    $manifest = New-Object Text.StringBuilder
+    $count = 0
+    foreach ($p in $paths) {
+        $full = Join-Path $REPO $p
+        if (-not (Test-Path -LiteralPath $full -PathType Leaf)) { continue }   # deleted in the working tree
+        [void]$manifest.Append((Get-Sha256Hex ([IO.File]::ReadAllBytes($full)))).Append('  ').Append($p).Append("`n")
+        $count++
+    }
+    $text = $manifest.ToString()
+    return @{ Hash = (Get-Sha256Hex ([Text.Encoding]::UTF8.GetBytes($text))); Count = $count; Manifest = $text }
+}
+
+function Install-Plugin([string]$FromDir) {
+    $plugins = Join-Path $PROJ 'Assets\Plugins\x86_64'
+    New-Item -ItemType Directory -Force $plugins | Out-Null
+    $dst = Join-Path $plugins 'EngineSimPlugin.dll'
+    if (Test-Path $dst) {
+        try { ([IO.File]::Open($dst, 'Open', 'ReadWrite', 'None')).Dispose() }
+        catch {
+            Write-Host "build-native: $dst is locked, most likely by an open Unity editor (it keeps native DLLs loaded)." -ForegroundColor Red
+            Write-Host 'build-native: close the editor and run tools\ci\build-native.ps1 again.' -ForegroundColor Red
+            $script:exitCode = 4
+            throw "installed DLL is locked: $dst"
+        }
+    }
+    Copy-Item (Join-Path $FromDir 'EngineSimPlugin.dll') $dst -Force
+    Copy-Item (Join-Path $FromDir 'EngineSimPlugin.version.json') $plugins -Force
+    Invoke-Logged 'check installed DLL' (Join-Path $FromDir 'esp_smoke.exe') @($dst) -Echo
+    return $plugins
+}
+
+$gate = [ordered]@{
+    gate = "build-native$suffix"; tier = 'merge'; status = 'fail'; hard = $true; headline = (-not $Asan)
+    build = [ordered]@{}; metrics = [ordered]@{}; evidence = @($logPath)
+}
+$exit = 1
+$script:exitCode = 1
+try {
+    $source = Get-SourceHash
+    $head = (& git -C $REPO rev-parse HEAD).Trim()
+    $dirty = & git -C $REPO status --porcelain -- $srcRel ":!$srcRel/probes" 'tools/ci/build-native.ps1'
+    $gitId = if ($dirty) { "$head-dirty" } else { $head }
+    $gate.build = [ordered]@{ git = $gitId; native = $source.Hash; abi = 1; preset = $configurePreset }
+    $gate.metrics['sourceFiles'] = $source.Count
+    Write-Host "build-native: source hash $($source.Hash) ($($source.Count) files), git $gitId"
+
+    $cacheRoot = Join-Path $commonRoot 'artifacts\native-cache'
+    $cacheDir = Join-Path $cacheRoot $source.Hash
+    $cacheHit = (-not $Asan) -and (-not $Force) -and
+        (Test-Path (Join-Path $cacheDir 'EngineSimPlugin.dll')) -and
+        (Test-Path (Join-Path $cacheDir 'EngineSimPlugin.version.json')) -and
+        (Test-Path (Join-Path $cacheDir 'esp_smoke.exe'))
+    if ($cacheHit) {
+        # A DLL built from uncommitted sources is reused only while they stay uncommitted; once they are committed the
+        # rebuild (one file) stamps the commit. A clean entry keeps the first commit these sources were built at.
+        $cachedGit = [string](Get-Content -Raw (Join-Path $cacheDir 'EngineSimPlugin.version.json') | ConvertFrom-Json).git
+        if ($cachedGit.EndsWith('-dirty') -and $cachedGit -ne $gitId) {
+            $cacheHit = $false
+            Write-Host "build-native: cached DLL was built from uncommitted sources ($cachedGit); rebuilding"
+        }
+    }
+    $gate.metrics['cacheHit'] = $cacheHit
+
+    if ($cacheHit) {
+        Write-Host "build-native: cache hit, $cacheDir (unchanged sources; no rebuild)"
+    } else {
+        Push-Location $src
+        try {
+            Invoke-Logged 'configure' $CMAKE @('--preset', $configurePreset, "-DESP_SOURCE_HASH=$($source.Hash)", "-DESP_GIT_COMMIT=$gitId")
+            Invoke-Logged 'build' $CMAKE @('--build', '--preset', $preset, '--parallel', "$Parallel")
+            $warnings = @($script:lastOutput | Where-Object { $_ -match ': warning [A-Z]+\d+' } | Sort-Object -Unique)
+            $gate.metrics['warnings'] = $warnings.Count
+            Invoke-Logged 'ctest' $CTEST @('--preset', $preset, '--output-on-failure') -Echo
+            $summary = $script:lastOutput | Where-Object { $_ -match 'tests passed' } | Select-Object -Last 1
+            $gate.metrics['ctest'] = "$summary".Trim()
+        } finally {
+            Pop-Location
+        }
+
+        if (-not $Asan) {
+            $dll = Join-Path $outDir 'EngineSimPlugin.dll'
+            $smoke = Join-Path $outDir 'esp_smoke.exe'
+            Invoke-Logged 'build info' $smoke @($dll, '--info')
+            $infoJson = ($script:lastOutput -join "`n").Trim()
+            $info = $infoJson | ConvertFrom-Json
+            if ($info.abi -ne 1 -or $info.sourceHash -ne $source.Hash -or $info.git -ne $gitId) {
+                throw "esp_build_info() does not match this build: $infoJson"
+            }
+            $version = [ordered]@{
+                abi = $info.abi; git = $info.git; sourceHash = $info.sourceHash
+                built = (Get-Date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ssZ'); piranha = $info.piranha
+            }
+            # Fill a temporary folder, then rename it, so a half-written cache entry is never used.
+            $tmp = "$cacheDir.tmp$PID"
+            New-Item -ItemType Directory -Force $tmp | Out-Null
+            Copy-Item $dll, (Join-Path $outDir 'EngineSimPlugin.pdb'), $smoke $tmp
+            $utf8 = New-Object Text.UTF8Encoding $false
+            [IO.File]::WriteAllText((Join-Path $tmp 'EngineSimPlugin.version.json'), ($version | ConvertTo-Json) + "`n", $utf8)
+            [IO.File]::WriteAllText((Join-Path $tmp 'source-manifest.txt'), $source.Manifest, $utf8)
+            Copy-Item $logPath (Join-Path $tmp 'build-native.log')
+            if (Test-Path $cacheDir) { Remove-Item -Recurse -Force $cacheDir }   # -Force, or an entry built from uncommitted sources
+            Rename-Item $tmp (Split-Path -Leaf $cacheDir)
+            Write-Host "build-native: cached in $cacheDir"
+        }
+    }
+
+    if (-not $Asan) {
+        $plugins = Install-Plugin $cacheDir
+        $gate.evidence += @((Join-Path $plugins 'EngineSimPlugin.dll'), (Join-Path $plugins 'EngineSimPlugin.version.json'))
+        Write-Host "build-native: installed EngineSimPlugin.dll + EngineSimPlugin.version.json in $plugins"
+        Get-Content (Join-Path $plugins 'EngineSimPlugin.version.json') | ForEach-Object { Write-Host "    $_" }
+    }
+    $gate.status = 'pass'
+    $exit = 0
+} catch {
+    Write-Host "build-native: FAILED: $_" -ForegroundColor Red
+    $gate.metrics['error'] = "$_"
+    $exit = $script:exitCode
+} finally {
+    $log.Dispose()
+}
+
+$gate.wallClock = [ordered]@{ seconds = [Math]::Round($sw.Elapsed.TotalSeconds, 1); budget = 900 }
+$gates = Join-Path $ART 'gates'
+New-Item -ItemType Directory -Force $gates | Out-Null
+[IO.File]::WriteAllText((Join-Path $gates "build-native$suffix.json"), ($gate | ConvertTo-Json -Depth 4) + "`n", (New-Object Text.UTF8Encoding $false))
+$color = if ($exit -eq 0) { 'Green' } else { 'Red' }
+Write-Host ("build-native: {0} in {1:N1} s (log {2})" -f $gate.status.ToUpper(), $sw.Elapsed.TotalSeconds, $logPath) -ForegroundColor $color
+exit $exit
