@@ -176,7 +176,7 @@ D:\Backroads-Unity\
 - Unity YAML: `*.unity *.prefab *.asset merge=unityyamlmerge`; T0.1 registers the editor's bundled `UnityYAMLMerge.exe` as that merge driver in the repo's local git config [S11].
 - EditMode test `Repo.NoCrInHashedFiles` fails if any file under a hashed tree contains a CR byte. Reason: Git for Windows here has `core.autocrlf=true` system-wide, so without these rules every `git worktree add` would rewrite hashed JSON with CRLF and the Canon importer would abort.
 
-`.gitignore` adds `Game/Library/ Game/Temp/ Game/Logs/ Game/obj/ Game/UserSettings/ Game/*.csproj Game/*.sln Game/Assets/ThirdParty/Synty/ Game/Assets/ThirdParty/Synty.meta Game/Assets/Backroads/World/Canon/ native/build*/ tools/winflexbison/ builds/ artifacts/ *.blend1`.
+`.gitignore` adds `Game/Library/ Game/Temp/ Game/Logs/ Game/obj/ Game/UserSettings/ Game/*.csproj Game/*.sln Game/Assets/Synty/ Game/Assets/Synty.meta Game/Assets/Backroads/World/Canon/ native/build*/ tools/winflexbison/ builds/ artifacts/ *.blend1`.
 
 **LFS budget** [C15, S19]: Git LFS stores files uncompressed: canon v1 is roughly 100 MB raw (two 16.8 MB height layers, four 4.2 MB byte layers, 24 PNG shots, `static_props.glb`, probes, deform references), not the 30 MB gzip figure of 03 §3.3. Only CanonData is committed, never a second importer copy. The DLL is committed only at milestone tags (lanes build it, §1.6). `.blend` files and baked textures are committed at review points, not every iteration. `tools\ci\lfs-budget.ps1` runs in every milestone gate and fails above 6 GiB of LFS objects (GitHub Free allows 10 GiB storage and 10 GiB transfer per month, 07 §10.5); `git lfs prune` runs after each tag. You decide about paid LFS before the first push.
 

@@ -7,8 +7,8 @@ Game/UserSettings/
 Game/*.csproj
 Game/*.sln
 # Synty packs never enter git (licence: source files stay inside the team; see docs/research/07 §10)
-Game/Assets/ThirdParty/Synty/
-Game/Assets/ThirdParty/Synty.meta
+Game/Assets/Synty/
+Game/Assets/Synty.meta
 # Canon importer output is regenerated from CanonData by canon-import.ps1
 Game/Assets/Backroads/World/Canon/
 Game/Assets/Backroads/World/Canon.meta

@@ -50,7 +50,7 @@
       "PowerShell(pip install:*)",
       "Edit(//d/SyntyPacks/**)",
       "Edit(//c/Users/kaiwr/Downloads/POLYGON_*)",
-      "Edit(./Game/Assets/ThirdParty/Synty/**)",
+      "Edit(./Game/Assets/Synty/**)",
       "Edit(//d/Backroads/**)",
       "Edit(//d/Backroads-ref/engine-sim/**)"
     ]
