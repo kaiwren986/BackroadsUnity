@@ -3,6 +3,7 @@
     "rootNamespace": "Backroads.Server",
     "references": [
         "Backroads.Core",
+        "Backroads.World",
         "Backroads.Game"
     ],
     "includePlatforms": [],
