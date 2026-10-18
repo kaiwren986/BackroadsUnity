@@ -72,7 +72,15 @@ namespace Backroads.World
             var a = Asset ?? throw new InvalidOperationException(NotImportedMessage);
             var sw = System.Diagnostics.Stopwatch.StartNew();
             s_Grid = WorldGrid.FromCanon(a);
-            if (!s_QuitHooked) { Application.quitting += Unload; s_QuitHooked = true; }
+            if (!s_QuitHooked)
+            {
+                Application.quitting += Unload;
+#if UNITY_EDITOR
+                UnityEditor.AssemblyReloadEvents.beforeAssemblyReload += Unload;
+                UnityEditor.EditorApplication.quitting += Unload;
+#endif
+                s_QuitHooked = true;
+            }
             double ms = sw.Elapsed.TotalMilliseconds;
             Log.Info($"canon v1 loaded: WorldGrid {WorldGrid.VN}x{WorldGrid.VN} in {ms:F0} ms (manifest {Short(a.manifestSha256)})");
             return ms;
