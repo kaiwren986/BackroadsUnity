@@ -8,7 +8,7 @@ Everything waiting for you, newest at the bottom. Each item has a decision id (P
 | U21 | Name a backup folder on a second drive or USB stick for `tools\ci\backup.ps1` | end of M0 | Backups go to `D:\Backroads-Unity-backups` on the same drive (no protection against drive failure) | waiting |
 | U1 | Create the private GitHub repo `kaiwren986/Backroads-Unity` (or say "agents may create it with gh") | end of M0 | Work stays on this PC only, plus local backups | waiting |
 | Unity Hub | Open Unity Hub once and check you are signed in (agents never sign in) | M0, day 2 | The Unity project can't be created in batchmode | waiting |
-| U10 | Synty packs (City, Explorer Kit, Pro Racer are downloaded): 1) turn off "use my chats to improve the model" in your Claude privacy settings, 2) email Synty for written confirmation (draft below), 3) run `tools\Synty-Import.bat` yourself when it exists | before any Synty import | Synty stays out of the project | waiting |
+| U10 | Synty packs (City, Explorer Kit, Pro Racer): you turned off model training on 2026-10-18 and asked the agents to import them into the client with Unity's importer. Sending Synty the email below is optional extra reassurance | after the M0 Unity project lands | n/a | **decided: agents import** |
 
 ## Draft email to Synty (U10)
 
