@@ -131,7 +131,17 @@ tools\ci\gate.ps1 -Tier milestone -Gate M0
 
 ### oracle.ps1: oracle check (wrapper around lane W's tools)
 
-Runs `node tools\oracle\make-snapshot.mjs` (only when `artifacts\oracle\552f780\` is missing, or with `-Fresh`), then `node tools\oracle\gen-hash.mjs`. With `-Export` it also runs `tools\oracle\run-export.ps1`. It never touches `D:\Backroads`. If W's files are not on the branch yet, it fails and says so; use `gate.ps1 -SkipOracle` until then.
+Runs:
+- `node tools\oracle\gen-hash.mjs`: the CI check. It makes the snapshot `artifacts\oracle\552f780\` when missing; `-Fresh` re-makes it with `make-snapshot.mjs`.
+- `node tools\oracle\verify-canon.mjs CanonData\v1`: re-checks the committed canon files, 68 checks.
+- With `-Export`: `tools\oracle\run-export.ps1 -Twice` (`-Once` for a single export). This is the headless Edge export into `artifacts\`, never into `CanonData\v1`. It holds `.gpu.lock`.
+
+It never touches `D:\Backroads`. If W's files are missing, it fails and says so.
+
+```powershell
+tools\ci\oracle.ps1            # about 2 s
+tools\ci\oracle.ps1 -Export    # minutes; milestone tier
+```
 
 ### worktree-new.ps1: a lane worktree
 

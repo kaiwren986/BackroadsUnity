@@ -1,6 +1,6 @@
 # M0 handoff, lane I-b (integrator, CI scripts): T0.6, the PowerShell side
 
-Branch `m0/i-scripts` in worktree `D:\Backroads-Unity-wt\ib`, cut from `main` at `dd412fa`, with `main` merged in at `d684b73` (JSON fixes) and `3023fc6` (lane I-a, which brought `Game\`, and lane V). Not merged, not pushed.
+Branch `m0/i-scripts` in worktree `D:\Backroads-Unity-wt\ib`, cut from `main` at `dd412fa`, with `main` merged in three times: `d684b73` (JSON fixes), `3023fc6` (lanes I-a and V, which brought `Game\`), and `0bab6ec` (lane W's canon export, the Synty rule). Not merged into main, not pushed.
 
 ## Done
 
@@ -15,7 +15,7 @@ All in `tools\ci\`, Windows PowerShell 5.1 syntax, ASCII only. Each script dot-s
 | `autotest.ps1` | `-br-autotest <id>` / `-br-smoke`; `.gpu.lock`; perf runs take `machine.lock` plus all slots, need an idle machine and mains power (otherwise `invalid`); `-MinSpec` (E-core affinity from `env.json`), `-Fps`, `-Repeat` (majority, medians); egress cross-check for `m0.net.egress` and every smoke |
 | `soak.ps1` | Server canary (`-Clients 0`: exit 0, `SERVER BOOT OK`, loopback-only sockets); bot soak plumbing, gated until the M4 bot CLI; `-ServerLinux` gated on U4b |
 | `gate.ps1` + `gates.json` | Tiers `merge` (1200 s), `nightly` (10800 s) and `milestone -Gate M<n>` with the wall clock against the budget. Pauses heavy steps while the user plays; fail-fast on merge; at the milestone tier, headline steps decide and lane failures are listed; copies to `docs\gates\`; sets `BR_OWNERS_BASE=main` for `Repo.OwnersRespected` |
-| `oracle.ps1` | Thin wrapper around lane W's `make-snapshot.mjs`, `gen-hash.mjs` and `run-export.ps1` (fails clearly until they are on main) |
+| `oracle.ps1` | Thin wrapper around lane W's tools: `gen-hash.mjs` (CI check), `verify-canon.mjs CanonData\v1`, and with `-Export` `run-export.ps1 -Twice` under `.gpu.lock` |
 | `worktree-new.ps1` | Worktree and branch from main; copies the DLL from the main checkout or runs `build-native.ps1`; disk, worktree-count and CRLF checks; next steps |
 | `backup.ps1` | `git bundle create --all` plus a shared, deduplicated LFS object store; keeps 7; prunes unreferenced LFS copies; `-Verify`; `RESTORE.txt`; refuses destinations inside the repo or a worktree |
 | `lfs-budget.ps1` | LFS history (`git lfs ls-files --all --json`) against 6 GiB, warning at 80 %; the local store; large non-LFS blobs |
@@ -57,6 +57,7 @@ Also:
 | Run | Result | Wall clock |
 |---|---|---|
 | `gate.ps1 -Tier merge -SkipOracle` | **pass**, 7 steps passed, oracle skipped. EditMode 59/60 (1 skipped), PlayMode 1/1, server compile, Dev build 158 MiB, `smoke` autotest | **84 s** (budget 1200 s) |
+| `gate.ps1 -Tier merge` (after merging main with lane W, 16:53) | **pass, all 8 steps**. Oracle `gen-hash` + `verify-canon` 68/68 in 1.9 s, EditMode **60/60**, PlayMode 1/1, server compile, Dev build, smoke | **100 s** |
 | `gate.ps1 -Tier nightly -SkipOracle -Skip backup,native.asan` | **pass**, 16 steps passed, 3 skipped. Slow sets empty (0 tests, allowed), ServerHeadless 97.6 MiB, canary `SERVER BOOT OK` loopback only, LFS 112.6 MiB (1.8 %), notices, `m0.crash.recover`, `m0.net.egress` (60 s; only Dev PlayerConnection TCP 55000 and UDP, tolerated), `m0.playtest.f10` | 256 s |
 | `gate.ps1 -Tier milestone -Gate M0 -SkipOracle` | **pass** (all headline steps). Nightly check, env-check, EditMode 60/60, Client 97.7 MiB without the testing assembly, `-br-smoke` on Client with **0 endpoints**, Dev, Server, canary, LFS, notices. Lane failure listed: `m0.playtest.f10` (see below). The `docs\gates\M0*` it wrote were deleted again: T0.9 makes them | 233 s |
 
@@ -68,7 +69,7 @@ Also:
 - **BuildCli's `.user-playing` check (lane I-a)** looks in its own checkout's `artifacts\`. From a worktree it does not see the user's lock in the main checkout. The scripts check the main one before starting Unity, so builds through `build-player.ps1` are safe. For direct calls, BuildCli could check `git rev-parse --git-common-dir`\..\artifacts too.
 - **`-br-quality <Tier>`** for `-MinSpec` is passed but not read by the player yet (QualityPreset, M1). The gate JSON carries a warning. `-MinSpec` against the real player is untested: only the stub is, because perf runs need an idle machine.
 - **GPU check for perf validity:** `result.json` has no GPU name, so a run on the integrated GPU cannot be marked invalid yet. Suggest adding `SystemInfo.graphicsDeviceName` to AutotestRunner's result (M1).
-- **Oracle (lane W):** `oracle.ps1` waits for `tools\oracle\gen-hash.mjs`, `make-snapshot.mjs` (on W's branch) and `run-export.ps1`. All runs above used `-SkipOracle`.
+- **Oracle export:** `oracle.ps1` (gen-hash + verify-canon) ran for real. `oracle.ps1 -Export` (`run-export.ps1 -Twice`) was not run from this lane: headless Edge loads three.js from jsDelivr, so the first live run belongs to T0.9, under the U2 approval W worked under. Only its command line and exit-code handling are tested (dry run and stub).
 - **`native.asan`** (V's `build-native.ps1 -Asan`) is wired into the nightly but was not run (cold ASan build; skipped while other lanes work).
 - **`backup.ps1` to the default `D:\Backroads-Unity-backups`** has not run; it was tested only in a temp folder, so no folder was created on the user's drive. U21 is still open.
 - **`soak.ps1 -Clients N`** waits for BotClient (N lane, M4). `-ServerLinux` waits for U4b. The proposed bot flags are in the README.
@@ -77,7 +78,7 @@ Also:
 
 ## Next
 
-- Coordinator: merge `m0/i-scripts` (all paths are lane I's, except the two I-a helper lines above). Then `tools\ci\gate.ps1 -Tier merge` replaces ad-hoc checks for every lane merge (`-SkipOracle` until W merges).
+- Coordinator: merge `m0/i-scripts` (all paths are lane I's, except the two I-a helper lines above). Then `tools\ci\gate.ps1 -Tier merge` replaces ad-hoc checks for every lane merge (the oracle step is live now that W is on main).
 - T0.9: `gate.ps1 -Tier nightly` (on main, with backup once U21 is answered), then `gate.ps1 -Tier milestone -Gate M0`, then commit `docs\gates\M0.json` and `docs\gates\M0\` with `docs\milestones\M0.md`.
 - M1: add the M1 autotests to `gates.json` (`milestones.M1` is pre-filled: `m1.shots.canon`, `m1.bench.revcycle` at 60 and 30 fps, `m1.perf.flythrough` plain and `-MinSpec`), `-br-quality`, the GPU name in `result.json`, and the notices copy for the Credits panel.
 
@@ -87,9 +88,9 @@ Also:
 cd D:\Backroads-Unity-wt\ib                       # branch m0/i-scripts
 git log --oneline -3
 powershell -NoProfile -ExecutionPolicy Bypass -File tools\ci\tests\ci-selftest.ps1 -Quick   # expect 0 failed
-tools\ci\gate.ps1 -Tier merge -SkipOracle         # expect pass in about 1.5 min
-tools\ci\gate.ps1 -Tier nightly -SkipOracle -Skip backup,native.asan
-tools\ci\gate.ps1 -Tier milestone -Gate M0 -SkipOracle   # writes docs\gates\M0*; do not commit them from this lane
+tools\ci\gate.ps1 -Tier merge                     # expect pass, 8 steps, about 1.5-2 min
+tools\ci\gate.ps1 -Tier nightly -Skip backup,native.asan
+tools\ci\gate.ps1 -Tier milestone -Gate M0 -SkipOracle   # -SkipOracle skips only the live export; writes docs\gates\M0*: do not commit them from this lane
 ```
 
 If the worktree is gone: `git -C D:\Backroads-Unity worktree add D:\Backroads-Unity-wt\ib m0/i-scripts`, then `tools\ci\build-native.ps1` before anything opens Unity.
