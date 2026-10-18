@@ -20,3 +20,7 @@ tools/winflexbison/
 builds/
 artifacts/
 *.blend1
+# Native plugin output of tools\ci\build-native.ps1: committed only at milestone tags (PLAN 1.6), with git add -f
+Game/Assets/Plugins/x86_64/*.dll
+Game/Assets/Plugins/x86_64/*.pdb
+Game/Assets/Plugins/x86_64/EngineSimPlugin.version.json
