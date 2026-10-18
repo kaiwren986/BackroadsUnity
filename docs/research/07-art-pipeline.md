@@ -596,11 +596,11 @@ Paraphrased; read the full text on syntystore.com.
   - uploading source files or models to third-party services for 3D model generation
   - using the assets in promotion related to generative AI
   - Its definition of generative AI is broad.
-  - **Practical rule for this project:**
-    - AI agents never open, read, parse, convert or modify Synty mesh or texture files.
-    - Agents only write Unity editor and runtime scripts that reference prefabs by path or GUID, and read audit metadata (names, bounds, counts).
-    - No Synty asset goes into image-to-3D or any AI generation tool.
-    - Ask Synty support in writing to confirm that an AI coding assistant writing placement and configuration scripts is fine. Suggested wording: "the assistant never generates or edits 3D models from your assets."
+  - **Practical rule for this project** (set by the user on 2026-10-18, with model training off; PLAN §4.7 supersedes the stricter version first written here):
+    - Agents may import, audit, look at, set up materials for and arrange Synty prefabs in Unity.
+    - Agents never make or edit 3D models from Synty assets, and never merge Synty geometry into baked meshes.
+    - No Synty file or render goes into image-to-3D or any AI generation tool, and no Synty file is committed.
+    - Optional: ask Synty support in writing to confirm that an AI coding assistant working this way is fine. Suggested wording: "the assistant never generates or edits 3D models from your assets."
 - **Subscription (SyntyPass, Standard Subscription Licence, also 9 July 2026).** When the subscription ends you may not use the assets in new work. Only minor bug fixes and maintenance are allowed, and substantial development needs an active subscription. For a free online game that keeps being updated, that is a trap, so **buy one-time licences for the packs you keep**. The subscription's monthly store credit can go toward them.
 - **Unity Asset Store purchases** of Synty packs are governed by the Unity Asset Store EULA, not Synty's licence. Pick one storefront and keep the receipts.
 - **Seats:** 5 per licence purchase, so a solo hobby project is covered.

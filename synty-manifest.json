@@ -1,6 +1,6 @@
 {
-  "note": "Packs the user owns. Agents may import them with Unity's own importer and run Unity's built-in URP material upgrade on them, then place prefabs by path or GUID. Agents never open, read, parse, edit or extract the mesh/texture files themselves, and never feed them to AI tools (AGENTS.md rule 3). The pack folders in Game/Assets are gitignored.",
-  "userInstruction": "2026-10-18: user turned off model training in Claude and asked the agents to import the packs into the Unity client with Unity's importer; models are used as they are.",
+  "note": "Packs the user owns. Agents may import them with Unity's importer, audit and look at them, set up their materials in Unity and arrange their prefabs. Agents never make or edit 3D models from them, never upload them to AI 3D or image tools, and never commit them (AGENTS.md rule 3, PLAN 4.7). The pack folders in Game/Assets are gitignored.",
+  "userInstruction": "2026-10-18: user turned off model training in Claude and asked the agents to import the packs into the Unity client with Unity's importer; models are used as they are. Later the same day the user trimmed the agents' rules to the licence's actual line (no AI-made or AI-edited models, nothing uploaded to AI 3D tools, nothing committed).",
   "trainingOffConfirmed": "2026-10-18",
   "syntyWrittenReply": null,
   "packs": [
