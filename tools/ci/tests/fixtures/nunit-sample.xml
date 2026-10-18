@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Hand-made NUnit 3 result in the shape Unity Test Framework 1.6 writes (-testResults), for ci-selftest.ps1. -->
+<test-run id="2" testcasecount="5" result="Failed(Child)" total="5" passed="3" failed="1" inconclusive="0" skipped="1" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-10-18 20:00:00Z" end-time="2026-10-18 20:00:12Z" duration="12.345">
+  <test-suite type="TestSuite" id="1000" name="Game" fullname="Game" runstate="Runnable" testcasecount="5" result="Failed" site="Child" start-time="2026-10-18 20:00:00Z" end-time="2026-10-18 20:00:12Z" duration="12.3" total="5" passed="3" failed="1" inconclusive="0" skipped="1" asserts="0">
+    <test-suite type="Assembly" id="1001" name="Backroads.Tests.EditMode.dll" fullname="D:/Backroads-Unity/Game/Library/ScriptAssemblies/Backroads.Tests.EditMode.dll" runstate="Runnable" testcasecount="5" result="Failed" site="Child" total="5" passed="3" failed="1" inconclusive="0" skipped="1" asserts="0">
+      <test-suite type="TestFixture" id="1002" name="Repo" fullname="Backroads.Tests.EditMode.Repo" classname="Backroads.Tests.EditMode.Repo" runstate="Runnable" testcasecount="2" result="Failed" site="Child" total="2" passed="1" failed="1" inconclusive="0" skipped="0" asserts="0">
+        <properties>
+          <property name="Category" value="Repo" />
+        </properties>
+        <test-case id="1003" name="NoCrInHashedFiles" fullname="Backroads.Tests.EditMode.Repo.NoCrInHashedFiles" methodname="NoCrInHashedFiles" classname="Backroads.Tests.EditMode.Repo" runstate="Runnable" seed="1" result="Passed" start-time="2026-10-18 20:00:01Z" end-time="2026-10-18 20:00:02Z" duration="1.1" asserts="0" />
+        <test-case id="1004" name="OwnersRespected" fullname="Backroads.Tests.EditMode.Repo.OwnersRespected" methodname="OwnersRespected" classname="Backroads.Tests.EditMode.Repo" runstate="Runnable" seed="2" result="Failed" start-time="2026-10-18 20:00:02Z" end-time="2026-10-18 20:00:03Z" duration="0.4" asserts="0">
+          <failure>
+            <message><![CDATA[  native/x.cpp changed by lane W, owned by V
+  Expected: 0
+  But was:  1
+]]></message>
+            <stack-trace><![CDATA[at Backroads.Tests.EditMode.Repo.OwnersRespected ()]]></stack-trace>
+          </failure>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1005" name="Architecture" fullname="Backroads.Tests.EditMode.Architecture" classname="Backroads.Tests.EditMode.Architecture" runstate="Runnable" testcasecount="2" result="Passed" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <test-case id="1006" name="OnlyNetReferencesNetcode" fullname="Backroads.Tests.EditMode.Architecture.OnlyNetReferencesNetcode" runstate="Runnable" result="Passed" duration="0.2" asserts="0">
+          <properties>
+            <property name="Category" value="Architecture" />
+          </properties>
+        </test-case>
+        <test-case id="1007" name="ServerCompile" fullname="Backroads.Tests.EditMode.Architecture.ServerCompile" runstate="Runnable" result="Passed" duration="9.9" asserts="0">
+          <properties>
+            <property name="Category" value="Architecture" />
+            <property name="Category" value="Slow" />
+          </properties>
+        </test-case>
+      </test-suite>
+      <test-case id="1008" name="Ignored" fullname="Backroads.Tests.EditMode.Ignored" runstate="Ignored" result="Skipped" label="Ignored" duration="0" asserts="0">
+        <reason>
+          <message><![CDATA[not yet]]></message>
+        </reason>
+      </test-case>
+    </test-suite>
+  </test-suite>
+</test-run>
