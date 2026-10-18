@@ -28,6 +28,16 @@ namespace Backroads.Testing
             public float p95GateMs = 16.6f;
             public float chunkGateMs = 1500f;
             public bool failOnGate = false;
+            /// <summary>The gate's resolution. When the window is smaller (laptop displays), the camera renders off screen at this size.</summary>
+            public int renderWidth = 2560;
+            public int renderHeight = 1440;
+            // diagnostics (negative = leave as the tier sets it): URP shadow distance and resolution, render scale,
+            // tree near radius, the finest terrain LOD that casts shadows
+            public float shadowDistance = -1;
+            public int shadowResolution = -1;
+            public float renderScale = -1;
+            public float treeNearRadius = -1;
+            public int terrainMaxShadowLod = -1;
         }
 
         public IEnumerator Run(AutotestContext ctx)
@@ -44,9 +54,27 @@ namespace Backroads.Testing
             ctx.Metric("load.buildingsMs", Math.Round(world.BuildingsMs, 1));
             ctx.Metric("load.vegetationMs", Math.Round(world.VegetationMs, 1));
             ctx.Metric("load.totalMs", Math.Round(world.TotalLoadMs, 1));
-            ctx.Metric("render.width", Screen.width);
-            ctx.Metric("render.height", Screen.height);
-            ctx.Note($"quality {QualityPreset.Describe(QualityPreset.Current)}{(QualityPreset.Requested ? "" : " (no -br-quality: project default)")}, window {Screen.width}x{Screen.height}, GPU {SystemInfo.graphicsDeviceName}");
+            // the size autotest.ps1 asked for (-screen-width/-height: 2560x1440, or 1920x1080 for -MinSpec), else the params
+            int tw = CommandLine.GetInt("-screen-width", p.renderWidth), th = CommandLine.GetInt("-screen-height", p.renderHeight);
+            RenderTexture rt = null;
+            int rw = Screen.width, rh = Screen.height;
+            if (tw > 0 && th > 0 && (Screen.width < tw || Screen.height < th))
+            {
+                rt = new RenderTexture(tw, th, 24, RenderTextureFormat.ARGB32, RenderTextureReadWrite.sRGB) { name = "flythrough" };
+                rt.Create();
+                rw = tw; rh = th;
+            }
+            ctx.Metric("render.width", rw);
+            ctx.Metric("render.height", rh);
+            ctx.Metric("window.width", Screen.width);
+            ctx.Metric("window.height", Screen.height);
+            ctx.Note($"quality {QualityPreset.Describe(QualityPreset.Current)}{(QualityPreset.Requested ? "" : " (no -br-quality: project default)")}, " +
+                     $"window {Screen.width}x{Screen.height}, rendered {rw}x{rh}{(rt != null ? " off screen (the display is smaller than the gate resolution)" : "")}, GPU {SystemInfo.graphicsDeviceName}");
+
+            ctx.Note("URP: " + world.OverrideRendering(p.shadowDistance, p.shadowResolution, p.renderScale));
+            if (p.treeNearRadius > 0) world.SetTreeNearRadius(p.treeNearRadius);
+            if (p.terrainMaxShadowLod >= 0) world.Terrain.MaxShadowLod = p.terrainMaxShadowLod;
+            ctx.Note($"trees near {world.TreeNearRadius:0} m, terrain shadows up to LOD {world.Terrain.MaxShadowLod}, lodScale {world.Terrain.LodScale}");
 
             WorldScenarioUtil.Script(world, true);
             var cams = world.Canon.world.cameras;
@@ -61,6 +89,7 @@ namespace Backroads.Testing
             poses.Add(town);
 
             var cam = world.cam;
+            if (rt != null) cam.targetTexture = rt;
             cam.transform.SetPositionAndRotation(poses[0].position, poses[0].rotation);
             float t0 = Time.realtimeSinceStartup;
             while (Time.realtimeSinceStartup - t0 < p.warmupSeconds) yield return null;
@@ -87,6 +116,12 @@ namespace Backroads.Testing
             }
             if (rec != null) rec.Recording = false;
             WorldScenarioUtil.Script(world, false);
+            if (rt != null)
+            {
+                cam.targetTexture = null;
+                rt.Release();
+                UnityEngine.Object.Destroy(rt);
+            }
 
             frames.Sort();
             float P(float q) => frames.Count == 0 ? 0 : frames[Mathf.Clamp(Mathf.CeilToInt(q / 100f * frames.Count) - 1, 0, frames.Count - 1)];

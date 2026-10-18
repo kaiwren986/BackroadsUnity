@@ -74,10 +74,20 @@ namespace Backroads.Client
             TreeNearRadius = q.TreeNearRadius;
             // JS shadows cover a +-75 m box around the view's focus; URP's shadow distance is from the camera. Without
             // -br-quality (QualityApply leaves the project's 50 m) use the tier's distance; restored on destroy.
-            if (GraphicsSettings.currentRenderPipeline is UniversalRenderPipelineAsset urp && !QualityPreset.Requested)
+            if (GraphicsSettings.currentRenderPipeline is UniversalRenderPipelineAsset urp)
             {
-                _shadowDistanceBefore = urp.shadowDistance;
-                urp.shadowDistance = Mathf.Max(urp.shadowDistance, q.ShadowDistance);
+                if (!QualityPreset.Requested)
+                {
+                    _shadowDistanceBefore = urp.shadowDistance;
+                    urp.shadowDistance = Mathf.Max(urp.shadowDistance, q.ShadowDistance);
+                }
+                // QualityApply turns STP on for Low; if the player was built without STP's compute shaders (no pipeline
+                // asset used STP at build time) every post-processed frame throws. Fall back to bilinear and say so.
+                if (urp.upscalingFilter == UpscalingFilterSelection.STP && StpResourcesMissing())
+                {
+                    urp.upscalingFilter = UpscalingFilterSelection.Auto;
+                    Log.Warn("STP upscaling was requested but its compute shaders are not in this build; Millbrook uses bilinear upscaling instead");
+                }
             }
 
             var sw = Stopwatch.StartNew();
@@ -107,6 +117,22 @@ namespace Backroads.Client
                      $"{Buildings.Buildings} buildings ({Buildings.Panes} panes, {Buildings.LitPanes} lit) {BuildingsMs:F0} ms, " +
                      $"{Vegetation.Trees} trees + {Vegetation.Rocks} rocks {VegetationMs:F0} ms, {Props.Chunks} prop chunks, {roads} paved roads; quality {q.Tier}");
             Ready = true;
+        }
+
+        /// <summary>True when STP's runtime resources (internal STP.RuntimeResources) are absent from this player.</summary>
+        static bool StpResourcesMissing()
+        {
+            try
+            {
+                var t = typeof(STP).GetNestedType("RuntimeResources", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Public);
+                if (t == null) return false;
+                var m = typeof(GraphicsSettings).GetMethod("TryGetRenderPipelineSettings")?.MakeGenericMethod(t);
+                if (m == null) return false;
+                var args = new object[] { null };
+                if (!(bool)m.Invoke(null, args) || args[0] == null) return true;
+                return t.GetProperty("setupCS")?.GetValue(args[0]) == null;
+            }
+            catch (Exception) { return false; }
         }
 
         void Fail(string why)
@@ -158,6 +184,24 @@ namespace Backroads.Client
                 lods[0].screenRelativeTransitionHeight = near;
                 lg.SetLODs(lods);
             }
+        }
+
+        /// <summary>
+        /// Test and diagnostics hook: overrides the URP shadow distance, shadow resolution and render scale (negative
+        /// values keep the current ones; the shadow distance is restored on destroy) and describes the result.
+        /// </summary>
+        public string OverrideRendering(float shadowDistance, int shadowResolution, float renderScale)
+        {
+            if (!(GraphicsSettings.currentRenderPipeline is UniversalRenderPipelineAsset urp)) return "not URP";
+            if (shadowDistance >= 0)
+            {
+                if (_shadowDistanceBefore < 0) _shadowDistanceBefore = urp.shadowDistance;
+                urp.shadowDistance = shadowDistance;
+            }
+            if (shadowResolution > 0) urp.mainLightShadowmapResolution = shadowResolution;
+            if (renderScale > 0) urp.renderScale = renderScale;
+            return $"shadows {urp.shadowCascadeCount} cascades, {urp.mainLightShadowmapResolution} px, {urp.shadowDistance:0} m; " +
+                   $"render scale {urp.renderScale:0.00}; upscaler {urp.upscalingFilter}";
         }
 
         /// <summary>Builds every terrain chunk the camera needs right now (after a teleport); returns milliseconds.</summary>

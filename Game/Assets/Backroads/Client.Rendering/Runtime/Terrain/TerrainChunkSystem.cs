@@ -42,6 +42,8 @@ namespace Backroads.Client.Rendering
         readonly List<Chunk> _queue = new List<Chunk>();
 
         public float LodScale = 1f;
+        /// <summary>Chunks at this LOD or finer cast shadows (default 1: within 250 m x lodScale).</summary>
+        public int MaxShadowLod = 1;
         public int BuildsPerFrame = 2;
         public Transform Root { get; }
         /// <summary>Wall time of the last BuildAll (all 256 chunks at their LOD for the camera), milliseconds.</summary>
@@ -187,6 +189,8 @@ namespace Backroads.Client.Rendering
             c.lod = lod;
             c.filter.sharedMesh = c.meshes[lod];
             c.renderer.enabled = true;
+            // JS shadows cover +-75 m around the view's focus, so only near chunks ever cast; far LODs stay out of the cascades
+            c.renderer.shadowCastingMode = lod <= MaxShadowLod ? ShadowCastingMode.On : ShadowCastingMode.Off;
             for (int l = 0; l < 4; l++)
                 if (Math.Abs(l - lod) > 1 && c.meshes[l] != null) { Kill(c.meshes[l]); c.meshes[l] = null; }
         }
