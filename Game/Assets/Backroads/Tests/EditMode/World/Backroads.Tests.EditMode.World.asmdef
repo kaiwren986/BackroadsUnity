@@ -1,0 +1,30 @@
+{
+    "name": "Backroads.Tests.EditMode.World",
+    "rootNamespace": "Backroads.Tests.EditMode.World",
+    "references": [
+        "Backroads.Core",
+        "Backroads.World",
+        "Backroads.Canon.Editor",
+        "Backroads.Client.Rendering",
+        "Unity.Mathematics",
+        "Unity.Collections",
+        "Unity.Burst",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
