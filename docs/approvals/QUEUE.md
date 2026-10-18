@@ -4,7 +4,7 @@ Everything waiting for you, newest at the bottom. Each item has a decision id (P
 
 | Id | Needed from you | Due | Default if unanswered | Status |
 |---|---|---|---|---|
-| U19 | Accept the agents' allowlist: copy `docs\approvals\claude-settings.proposed.json` into `Game`'s project settings, or tell an agent "accept the allowlist" | M0 | Agents keep asking before each command (slower) | waiting |
+| U19 | Accept the agents' allowlist (`docs\approvals\claude-settings.proposed.json`) | accepted 2026-10-18 | n/a | **accepted**: now in `.claude\settings.json`, with the same never-allowed list also applied to PowerShell commands (no push, `gh`, `wget`, `winget`, `npm install`, `pip install`) and `.\tools\...` spellings of the script rules |
 | U21 | Name a backup folder on a second drive or USB stick for `tools\ci\backup.ps1` | end of M0 | Backups go to `D:\Backroads-Unity-backups` on the same drive (no protection against drive failure) | waiting |
 | U1 | Create the private GitHub repo `kaiwren986/Backroads-Unity` (or say "agents may create it with gh") | end of M0 | Work stays on this PC only, plus local backups | waiting |
 | Unity Hub | Open Unity Hub once and check you are signed in (agents never sign in) | M0, day 2 | The Unity project can't be created in batchmode | waiting |
