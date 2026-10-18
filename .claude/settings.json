@@ -48,13 +48,9 @@
       "PowerShell(winget:*)",
       "PowerShell(npm install:*)",
       "PowerShell(pip install:*)",
-      "Read(//d/SyntyPacks/**)",
       "Edit(//d/SyntyPacks/**)",
-      "Read(//c/Users/kaiwr/Downloads/POLYGON_*)",
       "Edit(//c/Users/kaiwr/Downloads/POLYGON_*)",
-      "Read(./Game/Assets/ThirdParty/Synty/**)",
-      "Edit(./Game/Assets/ThirdParty/Synty/**)",
-      "Read(./artifacts/user-only/**)",
+      "Edit(./Game/Assets/Synty/**)",
       "Edit(//d/Backroads/**)",
       "Edit(//d/Backroads-ref/engine-sim/**)"
     ]

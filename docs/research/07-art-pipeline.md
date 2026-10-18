@@ -204,7 +204,7 @@ D:\Backroads-ref\vehicle-refs\<id>\            reference photos: OUTSIDE the rep
 <Unity>\Assets\Art\Vehicles\<Id>\VH_<Class>_<Variant>.fbx (+ .vehicle.json, Textures\T_*.png)
 <Unity>\Assets\Art\Wheels\WH_<Style>_<Size>.fbx
 <Unity>\Assets\Art\Materials\Vehicle\M_*.mat   <Unity>\Assets\Art\Shaders\SG_*.shadergraph
-<Unity>\Assets\ThirdParty\Synty\<Pack>\        gitignored (section 10.5)
+<Unity>\Assets\Synty\<Pack>\                   gitignored (section 10.5; where the packs import themselves)
 ```
 
 Asset ids are **fictional and generic**: `VH_Pickup_MidA`, `VH_Truck_Box75`, `VH_Rally_CoupeA`. Never use real model names, even inside the project: dataminers read file names.
@@ -596,11 +596,11 @@ Paraphrased; read the full text on syntystore.com.
   - uploading source files or models to third-party services for 3D model generation
   - using the assets in promotion related to generative AI
   - Its definition of generative AI is broad.
-  - **Practical rule for this project:**
-    - AI agents never open, read, parse, convert or modify Synty mesh or texture files.
-    - Agents only write Unity editor and runtime scripts that reference prefabs by path or GUID, and read audit metadata (names, bounds, counts).
-    - No Synty asset goes into image-to-3D or any AI generation tool.
-    - Ask Synty support in writing to confirm that an AI coding assistant writing placement and configuration scripts is fine. Suggested wording: "the assistant never generates or edits 3D models from your assets."
+  - **Practical rule for this project** (set by the user on 2026-10-18, with model training off; PLAN §4.7 supersedes the stricter version first written here):
+    - Agents may import, audit, look at, set up materials for and arrange Synty prefabs in Unity.
+    - Agents never make or edit 3D models from Synty assets, and never merge Synty geometry into baked meshes.
+    - No Synty file or render goes into image-to-3D or any AI generation tool, and no Synty file is committed.
+    - Optional: ask Synty support in writing to confirm that an AI coding assistant working this way is fine. Suggested wording: "the assistant never generates or edits 3D models from your assets."
 - **Subscription (SyntyPass, Standard Subscription Licence, also 9 July 2026).** When the subscription ends you may not use the assets in new work. Only minor bug fixes and maintenance are allowed, and substantial development needs an active subscription. For a free online game that keeps being updated, that is a trap, so **buy one-time licences for the packs you keep**. The subscription's monthly store credit can go toward them.
 - **Unity Asset Store purchases** of Synty packs are governed by the Unity Asset Store EULA, not Synty's licence. Pick one storefront and keep the receipts.
 - **Seats:** 5 per licence purchase, so a solo hobby project is covered.
@@ -609,7 +609,7 @@ Paraphrased; read the full text on syntystore.com.
 
 - **A private repo that only you (and future team members within your seats) can access fits the "inside your Team" rule.**
 - Recommended anyway:
-  - Gitignore `Assets/ThirdParty/Synty/` and commit `synty-manifest.json` (pack, version, storefront, local zip path).
+  - Gitignore `Assets/Synty/` (where the packs import themselves) and commit `synty-manifest.json` (pack, version, storefront, local zip path).
   - Add an editor check that warns when a listed pack is missing.
   - Re-importing a `.unitypackage` restores the same GUIDs, so scene and prefab references survive. Any converted or overridden materials go in our own `Assets/Art/SyntyOverrides/`, which is committed.
 - This keeps the repo small: packs are hundreds of MB to several GB. GitHub Free includes 10 GiB of LFS storage and 10 GiB of bandwidth per month. It also keeps the repo safe to open-source later.
