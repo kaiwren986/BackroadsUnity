@@ -1,0 +1,13 @@
+{
+  "id": "m1.perf.flythrough",
+  "kind": "perf-flythrough",
+  "seconds": 0,
+  "screenshot": false,
+  "legSeconds": 3.5,
+  "warmupSeconds": 2,
+  "loadTimeoutSeconds": 120,
+  "p95GateMs": 16.6,
+  "chunkGateMs": 1500,
+  "failOnGate": false,
+  "notes": "PLAN 6.1 M1 lane gate (T1.5): scripted flight through the 12 reference views and a low pass over Millbrook at the run quality (default High) and 2560x1440; frame-time percentiles of the flight, chunk build time at load (gate 1.5 s)."
+}

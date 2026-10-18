@@ -16,6 +16,7 @@ namespace Backroads.Client.Rendering
         public Material road;
         public Material water;
         public Material sky;
+        public Material lightPool;
 
         [Header("Buildings (templates for buildings.glb parts)")]
         public Material buildingPart;
@@ -41,8 +42,10 @@ namespace Backroads.Client.Rendering
         [Tooltip("Scale of the gradient ambient that stands in for three's sky IBL plus hemisphere light.")]
         public float ambientScale = 1f;
         [Tooltip("Post exposure in EV at day; three: ACES with exposure 0.95 / 0.6.")]
-        public float dayExposureEv = 0.66f;
-        public float lampIntensity = 10f;
+        public float dayExposureEv = 0.76f;
+        public float lampIntensity = 20f;
+        [Tooltip("Emission multiplier: URP's ACES washes bright emissives to white sooner than three's ACES fit, so the JS intensities are scaled down to keep the window and sign colours.")]
+        public float emissionScale = 0.6f;
         public float lampRange = 26f;
     }
 }

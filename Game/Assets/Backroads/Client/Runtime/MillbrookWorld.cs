@@ -6,6 +6,7 @@ using Backroads.Core;
 using Backroads.World;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 namespace Backroads.Client
 {
@@ -43,6 +44,7 @@ namespace Backroads.Client
         /// <summary>When true the wind clock stays at 0, as in the JS shots (clock frozen).</summary>
         public bool FreezeClock;
         public float TreeNearRadius { get; private set; } = 140f;
+        float _shadowDistanceBefore = -1;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         static void ResetStatics() => Current = null;
@@ -70,6 +72,13 @@ namespace Backroads.Client
             Shader.SetGlobalTexture("_BrDetail", Canon.detail);
             var q = QualityPreset.Current;
             TreeNearRadius = q.TreeNearRadius;
+            // JS shadows cover a +-75 m box around the view's focus; URP's shadow distance is from the camera. Without
+            // -br-quality (QualityApply leaves the project's 50 m) use the tier's distance; restored on destroy.
+            if (GraphicsSettings.currentRenderPipeline is UniversalRenderPipelineAsset urp && !QualityPreset.Requested)
+            {
+                _shadowDistanceBefore = urp.shadowDistance;
+                urp.shadowDistance = Mathf.Max(urp.shadowDistance, q.ShadowDistance);
+            }
 
             var sw = Stopwatch.StartNew();
             Terrain = new TerrainChunkSystem(grid, look.terrain, transform) { LodScale = q.TerrainLodScale, BuildsPerFrame = q.ChunkBuildsPerFrame };
@@ -129,6 +138,11 @@ namespace Backroads.Client
             if (Terrain != null) { Terrain.LodScale = 1f; Terrain.BuildsPerFrame = 2; }
             SetTreeNearRadius(140f);
             if (Sky != null) Sky.LampLightCount = 6;
+            if (GraphicsSettings.currentRenderPipeline is UniversalRenderPipelineAsset urp)
+            {
+                if (_shadowDistanceBefore < 0) _shadowDistanceBefore = urp.shadowDistance;
+                urp.shadowDistance = 250f; // the Mid tier; JS Medium covers +-75 m around a focus ~100 m away
+            }
         }
 
         public void SetTreeNearRadius(float radius)
@@ -152,6 +166,7 @@ namespace Backroads.Client
         void OnDestroy()
         {
             if (Current == this) Current = null;
+            if (_shadowDistanceBefore >= 0 && GraphicsSettings.currentRenderPipeline is UniversalRenderPipelineAsset urp) urp.shadowDistance = _shadowDistanceBefore;
             Terrain?.Dispose();
             Buildings?.Destroy();
             Vegetation?.Destroy();

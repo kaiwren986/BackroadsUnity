@@ -4,7 +4,8 @@
 //                   bits 0-15 = tint * 4096, bits 16-31 = hue * 65535; tint (t, t (0.96 + 0.08 hue), t (0.86 + 0.1 hue));
 //                   hue bits all set = rock grey (v, 0.97 v, 0.92 v) (props.js buildRocks)
 //   _WIND         : props.js treeMaterial sway (bend grows with height squared), phase from the JS-space origin
-// Emission = _EmissionColor * (_EmissionBase + _EmissionNight * night) with night from _BrSky.x (props.js setNight).
+// Emission = _EmissionColor * (_EmissionBase + _EmissionNight * night) * scale, night = _BrSky.x (props.js setNight),
+// scale = _BrSky.w (MillbrookLook.emissionScale; 1 when unset).
 Shader "Backroads/Lit Color"
 {
     Properties
@@ -145,7 +146,7 @@ Shader "Backroads/Lit Color"
                 LODFadeCrossFade(i.positionCS);
             #endif
                 float3 n = front ? i.normalWS : -i.normalWS;
-                half3 emission = _EmissionColor.rgb * (_EmissionBase + _EmissionNight * _BrSky.x);
+                half3 emission = _EmissionColor.rgb * (_EmissionBase + _EmissionNight * _BrSky.x) * (_BrSky.w > 0 ? _BrSky.w : 1);
                 return BrShadePbr(i.positionWS, n, i.positionCS, i.color.rgb, _Metallic, _Smoothness, emission, 1, i.fogFactor);
             }
             ENDHLSL

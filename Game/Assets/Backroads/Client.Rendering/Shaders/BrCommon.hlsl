@@ -3,6 +3,8 @@
 #ifndef BR_COMMON_INCLUDED
 #define BR_COMMON_INCLUDED
 
+// Environment reflections come from the analytic sky below (three.js reflects its sky PMREM), not from probes.
+#define _ENVIRONMENTREFLECTIONS_OFF 1
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 
@@ -10,10 +12,30 @@
 TEXTURE2D(_BrDetail);
 SAMPLER(sampler_BrDetail);
 
-// Day/night state set by DayNightPresenter: x = night factor (0 day .. 1 night), y = time of day in hours, z = wind time.
+// Day/night state set by DayNightPresenter: x = night factor (0 day .. 1 night), y = time of day in hours, z = wind time,
+// w = emission scale.
 float4 _BrSky;
 
+// Sky gradient globals (DayNightPresenter), linear colours; shared with Backroads/Sky.
+float4 _BrSkyZenith;
+float4 _BrSkyHorizon;
+float4 _BrSkyGlow;
+float4 _BrSunDir;
+
 float2 BrJsXZ(float3 positionWS) { return float2(-positionWS.x, positionWS.z); }
+
+// The sky's colour in direction d (gradient + warm horizon glow; no sun disc, no stars).
+half3 BrSkyColor(float3 d)
+{
+    d = normalize(d);
+    float up = saturate(d.y);
+    float3 col = lerp(_BrSkyHorizon.rgb, _BrSkyZenith.rgb, pow(up, 0.55));
+    float hz = pow(1.0 - up, 3.0);
+    float2 a = normalize(d.xz + 1e-4), b = normalize(_BrSunDir.xz + 1e-4);
+    float toward = pow(max(dot(a, b), 0.0), 2.0);
+    col += _BrSkyGlow.rgb * _BrSkyGlow.a * hz * (0.3 + 0.7 * toward);
+    return d.y < 0 ? _BrSkyHorizon.rgb * lerp(1.0, 0.85, saturate(-d.y * 4)) : col;
+}
 
 half4 BrDetailTex(float2 uv) { return SAMPLE_TEXTURE2D(_BrDetail, sampler_BrDetail, uv); }
 
@@ -43,6 +65,15 @@ half4 BrShadePbr(float3 positionWS, half3 normalWS, float4 positionCS, half3 alb
     s.emission = emission;
     s.alpha = alpha;
     half4 c = UniversalFragmentPBR(inputData, s);
+    // sky reflection (split-sum style approximation): Schlick-Fresnel with roughness, blurred towards the mean sky
+    half3 V = inputData.viewDirectionWS, N = inputData.normalWS;
+    half rough = 1 - smoothness;
+    half nv = saturate(dot(N, V));
+    half3 f0 = lerp(half3(0.04, 0.04, 0.04), albedo, metallic);
+    half3 F = f0 + (max((1 - rough).xxx, f0) - f0) * pow(1 - nv, 5);
+    half3 R = reflect(-V, N);
+    half3 sky = lerp(BrSkyColor(R), (_BrSkyHorizon.rgb + _BrSkyZenith.rgb) * 0.5, saturate(rough * 1.4));
+    c.rgb += sky * F * (1 - rough * rough * 0.75) * (1 - metallic * 0.5 * rough);
     c.rgb = MixFog(c.rgb, inputData.fogCoord);
     return c;
 }

@@ -1,0 +1,14 @@
+{
+  "id": "m1.shots.canon",
+  "kind": "shots-canon",
+  "seconds": 0,
+  "screenshot": false,
+  "childTimeoutSeconds": 300,
+  "width": 1600,
+  "height": 900,
+  "settleFrames": 4,
+  "loadTimeoutSeconds": 120,
+  "jsMediumQuality": true,
+  "minShots": 24,
+  "notes": "PLAN 6.1 M1 headline gate (T1.5): the 12 CanonData v1 reference cameras at 10:00 and 21:00, 1600x900, saved next to the JS shots on the contact sheet; image difference (MAD, SSIM) per shot in metrics."
+}

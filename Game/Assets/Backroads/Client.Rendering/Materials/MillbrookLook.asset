@@ -16,6 +16,7 @@ MonoBehaviour:
   road: {fileID: 2100000, guid: deaa118638224474894a7c243dcd3a5e, type: 2}
   water: {fileID: 2100000, guid: 23f694924a972d04a980b1eb9bee01b5, type: 2}
   sky: {fileID: 2100000, guid: 95769afcdd09eca4d925dc4676d6fa76, type: 2}
+  lightPool: {fileID: 2100000, guid: 152f8044a52587044aa4baa6fbd846fc, type: 2}
   buildingPart: {fileID: 2100000, guid: 8440a8180f2a9bc48a34ee11133865f9, type: 2}
   buildingMetal: {fileID: 2100000, guid: 732aa0664f9ac4147ac95cd083332c37, type: 2}
   bulb: {fileID: 2100000, guid: a5988e4ca81d91845bab021def4038aa, type: 2}
@@ -35,6 +36,7 @@ MonoBehaviour:
   volume: {fileID: 11400000, guid: cb016db0b6f4bfb4baf4507f432bc70c, type: 2}
   sunScale: 0.318
   ambientScale: 1
-  dayExposureEv: 0.66
-  lampIntensity: 10
+  dayExposureEv: 0.76
+  lampIntensity: 20
+  emissionScale: 0.6
   lampRange: 26

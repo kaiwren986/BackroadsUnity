@@ -107,6 +107,15 @@ namespace Backroads.Client.Editor
             look.water.SetFloat("_Smoothness", 0.94f);
             look.water.SetFloat("_Metallic", 0.1f);
             look.sky = Mat("M_Sky", "Backroads/Sky");
+            look.lightPool = Mat("M_LightPool", "Backroads/Light Pool");
+            look.lightPool.SetColor("_Color", BrColor.Hex(0xffc27a));
+            look.lightPool.SetFloat("_Opacity", 0.2f);
+            look.sunScale = 0.318f;
+            look.ambientScale = 1f;
+            look.dayExposureEv = 0.76f;
+            look.lampIntensity = 20f;
+            look.lampRange = 26f;
+            look.emissionScale = 0.6f;
 
             // buildings.glb parts (props.js mats.building / metal / bulb / signRed / windowLit / windowDark)
             look.buildingPart = Lit("M_BuildingPart", 0xffffff, 0.82f, 0.04f);
@@ -125,7 +134,7 @@ namespace Backroads.Client.Editor
             look.tree = Lit("M_Tree", 0xffffff, 0.86f, 0f, vertexColor: true, tint: true, wind: true);
             look.rock = Lit("M_Rock", 0x8a847b, 0.92f, 0f, tint: true);
             look.volume = CreateVolume();
-            foreach (var m in new Object[] { look.terrain, look.road, look.water, look.sky }) EditorUtility.SetDirty(m);
+            foreach (var m in new Object[] { look.terrain, look.road, look.water, look.sky, look.lightPool }) EditorUtility.SetDirty(m);
             EditorUtility.SetDirty(look);
             return look;
         }

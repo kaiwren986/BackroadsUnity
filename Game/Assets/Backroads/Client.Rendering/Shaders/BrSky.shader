@@ -23,6 +23,7 @@ Shader "Backroads/Sky"
             float4 _BrSkyGlow;
             float4 _BrSunDir;
             float4 _BrSunDisc;
+            // (BrCommon.hlsl BrSkyColor mirrors the gradient below for reflections)
             float4 _BrSky;
 
             struct A { float4 positionOS : POSITION; };
@@ -53,6 +54,13 @@ Shader "Backroads/Sky"
                 float disc = smoothstep(1.0 - _BrSunDisc.a, 1.0 - _BrSunDisc.a * 0.6, c);
                 float halo = pow(saturate(c), 600.0) * 0.6 + pow(saturate(c), 40.0) * 0.08;
                 col += _BrSunDisc.rgb * (disc + halo) * step(-0.02, d.y);
+                // stars (sky.js: 2,600 points, opacity smooth(0.35, 0.95, night)): about 2,000 on a hashed direction grid
+                float3 g = d * 220.0;
+                float3 cell = floor(g);
+                float h = frac(sin(dot(cell, float3(12.9898, 78.233, 37.719))) * 43758.5453);
+                float3 f = frac(g) - 0.5;
+                float star = step(0.9965, h) * smoothstep(0.35, 0.0, length(f)) * (0.4 + 0.9 * frac(h * 91.7));
+                col += star * smoothstep(0.35, 0.95, _BrSky.x) * smoothstep(-0.02, 0.05, d.y) * 1.4;
                 return half4(col, 1);
             }
             ENDHLSL
