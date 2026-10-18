@@ -1,0 +1,198 @@
+{
+    "schema":  1,
+    "gate":  "autotest.br-smoke",
+    "tier":  "milestone",
+    "status":  "pass",
+    "hard":  true,
+    "headline":  true,
+    "message":  "1 of 1 runs passed (SMOKE OK frames=1309 seconds=3.0 endpoints=0)",
+    "startedAt":  "2026-10-18T17:14:36.5255536-05:00",
+    "finishedAt":  "2026-10-18T17:14:48.2081212-05:00",
+    "build":  {
+                  "git":  "4ad883621696d98fcb5c98ac6d81e3df943eec9c",
+                  "branch":  "main",
+                  "dirty":  false,
+                  "unity":  "6000.3.20f1",
+                  "native":  "5adbd0db5b55b2bd7889af7bcaf632e5c4d2c5ec0c16317301d7857089aaa719",
+                  "abi":  1
+              },
+    "machine":  {
+                    "summary":  "Intel(R) Core(TM) Ultra 9 275HX / NVIDIA GeForce RTX 5080 Laptop GPU / Microsoft Windows 11 Home 26200",
+                    "power":  "mains",
+                    "batteryPercent":  81,
+                    "gpu":  {
+                                "active":  "NVIDIA GeForce RTX 5080 Laptop GPU",
+                                "discretePresent":  true,
+                                "controllers":  [
+                                                    {
+                                                        "name":  "Intel(R) Graphics",
+                                                        "discrete":  false,
+                                                        "drivesDisplay":  true,
+                                                        "driver":  "32.0.101.8826"
+                                                    },
+                                                    {
+                                                        "name":  "NVIDIA GeForce RTX 5080 Laptop GPU",
+                                                        "discrete":  true,
+                                                        "drivesDisplay":  true,
+                                                        "driver":  "32.0.16.1664"
+                                                    }
+                                                ],
+                                "note":  "active = discrete GPU if present; the player reports the GPU it really used in result.json"
+                            },
+                    "powerMode":  {
+                                      "overlayAc":  "Balanced",
+                                      "overlayDc":  "Balanced",
+                                      "scheme":  "64a64f24-65b9-4b56-befd-5ec1eaced9b3  (Silent)"
+                                  },
+                    "cores":  {
+                                  "logical":  24,
+                                  "p":  [
+                                            0,
+                                            1,
+                                            10,
+                                            11,
+                                            12,
+                                            13,
+                                            22,
+                                            23
+                                        ],
+                                  "e":  [
+                                            2,
+                                            3,
+                                            4,
+                                            5,
+                                            6,
+                                            7,
+                                            8,
+                                            9,
+                                            14,
+                                            15,
+                                            16,
+                                            17,
+                                            18,
+                                            19,
+                                            20,
+                                            21
+                                        ],
+                                  "minSpecMask":  "0xFC",
+                                  "source":  "artifacts/env.json"
+                              },
+                    "cpuLoadPercent":  18,
+                    "otherProcs":  [
+                                       {
+                                           "name":  "MSBuild.exe",
+                                           "pid":  49516,
+                                           "kind":  "other"
+                                       },
+                                       {
+                                           "name":  "MSBuild.exe",
+                                           "pid":  54404,
+                                           "kind":  "other"
+                                       },
+                                       {
+                                           "name":  "MSBuild.exe",
+                                           "pid":  31988,
+                                           "kind":  "other"
+                                       },
+                                       {
+                                           "name":  "MSBuild.exe",
+                                           "pid":  54504,
+                                           "kind":  "other"
+                                       }
+                                   ]
+                },
+    "wallClock":  {
+                      "seconds":  11.6,
+                      "budget":  600,
+                      "pausedSeconds":  0,
+                      "overBudget":  false
+                  },
+    "conditions":  {
+                       "scenario":  "br-smoke",
+                       "profile":  "Client",
+                       "milestone":  "M0",
+                       "quality":  "player default",
+                       "coreClass":  "unpinned",
+                       "fpsCap":  "uncapped",
+                       "resolution":  "2560x1440",
+                       "perf":  false,
+                       "repeat":  1,
+                       "minSpecProxy":  false,
+                       "egressCheck":  true
+                   },
+    "metrics":  {
+                    "exe":  "builds/M0/Backroads.exe",
+                    "buildGit":  "4ad883621696d98fcb5c98ac6d81e3df943eec9c",
+                    "buildProfile":  "Client",
+                    "buildMilestone":  "M0",
+                    "runs":  [
+                                 {
+                                     "run":  1,
+                                     "exitCode":  0,
+                                     "result":  "exit 0",
+                                     "seconds":  11.2,
+                                     "affinity":  null,
+                                     "resultFile":  true,
+                                     "status":  "pass",
+                                     "failures":  [
+
+                                                  ],
+                                     "metrics":  {
+                                                     "batchmode":  false,
+                                                     "developmentBuild":  false,
+                                                     "graphics":  "Direct3D12",
+                                                     "seconds":  3.0045082569122316,
+                                                     "frames":  1309,
+                                                     "exceptions":  0,
+                                                     "errors":  0,
+                                                     "firstProblem":  "",
+                                                     "lastSessionCrashed":  false,
+                                                     "crashReport":  "",
+                                                     "screenshot":  "D:\\Backroads-Unity\\artifacts\\20261018-1712\\gate-M0\\autotest.br-smoke\\smoke.png",
+                                                     "egressSupported":  true,
+                                                     "outboundEndpoints":  0
+                                                 },
+                                     "logVerdict":  "[BR] SMOKE OK frames=1309 seconds=3.0 endpoints=0"
+                                 }
+                             ],
+                    "batchmode":  false,
+                    "developmentBuild":  false,
+                    "graphics":  "Direct3D12",
+                    "seconds":  3.0045082569122316,
+                    "frames":  1309,
+                    "exceptions":  0,
+                    "errors":  0,
+                    "firstProblem":  "",
+                    "lastSessionCrashed":  false,
+                    "crashReport":  "",
+                    "screenshot":  "D:\\Backroads-Unity\\artifacts\\20261018-1712\\gate-M0\\autotest.br-smoke\\smoke.png",
+                    "egressSupported":  true,
+                    "outboundEndpoints":  0,
+                    "endpointsSeen":  0,
+                    "egressViolations":  [
+
+                                         ],
+                    "egressAllowed":  [
+
+                                      ],
+                    "devBuild":  false
+                },
+    "thresholds":  {
+                       "egressViolations":  0
+                   },
+    "evidence":  [
+                     "artifacts/20261018-1712/gate-M0/autotest.br-smoke/autotest.br-smoke.log",
+                     "artifacts/20261018-1712/gate-M0/autotest.br-smoke/autotest.br-smoke.log.stderr",
+                     "artifacts/20261018-1712/gate-M0/autotest.br-smoke/player.log",
+                     "artifacts/20261018-1712/gate-M0/autotest.br-smoke/smoke.json",
+                     "artifacts/20261018-1712/gate-M0/autotest.br-smoke/smoke.png"
+                 ],
+    "warnings":  [
+
+                 ],
+    "fallbackIfFail":  "see the scenario\u0027s fallback in the milestone card",
+    "exitCode":  0,
+    "out":  "artifacts/20261018-1712/gate-M0/autotest.br-smoke",
+    "run":  "artifacts/20261018-1712/gate-M0",
+    "script":  "tools/ci/autotest.ps1"
+}

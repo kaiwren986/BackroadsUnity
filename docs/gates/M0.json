@@ -1,0 +1,343 @@
+{
+    "schema":  1,
+    "gate":  "M0",
+    "tier":  "milestone",
+    "status":  "pass",
+    "hard":  true,
+    "headline":  true,
+    "message":  "16 steps passed",
+    "startedAt":  "2026-10-18T17:12:08.7121836-05:00",
+    "finishedAt":  "2026-10-18T17:16:41.2056081-05:00",
+    "build":  {
+                  "git":  "4ad883621696d98fcb5c98ac6d81e3df943eec9c",
+                  "branch":  "main",
+                  "dirty":  false,
+                  "unity":  "6000.3.20f1",
+                  "native":  "5adbd0db5b55b2bd7889af7bcaf632e5c4d2c5ec0c16317301d7857089aaa719",
+                  "abi":  1
+              },
+    "machine":  {
+                    "summary":  "Intel(R) Core(TM) Ultra 9 275HX / NVIDIA GeForce RTX 5080 Laptop GPU / Microsoft Windows 11 Home 26200",
+                    "power":  "mains",
+                    "batteryPercent":  81,
+                    "gpu":  {
+                                "active":  "NVIDIA GeForce RTX 5080 Laptop GPU",
+                                "discretePresent":  true,
+                                "controllers":  [
+                                                    {
+                                                        "name":  "Intel(R) Graphics",
+                                                        "discrete":  false,
+                                                        "drivesDisplay":  true,
+                                                        "driver":  "32.0.101.8826"
+                                                    },
+                                                    {
+                                                        "name":  "NVIDIA GeForce RTX 5080 Laptop GPU",
+                                                        "discrete":  true,
+                                                        "drivesDisplay":  true,
+                                                        "driver":  "32.0.16.1664"
+                                                    }
+                                                ],
+                                "note":  "active = discrete GPU if present; the player reports the GPU it really used in result.json"
+                            },
+                    "powerMode":  {
+                                      "overlayAc":  "Balanced",
+                                      "overlayDc":  "Balanced",
+                                      "scheme":  "64a64f24-65b9-4b56-befd-5ec1eaced9b3  (Silent)"
+                                  },
+                    "cores":  {
+                                  "logical":  24,
+                                  "p":  [
+                                            0,
+                                            1,
+                                            10,
+                                            11,
+                                            12,
+                                            13,
+                                            22,
+                                            23
+                                        ],
+                                  "e":  [
+                                            2,
+                                            3,
+                                            4,
+                                            5,
+                                            6,
+                                            7,
+                                            8,
+                                            9,
+                                            14,
+                                            15,
+                                            16,
+                                            17,
+                                            18,
+                                            19,
+                                            20,
+                                            21
+                                        ],
+                                  "minSpecMask":  "0xFC",
+                                  "source":  "artifacts/env.json"
+                              },
+                    "cpuLoadPercent":  47,
+                    "otherProcs":  [
+                                       {
+                                           "name":  "MSBuild.exe",
+                                           "pid":  49516,
+                                           "kind":  "other"
+                                       },
+                                       {
+                                           "name":  "MSBuild.exe",
+                                           "pid":  54404,
+                                           "kind":  "other"
+                                       },
+                                       {
+                                           "name":  "MSBuild.exe",
+                                           "pid":  31988,
+                                           "kind":  "other"
+                                       },
+                                       {
+                                           "name":  "MSBuild.exe",
+                                           "pid":  54504,
+                                           "kind":  "other"
+                                       }
+                                   ]
+                },
+    "wallClock":  {
+                      "seconds":  272.4,
+                      "budget":  null,
+                      "pausedSeconds":  0,
+                      "overBudget":  false
+                  },
+    "conditions":  {
+                       "tier":  "milestone",
+                       "milestone":  "M0",
+                       "skipOracle":  false,
+                       "only":  [
+
+                                ],
+                       "skip":  [
+
+                                ],
+                       "keepGoing":  true,
+                       "config":  "tools/ci/gates.json"
+                   },
+    "metrics":  {
+                    "steps":  [
+                                  {
+                                      "id":  "nightly.green",
+                                      "status":  "pass",
+                                      "hard":  true,
+                                      "headline":  true,
+                                      "seconds":  0.1,
+                                      "message":  "last green nightly 4ad8836 at 2026-10-18T17:12:06.3647302-05:00",
+                                      "exitCode":  null,
+                                      "json":  null,
+                                      "owner":  null
+                                  },
+                                  {
+                                      "id":  "env.check",
+                                      "status":  "pass",
+                                      "hard":  true,
+                                      "headline":  true,
+                                      "seconds":  2.2,
+                                      "message":  "exit 0: wrote D:\\Backroads-Unity\\artifacts\\env.json (pass)",
+                                      "exitCode":  0,
+                                      "json":  "artifacts/gates/env.check.json",
+                                      "owner":  null
+                                  },
+                                  {
+                                      "id":  "oracle.export",
+                                      "status":  "pass",
+                                      "hard":  true,
+                                      "headline":  true,
+                                      "seconds":  49.3,
+                                      "message":  "gen-hash + verify-canon + export twice (identical) green",
+                                      "exitCode":  0,
+                                      "json":  "artifacts/gates/oracle.export.json",
+                                      "owner":  "W"
+                                  },
+                                  {
+                                      "id":  "vendor.check",
+                                      "status":  "pass",
+                                      "hard":  true,
+                                      "headline":  true,
+                                      "seconds":  1.1,
+                                      "message":  "exit 0: vendor-check: 584 vendored files vs 584 upstream blobs (engine-sim 249, scs 74, piranha 261), 4 licence files; 0 differences (PASS, 0.8 s)",
+                                      "exitCode":  0,
+                                      "json":  "artifacts/gates/vendor.check.json",
+                                      "owner":  "V"
+                                  },
+                                  {
+                                      "id":  "native.ctest",
+                                      "status":  "pass",
+                                      "hard":  true,
+                                      "headline":  true,
+                                      "seconds":  1.1,
+                                      "message":  "exit 0: build-native: PASS in 0.7 s (log D:\\Backroads-Unity\\artifacts\\20261018-1713\\build-native.log)",
+                                      "exitCode":  0,
+                                      "json":  "artifacts/gates/native.ctest.json",
+                                      "owner":  "V"
+                                  },
+                                  {
+                                      "id":  "unity.editmode",
+                                      "status":  "pass",
+                                      "hard":  true,
+                                      "headline":  false,
+                                      "seconds":  22.5,
+                                      "message":  "60 passed, 0 skipped, 0 failed (60 total)",
+                                      "exitCode":  0,
+                                      "json":  "artifacts/gates/unity.editmode.json",
+                                      "owner":  null
+                                  },
+                                  {
+                                      "id":  "build.client",
+                                      "status":  "pass",
+                                      "hard":  true,
+                                      "headline":  true,
+                                      "seconds":  18.6,
+                                      "message":  "Client build at builds/M0 (97.9 MiB)",
+                                      "exitCode":  0,
+                                      "json":  "artifacts/gates/build.client.json",
+                                      "owner":  null
+                                  },
+                                  {
+                                      "id":  "build.dev",
+                                      "status":  "pass",
+                                      "hard":  true,
+                                      "headline":  false,
+                                      "seconds":  24.3,
+                                      "message":  "Dev build at builds/M0-dev (158.7 MiB)",
+                                      "exitCode":  0,
+                                      "json":  "artifacts/gates/build.dev.json",
+                                      "owner":  null
+                                  },
+                                  {
+                                      "id":  "build.server",
+                                      "status":  "pass",
+                                      "hard":  true,
+                                      "headline":  true,
+                                      "seconds":  25.9,
+                                      "message":  "ServerHeadless build at builds/M0-server (97.8 MiB)",
+                                      "exitCode":  0,
+                                      "json":  "artifacts/gates/build.server.json",
+                                      "owner":  null
+                                  },
+                                  {
+                                      "id":  "autotest.br-smoke",
+                                      "status":  "pass",
+                                      "hard":  true,
+                                      "headline":  true,
+                                      "seconds":  14.1,
+                                      "message":  "1 of 1 runs passed (SMOKE OK frames=1309 seconds=3.0 endpoints=0)",
+                                      "exitCode":  0,
+                                      "json":  "artifacts/gates/autotest.br-smoke.json",
+                                      "owner":  null
+                                  },
+                                  {
+                                      "id":  "soak.server-canary",
+                                      "status":  "pass",
+                                      "hard":  true,
+                                      "headline":  true,
+                                      "seconds":  18.8,
+                                      "message":  "server booted, quit cleanly after 10 s, loopback only",
+                                      "exitCode":  0,
+                                      "json":  "artifacts/gates/soak.server-canary.json",
+                                      "owner":  null
+                                  },
+                                  {
+                                      "id":  "lfs.budget",
+                                      "status":  "pass",
+                                      "hard":  true,
+                                      "headline":  false,
+                                      "seconds":  1.1,
+                                      "message":  "112.6 MiB in 54 LFS objects (1.8 % of 6 GiB); local store 112.6 MiB",
+                                      "exitCode":  0,
+                                      "json":  "artifacts/gates/lfs.budget.json",
+                                      "owner":  null
+                                  },
+                                  {
+                                      "id":  "licence.notices",
+                                      "status":  "pass",
+                                      "hard":  true,
+                                      "headline":  false,
+                                      "seconds":  0.6,
+                                      "message":  "7 shipped entries: each has a licence, a source and its licence text",
+                                      "exitCode":  0,
+                                      "json":  "artifacts/gates/licence.notices.json",
+                                      "owner":  null
+                                  },
+                                  {
+                                      "id":  "autotest.m0.crash.recover",
+                                      "status":  "pass",
+                                      "hard":  true,
+                                      "headline":  false,
+                                      "seconds":  16,
+                                      "message":  "1 of 1 runs passed (AUTOTEST m0.crash.recover PASS (0 failures) -\u003e D:\\Backroads-Unity\\artifacts\\20261018-1712\\gate-M0\\autotest.m0.crash.recover)",
+                                      "exitCode":  0,
+                                      "json":  "artifacts/gates/autotest.m0.crash.recover.json",
+                                      "owner":  null
+                                  },
+                                  {
+                                      "id":  "autotest.m0.net.egress",
+                                      "status":  "pass",
+                                      "hard":  true,
+                                      "headline":  false,
+                                      "seconds":  67.2,
+                                      "message":  "1 of 1 runs passed (AUTOTEST m0.net.egress PASS (0 failures) -\u003e D:\\Backroads-Unity\\artifacts\\20261018-1712\\gate-M0\\autotest.m0.net.egress)",
+                                      "exitCode":  0,
+                                      "json":  "artifacts/gates/autotest.m0.net.egress.json",
+                                      "owner":  null
+                                  },
+                                  {
+                                      "id":  "autotest.m0.playtest.f10",
+                                      "status":  "pass",
+                                      "hard":  true,
+                                      "headline":  false,
+                                      "seconds":  9.2,
+                                      "message":  "1 of 1 runs passed (AUTOTEST m0.playtest.f10 PASS (0 failures) -\u003e D:\\Backroads-Unity\\artifacts\\20261018-1712\\gate-M0\\autotest.m0.playtest.f10)",
+                                      "exitCode":  0,
+                                      "json":  "artifacts/gates/autotest.m0.playtest.f10.json",
+                                      "owner":  null
+                                  }
+                              ],
+                    "counts":  {
+                                   "pass":  16,
+                                   "fail":  0,
+                                   "error":  0,
+                                   "skipped":  0,
+                                   "blocked":  0,
+                                   "invalid":  0,
+                                   "dryrun":  0
+                               },
+                    "laneGateFailures":  [
+
+                                         ]
+                },
+    "thresholds":  {
+
+                   },
+    "evidence":  [
+                     "artifacts/gates/env.check.json",
+                     "artifacts/gates/oracle.export.json",
+                     "artifacts/gates/vendor.check.json",
+                     "artifacts/gates/native.ctest.json",
+                     "artifacts/gates/unity.editmode.json",
+                     "artifacts/gates/build.client.json",
+                     "artifacts/gates/build.dev.json",
+                     "artifacts/gates/build.server.json",
+                     "artifacts/gates/autotest.br-smoke.json",
+                     "artifacts/gates/soak.server-canary.json",
+                     "artifacts/gates/lfs.budget.json",
+                     "artifacts/gates/licence.notices.json",
+                     "artifacts/gates/autotest.m0.crash.recover.json",
+                     "artifacts/gates/autotest.m0.net.egress.json",
+                     "artifacts/gates/autotest.m0.playtest.f10.json"
+                 ],
+    "warnings":  [
+
+                 ],
+    "fallbackIfFail":  "fix or revert the failing step on the lane branch; at a milestone, a failed lane gate adopts its fallback (PLAN 1.10)",
+    "exitCode":  0,
+    "out":  "artifacts/20261018-1712/gate-M0",
+    "run":  "artifacts/20261018-1712/gate-M0",
+    "script":  "tools/ci/gate.ps1"
+}

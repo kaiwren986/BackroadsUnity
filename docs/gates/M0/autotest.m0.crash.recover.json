@@ -1,0 +1,184 @@
+{
+    "schema":  1,
+    "gate":  "autotest.m0.crash.recover",
+    "tier":  "milestone",
+    "status":  "pass",
+    "hard":  true,
+    "headline":  false,
+    "message":  "1 of 1 runs passed (AUTOTEST m0.crash.recover PASS (0 failures) -\u003e D:\\Backroads-Unity\\artifacts\\20261018-1712\\gate-M0\\autotest.m0.crash.recover)",
+    "startedAt":  "2026-10-18T17:15:11.0051770-05:00",
+    "finishedAt":  "2026-10-18T17:15:24.7029661-05:00",
+    "build":  {
+                  "git":  "4ad883621696d98fcb5c98ac6d81e3df943eec9c",
+                  "branch":  "main",
+                  "dirty":  false,
+                  "unity":  "6000.3.20f1",
+                  "native":  "5adbd0db5b55b2bd7889af7bcaf632e5c4d2c5ec0c16317301d7857089aaa719",
+                  "abi":  1
+              },
+    "machine":  {
+                    "summary":  "Intel(R) Core(TM) Ultra 9 275HX / NVIDIA GeForce RTX 5080 Laptop GPU / Microsoft Windows 11 Home 26200",
+                    "power":  "mains",
+                    "batteryPercent":  81,
+                    "gpu":  {
+                                "active":  "NVIDIA GeForce RTX 5080 Laptop GPU",
+                                "discretePresent":  true,
+                                "controllers":  [
+                                                    {
+                                                        "name":  "Intel(R) Graphics",
+                                                        "discrete":  false,
+                                                        "drivesDisplay":  true,
+                                                        "driver":  "32.0.101.8826"
+                                                    },
+                                                    {
+                                                        "name":  "NVIDIA GeForce RTX 5080 Laptop GPU",
+                                                        "discrete":  true,
+                                                        "drivesDisplay":  true,
+                                                        "driver":  "32.0.16.1664"
+                                                    }
+                                                ],
+                                "note":  "active = discrete GPU if present; the player reports the GPU it really used in result.json"
+                            },
+                    "powerMode":  {
+                                      "overlayAc":  "Balanced",
+                                      "overlayDc":  "Balanced",
+                                      "scheme":  "64a64f24-65b9-4b56-befd-5ec1eaced9b3  (Silent)"
+                                  },
+                    "cores":  {
+                                  "logical":  24,
+                                  "p":  [
+                                            0,
+                                            1,
+                                            10,
+                                            11,
+                                            12,
+                                            13,
+                                            22,
+                                            23
+                                        ],
+                                  "e":  [
+                                            2,
+                                            3,
+                                            4,
+                                            5,
+                                            6,
+                                            7,
+                                            8,
+                                            9,
+                                            14,
+                                            15,
+                                            16,
+                                            17,
+                                            18,
+                                            19,
+                                            20,
+                                            21
+                                        ],
+                                  "minSpecMask":  "0xFC",
+                                  "source":  "artifacts/env.json"
+                              },
+                    "cpuLoadPercent":  34,
+                    "otherProcs":  [
+                                       {
+                                           "name":  "MSBuild.exe",
+                                           "pid":  49516,
+                                           "kind":  "other"
+                                       },
+                                       {
+                                           "name":  "MSBuild.exe",
+                                           "pid":  54404,
+                                           "kind":  "other"
+                                       },
+                                       {
+                                           "name":  "MSBuild.exe",
+                                           "pid":  31988,
+                                           "kind":  "other"
+                                       },
+                                       {
+                                           "name":  "MSBuild.exe",
+                                           "pid":  54504,
+                                           "kind":  "other"
+                                       }
+                                   ]
+                },
+    "wallClock":  {
+                      "seconds":  13.6,
+                      "budget":  600,
+                      "pausedSeconds":  0,
+                      "overBudget":  false
+                  },
+    "conditions":  {
+                       "scenario":  "m0.crash.recover",
+                       "profile":  "Dev",
+                       "milestone":  "M0",
+                       "quality":  "player default",
+                       "coreClass":  "unpinned",
+                       "fpsCap":  "uncapped",
+                       "resolution":  "2560x1440",
+                       "perf":  false,
+                       "repeat":  1,
+                       "minSpecProxy":  false,
+                       "egressCheck":  false
+                   },
+    "metrics":  {
+                    "exe":  "builds/M0-dev/Backroads.exe",
+                    "buildGit":  "4ad883621696d98fcb5c98ac6d81e3df943eec9c",
+                    "buildProfile":  "Dev",
+                    "buildMilestone":  "M0",
+                    "runs":  [
+                                 {
+                                     "run":  1,
+                                     "exitCode":  0,
+                                     "result":  "exit 0",
+                                     "seconds":  13.2,
+                                     "affinity":  null,
+                                     "resultFile":  true,
+                                     "status":  "pass",
+                                     "failures":  [
+
+                                                  ],
+                                     "metrics":  {
+                                                     "developmentBuild":  true,
+                                                     "seconds":  5.048271179199219,
+                                                     "frames":  1877,
+                                                     "p50FrameMs":  1.197399377822876,
+                                                     "p95FrameMs":  10.371095657348633,
+                                                     "p99FrameMs":  14.58750057220459,
+                                                     "exceptions":  0,
+                                                     "errors":  0,
+                                                     "firstProblem":  ""
+                                                 },
+                                     "logVerdict":  "[BR] AUTOTEST m0.crash.recover PASS (0 failures) -\u003e D:\\Backroads-Unity\\artifacts\\20261018-1712\\gate-M0\\autotest.m0.crash.recover"
+                                 }
+                             ],
+                    "developmentBuild":  true,
+                    "seconds":  5.048271179199219,
+                    "frames":  1877,
+                    "p50FrameMs":  1.197399377822876,
+                    "p95FrameMs":  10.371095657348633,
+                    "p99FrameMs":  14.58750057220459,
+                    "exceptions":  0,
+                    "errors":  0,
+                    "firstProblem":  ""
+                },
+    "thresholds":  {
+
+                   },
+    "evidence":  [
+                     "artifacts/20261018-1712/gate-M0/autotest.m0.crash.recover/autotest.m0.crash.recover.log",
+                     "artifacts/20261018-1712/gate-M0/autotest.m0.crash.recover/autotest.m0.crash.recover.log.stderr",
+                     "artifacts/20261018-1712/gate-M0/autotest.m0.crash.recover/frametimes.csv",
+                     "artifacts/20261018-1712/gate-M0/autotest.m0.crash.recover/phase1.log",
+                     "artifacts/20261018-1712/gate-M0/autotest.m0.crash.recover/phase2.log",
+                     "artifacts/20261018-1712/gate-M0/autotest.m0.crash.recover/player.log",
+                     "artifacts/20261018-1712/gate-M0/autotest.m0.crash.recover/result.json"
+                 ],
+    "warnings":  [
+
+                 ],
+    "fallbackIfFail":  "see the scenario\u0027s fallback in the milestone card",
+    "exitCode":  0,
+    "out":  "artifacts/20261018-1712/gate-M0/autotest.m0.crash.recover",
+    "run":  "artifacts/20261018-1712/gate-M0",
+    "script":  "tools/ci/autotest.ps1"
+}

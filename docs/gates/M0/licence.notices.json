@@ -1,0 +1,66 @@
+{
+    "schema":  1,
+    "gate":  "licence.notices",
+    "tier":  "milestone",
+    "status":  "pass",
+    "hard":  true,
+    "headline":  false,
+    "message":  "7 shipped entries: each has a licence, a source and its licence text",
+    "startedAt":  "2026-10-18T17:15:08.3939424-05:00",
+    "finishedAt":  "2026-10-18T17:15:08.7153194-05:00",
+    "build":  {
+                  "git":  "4ad883621696d98fcb5c98ac6d81e3df943eec9c",
+                  "branch":  "main",
+                  "dirty":  false,
+                  "unity":  "6000.3.20f1",
+                  "native":  "5adbd0db5b55b2bd7889af7bcaf632e5c4d2c5ec0c16317301d7857089aaa719",
+                  "abi":  1
+              },
+    "machine":  null,
+    "wallClock":  {
+                      "seconds":  0.2,
+                      "budget":  60,
+                      "pausedSeconds":  0,
+                      "overBudget":  false
+                  },
+    "conditions":  {
+
+                   },
+    "metrics":  {
+                    "entries":  11,
+                    "shippedEntries":  7,
+                    "licences":  [
+                                     "MIT",
+                                     "Apache-2.0",
+                                     "Unity-Companion",
+                                     "OFL-1.1",
+                                     "ODbL-1.0"
+                                 ],
+                    "upstreamTexts":  [
+                                          "native/EngineSimPlugin/vendor/LICENSES/engine-sim-LICENSE",
+                                          "native/EngineSimPlugin/vendor/LICENSES/simple-2d-constraint-solver-LICENSE"
+                                      ],
+                    "unverifiedTexts":  [
+                                            "Apache-2.0.txt",
+                                            "ODbL-1.0.txt",
+                                            "OFL-1.1.txt"
+                                        ],
+                    "assetEntries":  0
+                },
+    "thresholds":  {
+
+                   },
+    "evidence":  [
+
+                 ],
+    "warnings":  [
+                     "Barlow Condensed : no copyright line; set licenceFile to the font\u0027s own OFL.txt when the font is added",
+                     "Inter : no copyright line; set licenceFile to the font\u0027s own OFL.txt when the font is added",
+                     "agent-written licence texts in use (verify before any public release): Apache-2.0.txt, ODbL-1.0.txt, OFL-1.1.txt"
+                 ],
+    "fallbackIfFail":  "add the missing licence, source or text to third-party.json before the build ships",
+    "exitCode":  0,
+    "out":  "artifacts/20261018-1712/gate-M0/licence.notices",
+    "run":  "artifacts/20261018-1712/gate-M0",
+    "script":  "tools/ci/notices.ps1"
+}
