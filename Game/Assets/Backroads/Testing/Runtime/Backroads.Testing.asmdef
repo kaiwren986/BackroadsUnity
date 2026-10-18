@@ -1,0 +1,32 @@
+{
+    "name": "Backroads.Testing",
+    "rootNamespace": "Backroads.Testing",
+    "references": [
+        "Backroads.Core",
+        "Backroads.World",
+        "Backroads.Deform",
+        "Backroads.Roads",
+        "Backroads.Vehicles",
+        "Backroads.Traffic",
+        "Backroads.Gameplay",
+        "Backroads.Persistence",
+        "Backroads.Net",
+        "Backroads.Game",
+        "Backroads.EngineSim",
+        "Backroads.Client.Rendering",
+        "Backroads.Client",
+        "Backroads.Client.UI",
+        "Unity.InputSystem"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "UNITY_EDITOR || BACKROADS_TESTING"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

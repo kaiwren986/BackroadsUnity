@@ -1,0 +1,23 @@
+{
+    "name": "Backroads.Client.UI",
+    "rootNamespace": "Backroads.Client.UI",
+    "references": [
+        "Backroads.Core",
+        "Backroads.Vehicles",
+        "Backroads.Gameplay",
+        "Backroads.Net",
+        "Unity.InputSystem",
+        "UnityEngine.UI"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "!UNITY_SERVER"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

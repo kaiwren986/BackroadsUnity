@@ -1,0 +1,17 @@
+{
+  "milestone": "M0",
+  "title": "Playtest checklist",
+  "summary": "M0 proves the toolchain works on your PC: a grey test yard with the axis canary markers on a slow turntable.",
+  "tryThis": [
+    "Double-click Play.bat. A window opens on a grey test yard with three small coloured cubes turning slowly.",
+    "Press F10. The playtest checklist opens on the right. Answer both questions; your answers save as you go.",
+    "Press F10 again to close it, then close the window."
+  ],
+  "items": [
+    { "id": "m0.opened", "text": "Did the game open?" },
+    { "id": "m0.f10", "text": "Did F10 show this list?" }
+  ],
+  "knownIssues": [
+    "There is nothing to drive yet. Millbrook arrives in M1."
+  ]
+}

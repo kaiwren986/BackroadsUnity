@@ -1,0 +1,7 @@
+{
+  "id": "smoke",
+  "kind": "boot",
+  "seconds": 3,
+  "screenshot": true,
+  "notes": "Boot the test yard, run 3 s, take one screenshot, exit 0. PLAN 1.9 merge tier."
+}

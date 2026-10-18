@@ -1,0 +1,19 @@
+{
+    "name": "Backroads.Traffic",
+    "rootNamespace": "Backroads.Traffic",
+    "references": [
+        "Backroads.Core",
+        "Backroads.World",
+        "Backroads.Roads",
+        "Backroads.Vehicles"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

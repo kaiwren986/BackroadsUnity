@@ -1,0 +1,7 @@
+{
+  "id": "m0.net.egress",
+  "kind": "net-egress",
+  "seconds": 60,
+  "screenshot": false,
+  "notes": "Single player for 60 s; samples the TCP and UDP tables of this process every second; any TCP connection to a non-loopback address or UDP endpoint on a non-loopback address fails (development players: Unity PlayerConnection on 54997-55511 is reported, not failed). PLAN 1.9 [C7]."
+}

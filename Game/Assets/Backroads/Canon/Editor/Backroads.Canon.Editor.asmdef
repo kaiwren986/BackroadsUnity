@@ -1,0 +1,19 @@
+{
+    "name": "Backroads.Canon.Editor",
+    "rootNamespace": "Backroads.Canon.Editor",
+    "references": [
+        "Backroads.Core",
+        "Backroads.World"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,19 @@
+{
+    "name": "Backroads.Server",
+    "rootNamespace": "Backroads.Server",
+    "references": [
+        "Backroads.Core",
+        "Backroads.Game"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "UNITY_SERVER"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
