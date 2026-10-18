@@ -58,9 +58,19 @@ namespace Backroads.Testing
             public List<string> failures = new List<string>();
             public List<string> notes = new List<string>();
             public List<NetEgressProbe.Endpoint> endpoints = new List<NetEgressProbe.Endpoint>();
+            public List<NamedValue> metrics = new List<NamedValue>();
+            public string gpu;
+        }
+
+        [Serializable]
+        public struct NamedValue
+        {
+            public string name;
+            public double value;
         }
 
         Scenario _sc;
+        string _scJson;
         Result _r;
         string _out;
         MetricsRecorder _metrics;
@@ -88,11 +98,15 @@ namespace Backroads.Testing
             _firstProblem ??= condition;
         }
 
-        public static Scenario LoadScenario(string id)
+        public static Scenario LoadScenario(string id) => LoadScenario(id, out _);
+
+        public static Scenario LoadScenario(string id, out string json)
         {
+            json = null;
             var path = Path.Combine(Application.streamingAssetsPath, "Autotest", id + ".json");
             if (!File.Exists(path)) return null;
-            var s = JsonUtility.FromJson<Scenario>(File.ReadAllText(path));
+            json = File.ReadAllText(path);
+            var s = JsonUtility.FromJson<Scenario>(json);
             if (s != null && string.IsNullOrEmpty(s.id)) s.id = id;
             return s;
         }
@@ -101,8 +115,8 @@ namespace Backroads.Testing
         {
             var id = CommandLine.Get(Flag);
             _out = BrPaths.EnsureDir(BrPaths.OutDir ?? Path.Combine(Application.persistentDataPath, "autotest", id));
-            _r = new Result { id = id, build = BuildInfo.Current.Id, developmentBuild = Debug.isDebugBuild, startedUtc = DateTime.UtcNow.ToString("o") };
-            _sc = LoadScenario(id);
+            _r = new Result { id = id, build = BuildInfo.Current.Id, developmentBuild = Debug.isDebugBuild, startedUtc = DateTime.UtcNow.ToString("o"), gpu = SystemInfo.graphicsDeviceName };
+            _sc = LoadScenario(id, out _scJson);
             if (_sc == null) { Fail($"no scenario StreamingAssets/Autotest/{id}.json"); Finish(); yield break; }
             _r.kind = _sc.kind;
             // Autotests start from background scripts and often never get the foreground; by default the Input System
@@ -120,24 +134,31 @@ namespace Backroads.Testing
                 case "net-egress": yield return RunNetEgress(); break;
                 case "crash-recover": yield return RunCrashRecover(); break;
                 case "playtest-f10": yield return RunPlaytestF10(); break;
-                default: Fail("unknown scenario kind " + _sc.kind); break;
+                default:
+                    var lane = AutotestScenarios.Create(_sc.kind);
+                    if (lane == null) Fail("unknown scenario kind " + _sc.kind);
+                    else yield return lane.Run(new AutotestContext(this, _sc, _scJson, _out));
+                    break;
             }
             _r.seconds = Time.realtimeSinceStartup - t0;
             _r.frames = Time.frameCount - f0;
             Finish();
         }
 
-        void Fail(string why) { _r.failures.Add(why); Log.Warn("autotest failure: " + why); }
+        internal void Fail(string why) { _r.failures.Add(why); Log.Warn("autotest failure: " + why); }
+        internal void Note(string note) => _r.notes.Add(note);
+        internal void AddEvidence(string path) => _r.evidence.Add(path);
+        internal void Metric(string name, double value) => _r.metrics.Add(new NamedValue { name = name, value = value });
 
-        bool Renders => !Application.isBatchMode && SystemInfo.graphicsDeviceType != UnityEngine.Rendering.GraphicsDeviceType.Null;
+        internal bool Renders => !Application.isBatchMode && SystemInfo.graphicsDeviceType != UnityEngine.Rendering.GraphicsDeviceType.Null;
 
-        IEnumerator Wait(float seconds)
+        internal IEnumerator Wait(float seconds)
         {
             float t = Time.realtimeSinceStartup;
             while (Time.realtimeSinceStartup - t < seconds) yield return null;
         }
 
-        IEnumerator Screenshot(string name)
+        internal IEnumerator Screenshot(string name)
         {
             if (!Renders) { _r.notes.Add($"screenshot {name} skipped: no rendering (batchmode or null device)"); yield break; }
             yield return new WaitForEndOfFrame();
