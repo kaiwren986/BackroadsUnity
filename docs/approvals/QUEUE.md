@@ -10,6 +10,7 @@ Everything waiting for you, newest at the bottom. Each item has a decision id (P
 | Unity Hub | Open Unity Hub once and check you are signed in (agents never sign in) | M0, day 2 | The Unity project can't be created in batchmode | waiting |
 | U10 | Synty packs (City, Explorer Kit, Pro Racer): you turned off model training on 2026-10-18 and asked the agents to import them into the client with Unity's importer. Sending Synty the email below is optional extra reassurance | after the M0 Unity project lands | n/a | **decided: agents import** |
 | U3 | Free downloads (decision 5): Unity add-on packages (glTFast and the 6.3 patch versions), Clipper2 (kerbs and sidewalks), win_flex_bison (unlocks the 25 ready-made engines), piranha's licence file, later Facepunch.Steamworks | approved 2026-10-18 | n/a | **approved** |
+| Licence texts | `licenses\` holds the standard texts of MIT, BSD-2/3-Clause, Apache-2.0, OFL-1.1, ODbL-1.0 and BSL-1.0, written by an agent from memory and marked as such (no download was allowed). Either let an agent fetch the 7 canonical text files from opensource.org, apache.org, openfontlicense.org, opendatacommons.org and boost.org to replace them, or compare them yourself. ODbL is the long one most likely to differ in wording | before any public build (friends-only builds are fine meanwhile) | The marked copies stay; `notices.ps1` reports them as unverified in every gate | waiting |
 
 ## Draft email to Synty (U10)
 

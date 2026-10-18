@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "note": "Gate composition fixture for ci-selftest.ps1 (fake steps only).",
+  "budgetSeconds": { "merge": 1, "nightly": 600, "milestone": null },
+  "tiers": {
+    "merge": {
+      "steps": [
+        { "id": "selftest.ok", "script": "tests/fake-step.ps1", "args": ["-Mode", "pass", "-Seconds", "2"], "gateJson": true },
+        { "id": "selftest.oracle", "script": "tests/fake-step.ps1", "args": ["-Mode", "pass"], "gateJson": true, "oracle": true },
+        { "id": "selftest.soft", "script": "tests/fake-step.ps1", "args": ["-Mode", "fail"], "gateJson": true, "hard": false },
+        { "id": "selftest.missing", "script": "tests/no-such-script.ps1", "args": [], "gateJson": true, "owner": "Z" },
+        { "id": "selftest.after", "script": "tests/fake-step.ps1", "args": ["-Mode", "pass"], "gateJson": true },
+        { "id": "selftest.param", "script": "tests/fake-step.ps1", "args": [], "gateJson": true, "requiresParam": "Asan" },
+        { "id": "selftest.nojson", "script": "tests/fake-step.ps1", "args": ["-Mode", "nojson"], "gateJson": true, "hard": false },
+        { "id": "selftest.foreign", "script": "tests/fake-step.ps1", "args": ["-Mode", "nojson"], "gateJson": false }
+      ]
+    },
+    "nightly": {
+      "include": ["merge"],
+      "steps": [
+        { "id": "selftest.missing", "script": "tests/fake-step.ps1", "args": ["-Mode", "pass"], "gateJson": true },
+        { "id": "selftest.nightly", "script": "tests/fake-step.ps1", "args": ["-Mode", "pass"], "gateJson": true }
+      ]
+    },
+    "milestone": {
+      "steps": [
+        { "id": "selftest.nightly-green", "builtin": "lastNightly", "headline": true },
+        { "id": "selftest.headline", "script": "tests/fake-step.ps1", "args": ["-Mode", "pass"], "gateJson": true, "headline": true },
+        { "id": "selftest.lane", "script": "tests/fake-step.ps1", "args": ["-Mode", "fail"], "gateJson": true, "headline": false }
+      ]
+    }
+  },
+  "milestones": {
+    "M99": {
+      "milestone": [
+        { "id": "selftest.m99", "script": "tests/fake-step.ps1", "args": ["-Mode", "pass"], "gateJson": true, "headline": true }
+      ]
+    }
+  }
+}

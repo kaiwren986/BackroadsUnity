@@ -8,7 +8,7 @@ param(
 )
 . "$PSScriptRoot\env.ps1"
 $ErrorActionPreference = 'Stop'
-if (Test-Path (Join-Path $ART 'machine.lock')) { Write-Host 'machine.lock exists: a perf gate is running'; exit 3 }
+if ((Test-Path (Join-Path $ART 'machine.lock')) -or (Test-Path (Join-Path $LOCKS 'machine.lock'))) { Write-Host 'machine.lock exists: a perf gate is running'; exit 3 }   # $LOCKS: the main checkout's artifacts (machine-wide)
 if (-not $Log) { $Log = Join-Path $ART 'project-setup.log' }
 $sw = [Diagnostics.Stopwatch]::StartNew()
 
