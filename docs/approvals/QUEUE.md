@@ -9,6 +9,7 @@ Everything waiting for you, newest at the bottom. Each item has a decision id (P
 | U1 | Create the private GitHub repo `kaiwren986/Backroads-Unity` (or say "agents may create it with gh") | end of M0 | Work stays on this PC only, plus local backups | waiting |
 | Unity Hub | Open Unity Hub once and check you are signed in (agents never sign in) | M0, day 2 | The Unity project can't be created in batchmode | waiting |
 | U10 | Synty packs (City, Explorer Kit, Pro Racer): you turned off model training on 2026-10-18 and asked the agents to import them into the client with Unity's importer. Sending Synty the email below is optional extra reassurance | after the M0 Unity project lands | n/a | **decided: agents import** |
+| U3 | Free downloads (decision 5): Unity add-on packages (glTFast and the 6.3 patch versions), Clipper2 (kerbs and sidewalks), win_flex_bison (unlocks the 25 ready-made engines), piranha's licence file, later Facepunch.Steamworks | approved 2026-10-18 | n/a | **approved** |
 
 ## Draft email to Synty (U10)
 
