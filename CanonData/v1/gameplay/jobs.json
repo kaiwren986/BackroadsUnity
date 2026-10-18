@@ -1,0 +1,164 @@
+{
+  "CARGO": {
+    "parcels": {
+      "name": "Parcels",
+      "size": 1,
+      "value": 5.5,
+      "kg": 35,
+      "fragile": 0.7
+    },
+    "produce": {
+      "name": "Produce crates",
+      "size": 2,
+      "value": 7,
+      "kg": 110,
+      "fragile": 1
+    },
+    "lumber": {
+      "name": "Lumber",
+      "size": 3,
+      "value": 8,
+      "kg": 280,
+      "fragile": 0.25
+    },
+    "stone": {
+      "name": "Cut stone",
+      "size": 4,
+      "value": 11,
+      "kg": 650,
+      "fragile": 0.15
+    },
+    "fish": {
+      "name": "Fresh fish",
+      "size": 2,
+      "value": 9.5,
+      "kg": 100,
+      "fragile": 0.8,
+      "timed": true
+    },
+    "goods": {
+      "name": "General goods",
+      "size": 3,
+      "value": 7.5,
+      "kg": 200,
+      "fragile": 0.5
+    },
+    "drums": {
+      "name": "Fuel drums",
+      "size": 3,
+      "value": 9,
+      "kg": 380,
+      "fragile": 0.4
+    }
+  },
+  "CARRIES": {
+    "hatch": [
+      "parcels",
+      "fish"
+    ],
+    "rally": [
+      "parcels"
+    ],
+    "pickup": [
+      "parcels",
+      "produce",
+      "lumber",
+      "fish",
+      "goods",
+      "drums"
+    ],
+    "truck": [
+      "parcels",
+      "produce",
+      "lumber",
+      "stone",
+      "fish",
+      "goods",
+      "drums"
+    ],
+    "dozer": []
+  },
+  "SUPPLY": {
+    "town": [
+      "parcels",
+      "goods"
+    ],
+    "depot": [
+      "parcels",
+      "goods",
+      "drums"
+    ],
+    "farm": [
+      "produce",
+      "produce"
+    ],
+    "quarry": [
+      "stone",
+      "stone"
+    ],
+    "mill": [
+      "lumber",
+      "lumber"
+    ],
+    "harbor": [
+      "fish",
+      "goods",
+      "fish"
+    ],
+    "fuel": [
+      "drums",
+      "parcels"
+    ]
+  },
+  "DEMAND": {
+    "town": [
+      "produce",
+      "fish",
+      "lumber",
+      "goods",
+      "parcels"
+    ],
+    "depot": [
+      "stone",
+      "lumber",
+      "produce",
+      "parcels",
+      "fish"
+    ],
+    "farm": [
+      "goods",
+      "parcels",
+      "lumber",
+      "drums"
+    ],
+    "quarry": [
+      "goods",
+      "drums",
+      "parcels"
+    ],
+    "mill": [
+      "goods",
+      "parcels",
+      "drums"
+    ],
+    "harbor": [
+      "goods",
+      "lumber",
+      "produce",
+      "drums"
+    ],
+    "fuel": [
+      "parcels",
+      "goods",
+      "drums"
+    ]
+  },
+  "TANK": {
+    "hatch": 0.6,
+    "rally": 0.7,
+    "pickup": 1,
+    "truck": 2,
+    "dozer": 1.6
+  },
+  "RING_R": 7.5
+}
