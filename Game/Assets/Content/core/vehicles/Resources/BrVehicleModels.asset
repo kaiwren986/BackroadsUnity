@@ -1,0 +1,691 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52b839bd53f28a2418d7bd6650a07c7e, type: 3}
+  m_Name: BrVehicleModels
+  m_EditorClassIdentifier: Backroads.Vehicles.Client::Backroads.Vehicles.Client.VehicleModelSet
+  models:
+  - id: hatch
+    source: Assets/Content/core/vehicles/models/hatch.glb
+    body:
+      mesh: {fileID: -7383457512491876439, guid: 70e230fa02c6b414cac41199c410ca3e, type: 3}
+      materials:
+      - Paint
+      - Trim
+      - Under
+      - Glass
+      - Interior
+      - Grille
+      - Chrome
+      - Plate
+      - Headlight
+      - Indicator
+      - Taillight
+      - Reverse
+      - Mirror
+      - Seat
+    bodyLod1:
+      mesh: {fileID: 2202907087754281384, guid: 70e230fa02c6b414cac41199c410ca3e, type: 3}
+      materials:
+      - Paint
+      - Trim
+      - Glass
+      - Headlight
+      - Indicator
+      - Taillight
+      - Reverse
+    wheel:
+      mesh: {fileID: 3217340798425999227, guid: 70e230fa02c6b414cac41199c410ca3e, type: 3}
+      materials:
+      - Rubber
+      - Alloy
+      - Chrome
+      - Brake
+      - DarkAlloy
+    wheelLod1:
+      mesh: {fileID: 3400631611175728483, guid: 70e230fa02c6b414cac41199c410ca3e, type: 3}
+      materials:
+      - Rubber
+      - Alloy
+    caliper:
+      mesh: {fileID: -5538159619734212498, guid: 70e230fa02c6b414cac41199c410ca3e, type: 3}
+      materials:
+      - Caliper
+    materials:
+    - name: Paint
+      baseColor: {r: 0.027320892, g: 0.34670407, b: 0.65837485, a: 1}
+      metallic: 0.5
+      roughness: 0.3
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Trim
+      baseColor: {r: 0.006048833, g: 0.0065120906, b: 0.007499032, a: 1}
+      metallic: 0
+      roughness: 0.55
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Under
+      baseColor: {r: 0.0036765074, g: 0.0036765074, b: 0.004024717, a: 1}
+      metallic: 0
+      roughness: 0.9
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Glass
+      baseColor: {r: 0.0051815165, g: 0.008023193, b: 0.010960094, a: 0.38}
+      metallic: 0
+      roughness: 0.03
+      blend: 1
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Interior
+      baseColor: {r: 0.012286488, g: 0.0129830325, b: 0.014443844, a: 1}
+      metallic: 0
+      roughness: 0.85
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Grille
+      baseColor: {r: 0.004024717, g: 0.004391442, b: 0.0047769533, a: 1}
+      metallic: 0.4
+      roughness: 0.45
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Chrome
+      baseColor: {r: 0.80695224, g: 0.82278574, b: 0.8549926, a: 1}
+      metallic: 1
+      roughness: 0.07
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Plate
+      baseColor: {r: 0.8148466, g: 0.7912979, b: 0.7011019, a: 1}
+      metallic: 0
+      roughness: 0.5
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Headlight
+      baseColor: {r: 0.8962694, g: 0.8962694, b: 0.8962694, a: 1}
+      metallic: 0
+      roughness: 0.05
+      blend: 0
+      emissive: {r: 0.6, g: 0.54279673, b: 0.4294161, a: 1}
+    - name: Indicator
+      baseColor: {r: 0.6653873, g: 0.19461784, b: 0.00699541, a: 1}
+      metallic: 0
+      roughness: 0.12
+      blend: 0
+      emissive: {r: 0.6, g: 0.19388594, b: 0.00822125, a: 1}
+    - name: Taillight
+      baseColor: {r: 0.15592647, g: 0.0027317428, b: 0.001517635, a: 1}
+      metallic: 0
+      roughness: 0.12
+      blend: 0
+      emissive: {r: 0.6, g: 0.01389202, b: 0.006197894, a: 1}
+    - name: Reverse
+      baseColor: {r: 0.7454042, g: 0.7454042, b: 0.7454042, a: 1}
+      metallic: 0
+      roughness: 0.12
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Mirror
+      baseColor: {r: 0.47932017, g: 0.55201143, b: 0.60382736, a: 1}
+      metallic: 1
+      roughness: 0.02
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Seat
+      baseColor: {r: 0.024157632, g: 0.02518686, b: 0.029556835, a: 1}
+      metallic: 0
+      roughness: 0.9
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Rubber
+      baseColor: {r: 0.007499032, g: 0.007499032, b: 0.008023193, a: 1}
+      metallic: 0
+      roughness: 0.92
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Alloy
+      baseColor: {r: 0.57758045, g: 0.60382736, b: 0.6444797, a: 1}
+      metallic: 1
+      roughness: 0.22
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Brake
+      baseColor: {r: 0.2663556, g: 0.2746773, b: 0.29177064, a: 1}
+      metallic: 0.9
+      roughness: 0.35
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: DarkAlloy
+      baseColor: {r: 0.019382361, g: 0.02121901, b: 0.02518686, a: 1}
+      metallic: 0.9
+      roughness: 0.3
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Caliper
+      baseColor: {r: 0.43415365, g: 0.023153367, b: 0.014443844, a: 1}
+      metallic: 0
+      roughness: 0.38
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+  - id: rally
+    source: Assets/Content/core/vehicles/models/rally.glb
+    body:
+      mesh: {fileID: -7383457512491876439, guid: 07a3fdbb580e7404fbdedd957ca67e61, type: 3}
+      materials:
+      - Paint
+      - Trim
+      - Under
+      - Glass
+      - Stripe
+      - Interior
+      - Headlight
+      - Taillight
+      - Reverse
+      - Grille
+      - Plate
+      - Caliper
+      - Chrome
+      - Mirror
+      - Seat
+      - Steel
+    bodyLod1:
+      mesh: {fileID: 2202907087754281384, guid: 07a3fdbb580e7404fbdedd957ca67e61, type: 3}
+      materials:
+      - Paint
+      - Trim
+      - Glass
+      - Stripe
+      - Headlight
+      - Taillight
+      - Reverse
+    wheel:
+      mesh: {fileID: 3217340798425999227, guid: 07a3fdbb580e7404fbdedd957ca67e61, type: 3}
+      materials:
+      - Rubber
+      - DarkAlloy
+      - Chrome
+      - Brake
+    wheelLod1:
+      mesh: {fileID: 3400631611175728483, guid: 07a3fdbb580e7404fbdedd957ca67e61, type: 3}
+      materials:
+      - Rubber
+      - DarkAlloy
+    caliper:
+      mesh: {fileID: -5538159619734212498, guid: 07a3fdbb580e7404fbdedd957ca67e61, type: 3}
+      materials:
+      - Steel
+    materials:
+    - name: Paint
+      baseColor: {r: 0.027320892, g: 0.34670407, b: 0.65837485, a: 1}
+      metallic: 0.5
+      roughness: 0.3
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Trim
+      baseColor: {r: 0.006048833, g: 0.0065120906, b: 0.007499032, a: 1}
+      metallic: 0
+      roughness: 0.55
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Under
+      baseColor: {r: 0.0036765074, g: 0.0036765074, b: 0.004024717, a: 1}
+      metallic: 0
+      roughness: 0.9
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Glass
+      baseColor: {r: 0.0051815165, g: 0.008023193, b: 0.010960094, a: 0.38}
+      metallic: 0
+      roughness: 0.03
+      blend: 1
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Stripe
+      baseColor: {r: 0.8879231, g: 0.8879231, b: 0.8549926, a: 1}
+      metallic: 0.15
+      roughness: 0.32
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Interior
+      baseColor: {r: 0.012286488, g: 0.0129830325, b: 0.014443844, a: 1}
+      metallic: 0
+      roughness: 0.85
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Headlight
+      baseColor: {r: 0.8962694, g: 0.8962694, b: 0.8962694, a: 1}
+      metallic: 0
+      roughness: 0.05
+      blend: 0
+      emissive: {r: 0.6, g: 0.54279673, b: 0.4294161, a: 1}
+    - name: Taillight
+      baseColor: {r: 0.15592647, g: 0.0027317428, b: 0.001517635, a: 1}
+      metallic: 0
+      roughness: 0.12
+      blend: 0
+      emissive: {r: 0.6, g: 0.01389202, b: 0.006197894, a: 1}
+    - name: Reverse
+      baseColor: {r: 0.7454042, g: 0.7454042, b: 0.7454042, a: 1}
+      metallic: 0
+      roughness: 0.12
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Grille
+      baseColor: {r: 0.004024717, g: 0.004391442, b: 0.0047769533, a: 1}
+      metallic: 0.4
+      roughness: 0.45
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Plate
+      baseColor: {r: 0.8148466, g: 0.7912979, b: 0.7011019, a: 1}
+      metallic: 0
+      roughness: 0.5
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Caliper
+      baseColor: {r: 0.43415365, g: 0.023153367, b: 0.014443844, a: 1}
+      metallic: 0
+      roughness: 0.38
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Chrome
+      baseColor: {r: 0.80695224, g: 0.82278574, b: 0.8549926, a: 1}
+      metallic: 1
+      roughness: 0.07
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Mirror
+      baseColor: {r: 0.47932017, g: 0.55201143, b: 0.60382736, a: 1}
+      metallic: 1
+      roughness: 0.02
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Seat
+      baseColor: {r: 0.024157632, g: 0.02518686, b: 0.029556835, a: 1}
+      metallic: 0
+      roughness: 0.9
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Steel
+      baseColor: {r: 0.09084171, g: 0.099898726, b: 0.114435375, a: 1}
+      metallic: 0.85
+      roughness: 0.45
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Rubber
+      baseColor: {r: 0.007499032, g: 0.007499032, b: 0.008023193, a: 1}
+      metallic: 0
+      roughness: 0.92
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: DarkAlloy
+      baseColor: {r: 0.019382361, g: 0.02121901, b: 0.02518686, a: 1}
+      metallic: 0.9
+      roughness: 0.3
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Brake
+      baseColor: {r: 0.2663556, g: 0.2746773, b: 0.29177064, a: 1}
+      metallic: 0.9
+      roughness: 0.35
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+  - id: pickup
+    source: Assets/Content/core/vehicles/models/pickup.glb
+    body:
+      mesh: {fileID: -7383457512491876439, guid: c2f42f3a19fb0da4589de6c8188f8594, type: 3}
+      materials:
+      - Paint
+      - Trim
+      - Under
+      - Glass
+      - Interior
+      - Bedliner
+      - Headlight
+      - Indicator
+      - Taillight
+      - Reverse
+      - Steel
+      - Grille
+      - Chrome
+      - Plate
+      - Mirror
+      - Seat
+    bodyLod1:
+      mesh: {fileID: 2202907087754281384, guid: c2f42f3a19fb0da4589de6c8188f8594, type: 3}
+      materials:
+      - Paint
+      - Trim
+      - Glass
+      - Headlight
+      - Indicator
+      - Taillight
+      - Reverse
+    wheel:
+      mesh: {fileID: 3217340798425999227, guid: c2f42f3a19fb0da4589de6c8188f8594, type: 3}
+      materials:
+      - Rubber
+      - DarkAlloy
+      - Chrome
+      - Brake
+    wheelLod1:
+      mesh: {fileID: 3400631611175728483, guid: c2f42f3a19fb0da4589de6c8188f8594, type: 3}
+      materials:
+      - Rubber
+      - DarkAlloy
+    caliper:
+      mesh: {fileID: -5538159619734212498, guid: c2f42f3a19fb0da4589de6c8188f8594, type: 3}
+      materials:
+      - Steel
+    materials:
+    - name: Paint
+      baseColor: {r: 0.027320892, g: 0.34670407, b: 0.65837485, a: 1}
+      metallic: 0.5
+      roughness: 0.3
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Trim
+      baseColor: {r: 0.006048833, g: 0.0065120906, b: 0.007499032, a: 1}
+      metallic: 0
+      roughness: 0.55
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Under
+      baseColor: {r: 0.0036765074, g: 0.0036765074, b: 0.004024717, a: 1}
+      metallic: 0
+      roughness: 0.9
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Glass
+      baseColor: {r: 0.0051815165, g: 0.008023193, b: 0.010960094, a: 0.38}
+      metallic: 0
+      roughness: 0.03
+      blend: 1
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Interior
+      baseColor: {r: 0.012286488, g: 0.0129830325, b: 0.014443844, a: 1}
+      metallic: 0
+      roughness: 0.85
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Bedliner
+      baseColor: {r: 0.010329823, g: 0.010960094, b: 0.012286488, a: 1}
+      metallic: 0
+      roughness: 0.95
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Headlight
+      baseColor: {r: 0.8962694, g: 0.8962694, b: 0.8962694, a: 1}
+      metallic: 0
+      roughness: 0.05
+      blend: 0
+      emissive: {r: 0.6, g: 0.54279673, b: 0.4294161, a: 1}
+    - name: Indicator
+      baseColor: {r: 0.6653873, g: 0.19461784, b: 0.00699541, a: 1}
+      metallic: 0
+      roughness: 0.12
+      blend: 0
+      emissive: {r: 0.6, g: 0.19388594, b: 0.00822125, a: 1}
+    - name: Taillight
+      baseColor: {r: 0.15592647, g: 0.0027317428, b: 0.001517635, a: 1}
+      metallic: 0
+      roughness: 0.12
+      blend: 0
+      emissive: {r: 0.6, g: 0.01389202, b: 0.006197894, a: 1}
+    - name: Reverse
+      baseColor: {r: 0.7454042, g: 0.7454042, b: 0.7454042, a: 1}
+      metallic: 0
+      roughness: 0.12
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Steel
+      baseColor: {r: 0.09084171, g: 0.099898726, b: 0.114435375, a: 1}
+      metallic: 0.85
+      roughness: 0.45
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Grille
+      baseColor: {r: 0.004024717, g: 0.004391442, b: 0.0047769533, a: 1}
+      metallic: 0.4
+      roughness: 0.45
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Chrome
+      baseColor: {r: 0.80695224, g: 0.82278574, b: 0.8549926, a: 1}
+      metallic: 1
+      roughness: 0.07
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Plate
+      baseColor: {r: 0.8148466, g: 0.7912979, b: 0.7011019, a: 1}
+      metallic: 0
+      roughness: 0.5
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Mirror
+      baseColor: {r: 0.47932017, g: 0.55201143, b: 0.60382736, a: 1}
+      metallic: 1
+      roughness: 0.02
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Seat
+      baseColor: {r: 0.024157632, g: 0.02518686, b: 0.029556835, a: 1}
+      metallic: 0
+      roughness: 0.9
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Rubber
+      baseColor: {r: 0.007499032, g: 0.007499032, b: 0.008023193, a: 1}
+      metallic: 0
+      roughness: 0.92
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: DarkAlloy
+      baseColor: {r: 0.019382361, g: 0.02121901, b: 0.02518686, a: 1}
+      metallic: 0.9
+      roughness: 0.3
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Brake
+      baseColor: {r: 0.2663556, g: 0.2746773, b: 0.29177064, a: 1}
+      metallic: 0.9
+      roughness: 0.35
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+  - id: truck
+    source: Assets/Art/Vehicles/Truck/truck.glb
+    body:
+      mesh: {fileID: -7383457512491876439, guid: de813a0586f41df4a9885280e899e492, type: 3}
+      materials:
+      - Paint
+      - Under
+      - BoxPanel
+      - Rib
+      - Livery
+      - Livery2
+      - Alloy
+      - Chrome
+      - Steel
+      - Plate
+      - Glass
+      - Trim
+      - Headlight
+      - Indicator
+      - Mirror
+      - Rubber
+      - Taillight
+      - Reverse
+      - Grille
+      - Interior
+    bodyLod1:
+      mesh: {fileID: 2202907087754281384, guid: de813a0586f41df4a9885280e899e492, type: 3}
+      materials:
+      - Paint
+      - BoxPanel
+      - Livery
+      - Livery2
+      - Glass
+      - Trim
+      - Headlight
+      - Indicator
+      - Taillight
+      - Reverse
+    wheel:
+      mesh: {fileID: 3217340798425999227, guid: de813a0586f41df4a9885280e899e492, type: 3}
+      materials:
+      - Rubber
+      - Steel
+      - Under
+      - Chrome
+      - Brake
+      - DarkAlloy
+    wheelLod1:
+      mesh: {fileID: 3400631611175728483, guid: de813a0586f41df4a9885280e899e492, type: 3}
+      materials:
+      - Rubber
+      - Steel
+    caliper:
+      mesh: {fileID: -5538159619734212498, guid: de813a0586f41df4a9885280e899e492, type: 3}
+      materials:
+      - Steel
+    materials:
+    - name: Paint
+      baseColor: {r: 0.027320892, g: 0.34670407, b: 0.65837485, a: 1}
+      metallic: 0.5
+      roughness: 0.3
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Under
+      baseColor: {r: 0.0036765074, g: 0.0036765074, b: 0.004024717, a: 1}
+      metallic: 0
+      roughness: 0.9
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: BoxPanel
+      baseColor: {r: 0.8468732, g: 0.8468732, b: 0.8148466, a: 1}
+      metallic: 0.15
+      roughness: 0.42
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Rib
+      baseColor: {r: 0.6653873, g: 0.67244315, b: 0.6444797, a: 1}
+      metallic: 0.3
+      roughness: 0.4
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Livery
+      baseColor: {r: 0.02842604, g: 0.15896083, b: 0.07818742, a: 1}
+      metallic: 0.3
+      roughness: 0.35
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Livery2
+      baseColor: {r: 0.8879231, g: 0.58407843, b: 0.07227185, a: 1}
+      metallic: 0.3
+      roughness: 0.35
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Alloy
+      baseColor: {r: 0.57758045, g: 0.60382736, b: 0.6444797, a: 1}
+      metallic: 1
+      roughness: 0.22
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Chrome
+      baseColor: {r: 0.80695224, g: 0.82278574, b: 0.8549926, a: 1}
+      metallic: 1
+      roughness: 0.07
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Steel
+      baseColor: {r: 0.09084171, g: 0.099898726, b: 0.114435375, a: 1}
+      metallic: 0.85
+      roughness: 0.45
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Plate
+      baseColor: {r: 0.8148466, g: 0.7912979, b: 0.7011019, a: 1}
+      metallic: 0
+      roughness: 0.5
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Glass
+      baseColor: {r: 0.0051815165, g: 0.008023193, b: 0.010960094, a: 0.38}
+      metallic: 0
+      roughness: 0.03
+      blend: 1
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Trim
+      baseColor: {r: 0.006048833, g: 0.0065120906, b: 0.007499032, a: 1}
+      metallic: 0
+      roughness: 0.55
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Headlight
+      baseColor: {r: 0.8962694, g: 0.8962694, b: 0.8962694, a: 1}
+      metallic: 0
+      roughness: 0.05
+      blend: 0
+      emissive: {r: 0.6, g: 0.54279673, b: 0.4294161, a: 1}
+    - name: Indicator
+      baseColor: {r: 0.6653873, g: 0.19461784, b: 0.00699541, a: 1}
+      metallic: 0
+      roughness: 0.12
+      blend: 0
+      emissive: {r: 0.6, g: 0.19388594, b: 0.00822125, a: 1}
+    - name: Mirror
+      baseColor: {r: 0.47932017, g: 0.55201143, b: 0.60382736, a: 1}
+      metallic: 1
+      roughness: 0.02
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Rubber
+      baseColor: {r: 0.007499032, g: 0.007499032, b: 0.008023193, a: 1}
+      metallic: 0
+      roughness: 0.92
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Taillight
+      baseColor: {r: 0.15592647, g: 0.0027317428, b: 0.001517635, a: 1}
+      metallic: 0
+      roughness: 0.12
+      blend: 0
+      emissive: {r: 0.6, g: 0.01389202, b: 0.006197894, a: 1}
+    - name: Reverse
+      baseColor: {r: 0.7454042, g: 0.7454042, b: 0.7454042, a: 1}
+      metallic: 0
+      roughness: 0.12
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Grille
+      baseColor: {r: 0.004024717, g: 0.004391442, b: 0.0047769533, a: 1}
+      metallic: 0.4
+      roughness: 0.45
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Interior
+      baseColor: {r: 0.012286488, g: 0.0129830325, b: 0.014443844, a: 1}
+      metallic: 0
+      roughness: 0.85
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: Brake
+      baseColor: {r: 0.2663556, g: 0.2746773, b: 0.29177064, a: 1}
+      metallic: 0.9
+      roughness: 0.35
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+    - name: DarkAlloy
+      baseColor: {r: 0.019382361, g: 0.02121901, b: 0.02518686, a: 1}
+      metallic: 0.9
+      roughness: 0.3
+      blend: 0
+      emissive: {r: 0, g: 0, b: 0, a: 1}
+  opaqueTemplate: {fileID: 2100000, guid: 0266e4222ddcf094b87cb5b5a8c5daa2, type: 2}
+  glassTemplate: {fileID: 2100000, guid: cd883790be184b940822aae0de2e8809, type: 2}

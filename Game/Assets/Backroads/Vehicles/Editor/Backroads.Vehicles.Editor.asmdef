@@ -1,0 +1,22 @@
+{
+    "name": "Backroads.Vehicles.Editor",
+    "rootNamespace": "Backroads.Vehicles.Editor",
+    "references": [
+        "Backroads.Core",
+        "Backroads.Vehicles",
+        "Backroads.Vehicles.Client",
+        "Unity.Collections",
+        "Unity.Mathematics"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,23 @@
+{
+    "name": "Backroads.Vehicles.Client",
+    "rootNamespace": "Backroads.Vehicles.Client",
+    "references": [
+        "Backroads.Core",
+        "Backroads.World",
+        "Backroads.Vehicles",
+        "Unity.Mathematics",
+        "Unity.Collections",
+        "Unity.Burst"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "!UNITY_SERVER"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

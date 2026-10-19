@@ -4,7 +4,10 @@
     "references": [
         "Backroads.Core",
         "Backroads.World",
-        "Backroads.Deform"
+        "Backroads.Deform",
+        "Unity.Mathematics",
+        "Unity.Collections",
+        "Unity.Burst"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
