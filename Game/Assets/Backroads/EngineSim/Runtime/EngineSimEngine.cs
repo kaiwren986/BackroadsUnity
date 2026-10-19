@@ -25,10 +25,21 @@ namespace Backroads.EngineSim
             public bool workerThread;
             public int flags;
 
+            /// <summary>Audio at the output rate, own worker, and the PLAN 3.8 tier of -br-quality (QualityPreset.EngineAudio).</summary>
             public static Options ForPlayback()
             {
                 AudioSettings.GetDSPBufferSize(out int dsp, out _);
-                return new Options { audioSampleRate = AudioSettings.outputSampleRate, dspBufferFrames = dsp, workerThread = true };
+                var o = new Options { audioSampleRate = AudioSettings.outputSampleRate, dspBufferFrames = dsp, workerThread = true };
+                o.ApplyTier(QualityPreset.Current.EngineAudio);
+                return o;
+            }
+
+            /// <summary>PLAN 3.8: Ultra = 8 gas substeps, IR up to 10,000 taps; High = 4 substeps; Low = 4 substeps, IR up to 2,000 taps.
+            /// The simulation frequency is never a quality knob.</summary>
+            public void ApplyTier(EngineAudioTier tier)
+            {
+                fluidSteps = tier == EngineAudioTier.Ultra ? 8 : 4;
+                firMaxTaps = tier == EngineAudioTier.Low ? 2000 : 10000;
             }
         }
 

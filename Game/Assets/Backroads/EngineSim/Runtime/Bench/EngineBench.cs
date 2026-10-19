@@ -359,7 +359,7 @@ namespace Backroads.EngineSim
                 $"audio ring {s.ringFillFrames / rate * 1000:F1} ms (target {s.ringTargetFrames / rate * 1000:F1} ms)   underruns {s.audioUnderruns}   " +
                 $"coast events {s.coastEvents}   stale collects {s.staleSteps}   drift trim {s.driftTrim * 100:+0.00;-0.00} %\n" +
                 $"main thread per FixedUpdate p99 {Engine.CostPercentileMs(99):F3} ms   frame p95 {s.frameP95Ms:F1} ms   " +
-                $"{Engine.Info.cylinders} cyl, {Engine.Info.simFrequency} Hz, {Engine.Info.fluidSteps} gas substeps, IR {Engine.Info.irTaps} taps";
+                $"{Engine.Info.cylinders} cyl, {Engine.Info.simFrequency} Hz, {Engine.Info.fluidSteps} gas substeps, IR {Engine.Info.irTaps} taps, tier {QualityPreset.Current.EngineAudio}";
             _loadButton.text = LoadOn ? "Load: on (L)" : "Load: off (L)";
             _ignitionButton.text = _ignition ? "Ignition: ON (tap I)" : "Ignition: off (tap I)";
             _sweepButton.SetEnabled(!Sweep.Running);
