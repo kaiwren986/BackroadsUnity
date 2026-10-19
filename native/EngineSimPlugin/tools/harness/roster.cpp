@@ -8,8 +8,11 @@
 #include "harness.h"
 
 #include <windows.h>
+#include <intrin.h>
+#include <timeapi.h>
 
 #include <algorithm>
+#include <atomic>
 #include <cmath>
 #include <thread>
 
@@ -153,6 +156,117 @@ int runBigBlockGate(const std::string &outJson) {
         j.save(outJson);
     }
     drainLog();
+    return pass ? 0 : 1;
+}
+
+// FOLLOW_RPM through hitches, in real time like Unity: 60 fps frames, fixed steps of 1/120 s run at the start of each
+// frame, at most 4 per frame (maximumDeltaTime 4/120: a longer frame loses game time), the result of step k - 2
+// collected; an audio consumer at real time (256-frame blocks). The rpm follows a slow ramp with 50 % pedal. At 12 s the
+// main thread stalls 100 ms, at 22 s 250 ms (both shorter than coast_max_ms). Gate: 0 underruns from 5 s on.
+// --repay-all (ESP_FOLLOW_REPAY_ALL=1) restores M1's repayment for comparison.
+int runFollowHitch(const std::string &engine, const std::string &outJson, bool repayAll) {
+    if (repayAll) _putenv_s("ESP_FOLLOW_REPAY_ALL", "1");
+    Engine eng;
+    std::string err;
+    CreateOpts o;
+    o.audioRate = 48000;
+    if (!eng.open(engine, o, err)) {
+        std::printf("FAIL %s\n", err.c_str());
+        return 1;
+    }
+    EspEngine *e = eng.h();
+    EspWorkerOptions wo{};
+    wo.struct_size = sizeof wo;
+    wo.priority = 3;
+    wo.power_throttling_off = 1;
+    wo.coast_max_ms = 300;
+    esp_set_worker_options(e, &wo);
+    std::atomic<bool> run{true};
+    std::thread audio([&] {
+        SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_TIME_CRITICAL);
+        std::vector<float> buf(256 * 2);
+        const double period = 256.0 / 48000.0;
+        double next = nowS();
+        while (run.load()) {
+            esp_read_audio(e, buf.data(), 256, 2);
+            next += period;
+            const double wait = next - nowS();
+            if (wait > 0.002) Sleep(static_cast<DWORD>((wait - 0.001) * 1000));
+            while (nowS() < next) _mm_pause();
+            if (nowS() - next > 0.1) next = nowS();
+        }
+    });
+    timeBeginPeriod(1);
+    const double fixedDt = 1.0 / 120.0, frame = 1.0 / 60.0, seconds = 32.0;
+    const double hitchAt[2] = {12.0, 22.0}, hitchMs[2] = {100.0, 250.0};
+    bool hitched[2] = {false, false};
+    EspDrivelineIn in = driveline(ESP_MODE_FOLLOW_RPM);
+    int64_t k = 0;
+    int fi = 0;
+    double gameTime = 0.0, fixedTime = 0.0, lastFrameS = 0.0;
+    int underrunsAt5 = -1;
+    int underrunsBefore[2] = {0, 0};
+    const double t0 = nowS();
+    double next = t0;
+    lastFrameS = t0;
+    while (true) {
+        const double now = nowS();
+        const double t = now - t0;
+        if (t >= seconds) break;
+        const double frameDt = now - lastFrameS;
+        lastFrameS = now;
+        gameTime += std::min(frameDt, 4 * fixedDt);  // maximumDeltaTime: a long frame loses game time
+        const int steps = static_cast<int>(std::min(4.0, std::floor((gameTime - fixedTime) / fixedDt + 1e-9)));
+        const double rpm = 2500.0 - 1500.0 * std::cos(2 * 3.14159265358979 * t / 10.0);
+        EspControls c = controls(0.5f, true, false, 1.0f, static_cast<float>(frameDt), fi);
+        esp_set_controls(e, &c);
+        in.follow_rpm = rpm;
+        for (int s = 0; s < steps; ++s, ++k) {
+            fixedTime += fixedDt;
+            esp_step_begin(e, k, fixedDt, &in, nullptr, 0);
+            if (k >= 2) {
+                EspStepOut out = stepOut();
+                esp_step_end(e, k - 2, 1000, &out);
+            }
+        }
+        ++fi;
+        if (underrunsAt5 < 0 && t >= 5.0) underrunsAt5 = stats(e).audio_underruns;
+        for (int h = 0; h < 2; ++h) {
+            if (!hitched[h] && t >= hitchAt[h]) {
+                hitched[h] = true;
+                underrunsBefore[h] = stats(e).audio_underruns;
+                Sleep(static_cast<DWORD>(hitchMs[h]));  // the main thread stalls
+            }
+        }
+        next += frame;
+        if (next < nowS() - 0.05) next = nowS();
+        const double wait = next - nowS();
+        if (wait > 0.002) Sleep(static_cast<DWORD>((wait - 0.001) * 1000));
+        while (nowS() < next) _mm_pause();
+    }
+    timeEndPeriod(1);
+    const EspStats s = stats(e);
+    run = false;
+    audio.join();
+    const int after100 = underrunsBefore[1] - underrunsBefore[0];
+    const int after250 = s.audio_underruns - underrunsBefore[1];
+    const int steady = s.audio_underruns - std::max(0, underrunsAt5);
+    const bool pass = repayAll || steady == 0;
+    std::printf("follow-hitch %s%s: underruns from 5 s %d (around the 100 ms hitch %d, around the 250 ms hitch %d), coast "
+                "events %d, steps borrowed (debt) %lld at the end, RTF %.2f -> %s%s\n",
+                engine.c_str(), repayAll ? " --repay-all (M1 repayment)" : "", steady, after100, after250, s.coast_events,
+                static_cast<long long>(s.steps_borrowed), s.rtf, pass ? "PASS" : "FAIL",
+                repayAll ? " (report only)" : " (gate: 0 underruns)");
+    eng.close();
+    drainLog();
+    if (!outJson.empty()) {
+        Json j;
+        j.obj().str("gate", "esp_follow_hitch").str("engine", engine).boolean("repayAll", repayAll)
+            .integer("underrunsSteady", steady).integer("underruns100ms", after100).integer("underruns250ms", after250)
+            .integer("coastEvents", s.coast_events).integer("stepsBorrowed", s.steps_borrowed).num("rtf", s.rtf, 3)
+            .boolean("pass", pass).end();
+        j.save(outJson);
+    }
     return pass ? 0 : 1;
 }
 

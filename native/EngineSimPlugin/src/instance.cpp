@@ -86,6 +86,7 @@ Instance::Instance(const EspCreateDesc &desc, const std::string &esDir, const st
     m_out.init(ring, rate, target);
     m_fill.init(rate, dsp, target, (desc.flags & ESP_CREATE_NO_DRIFT_TRIM) == 0);
     m_wake = CreateEventW(nullptr, FALSE, FALSE, nullptr);
+    m_out.wakeEvent = m_wake;
     // CREATE_WAITABLE_TIMER_HIGH_RESOLUTION (Windows 10 1803+): sub-millisecond timed waits whatever the process timer
     // resolution is (a console or background process can be held at 15.6 ms on Windows 11).
     m_timer = CreateWaitableTimerExW(nullptr, nullptr, 0x00000002 /* CREATE_WAITABLE_TIMER_HIGH_RESOLUTION */,
@@ -95,6 +96,7 @@ Instance::Instance(const EspCreateDesc &desc, const std::string &esDir, const st
         // own static CRT, whose copy of the environment is taken when the DLL loads.
         char v[8] = {};
         if (GetEnvironmentVariableA("ESP_COAST_LOWWATER", v, sizeof v) > 0 && v[0] == '0') m_lowWaterCoast = false;
+        if (GetEnvironmentVariableA("ESP_FOLLOW_REPAY_ALL", v, sizeof v) > 0 && v[0] == '1') m_followSpareRepay = false;
         if (GetEnvironmentVariableA("ESP_HIRES_TIMER", v, sizeof v) > 0 && v[0] == '0' && m_timer != nullptr) {
             CloseHandle(static_cast<HANDLE>(m_timer));
             m_timer = nullptr;
@@ -793,6 +795,20 @@ void Instance::process(const Command &c, bool afterCoast) {
     if (m_executed > prevTarget) flags |= ESP_OUT_REPAID;
     int64_t n = m_target - m_executed;  // borrowed coast steps are repaid here, never below zero
     if (n < 0) n = 0;
+    if (modeOf(c) == ESP_MODE_FOLLOW_RPM && m_audio && m_followSpareRepay && m_executed > prevTarget) {
+        // FOLLOW_RPM (sound only, M2): repay borrowed steps only from audio the ring can spare above its target, and
+        // keep the rest as debt. After a hitch Unity advances physics by at most maximumDeltaTime (33 ms), so most of
+        // what was coasted is never earned back; repaying it all at once ran commands with no steps and left the ring
+        // empty for that long (measured in m2.vehicles.drive: ~65 ms of silence after a 100 ms frame). In this mode the
+        // engine only follows a given rpm, so engine time ahead of physics time costs nothing; other modes are unchanged.
+        const int64_t own = m_target - prevTarget;        // this command's own steps
+        const int64_t debt = m_executed - prevTarget;     // borrowed, not yet repaid
+        const double framesPerStep = static_cast<double>(m_rate) / (m_freq * (m_simSpeed > 0 ? m_simSpeed : 1.0));
+        const double spareFrames = static_cast<double>(m_out.ring.fill()) - m_out.targetFrames.load(std::memory_order_relaxed);
+        const int64_t spare = spareFrames > 0 ? static_cast<int64_t>(spareFrames / framesPerStep) : 0;
+        const int64_t repay = std::max<int64_t>(0, std::min(debt, std::min(own, spare)));
+        n = std::max<int64_t>(0, own - repay);
+    }
 
     StepAcc acc;
     runSteps(n, c, acc);
@@ -908,9 +924,13 @@ void Instance::notePush(double startS, double wallS, double cpuS, double kickLat
     if (d.underrunsLogged >= 8) return;  // a bad run logs its first few only
     ++d.underrunsLogged;
     const double at = qpcSeconds(m_out.lastUnderrunQpc.load(std::memory_order_relaxed)) - d.t0;
-    std::string lines = fmtLine("underrun #%d at %.3f s (ring target %.1f ms); the batches before it (t s, gap ms, fill "
-                                "before -> after ms, wall/cpu ms, kick->start ms, step):",
-                                u, at, m_out.targetFrames.load(std::memory_order_relaxed) * toMs);
+    const int64_t lw = m_out.lowWakeQpc.load(std::memory_order_relaxed);
+    std::string lines = fmtLine("underrun #%d at %.3f s (ring target %.1f ms); audio thread last woke the worker at %.3f s; "
+                                "the worker's last wait: deadline %.3f s, woke %.3f s (%s); the batches before it (t s, gap "
+                                "ms, fill before -> after ms, wall/cpu ms, kick->start ms, step):",
+                                u, at, m_out.targetFrames.load(std::memory_order_relaxed) * toMs,
+                                lw != 0 ? qpcSeconds(lw) - d.t0 : -1.0, d.lastWaitDeadlineS - d.t0, d.lastWaitWokeS - d.t0,
+                                d.lastWaitByEvent ? "by its event" : "by its deadline");
     for (int i = 0; i < d.count; ++i) {
         const PushNote &h = d.hist[(d.next - d.count + i + 24) % 24];
         lines += fmtLine("\n    %s %.3f gap %.1f fill %.1f -> %.1f wall %.2f cpu %.2f kick %.2f step %lld", h.coast ? "coast" : "cmd  ",
@@ -926,12 +946,15 @@ void Instance::logWorkerSummary() {
     logf(LogLevel::Info,
          "worker summary %s: %lld batches; steady state (from 10 s): longest gap between pushes %.1f ms (at %.1f s), "
          "lowest fill before a push %.1f ms (at %.1f s), pushes with fill < 2/5/10/15 ms: %lld/%lld/%lld/%lld, "
-         "longest batch %.2f ms, most descheduled %.2f ms, longest kick->start %.2f ms; low-water coasts %d; "
+         "longest batch %.2f ms, most descheduled %.2f ms, longest kick->start %.2f ms; latest wake after a deadline "
+         "%.1f ms (at %.1f s), wakes > 5 / 20 ms late %lld / %lld; audio-thread wakes %d; low-water coasts %d; "
          "underruns %d; timer %s, low-water coast %s, worker %s",
          m_bundle.name.c_str(), static_cast<long long>(d.pushes), d.maxGapMs, d.maxGapAtS, d.minFillBeforeMs < 1e8 ? d.minFillBeforeMs : 0.0,
          d.minFillAtS, static_cast<long long>(d.lowFill[0]), static_cast<long long>(d.lowFill[1]),
          static_cast<long long>(d.lowFill[2]), static_cast<long long>(d.lowFill[3]), d.maxWallMs, d.maxDeschedMs,
-         d.maxKickLatencyMs, d.lowWaterCoasts, m_out.underruns.load(), m_timer != nullptr ? "high-resolution" : "ms",
+         d.maxKickLatencyMs, d.maxWakeLateMs, d.maxWakeLateAtS, static_cast<long long>(d.wakesLate5),
+         static_cast<long long>(d.wakesLate20), m_out.lowWakes.load(), d.lowWaterCoasts, m_out.underruns.load(),
+         m_timer != nullptr ? "high-resolution" : "ms",
          m_lowWaterCoast ? "on" : "off", m_schedClass);
 }
 

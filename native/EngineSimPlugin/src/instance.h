@@ -151,6 +151,7 @@ private:
     const char *m_schedClass = "default";     // worker only: what the worker runs as (for the summary)
     void applyWorkerPriority();
     bool m_lowWaterCoast = true;  // coast as soon as the ring would run dry before the next command (ESP_COAST_LOWWATER=0: off)
+    bool m_followSpareRepay = true;  // FOLLOW_RPM repays borrowed steps from spare audio only (ESP_FOLLOW_REPAY_ALL=1: off)
     std::atomic<bool> m_stop{false};
     std::atomic<int64_t> m_lastKickQpc{0};
     std::atomic<int32_t> m_coastMaxMs{300};
@@ -185,6 +186,11 @@ private:
         double maxKickLatencyMs = 0.0, maxDeschedMs = 0.0, maxWallMs = 0.0;
         int64_t pushes = 0, lowFill[4] = {};  // fill before a push below 2, 5, 10, 15 ms
         int32_t underrunsSeen = 0, underrunsLogged = 0, lowWaterCoasts = 0;
+        // timed waits: how late the worker woke after its deadline (wake-up latency: timer DPCs, scheduling, paging)
+        double maxWakeLateMs = 0.0, maxWakeLateAtS = 0.0;
+        int64_t wakesLate5 = 0, wakesLate20 = 0;
+        double lastWaitDeadlineS = 0.0, lastWaitWokeS = 0.0;
+        bool lastWaitTimed = false, lastWaitByEvent = false;
     } m_diag;
     double m_slope = 0.0, m_mx = 0.0, m_my = 0.0, m_sxx = 0.0, m_sxy = 0.0;
     bool m_slopeInit = false;

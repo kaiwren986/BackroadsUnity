@@ -40,6 +40,12 @@ public:
     std::atomic<int32_t> underruns{0};
     std::atomic<int32_t> underrunFrames{0};
     std::atomic<int64_t> lastUnderrunQpc{0};  // QPC ticks of the last counted underrun (worker diagnostics)
+    // M2: the worker's wake event and its low-water mark (frames, 0 = off). The audio thread sets the event once when the
+    // fill falls to the mark, so the worker's low-water coast follows the audio clock, not only its own timer.
+    void *wakeEvent = nullptr;
+    std::atomic<int32_t> lowWaterFrames{0};
+    std::atomic<int64_t> lowWakeQpc{0};      // when the audio thread last woke the worker (diagnostics)
+    std::atomic<int32_t> lowWakes{0};
     std::atomic<int64_t> consumed{0};
 
 private:
@@ -51,6 +57,7 @@ private:
     bool m_primed = false;    // false until the ring first reaches the target (start) or half of it (after underrun)
     bool m_inUnderrun = false;
     bool m_everPrimed = false;
+    bool m_lowSignalled = false;  // audio thread: the worker was woken for this low episode
 };
 
 class FillController {

@@ -8,9 +8,10 @@
 //   - (M2, card T2.4) the audio ring would run dry before the next command could refill it: the fill has fallen to the
 //     low-water mark of one DSP buffer + one coast batch of worker time + 3 ms. In steady play the fill before a push
 //     never gets there (it sits near the target minus one frame); it is the last line against an underrun when a frame
-//     comes late but not late enough to count as a hitch. Never while borrowed steps are still being repaid: those
-//     commands run no steps by design, and coasting then would only borrow again (measured in the M2 bench demo after
-//     a 300 ms screenshot hitch: coast and repay alternated, the debt never cleared and the engine held a stale target).
+//     comes late but not late enough to count as a hitch. Never while borrowed steps are still being repaid by commands
+//     that run no steps (FREE, SLAVED_CRANK): coasting then would only borrow again (measured in the M2 bench demo after
+//     a 300 ms screenshot hitch: coast and repay alternated and the debt never cleared). FOLLOW_RPM repays only from
+//     spare audio (instance.cpp process()), so its commands keep producing and the low-water coast stays available.
 // Coasted steps are borrowed; process() subtracts them from the following commands (never below zero), restoring
 // round(sum(dt) * f), and re-enters the mode (the SLAVED_CRANK PD integral resets).
 // Timed waits use a high-resolution waitable timer, so a deadline is met within about 0.5 ms whatever the process timer
@@ -29,19 +30,41 @@ namespace esp {
 
 void Instance::workerWait(double seconds) {
     HANDLE wake = static_cast<HANDLE>(m_wake);
+    const double start = nowSeconds();
+    const double deadline = start + std::max(1e-4, seconds);
+    DWORD r = WAIT_TIMEOUT;
+    bool timed = false;
     if (m_timer != nullptr) {
         HANDLE timer = static_cast<HANDLE>(m_timer);
         LARGE_INTEGER due;
         due.QuadPart = -static_cast<LONGLONG>(std::max(1e-4, seconds) * 1e7);  // relative, 100 ns units
         if (SetWaitableTimer(timer, &due, 0, nullptr, nullptr, FALSE)) {
             HANDLE both[2] = {wake, timer};
-            WaitForMultipleObjects(2, both, FALSE, INFINITE);
+            r = WaitForMultipleObjects(2, both, FALSE, INFINITE);
             CancelWaitableTimer(timer);
-            return;
+            timed = true;
         }
     }
-    const DWORD ms = static_cast<DWORD>(std::max(1.0, std::ceil(seconds * 1000.0)));
-    WaitForSingleObject(wake, ms);
+    if (!timed) {
+        const DWORD ms = static_cast<DWORD>(std::max(1.0, std::ceil(seconds * 1000.0)));
+        r = WaitForSingleObject(wake, ms);
+    }
+    // diagnostics: a wake by the deadline (timer or timeout) that came late
+    const double woke = nowSeconds();
+    WorkerDiag &d = m_diag;
+    d.lastWaitDeadlineS = deadline;
+    d.lastWaitWokeS = woke;
+    d.lastWaitByEvent = (r == WAIT_OBJECT_0);
+    d.lastWaitTimed = !d.lastWaitByEvent;
+    if (!d.lastWaitByEvent && d.pushes > 0 && woke - d.t0 >= 10.0) {
+        const double lateMs = 1000.0 * (woke - deadline);
+        if (lateMs > d.maxWakeLateMs) {
+            d.maxWakeLateMs = lateMs;
+            d.maxWakeLateAtS = woke - d.t0;
+        }
+        if (lateMs > 5.0) ++d.wakesLate5;
+        if (lateMs > 20.0) ++d.wakesLate20;
+    }
 }
 
 // The audio class (EspWorkerOptions.priority 3, M2) is applied here, on the worker itself: MMCSS registers the calling
@@ -102,7 +125,10 @@ void Instance::workerMain() {
                 const double fillS = static_cast<double>(m_out.ring.fill()) / rate;
                 const double batchS = m_stats.wallEma > 0 ? 1.5 * m_stats.wallEma / 1000.0 : stepWall;
                 const double lowS = static_cast<double>(m_fill.dspFrames()) / rate + std::min(batchS, stepWall) + 0.003;
-                const bool inDebt = m_executed > m_target;  // borrowed steps not yet repaid
+                // borrowed steps being repaid with commands that run no steps (FOLLOW_RPM keeps producing while in debt)
+                const bool inDebt = m_executed > m_target && !(m_followSpareRepay && modeOf(m_lastCmd) == ESP_MODE_FOLLOW_RPM);
+                m_out.lowWaterFrames.store(m_lowWaterCoast && !inDebt ? static_cast<int32_t>(lowS * rate) : 0,
+                                           std::memory_order_relaxed);
                 const bool low = m_lowWaterCoast && !inDebt && m_out.producerActive.load(std::memory_order_relaxed) && fillS <= lowS &&
                                  now - lastKick >= 0.5 * stepWall;
                 if (now - lastKick >= threshold || low) {

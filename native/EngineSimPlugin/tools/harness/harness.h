@@ -158,6 +158,8 @@ int runAllEngines(const std::string &outJson, int threads, bool hardRoster);
 int runSanitiseAll(const std::string &outJson, int threads);
 // M2 (roster.cpp): v8_bigblock_a against the upstream script it ports; the roster report.
 int runBigBlockGate(const std::string &outJson);
+// FOLLOW_RPM through main-thread hitches with Unity's clock (at most 4 fixed steps per frame): underruns after each hitch.
+int runFollowHitch(const std::string &engine, const std::string &outJson, bool repayAll);
 int runRosterReport(const std::string &outJson);
 
 } // namespace esph

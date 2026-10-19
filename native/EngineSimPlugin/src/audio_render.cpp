@@ -4,6 +4,8 @@
 #include "platform.h"
 #include "synthesizer.h"
 
+#include <windows.h>
+
 #include <algorithm>
 #include <cmath>
 
@@ -79,6 +81,20 @@ int32_t AudioOutput::read(float *dst, int32_t frames, int32_t channels) {
         m_inUnderrun = false;
     }
     consumed.fetch_add(got, std::memory_order_relaxed);
+    // wake the worker once per low episode (SetEvent neither blocks nor allocates; the worker decides what to do)
+    const int32_t low = lowWaterFrames.load(std::memory_order_relaxed);
+    if (low > 0 && wakeEvent != nullptr) {
+        if (ring.fill() <= static_cast<size_t>(low)) {
+            if (!m_lowSignalled) {
+                m_lowSignalled = true;
+                lowWakeQpc.store(qpcNow(), std::memory_order_relaxed);
+                lowWakes.fetch_add(1, std::memory_order_relaxed);
+                SetEvent(static_cast<HANDLE>(wakeEvent));
+            }
+        } else {
+            m_lowSignalled = false;
+        }
+    }
     return got;
 }
 

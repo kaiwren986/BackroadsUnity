@@ -19,6 +19,7 @@
 //   esp_cli sanitise-all [--threads 8]                 mr_sanitise every upstream script; the copies must still load
 //   esp_cli bigblock                                   v8_bigblock_a vs the upstream script it ports (dyno, start)
 //   esp_cli roster                                     every builtin: crank, idle, WOT peak (report)
+//   esp_cli follow-hitch [engine] [--repay-all]        FOLLOW_RPM through 100 and 250 ms hitches, real time (underruns)
 //   esp_cli selftest                                   start + dyno + follow gates
 // Every report also takes --json <file>.
 #include "harness/harness.h"
@@ -161,6 +162,7 @@ int main(int argc, char **argv) {
     }
     if (cmd == "bigblock") return runBigBlockGate(json);
     if (cmd == "roster") return runRosterReport(json);
+    if (cmd == "follow-hitch") return runFollowHitch(engineArg("v8_bigblock_a"), json, a.has("repay-all"));
     if (cmd == "selftest") {
         int fails = 0;
         fails += runStartGate("f4_boxer_a", "") != 0;

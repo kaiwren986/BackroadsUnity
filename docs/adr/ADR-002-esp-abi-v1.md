@@ -176,5 +176,19 @@ compatible extensions in the sense of "Decision" above (a value that was unused 
    a fast editor loop) most frames send no command and audio arrives once per fixed step; the target must cover that
    cadence (measured: target 13.1 ms with a push every 8.3 ms and a 21 ms DSP buffer gave an underrun).
 3. **Low-water coast (item 6).** Besides the hitch threshold, the worker also coasts when the ring would run dry before
-   the next command: the fill has fallen to one DSP buffer + one coast batch of worker time + 3 ms. Timed worker waits
-   use a high-resolution waitable timer. Borrowing and repayment are unchanged (`esp_step_accounting` still exact).
+   the next command: the fill has fallen to one DSP buffer + one coast batch of worker time + 3 ms; not while commands
+   are repaying borrowed steps with no steps of their own (that only borrowed again). Timed worker waits use a
+   high-resolution waitable timer. In FREE and SLAVED_CRANK borrowing and repayment are unchanged
+   (`esp_step_accounting` still exact).
+4. **FOLLOW_RPM repays from spare audio (items 1 and 6).** In FOLLOW_RPM with audio, a command repays borrowed steps
+   only from audio the ring holds above its target and keeps the rest as debt (`EspStats.steps_borrowed`), so engine
+   time may run ahead of physics time in this mode. Why: after a hitch Unity advances physics by at most
+   `maximumDeltaTime` (33 ms), so most coasted steps are never earned back, and repaying them at once ran commands with
+   no steps: about 65 ms of silence after a 100 ms frame (`m2.vehicles.drive`). FOLLOW_RPM is sound only (the vehicle
+   model drives), so the debt costs nothing. Test: `esp_follow_hitch` (heavy): 0 underruns through 100 and 250 ms
+   main-thread stalls with Unity's clock; `--repay-all` (`ESP_FOLLOW_REPAY_ALL=1`) shows the M1 rule for comparison.
+5. **The audio thread wakes the worker (Thread contract, Audio).** `esp_read_audio` stays lock-free and
+   allocation-free; when the fill falls to the worker's low-water mark it now calls `SetEvent` on the worker's wake
+   event once per low episode (a non-blocking kernel call), so the low-water coast follows the audio clock and not
+   only the worker's own timer. Why: in M2 release soaks the worker and the frame loop sometimes woke 45-50 ms after
+   their timers while the audio thread kept running.
