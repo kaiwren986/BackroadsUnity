@@ -71,6 +71,7 @@ private:
     int32_t m_frame = INT32_MIN;
     double m_frameDt = 0.0, m_frameWork = 0.0;
     std::vector<double> m_frameDts, m_frameWorks;  // ring of the last 256 frames
+    std::vector<double> m_scratch;                // p95 work space, allocated once (no steady-state allocation)
     size_t m_next = 0, m_count = 0;
     double m_lastRecompute = -1.0;
     double m_p95FrameMs = 0.0, m_workerFrameMs = 0.0;

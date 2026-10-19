@@ -68,7 +68,14 @@ static void firSpeed() {
     const double usRef = std::chrono::duration<double, std::micro>(t2 - t1).count() / (n / 4);
     std::printf("  FIR 10000 taps, %s: %.3f us/sample (ConvolutionFilter %.3f, %.1fx) (acc %g)\n", esp::firKernelName(), us,
                 usRef, usRef / us, acc);
+#if defined(__SANITIZE_ADDRESS__)
+    // ASan instruments every vector load of the SIMD kernel (measured 6x slower than the scalar reference there):
+    // the speed comparison means something only in the release build.
+    (void)us;
+    (void)usRef;
+#else
     CHECK(us < usRef);
+#endif
 }
 
 static void resampler() {

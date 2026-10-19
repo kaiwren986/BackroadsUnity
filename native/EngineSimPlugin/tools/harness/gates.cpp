@@ -143,6 +143,10 @@ int runFollowGate(const std::string &engine, const std::string &outJson) {
     std::string err;
     CreateOpts o;
     o.audioRate = 48000;
+    // The Driver runs in lockstep (it waits for each result before sending the next command), so the worker idles
+    // between commands by construction. Under ASan (about 10x slower) that idle time passes the coast threshold, and
+    // every command would only repay borrowed steps. Coasting is for real-time callers; this gate measures tracking.
+    o.flags = ESP_CREATE_NO_COAST;
     if (!eng.open(engine, o, err)) {
         std::printf("FAIL %s\n", err.c_str());
         return 1;

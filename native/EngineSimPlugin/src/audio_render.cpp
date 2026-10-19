@@ -90,6 +90,7 @@ void FillController::init(int sampleRate, int dspBufferFrames, int initialTarget
     m_frame = INT32_MIN;
     m_frameDts.assign(256, 0.0);
     m_frameWorks.assign(256, 0.0);
+    m_scratch.assign(256, 0.0);
     m_next = m_count = 0;
     m_lastRecompute = -1.0;
 }
@@ -116,12 +117,15 @@ void FillController::onCommand(int32_t frameIndex, double frameDtS, double worke
 
 namespace {
 
-double p95(std::vector<double> v, size_t n) {
-    v.resize(n);
-    if (v.empty()) return 0.0;
+// p95 of the first n values of v, using scratch (same size as v) so the worker never allocates here.
+double p95(const std::vector<double> &v, size_t n, std::vector<double> &scratch) {
+    n = std::min(n, std::min(v.size(), scratch.size()));
+    if (n == 0) return 0.0;
+    std::copy(v.begin(), v.begin() + static_cast<std::ptrdiff_t>(n), scratch.begin());
     const size_t k = static_cast<size_t>(std::ceil(0.95 * static_cast<double>(n))) - 1;
-    std::nth_element(v.begin(), v.begin() + static_cast<std::ptrdiff_t>(k), v.end());
-    return v[k];
+    const auto end = scratch.begin() + static_cast<std::ptrdiff_t>(n);
+    std::nth_element(scratch.begin(), scratch.begin() + static_cast<std::ptrdiff_t>(k), end);
+    return scratch[k];
 }
 
 } // namespace
@@ -129,8 +133,8 @@ double p95(std::vector<double> v, size_t n) {
 void FillController::recompute(double nowS) {
     m_lastRecompute = nowS;
     if (m_count < 8) return;
-    m_p95FrameMs = 1000.0 * p95(m_frameDts, m_count);
-    m_workerFrameMs = 1000.0 * p95(m_frameWorks, m_count);
+    m_p95FrameMs = 1000.0 * p95(m_frameDts, m_count, m_scratch);
+    m_workerFrameMs = 1000.0 * p95(m_frameWorks, m_count, m_scratch);
     double targetMs = m_p95FrameMs + m_workerFrameMs + 1000.0 * m_dsp / m_rate + 5.0;
     targetMs = std::max(10.0, std::min(250.0, targetMs));
     const int32_t t = static_cast<int32_t>(std::lround(targetMs * m_rate / 1000.0));
