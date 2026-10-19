@@ -1,0 +1,31 @@
+{
+    "name": "Backroads.Tests.EditMode.Deform",
+    "rootNamespace": "Backroads.Tests.EditMode.Deform",
+    "references": [
+        "Backroads.Core",
+        "Backroads.World",
+        "Backroads.Deform",
+        "Backroads.Canon.Editor",
+        "Backroads.Client.Rendering",
+        "Unity.Mathematics",
+        "Unity.Collections",
+        "Unity.Burst",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
