@@ -1,0 +1,107 @@
+{
+    "schema":  1,
+    "gate":  "lfs.budget",
+    "tier":  "milestone",
+    "status":  "pass",
+    "hard":  true,
+    "headline":  false,
+    "message":  "115.1 MiB in 58 LFS objects (1.9 % of 6 GiB); local store 117.9 MiB",
+    "startedAt":  "2026-10-18T22:41:40.1873110-05:00",
+    "finishedAt":  "2026-10-18T22:41:41.1011663-05:00",
+    "build":  {
+                  "git":  "ce0b806b9b72521896f5b1e1f6e0ff4356d36a02",
+                  "branch":  "main",
+                  "dirty":  true,
+                  "unity":  "6000.3.20f1",
+                  "native":  "61778051a0c8b30c4c5be7d8f7ea3eca73092bc746c8d4c70b04a864a9ebbf17",
+                  "abi":  1
+              },
+    "machine":  null,
+    "wallClock":  {
+                      "seconds":  0.6,
+                      "budget":  120,
+                      "pausedSeconds":  0,
+                      "overBudget":  false
+                  },
+    "conditions":  {
+
+                   },
+    "metrics":  {
+                    "gitLfs":  "git-lfs/3.7.1 (GitHub; windows amd64; go 1.25.1; git b84b3384)",
+                    "reachableObjects":  58,
+                    "reachableBytes":  120680129,
+                    "reachable":  "115.1 MiB",
+                    "byFolderBytes":  {
+                                          "CanonData/v1":  116872233,
+                                          "Game/Assets/Plugins":  1420288,
+                                          "CanonData/refs":  1181156,
+                                          "native":  1062548,
+                                          "Game/Assets/StreamingAssets":  125716,
+                                          "Game/Assets/Art":  18188
+                                      },
+                    "largest":  [
+                                    {
+                                        "name":  "CanonData/v1/terrain/heights.f32",
+                                        "bytes":  16793604
+                                    },
+                                    {
+                                        "name":  "CanonData/v1/terrain/base.f32",
+                                        "bytes":  16793604
+                                    },
+                                    {
+                                        "name":  "CanonData/v1/reference/static_props.glb",
+                                        "bytes":  11595764
+                                    },
+                                    {
+                                        "name":  "CanonData/v1/terrain/surface.u8",
+                                        "bytes":  4198401
+                                    },
+                                    {
+                                        "name":  "CanonData/v1/terrain/roadd.u8",
+                                        "bytes":  4198401
+                                    },
+                                    {
+                                        "name":  "CanonData/v1/terrain/mud.u8",
+                                        "bytes":  4198401
+                                    },
+                                    {
+                                        "name":  "CanonData/v1/terrain/wear.u8",
+                                        "bytes":  4198401
+                                    },
+                                    {
+                                        "name":  "CanonData/v1/reference/shots/poi_fuel_1000.png",
+                                        "bytes":  2850650
+                                    },
+                                    {
+                                        "name":  "CanonData/v1/reference/shots/roundabout_1000.png",
+                                        "bytes":  2744598
+                                    },
+                                    {
+                                        "name":  "CanonData/v1/reference/shots/junction_1000.png",
+                                        "bytes":  2644699
+                                    }
+                                ],
+                    "localStoreBytes":  123579585,
+                    "localStoreObjects":  61,
+                    "localStore":  "117.9 MiB",
+                    "largeNonLfsBlobs":  [
+
+                                         ],
+                    "percentOfBudget":  1.9
+                },
+    "thresholds":  {
+                       "reachableBytes":  6442450944,
+                       "warnAtBytes":  5153960755
+                   },
+    "evidence":  [
+                     "artifacts/20261018-2238/gate-M1/lfs.budget/lfs-objects.json"
+                 ],
+    "warnings":  [
+
+                 ],
+    "fallbackIfFail":  "git lfs prune after the tag; commit .blend and baked textures only at review points; ask the user about paid LFS (U22)",
+    "exitCode":  0,
+    "out":  "artifacts/20261018-2238/gate-M1/lfs.budget",
+    "run":  "artifacts/20261018-2238/gate-M1",
+    "script":  "tools/ci/lfs-budget.ps1"
+}

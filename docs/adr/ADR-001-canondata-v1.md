@@ -1,6 +1,6 @@
 # ADR-001: CanonData v1 is a frozen contract
 
-- **Status:** draft (lane W, M1). Accepted when the integrator freezes it at the M1 gate (T1.9).
+- **Status:** **accepted and frozen** at the `m1` tag (2026-10-18; M1 milestone gate 19/19, docs/gates/M1.json). Changes need a new ADR.
 - **Date:** 2026-10-18
 - **Owners:** lane W (world and rendering); changes need the user's approval (AGENTS.md rule 4) and the integrator's merge.
 - **Plan:** PLAN §1.2, §1.8, §1.10 ("frozen contracts"), §2.2, §2.6, §6.1 M0/M1; 03 §2, §3.

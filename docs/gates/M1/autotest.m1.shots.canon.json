@@ -1,0 +1,618 @@
+{
+    "schema":  1,
+    "gate":  "autotest.m1.shots.canon",
+    "tier":  "milestone",
+    "status":  "pass",
+    "hard":  true,
+    "headline":  true,
+    "message":  "1 of 1 runs passed (AUTOTEST m1.shots.canon PASS (0 failures) -\u003e D:\\Backroads-Unity\\artifacts\\20261018-2238\\gate-M1\\autotest.m1.shots.canon)",
+    "startedAt":  "2026-10-18T22:41:44.1204311-05:00",
+    "finishedAt":  "2026-10-18T22:41:59.1121335-05:00",
+    "build":  {
+                  "git":  "ce0b806b9b72521896f5b1e1f6e0ff4356d36a02",
+                  "branch":  "main",
+                  "dirty":  true,
+                  "unity":  "6000.3.20f1",
+                  "native":  "61778051a0c8b30c4c5be7d8f7ea3eca73092bc746c8d4c70b04a864a9ebbf17",
+                  "abi":  1
+              },
+    "machine":  {
+                    "summary":  "Intel(R) Core(TM) Ultra 9 275HX / NVIDIA GeForce RTX 5080 Laptop GPU / Microsoft Windows 11 Home 26200",
+                    "power":  "mains",
+                    "batteryPercent":  81,
+                    "gpu":  {
+                                "active":  "NVIDIA GeForce RTX 5080 Laptop GPU",
+                                "discretePresent":  true,
+                                "controllers":  [
+                                                    {
+                                                        "name":  "Intel(R) Graphics",
+                                                        "discrete":  false,
+                                                        "drivesDisplay":  true,
+                                                        "driver":  "32.0.101.8826"
+                                                    },
+                                                    {
+                                                        "name":  "NVIDIA GeForce RTX 5080 Laptop GPU",
+                                                        "discrete":  true,
+                                                        "drivesDisplay":  true,
+                                                        "driver":  "32.0.16.1664"
+                                                    }
+                                                ],
+                                "note":  "active = discrete GPU if present; the player reports the GPU it really used in result.json"
+                            },
+                    "powerMode":  {
+                                      "overlayAc":  "Balanced",
+                                      "overlayDc":  "Balanced",
+                                      "scheme":  "64a64f24-65b9-4b56-befd-5ec1eaced9b3  (Silent)"
+                                  },
+                    "cores":  {
+                                  "logical":  24,
+                                  "p":  [
+                                            0,
+                                            1,
+                                            10,
+                                            11,
+                                            12,
+                                            13,
+                                            22,
+                                            23
+                                        ],
+                                  "e":  [
+                                            2,
+                                            3,
+                                            4,
+                                            5,
+                                            6,
+                                            7,
+                                            8,
+                                            9,
+                                            14,
+                                            15,
+                                            16,
+                                            17,
+                                            18,
+                                            19,
+                                            20,
+                                            21
+                                        ],
+                                  "minSpecMask":  "0xFC",
+                                  "source":  "artifacts/env.json"
+                              },
+                    "cpuLoadPercent":  8,
+                    "otherProcs":  [
+
+                                   ]
+                },
+    "wallClock":  {
+                      "seconds":  14.7,
+                      "budget":  600,
+                      "pausedSeconds":  0,
+                      "overBudget":  false
+                  },
+    "conditions":  {
+                       "scenario":  "m1.shots.canon",
+                       "profile":  "Dev",
+                       "milestone":  "M1",
+                       "quality":  "player default",
+                       "coreClass":  "unpinned",
+                       "fpsCap":  "uncapped",
+                       "resolution":  "2560x1440",
+                       "perf":  false,
+                       "repeat":  1,
+                       "minSpecProxy":  false,
+                       "egressCheck":  false
+                   },
+    "metrics":  {
+                    "exe":  "builds/M1-dev/Backroads.exe",
+                    "buildGit":  "ce0b806b9b72521896f5b1e1f6e0ff4356d36a02",
+                    "buildProfile":  "Dev",
+                    "buildMilestone":  "M1",
+                    "runs":  [
+                                 {
+                                     "run":  1,
+                                     "exitCode":  0,
+                                     "result":  "exit 0",
+                                     "seconds":  14.4,
+                                     "affinity":  null,
+                                     "resultFile":  true,
+                                     "status":  "pass",
+                                     "failures":  [
+
+                                                  ],
+                                     "metrics":  {
+                                                     "developmentBuild":  true,
+                                                     "seconds":  3.7782602310180666,
+                                                     "frames":  98,
+                                                     "p50FrameMs":  6.593905925750732,
+                                                     "p95FrameMs":  133.6772003173828,
+                                                     "p99FrameMs":  2683.636962890625,
+                                                     "exceptions":  0,
+                                                     "errors":  0,
+                                                     "firstProblem":  "",
+                                                     "gpu":  "NVIDIA GeForce RTX 5080 Laptop GPU",
+                                                     "quality":  "default High (render 1.00, cap none, shadows 4/4096/400 m, engine audio Ultra)",
+                                                     "Count":  51,
+                                                     "Length":  51,
+                                                     "LongLength":  51,
+                                                     "Rank":  1,
+                                                     "SyncRoot":  [
+                                                                      {
+                                                                          "name":  "shot.poi_town_1000.mad",
+                                                                          "value":  0.03505
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.poi_town_1000.ssim",
+                                                                          "value":  0.93752
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.poi_depot_1000.mad",
+                                                                          "value":  0.03199
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.poi_depot_1000.ssim",
+                                                                          "value":  0.9285
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.poi_farm_1000.mad",
+                                                                          "value":  0.0281
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.poi_farm_1000.ssim",
+                                                                          "value":  0.94733
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.poi_quarry_1000.mad",
+                                                                          "value":  0.02855
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.poi_quarry_1000.ssim",
+                                                                          "value":  0.94809
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.poi_mill_1000.mad",
+                                                                          "value":  0.03088
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.poi_mill_1000.ssim",
+                                                                          "value":  0.93294
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.poi_harbor_1000.mad",
+                                                                          "value":  0.02698
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.poi_harbor_1000.ssim",
+                                                                          "value":  0.95754
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.poi_fuel_1000.mad",
+                                                                          "value":  0.0293
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.poi_fuel_1000.ssim",
+                                                                          "value":  0.94435
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.bog_1000.mad",
+                                                                          "value":  0.03513
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.bog_1000.ssim",
+                                                                          "value":  0.93239
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.roundabout_1000.mad",
+                                                                          "value":  0.0365
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.roundabout_1000.ssim",
+                                                                          "value":  0.90462
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.junction_1000.mad",
+                                                                          "value":  0.02985
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.junction_1000.ssim",
+                                                                          "value":  0.93098
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.lake_1000.mad",
+                                                                          "value":  0.0301
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.lake_1000.ssim",
+                                                                          "value":  0.95244
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.overview_1000.mad",
+                                                                          "value":  0.03854
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.overview_1000.ssim",
+                                                                          "value":  0.95402
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.poi_town_2100.mad",
+                                                                          "value":  0.03599
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.poi_town_2100.ssim",
+                                                                          "value":  0.80378
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.poi_depot_2100.mad",
+                                                                          "value":  0.03696
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.poi_depot_2100.ssim",
+                                                                          "value":  0.78924
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.poi_farm_2100.mad",
+                                                                          "value":  0.02909
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.poi_farm_2100.ssim",
+                                                                          "value":  0.79106
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.poi_quarry_2100.mad",
+                                                                          "value":  0.03058
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.poi_quarry_2100.ssim",
+                                                                          "value":  0.75699
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.poi_mill_2100.mad",
+                                                                          "value":  0.01966
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.poi_mill_2100.ssim",
+                                                                          "value":  0.79049
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.poi_harbor_2100.mad",
+                                                                          "value":  0.03416
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.poi_harbor_2100.ssim",
+                                                                          "value":  0.82726
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.poi_fuel_2100.mad",
+                                                                          "value":  0.02822
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.poi_fuel_2100.ssim",
+                                                                          "value":  0.80163
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.bog_2100.mad",
+                                                                          "value":  0.02462
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.bog_2100.ssim",
+                                                                          "value":  0.77929
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.roundabout_2100.mad",
+                                                                          "value":  0.05672
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.roundabout_2100.ssim",
+                                                                          "value":  0.70763
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.junction_2100.mad",
+                                                                          "value":  0.0299
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.junction_2100.ssim",
+                                                                          "value":  0.84286
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.lake_2100.mad",
+                                                                          "value":  0.02412
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.lake_2100.ssim",
+                                                                          "value":  0.82168
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.overview_2100.mad",
+                                                                          "value":  0.02487
+                                                                      },
+                                                                      {
+                                                                          "name":  "shot.overview_2100.ssim",
+                                                                          "value":  0.8771
+                                                                      },
+                                                                      {
+                                                                          "name":  "shots.written",
+                                                                          "value":  24.0
+                                                                      },
+                                                                      {
+                                                                          "name":  "shots.mad.mean",
+                                                                          "value":  0.03149
+                                                                      },
+                                                                      {
+                                                                          "name":  "shots.ssim.mean",
+                                                                          "value":  0.86916
+                                                                      }
+                                                                  ],
+                                                     "IsReadOnly":  false,
+                                                     "IsFixedSize":  true,
+                                                     "IsSynchronized":  false
+                                                 },
+                                     "logVerdict":  "[BR] AUTOTEST m1.shots.canon PASS (0 failures) -\u003e D:\\Backroads-Unity\\artifacts\\20261018-2238\\gate-M1\\autotest.m1.shots.canon"
+                                 }
+                             ],
+                    "developmentBuild":  true,
+                    "seconds":  3.7782602310180666,
+                    "frames":  98,
+                    "p50FrameMs":  6.593905925750732,
+                    "p95FrameMs":  133.6772003173828,
+                    "p99FrameMs":  2683.636962890625,
+                    "exceptions":  0,
+                    "errors":  0,
+                    "firstProblem":  "",
+                    "gpu":  "NVIDIA GeForce RTX 5080 Laptop GPU",
+                    "quality":  "default High (render 1.00, cap none, shadows 4/4096/400 m, engine audio Ultra)",
+                    "Count":  51,
+                    "Length":  51,
+                    "LongLength":  51,
+                    "Rank":  1,
+                    "SyncRoot":  [
+                                     {
+                                         "name":  "shot.poi_town_1000.mad",
+                                         "value":  0.03505
+                                     },
+                                     {
+                                         "name":  "shot.poi_town_1000.ssim",
+                                         "value":  0.93752
+                                     },
+                                     {
+                                         "name":  "shot.poi_depot_1000.mad",
+                                         "value":  0.03199
+                                     },
+                                     {
+                                         "name":  "shot.poi_depot_1000.ssim",
+                                         "value":  0.9285
+                                     },
+                                     {
+                                         "name":  "shot.poi_farm_1000.mad",
+                                         "value":  0.0281
+                                     },
+                                     {
+                                         "name":  "shot.poi_farm_1000.ssim",
+                                         "value":  0.94733
+                                     },
+                                     {
+                                         "name":  "shot.poi_quarry_1000.mad",
+                                         "value":  0.02855
+                                     },
+                                     {
+                                         "name":  "shot.poi_quarry_1000.ssim",
+                                         "value":  0.94809
+                                     },
+                                     {
+                                         "name":  "shot.poi_mill_1000.mad",
+                                         "value":  0.03088
+                                     },
+                                     {
+                                         "name":  "shot.poi_mill_1000.ssim",
+                                         "value":  0.93294
+                                     },
+                                     {
+                                         "name":  "shot.poi_harbor_1000.mad",
+                                         "value":  0.02698
+                                     },
+                                     {
+                                         "name":  "shot.poi_harbor_1000.ssim",
+                                         "value":  0.95754
+                                     },
+                                     {
+                                         "name":  "shot.poi_fuel_1000.mad",
+                                         "value":  0.0293
+                                     },
+                                     {
+                                         "name":  "shot.poi_fuel_1000.ssim",
+                                         "value":  0.94435
+                                     },
+                                     {
+                                         "name":  "shot.bog_1000.mad",
+                                         "value":  0.03513
+                                     },
+                                     {
+                                         "name":  "shot.bog_1000.ssim",
+                                         "value":  0.93239
+                                     },
+                                     {
+                                         "name":  "shot.roundabout_1000.mad",
+                                         "value":  0.0365
+                                     },
+                                     {
+                                         "name":  "shot.roundabout_1000.ssim",
+                                         "value":  0.90462
+                                     },
+                                     {
+                                         "name":  "shot.junction_1000.mad",
+                                         "value":  0.02985
+                                     },
+                                     {
+                                         "name":  "shot.junction_1000.ssim",
+                                         "value":  0.93098
+                                     },
+                                     {
+                                         "name":  "shot.lake_1000.mad",
+                                         "value":  0.0301
+                                     },
+                                     {
+                                         "name":  "shot.lake_1000.ssim",
+                                         "value":  0.95244
+                                     },
+                                     {
+                                         "name":  "shot.overview_1000.mad",
+                                         "value":  0.03854
+                                     },
+                                     {
+                                         "name":  "shot.overview_1000.ssim",
+                                         "value":  0.95402
+                                     },
+                                     {
+                                         "name":  "shot.poi_town_2100.mad",
+                                         "value":  0.03599
+                                     },
+                                     {
+                                         "name":  "shot.poi_town_2100.ssim",
+                                         "value":  0.80378
+                                     },
+                                     {
+                                         "name":  "shot.poi_depot_2100.mad",
+                                         "value":  0.03696
+                                     },
+                                     {
+                                         "name":  "shot.poi_depot_2100.ssim",
+                                         "value":  0.78924
+                                     },
+                                     {
+                                         "name":  "shot.poi_farm_2100.mad",
+                                         "value":  0.02909
+                                     },
+                                     {
+                                         "name":  "shot.poi_farm_2100.ssim",
+                                         "value":  0.79106
+                                     },
+                                     {
+                                         "name":  "shot.poi_quarry_2100.mad",
+                                         "value":  0.03058
+                                     },
+                                     {
+                                         "name":  "shot.poi_quarry_2100.ssim",
+                                         "value":  0.75699
+                                     },
+                                     {
+                                         "name":  "shot.poi_mill_2100.mad",
+                                         "value":  0.01966
+                                     },
+                                     {
+                                         "name":  "shot.poi_mill_2100.ssim",
+                                         "value":  0.79049
+                                     },
+                                     {
+                                         "name":  "shot.poi_harbor_2100.mad",
+                                         "value":  0.03416
+                                     },
+                                     {
+                                         "name":  "shot.poi_harbor_2100.ssim",
+                                         "value":  0.82726
+                                     },
+                                     {
+                                         "name":  "shot.poi_fuel_2100.mad",
+                                         "value":  0.02822
+                                     },
+                                     {
+                                         "name":  "shot.poi_fuel_2100.ssim",
+                                         "value":  0.80163
+                                     },
+                                     {
+                                         "name":  "shot.bog_2100.mad",
+                                         "value":  0.02462
+                                     },
+                                     {
+                                         "name":  "shot.bog_2100.ssim",
+                                         "value":  0.77929
+                                     },
+                                     {
+                                         "name":  "shot.roundabout_2100.mad",
+                                         "value":  0.05672
+                                     },
+                                     {
+                                         "name":  "shot.roundabout_2100.ssim",
+                                         "value":  0.70763
+                                     },
+                                     {
+                                         "name":  "shot.junction_2100.mad",
+                                         "value":  0.0299
+                                     },
+                                     {
+                                         "name":  "shot.junction_2100.ssim",
+                                         "value":  0.84286
+                                     },
+                                     {
+                                         "name":  "shot.lake_2100.mad",
+                                         "value":  0.02412
+                                     },
+                                     {
+                                         "name":  "shot.lake_2100.ssim",
+                                         "value":  0.82168
+                                     },
+                                     {
+                                         "name":  "shot.overview_2100.mad",
+                                         "value":  0.02487
+                                     },
+                                     {
+                                         "name":  "shot.overview_2100.ssim",
+                                         "value":  0.8771
+                                     },
+                                     {
+                                         "name":  "shots.written",
+                                         "value":  24.0
+                                     },
+                                     {
+                                         "name":  "shots.mad.mean",
+                                         "value":  0.03149
+                                     },
+                                     {
+                                         "name":  "shots.ssim.mean",
+                                         "value":  0.86916
+                                     }
+                                 ],
+                    "IsReadOnly":  false,
+                    "IsFixedSize":  true,
+                    "IsSynchronized":  false
+                },
+    "thresholds":  {
+
+                   },
+    "evidence":  [
+                     "artifacts/20261018-2238/gate-M1/autotest.m1.shots.canon/autotest.m1.shots.canon.log",
+                     "artifacts/20261018-2238/gate-M1/autotest.m1.shots.canon/autotest.m1.shots.canon.log.stderr",
+                     "artifacts/20261018-2238/gate-M1/autotest.m1.shots.canon/bog_1000.png",
+                     "artifacts/20261018-2238/gate-M1/autotest.m1.shots.canon/bog_2100.png",
+                     "artifacts/20261018-2238/gate-M1/autotest.m1.shots.canon/contact_sheet.png",
+                     "artifacts/20261018-2238/gate-M1/autotest.m1.shots.canon/frametimes.csv",
+                     "artifacts/20261018-2238/gate-M1/autotest.m1.shots.canon/junction_1000.png",
+                     "artifacts/20261018-2238/gate-M1/autotest.m1.shots.canon/junction_2100.png",
+                     "artifacts/20261018-2238/gate-M1/autotest.m1.shots.canon/lake_1000.png",
+                     "artifacts/20261018-2238/gate-M1/autotest.m1.shots.canon/lake_2100.png",
+                     "artifacts/20261018-2238/gate-M1/autotest.m1.shots.canon/overview_1000.png",
+                     "artifacts/20261018-2238/gate-M1/autotest.m1.shots.canon/overview_2100.png",
+                     "artifacts/20261018-2238/gate-M1/autotest.m1.shots.canon/player.log",
+                     "artifacts/20261018-2238/gate-M1/autotest.m1.shots.canon/poi_depot_1000.png",
+                     "artifacts/20261018-2238/gate-M1/autotest.m1.shots.canon/poi_depot_2100.png",
+                     "artifacts/20261018-2238/gate-M1/autotest.m1.shots.canon/poi_farm_1000.png",
+                     "artifacts/20261018-2238/gate-M1/autotest.m1.shots.canon/poi_farm_2100.png",
+                     "artifacts/20261018-2238/gate-M1/autotest.m1.shots.canon/poi_fuel_1000.png",
+                     "artifacts/20261018-2238/gate-M1/autotest.m1.shots.canon/poi_fuel_2100.png",
+                     "artifacts/20261018-2238/gate-M1/autotest.m1.shots.canon/poi_harbor_1000.png",
+                     "artifacts/20261018-2238/gate-M1/autotest.m1.shots.canon/poi_harbor_2100.png",
+                     "artifacts/20261018-2238/gate-M1/autotest.m1.shots.canon/poi_mill_1000.png",
+                     "artifacts/20261018-2238/gate-M1/autotest.m1.shots.canon/poi_mill_2100.png",
+                     "artifacts/20261018-2238/gate-M1/autotest.m1.shots.canon/poi_quarry_1000.png",
+                     "artifacts/20261018-2238/gate-M1/autotest.m1.shots.canon/poi_quarry_2100.png",
+                     "artifacts/20261018-2238/gate-M1/autotest.m1.shots.canon/poi_town_1000.png",
+                     "artifacts/20261018-2238/gate-M1/autotest.m1.shots.canon/poi_town_2100.png",
+                     "artifacts/20261018-2238/gate-M1/autotest.m1.shots.canon/result.json",
+                     "artifacts/20261018-2238/gate-M1/autotest.m1.shots.canon/roundabout_1000.png",
+                     "artifacts/20261018-2238/gate-M1/autotest.m1.shots.canon/roundabout_2100.png"
+                 ],
+    "warnings":  [
+
+                 ],
+    "fallbackIfFail":  "see the scenario\u0027s fallback in the milestone card",
+    "exitCode":  0,
+    "out":  "artifacts/20261018-2238/gate-M1/autotest.m1.shots.canon",
+    "run":  "artifacts/20261018-2238/gate-M1",
+    "script":  "tools/ci/autotest.ps1"
+}

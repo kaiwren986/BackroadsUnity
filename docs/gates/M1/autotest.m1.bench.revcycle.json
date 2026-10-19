@@ -1,0 +1,399 @@
+{
+    "schema":  1,
+    "gate":  "autotest.m1.bench.revcycle",
+    "tier":  "milestone",
+    "status":  "pass",
+    "hard":  true,
+    "headline":  true,
+    "message":  "1 of 1 runs passed (AUTOTEST m1.bench.revcycle PASS (0 failures) -\u003e D:\\Backroads-Unity\\artifacts\\20261018-2238\\gate-M1\\autotest.m1.bench.revcycle)",
+    "startedAt":  "2026-10-18T22:42:01.3541380-05:00",
+    "finishedAt":  "2026-10-18T22:42:28.4644904-05:00",
+    "build":  {
+                  "git":  "ce0b806b9b72521896f5b1e1f6e0ff4356d36a02",
+                  "branch":  "main",
+                  "dirty":  true,
+                  "unity":  "6000.3.20f1",
+                  "native":  "61778051a0c8b30c4c5be7d8f7ea3eca73092bc746c8d4c70b04a864a9ebbf17",
+                  "abi":  1
+              },
+    "machine":  {
+                    "summary":  "Intel(R) Core(TM) Ultra 9 275HX / NVIDIA GeForce RTX 5080 Laptop GPU / Microsoft Windows 11 Home 26200",
+                    "power":  "mains",
+                    "batteryPercent":  81,
+                    "gpu":  {
+                                "active":  "NVIDIA GeForce RTX 5080 Laptop GPU",
+                                "discretePresent":  true,
+                                "controllers":  [
+                                                    {
+                                                        "name":  "Intel(R) Graphics",
+                                                        "discrete":  false,
+                                                        "drivesDisplay":  true,
+                                                        "driver":  "32.0.101.8826"
+                                                    },
+                                                    {
+                                                        "name":  "NVIDIA GeForce RTX 5080 Laptop GPU",
+                                                        "discrete":  true,
+                                                        "drivesDisplay":  true,
+                                                        "driver":  "32.0.16.1664"
+                                                    }
+                                                ],
+                                "note":  "active = discrete GPU if present; the player reports the GPU it really used in result.json"
+                            },
+                    "powerMode":  {
+                                      "overlayAc":  "Balanced",
+                                      "overlayDc":  "Balanced",
+                                      "scheme":  "64a64f24-65b9-4b56-befd-5ec1eaced9b3  (Silent)"
+                                  },
+                    "cores":  {
+                                  "logical":  24,
+                                  "p":  [
+                                            0,
+                                            1,
+                                            10,
+                                            11,
+                                            12,
+                                            13,
+                                            22,
+                                            23
+                                        ],
+                                  "e":  [
+                                            2,
+                                            3,
+                                            4,
+                                            5,
+                                            6,
+                                            7,
+                                            8,
+                                            9,
+                                            14,
+                                            15,
+                                            16,
+                                            17,
+                                            18,
+                                            19,
+                                            20,
+                                            21
+                                        ],
+                                  "minSpecMask":  "0xFC",
+                                  "source":  "artifacts/env.json"
+                              },
+                    "cpuLoadPercent":  37,
+                    "otherProcs":  [
+
+                                   ]
+                },
+    "wallClock":  {
+                      "seconds":  26.8,
+                      "budget":  600,
+                      "pausedSeconds":  0,
+                      "overBudget":  false
+                  },
+    "conditions":  {
+                       "scenario":  "m1.bench.revcycle",
+                       "profile":  "Dev",
+                       "milestone":  "M1",
+                       "quality":  "player default",
+                       "coreClass":  "unpinned",
+                       "fpsCap":  "uncapped",
+                       "resolution":  "2560x1440",
+                       "perf":  false,
+                       "repeat":  1,
+                       "minSpecProxy":  false,
+                       "egressCheck":  false
+                   },
+    "metrics":  {
+                    "exe":  "builds/M1-dev/Backroads.exe",
+                    "buildGit":  "ce0b806b9b72521896f5b1e1f6e0ff4356d36a02",
+                    "buildProfile":  "Dev",
+                    "buildMilestone":  "M1",
+                    "runs":  [
+                                 {
+                                     "run":  1,
+                                     "exitCode":  0,
+                                     "result":  "exit 0",
+                                     "seconds":  26.6,
+                                     "affinity":  null,
+                                     "resultFile":  true,
+                                     "status":  "pass",
+                                     "failures":  [
+
+                                                  ],
+                                     "metrics":  {
+                                                     "developmentBuild":  true,
+                                                     "seconds":  22.112234115600587,
+                                                     "frames":  4447,
+                                                     "p50FrameMs":  4.6320013999938969,
+                                                     "p95FrameMs":  5.137301445007324,
+                                                     "p99FrameMs":  6.792602062225342,
+                                                     "exceptions":  0,
+                                                     "errors":  0,
+                                                     "firstProblem":  "",
+                                                     "gpu":  "NVIDIA GeForce RTX 5080 Laptop GPU",
+                                                     "quality":  "default High (render 1.00, cap none, shadows 4/4096/400 m, engine audio Ultra)",
+                                                     "Count":  26,
+                                                     "Length":  26,
+                                                     "LongLength":  26,
+                                                     "Rank":  1,
+                                                     "SyncRoot":  [
+                                                                      {
+                                                                          "name":  "pitch_idle_rpm",
+                                                                          "value":  688.2440341168492
+                                                                      },
+                                                                      {
+                                                                          "name":  "pitch_idle_pass",
+                                                                          "value":  1.0
+                                                                      },
+                                                                      {
+                                                                          "name":  "pitch_25pct_rpm",
+                                                                          "value":  3320.7251892142863
+                                                                      },
+                                                                      {
+                                                                          "name":  "pitch_25pct_pass",
+                                                                          "value":  1.0
+                                                                      },
+                                                                      {
+                                                                          "name":  "pitch_60pct_rpm",
+                                                                          "value":  5113.616515955886
+                                                                      },
+                                                                      {
+                                                                          "name":  "pitch_60pct_pass",
+                                                                          "value":  1.0
+                                                                      },
+                                                                      {
+                                                                          "name":  "pitch_100pct_rpm",
+                                                                          "value":  5217.698451794383
+                                                                      },
+                                                                      {
+                                                                          "name":  "pitch_100pct_pass",
+                                                                          "value":  1.0
+                                                                      },
+                                                                      {
+                                                                          "name":  "fps",
+                                                                          "value":  215.705078125
+                                                                      },
+                                                                      {
+                                                                          "name":  "underruns",
+                                                                          "value":  0.0
+                                                                      },
+                                                                      {
+                                                                          "name":  "underrun_frames",
+                                                                          "value":  0.0
+                                                                      },
+                                                                      {
+                                                                          "name":  "clip_fraction",
+                                                                          "value":  0.0
+                                                                      },
+                                                                      {
+                                                                          "name":  "main_thread_p99_ms",
+                                                                          "value":  0.00930000003427267
+                                                                      },
+                                                                      {
+                                                                          "name":  "main_thread_p50_ms",
+                                                                          "value":  0.004100000020116568
+                                                                      },
+                                                                      {
+                                                                          "name":  "main_thread_p95_ms",
+                                                                          "value":  0.007499999832361937
+                                                                      },
+                                                                      {
+                                                                          "name":  "collect_wait_ms_max",
+                                                                          "value":  0.0
+                                                                      },
+                                                                      {
+                                                                          "name":  "rtf",
+                                                                          "value":  3.0738018052561677
+                                                                      },
+                                                                      {
+                                                                          "name":  "worker_ms",
+                                                                          "value":  2.5504599778623078
+                                                                      },
+                                                                      {
+                                                                          "name":  "stale_steps",
+                                                                          "value":  0.0
+                                                                      },
+                                                                      {
+                                                                          "name":  "coast_events",
+                                                                          "value":  1.0
+                                                                      },
+                                                                      {
+                                                                          "name":  "underruns_before_cycle",
+                                                                          "value":  1.0
+                                                                      },
+                                                                      {
+                                                                          "name":  "listener_volume",
+                                                                          "value":  0.0010000000474974514
+                                                                      },
+                                                                      {
+                                                                          "name":  "ring_target_ms",
+                                                                          "value":  18.9375
+                                                                      },
+                                                                      {
+                                                                          "name":  "frame_p95_ms",
+                                                                          "value":  4.7133006155490879
+                                                                      },
+                                                                      {
+                                                                          "name":  "starter_release_s",
+                                                                          "value":  2.363612651824951
+                                                                      },
+                                                                      {
+                                                                          "name":  "dsp_buffer_frames",
+                                                                          "value":  256.0
+                                                                      }
+                                                                  ],
+                                                     "IsReadOnly":  false,
+                                                     "IsFixedSize":  true,
+                                                     "IsSynchronized":  false
+                                                 },
+                                     "logVerdict":  "[BR] AUTOTEST m1.bench.revcycle PASS (0 failures) -\u003e D:\\Backroads-Unity\\artifacts\\20261018-2238\\gate-M1\\autotest.m1.bench.revcycle"
+                                 }
+                             ],
+                    "developmentBuild":  true,
+                    "seconds":  22.112234115600587,
+                    "frames":  4447,
+                    "p50FrameMs":  4.6320013999938969,
+                    "p95FrameMs":  5.137301445007324,
+                    "p99FrameMs":  6.792602062225342,
+                    "exceptions":  0,
+                    "errors":  0,
+                    "firstProblem":  "",
+                    "gpu":  "NVIDIA GeForce RTX 5080 Laptop GPU",
+                    "quality":  "default High (render 1.00, cap none, shadows 4/4096/400 m, engine audio Ultra)",
+                    "Count":  26,
+                    "Length":  26,
+                    "LongLength":  26,
+                    "Rank":  1,
+                    "SyncRoot":  [
+                                     {
+                                         "name":  "pitch_idle_rpm",
+                                         "value":  688.2440341168492
+                                     },
+                                     {
+                                         "name":  "pitch_idle_pass",
+                                         "value":  1.0
+                                     },
+                                     {
+                                         "name":  "pitch_25pct_rpm",
+                                         "value":  3320.7251892142863
+                                     },
+                                     {
+                                         "name":  "pitch_25pct_pass",
+                                         "value":  1.0
+                                     },
+                                     {
+                                         "name":  "pitch_60pct_rpm",
+                                         "value":  5113.616515955886
+                                     },
+                                     {
+                                         "name":  "pitch_60pct_pass",
+                                         "value":  1.0
+                                     },
+                                     {
+                                         "name":  "pitch_100pct_rpm",
+                                         "value":  5217.698451794383
+                                     },
+                                     {
+                                         "name":  "pitch_100pct_pass",
+                                         "value":  1.0
+                                     },
+                                     {
+                                         "name":  "fps",
+                                         "value":  215.705078125
+                                     },
+                                     {
+                                         "name":  "underruns",
+                                         "value":  0.0
+                                     },
+                                     {
+                                         "name":  "underrun_frames",
+                                         "value":  0.0
+                                     },
+                                     {
+                                         "name":  "clip_fraction",
+                                         "value":  0.0
+                                     },
+                                     {
+                                         "name":  "main_thread_p99_ms",
+                                         "value":  0.00930000003427267
+                                     },
+                                     {
+                                         "name":  "main_thread_p50_ms",
+                                         "value":  0.004100000020116568
+                                     },
+                                     {
+                                         "name":  "main_thread_p95_ms",
+                                         "value":  0.007499999832361937
+                                     },
+                                     {
+                                         "name":  "collect_wait_ms_max",
+                                         "value":  0.0
+                                     },
+                                     {
+                                         "name":  "rtf",
+                                         "value":  3.0738018052561677
+                                     },
+                                     {
+                                         "name":  "worker_ms",
+                                         "value":  2.5504599778623078
+                                     },
+                                     {
+                                         "name":  "stale_steps",
+                                         "value":  0.0
+                                     },
+                                     {
+                                         "name":  "coast_events",
+                                         "value":  1.0
+                                     },
+                                     {
+                                         "name":  "underruns_before_cycle",
+                                         "value":  1.0
+                                     },
+                                     {
+                                         "name":  "listener_volume",
+                                         "value":  0.0010000000474974514
+                                     },
+                                     {
+                                         "name":  "ring_target_ms",
+                                         "value":  18.9375
+                                     },
+                                     {
+                                         "name":  "frame_p95_ms",
+                                         "value":  4.7133006155490879
+                                     },
+                                     {
+                                         "name":  "starter_release_s",
+                                         "value":  2.363612651824951
+                                     },
+                                     {
+                                         "name":  "dsp_buffer_frames",
+                                         "value":  256.0
+                                     }
+                                 ],
+                    "IsReadOnly":  false,
+                    "IsFixedSize":  true,
+                    "IsSynchronized":  false
+                },
+    "thresholds":  {
+
+                   },
+    "evidence":  [
+                     "artifacts/20261018-2238/gate-M1/autotest.m1.bench.revcycle/audio_report.json",
+                     "artifacts/20261018-2238/gate-M1/autotest.m1.bench.revcycle/autotest.m1.bench.revcycle.log",
+                     "artifacts/20261018-2238/gate-M1/autotest.m1.bench.revcycle/autotest.m1.bench.revcycle.log.stderr",
+                     "artifacts/20261018-2238/gate-M1/autotest.m1.bench.revcycle/bench_revcycle.png",
+                     "artifacts/20261018-2238/gate-M1/autotest.m1.bench.revcycle/contact_sheet.png",
+                     "artifacts/20261018-2238/gate-M1/autotest.m1.bench.revcycle/esp_tap.wav",
+                     "artifacts/20261018-2238/gate-M1/autotest.m1.bench.revcycle/frametimes.csv",
+                     "artifacts/20261018-2238/gate-M1/autotest.m1.bench.revcycle/player.log",
+                     "artifacts/20261018-2238/gate-M1/autotest.m1.bench.revcycle/result.json",
+                     "artifacts/20261018-2238/gate-M1/autotest.m1.bench.revcycle/steps.csv",
+                     "artifacts/20261018-2238/gate-M1/autotest.m1.bench.revcycle/unity_tap.wav"
+                 ],
+    "warnings":  [
+
+                 ],
+    "fallbackIfFail":  "see the scenario\u0027s fallback in the milestone card",
+    "exitCode":  0,
+    "out":  "artifacts/20261018-2238/gate-M1/autotest.m1.bench.revcycle",
+    "run":  "artifacts/20261018-2238/gate-M1",
+    "script":  "tools/ci/autotest.ps1"
+}

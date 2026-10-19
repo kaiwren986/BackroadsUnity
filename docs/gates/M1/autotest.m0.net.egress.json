@@ -1,0 +1,176 @@
+{
+    "schema":  1,
+    "gate":  "autotest.m0.net.egress",
+    "tier":  "milestone",
+    "status":  "pass",
+    "hard":  true,
+    "headline":  false,
+    "message":  "1 of 1 runs passed (AUTOTEST m0.net.egress PASS (0 failures) -\u003e D:\\Backroads-Unity\\artifacts\\20261018-2238\\gate-M1\\autotest.m0.net.egress)",
+    "startedAt":  "2026-10-18T22:43:22.0370663-05:00",
+    "finishedAt":  "2026-10-18T22:44:27.2464819-05:00",
+    "build":  {
+                  "git":  "ce0b806b9b72521896f5b1e1f6e0ff4356d36a02",
+                  "branch":  "main",
+                  "dirty":  true,
+                  "unity":  "6000.3.20f1",
+                  "native":  "61778051a0c8b30c4c5be7d8f7ea3eca73092bc746c8d4c70b04a864a9ebbf17",
+                  "abi":  1
+              },
+    "machine":  {
+                    "summary":  "Intel(R) Core(TM) Ultra 9 275HX / NVIDIA GeForce RTX 5080 Laptop GPU / Microsoft Windows 11 Home 26200",
+                    "power":  "mains",
+                    "batteryPercent":  81,
+                    "gpu":  {
+                                "active":  "NVIDIA GeForce RTX 5080 Laptop GPU",
+                                "discretePresent":  true,
+                                "controllers":  [
+                                                    {
+                                                        "name":  "Intel(R) Graphics",
+                                                        "discrete":  false,
+                                                        "drivesDisplay":  true,
+                                                        "driver":  "32.0.101.8826"
+                                                    },
+                                                    {
+                                                        "name":  "NVIDIA GeForce RTX 5080 Laptop GPU",
+                                                        "discrete":  true,
+                                                        "drivesDisplay":  true,
+                                                        "driver":  "32.0.16.1664"
+                                                    }
+                                                ],
+                                "note":  "active = discrete GPU if present; the player reports the GPU it really used in result.json"
+                            },
+                    "powerMode":  {
+                                      "overlayAc":  "Balanced",
+                                      "overlayDc":  "Balanced",
+                                      "scheme":  "64a64f24-65b9-4b56-befd-5ec1eaced9b3  (Silent)"
+                                  },
+                    "cores":  {
+                                  "logical":  24,
+                                  "p":  [
+                                            0,
+                                            1,
+                                            10,
+                                            11,
+                                            12,
+                                            13,
+                                            22,
+                                            23
+                                        ],
+                                  "e":  [
+                                            2,
+                                            3,
+                                            4,
+                                            5,
+                                            6,
+                                            7,
+                                            8,
+                                            9,
+                                            14,
+                                            15,
+                                            16,
+                                            17,
+                                            18,
+                                            19,
+                                            20,
+                                            21
+                                        ],
+                                  "minSpecMask":  "0xFC",
+                                  "source":  "artifacts/env.json"
+                              },
+                    "cpuLoadPercent":  18,
+                    "otherProcs":  [
+
+                                   ]
+                },
+    "wallClock":  {
+                      "seconds":  64.9,
+                      "budget":  600,
+                      "pausedSeconds":  0,
+                      "overBudget":  false
+                  },
+    "conditions":  {
+                       "scenario":  "m0.net.egress",
+                       "profile":  "Dev",
+                       "milestone":  "M1",
+                       "quality":  "player default",
+                       "coreClass":  "unpinned",
+                       "fpsCap":  "uncapped",
+                       "resolution":  "2560x1440",
+                       "perf":  false,
+                       "repeat":  1,
+                       "minSpecProxy":  false,
+                       "egressCheck":  true
+                   },
+    "metrics":  {
+                    "exe":  "builds/M1-dev/Backroads.exe",
+                    "buildGit":  "ce0b806b9b72521896f5b1e1f6e0ff4356d36a02",
+                    "buildProfile":  "Dev",
+                    "buildMilestone":  "M1",
+                    "runs":  [
+                                 {
+                                     "run":  1,
+                                     "exitCode":  0,
+                                     "result":  "exit 0",
+                                     "seconds":  64.6,
+                                     "affinity":  null,
+                                     "resultFile":  true,
+                                     "status":  "pass",
+                                     "failures":  [
+
+                                                  ],
+                                     "metrics":  {
+                                                     "developmentBuild":  true,
+                                                     "seconds":  60.20714569091797,
+                                                     "frames":  12446,
+                                                     "p50FrameMs":  4.753904342651367,
+                                                     "p95FrameMs":  5.024397850036621,
+                                                     "p99FrameMs":  6.085204124450684,
+                                                     "exceptions":  0,
+                                                     "errors":  0,
+                                                     "firstProblem":  "",
+                                                     "gpu":  "NVIDIA GeForce RTX 5080 Laptop GPU",
+                                                     "quality":  "default High (render 1.00, cap none, shadows 4/4096/400 m, engine audio Ultra)"
+                                                 },
+                                     "logVerdict":  "[BR] AUTOTEST m0.net.egress PASS (0 failures) -\u003e D:\\Backroads-Unity\\artifacts\\20261018-2238\\gate-M1\\autotest.m0.net.egress"
+                                 }
+                             ],
+                    "developmentBuild":  true,
+                    "seconds":  60.20714569091797,
+                    "frames":  12446,
+                    "p50FrameMs":  4.753904342651367,
+                    "p95FrameMs":  5.024397850036621,
+                    "p99FrameMs":  6.085204124450684,
+                    "exceptions":  0,
+                    "errors":  0,
+                    "firstProblem":  "",
+                    "gpu":  "NVIDIA GeForce RTX 5080 Laptop GPU",
+                    "quality":  "default High (render 1.00, cap none, shadows 4/4096/400 m, engine audio Ultra)",
+                    "endpointsSeen":  2,
+                    "egressViolations":  [
+
+                                         ],
+                    "egressAllowed":  [
+                                          "tcp 0.0.0.0:55000 -\u003e 0.0.0.0:0 Listen : Development PlayerConnection listen port",
+                                          "udp 0.0.0.0:57448 -\u003e :0 Bound : UDP socket in a Development player (PlayerConnection discovery)"
+                                      ],
+                    "devBuild":  true
+                },
+    "thresholds":  {
+                       "egressViolations":  0
+                   },
+    "evidence":  [
+                     "artifacts/20261018-2238/gate-M1/autotest.m0.net.egress/autotest.m0.net.egress.log",
+                     "artifacts/20261018-2238/gate-M1/autotest.m0.net.egress/autotest.m0.net.egress.log.stderr",
+                     "artifacts/20261018-2238/gate-M1/autotest.m0.net.egress/frametimes.csv",
+                     "artifacts/20261018-2238/gate-M1/autotest.m0.net.egress/player.log",
+                     "artifacts/20261018-2238/gate-M1/autotest.m0.net.egress/result.json"
+                 ],
+    "warnings":  [
+                     "Development player: Unity PlayerConnection sockets tolerated; the Client build (-Smoke -Profile Client) gives the strict answer"
+                 ],
+    "fallbackIfFail":  "see the scenario\u0027s fallback in the milestone card",
+    "exitCode":  0,
+    "out":  "artifacts/20261018-2238/gate-M1/autotest.m0.net.egress",
+    "run":  "artifacts/20261018-2238/gate-M1",
+    "script":  "tools/ci/autotest.ps1"
+}

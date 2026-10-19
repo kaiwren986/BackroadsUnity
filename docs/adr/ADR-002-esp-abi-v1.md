@@ -1,6 +1,6 @@
 # ADR-002: EngineSimPlugin C ABI v1 is a frozen contract
 
-- **Status:** draft (lane V, M1). Accepted when the integrator freezes it at the M1 gate (T1.9).
+- **Status:** **accepted and frozen** at the `m1` tag (2026-10-18; M1 milestone gate 19/19, cosim matrix 33/33). Changes need a new ADR.
 - **Date:** 2026-10-18
 - **Owners:** lane V (vehicles and native plugin); changes need a new ADR, updated tests in the same commit (PLAN §1.10)
   and the integrator's merge.
