@@ -1,0 +1,480 @@
+{
+    "glb": "Assets/Art/Vehicles/Truck/truck.glb",
+    "fbx": "Assets/Art/Vehicles/Truck/VH_Truck.fbx",
+    "namesMatch": true,
+    "slotsMatch": true,
+    "trisMatch": true,
+    "maxPositionDelta": 0.0,
+    "maxRotationDeltaDeg": 0.0,
+    "maxScaleDelta": 0.0,
+    "maxBoundsDelta": 4.76837158203125e-7,
+    "totalBoundsDelta": 4.76837158203125e-7,
+    "glbMin": {
+        "x": -1.5,
+        "y": -0.5269999504089356,
+        "z": -4.299999713897705
+    },
+    "glbMax": {
+        "x": 1.5,
+        "y": 3.760000228881836,
+        "z": 4.1334309577941898
+    },
+    "fbxMin": {
+        "x": -1.5,
+        "y": -0.5269999504089356,
+        "z": -4.299999237060547
+    },
+    "fbxMax": {
+        "x": 1.5,
+        "y": 3.760000228881836,
+        "z": 4.133430480957031
+    },
+    "duplicateNames": [],
+    "nodes": [
+        {
+            "name": "Body",
+            "inGlb": true,
+            "inFbx": true,
+            "glbPosition": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "fbxPosition": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "positionDelta": 0.0,
+            "rotationDeltaDeg": 0.0,
+            "scaleDelta": 0.0,
+            "glbMin": {
+                "x": -1.5,
+                "y": 0.2250000238418579,
+                "z": -4.299999713897705
+            },
+            "glbMax": {
+                "x": 1.5,
+                "y": 3.760000228881836,
+                "z": 4.1334309577941898
+            },
+            "fbxMin": {
+                "x": -1.5,
+                "y": 0.22499990463256837,
+                "z": -4.299999237060547
+            },
+            "fbxMax": {
+                "x": 1.5,
+                "y": 3.759999990463257,
+                "z": 4.133430480957031
+            },
+            "boundsDelta": 4.76837158203125e-7,
+            "glbTris": [
+                806,
+                224,
+                564,
+                240,
+                24,
+                24,
+                2972,
+                884,
+                1752,
+                376,
+                564,
+                1460,
+                376,
+                2820,
+                376,
+                48,
+                376,
+                376,
+                188,
+                188
+            ],
+            "fbxTris": [
+                806,
+                224,
+                564,
+                240,
+                24,
+                24,
+                2972,
+                884,
+                1752,
+                376,
+                564,
+                1460,
+                376,
+                2820,
+                376,
+                48,
+                376,
+                376,
+                188,
+                188
+            ],
+            "glbMaterials": [
+                "Paint",
+                "Under",
+                "BoxPanel",
+                "Rib",
+                "Livery",
+                "Livery2",
+                "Alloy",
+                "Chrome",
+                "Steel",
+                "Plate",
+                "Glass",
+                "Trim",
+                "Headlight",
+                "Indicator",
+                "Mirror",
+                "Rubber",
+                "Taillight",
+                "Reverse",
+                "Grille",
+                "Interior"
+            ],
+            "fbxMaterials": [
+                "Assets/Art/Materials/Vehicle/M_Paint.mat",
+                "Assets/Art/Materials/Vehicle/M_Trim.mat",
+                "Assets/Art/Materials/Vehicle/M_Paint.mat",
+                "Assets/Art/Materials/Vehicle/M_Trim.mat",
+                "Assets/Art/Materials/Vehicle/M_Paint.mat",
+                "Assets/Art/Materials/Vehicle/M_Paint.mat",
+                "Assets/Art/Materials/Vehicle/M_Trim.mat",
+                "Assets/Art/Materials/Vehicle/M_Trim.mat",
+                "Assets/Art/Materials/Vehicle/M_Trim.mat",
+                "Assets/Art/Materials/Vehicle/M_Trim.mat",
+                "Assets/Art/Materials/Vehicle/M_Glass.mat",
+                "Assets/Art/Materials/Vehicle/M_Trim.mat",
+                "Assets/Art/Materials/Vehicle/M_Lights.mat",
+                "Assets/Art/Materials/Vehicle/M_Lights.mat",
+                "Assets/Art/Materials/Vehicle/M_Trim.mat",
+                "Assets/Art/Materials/Vehicle/M_Tyre.mat",
+                "Assets/Art/Materials/Vehicle/M_Lights.mat",
+                "Assets/Art/Materials/Vehicle/M_Lights.mat",
+                "Assets/Art/Materials/Vehicle/M_Trim.mat",
+                "Assets/Art/Materials/Vehicle/M_Interior.mat"
+            ],
+            "expectedMaterials": [
+                "Assets/Art/Materials/Vehicle/M_Paint.mat",
+                "Assets/Art/Materials/Vehicle/M_Trim.mat",
+                "Assets/Art/Materials/Vehicle/M_Paint.mat",
+                "Assets/Art/Materials/Vehicle/M_Trim.mat",
+                "Assets/Art/Materials/Vehicle/M_Paint.mat",
+                "Assets/Art/Materials/Vehicle/M_Paint.mat",
+                "Assets/Art/Materials/Vehicle/M_Trim.mat",
+                "Assets/Art/Materials/Vehicle/M_Trim.mat",
+                "Assets/Art/Materials/Vehicle/M_Trim.mat",
+                "Assets/Art/Materials/Vehicle/M_Trim.mat",
+                "Assets/Art/Materials/Vehicle/M_Glass.mat",
+                "Assets/Art/Materials/Vehicle/M_Trim.mat",
+                "Assets/Art/Materials/Vehicle/M_Lights.mat",
+                "Assets/Art/Materials/Vehicle/M_Lights.mat",
+                "Assets/Art/Materials/Vehicle/M_Trim.mat",
+                "Assets/Art/Materials/Vehicle/M_Tyre.mat",
+                "Assets/Art/Materials/Vehicle/M_Lights.mat",
+                "Assets/Art/Materials/Vehicle/M_Lights.mat",
+                "Assets/Art/Materials/Vehicle/M_Trim.mat",
+                "Assets/Art/Materials/Vehicle/M_Interior.mat"
+            ],
+            "slotsMatch": true
+        },
+        {
+            "name": "Body_LOD1",
+            "inGlb": true,
+            "inFbx": true,
+            "glbPosition": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "fbxPosition": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "positionDelta": 0.0,
+            "rotationDeltaDeg": 0.0,
+            "scaleDelta": 0.0,
+            "glbMin": {
+                "x": -1.496927261352539,
+                "y": 0.2250000238418579,
+                "z": -4.296761512756348
+            },
+            "glbMax": {
+                "x": 1.496927261352539,
+                "y": 3.7567620277404787,
+                "z": 4.131068229675293
+            },
+            "fbxMin": {
+                "x": -1.496927261352539,
+                "y": 0.22499990463256837,
+                "z": -4.296761512756348
+            },
+            "fbxMax": {
+                "x": 1.496927261352539,
+                "y": 3.7567617893218996,
+                "z": 4.131068229675293
+            },
+            "boundsDelta": 2.384185791015625e-7,
+            "glbTris": [
+                282,
+                308,
+                4,
+                4,
+                44,
+                1058,
+                40,
+                220,
+                40,
+                40
+            ],
+            "fbxTris": [
+                282,
+                308,
+                4,
+                4,
+                44,
+                1058,
+                40,
+                220,
+                40,
+                40
+            ],
+            "glbMaterials": [
+                "Paint",
+                "BoxPanel",
+                "Livery",
+                "Livery2",
+                "Glass",
+                "Trim",
+                "Headlight",
+                "Indicator",
+                "Taillight",
+                "Reverse"
+            ],
+            "fbxMaterials": [
+                "Assets/Art/Materials/Vehicle/M_Paint.mat",
+                "Assets/Art/Materials/Vehicle/M_Paint.mat",
+                "Assets/Art/Materials/Vehicle/M_Paint.mat",
+                "Assets/Art/Materials/Vehicle/M_Paint.mat",
+                "Assets/Art/Materials/Vehicle/M_Glass.mat",
+                "Assets/Art/Materials/Vehicle/M_Trim.mat",
+                "Assets/Art/Materials/Vehicle/M_Lights.mat",
+                "Assets/Art/Materials/Vehicle/M_Lights.mat",
+                "Assets/Art/Materials/Vehicle/M_Lights.mat",
+                "Assets/Art/Materials/Vehicle/M_Lights.mat"
+            ],
+            "expectedMaterials": [
+                "Assets/Art/Materials/Vehicle/M_Paint.mat",
+                "Assets/Art/Materials/Vehicle/M_Paint.mat",
+                "Assets/Art/Materials/Vehicle/M_Paint.mat",
+                "Assets/Art/Materials/Vehicle/M_Paint.mat",
+                "Assets/Art/Materials/Vehicle/M_Glass.mat",
+                "Assets/Art/Materials/Vehicle/M_Trim.mat",
+                "Assets/Art/Materials/Vehicle/M_Lights.mat",
+                "Assets/Art/Materials/Vehicle/M_Lights.mat",
+                "Assets/Art/Materials/Vehicle/M_Lights.mat",
+                "Assets/Art/Materials/Vehicle/M_Lights.mat"
+            ],
+            "slotsMatch": true
+        },
+        {
+            "name": "Caliper",
+            "inGlb": true,
+            "inFbx": true,
+            "glbPosition": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "fbxPosition": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "positionDelta": 0.0,
+            "rotationDeltaDeg": 0.0,
+            "scaleDelta": 0.0,
+            "glbMin": {
+                "x": -0.012000001966953278,
+                "y": 0.036045849323272708,
+                "z": -0.266419380903244
+            },
+            "glbMax": {
+                "x": 0.06300000101327896,
+                "y": 0.14456185698509217,
+                "z": -0.1282157003879547
+            },
+            "fbxMin": {
+                "x": -0.012000001966953278,
+                "y": 0.036045849323272708,
+                "z": -0.266419380903244
+            },
+            "fbxMax": {
+                "x": 0.06300000101327896,
+                "y": 0.14456185698509217,
+                "z": -0.1282157003879547
+            },
+            "boundsDelta": 0.0,
+            "glbTris": [
+                108
+            ],
+            "fbxTris": [
+                108
+            ],
+            "glbMaterials": [
+                "Steel"
+            ],
+            "fbxMaterials": [
+                "Assets/Art/Materials/Vehicle/M_Trim.mat"
+            ],
+            "expectedMaterials": [
+                "Assets/Art/Materials/Vehicle/M_Trim.mat"
+            ],
+            "slotsMatch": true
+        },
+        {
+            "name": "Wheel",
+            "inGlb": true,
+            "inFbx": true,
+            "glbPosition": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "fbxPosition": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "positionDelta": 0.0,
+            "rotationDeltaDeg": 0.0,
+            "scaleDelta": 0.0,
+            "glbMin": {
+                "x": -0.1834999918937683,
+                "y": -0.5270000100135803,
+                "z": -0.528816819190979
+            },
+            "glbMax": {
+                "x": 0.17509999871253968,
+                "y": 0.5270000100135803,
+                "z": 0.528816819190979
+            },
+            "fbxMin": {
+                "x": -0.1834999918937683,
+                "y": -0.5270000100135803,
+                "z": -0.528816819190979
+            },
+            "fbxMax": {
+                "x": 0.17509999871253968,
+                "y": 0.5270000100135803,
+                "z": 0.528816819190979
+            },
+            "boundsDelta": 0.0,
+            "glbTris": [
+                2016,
+                720,
+                352,
+                276,
+                140,
+                76
+            ],
+            "fbxTris": [
+                2016,
+                720,
+                352,
+                276,
+                140,
+                76
+            ],
+            "glbMaterials": [
+                "Rubber",
+                "Steel",
+                "Under",
+                "Chrome",
+                "Brake",
+                "DarkAlloy"
+            ],
+            "fbxMaterials": [
+                "Assets/Art/Materials/Vehicle/M_Tyre.mat",
+                "Assets/Art/Materials/Vehicle/M_Trim.mat",
+                "Assets/Art/Materials/Vehicle/M_Trim.mat",
+                "Assets/Art/Materials/Vehicle/M_Trim.mat",
+                "Assets/Art/Materials/Vehicle/M_Trim.mat",
+                "Assets/Art/Materials/Vehicle/M_Trim.mat"
+            ],
+            "expectedMaterials": [
+                "Assets/Art/Materials/Vehicle/M_Tyre.mat",
+                "Assets/Art/Materials/Vehicle/M_Trim.mat",
+                "Assets/Art/Materials/Vehicle/M_Trim.mat",
+                "Assets/Art/Materials/Vehicle/M_Trim.mat",
+                "Assets/Art/Materials/Vehicle/M_Trim.mat",
+                "Assets/Art/Materials/Vehicle/M_Trim.mat"
+            ],
+            "slotsMatch": true
+        },
+        {
+            "name": "Wheel_LOD1",
+            "inGlb": true,
+            "inFbx": true,
+            "glbPosition": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "fbxPosition": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "positionDelta": 0.0,
+            "rotationDeltaDeg": 0.0,
+            "scaleDelta": 0.0,
+            "glbMin": {
+                "x": -0.17000000178813935,
+                "y": -0.5,
+                "z": -0.4999999701976776
+            },
+            "glbMax": {
+                "x": 0.17000000178813935,
+                "y": 0.5,
+                "z": 0.5
+            },
+            "fbxMin": {
+                "x": -0.17000000178813935,
+                "y": -0.5,
+                "z": -0.5
+            },
+            "fbxMax": {
+                "x": 0.17000000178813935,
+                "y": 0.5,
+                "z": 0.5
+            },
+            "boundsDelta": 2.9802322387695315e-8,
+            "glbTris": [
+                192,
+                60
+            ],
+            "fbxTris": [
+                192,
+                60
+            ],
+            "glbMaterials": [
+                "Rubber",
+                "Steel"
+            ],
+            "fbxMaterials": [
+                "Assets/Art/Materials/Vehicle/M_Tyre.mat",
+                "Assets/Art/Materials/Vehicle/M_Trim.mat"
+            ],
+            "expectedMaterials": [
+                "Assets/Art/Materials/Vehicle/M_Tyre.mat",
+                "Assets/Art/Materials/Vehicle/M_Trim.mat"
+            ],
+            "slotsMatch": true
+        }
+    ]
+}

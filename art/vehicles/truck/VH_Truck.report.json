@@ -1,0 +1,154 @@
+{
+  "tool": "art/pipeline/glb_to_fbx.py",
+  "blender": "4.5.12 LTS",
+  "source": "D:\\Backroads@552f7807f4ad56547815c32a5e8407a7c324d556:assets/vehicles/truck.glb",
+  "glbSha256": "ca3c549a1aecbab10166b74efede6e45fe1ed2ae0223b5b4f2babd71934b1523",
+  "fbx": "VH_Truck.fbx",
+  "fbxSha256": "eb680bf97020da6aed4d89df730bf07a0d1cb7a7bf10cc31fb14b32a27b20591",
+  "nodes": [
+    {
+      "name": "Body",
+      "type": "MESH",
+      "mesh": "Body",
+      "parent": null,
+      "tris": 14638,
+      "materials": [
+        "Paint",
+        "Under",
+        "BoxPanel",
+        "Rib",
+        "Livery",
+        "Livery2",
+        "Alloy",
+        "Chrome",
+        "Steel",
+        "Plate",
+        "Glass",
+        "Trim",
+        "Headlight",
+        "Indicator",
+        "Mirror",
+        "Rubber",
+        "Taillight",
+        "Reverse",
+        "Grille",
+        "Interior"
+      ],
+      "unityBounds": {
+        "min": [
+          -1.5,
+          0.225,
+          -4.3
+        ],
+        "max": [
+          1.5,
+          3.76,
+          4.13343
+        ]
+      }
+    },
+    {
+      "name": "Body_LOD1",
+      "type": "MESH",
+      "mesh": "Body.002",
+      "parent": null,
+      "tris": 2040,
+      "materials": [
+        "Paint",
+        "BoxPanel",
+        "Livery",
+        "Livery2",
+        "Glass",
+        "Trim",
+        "Headlight",
+        "Indicator",
+        "Taillight",
+        "Reverse"
+      ],
+      "unityBounds": {
+        "min": [
+          -1.496927,
+          0.225,
+          -4.296762
+        ],
+        "max": [
+          1.496927,
+          3.756762,
+          4.131069
+        ]
+      }
+    },
+    {
+      "name": "Caliper",
+      "type": "MESH",
+      "mesh": "Caliper",
+      "parent": null,
+      "tris": 108,
+      "materials": [
+        "Steel"
+      ],
+      "unityBounds": {
+        "min": [
+          -0.012,
+          0.036046,
+          -0.266419
+        ],
+        "max": [
+          0.063,
+          0.144562,
+          -0.128216
+        ]
+      }
+    },
+    {
+      "name": "Wheel",
+      "type": "MESH",
+      "mesh": "Wheel",
+      "parent": null,
+      "tris": 3580,
+      "materials": [
+        "Rubber",
+        "Steel",
+        "Under",
+        "Chrome",
+        "Brake",
+        "DarkAlloy"
+      ],
+      "unityBounds": {
+        "min": [
+          -0.1835,
+          -0.527,
+          -0.528817
+        ],
+        "max": [
+          0.1751,
+          0.527,
+          0.528817
+        ]
+      }
+    },
+    {
+      "name": "Wheel_LOD1",
+      "type": "MESH",
+      "mesh": "Wheel_LOD1",
+      "parent": null,
+      "tris": 252,
+      "materials": [
+        "Rubber",
+        "Steel"
+      ],
+      "unityBounds": {
+        "min": [
+          -0.17,
+          -0.5,
+          -0.5
+        ],
+        "max": [
+          0.17,
+          0.5,
+          0.5
+        ]
+      }
+    }
+  ]
+}
