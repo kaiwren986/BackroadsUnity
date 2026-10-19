@@ -1,0 +1,6822 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 236a4a59903a9e140b14fd9b2669c3e2, type: 3}
+  m_Name: BrRoadNetwork
+  m_EditorClassIdentifier: Backroads.Roads::Backroads.Roads.RoadNetworkAsset
+  formatVersion: 1
+  builderVersion: 1
+  canonManifestSha256: a112c66d5c517e52673ed84197fb692202177e52e02ade57ac3c607b42825b2b
+  contentHash: 442832e898f63b69e2e85eaaa7e33b02b39e71ed70d3f2d0fc101309c5b5a1d5
+  inputRoads: 24
+  inputPoints: 1722
+  nodes:
+  - id: 0
+    legacyId: 0
+    position: {x: 70, y: 13.335372, z: 30}
+    kind: 0
+    control: 0
+    flags: 3
+    firstArm: 0
+    armCount: 3
+    firstCorner: 0
+    cornerCount: 3
+    majorA: -1
+    majorB: -1
+    bestPairBendDeg: 39.2056
+    minArmGapDeg: 109.23745
+  - id: 1
+    legacyId: 1
+    position: {x: 56.82801, y: 13.335274, z: 25.700035}
+    kind: 0
+    control: 0
+    flags: 3
+    firstArm: 3
+    armCount: 3
+    firstCorner: 3
+    cornerCount: 3
+    majorA: 0
+    majorB: 1
+    bestPairBendDeg: 7.709243
+    minArmGapDeg: 78.742584
+  - id: 2
+    legacyId: 2
+    position: {x: 5.7302723, y: 13.263414, z: -15.715099}
+    kind: 0
+    control: 2
+    flags: 2
+    firstArm: 6
+    armCount: 4
+    firstCorner: 6
+    cornerCount: 4
+    majorA: 0
+    majorB: 2
+    bestPairBendDeg: 8.040335
+    minArmGapDeg: 73.175964
+  - id: 3
+    legacyId: 3
+    position: {x: -85, y: 9.385864, z: -85}
+    kind: 0
+    control: 2
+    flags: 4
+    firstArm: 10
+    armCount: 3
+    firstCorner: 10
+    cornerCount: 3
+    majorA: 0
+    majorB: 1
+    bestPairBendDeg: 20.16173
+    minArmGapDeg: 95.84108
+  - id: 4
+    legacyId: 4
+    position: {x: 120.18341, y: 13.284002, z: 84.18341}
+    kind: 0
+    control: 2
+    flags: 0
+    firstArm: 13
+    armCount: 4
+    firstCorner: 13
+    cornerCount: 4
+    majorA: 0
+    majorB: 2
+    bestPairBendDeg: 1.272222e-13
+    minArmGapDeg: 84.85834
+  - id: 5
+    legacyId: 5
+    position: {x: 169.96587, y: 10.946743, z: 143.86714}
+    kind: 0
+    control: 2
+    flags: 4
+    firstArm: 17
+    armCount: 4
+    firstCorner: 17
+    cornerCount: 4
+    majorA: 0
+    majorB: 2
+    bestPairBendDeg: 8.44005
+    minArmGapDeg: 83.7622
+  - id: 6
+    legacyId: 6
+    position: {x: 300, y: 11.097646, z: 225}
+    kind: 3
+    control: 0
+    flags: 0
+    firstArm: 21
+    armCount: 1
+    firstCorner: 0
+    cornerCount: 0
+    majorA: -1
+    majorB: -1
+    bestPairBendDeg: -1
+    minArmGapDeg: -1
+  - id: 7
+    legacyId: 7
+    position: {x: 104.62706, y: 13.343751, z: -8.627061}
+    kind: 0
+    control: 2
+    flags: 8
+    firstArm: 22
+    armCount: 4
+    firstCorner: 21
+    cornerCount: 4
+    majorA: 1
+    majorB: 3
+    bestPairBendDeg: 0.007222432
+    minArmGapDeg: 85.55114
+  - id: 8
+    legacyId: 8
+    position: {x: 255, y: 29.44951, z: -175}
+    kind: 3
+    control: 0
+    flags: 0
+    firstArm: 26
+    armCount: 1
+    firstCorner: 0
+    cornerCount: 0
+    majorA: -1
+    majorB: -1
+    bestPairBendDeg: -1
+    minArmGapDeg: -1
+  - id: 9
+    legacyId: 9
+    position: {x: 25.054167, y: 13.243988, z: 58.945683}
+    kind: 0
+    control: 2
+    flags: 8
+    firstArm: 27
+    armCount: 4
+    firstCorner: 25
+    cornerCount: 4
+    majorA: 1
+    majorB: 3
+    bestPairBendDeg: 0.05111445
+    minArmGapDeg: 85.16271
+  - id: 10
+    legacyId: 10
+    position: {x: -92, y: 2.0075908, z: 152}
+    kind: 3
+    control: 0
+    flags: 0
+    firstArm: 31
+    armCount: 1
+    firstCorner: 0
+    cornerCount: 0
+    majorA: -1
+    majorB: -1
+    bestPairBendDeg: -1
+    minArmGapDeg: -1
+  - id: 11
+    legacyId: 11
+    position: {x: -330, y: 20.912043, z: -95}
+    kind: 3
+    control: 0
+    flags: 0
+    firstArm: 32
+    armCount: 1
+    firstCorner: 0
+    cornerCount: 0
+    majorA: -1
+    majorB: -1
+    bestPairBendDeg: -1
+    minArmGapDeg: -1
+  - id: 12
+    legacyId: 12
+    position: {x: -150, y: 44.3806, z: -315}
+    kind: 3
+    control: 0
+    flags: 0
+    firstArm: 33
+    armCount: 1
+    firstCorner: 0
+    cornerCount: 0
+    majorA: -1
+    majorB: -1
+    bestPairBendDeg: -1
+    minArmGapDeg: -1
+  - id: 13
+    legacyId: 13
+    position: {x: 4.156, y: 11.105, z: 186.322}
+    kind: 1
+    control: 0
+    flags: 0
+    firstArm: 34
+    armCount: 2
+    firstCorner: 29
+    cornerCount: 2
+    majorA: -1
+    majorB: -1
+    bestPairBendDeg: -1
+    minArmGapDeg: 89.99831
+  - id: 14
+    legacyId: 14
+    position: {x: 53.222, y: 7.071, z: 242.781}
+    kind: 1
+    control: 0
+    flags: 0
+    firstArm: 36
+    armCount: 2
+    firstCorner: 31
+    cornerCount: 2
+    majorA: -1
+    majorB: -1
+    bestPairBendDeg: -1
+    minArmGapDeg: 89.993095
+  - id: 15
+    legacyId: 15
+    position: {x: -18.315, y: 13.333, z: 7.651}
+    kind: 1
+    control: 0
+    flags: 0
+    firstArm: 38
+    armCount: 2
+    firstCorner: 33
+    cornerCount: 2
+    majorA: -1
+    majorB: -1
+    bestPairBendDeg: -1
+    minArmGapDeg: 93.966
+  - id: 16
+    legacyId: 16
+    position: {x: 79.817, y: 13.308, z: 120.569}
+    kind: 0
+    control: 3
+    flags: 0
+    firstArm: 40
+    armCount: 4
+    firstCorner: 35
+    cornerCount: 4
+    majorA: -1
+    majorB: -1
+    bestPairBendDeg: 0.63686883
+    minArmGapDeg: 89.36201
+  - id: 17
+    legacyId: 17
+    position: {x: 128.883, y: 11.394, z: 177.027}
+    kind: 0
+    control: 2
+    flags: 4
+    firstArm: 44
+    armCount: 3
+    firstCorner: 39
+    cornerCount: 3
+    majorA: 1
+    majorB: 2
+    bestPairBendDeg: 2.0847392
+    minArmGapDeg: 89.99882
+  - id: 18
+    legacyId: 18
+    position: {x: 60.183, y: 13.402, z: -60.569}
+    kind: 1
+    control: 0
+    flags: 0
+    firstArm: 47
+    armCount: 2
+    firstCorner: 42
+    cornerCount: 2
+    majorA: -1
+    majorB: -1
+    bestPairBendDeg: -1
+    minArmGapDeg: 91.07031
+  - id: 19
+    legacyId: 19
+    position: {x: 158.315, y: 13.378, z: 52.349}
+    kind: 0
+    control: 2
+    flags: 0
+    firstArm: 49
+    armCount: 3
+    firstCorner: 44
+    cornerCount: 3
+    majorA: 0
+    majorB: 1
+    bestPairBendDeg: 0.36545682
+    minArmGapDeg: 88.49654
+  - id: 20
+    legacyId: 20
+    position: {x: 207.381, y: 10.028, z: 108.807}
+    kind: 1
+    control: 0
+    flags: 0
+    firstArm: 52
+    armCount: 2
+    firstCorner: 47
+    cornerCount: 2
+    majorA: -1
+    majorB: -1
+    bestPairBendDeg: -1
+    minArmGapDeg: 92.14613
+  - id: 21
+    legacyId: -1
+    position: {x: -12.956526, y: 13.044396, z: -25.444136}
+    kind: 6
+    control: 0
+    flags: 0
+    firstArm: 54
+    armCount: 2
+    firstCorner: 49
+    cornerCount: 2
+    majorA: -1
+    majorB: -1
+    bestPairBendDeg: -1
+    minArmGapDeg: 174.87773
+  - id: 22
+    legacyId: -1
+    position: {x: 185.47977, y: 10.350772, z: 156.73874}
+    kind: 6
+    control: 0
+    flags: 0
+    firstArm: 56
+    armCount: 2
+    firstCorner: 51
+    cornerCount: 2
+    majorA: -1
+    majorB: -1
+    bestPairBendDeg: -1
+    minArmGapDeg: 173.88304
+  - id: 23
+    legacyId: -1
+    position: {x: 255.65785, y: 10.839856, z: 194.45747}
+    kind: 5
+    control: 2
+    flags: 16
+    firstArm: 58
+    armCount: 3
+    firstCorner: 53
+    cornerCount: 3
+    majorA: 0
+    majorB: 2
+    bestPairBendDeg: 1.9534513
+    minArmGapDeg: 32.721462
+  - id: 24
+    legacyId: -1
+    position: {x: 119.17673, y: 13.364841, z: -23.17681}
+    kind: 6
+    control: 0
+    flags: 0
+    firstArm: 61
+    armCount: 2
+    firstCorner: 56
+    cornerCount: 2
+    majorA: -1
+    majorB: -1
+    bestPairBendDeg: -1
+    minArmGapDeg: 179.82997
+  - id: 25
+    legacyId: -1
+    position: {x: 203.6809, y: 20.453825, z: -95.32215}
+    kind: 5
+    control: 2
+    flags: 4
+    firstArm: 63
+    armCount: 3
+    firstCorner: 58
+    cornerCount: 3
+    majorA: 0
+    majorB: 2
+    bestPairBendDeg: 13.216097
+    minArmGapDeg: 68.929634
+  - id: 26
+    legacyId: -1
+    position: {x: -25.419407, y: 9.31347, z: 111.43894}
+    kind: 6
+    control: 0
+    flags: 0
+    firstArm: 66
+    armCount: 2
+    firstCorner: 61
+    cornerCount: 2
+    majorA: -1
+    majorB: -1
+    bestPairBendDeg: -1
+    minArmGapDeg: 175.95682
+  - id: 27
+    legacyId: -1
+    position: {x: -89.606316, y: 2.0128691, z: 152.77899}
+    kind: 5
+    control: 2
+    flags: 18
+    firstArm: 68
+    armCount: 3
+    firstCorner: 63
+    cornerCount: 3
+    majorA: 0
+    majorB: 2
+    bestPairBendDeg: 13.471037
+    minArmGapDeg: 57.457542
+  - id: 28
+    legacyId: -1
+    position: {x: -185.69449, y: 8.887003, z: -45.68943}
+    kind: 5
+    control: 2
+    flags: 20
+    firstArm: 71
+    armCount: 3
+    firstCorner: 66
+    cornerCount: 3
+    majorA: 0
+    majorB: 1
+    bestPairBendDeg: 1.4229091
+    minArmGapDeg: 42.659958
+  - id: 29
+    legacyId: -1
+    position: {x: -325.88852, y: 20.879072, z: -90.63498}
+    kind: 5
+    control: 2
+    flags: 18
+    firstArm: 74
+    armCount: 3
+    firstCorner: 69
+    cornerCount: 3
+    majorA: 0
+    majorB: 2
+    bestPairBendDeg: 9.64872
+    minArmGapDeg: 48.743755
+  - id: 30
+    legacyId: -1
+    position: {x: -141.15393, y: 34.72827, z: -250.14374}
+    kind: 5
+    control: 2
+    flags: 4
+    firstArm: 77
+    armCount: 3
+    firstCorner: 72
+    cornerCount: 3
+    majorA: 0
+    majorB: 1
+    bestPairBendDeg: 23.232994
+    minArmGapDeg: 90.88248
+  arms:
+  - id: 0
+    node: 0
+    edge: 0
+    sourceRoad: 0
+    atA: 1
+    cls: 1
+    halfWidth: 3.6
+    dir: {x: -0.96403456, y: -0.2657769}
+    angleDeg: -164.58688
+    length: 13.996657
+    grade: -0.000007037167
+    maxGrade: 0.000017615457
+    tangentL: 10.9297
+    tangentR: 5.5557694
+    mouth: 11.4297
+    maxMouth: 3.9966578
+    shortArm: 1
+  - id: 1
+    node: 0
+    edge: 9
+    sourceRoad: 2
+    atA: 1
+    cls: 1
+    halfWidth: 3.6
+    dir: {x: 0.5790148, y: -0.81531703}
+    angleDeg: -54.618725
+    length: 51.99979
+    grade: 0.000033471464
+    maxGrade: 0.000108260654
+    tangentL: 11.078672
+    tangentR: 10.9297
+    mouth: 11.578672
+    maxMouth: 23.399904
+    shortArm: 0
+  - id: 2
+    node: 0
+    edge: 4
+    sourceRoad: 1
+    atA: 1
+    cls: 1
+    halfWidth: 3.6
+    dir: {x: 0.5790148, y: 0.81531703}
+    angleDeg: 54.618725
+    length: 73.99979
+    grade: 0.000029649596
+    maxGrade: 0.000091359376
+    tangentL: 5.5557694
+    tangentR: 11.078672
+    mouth: 11.578672
+    maxMouth: 33.299904
+    shortArm: 0
+  - id: 3
+    node: 1
+    edge: 1
+    sourceRoad: 0
+    atA: 1
+    cls: 1
+    halfWidth: 3.6
+    dir: {x: -0.8623506, y: -0.5063116}
+    angleDeg: -149.58154
+    length: 65.99812
+    grade: -0.00007750156
+    maxGrade: 0.00017983986
+    tangentL: 0
+    tangentR: 19.011164
+    mouth: 19.511164
+    maxMouth: 29.699154
+    shortArm: 0
+  - id: 4
+    node: 1
+    edge: 0
+    sourceRoad: 0
+    atA: 0
+    cls: 1
+    halfWidth: 3.6
+    dir: {x: 0.922476, y: 0.38605443}
+    angleDeg: 22.709215
+    length: 13.996657
+    grade: 0.000007037167
+    maxGrade: 0.000017615457
+    tangentL: 11.134221
+    tangentR: 0
+    mouth: 11.634221
+    maxMouth: 3.9966578
+    shortArm: 1
+  - id: 5
+    node: 1
+    edge: 13
+    sourceRoad: 3
+    atA: 1
+    cls: 1
+    halfWidth: 3.6
+    dir: {x: -0.6649159, y: 0.7469182}
+    angleDeg: 131.67587
+    length: 45.999996
+    grade: -0.00027819842
+    maxGrade: 0.00094843056
+    tangentL: 19.011164
+    tangentR: 11.134221
+    mouth: 19.511164
+    maxMouth: 20.699999
+    shortArm: 0
+  - id: 6
+    node: 2
+    edge: 2
+    sourceRoad: 0
+    atA: 1
+    cls: 1
+    halfWidth: 3.6
+    dir: {x: -0.8746358, y: -0.48478058}
+    angleDeg: -151.0019
+    length: 21.080997
+    grade: -0.010035927
+    maxGrade: 0.016928323
+    tangentL: 7.0172467
+    tangentR: 14.430357
+    mouth: 14.930357
+    maxMouth: 20.080997
+    shortArm: 0
+  - id: 7
+    node: 2
+    edge: 39
+    sourceRoad: 23
+    atA: 1
+    cls: 2
+    halfWidth: 3.1
+    dir: {x: 0.7718386, y: -0.6358185}
+    angleDeg: -39.480717
+    length: 70.547935
+    grade: 0.003088369
+    maxGrade: 0.0079361135
+    tangentL: 13.955581
+    tangentR: 7.751887
+    mouth: 14.455581
+    maxMouth: 31.74657
+    shortArm: 0
+  - id: 8
+    node: 2
+    edge: 1
+    sourceRoad: 0
+    atA: 0
+    cls: 1
+    halfWidth: 3.6
+    dir: {x: 0.79823166, y: 0.6023506}
+    angleDeg: 37.038433
+    length: 65.99812
+    grade: 0.0028308956
+    maxGrade: 0.004944532
+    tangentL: 9.010655
+    tangentR: 13.561277
+    mouth: 14.061277
+    maxMouth: 29.699154
+    shortArm: 0
+  - id: 9
+    node: 2
+    edge: 38
+    sourceRoad: 22
+    atA: 0
+    cls: 2
+    halfWidth: 3.1
+    dir: {x: -0.7171799, y: 0.6968881}
+    angleDeg: 135.82214
+    length: 33.52808
+    grade: 0.0030851716
+    maxGrade: 0.007605203
+    tangentL: 14.801527
+    tangentR: 9.593847
+    mouth: 15.301527
+    maxMouth: 15.087635
+    shortArm: 1
+  - id: 10
+    node: 3
+    edge: 20
+    sourceRoad: 5
+    atA: 1
+    cls: 0
+    halfWidth: 3.6
+    dir: {x: -0.41899678, y: -0.9079877}
+    angleDeg: -114.77126
+    length: 187.95456
+    grade: 0.062072895
+    maxGrade: 0.10569594
+    tangentL: 2.7734084
+    tangentR: 14.085527
+    mouth: 14.585527
+    maxMouth: 84.57955
+    shortArm: 0
+  - id: 11
+    node: 3
+    edge: 3
+    sourceRoad: 0
+    atA: 0
+    cls: 0
+    halfWidth: 3.6
+    dir: {x: 0.7062794, y: 0.70793325}
+    angleDeg: 45.067005
+    length: 93.75558
+    grade: 0.030225119
+    maxGrade: 0.044930093
+    tangentL: 12.11791
+    tangentR: 2.7734084
+    mouth: 12.61791
+    maxMouth: 92.75558
+    shortArm: 0
+  - id: 12
+    node: 3
+    edge: 17
+    sourceRoad: 4
+    atA: 1
+    cls: 0
+    halfWidth: 3.6
+    dir: {x: -0.86063236, y: 0.5092268}
+    angleDeg: 149.38766
+    length: 113.99407
+    grade: 0.002815058
+    maxGrade: 0.0075482153
+    tangentL: 14.085527
+    tangentR: 12.11791
+    mouth: 14.585527
+    maxMouth: 51.297333
+    shortArm: 0
+  - id: 13
+    node: 4
+    edge: 4
+    sourceRoad: 1
+    atA: 0
+    cls: 1
+    halfWidth: 3.6
+    dir: {x: -0.70710677, y: -0.70710677}
+    angleDeg: -135
+    length: 73.99979
+    grade: 0.0026060066
+    maxGrade: 0.0052175797
+    tangentL: 9.64404
+    tangentR: 11.190479
+    mouth: 11.690479
+    maxMouth: 33.299904
+    shortArm: 0
+  - id: 14
+    node: 4
+    edge: 37
+    sourceRoad: 21
+    atA: 1
+    cls: 2
+    halfWidth: 3.1
+    dir: {x: 0.76763135, y: -0.6408916}
+    angleDeg: -39.858337
+    length: 49.673466
+    grade: 0.0022598316
+    maxGrade: 0.005537397
+    tangentL: 12.0986395
+    tangentR: 10.191051
+    mouth: 12.5986395
+    maxMouth: 22.35306
+    shortArm: 0
+  - id: 15
+    node: 4
+    edge: 5
+    sourceRoad: 1
+    atA: 1
+    cls: 1
+    halfWidth: 3.6
+    dir: {x: 0.70710677, y: 0.70710677}
+    angleDeg: 45
+    length: 77.99914
+    grade: -0.011273482
+    maxGrade: 0.019021276
+    tangentL: 10.038065
+    tangentR: 11.641609
+    mouth: 12.141609
+    maxMouth: 35.09961
+    shortArm: 0
+  - id: 16
+    node: 4
+    edge: 36
+    sourceRoad: 20
+    atA: 0
+    cls: 2
+    halfWidth: 3.1
+    dir: {x: -0.74281293, y: 0.66949904}
+    angleDeg: 137.97159
+    length: 54.34478
+    grade: 0.0021936777
+    maxGrade: 0.0054645077
+    tangentL: 11.665197
+    tangentR: 10.564693
+    mouth: 12.165197
+    maxMouth: 24.45515
+    shortArm: 0
+  - id: 17
+    node: 5
+    edge: 5
+    sourceRoad: 1
+    atA: 0
+    cls: 1
+    halfWidth: 3.6
+    dir: {x: -0.6004316, y: -0.7996761}
+    angleDeg: -126.90082
+    length: 77.99914
+    grade: 0.04256425
+    maxGrade: 0.044215716
+    tangentL: 11.876387
+    tangentR: 10.217613
+    mouth: 12.376387
+    maxMouth: 35.09961
+    shortArm: 0
+  - id: 18
+    node: 5
+    edge: 34
+    sourceRoad: 18
+    atA: 1
+    cls: 2
+    halfWidth: 3.1
+    dir: {x: 0.72970164, y: -0.6837657}
+    angleDeg: -43.138615
+    length: 51.274612
+    grade: -0.09127622
+    maxGrade: 0.21250086
+    tangentL: 11.515833
+    tangentR: 12.324713
+    mouth: 12.824713
+    maxMouth: 23.073576
+    shortArm: 0
+  - id: 19
+    node: 5
+    edge: 6
+    sourceRoad: 1
+    atA: 1
+    cls: 1
+    halfWidth: 3.6
+    dir: {x: 0.71130097, y: 0.70288754}
+    angleDeg: 44.659134
+    length: 20.254353
+    grade: -0.029561898
+    maxGrade: 0.037571497
+    tangentL: 9.415538
+    tangentR: 11.034691
+    mouth: 11.534691
+    maxMouth: 19.254353
+    shortArm: 0
+  - id: 20
+    node: 5
+    edge: 33
+    sourceRoad: 17
+    atA: 0
+    cls: 2
+    halfWidth: 3.1
+    dir: {x: -0.7781625, y: 0.628063}
+    angleDeg: 141.09264
+    length: 52.795822
+    grade: 0.049410067
+    maxGrade: 0.12112825
+    tangentL: 10.735437
+    tangentR: 9.975087
+    mouth: 11.235437
+    maxMouth: 23.75812
+    shortArm: 0
+  - id: 21
+    node: 6
+    edge: 8
+    sourceRoad: 1
+    atA: 0
+    cls: 0
+    halfWidth: 3.6
+    dir: {x: -0.79914963, y: -0.60113215}
+    angleDeg: -143.04897
+    length: 53.988804
+    grade: -0.0010266992
+    maxGrade: 0.0030242896
+    tangentL: 0
+    tangentR: 0
+    mouth: 0
+    maxMouth: 24.294962
+    shortArm: 0
+  - id: 22
+    node: 7
+    edge: 29
+    sourceRoad: 13
+    atA: 1
+    cls: 2
+    halfWidth: 3.1
+    dir: {x: -0.65012646, y: -0.759826}
+    angleDeg: -130.55113
+    length: 68.36111
+    grade: -0.00029735715
+    maxGrade: 0.0009946639
+    tangentL: 10.337027
+    tangentR: 8.919939
+    mouth: 10.837027
+    maxMouth: 30.762497
+    shortArm: 0
+  - id: 23
+    node: 7
+    edge: 10
+    sourceRoad: 2
+    atA: 1
+    cls: 1
+    halfWidth: 3.6
+    dir: {x: 0.70710677, y: -0.70710677}
+    angleDeg: -45
+    length: 20.576393
+    grade: 0.0009880078
+    maxGrade: 0.0023095962
+    tangentL: 8.507979
+    tangentR: 9.874417
+    mouth: 10.374417
+    maxMouth: 19.576393
+    shortArm: 0
+  - id: 24
+    node: 7
+    edge: 30
+    sourceRoad: 14
+    atA: 1
+    cls: 2
+    halfWidth: 3.1
+    dir: {x: 0.6608124, y: 0.75055116}
+    angleDeg: 48.63814
+    length: 81.2433
+    grade: -0.00035
+    maxGrade: 0.0010092172
+    tangentL: 10.199221
+    tangentR: 9.04078
+    mouth: 10.699221
+    maxMouth: 36.559486
+    shortArm: 0
+  - id: 25
+    node: 7
+    edge: 9
+    sourceRoad: 2
+    atA: 0
+    cls: 1
+    halfWidth: 3.6
+    dir: {x: -0.70701766, y: 0.70719594}
+    angleDeg: 134.99278
+    length: 51.99979
+    grade: -0.00029248805
+    maxGrade: 0.00039515883
+    tangentL: 8.379457
+    tangentR: 9.730062
+    mouth: 10.230062
+    maxMouth: 23.399904
+    shortArm: 0
+  - id: 26
+    node: 8
+    edge: 12
+    sourceRoad: 2
+    atA: 0
+    cls: 0
+    halfWidth: 3.6
+    dir: {x: -0.6929045, y: 0.7210294}
+    angleDeg: 133.86046
+    length: 95.720215
+    grade: -0.03933789
+    maxGrade: 0.08633205
+    tangentL: 0
+    tangentR: 0
+    mouth: 0
+    maxMouth: 43.074097
+    shortArm: 0
+  - id: 27
+    node: 9
+    edge: 26
+    sourceRoad: 10
+    atA: 1
+    cls: 2
+    halfWidth: 3.1
+    dir: {x: -0.64565, y: -0.76363343}
+    angleDeg: -130.21443
+    length: 67.171776
+    grade: 0.0039684623
+    maxGrade: 0.010120575
+    tangentL: 10.4044285
+    tangentR: 8.871655
+    mouth: 10.9044285
+    maxMouth: 30.227299
+    shortArm: 0
+  - id: 28
+    node: 9
+    edge: 13
+    sourceRoad: 3
+    atA: 0
+    cls: 1
+    halfWidth: 3.6
+    dir: {x: 0.7064682, y: -0.7077448}
+    angleDeg: -45.05172
+    length: 45.999996
+    grade: 0.003933985
+    maxGrade: 0.0071088453
+    tangentL: 8.541833
+    tangentR: 9.944955
+    mouth: 10.444955
+    maxMouth: 20.699999
+    shortArm: 0
+  - id: 29
+    node: 9
+    edge: 27
+    sourceRoad: 11
+    atA: 1
+    cls: 2
+    halfWidth: 3.1
+    dir: {x: 0.66428304, y: 0.74748117}
+    angleDeg: 48.372654
+    length: 82.44016
+    grade: 0.0038393114
+    maxGrade: 0.009448288
+    tangentL: 10.15304
+    tangentR: 9.072646
+    mouth: 10.65304
+    maxMouth: 37.098072
+    shortArm: 0
+  - id: 30
+    node: 9
+    edge: 14
+    sourceRoad: 3
+    atA: 1
+    cls: 1
+    halfWidth: 3.6
+    dir: {x: -0.7070993, y: 0.7071143}
+    angleDeg: 134.99939
+    length: 72.852325
+    grade: -0.01502652
+    maxGrade: 0.026045498
+    tangentL: 8.328041
+    tangentR: 9.6816435
+    mouth: 10.1816435
+    maxMouth: 71.852325
+    shortArm: 0
+  - id: 31
+    node: 10
+    edge: 16
+    sourceRoad: 3
+    atA: 0
+    cls: 0
+    halfWidth: 3.6
+    dir: {x: 0.95091134, y: 0.30946338}
+    angleDeg: 18.026894
+    length: 2.5172544
+    grade: 0.0020968837
+    maxGrade: 0.0020968837
+    tangentL: 0
+    tangentR: 0
+    mouth: 0
+    maxMouth: -7.4827456
+    shortArm: 0
+  - id: 32
+    node: 11
+    edge: 19
+    sourceRoad: 4
+    atA: 0
+    cls: 0
+    halfWidth: 3.6
+    dir: {x: 0.68565017, y: 0.7279312}
+    angleDeg: 46.71324
+    length: 6.002547
+    grade: -0.005492593
+    maxGrade: 0.010102912
+    tangentL: 0
+    tangentR: 0
+    mouth: 0
+    maxMouth: -3.9974532
+    shortArm: 0
+  - id: 33
+    node: 12
+    edge: 21
+    sourceRoad: 5
+    atA: 0
+    cls: 0
+    halfWidth: 3.6
+    dir: {x: 0, y: 1}
+    angleDeg: 90
+    length: 66.59262
+    grade: -0.13031958
+    maxGrade: 0.151069
+    tangentL: 0
+    tangentR: 0
+    mouth: 0
+    maxMouth: 29.96668
+    shortArm: 0
+  - id: 34
+    node: 13
+    edge: 35
+    sourceRoad: 19
+    atA: 1
+    cls: 2
+    halfWidth: 3.1
+    dir: {x: 0.7548096, y: -0.65594393}
+    angleDeg: -40.99126
+    length: 100.23994
+    grade: -0.040355034
+    maxGrade: 0.10122931
+    tangentL: 9.100268
+    tangentR: 0
+    mouth: 9.600268
+    maxMouth: 45.10797
+    shortArm: 0
+  - id: 35
+    node: 13
+    edge: 25
+    sourceRoad: 9
+    atA: 1
+    cls: 2
+    halfWidth: 3.1
+    dir: {x: 0.6559662, y: 0.75479025}
+    angleDeg: 49.007046
+    length: 74.80034
+    grade: -0.035238434
+    maxGrade: 0.080628365
+    tangentL: 0
+    tangentR: 9.100268
+    mouth: 9.600268
+    maxMouth: 33.660152
+    shortArm: 0
+  - id: 36
+    node: 14
+    edge: 25
+    sourceRoad: 9
+    atA: 0
+    cls: 2
+    halfWidth: 3.1
+    dir: {x: -0.65590924, y: -0.7548398}
+    angleDeg: -130.98863
+    length: 74.80034
+    grade: 0.02977497
+    maxGrade: 0.071724616
+    tangentL: 9.101096
+    tangentR: 0
+    mouth: 9.601096
+    maxMouth: 33.660152
+    shortArm: 0
+  - id: 37
+    node: 14
+    edge: 32
+    sourceRoad: 16
+    atA: 1
+    cls: 2
+    halfWidth: 3.1
+    dir: {x: 0.75476074, y: -0.6560002}
+    angleDeg: -40.995533
+    length: 100.24059
+    grade: 0.037104025
+    maxGrade: 0.08626931
+    tangentL: 0
+    tangentR: 9.101096
+    mouth: 9.601096
+    maxMouth: 45.108265
+    shortArm: 0
+  - id: 38
+    node: 15
+    edge: 38
+    sourceRoad: 22
+    atA: 1
+    cls: 2
+    halfWidth: 3.1
+    dir: {x: 0.7171716, y: -0.6968966}
+    angleDeg: -44.178543
+    length: 33.52808
+    grade: -0.0014555147
+    maxGrade: 0.007605203
+    tangentL: 8.490935
+    tangentR: 0
+    mouth: 8.990935
+    maxMouth: 15.087635
+    shortArm: 0
+  - id: 39
+    node: 15
+    edge: 26
+    sourceRoad: 10
+    atA: 0
+    cls: 2
+    halfWidth: 3.1
+    dir: {x: 0.6456248, y: 0.76365477}
+    angleDeg: 49.78746
+    length: 67.171776
+    grade: 0.0001
+    maxGrade: 0.00050602877
+    tangentL: 0
+    tangentR: 8.490935
+    mouth: 8.990935
+    maxMouth: 30.227299
+    shortArm: 0
+  - id: 40
+    node: 16
+    edge: 27
+    sourceRoad: 11
+    atA: 0
+    cls: 2
+    halfWidth: 3.1
+    dir: {x: -0.66430795, y: -0.747459}
+    angleDeg: -131.62926
+    length: 82.44016
+    grade: 0.00115
+    maxGrade: 0.0029846558
+    tangentL: 10.674722
+    tangentR: 10.718694
+    mouth: 11.218694
+    maxMouth: 37.098072
+    shortArm: 0
+  - id: 41
+    node: 16
+    edge: 36
+    sourceRoad: 20
+    atA: 1
+    cls: 2
+    halfWidth: 3.1
+    dir: {x: 0.7427742, y: -0.669542}
+    angleDeg: -42.031727
+    length: 54.34478
+    grade: 0.0011468389
+    maxGrade: 0.0029806406
+    tangentL: 10.40944
+    tangentR: 10.674722
+    mouth: 11.174722
+    maxMouth: 24.45515
+    shortArm: 0
+  - id: 42
+    node: 16
+    edge: 28
+    sourceRoad: 12
+    atA: 1
+    cls: 2
+    halfWidth: 3.1
+    dir: {x: 0.6559588, y: 0.75479674}
+    angleDeg: 49.00761
+    length: 74.79958
+    grade: -0.025399122
+    maxGrade: 0.055895735
+    tangentL: 10.599792
+    tangentR: 10.40944
+    mouth: 11.099792
+    maxMouth: 33.659813
+    shortArm: 0
+  - id: 43
+    node: 16
+    edge: 35
+    sourceRoad: 19
+    atA: 0
+    cls: 2
+    halfWidth: 3.1
+    dir: {x: -0.7548096, y: 0.65594393}
+    angleDeg: 139.00874
+    length: 100.23994
+    grade: -0.02466835
+    maxGrade: 0.053876266
+    tangentL: 10.718694
+    tangentR: 10.599792
+    mouth: 11.218694
+    maxMouth: 45.10797
+    shortArm: 0
+  - id: 44
+    node: 17
+    edge: 28
+    sourceRoad: 12
+    atA: 0
+    cls: 2
+    halfWidth: 3.1
+    dir: {x: -0.65601575, y: -0.7547472}
+    angleDeg: -130.99672
+    length: 74.79958
+    grade: -0.008274491
+    maxGrade: 0.037593592
+    tangentL: 10.220953
+    tangentR: 10.600218
+    mouth: 11.100218
+    maxMouth: 33.659813
+    shortArm: 0
+  - id: 45
+    node: 17
+    edge: 33
+    sourceRoad: 17
+    atA: 1
+    cls: 2
+    halfWidth: 3.1
+    dir: {x: 0.7781248, y: -0.6281097}
+    angleDeg: -38.910793
+    length: 52.795822
+    grade: 0.03891507
+    maxGrade: 0.10638942
+    tangentL: 0
+    tangentR: 10.220953
+    mouth: 10.720953
+    maxMouth: 23.75812
+    shortArm: 0
+  - id: 46
+    node: 17
+    edge: 32
+    sourceRoad: 16
+    atA: 0
+    cls: 2
+    halfWidth: 3.1
+    dir: {x: -0.75476074, y: 0.6560002}
+    angleDeg: 139.00447
+    length: 100.24059
+    grade: -0.089784056
+    maxGrade: 0.21350965
+    tangentL: 10.600218
+    tangentR: 0
+    mouth: 11.100218
+    maxMouth: 45.108265
+    shortArm: 0
+  - id: 47
+    node: 18
+    edge: 29
+    sourceRoad: 13
+    atA: 0
+    cls: 2
+    halfWidth: 3.1
+    dir: {x: 0.65012, y: 0.75983155}
+    angleDeg: 49.449352
+    length: 68.36111
+    grade: -0.0028973552
+    maxGrade: 0.007459979
+    tangentL: 8.931576
+    tangentR: 0
+    mouth: 9.431576
+    maxMouth: 30.762497
+    shortArm: 0
+  - id: 48
+    node: 18
+    edge: 39
+    sourceRoad: 23
+    atA: 0
+    cls: 2
+    halfWidth: 3.1
+    dir: {x: -0.77184284, y: 0.63581336}
+    angleDeg: 140.51967
+    length: 70.547935
+    grade: -0.002842217
+    maxGrade: 0.0069467584
+    tangentL: 0
+    tangentR: 8.931576
+    mouth: 9.431576
+    maxMouth: 31.74657
+    shortArm: 0
+  - id: 49
+    node: 19
+    edge: 30
+    sourceRoad: 14
+    atA: 0
+    cls: 2
+    halfWidth: 3.1
+    dir: {x: -0.66081643, y: -0.7505475}
+    angleDeg: -131.36217
+    length: 81.2433
+    grade: -0.00195
+    maxGrade: 0.0050441762
+    tangentL: 0
+    tangentR: 10.881863
+    mouth: 11.381863
+    maxMouth: 36.559486
+    shortArm: 0
+  - id: 50
+    node: 19
+    edge: 31
+    sourceRoad: 15
+    atA: 1
+    cls: 2
+    halfWidth: 3.1
+    dir: {x: 0.65601575, y: 0.7547472}
+    angleDeg: 49.00329
+    length: 74.79959
+    grade: -0.004100678
+    maxGrade: 0.027700542
+    tangentL: 10.391526
+    tangentR: 0
+    mouth: 10.891526
+    maxMouth: 33.659813
+    shortArm: 0
+  - id: 51
+    node: 19
+    edge: 37
+    sourceRoad: 21
+    atA: 0
+    cls: 2
+    halfWidth: 3.1
+    dir: {x: -0.7676273, y: 0.64089656}
+    angleDeg: 140.1413
+    length: 49.673466
+    grade: -0.0018565906
+    maxGrade: 0.004528847
+    tangentL: 10.881863
+    tangentR: 10.391526
+    mouth: 11.381863
+    maxMouth: 22.35306
+    shortArm: 0
+  - id: 52
+    node: 20
+    edge: 31
+    sourceRoad: 15
+    atA: 0
+    cls: 2
+    halfWidth: 3.1
+    dir: {x: -0.6559588, y: -0.75479674}
+    angleDeg: -130.99239
+    length: 74.79959
+    grade: 0.026387895
+    maxGrade: 0.08953211
+    tangentL: 0
+    tangentR: 8.7653675
+    mouth: 9.2653675
+    maxMouth: 33.659813
+    shortArm: 0
+  - id: 53
+    node: 20
+    edge: 34
+    sourceRoad: 18
+    atA: 0
+    cls: 2
+    halfWidth: 3.1
+    dir: {x: -0.7297027, y: 0.6837646}
+    angleDeg: 136.86148
+    length: 51.274612
+    grade: -0.06678017
+    maxGrade: 0.16077033
+    tangentL: 8.7653675
+    tangentR: 0
+    mouth: 9.2653675
+    maxMouth: 23.073576
+    shortArm: 0
+  - id: 54
+    node: 21
+    edge: 3
+    sourceRoad: 0
+    atA: 1
+    cls: 0
+    halfWidth: 3.6
+    dir: {x: -0.8543465, y: -0.5197038}
+    angleDeg: -148.68762
+    length: 93.75558
+    grade: -0.025573416
+    maxGrade: 0.03454296
+    tangentL: 0
+    tangentR: 0
+    mouth: 0
+    maxMouth: 42.19001
+    shortArm: 0
+  - id: 55
+    node: 21
+    edge: 2
+    sourceRoad: 0
+    atA: 0
+    cls: 1
+    halfWidth: 3.6
+    dir: {x: 0.8973345, y: 0.44135106}
+    angleDeg: 26.190115
+    length: 21.080997
+    grade: 0.010646262
+    maxGrade: 0.016928323
+    tangentL: 0
+    tangentR: 0
+    mouth: 0
+    maxMouth: 9.486448
+    shortArm: 0
+  - id: 56
+    node: 22
+    edge: 6
+    sourceRoad: 1
+    atA: 0
+    cls: 1
+    halfWidth: 3.6
+    dir: {x: -0.8217687, y: -0.56982124}
+    angleDeg: -145.26224
+    length: 20.254353
+    grade: 0.02932074
+    maxGrade: 0.037571497
+    tangentL: 0
+    tangentR: 0
+    mouth: 0
+    maxMouth: 9.114459
+    shortArm: 0
+  - id: 57
+    node: 22
+    edge: 7
+    sourceRoad: 1
+    atA: 1
+    cls: 0
+    halfWidth: 3.6
+    dir: {x: 0.87780917, y: 0.47901052}
+    angleDeg: 28.620798
+    length: 79.743576
+    grade: -0.009334732
+    maxGrade: 0.018608974
+    tangentL: 0
+    tangentR: 0
+    mouth: 0
+    maxMouth: 35.88461
+    shortArm: 0
+  - id: 58
+    node: 23
+    edge: 7
+    sourceRoad: 1
+    atA: 0
+    cls: 0
+    halfWidth: 3.6
+    dir: {x: -0.85666335, y: -0.5158759}
+    angleDeg: -148.94398
+    length: 79.743576
+    grade: -0.013606291
+    maxGrade: 0.01482449
+    tangentL: 24.735786
+    tangentR: 0
+    mouth: 25.235786
+    maxMouth: 78.743576
+    shortArm: 0
+  - id: 59
+    node: 23
+    edge: 22
+    sourceRoad: 6
+    atA: 0
+    cls: 3
+    halfWidth: 2.7
+    dir: {x: -0.4418585, y: -0.8970848}
+    angleDeg: -116.22252
+    length: 301.5734
+    grade: 0.016280303
+    maxGrade: 0.11705694
+    tangentL: 5.234483
+    tangentR: 25
+    mouth: 25.5
+    maxMouth: 135.70804
+    shortArm: 0
+  - id: 60
+    node: 23
+    edge: 8
+    sourceRoad: 1
+    atA: 1
+    cls: 0
+    halfWidth: 3.6
+    dir: {x: 0.87375045, y: 0.4863745}
+    angleDeg: 29.102566
+    length: 53.988804
+    grade: 0.008817666
+    maxGrade: 0.011352325
+    tangentL: 0
+    tangentR: 2.351555
+    mouth: 2.851555
+    maxMouth: 52.988804
+    shortArm: 0
+  - id: 61
+    node: 24
+    edge: 11
+    sourceRoad: 2
+    atA: 1
+    cls: 0
+    halfWidth: 3.6
+    dir: {x: 0.705001, y: -0.70920634}
+    angleDeg: -45.170376
+    length: 113.417885
+    grade: 0.0058198357
+    maxGrade: 0.011726656
+    tangentL: 0
+    tangentR: 0
+    mouth: 0
+    maxMouth: 51.038048
+    shortArm: 0
+  - id: 62
+    node: 24
+    edge: 10
+    sourceRoad: 2
+    atA: 0
+    cls: 1
+    halfWidth: 3.6
+    dir: {x: -0.70710254, y: 0.707111}
+    angleDeg: 134.99966
+    length: 20.576393
+    grade: -0.0010418745
+    maxGrade: 0.0023095962
+    tangentL: 0
+    tangentR: 0
+    mouth: 0
+    maxMouth: 9.259377
+    shortArm: 0
+  - id: 63
+    node: 25
+    edge: 12
+    sourceRoad: 2
+    atA: 1
+    cls: 0
+    halfWidth: 3.6
+    dir: {x: 0.6480367, y: -0.7616091}
+    angleDeg: -49.60626
+    length: 95.720215
+    grade: 0.11000292
+    maxGrade: 0.11001383
+    tangentL: 5.569906
+    tangentR: 0
+    mouth: 6.069906
+    maxMouth: 94.720215
+    shortArm: 0
+  - id: 64
+    node: 25
+    edge: 22
+    sourceRoad: 6
+    atA: 1
+    cls: 3
+    halfWidth: 2.7
+    dir: {x: 0.2642063, y: 0.9644662}
+    angleDeg: 74.68021
+    length: 301.5734
+    grade: -0.027362153
+    maxGrade: 0.03992375
+    tangentL: 18.010506
+    tangentR: 7.2728157
+    mouth: 18.510506
+    maxMouth: 135.70804
+    shortArm: 0
+  - id: 65
+    node: 25
+    edge: 11
+    sourceRoad: 2
+    atA: 0
+    cls: 0
+    halfWidth: 3.6
+    dir: {x: -0.80499566, y: 0.5932807}
+    angleDeg: 143.60983
+    length: 113.417885
+    grade: -0.1099956
+    maxGrade: 0.11000222
+    tangentL: 0
+    tangentR: 17.392767
+    mouth: 17.892767
+    maxMouth: 112.417885
+    shortArm: 0
+  - id: 66
+    node: 26
+    edge: 14
+    sourceRoad: 3
+    atA: 0
+    cls: 1
+    halfWidth: 3.6
+    dir: {x: 0.64927626, y: -0.76055264}
+    angleDeg: -49.512943
+    length: 72.852325
+    grade: 0.097447336
+    maxGrade: 0.10805776
+    tangentL: 0
+    tangentR: 0
+    mouth: 0
+    maxMouth: 32.783546
+    shortArm: 0
+  - id: 67
+    node: 26
+    edge: 15
+    sourceRoad: 3
+    atA: 1
+    cls: 0
+    halfWidth: 3.6
+    dir: {x: -0.5940351, y: 0.8044391}
+    angleDeg: 126.44388
+    length: 87.1309
+    grade: -0.10966768
+    maxGrade: 0.11000639
+    tangentL: 0
+    tangentR: 0
+    mouth: 0
+    maxMouth: 39.208904
+    shortArm: 0
+  - id: 68
+    node: 27
+    edge: 16
+    sourceRoad: 3
+    atA: 1
+    cls: 0
+    halfWidth: 3.6
+    dir: {x: -0.95091134, y: -0.30946338}
+    angleDeg: -161.9731
+    length: 2.5172544
+    grade: -0.0020968837
+    maxGrade: 0.0020968837
+    tangentL: 8.023381
+    tangentR: 0
+    mouth: 8.523381
+    maxMouth: 1.5172542
+    shortArm: 1
+  - id: 69
+    node: 27
+    edge: 24
+    sourceRoad: 8
+    atA: 1
+    cls: 3
+    halfWidth: 2.7
+    dir: {x: 0.6031845, y: -0.79760164}
+    angleDeg: -52.901684
+    length: 253.02505
+    grade: 0.017004859
+    maxGrade: 0.027923722
+    tangentL: 22.412659
+    tangentR: 9.286799
+    mouth: 22.912659
+    maxMouth: 113.861275
+    shortArm: 0
+  - id: 70
+    node: 27
+    edge: 15
+    sourceRoad: 3
+    atA: 0
+    cls: 0
+    halfWidth: 3.6
+    dir: {x: 0.99684036, y: 0.07943094}
+    angleDeg: 4.555857
+    length: 87.1309
+    grade: 0.031930625
+    maxGrade: 0.05388063
+    tangentL: 0
+    tangentR: 21.919336
+    mouth: 22.419336
+    maxMouth: 86.1309
+    shortArm: 0
+  - id: 71
+    node: 28
+    edge: 18
+    sourceRoad: 4
+    atA: 1
+    cls: 0
+    halfWidth: 3.6
+    dir: {x: -0.9865738, y: -0.16331607}
+    angleDeg: -170.60057
+    length: 149.9812
+    grade: 0.039137185
+    maxGrade: 0.06617342
+    tangentL: 0
+    tangentR: 3.8076682
+    mouth: 4.307668
+    maxMouth: 67.49155
+    shortArm: 0
+  - id: 72
+    node: 28
+    edge: 17
+    sourceRoad: 4
+    atA: 0
+    cls: 0
+    halfWidth: 3.6
+    dir: {x: 0.98221415, y: 0.18776421}
+    angleDeg: 10.822334
+    length: 113.99407
+    grade: 0.000004063482
+    maxGrade: 0.014133372
+    tangentL: 24.648561
+    tangentR: 0
+    mouth: 25.148561
+    maxMouth: 51.297333
+    shortArm: 0
+  - id: 73
+    node: 28
+    edge: 24
+    sourceRoad: 8
+    atA: 0
+    cls: 3
+    halfWidth: 2.7
+    dir: {x: 0.5950712, y: 0.803673}
+    angleDeg: 53.482292
+    length: 253.02505
+    grade: -0.10033062
+    maxGrade: 0.15
+    tangentL: 6.0306163
+    tangentR: 25
+    mouth: 25.5
+    maxMouth: 113.861275
+    shortArm: 0
+  - id: 74
+    node: 29
+    edge: 19
+    sourceRoad: 4
+    atA: 1
+    cls: 0
+    halfWidth: 3.6
+    dir: {x: -0.68565017, y: -0.7279312}
+    angleDeg: -133.28676
+    length: 6.002547
+    grade: 0.005492593
+    maxGrade: 0.010102912
+    tangentL: 5.984054
+    tangentR: 0
+    mouth: 6.484054
+    maxMouth: 5.002547
+    shortArm: 1
+  - id: 75
+    node: 29
+    edge: 23
+    sourceRoad: 7
+    atA: 1
+    cls: 3
+    halfWidth: 2.7
+    dir: {x: 0.97929627, y: -0.20243241}
+    angleDeg: -11.679235
+    length: 291.45712
+    grade: -0.0031090092
+    maxGrade: 0.012071829
+    tangentL: 25
+    tangentR: 7.5946627
+    mouth: 25.5
+    maxMouth: 131.1557
+    shortArm: 0
+  - id: 76
+    node: 29
+    edge: 18
+    sourceRoad: 4
+    atA: 0
+    cls: 0
+    halfWidth: 3.6
+    dir: {x: 0.7979573, y: 0.60271394}
+    angleDeg: 37.064518
+    length: 149.9812
+    grade: -0.0253224
+    maxGrade: 0.042809363
+    tangentL: 0
+    tangentR: 24.592274
+    mouth: 25.092274
+    maxMouth: 67.49155
+    shortArm: 0
+  - id: 77
+    node: 30
+    edge: 21
+    sourceRoad: 5
+    atA: 1
+    cls: 0
+    halfWidth: 3.6
+    dir: {x: -0.49233735, y: -0.8704045}
+    angleDeg: -119.49432
+    length: 66.59262
+    grade: 0.15122764
+    maxGrade: 0.1512492
+    tangentL: 3.2069013
+    tangentR: 7.4697413
+    mouth: 7.9697413
+    maxMouth: 65.59262
+    shortArm: 0
+  - id: 78
+    node: 30
+    edge: 20
+    sourceRoad: 5
+    atA: 0
+    cls: 0
+    halfWidth: 3.6
+    dir: {x: 0.79576236, y: 0.605609}
+    angleDeg: 37.27268
+    length: 187.95456
+    grade: -0.15121028
+    maxGrade: 0.15125936
+    tangentL: 11.507306
+    tangentR: 3.2069013
+    mouth: 12.007306
+    maxMouth: 84.57955
+    shortArm: 0
+  - id: 79
+    node: 30
+    edge: 23
+    sourceRoad: 7
+    atA: 0
+    cls: 3
+    halfWidth: 2.7
+    dir: {x: -0.6177931, y: 0.7863407}
+    angleDeg: 128.15515
+    length: 291.45712
+    grade: 0.09459959
+    maxGrade: 0.15
+    tangentL: 8.81289
+    tangentR: 12.421276
+    mouth: 12.921276
+    maxMouth: 131.1557
+    shortArm: 0
+  corners:
+  - id: 0
+    node: 0
+    armI: 0
+    armJ: 1
+    kind: 0
+    openingDeg: 109.968155
+    radius: 12
+    tI: 10.9297
+    tJ: 10.9297
+    clearance: 0
+    hasClearance: 0
+    centre: {x: 63.609512, y: 12.056199}
+    downtown: 0
+  - id: 1
+    node: 0
+    armI: 1
+    armJ: 2
+    kind: 0
+    openingDeg: 109.23745
+    radius: 12
+    tI: 11.078672
+    tJ: 11.078672
+    clearance: 0
+    hasClearance: 0
+    centre: {x: 89.13366, y: 30}
+    downtown: 0
+  - id: 2
+    node: 0
+    armI: 2
+    armJ: 0
+    kind: 0
+    openingDeg: 140.7944
+    radius: 12
+    tI: 5.5557694
+    tJ: 5.5557694
+    clearance: 0
+    hasClearance: 0
+    centre: {x: 60.497925, y: 43.562344}
+    downtown: 0
+  - id: 3
+    node: 1
+    armI: 3
+    armJ: 4
+    kind: 1
+    openingDeg: 172.29076
+    radius: 0
+    tI: 0
+    tJ: 0
+    clearance: 0
+    hasClearance: 0
+    centre: {x: 56.82801, y: 25.700035}
+    downtown: 0
+  - id: 4
+    node: 1
+    armI: 4
+    armJ: 5
+    kind: 0
+    openingDeg: 108.96666
+    radius: 12
+    tI: 11.134221
+    tJ: 11.134221
+    clearance: 0
+    hasClearance: 0
+    centre: {x: 61.076614, y: 44.389076}
+    downtown: 0
+  - id: 5
+    node: 1
+    armI: 5
+    armJ: 3
+    kind: 0
+    openingDeg: 78.742584
+    radius: 12
+    tI: 19.011164
+    tJ: 19.011164
+    clearance: 0
+    hasClearance: 0
+    centre: {x: 32.53526, y: 29.527132}
+    downtown: 0
+  - id: 6
+    node: 2
+    armI: 6
+    armJ: 7
+    kind: 0
+    openingDeg: 111.52119
+    radius: 7.5
+    tI: 7.0172467
+    tJ: 7.751887
+    clearance: 9.621551
+    hasClearance: 1
+    centre: {x: 4.9738016, y: -28.82538}
+    downtown: 0
+  - id: 7
+    node: 2
+    armI: 7
+    armJ: 8
+    kind: 0
+    openingDeg: 76.51915
+    radius: 7.5
+    tI: 13.955581
+    tJ: 13.561277
+    clearance: 0
+    hasClearance: 0
+    centre: {x: 23.241405, y: -16.406826}
+    downtown: 0
+  - id: 8
+    node: 2
+    armI: 8
+    armJ: 9
+    kind: 0
+    openingDeg: 98.78371
+    radius: 7.5
+    tI: 9.010655
+    tJ: 9.593847
+    clearance: 17.481367
+    hasClearance: 1
+    centre: {x: 6.236771, y: -1.4271542}
+    downtown: 0
+  - id: 9
+    node: 2
+    armI: 9
+    armJ: 6
+    kind: 0
+    openingDeg: 73.175964
+    radius: 7.5
+    tI: 14.801527
+    tJ: 14.430357
+    clearance: 3.3384151
+    hasClearance: 1
+    centre: {x: -12.272099, y: -13.002198}
+    downtown: 0
+  - id: 10
+    node: 3
+    armI: 10
+    armJ: 11
+    kind: 0
+    openingDeg: 159.83827
+    radius: 12
+    tI: 2.7734084
+    tJ: 2.7734084
+    clearance: 0
+    hasClearance: 0
+    centre: {x: -71.997444, y: -94.05457}
+    downtown: 0
+  - id: 11
+    node: 3
+    armI: 11
+    armJ: 12
+    kind: 0
+    openingDeg: 104.320656
+    radius: 12
+    tI: 12.11791
+    tJ: 12.11791
+    clearance: 0
+    hasClearance: 0
+    centre: {x: -87.48513, y: -65.40337}
+    downtown: 0
+  - id: 12
+    node: 3
+    armI: 12
+    armJ: 10
+    kind: 0
+    openingDeg: 95.84108
+    radius: 12
+    tI: 14.085527
+    tJ: 14.085527
+    clearance: 0
+    hasClearance: 0
+    centre: {x: -105.0664, y: -91.253136}
+    downtown: 0
+  - id: 13
+    node: 4
+    armI: 13
+    armJ: 14
+    kind: 0
+    openingDeg: 95.14166
+    radius: 7.5
+    tI: 9.64404
+    tJ: 10.191051
+    clearance: 3.9496095
+    hasClearance: 1
+    centre: {x: 121.21293, y: 69.51516}
+    downtown: 0
+  - id: 14
+    node: 4
+    armI: 14
+    armJ: 15
+    kind: 0
+    openingDeg: 84.85834
+    radius: 7.5
+    tI: 12.0986395
+    tJ: 11.641609
+    clearance: 14.436841
+    hasClearance: 1
+    centre: {x: 136.26416, y: 84.56638}
+    downtown: 0
+  - id: 15
+    node: 4
+    armI: 15
+    armJ: 16
+    kind: 0
+    openingDeg: 92.97159
+    radius: 7.5
+    tI: 10.038065
+    tJ: 10.564693
+    clearance: 18.453081
+    hasClearance: 1
+    centre: {x: 119.43251, y: 99.13028}
+    downtown: 0
+  - id: 16
+    node: 4
+    armI: 16
+    armJ: 13
+    kind: 0
+    openingDeg: 87.02841
+    radius: 7.5
+    tI: 11.665197
+    tJ: 11.190479
+    clearance: 13.327442
+    hasClearance: 1
+    centre: {x: 104.42166, y: 84.11943}
+    downtown: 0
+  - id: 17
+    node: 5
+    armI: 17
+    armJ: 18
+    kind: 0
+    openingDeg: 83.7622
+    radius: 7.5
+    tI: 11.876387
+    tJ: 12.324713
+    clearance: 19.876806
+    hasClearance: 1
+    centre: {x: 171.71132, y: 127.70509}
+    downtown: 0
+  - id: 18
+    node: 5
+    armI: 18
+    armJ: 19
+    kind: 0
+    openingDeg: 87.797745
+    radius: 7.5
+    tI: 11.515833
+    tJ: 11.034691
+    clearance: 17.226786
+    hasClearance: 1
+    centre: {x: 185.61691, y: 143.72784}
+    downtown: 0
+  - id: 19
+    node: 5
+    armI: 19
+    armJ: 20
+    kind: 0
+    openingDeg: 96.4335
+    radius: 7.5
+    tI: 9.415538
+    tJ: 9.975087
+    clearance: 8.826821
+    hasClearance: 1
+    centre: {x: 168.8611, y: 158.38065}
+    downtown: 0
+  - id: 20
+    node: 5
+    armI: 20
+    armJ: 17
+    kind: 0
+    openingDeg: 92.006546
+    radius: 7.5
+    tI: 10.735437
+    tJ: 10.217613
+    clearance: 17.936134
+    hasClearance: 1
+    centre: {x: 154.95448, y: 142.36116}
+    downtown: 0
+  - id: 21
+    node: 7
+    armI: 22
+    armJ: 23
+    kind: 0
+    openingDeg: 85.55114
+    radius: 6
+    tI: 10.337027
+    tJ: 9.874417
+    clearance: 2.8267264
+    hasClearance: 1
+    centre: {x: 104.821106, y: -22.397552}
+    downtown: 1
+  - id: 22
+    node: 7
+    armI: 23
+    armJ: 24
+    kind: 0
+    openingDeg: 93.638145
+    radius: 6
+    tI: 8.507979
+    tJ: 9.04078
+    clearance: 2.0892117
+    hasClearance: 1
+    centre: {x: 117.431335, y: -7.854885}
+    downtown: 1
+  - id: 23
+    node: 7
+    armI: 24
+    armJ: 25
+    kind: 0
+    openingDeg: 86.35464
+    radius: 6
+    tI: 10.199221
+    tJ: 9.730062
+    clearance: 10.4734955
+    hasClearance: 1
+    centre: {x: 104.53682, y: 5.0413685}
+    downtown: 1
+  - id: 24
+    node: 7
+    armI: 25
+    armJ: 22
+    kind: 0
+    openingDeg: 94.456085
+    radius: 6
+    tI: 8.379457
+    tJ: 8.919939
+    clearance: 3.8592556
+    hasClearance: 1
+    centre: {x: 91.91356, y: -9.488511}
+    downtown: 1
+  - id: 25
+    node: 9
+    armI: 27
+    armJ: 28
+    kind: 0
+    openingDeg: 85.16271
+    radius: 6
+    tI: 10.4044285
+    tJ: 9.944955
+    clearance: 2.9236042
+    hasClearance: 1
+    centre: {x: 25.28561, y: 45.1251}
+    downtown: 1
+  - id: 26
+    node: 9
+    armI: 28
+    armJ: 29
+    kind: 0
+    openingDeg: 93.42438
+    radius: 6
+    tI: 8.541833
+    tJ: 9.072646
+    clearance: 3.2747018
+    hasClearance: 1
+    centre: {x: 37.88305, y: 59.682343}
+    downtown: 1
+  - id: 27
+    node: 9
+    armI: 29
+    armJ: 30
+    kind: 0
+    openingDeg: 86.62674
+    radius: 6
+    tI: 10.15304
+    tJ: 9.6816435
+    clearance: 2.1988106
+    hasClearance: 1
+    centre: {x: 24.99658, y: 72.579865}
+    downtown: 1
+  - id: 28
+    node: 9
+    armI: 30
+    armJ: 27
+    kind: 0
+    openingDeg: 94.78617
+    radius: 6
+    tI: 8.328041
+    tJ: 8.871655
+    clearance: 1.21737
+    hasClearance: 1
+    centre: {x: 12.377117, y: 58.046406}
+    downtown: 1
+  - id: 29
+    node: 13
+    armI: 34
+    armJ: 35
+    kind: 0
+    openingDeg: 89.99831
+    radius: 6
+    tI: 9.100268
+    tJ: 9.100268
+    clearance: 0
+    hasClearance: 0
+    centre: {x: 16.99406, y: 187.2215}
+    downtown: 0
+  - id: 30
+    node: 13
+    armI: 35
+    armJ: 34
+    kind: 2
+    openingDeg: 270.00168
+    radius: 0
+    tI: 0
+    tJ: 0
+    clearance: 0
+    hasClearance: 0
+    centre: {x: -0.217405, y: 186.01558}
+    downtown: 0
+  - id: 31
+    node: 14
+    armI: 36
+    armJ: 37
+    kind: 0
+    openingDeg: 89.993095
+    radius: 6
+    tI: 9.101096
+    tJ: 9.101096
+    clearance: 0
+    hasClearance: 0
+    centre: {x: 54.121548, y: 229.94235}
+    downtown: 0
+  - id: 32
+    node: 14
+    armI: 37
+    armJ: 36
+    kind: 2
+    openingDeg: 270.0069
+    radius: 0
+    tI: 0
+    tJ: 0
+    clearance: 0
+    hasClearance: 0
+    centre: {x: 52.91556, y: 247.1546}
+    downtown: 0
+  - id: 33
+    node: 15
+    armI: 38
+    armJ: 39
+    kind: 0
+    openingDeg: 93.966
+    radius: 6
+    tI: 8.490935
+    tJ: 8.490935
+    clearance: 0
+    hasClearance: 0
+    centre: {x: -5.883783, y: 8.259957}
+    downtown: 0
+  - id: 34
+    node: 15
+    armI: 39
+    armJ: 38
+    kind: 2
+    openingDeg: 266.034
+    radius: 0
+    tI: 0
+    tJ: 0
+    clearance: 0
+    hasClearance: 0
+    centre: {x: -22.54981, y: 7.443553}
+    downtown: 0
+  - id: 35
+    node: 16
+    armI: 40
+    armJ: 41
+    kind: 0
+    openingDeg: 89.59753
+    radius: 7.5
+    tI: 10.674722
+    tJ: 10.674722
+    clearance: 3.2766523
+    hasClearance: 1
+    centre: {x: 80.648766, y: 105.548416}
+    downtown: 0
+  - id: 36
+    node: 16
+    armI: 41
+    armJ: 42
+    kind: 0
+    openingDeg: 91.03934
+    radius: 7.5
+    tI: 10.40944
+    tJ: 10.40944
+    clearance: 16.702978
+    hasClearance: 1
+    centre: {x: 94.64601, y: 121.47285}
+    downtown: 0
+  - id: 37
+    node: 16
+    armI: 42
+    armJ: 43
+    kind: 0
+    openingDeg: 90.00113
+    radius: 7.5
+    tI: 10.599792
+    tJ: 10.599792
+    clearance: 8.10755
+    hasClearance: 1
+    centre: {x: 78.76918, y: 135.52286}
+    downtown: 0
+  - id: 38
+    node: 16
+    armI: 43
+    armJ: 40
+    kind: 0
+    openingDeg: 89.36201
+    radius: 7.5
+    tI: 10.718694
+    tJ: 10.718694
+    clearance: 10.094497
+    hasClearance: 1
+    centre: {x: 64.77342, y: 119.59888}
+    downtown: 0
+  - id: 39
+    node: 17
+    armI: 44
+    armJ: 45
+    kind: 0
+    openingDeg: 92.08592
+    radius: 7.5
+    tI: 10.220953
+    tJ: 10.220953
+    clearance: 17.244295
+    hasClearance: 1
+    centre: {x: 130.1782, y: 162.359}
+    downtown: 0
+  - id: 40
+    node: 17
+    armI: 45
+    armJ: 46
+    kind: 1
+    openingDeg: 177.91527
+    radius: 0
+    tI: 0
+    tJ: 0
+    clearance: 0
+    hasClearance: 0
+    centre: {x: 128.883, y: 177.027}
+    downtown: 0
+  - id: 41
+    node: 17
+    armI: 46
+    armJ: 44
+    kind: 0
+    openingDeg: 89.99882
+    radius: 7.5
+    tI: 10.600218
+    tJ: 10.600218
+    clearance: 17.815228
+    hasClearance: 1
+    centre: {x: 113.92877, y: 175.98029}
+    downtown: 0
+  - id: 42
+    node: 18
+    armI: 47
+    armJ: 48
+    kind: 0
+    openingDeg: 91.07031
+    radius: 6
+    tI: 8.931576
+    tJ: 8.931576
+    clearance: 0
+    hasClearance: 0
+    centre: {x: 59.07513, y: -47.866417}
+    downtown: 0
+  - id: 43
+    node: 18
+    armI: 48
+    armJ: 47
+    kind: 2
+    openingDeg: 268.9297
+    radius: 0
+    tI: 0
+    tJ: 0
+    clearance: 0
+    hasClearance: 0
+    centre: {x: 60.560406, y: -64.896255}
+    downtown: 0
+  - id: 44
+    node: 19
+    armI: 49
+    armJ: 50
+    kind: 1
+    openingDeg: 180.36546
+    radius: 0
+    tI: 0
+    tJ: 0
+    clearance: 0
+    hasClearance: 0
+    centre: {x: 158.315, y: 52.349}
+    downtown: 0
+  - id: 45
+    node: 19
+    armI: 50
+    armJ: 51
+    kind: 0
+    openingDeg: 91.13801
+    radius: 7.5
+    tI: 10.391526
+    tJ: 10.391526
+    clearance: 7.3146405
+    hasClearance: 1
+    centre: {x: 157.13168, y: 67.145744}
+    downtown: 0
+  - id: 46
+    node: 19
+    armI: 51
+    armJ: 49
+    kind: 0
+    openingDeg: 88.49654
+    radius: 7.5
+    tI: 10.881863
+    tJ: 10.881863
+    clearance: 6.5381403
+    hasClearance: 1
+    centre: {x: 143.16829, y: 51.1863}
+    downtown: 0
+  - id: 47
+    node: 20
+    armI: 52
+    armJ: 53
+    kind: 2
+    openingDeg: 267.85385
+    radius: 0
+    tI: 0
+    tJ: 0
+    clearance: 0
+    hasClearance: 0
+    centre: {x: 211.67957, y: 109.02735}
+    downtown: 0
+  - id: 48
+    node: 20
+    armI: 53
+    armJ: 52
+    kind: 0
+    openingDeg: 92.14613
+    radius: 6
+    tI: 8.7653675
+    tJ: 8.7653675
+    clearance: 0
+    hasClearance: 0
+    centre: {x: 194.76263, y: 108.16016}
+    downtown: 0
+  - id: 49
+    node: 21
+    armI: 54
+    armJ: 55
+    kind: 1
+    openingDeg: 174.87773
+    radius: 0
+    tI: 0
+    tJ: 0
+    clearance: 0
+    hasClearance: 0
+    centre: {x: -12.956526, y: -25.444136}
+    downtown: 0
+  - id: 50
+    node: 21
+    armI: 55
+    armJ: 54
+    kind: 1
+    openingDeg: 185.12227
+    radius: 0
+    tI: 0
+    tJ: 0
+    clearance: 0
+    hasClearance: 0
+    centre: {x: -12.956526, y: -25.444136}
+    downtown: 0
+  - id: 51
+    node: 22
+    armI: 56
+    armJ: 57
+    kind: 1
+    openingDeg: 173.88304
+    radius: 0
+    tI: 0
+    tJ: 0
+    clearance: 0
+    hasClearance: 0
+    centre: {x: 185.47977, y: 156.73874}
+    downtown: 0
+  - id: 52
+    node: 22
+    armI: 57
+    armJ: 56
+    kind: 1
+    openingDeg: 186.11696
+    radius: 0
+    tI: 0
+    tJ: 0
+    clearance: 0
+    hasClearance: 0
+    centre: {x: 185.47977, y: 156.73874}
+    downtown: 0
+  - id: 53
+    node: 23
+    armI: 58
+    armJ: 59
+    kind: 0
+    openingDeg: 32.721462
+    radius: 4.1505027
+    tI: 24.735786
+    tJ: 25
+    clearance: 0
+    hasClearance: 0
+    centre: {x: 238.46591, y: 175.0573}
+    downtown: 0
+  - id: 54
+    node: 23
+    armI: 59
+    armJ: 60
+    kind: 0
+    openingDeg: 145.32509
+    radius: 9
+    tI: 5.234483
+    tJ: 2.351555
+    clearance: 0
+    hasClearance: 0
+    centre: {x: 263.84085, y: 184.59195}
+    downtown: 0
+  - id: 55
+    node: 23
+    armI: 60
+    armJ: 58
+    kind: 1
+    openingDeg: 181.95345
+    radius: 0
+    tI: 0
+    tJ: 0
+    clearance: 0
+    hasClearance: 0
+    centre: {x: 255.65785, y: 194.45747}
+    downtown: 0
+  - id: 56
+    node: 24
+    armI: 61
+    armJ: 62
+    kind: 1
+    openingDeg: 180.17003
+    radius: 0
+    tI: 0
+    tJ: 0
+    clearance: 0
+    hasClearance: 0
+    centre: {x: 119.17673, y: -23.17681}
+    downtown: 0
+  - id: 57
+    node: 24
+    armI: 62
+    armJ: 61
+    kind: 1
+    openingDeg: 179.82997
+    radius: 0
+    tI: 0
+    tJ: 0
+    clearance: 0
+    hasClearance: 0
+    centre: {x: 119.17673, y: -23.17681}
+    downtown: 0
+  - id: 58
+    node: 25
+    armI: 63
+    armJ: 64
+    kind: 0
+    openingDeg: 124.28646
+    radius: 9
+    tI: 5.569906
+    tJ: 7.2728157
+    clearance: 0
+    hasClearance: 0
+    centre: {x: 216.88667, y: -91.39898}
+    downtown: 0
+  - id: 59
+    node: 25
+    armI: 64
+    armJ: 65
+    kind: 0
+    openingDeg: 68.929634
+    radius: 9
+    tI: 18.010506
+    tJ: 17.392767
+    clearance: 0
+    hasClearance: 0
+    centre: {x: 197.15514, y: -74.86041}
+    downtown: 0
+  - id: 60
+    node: 25
+    armI: 65
+    armJ: 63
+    kind: 1
+    openingDeg: 166.7839
+    radius: 0
+    tI: 0
+    tJ: 0
+    clearance: 0
+    hasClearance: 0
+    centre: {x: 203.6809, y: -95.32215}
+    downtown: 0
+  - id: 61
+    node: 26
+    armI: 66
+    armJ: 67
+    kind: 1
+    openingDeg: 175.95682
+    radius: 0
+    tI: 0
+    tJ: 0
+    clearance: 0
+    hasClearance: 0
+    centre: {x: -25.419407, y: 111.43894}
+    downtown: 0
+  - id: 62
+    node: 26
+    armI: 67
+    armJ: 66
+    kind: 1
+    openingDeg: 184.04318
+    radius: 0
+    tI: 0
+    tJ: 0
+    clearance: 0
+    hasClearance: 0
+    centre: {x: -25.419407, y: 111.43894}
+    downtown: 0
+  - id: 63
+    node: 27
+    armI: 68
+    armJ: 69
+    kind: 0
+    openingDeg: 109.07142
+    radius: 9
+    tI: 8.023381
+    tJ: 9.286799
+    clearance: 0
+    hasClearance: 0
+    centre: {x: -93.3366, y: 138.31458}
+    downtown: 0
+  - id: 64
+    node: 27
+    armI: 69
+    armJ: 70
+    kind: 0
+    openingDeg: 57.457542
+    radius: 9
+    tI: 22.412659
+    tJ: 21.919336
+    clearance: 0
+    hasClearance: 0
+    centre: {x: -66.7554, y: 141.95988}
+    downtown: 0
+  - id: 65
+    node: 27
+    armI: 70
+    armJ: 68
+    kind: 1
+    openingDeg: 193.47104
+    radius: 0
+    tI: 0
+    tJ: 0
+    clearance: 0
+    hasClearance: 0
+    centre: {x: -89.606316, y: 152.77899}
+    downtown: 0
+  - id: 66
+    node: 28
+    armI: 71
+    armJ: 72
+    kind: 1
+    openingDeg: 181.42291
+    radius: 0
+    tI: 0
+    tJ: 0
+    clearance: 0
+    hasClearance: 0
+    centre: {x: -185.69449, y: -45.68943}
+    downtown: 0
+  - id: 67
+    node: 28
+    armI: 72
+    armJ: 73
+    kind: 0
+    openingDeg: 42.659958
+    radius: 6.5435495
+    tI: 24.648561
+    tJ: 25
+    clearance: 0
+    hasClearance: 0
+    centre: {x: -163.38892, y: -31.098175}
+    downtown: 0
+  - id: 68
+    node: 28
+    armI: 73
+    armJ: 71
+    kind: 0
+    openingDeg: 135.91713
+    radius: 9
+    tI: 6.0306163
+    tJ: 3.8076682
+    clearance: 0
+    hasClearance: 0
+    centre: {x: -191.5088, y: -33.880455}
+    downtown: 0
+  - id: 69
+    node: 29
+    armI: 74
+    armJ: 75
+    kind: 0
+    openingDeg: 121.60752
+    radius: 9
+    tI: 5.984054
+    tJ: 7.5946627
+    clearance: 0
+    hasClearance: 0
+    centre: {x: -320.81955, y: -103.63015}
+    downtown: 0
+  - id: 70
+    node: 29
+    armI: 75
+    armJ: 76
+    kind: 0
+    openingDeg: 48.743755
+    radius: 8.083355
+    tI: 25
+    tJ: 24.592274
+    clearance: 0
+    hasClearance: 0
+    centre: {x: -299.2232, y: -85.13569}
+    downtown: 0
+  - id: 71
+    node: 29
+    armI: 76
+    armJ: 74
+    kind: 1
+    openingDeg: 189.64873
+    radius: 0
+    tI: 0
+    tJ: 0
+    clearance: 0
+    hasClearance: 0
+    centre: {x: -325.88852, y: -90.63498}
+    downtown: 0
+  - id: 72
+    node: 30
+    armI: 77
+    armJ: 78
+    kind: 0
+    openingDeg: 156.767
+    radius: 12
+    tI: 3.2069013
+    tJ: 3.2069013
+    clearance: 0
+    hasClearance: 0
+    centre: {x: -129.15451, y: -260.6155}
+    downtown: 0
+  - id: 73
+    node: 30
+    armI: 78
+    armJ: 79
+    kind: 0
+    openingDeg: 90.88248
+    radius: 9
+    tI: 11.507306
+    tJ: 12.421276
+    clearance: 0
+    hasClearance: 0
+    centre: {x: -139.62753, y: -233.14821}
+    downtown: 0
+  - id: 74
+    node: 30
+    armI: 79
+    armJ: 77
+    kind: 0
+    openingDeg: 112.35052
+    radius: 9
+    tI: 8.81289
+    tJ: 7.4697413
+    clearance: 0
+    hasClearance: 0
+    centre: {x: -155.79866, y: -250.44199}
+    downtown: 0
+  edges:
+  - id: 0
+    nodeA: 0
+    nodeB: 1
+    sourceRoad: 0
+    cls: 1
+    halfWidth: 3.6
+    sStart: 0
+    sEnd: 13.99665781665531
+    length: 13.996657
+    points:
+    - {x: 70, y: 13.335372, z: 30}
+    - {x: 68.000656, y: 13.335372, z: 29.955984}
+    - {x: 66.04176, y: 13.335371, z: 29.556477}
+    - {x: 64.14576, y: 13.335365, z: 28.920616}
+    - {x: 62.283157, y: 13.33535, z: 28.193062}
+    - {x: 60.46068, y: 13.335334, z: 27.37044}
+    - {x: 58.655018, y: 13.335309, z: 26.512314}
+    - {x: 56.82801, y: 13.335274, z: 25.700035}
+    s:
+    - 0
+    - 1.9998289
+    - 3.999042
+    - 5.998829
+    - 7.9984884
+    - 9.998022
+    - 11.997219
+    - 13.996657
+  - id: 1
+    nodeA: 1
+    nodeB: 2
+    sourceRoad: 0
+    cls: 1
+    halfWidth: 3.6
+    sStart: 13.99665781665531
+    sEnd: 79.99477947232673
+    length: 65.99812
+    points:
+    - {x: 56.82801, y: 13.335274, z: 25.700035}
+    - {x: 55.044144, y: 13.335225, z: 24.79679}
+    - {x: 53.297527, y: 13.335162, z: 23.822893}
+    - {x: 51.57874, y: 13.33508, z: 22.80054}
+    - {x: 49.884327, y: 13.334977, z: 21.738218}
+    - {x: 48.211998, y: 13.334849, z: 20.641407}
+    - {x: 46.565674, y: 13.334696, z: 19.506031}
+    - {x: 44.945778, y: 13.334511, z: 18.33318}
+    - {x: 43.348717, y: 13.3342905, z: 17.129374}
+    - {x: 41.770874, y: 13.33403, z: 15.900448}
+    - {x: 40.20986, y: 13.333724, z: 14.650193}
+    - {x: 38.664772, y: 13.3333645, z: 13.380311}
+    - {x: 37.135597, y: 13.332944, z: 12.091301}
+    - {x: 35.621693, y: 13.332454, z: 10.784387}
+    - {x: 34.122417, y: 13.331883, z: 9.46071}
+    - {x: 32.636852, y: 13.33122, z: 8.121657}
+    - {x: 31.163424, y: 13.330448, z: 6.769262}
+    - {x: 29.70041, y: 13.329551, z: 5.405599}
+    - {x: 28.246384, y: 13.328506, z: 4.0323586}
+    - {x: 26.799995, y: 13.3272915, z: 2.6510723}
+    - {x: 25.3596, y: 13.325874, z: 1.2635367}
+    - {x: 23.9231, y: 13.324221, z: -0.12803243}
+    - {x: 22.487936, y: 13.322289, z: -1.5209807}
+    - {x: 21.051088, y: 13.320032, z: -2.9121933}
+    - {x: 19.60908, y: 13.317393, z: -4.298053}
+    - {x: 18.157969, y: 13.314311, z: -5.674375}
+    - {x: 16.693405, y: 13.310714, z: -7.036374}
+    - {x: 15.210941, y: 13.306523, z: -8.378862}
+    - {x: 13.70626, y: 13.301652, z: -9.696403}
+    - {x: 12.175085, y: 13.296002, z: -10.983041}
+    - {x: 10.614292, y: 13.289472, z: -12.23355}
+    - {x: 9.020869, y: 13.281945, z: -13.442152}
+    - {x: 7.392937, y: 13.273303, z: -14.603793}
+    - {x: 5.7302723, y: 13.263414, z: -15.715099}
+    s:
+    - 0
+    - 1.9995081
+    - 3.999293
+    - 5.9991517
+    - 7.999043
+    - 9.998962
+    - 11.99883
+    - 13.998737
+    - 15.998677
+    - 17.99864
+    - 19.998611
+    - 21.99859
+    - 23.99857
+    - 25.998552
+    - 27.998539
+    - 29.99853
+    - 31.998522
+    - 33.998516
+    - 35.998512
+    - 37.998512
+    - 39.99851
+    - 41.99851
+    - 43.99851
+    - 45.99851
+    - 47.99851
+    - 49.998505
+    - 51.9985
+    - 53.998497
+    - 55.99849
+    - 57.998474
+    - 59.998436
+    - 61.998363
+    - 63.998257
+    - 65.99812
+  - id: 2
+    nodeA: 2
+    nodeB: 21
+    sourceRoad: 0
+    cls: 1
+    halfWidth: 3.6
+    sStart: 79.99477947232673
+    sEnd: 101.07577625883323
+    length: 21.080997
+    points:
+    - {x: 5.7302723, y: 13.263414, z: -15.715099}
+    - {x: 4.034254, y: 13.252143, z: -16.774773}
+    - {x: 2.3076944, y: 13.239343, z: -17.783928}
+    - {x: 0.5546154, y: 13.224863, z: -18.746326}
+    - {x: -1.2199824, y: 13.208546, z: -19.668526}
+    - {x: -3.0103726, y: 13.1902275, z: -20.559774}
+    - {x: -4.810573, y: 13.16974, z: -21.431105}
+    - {x: -6.6148753, y: 13.146913, z: -22.293943}
+    - {x: -8.417981, y: 13.121576, z: -23.159277}
+    - {x: -10.214746, y: 13.093563, z: -24.037672}
+    - {x: -11.99998, y: 13.062706, z: -24.939245}
+    - {x: -12.956526, y: 13.044396, z: -25.444136}
+    s:
+    - 0
+    - 1.999847
+    - 3.9996972
+    - 5.9995713
+    - 7.999484
+    - 9.999438
+    - 11.999424
+    - 13.999423
+    - 15.999421
+    - 17.999407
+    - 19.99938
+    - 21.080997
+  - id: 3
+    nodeA: 21
+    nodeB: 3
+    sourceRoad: 0
+    cls: 0
+    halfWidth: 3.6
+    sStart: 101.07577625883323
+    sEnd: 194.8313504812004
+    length: 93.75558
+    points:
+    - {x: -12.956526, y: 13.044396, z: -25.444136}
+    - {x: -13.768684, y: 13.028851, z: -25.872816}
+    - {x: -15.516593, y: 12.991848, z: -26.84478}
+    - {x: -17.239077, y: 12.951566, z: -27.86111}
+    - {x: -18.935343, y: 12.907886, z: -28.920572}
+    - {x: -20.604929, y: 12.860709, z: -30.02158}
+    - {x: -22.248896, y: 12.809955, z: -31.160492}
+    - {x: -23.870098, y: 12.755563, z: -32.33161}
+    - {x: -25.472994, y: 12.697497, z: -33.52769}
+    - {x: -27.062632, y: 12.63574, z: -34.74136}
+    - {x: -28.643496, y: 12.570303, z: -35.966454}
+    - {x: -30.218998, y: 12.501217, z: -37.198437}
+    - {x: -31.791971, y: 12.428542, z: -38.43365}
+    - {x: -33.365, y: 12.352364, z: -39.668793}
+    - {x: -34.94034, y: 12.2727995, z: -40.90099}
+    - {x: -36.519783, y: 12.189995, z: -42.12791}
+    - {x: -38.104687, y: 12.104117, z: -43.34777}
+    - {x: -39.695946, y: 12.01535, z: -44.55933}
+    - {x: -41.29393, y: 11.9239, z: -45.761993}
+    - {x: -42.89813, y: 11.82999, z: -46.95637}
+    - {x: -44.506508, y: 11.733863, z: -48.14511}
+    - {x: -46.1155, y: 11.635774, z: -49.333027}
+    - {x: -47.72069, y: 11.535985, z: -50.52607}
+    - {x: -49.318577, y: 11.4347725, z: -51.728874}
+    - {x: -50.907146, y: 11.332425, z: -52.943954}
+    - {x: -52.48493, y: 11.22928, z: -54.173016}
+    - {x: -54.05003, y: 11.125721, z: -55.41818}
+    - {x: -55.601727, y: 11.022164, z: -56.679996}
+    - {x: -57.138756, y: 10.918807, z: -57.95963}
+    - {x: -58.65988, y: 10.815839, z: -59.258114}
+    - {x: -60.16395, y: 10.713455, z: -60.576305}
+    - {x: -61.650238, y: 10.611857, z: -61.914516}
+    - {x: -63.119133, y: 10.511243, z: -63.271797}
+    - {x: -64.5726, y: 10.411769, z: -64.6456}
+    - {x: -66.01394, y: 10.313527, z: -66.03214}
+    - {x: -67.44649, y: 10.216618, z: -67.427765}
+    - {x: -68.87241, y: 10.121185, z: -68.83016}
+    - {x: -70.29299, y: 10.02801, z: -70.23798}
+    - {x: -71.709236, y: 9.93815, z: -71.65016}
+    - {x: -73.12213, y: 9.852723, z: -73.06569}
+    - {x: -74.53265, y: 9.770606, z: -74.48358}
+    - {x: -75.94176, y: 9.693258, z: -75.902885}
+    - {x: -77.34797, y: 9.623101, z: -77.32505}
+    - {x: -78.75455, y: 9.562862, z: -78.74686}
+    - {x: -80.16545, y: 9.496924, z: -80.164375}
+    - {x: -81.57913, y: 9.441735, z: -81.57912}
+    - {x: -82.99334, y: 9.398341, z: -82.99334}
+    - {x: -85, y: 9.385864, z: -85}
+    s:
+    - 0
+    - 0.91835034
+    - 2.9183252
+    - 4.9182944
+    - 6.91824
+    - 8.918174
+    - 10.918111
+    - 12.918063
+    - 14.9180355
+    - 16.918022
+    - 18.918016
+    - 20.918015
+    - 22.918015
+    - 24.918015
+    - 26.918013
+    - 28.918009
+    - 30.918003
+    - 32.917995
+    - 34.917988
+    - 36.917984
+    - 38.91798
+    - 40.91798
+    - 42.91798
+    - 44.917973
+    - 46.91797
+    - 48.91796
+    - 50.917957
+    - 52.917942
+    - 54.917923
+    - 56.917892
+    - 58.91786
+    - 60.91782
+    - 62.917786
+    - 64.91776
+    - 66.91775
+    - 68.91774
+    - 70.91774
+    - 72.91773
+    - 74.91773
+    - 76.91773
+    - 78.91773
+    - 80.91773
+    - 82.91773
+    - 84.91773
+    - 86.917725
+    - 88.917725
+    - 90.917725
+    - 93.75558
+  - id: 4
+    nodeA: 0
+    nodeB: 4
+    sourceRoad: 1
+    cls: 1
+    halfWidth: 3.6
+    sStart: 0
+    sEnd: 73.99978850904961
+    length: 73.99979
+    points:
+    - {x: 70, y: 13.335372, z: 30}
+    - {x: 70.95091, y: 13.335372, z: 31.759449}
+    - {x: 72.0699, y: 13.335372, z: 33.417084}
+    - {x: 73.27334, y: 13.335389, z: 35.01449}
+    - {x: 74.50871, y: 13.335424, z: 36.58732}
+    - {x: 75.77658, y: 13.335462, z: 38.134075}
+    - {x: 77.071465, y: 13.335516, z: 39.658253}
+    - {x: 78.32766, y: 13.33559, z: 41.214493}
+    - {x: 79.61922, y: 13.335689, z: 42.741512}
+    - {x: 80.93711, y: 13.335813, z: 44.24588}
+    - {x: 82.27196, y: 13.335965, z: 45.73523}
+    - {x: 83.62074, y: 13.336147, z: 47.21197}
+    - {x: 84.9808, y: 13.33636, z: 48.67834}
+    - {x: 86.34978, y: 13.336597, z: 50.13637}
+    - {x: 87.73078, y: 13.33686, z: 51.58303}
+    - {x: 89.12098, y: 13.337142, z: 53.02086}
+    - {x: 90.517815, y: 13.337439, z: 54.452236}
+    - {x: 91.919464, y: 13.337739, z: 55.878902}
+    - {x: 93.32485, y: 13.338034, z: 57.301888}
+    - {x: 94.7333, y: 13.3383045, z: 58.721844}
+    - {x: 96.14427, y: 13.338533, z: 60.139286}
+    - {x: 97.556885, y: 13.338696, z: 61.555103}
+    - {x: 98.970436, y: 13.338761, z: 62.969975}
+    - {x: 100.38445, y: 13.338696, z: 64.384384}
+    - {x: 101.79863, y: 13.338453, z: 65.79863}
+    - {x: 103.212845, y: 13.337984, z: 67.212845}
+    - {x: 104.62706, y: 13.33723, z: 68.62706}
+    - {x: 106.041275, y: 13.3361225, z: 70.041275}
+    - {x: 107.45549, y: 13.334585, z: 71.45549}
+    - {x: 108.8697, y: 13.332532, z: 72.8697}
+    - {x: 110.28391, y: 13.329867, z: 74.28391}
+    - {x: 111.69813, y: 13.326486, z: 75.69813}
+    - {x: 113.11234, y: 13.32227, z: 77.11234}
+    - {x: 114.52656, y: 13.317097, z: 78.52656}
+    - {x: 115.940765, y: 13.31083, z: 79.940765}
+    - {x: 117.35498, y: 13.303328, z: 81.35498}
+    - {x: 118.769196, y: 13.294437, z: 82.769196}
+    - {x: 120.18341, y: 13.284002, z: 84.18341}
+    s:
+    - 0
+    - 1.9999748
+    - 3.9999433
+    - 5.9999347
+    - 7.999922
+    - 9.9999075
+    - 11.999872
+    - 13.999844
+    - 15.999825
+    - 17.999817
+    - 19.99981
+    - 21.999805
+    - 23.999802
+    - 25.999796
+    - 27.999792
+    - 29.99979
+    - 31.99979
+    - 33.99979
+    - 35.99979
+    - 37.99979
+    - 39.99979
+    - 41.99979
+    - 43.99979
+    - 45.99979
+    - 47.99979
+    - 49.99979
+    - 51.99979
+    - 53.99979
+    - 55.99979
+    - 57.99979
+    - 59.99979
+    - 61.99979
+    - 63.99979
+    - 65.99979
+    - 67.99979
+    - 69.99979
+    - 71.99979
+    - 73.99979
+  - id: 5
+    nodeA: 4
+    nodeB: 5
+    sourceRoad: 1
+    cls: 1
+    halfWidth: 3.6
+    sStart: 73.99978850904961
+    sEnd: 151.9989238386072
+    length: 77.99914
+    points:
+    - {x: 120.18341, y: 13.284002, z: 84.18341}
+    - {x: 121.597626, y: 13.271859, z: 85.597626}
+    - {x: 123.01183, y: 13.257843, z: 87.01183}
+    - {x: 124.42605, y: 13.241784, z: 88.42605}
+    - {x: 125.84026, y: 13.223515, z: 89.84026}
+    - {x: 127.25448, y: 13.2028675, z: 91.25448}
+    - {x: 128.66869, y: 13.179681, z: 92.66869}
+    - {x: 130.0829, y: 13.153797, z: 94.08291}
+    - {x: 131.49707, y: 13.125068, z: 95.49716}
+    - {x: 132.91098, y: 13.093355, z: 96.91168}
+    - {x: 134.32399, y: 13.058533, z: 98.3271}
+    - {x: 135.73502, y: 13.02049, z: 99.74449}
+    - {x: 137.14253, y: 12.979134, z: 101.165375}
+    - {x: 138.54472, y: 12.93439, z: 102.5915}
+    - {x: 139.93968, y: 12.886208, z: 104.024704}
+    - {x: 141.32544, y: 12.834557, z: 105.466805}
+    - {x: 142.69994, y: 12.779435, z: 106.91964}
+    - {x: 144.06104, y: 12.720868, z: 108.38503}
+    - {x: 145.40633, y: 12.658909, z: 109.86494}
+    - {x: 146.73296, y: 12.593641, z: 111.36158}
+    - {x: 148.0375, y: 12.525177, z: 112.877495}
+    - {x: 149.31638, y: 12.453661, z: 114.41511}
+    - {x: 150.56659, y: 12.379267, z: 115.976105}
+    - {x: 151.78656, y: 12.302196, z: 117.56085}
+    - {x: 152.97655, y: 12.222675, z: 119.168236}
+    - {x: 154.13853, y: 12.140963, z: 120.79598}
+    - {x: 155.27557, y: 12.057334, z: 122.44128}
+    - {x: 156.39105, y: 11.972086, z: 124.10127}
+    - {x: 157.48857, y: 11.885536, z: 125.77321}
+    - {x: 158.57182, y: 11.798013, z: 127.45442}
+    - {x: 159.64488, y: 11.70986, z: 129.14218}
+    - {x: 160.71294, y: 11.6214285, z: 130.83311}
+    - {x: 161.78319, y: 11.533076, z: 132.52266}
+    - {x: 162.86427, y: 11.445166, z: 134.20528}
+    - {x: 163.96504, y: 11.358056, z: 135.87506}
+    - {x: 165.09308, y: 11.272105, z: 137.52652}
+    - {x: 166.25397, y: 11.187665, z: 139.15504}
+    - {x: 167.45131, y: 11.105076, z: 140.75694}
+    - {x: 168.68779, y: 11.024665, z: 142.32886}
+    - {x: 169.96587, y: 10.946743, z: 143.86714}
+    s:
+    - 0
+    - 2
+    - 4
+    - 6
+    - 8
+    - 10
+    - 12
+    - 14
+    - 16
+    - 18
+    - 20
+    - 22
+    - 23.999998
+    - 25.999996
+    - 27.999992
+    - 29.999987
+    - 31.999977
+    - 33.999966
+    - 35.999947
+    - 37.99992
+    - 39.99988
+    - 41.99983
+    - 43.999767
+    - 45.9997
+    - 47.999638
+    - 49.999584
+    - 51.999542
+    - 53.999508
+    - 55.99949
+    - 57.999477
+    - 59.99947
+    - 61.99947
+    - 63.99947
+    - 65.99945
+    - 67.99942
+    - 69.99937
+    - 71.999306
+    - 73.99924
+    - 75.99918
+    - 77.99914
+  - id: 6
+    nodeA: 5
+    nodeB: 22
+    sourceRoad: 1
+    cls: 1
+    halfWidth: 3.6
+    sStart: 151.9989238386072
+    sEnd: 172.25327689917833
+    length: 20.254353
+    points:
+    - {x: 169.96587, y: 10.946743, z: 143.86714}
+    - {x: 171.28891, y: 10.871601, z: 145.36694}
+    - {x: 172.65974, y: 10.799507, z: 146.82315}
+    - {x: 174.07953, y: 10.730704, z: 148.2316}
+    - {x: 175.54974, y: 10.665405, z: 149.58723}
+    - {x: 177.0696, y: 10.603797, z: 150.88693}
+    - {x: 178.6356, y: 10.546035, z: 152.13062}
+    - {x: 180.24275, y: 10.492246, z: 153.3207}
+    - {x: 181.88557, y: 10.442525, z: 154.46104}
+    - {x: 183.55916, y: 10.39694, z: 155.55582}
+    - {x: 185.25935, y: 10.355533, z: 156.60884}
+    - {x: 185.47977, y: 10.350772, z: 156.73874}
+    s:
+    - 0
+    - 1.9999611
+    - 3.9998946
+    - 5.9997697
+    - 7.9995904
+    - 9.999378
+    - 11.999162
+    - 13.998961
+    - 15.998787
+    - 17.998638
+    - 19.998514
+    - 20.254353
+  - id: 7
+    nodeA: 22
+    nodeB: 23
+    sourceRoad: 1
+    cls: 0
+    halfWidth: 3.6
+    sStart: 172.25327689917833
+    sEnd: 251.99685561924167
+    length: 79.743576
+    points:
+    - {x: 185.47977, y: 10.350772, z: 156.73874}
+    - {x: 186.9823, y: 10.318316, z: 157.62425}
+    - {x: 188.72417, y: 10.285283, z: 158.60693}
+    - {x: 190.4813, y: 10.256401, z: 159.56207}
+    - {x: 192.25035, y: 10.23162, z: 160.495}
+    - {x: 194.02788, y: 10.21087, z: 161.41168}
+    - {x: 195.81015, y: 10.194063, z: 162.31915}
+    - {x: 197.5939, y: 10.181094, z: 163.22372}
+    - {x: 199.3773, y: 10.171844, z: 164.12897}
+    - {x: 201.1601, y: 10.166177, z: 165.0354}
+    - {x: 202.94316, y: 10.163943, z: 165.94133}
+    - {x: 204.72783, y: 10.164985, z: 166.84409}
+    - {x: 206.51532, y: 10.169129, z: 167.74124}
+    - {x: 208.30626, y: 10.176197, z: 168.63147}
+    - {x: 210.10095, y: 10.186003, z: 169.51411}
+    - {x: 211.8993, y: 10.198357, z: 170.3893}
+    - {x: 213.7008, y: 10.213068, z: 171.25797}
+    - {x: 215.50499, y: 10.229946, z: 172.12105}
+    - {x: 217.31177, y: 10.248805, z: 172.97868}
+    - {x: 219.12111, y: 10.269461, z: 173.8309}
+    - {x: 220.93208, y: 10.291736, z: 174.67966}
+    - {x: 222.74263, y: 10.315457, z: 175.52931}
+    - {x: 224.54994, y: 10.340458, z: 176.38582}
+    - {x: 226.35098, y: 10.366575, z: 177.2554}
+    - {x: 228.14291, y: 10.393653, z: 178.14359}
+    - {x: 229.9234, y: 10.4215355, z: 179.05447}
+    - {x: 231.69081, y: 10.450069, z: 179.99046}
+    - {x: 233.44437, y: 10.479104, z: 180.95216}
+    - {x: 235.18407, y: 10.5084915, z: 181.93872}
+    - {x: 236.91035, y: 10.538082, z: 182.9486}
+    - {x: 238.62398, y: 10.567731, z: 183.97983}
+    - {x: 240.32637, y: 10.597296, z: 185.02951}
+    - {x: 242.02031, y: 10.626639, z: 186.09279}
+    - {x: 243.70978, y: 10.655631, z: 187.16316}
+    - {x: 245.39917, y: 10.68415, z: 188.23364}
+    - {x: 247.09178, y: 10.712083, z: 189.29904}
+    - {x: 248.78978, y: 10.739329, z: 190.35583}
+    - {x: 250.49461, y: 10.765801, z: 191.40152}
+    - {x: 252.20729, y: 10.791423, z: 192.43433}
+    - {x: 253.92833, y: 10.816127, z: 193.45314}
+    - {x: 255.65785, y: 10.839856, z: 194.45747}
+    s:
+    - 0
+    - 1.7440649
+    - 3.7439964
+    - 5.743951
+    - 7.7439237
+    - 9.743912
+    - 11.743909
+    - 13.743908
+    - 15.743908
+    - 17.743908
+    - 19.743908
+    - 21.743908
+    - 23.743908
+    - 25.743906
+    - 27.743906
+    - 29.743904
+    - 31.743902
+    - 33.7439
+    - 35.7439
+    - 37.743896
+    - 39.743896
+    - 41.743896
+    - 43.74389
+    - 45.74387
+    - 47.743843
+    - 49.7438
+    - 51.74376
+    - 53.74372
+    - 55.743687
+    - 57.743664
+    - 59.74365
+    - 61.74364
+    - 63.743637
+    - 65.74364
+    - 67.74364
+    - 69.74364
+    - 71.74363
+    - 73.74362
+    - 75.74361
+    - 77.74359
+    - 79.743576
+  - id: 8
+    nodeA: 23
+    nodeB: 6
+    sourceRoad: 1
+    cls: 0
+    halfWidth: 3.6
+    sStart: 251.99685561924167
+    sEnd: 305.98565958484244
+    length: 53.988804
+    points:
+    - {x: 255.65785, y: 10.839856, z: 194.45747}
+    - {x: 257.39566, y: 10.86256, z: 195.4474}
+    - {x: 259.14093, y: 10.884197, z: 196.42413}
+    - {x: 260.8917, y: 10.904732, z: 197.391}
+    - {x: 262.64456, y: 10.924133, z: 198.35402}
+    - {x: 264.3952, y: 10.94238, z: 199.32112}
+    - {x: 266.13916, y: 10.95945, z: 200.30016}
+    - {x: 267.87292, y: 10.975331, z: 201.29713}
+    - {x: 269.5941, y: 10.990061, z: 202.31575}
+    - {x: 271.301, y: 11.003674, z: 203.35803}
+    - {x: 272.992, y: 11.016209, z: 204.4259}
+    - {x: 274.6655, y: 11.027705, z: 205.52106}
+    - {x: 276.31976, y: 11.038207, z: 206.64505}
+    - {x: 277.95325, y: 11.047759, z: 207.79904}
+    - {x: 279.56693, y: 11.056402, z: 208.98058}
+    - {x: 281.16248, y: 11.064171, z: 210.18645}
+    - {x: 282.7382, y: 11.071096, z: 211.41814}
+    - {x: 284.29803, y: 11.077145, z: 212.66985}
+    - {x: 285.84705, y: 11.082318, z: 213.93497}
+    - {x: 287.39075, y: 11.086637, z: 215.20656}
+    - {x: 288.9398, y: 11.090171, z: 216.47165}
+    - {x: 290.4985, y: 11.092876, z: 217.72466}
+    - {x: 292.03278, y: 11.094835, z: 219.00763}
+    - {x: 293.56525, y: 11.096206, z: 220.29277}
+    - {x: 295.10468, y: 11.097573, z: 221.56952}
+    - {x: 296.66223, y: 11.098071, z: 222.82372}
+    - {x: 298.28088, y: 11.097851, z: 223.99643}
+    - {x: 300, y: 11.097646, z: 225}
+    s:
+    - 0
+    - 1.9999853
+    - 3.9999745
+    - 5.99997
+    - 7.99997
+    - 9.999967
+    - 11.999953
+    - 13.99993
+    - 15.999905
+    - 17.99988
+    - 19.999857
+    - 21.99984
+    - 23.999828
+    - 25.999817
+    - 27.999802
+    - 29.999777
+    - 31.999756
+    - 33.999744
+    - 35.99974
+    - 37.99974
+    - 39.999714
+    - 41.999638
+    - 43.999638
+    - 45.999634
+    - 47.999622
+    - 49.99937
+    - 51.998188
+    - 53.988804
+  - id: 9
+    nodeA: 0
+    nodeB: 7
+    sourceRoad: 2
+    cls: 1
+    halfWidth: 3.6
+    sStart: 0
+    sEnd: 51.99978850904963
+    length: 51.99979
+    points:
+    - {x: 70, y: 13.335372, z: 30}
+    - {x: 70.95091, y: 13.335372, z: 28.240551}
+    - {x: 72.0699, y: 13.335372, z: 26.582918}
+    - {x: 73.27334, y: 13.335388, z: 24.985512}
+    - {x: 74.50871, y: 13.335425, z: 23.412682}
+    - {x: 75.77658, y: 13.335466, z: 21.865925}
+    - {x: 77.071465, y: 13.335526, z: 20.341745}
+    - {x: 78.32766, y: 13.335609, z: 18.78551}
+    - {x: 79.61922, y: 13.33572, z: 17.258488}
+    - {x: 80.93711, y: 13.335863, z: 15.754119}
+    - {x: 82.27196, y: 13.336041, z: 14.26477}
+    - {x: 83.62074, y: 13.336258, z: 12.78803}
+    - {x: 84.9808, y: 13.3365135, z: 11.321659}
+    - {x: 86.34978, y: 13.336805, z: 9.863628}
+    - {x: 87.73078, y: 13.337134, z: 8.41697}
+    - {x: 89.12098, y: 13.3375, z: 6.979142}
+    - {x: 90.517815, y: 13.337901, z: 5.5477653}
+    - {x: 91.919464, y: 13.338335, z: 4.121097}
+    - {x: 93.32485, y: 13.3388, z: 2.698113}
+    - {x: 94.7333, y: 13.339295, z: 1.278156}
+    - {x: 96.14427, y: 13.339818, z: -0.13928653}
+    - {x: 97.556885, y: 13.34037, z: -1.5551015}
+    - {x: 98.970436, y: 13.340954, z: -2.969974}
+    - {x: 100.38445, y: 13.341576, z: -4.3843875}
+    - {x: 101.79863, y: 13.34224, z: -5.7986336}
+    - {x: 103.212845, y: 13.34296, z: -7.2128468}
+    - {x: 104.62706, y: 13.343751, z: -8.627061}
+    s:
+    - 0
+    - 1.9999748
+    - 3.9999433
+    - 5.9999347
+    - 7.999922
+    - 9.9999075
+    - 11.999872
+    - 13.999844
+    - 15.999825
+    - 17.999817
+    - 19.99981
+    - 21.999805
+    - 23.999802
+    - 25.999796
+    - 27.999792
+    - 29.99979
+    - 31.99979
+    - 33.99979
+    - 35.99979
+    - 37.99979
+    - 39.99979
+    - 41.99979
+    - 43.99979
+    - 45.99979
+    - 47.99979
+    - 49.99979
+    - 51.99979
+  - id: 10
+    nodeA: 7
+    nodeB: 24
+    sourceRoad: 2
+    cls: 1
+    halfWidth: 3.6
+    sStart: 51.99978850904963
+    sEnd: 72.57618101219978
+    length: 20.576393
+    points:
+    - {x: 104.62706, y: 13.343751, z: -8.627061}
+    - {x: 106.041275, y: 13.344631, z: -10.041274}
+    - {x: 107.45549, y: 13.345629, z: -11.455487}
+    - {x: 108.8697, y: 13.346776, z: -12.869701}
+    - {x: 110.28391, y: 13.348112, z: -14.283915}
+    - {x: 111.69813, y: 13.349685, z: -15.698129}
+    - {x: 113.11234, y: 13.351552, z: -17.11234}
+    - {x: 114.52656, y: 13.353782, z: -18.526556}
+    - {x: 115.940765, y: 13.356453, z: -19.94077}
+    - {x: 117.35498, y: 13.35966, z: -21.354982}
+    - {x: 118.76919, y: 13.363511, z: -22.769203}
+    - {x: 119.17673, y: 13.364841, z: -23.17681}
+    s:
+    - 0
+    - 2
+    - 4
+    - 6
+    - 8
+    - 10
+    - 12
+    - 14
+    - 16
+    - 18
+    - 20
+    - 20.576393
+  - id: 11
+    nodeA: 24
+    nodeB: 25
+    sourceRoad: 2
+    cls: 0
+    halfWidth: 3.6
+    sStart: 72.57618101219978
+    sEnd: 185.99406783052402
+    length: 113.417885
+    points:
+    - {x: 119.17673, y: 13.364841, z: -23.17681}
+    - {x: 120.18328, y: 13.36813, z: -24.183537}
+    - {x: 121.59686, y: 13.37366, z: -25.598381}
+    - {x: 123.00909, y: 13.380264, z: -27.014584}
+    - {x: 124.41863, y: 13.388125, z: -28.433447}
+    - {x: 125.82371, y: 13.397445, z: -29.856737}
+    - {x: 127.22202, y: 13.408449, z: -31.286667}
+    - {x: 128.61084, y: 13.421382, z: -32.725826}
+    - {x: 129.98714, y: 13.436507, z: -34.176952}
+    - {x: 131.34773, y: 13.454107, z: -35.6428}
+    - {x: 132.68924, y: 13.474479, z: -37.126114}
+    - {x: 134.00809, y: 13.4979315, z: -38.629612}
+    - {x: 135.30038, y: 13.524786, z: -40.15596}
+    - {x: 136.56204, y: 13.555369, z: -41.707706}
+    - {x: 137.78917, y: 13.5900135, z: -43.28688}
+    - {x: 138.97899, y: 13.629053, z: -44.89433}
+    - {x: 140.13095, y: 13.672819, z: -46.52913}
+    - {x: 141.24712, y: 13.7216425, z: -48.188595}
+    - {x: 142.3325, y: 13.7758465, z: -49.86839}
+    - {x: 143.39503, y: 13.835748, z: -51.562763}
+    - {x: 144.44498, y: 13.901653, z: -53.265003}
+    - {x: 145.49376, y: 13.973856, z: -54.967953}
+    - {x: 146.55342, y: 14.052636, z: -56.66415}
+    - {x: 147.63623, y: 14.138256, z: -58.345623}
+    - {x: 148.75468, y: 14.230958, z: -60.003574}
+    - {x: 149.92223, y: 14.330959, z: -61.62731}
+    - {x: 151.1553, y: 14.438456, z: -63.20175}
+    - {x: 152.45995, y: 14.553608, z: -64.71715}
+    - {x: 153.84157, y: 14.676547, z: -66.16248}
+    - {x: 155.30066, y: 14.80737, z: -67.52944}
+    - {x: 156.83293, y: 14.946134, z: -68.81384}
+    - {x: 158.43031, y: 15.092856, z: -70.01654}
+    - {x: 160.08249, y: 15.2475195, z: -71.14306}
+    - {x: 161.77905, y: 15.410045, z: -72.201805}
+    - {x: 163.51106, y: 15.580241, z: -73.201744}
+    - {x: 165.27155, y: 15.7578125, z: -74.15072}
+    - {x: 167.0524, y: 15.94236, z: -75.060905}
+    - {x: 168.84879, y: 16.133396, z: -75.940025}
+    - {x: 170.65645, y: 16.330347, z: -76.79577}
+    - {x: 172.47112, y: 16.53256, z: -77.636566}
+    - {x: 174.28871, y: 16.739319, z: -78.471054}
+    - {x: 176.1056, y: 16.949839, z: -79.30702}
+    - {x: 177.9191, y: 17.163319, z: -80.15037}
+    - {x: 179.72757, y: 17.379059, z: -81.00443}
+    - {x: 181.53036, y: 17.596458, z: -81.87037}
+    - {x: 183.32744, y: 17.815016, z: -82.748146}
+    - {x: 185.11874, y: 18.034319, z: -83.63765}
+    - {x: 186.90378, y: 18.254053, z: -84.53966}
+    - {x: 188.68103, y: 18.47399, z: -85.456894}
+    - {x: 190.44772, y: 18.693985, z: -86.39432}
+    - {x: 192.19975, y: 18.913977, z: -87.358864}
+    - {x: 193.932, y: 19.133966, z: -88.358444}
+    - {x: 195.64125, y: 19.353954, z: -89.39682}
+    - {x: 197.32368, y: 19.573936, z: -90.478035}
+    - {x: 198.97498, y: 19.793917, z: -91.606125}
+    - {x: 200.58957, y: 20.013891, z: -92.78603}
+    - {x: 202.16074, y: 20.23386, z: -94.023056}
+    - {x: 203.6809, y: 20.453825, z: -95.32215}
+    s:
+    - 0
+    - 1.4236075
+    - 3.4236073
+    - 5.4236073
+    - 7.4236064
+    - 9.423604
+    - 11.4236
+    - 13.4235935
+    - 15.423582
+    - 17.423565
+    - 19.423538
+    - 21.4235
+    - 23.423445
+    - 25.423368
+    - 27.423273
+    - 29.423166
+    - 31.423061
+    - 33.422974
+    - 35.422916
+    - 37.422894
+    - 39.42289
+    - 41.422886
+    - 43.422874
+    - 45.422832
+    - 47.42277
+    - 49.422695
+    - 51.42252
+    - 53.422157
+    - 55.42162
+    - 57.420998
+    - 59.420395
+    - 61.41991
+    - 63.419594
+    - 65.41942
+    - 67.41935
+    - 69.41932
+    - 71.41927
+    - 73.41924
+    - 75.41923
+    - 77.41922
+    - 79.41922
+    - 81.41922
+    - 83.41921
+    - 85.419205
+    - 87.4192
+    - 89.41919
+    - 91.41918
+    - 93.419174
+    - 95.41916
+    - 97.41915
+    - 99.419136
+    - 101.419106
+    - 103.419044
+    - 105.41894
+    - 107.41878
+    - 109.41855
+    - 111.41825
+    - 113.417885
+  - id: 12
+    nodeA: 25
+    nodeB: 8
+    sourceRoad: 2
+    cls: 0
+    halfWidth: 3.6
+    sStart: 185.99406783052402
+    sEnd: 281.7142816420375
+    length: 95.720215
+    points:
+    - {x: 203.6809, y: 20.453825, z: -95.32215}
+    - {x: 205.14102, y: 20.673784, z: -96.68835}
+    - {x: 206.53078, y: 20.893742, z: -98.126114}
+    - {x: 207.83244, y: 21.113697, z: -99.64404}
+    - {x: 209.03589, y: 21.333649, z: -101.24079}
+    - {x: 210.13727, y: 21.5536, z: -102.90938}
+    - {x: 211.12898, y: 21.773554, z: -104.64551}
+    - {x: 211.98538, y: 21.993505, z: -106.45218}
+    - {x: 212.72227, y: 22.21346, z: -108.310936}
+    - {x: 213.34859, y: 22.433416, z: -110.20991}
+    - {x: 213.89062, y: 22.653376, z: -112.134926}
+    - {x: 214.39394, y: 22.873339, z: -114.07055}
+    - {x: 214.91714, y: 23.093302, z: -116.0008}
+    - {x: 215.52231, y: 23.313269, z: -117.90676}
+    - {x: 216.25131, y: 23.533236, z: -119.76845}
+    - {x: 217.10597, y: 23.753206, z: -121.57598}
+    - {x: 218.08626, y: 23.97318, z: -123.31886}
+    - {x: 219.14603, y: 24.19316, z: -125.01474}
+    - {x: 220.27058, y: 24.41314, z: -126.66855}
+    - {x: 221.42603, y: 24.633123, z: -128.30098}
+    - {x: 222.59486, y: 24.85311, z: -129.92387}
+    - {x: 223.76181, y: 25.0731, z: -131.54814}
+    - {x: 224.91626, y: 25.293093, z: -133.18129}
+    - {x: 226.05196, y: 25.513086, z: -134.82751}
+    - {x: 227.16484, y: 25.733084, z: -136.48924}
+    - {x: 228.25204, y: 25.95308, z: -138.16788}
+    - {x: 229.31189, y: 26.173077, z: -139.86392}
+    - {x: 230.34573, y: 26.393076, z: -141.57596}
+    - {x: 231.35756, y: 26.613073, z: -143.30112}
+    - {x: 232.35416, y: 26.83307, z: -145.03513}
+    - {x: 233.34409, y: 27.053066, z: -146.77296}
+    - {x: 234.3354, y: 27.273064, z: -148.50998}
+    - {x: 235.33601, y: 27.492632, z: -150.24167}
+    - {x: 236.35327, y: 27.709877, z: -151.96361}
+    - {x: 237.39381, y: 27.922806, z: -153.67154}
+    - {x: 238.46353, y: 28.129307, z: -155.36133}
+    - {x: 239.56682, y: 28.327066, z: -157.02937}
+    - {x: 240.706, y: 28.513594, z: -158.67311}
+    - {x: 241.88354, y: 28.686247, z: -160.28954}
+    - {x: 243.09982, y: 28.842314, z: -161.87704}
+    - {x: 244.35194, y: 28.979078, z: -163.43648}
+    - {x: 245.63582, y: 29.096027, z: -164.96991}
+    - {x: 246.94672, y: 29.193249, z: -166.48032}
+    - {x: 248.24968, y: 29.271023, z: -167.99763}
+    - {x: 249.5877, y: 29.330793, z: -169.48401}
+    - {x: 250.96231, y: 29.393206, z: -170.93668}
+    - {x: 252.36403, y: 29.429571, z: -172.36325}
+    - {x: 253.77785, y: 29.447397, z: -173.77785}
+    - {x: 255, y: 29.44951, z: -175}
+    s:
+    - 0
+    - 1.9996063
+    - 3.9992623
+    - 5.9988694
+    - 7.998338
+    - 9.99765
+    - 11.997062
+    - 13.996429
+    - 15.995924
+    - 17.995516
+    - 19.995392
+    - 21.99538
+    - 23.995287
+    - 25.995008
+    - 27.994339
+    - 29.993742
+    - 31.993395
+    - 33.99317
+    - 35.993103
+    - 37.993073
+    - 39.99307
+    - 41.993065
+    - 43.993046
+    - 45.993015
+    - 47.992973
+    - 49.992928
+    - 51.99289
+    - 53.992867
+    - 55.99286
+    - 57.99286
+    - 59.99286
+    - 61.992855
+    - 63.992844
+    - 65.99281
+    - 67.99276
+    - 69.992676
+    - 71.99258
+    - 73.99247
+    - 75.99234
+    - 77.992226
+    - 79.99213
+    - 81.992065
+    - 83.99202
+    - 85.992004
+    - 87.991905
+    - 89.99186
+    - 91.991844
+    - 93.99184
+    - 95.720215
+  - id: 13
+    nodeA: 1
+    nodeB: 9
+    sourceRoad: 3
+    cls: 1
+    halfWidth: 3.6
+    sStart: 0
+    sEnd: 45.99999803040552
+    length: 45.999996
+    points:
+    - {x: 56.82801, y: 13.335273, z: 25.700035}
+    - {x: 55.54908, y: 13.335262, z: 27.237675}
+    - {x: 54.232136, y: 13.335251, z: 28.742886}
+    - {x: 52.89127, y: 13.335127, z: 30.226826}
+    - {x: 51.540627, y: 13.334818, z: 31.701874}
+    - {x: 50.180103, y: 13.334483, z: 33.167812}
+    - {x: 48.809708, y: 13.333996, z: 34.624523}
+    - {x: 47.45138, y: 13.333319, z: 36.0925}
+    - {x: 46.08301, y: 13.332409, z: 37.551117}
+    - {x: 44.70599, y: 13.3312235, z: 39.001568}
+    - {x: 43.322987, y: 13.329709, z: 40.446316}
+    - {x: 41.934967, y: 13.327812, z: 41.88625}
+    - {x: 40.54272, y: 13.325481, z: 43.322094}
+    - {x: 39.147133, y: 13.322668, z: 44.75469}
+    - {x: 37.74714, y: 13.319291, z: 46.182983}
+    - {x: 36.34358, y: 13.315258, z: 47.60777}
+    - {x: 34.937252, y: 13.310466, z: 49.029823}
+    - {x: 33.528854, y: 13.304796, z: 50.44983}
+    - {x: 32.118847, y: 13.298121, z: 51.868237}
+    - {x: 30.707523, y: 13.290296, z: 53.285336}
+    - {x: 29.29509, y: 13.2811575, z: 54.70133}
+    - {x: 27.881882, y: 13.270529, z: 56.116547}
+    - {x: 26.46817, y: 13.258206, z: 57.53126}
+    - {x: 25.054167, y: 13.243988, z: 58.945683}
+    s:
+    - 0
+    - 1.9999999
+    - 3.9999998
+    - 5.9999995
+    - 7.9999995
+    - 9.999999
+    - 11.999999
+    - 13.999999
+    - 15.999999
+    - 17.999998
+    - 19.999998
+    - 21.999998
+    - 23.999998
+    - 25.999998
+    - 27.999998
+    - 29.999998
+    - 31.999998
+    - 33.999996
+    - 35.999996
+    - 37.999996
+    - 39.999996
+    - 41.999996
+    - 43.999996
+    - 45.999996
+  - id: 14
+    nodeA: 9
+    nodeB: 26
+    sourceRoad: 3
+    cls: 1
+    halfWidth: 3.6
+    sStart: 45.99999803040552
+    sEnd: 118.85232701012526
+    length: 72.852325
+    points:
+    - {x: 25.054167, y: 13.243988, z: 58.945683}
+    - {x: 23.640017, y: 13.227658, z: 60.359962}
+    - {x: 22.225813, y: 13.208986, z: 61.774185}
+    - {x: 20.8116, y: 13.187726, z: 63.1884}
+    - {x: 19.397387, y: 13.163621, z: 64.602615}
+    - {x: 17.983173, y: 13.136402, z: 66.01683}
+    - {x: 16.56896, y: 13.105789, z: 67.43104}
+    - {x: 15.154746, y: 13.07149, z: 68.84525}
+    - {x: 13.740532, y: 13.033207, z: 70.25947}
+    - {x: 12.326319, y: 12.990633, z: 71.67368}
+    - {x: 10.912106, y: 12.943458, z: 73.0879}
+    - {x: 9.497891, y: 12.891367, z: 74.502106}
+    - {x: 8.083678, y: 12.834046, z: 75.91632}
+    - {x: 6.6694646, y: 12.771184, z: 77.330536}
+    - {x: 5.255251, y: 12.702474, z: 78.74475}
+    - {x: 3.8410373, y: 12.627618, z: 80.158966}
+    - {x: 2.4268239, y: 12.54633, z: 81.57317}
+    - {x: 1.012617, y: 12.458343, z: 82.9874}
+    - {x: -0.4014563, y: 12.363402, z: 84.40175}
+    - {x: -1.8149333, y: 12.261281, z: 85.8167}
+    - {x: -3.226893, y: 12.151775, z: 87.23316}
+    - {x: -4.635951, y: 12.034713, z: 88.65251}
+    - {x: -6.0405006, y: 11.909949, z: 90.076324}
+    - {x: -7.4392924, y: 11.77738, z: 91.50579}
+    - {x: -8.831508, y: 11.636932, z: 92.941666}
+    - {x: -10.216743, y: 11.48858, z: 94.38428}
+    - {x: -11.594812, y: 11.332332, z: 95.83373}
+    - {x: -12.965554, y: 11.168275, z: 97.290115}
+    - {x: -14.32867, y: 10.996609, z: 98.75365}
+    - {x: -15.6834755, y: 10.81764, z: 100.22486}
+    - {x: -17.028751, y: 10.631779, z: 101.704796}
+    - {x: -18.363167, y: 10.4395275, z: 103.194534}
+    - {x: -19.686073, y: 10.241478, z: 104.694496}
+    - {x: -20.997993, y: 10.0383, z: 106.20407}
+    - {x: -22.300457, y: 9.830728, z: 107.721825}
+    - {x: -23.59441, y: 9.619559, z: 109.24683}
+    - {x: -24.878344, y: 9.405578, z: 110.78028}
+    - {x: -25.419407, y: 9.31347, z: 111.43894}
+    s:
+    - 0
+    - 2
+    - 4
+    - 6
+    - 8
+    - 10
+    - 12
+    - 14
+    - 16
+    - 18
+    - 20
+    - 22
+    - 24
+    - 26
+    - 28
+    - 30
+    - 32
+    - 34
+    - 36
+    - 38
+    - 40
+    - 42
+    - 44
+    - 46
+    - 48
+    - 49.999996
+    - 51.999996
+    - 53.999996
+    - 55.999992
+    - 57.99999
+    - 59.999985
+    - 61.999977
+    - 63.999966
+    - 65.99996
+    - 67.999954
+    - 69.99995
+    - 71.99993
+    - 72.852325
+  - id: 15
+    nodeA: 26
+    nodeB: 27
+    sourceRoad: 3
+    cls: 0
+    halfWidth: 3.6
+    sStart: 118.85232701012526
+    sEnd: 205.98322758686132
+    length: 87.1309
+    points:
+    - {x: -25.419407, y: 9.31347, z: 111.43894}
+    - {x: -26.147844, y: 9.189465, z: 112.32569}
+    - {x: -27.39581, y: 8.971803, z: 113.88852}
+    - {x: -28.612808, y: 8.753079, z: 115.47558}
+    - {x: -29.783579, y: 8.533682, z: 117.09698}
+    - {x: -30.902729, y: 8.313909, z: 118.75432}
+    - {x: -31.96377, y: 8.093967, z: 120.44938}
+    - {x: -32.962112, y: 7.873982, z: 122.1821}
+    - {x: -33.894356, y: 7.6539965, z: 123.95131}
+    - {x: -34.7554, y: 7.434011, z: 125.756294}
+    - {x: -35.544754, y: 7.2140265, z: 127.59379}
+    - {x: -36.276886, y: 6.9940434, z: 129.45485}
+    - {x: -36.966515, y: 6.7740636, z: 131.33212}
+    - {x: -37.633415, y: 6.554089, z: 133.21765}
+    - {x: -38.30107, y: 6.334121, z: 135.1029}
+    - {x: -38.99488, y: 6.1141634, z: 136.97867}
+    - {x: -39.744984, y: 5.894218, z: 138.83253}
+    - {x: -40.57935, y: 5.6742864, z: 140.64977}
+    - {x: -41.517956, y: 5.454368, z: 142.41498}
+    - {x: -42.58175, y: 5.2344627, z: 144.10722}
+    - {x: -43.78708, y: 5.0153356, z: 145.70161}
+    - {x: -45.149403, y: 4.798053, z: 147.16405}
+    - {x: -46.672653, y: 4.5837927, z: 148.45778}
+    - {x: -48.3232, y: 4.373843, z: 149.58391}
+    - {x: -50.077843, y: 4.169601, z: 150.54031}
+    - {x: -51.912132, y: 3.9725688, z: 151.3348}
+    - {x: -53.804935, y: 3.7839386, z: 151.97917}
+    - {x: -55.739506, y: 3.605052, z: 152.48534}
+    - {x: -57.699257, y: 3.4373944, z: 152.88281}
+    - {x: -59.675438, y: 3.2810495, z: 153.18863}
+    - {x: -61.661922, y: 3.1356206, z: 153.41876}
+    - {x: -63.65466, y: 3.0005867, z: 153.58714}
+    - {x: -65.651085, y: 2.875312, z: 153.70454}
+    - {x: -67.649666, y: 2.759139, z: 153.77695}
+    - {x: -69.64931, y: 2.6513805, z: 153.81201}
+    - {x: -71.649254, y: 2.5521655, z: 153.8195}
+    - {x: -73.64914, y: 2.4614859, z: 153.80217}
+    - {x: -75.6487, y: 2.379087, z: 153.76143}
+    - {x: -77.647484, y: 2.3035314, z: 153.69353}
+    - {x: -79.64352, y: 2.2360396, z: 153.57289}
+    - {x: -81.63979, y: 2.178051, z: 153.45592}
+    - {x: -83.63716, y: 2.1303065, z: 153.3544}
+    - {x: -85.632355, y: 2.078667, z: 153.21718}
+    - {x: -87.62467, y: 2.0395806, z: 153.04285}
+    - {x: -89.606316, y: 2.0128691, z: 152.77899}
+    s:
+    - 0
+    - 1.1475831
+    - 3.1475487
+    - 5.1475067
+    - 7.147415
+    - 9.147234
+    - 11.146995
+    - 13.146745
+    - 15.146542
+    - 17.146385
+    - 19.146255
+    - 21.146135
+    - 23.146076
+    - 25.146067
+    - 27.14606
+    - 29.146027
+    - 31.14589
+    - 33.14552
+    - 35.144753
+    - 37.143593
+    - 39.142315
+    - 41.140976
+    - 43.13948
+    - 45.137604
+    - 47.135967
+    - 49.134922
+    - 51.134407
+    - 53.134098
+    - 55.13375
+    - 57.133453
+    - 59.133224
+    - 61.133064
+    - 63.132942
+    - 65.13283
+    - 67.132774
+    - 69.13274
+    - 71.1327
+    - 73.13267
+    - 75.13261
+    - 77.132286
+    - 79.13199
+    - 81.131935
+    - 83.131836
+    - 85.13177
+    - 87.1309
+  - id: 16
+    nodeA: 27
+    nodeB: 10
+    sourceRoad: 3
+    cls: 0
+    halfWidth: 3.6
+    sStart: 205.98322758686132
+    sEnd: 208.50048186198498
+    length: 2.5172544
+    points:
+    - {x: -89.606316, y: 2.0128691, z: 152.77899}
+    - {x: -92, y: 2.0075908, z: 152}
+    s:
+    - 0
+    - 2.5172544
+  - id: 17
+    nodeA: 3
+    nodeB: 28
+    sourceRoad: 4
+    cls: 0
+    halfWidth: 3.6
+    sStart: 0
+    sEnd: 113.99407396426666
+    length: 113.99407
+    points:
+    - {x: -85, y: 9.385864, z: -85}
+    - {x: -86.87101, y: 9.385864, z: -84.2936}
+    - {x: -88.62859, y: 9.385864, z: -83.33948}
+    - {x: -90.308784, y: 9.40096, z: -82.25466}
+    - {x: -91.95499, y: 9.407359, z: -81.11897}
+    - {x: -93.564835, y: 9.413212, z: -79.932335}
+    - {x: -95.14643, y: 9.4194975, z: -78.70842}
+    - {x: -96.76682, y: 9.42565, z: -77.53629}
+    - {x: -98.34764, y: 9.431502, z: -76.31127}
+    - {x: -99.89663, y: 9.436998, z: -75.04618}
+    - {x: -101.4237, y: 9.442163, z: -73.754684}
+    - {x: -102.932274, y: 9.446862, z: -72.44163}
+    - {x: -104.42575, y: 9.451018, z: -71.111404}
+    - {x: -105.90669, y: 9.454619, z: -69.76726}
+    - {x: -107.37272, y: 9.45762, z: -68.40685}
+    - {x: -108.828865, y: 9.459958, z: -67.03586}
+    - {x: -110.28038, y: 9.461558, z: -65.65995}
+    - {x: -111.73218, y: 9.462335, z: -64.284355}
+    - {x: -113.18865, y: 9.462198, z: -62.91371}
+    - {x: -114.65411, y: 9.461061, z: -61.552692}
+    - {x: -116.13325, y: 9.458826, z: -60.206573}
+    - {x: -117.631584, y: 9.455391, z: -58.881905}
+    - {x: -119.15461, y: 9.4506445, z: -57.585747}
+    - {x: -120.70747, y: 9.444492, z: -56.325573}
+    - {x: -122.29481, y: 9.436847, z: -55.109196}
+    - {x: -123.92036, y: 9.427631, z: -53.94449}
+    - {x: -125.586525, y: 9.416779, z: -52.838764}
+    - {x: -127.29418, y: 9.404228, z: -51.798336}
+    - {x: -129.04271, y: 9.389933, z: -50.828217}
+    - {x: -130.83015, y: 9.373856, z: -49.93177}
+    - {x: -132.65337, y: 9.355979, z: -49.110416}
+    - {x: -134.50833, y: 9.336304, z: -48.3634}
+    - {x: -136.39056, y: 9.314854, z: -47.687733}
+    - {x: -138.2953, y: 9.291679, z: -47.078217}
+    - {x: -140.2182, y: 9.266855, z: -46.528404}
+    - {x: -142.15594, y: 9.240486, z: -46.033405}
+    - {x: -144.10483, y: 9.2127075, z: -45.584255}
+    - {x: -146.06256, y: 9.183688, z: -45.17544}
+    - {x: -148.0274, y: 9.153631, z: -44.80235}
+    - {x: -149.99817, y: 9.122773, z: -44.461864}
+    - {x: -151.97404, y: 9.091389, z: -44.152443}
+    - {x: -153.95453, y: 9.059785, z: -43.87408}
+    - {x: -155.9393, y: 9.028306, z: -43.628315}
+    - {x: -157.92815, y: 8.997328, z: -43.41803}
+    - {x: -159.92073, y: 8.967261, z: -43.247196}
+    - {x: -161.9166, y: 8.938547, z: -43.120705}
+    - {x: -163.91496, y: 8.9116535, z: -43.04405}
+    - {x: -165.91466, y: 8.887073, z: -43.02235}
+    - {x: -167.91412, y: 8.865321, z: -43.05947}
+    - {x: -169.9115, y: 8.846931, z: -43.15771}
+    - {x: -171.90492, y: 8.832449, z: -43.317577}
+    - {x: -173.89267, y: 8.822432, z: -43.53718}
+    - {x: -175.87358, y: 8.817438, z: -43.81202}
+    - {x: -177.84726, y: 8.818028, z: -44.135048}
+    - {x: -179.81427, y: 8.824753, z: -44.496655}
+    - {x: -181.77608, y: 8.83815, z: -44.885624}
+    - {x: -183.73528, y: 8.858737, z: -45.2876}
+    - {x: -185.69449, y: 8.887003, z: -45.68943}
+    s:
+    - 0
+    - 1.9999169
+    - 3.9997852
+    - 5.9997478
+    - 7.999691
+    - 9.999623
+    - 11.999478
+    - 13.999361
+    - 15.999278
+    - 17.999239
+    - 19.99921
+    - 21.99919
+    - 23.999178
+    - 25.999157
+    - 27.999147
+    - 29.999144
+    - 31.999144
+    - 33.99914
+    - 35.999138
+    - 37.999123
+    - 39.999092
+    - 41.99903
+    - 43.99894
+    - 45.998795
+    - 47.998596
+    - 49.998337
+    - 51.99802
+    - 53.997665
+    - 55.99729
+    - 57.99693
+    - 59.99661
+    - 61.99635
+    - 63.99617
+    - 65.99606
+    - 67.99602
+    - 69.995995
+    - 71.99596
+    - 73.99591
+    - 75.99587
+    - 77.995834
+    - 79.99579
+    - 81.995735
+    - 83.995674
+    - 85.9956
+    - 87.99549
+    - 89.99536
+    - 91.99521
+    - 93.99502
+    - 95.99482
+    - 97.99462
+    - 99.99443
+    - 101.99428
+    - 103.99417
+    - 105.99411
+    - 107.99408
+    - 109.99408
+    - 111.99408
+    - 113.99407
+  - id: 18
+    nodeA: 28
+    nodeB: 29
+    sourceRoad: 4
+    cls: 0
+    halfWidth: 3.6
+    sStart: 113.99407396426666
+    sEnd: 263.97528170250456
+    length: 149.9812
+    points:
+    - {x: -185.69449, y: 8.887003, z: -45.68943}
+    - {x: -187.65613, y: 8.923408, z: -46.079117}
+    - {x: -189.62222, y: 8.968367, z: -46.445587}
+    - {x: -191.59412, y: 9.022252, z: -46.77926}
+    - {x: -193.57236, y: 9.085389, z: -47.072872}
+    - {x: -195.55667, y: 9.158046, z: -47.32202}
+    - {x: -197.5461, y: 9.240438, z: -47.526554}
+    - {x: -199.53926, y: 9.3327265, z: -47.691036}
+    - {x: -201.5348, y: 9.435013, z: -47.824333}
+    - {x: -203.53148, y: 9.547345, z: -47.93946}
+    - {x: -205.52805, y: 9.669713, z: -48.05659}
+    - {x: -207.5231, y: 9.802056, z: -48.1962}
+    - {x: -209.51459, y: 9.94426, z: -48.37901}
+    - {x: -211.4991, y: 10.096137, z: -48.62535}
+    - {x: -213.47153, y: 10.257375, z: -48.95443}
+    - {x: -215.42383, y: 10.42754, z: -49.386948}
+    - {x: -217.34358, y: 10.606087, z: -49.945972}
+    - {x: -219.22272, y: 10.792372, z: -50.62848}
+    - {x: -221.05214, y: 10.98566, z: -51.434963}
+    - {x: -222.8223, y: 11.185135, z: -52.364655}
+    - {x: -224.5322, y: 11.389913, z: -53.401505}
+    - {x: -226.19986, y: 11.599051, z: -54.505257}
+    - {x: -227.84352, y: 11.8116045, z: -55.644684}
+    - {x: -229.48923, y: 12.026749, z: -56.781113}
+    - {x: -231.16194, y: 12.243783, z: -57.877155}
+    - {x: -232.88219, y: 12.462123, z: -58.896564}
+    - {x: -234.66994, y: 12.6813, z: -59.791653}
+    - {x: -236.51904, y: 12.900955, z: -60.551346}
+    - {x: -238.42781, y: 13.120832, z: -61.144863}
+    - {x: -240.38217, y: 13.340778, z: -61.565586}
+    - {x: -242.36186, y: 13.560727, z: -61.84456}
+    - {x: -244.35515, y: 13.780681, z: -62.00345}
+    - {x: -246.3542, y: 14.000638, z: -62.059948}
+    - {x: -248.35414, y: 14.2206, z: -62.055126}
+    - {x: -250.35382, y: 14.440564, z: -62.020107}
+    - {x: -252.35347, y: 14.660528, z: -61.98291}
+    - {x: -254.3534, y: 14.880493, z: -61.96728}
+    - {x: -256.35297, y: 15.100456, z: -62.00296}
+    - {x: -258.34967, y: 15.320416, z: -62.111805}
+    - {x: -260.33823, y: 15.540374, z: -62.321037}
+    - {x: -262.30533, y: 15.760328, z: -62.677486}
+    - {x: -264.23657, y: 15.980281, z: -63.193928}
+    - {x: -266.1139, y: 16.200235, z: -63.880463}
+    - {x: -267.93466, y: 16.420193, z: -64.70688}
+    - {x: -269.7094, y: 16.640154, z: -65.628685}
+    - {x: -271.46417, y: 16.86012, z: -66.5882}
+    - {x: -273.2182, y: 17.080093, z: -67.54911}
+    - {x: -274.98923, y: 17.30007, z: -68.47812}
+    - {x: -276.79108, y: 17.52005, z: -69.345764}
+    - {x: -278.62036, y: 17.740036, z: -70.153915}
+    - {x: -280.47784, y: 17.960026, z: -70.89505}
+    - {x: -282.35544, y: 18.178802, z: -71.583694}
+    - {x: -284.24744, y: 18.395039, z: -72.231865}
+    - {x: -286.14948, y: 18.607304, z: -72.85001}
+    - {x: -288.05905, y: 18.814075, z: -73.444565}
+    - {x: -289.974, y: 19.01373, z: -74.02158}
+    - {x: -291.89264, y: 19.20455, z: -74.5862}
+    - {x: -293.81345, y: 19.384739, z: -75.143425}
+    - {x: -295.73477, y: 19.552404, z: -75.69888}
+    - {x: -297.6551, y: 19.705904, z: -76.25776}
+    - {x: -299.57288, y: 19.845886, z: -76.82531}
+    - {x: -301.48608, y: 19.97311, z: -77.40799}
+    - {x: -303.39215, y: 20.088415, z: -78.01363}
+    - {x: -305.28796, y: 20.192745, z: -78.65063}
+    - {x: -307.17, y: 20.28715, z: -79.32712}
+    - {x: -309.03418, y: 20.372766, z: -80.0515}
+    - {x: -310.8738, y: 20.45075, z: -80.836044}
+    - {x: -312.68555, y: 20.52229, z: -81.68294}
+    - {x: -314.46793, y: 20.587992, z: -82.5897}
+    - {x: -316.21362, y: 20.647484, z: -83.56508}
+    - {x: -317.9165, y: 20.70052, z: -84.61327}
+    - {x: -319.57278, y: 20.747936, z: -85.73358}
+    - {x: -321.18076, y: 20.788929, z: -86.922264}
+    - {x: -322.78925, y: 20.82287, z: -88.11036}
+    - {x: -324.37244, y: 20.84999, z: -89.3313}
+    - {x: -325.88852, y: 20.879072, z: -90.63498}
+    s:
+    - 0
+    - 1.9999824
+    - 3.9999385
+    - 5.9998636
+    - 7.9997644
+    - 9.999658
+    - 11.999572
+    - 13.99952
+    - 15.999502
+    - 17.9995
+    - 19.99949
+    - 21.999435
+    - 23.99929
+    - 25.999039
+    - 27.998722
+    - 29.998363
+    - 31.99785
+    - 33.997097
+    - 35.996395
+    - 37.995846
+    - 39.99555
+    - 41.995388
+    - 43.99536
+    - 45.99532
+    - 47.995144
+    - 49.994747
+    - 51.994064
+    - 53.99314
+    - 55.992058
+    - 57.991188
+    - 59.990437
+    - 61.990055
+    - 63.989902
+    - 65.98984
+    - 67.98983
+    - 69.98982
+    - 71.9898
+    - 73.989685
+    - 75.98938
+    - 77.98891
+    - 79.98803
+    - 81.987144
+    - 83.98606
+    - 85.98561
+    - 87.98545
+    - 89.985435
+    - 91.98542
+    - 93.98533
+    - 95.985176
+    - 97.98503
+    - 99.98491
+    - 101.98481
+    - 103.98475
+    - 105.984726
+    - 107.98472
+    - 109.98471
+    - 111.9847
+    - 113.9847
+    - 115.9847
+    - 117.9847
+    - 119.984695
+    - 121.98468
+    - 123.98465
+    - 125.984604
+    - 127.98456
+    - 129.98451
+    - 131.98445
+    - 133.98434
+    - 135.98413
+    - 137.98383
+    - 139.98344
+    - 141.98306
+    - 143.9827
+    - 145.9824
+    - 147.98167
+    - 149.9812
+  - id: 19
+    nodeA: 29
+    nodeB: 11
+    sourceRoad: 4
+    cls: 0
+    halfWidth: 3.6
+    sStart: 263.97528170250456
+    sEnd: 269.9778284127058
+    length: 6.002547
+    points:
+    - {x: -325.88852, y: 20.879072, z: -90.63498}
+    - {x: -327.3397, y: 20.899275, z: -92.01071}
+    - {x: -328.70627, y: 20.910978, z: -93.470215}
+    - {x: -330, y: 20.912043, z: -95}
+    s:
+    - 0
+    - 1.9996201
+    - 3.9990528
+    - 6.002547
+  - id: 20
+    nodeA: 3
+    nodeB: 30
+    sourceRoad: 5
+    cls: 0
+    halfWidth: 3.6
+    sStart: 0
+    sEnd: 187.95456384259498
+    length: 187.95456
+    points:
+    - {x: -85, y: 9.385864, z: -85}
+    - {x: -85.351814, y: 9.385864, z: -86.96833}
+    - {x: -86.104515, y: 9.385864, z: -88.82062}
+    - {x: -87.055016, y: 9.597242, z: -90.58018}
+    - {x: -88.07393, y: 9.72315, z: -92.30102}
+    - {x: -89.147514, y: 9.838582, z: -93.98836}
+    - {x: -90.22917, y: 9.973421, z: -95.669876}
+    - {x: -91.25085, y: 10.122738, z: -97.38893}
+    - {x: -92.32662, y: 10.28233, z: -99.07486}
+    - {x: -93.425385, y: 10.449671, z: -100.746}
+    - {x: -94.520905, y: 10.627099, z: -102.419266}
+    - {x: -95.596214, y: 10.8127365, z: -104.10552}
+    - {x: -96.6315, y: 11.004831, z: -105.81656}
+    - {x: -97.6196, y: 11.202083, z: -107.55533}
+    - {x: -98.53541, y: 11.404526, z: -109.33305}
+    - {x: -99.35261, y: 11.612292, z: -111.15786}
+    - {x: -100.047676, y: 11.825563, z: -113.032265}
+    - {x: -100.60043, y: 12.044425, z: -114.95351}
+    - {x: -100.97572, y: 12.268926, z: -116.91702}
+    - {x: -101.18655, y: 12.499136, z: -118.90493}
+    - {x: -101.24731, y: 12.735177, z: -120.90322}
+    - {x: -101.15631, y: 12.977218, z: -122.90053}
+    - {x: -100.937386, y: 13.225466, z: -124.88808}
+    - {x: -100.62118, y: 13.47965, z: -126.86257}
+    - {x: -100.22657, y: 13.739542, z: -128.82307}
+    - {x: -99.76997, y: 14.004937, z: -130.7702}
+    - {x: -99.27869, y: 14.275647, z: -132.70891}
+    - {x: -98.773254, y: 14.551432, z: -134.64398}
+    - {x: -98.267235, y: 14.831989, z: -136.5789}
+    - {x: -97.770195, y: 15.116945, z: -138.51616}
+    - {x: -97.28947, y: 15.405857, z: -140.4575}
+    - {x: -96.8319, y: 15.698215, z: -142.40445}
+    - {x: -96.407555, y: 15.993436, z: -144.35889}
+    - {x: -96.02469, y: 16.290932, z: -146.32184}
+    - {x: -95.68811, y: 16.590176, z: -148.29323}
+    - {x: -95.40259, y: 16.89069, z: -150.2726}
+    - {x: -95.1716, y: 17.19208, z: -152.25906}
+    - {x: -94.9963, y: 17.494028, z: -154.2512}
+    - {x: -94.87624, y: 17.796288, z: -156.24742}
+    - {x: -94.8109, y: 18.098688, z: -158.2462}
+    - {x: -94.79945, y: 18.401127, z: -160.24603}
+    - {x: -94.83916, y: 18.703564, z: -162.24554}
+    - {x: -94.92569, y: 19.006004, z: -164.24362}
+    - {x: -95.05864, y: 19.308447, z: -166.23917}
+    - {x: -95.23014, y: 19.61089, z: -168.23175}
+    - {x: -95.43427, y: 19.913336, z: -170.22127}
+    - {x: -95.66906, y: 20.215782, z: -172.2074}
+    - {x: -95.930534, y: 20.51823, z: -174.19022}
+    - {x: -96.214516, y: 20.82068, z: -176.16994}
+    - {x: -96.51171, y: 21.12313, z: -178.14774}
+    - {x: -96.81068, y: 21.425581, z: -180.12526}
+    - {x: -97.09916, y: 21.72803, z: -182.10434}
+    - {x: -97.37766, y: 22.030476, z: -184.08485}
+    - {x: -97.65172, y: 22.33292, z: -186.06598}
+    - {x: -97.929344, y: 22.635357, z: -188.04662}
+    - {x: -98.21398, y: 22.937786, z: -190.02626}
+    - {x: -98.50852, y: 23.240208, z: -192.00444}
+    - {x: -98.83699, y: 23.54262, z: -193.97723}
+    - {x: -99.22365, y: 23.845024, z: -195.93925}
+    - {x: -99.711685, y: 24.147419, z: -197.87843}
+    - {x: -100.33988, y: 24.449806, z: -199.77641}
+    - {x: -101.113075, y: 24.752192, z: -201.61992}
+    - {x: -102.05219, y: 25.054573, z: -203.38484}
+    - {x: -103.1352, y: 25.356955, z: -205.06506}
+    - {x: -104.3421, y: 25.659336, z: -206.65926}
+    - {x: -105.63432, y: 25.961714, z: -208.18533}
+    - {x: -106.98533, y: 26.264086, z: -209.65993}
+    - {x: -108.362724, y: 26.566452, z: -211.10999}
+    - {x: -109.74242, y: 26.86881, z: -212.55788}
+    - {x: -111.0955, y: 27.171162, z: -214.03053}
+    - {x: -112.38487, y: 27.473497, z: -215.55882}
+    - {x: -113.555336, y: 27.775808, z: -217.17949}
+    - {x: -114.549034, y: 28.078089, z: -218.91261}
+    - {x: -115.30204, y: 28.38034, z: -220.76305}
+    - {x: -115.761734, y: 28.68257, z: -222.70792}
+    - {x: -115.97525, y: 28.98478, z: -224.69559}
+    - {x: -116.06529, y: 29.28697, z: -226.69347}
+    - {x: -116.20758, y: 29.589146, z: -228.68784}
+    - {x: -116.58701, y: 29.891306, z: -230.6485}
+    - {x: -117.31687, y: 30.19346, z: -232.50519}
+    - {x: -118.38007, y: 30.495628, z: -234.19408}
+    - {x: -119.70107, y: 30.797825, z: -235.69312}
+    - {x: -121.195526, y: 31.100052, z: -237.0199}
+    - {x: -122.80223, y: 31.402311, z: -238.20967}
+    - {x: -124.47679, y: 31.704601, z: -239.30254}
+    - {x: -126.19881, y: 32.006916, z: -240.31943}
+    - {x: -127.94857, y: 32.30926, z: -241.288}
+    - {x: -129.71245, y: 32.61163, z: -242.23068}
+    - {x: -131.4799, y: 32.914013, z: -243.1667}
+    - {x: -133.23853, y: 33.216404, z: -244.11914}
+    - {x: -134.96634, y: 33.518795, z: -245.1261}
+    - {x: -136.64705, y: 33.821175, z: -246.20934}
+    - {x: -138.25995, y: 34.123547, z: -247.39088}
+    - {x: -139.76683, y: 34.42591, z: -248.70439}
+    - {x: -141.15393, y: 34.72827, z: -250.14374}
+    s:
+    - 0
+    - 1.9995204
+    - 3.9989073
+    - 5.9987793
+    - 7.998655
+    - 9.998575
+    - 11.997944
+    - 13.997692
+    - 15.997603
+    - 17.997602
+    - 19.997591
+    - 21.997538
+    - 23.997404
+    - 25.997316
+    - 27.997066
+    - 29.996498
+    - 31.995626
+    - 33.994804
+    - 35.993866
+    - 37.992916
+    - 39.992138
+    - 41.991512
+    - 43.99108
+    - 45.99074
+    - 47.990562
+    - 49.9905
+    - 51.990486
+    - 53.990486
+    - 55.990482
+    - 57.99048
+    - 59.990463
+    - 61.990448
+    - 63.990425
+    - 65.99037
+    - 67.99028
+    - 69.99014
+    - 71.98999
+    - 73.98982
+    - 75.98966
+    - 77.9895
+    - 79.98937
+    - 81.98927
+    - 83.98922
+    - 85.98918
+    - 87.98914
+    - 89.9891
+    - 91.98906
+    - 93.98904
+    - 95.98903
+    - 97.98903
+    - 99.98903
+    - 101.98902
+    - 103.98902
+    - 105.98902
+    - 107.98902
+    - 109.98902
+    - 111.98901
+    - 113.98896
+    - 115.988716
+    - 117.98836
+    - 119.98761
+    - 121.98669
+    - 123.985916
+    - 125.984924
+    - 127.984436
+    - 129.98412
+    - 131.98404
+    - 133.98401
+    - 135.984
+    - 137.98389
+    - 139.98343
+    - 141.98254
+    - 143.98035
+    - 145.97812
+    - 147.97658
+    - 149.9757
+    - 151.97559
+    - 153.97502
+    - 155.97208
+    - 157.96706
+    - 159.96275
+    - 161.96077
+    - 163.95921
+    - 165.95848
+    - 167.9581
+    - 169.95796
+    - 171.9579
+    - 173.95789
+    - 175.95789
+    - 177.95787
+    - 179.95769
+    - 181.95724
+    - 183.95662
+    - 185.95561
+    - 187.95456
+  - id: 21
+    nodeA: 30
+    nodeB: 12
+    sourceRoad: 5
+    cls: 0
+    halfWidth: 3.6
+    sStart: 187.95456384259498
+    sEnd: 254.54718667931843
+    length: 66.59262
+    points:
+    - {x: -141.15393, y: 34.72827, z: -250.14374}
+    - {x: -142.41467, y: 35.03063, z: -251.69514}
+    - {x: -143.51749, y: 35.33299, z: -253.36264}
+    - {x: -144.48764, y: 35.63535, z: -255.11057}
+    - {x: -145.33005, y: 35.93772, z: -256.92386}
+    - {x: -146.04597, y: 36.2401, z: -258.79102}
+    - {x: -146.6721, y: 36.542492, z: -260.69012}
+    - {x: -147.22018, y: 36.844894, z: -262.61328}
+    - {x: -147.70091, y: 37.147305, z: -264.55447}
+    - {x: -148.12201, y: 37.449726, z: -266.50955}
+    - {x: -148.48523, y: 37.752155, z: -268.47623}
+    - {x: -148.79335, y: 38.05459, z: -270.4523}
+    - {x: -149.05281, y: 38.357025, z: -272.43533}
+    - {x: -149.26834, y: 38.659466, z: -274.4236}
+    - {x: -149.44542, y: 38.96191, z: -276.4157}
+    - {x: -149.58954, y: 39.264355, z: -278.41046}
+    - {x: -149.7054, y: 39.566803, z: -280.40707}
+    - {x: -149.79645, y: 39.86925, z: -282.40497}
+    - {x: -149.86581, y: 40.1717, z: -284.40375}
+    - {x: -149.91684, y: 40.474148, z: -286.40308}
+    - {x: -149.9525, y: 40.776596, z: -288.40274}
+    - {x: -149.9755, y: 41.07905, z: -290.40262}
+    - {x: -149.98892, y: 41.3815, z: -292.40256}
+    - {x: -149.99585, y: 41.683952, z: -294.40256}
+    - {x: -149.99886, y: 41.986088, z: -296.40253}
+    - {x: -149.99982, y: 42.28418, z: -298.40253}
+    - {x: -150, y: 42.581024, z: -300.40253}
+    - {x: -150, y: 42.875626, z: -302.40253}
+    - {x: -150, y: 43.164993, z: -304.40253}
+    - {x: -150, y: 43.431015, z: -306.40253}
+    - {x: -150, y: 43.714138, z: -308.40253}
+    - {x: -150, y: 43.982365, z: -310.40253}
+    - {x: -150, y: 44.23392, z: -312.40253}
+    - {x: -150, y: 44.3806, z: -315}
+    s:
+    - 0
+    - 1.999069
+    - 3.9982553
+    - 5.997362
+    - 7.996798
+    - 9.996494
+    - 11.996163
+    - 13.995894
+    - 15.995724
+    - 17.995626
+    - 19.99557
+    - 21.995514
+    - 23.995447
+    - 25.995382
+    - 27.995329
+    - 29.995285
+    - 31.99525
+    - 33.99522
+    - 35.9952
+    - 37.995186
+    - 39.995174
+    - 41.995167
+    - 43.995163
+    - 45.995163
+    - 47.995163
+    - 49.995163
+    - 51.995163
+    - 53.995163
+    - 55.995163
+    - 57.995163
+    - 59.995163
+    - 61.995163
+    - 63.995163
+    - 66.59262
+  - id: 22
+    nodeA: 25
+    nodeB: 23
+    sourceRoad: 6
+    cls: 3
+    halfWidth: 2.7
+    sStart: 0
+    sEnd: 301.57340331340396
+    length: 301.5734
+    points:
+    - {x: 203.6809, y: 20.453444, z: -95.32215}
+    - {x: 204.38881, y: 20.379349, z: -93.45163}
+    - {x: 205.04768, y: 20.299505, z: -91.56341}
+    - {x: 205.57878, y: 20.265387, z: -89.6354}
+    - {x: 206.00323, y: 20.215923, z: -87.68128}
+    - {x: 206.31523, y: 20.162016, z: -85.70632}
+    - {x: 206.56313, y: 20.112434, z: -83.72214}
+    - {x: 206.84349, y: 20.063084, z: -81.74222}
+    - {x: 207.04298, y: 20.012358, z: -79.75254}
+    - {x: 207.16115, y: 19.9599, z: -77.75637}
+    - {x: 207.20291, y: 19.906279, z: -75.75705}
+    - {x: 207.18129, y: 19.850628, z: -73.757286}
+    - {x: 207.11398, y: 19.792528, z: -71.75846}
+    - {x: 207.00275, y: 19.731987, z: -69.76157}
+    - {x: 206.86957, y: 19.669, z: -67.766014}
+    - {x: 206.7322, y: 19.603548, z: -65.770744}
+    - {x: 206.60846, y: 19.535511, z: -63.774593}
+    - {x: 206.51488, y: 19.464737, z: -61.77683}
+    - {x: 206.46707, y: 19.391092, z: -59.777473}
+    - {x: 206.47905, y: 19.314474, z: -57.777626}
+    - {x: 206.55302, y: 19.234797, z: -55.77918}
+    - {x: 206.69301, y: 19.151983, z: -53.784286}
+    - {x: 206.90193, y: 19.065954, z: -51.795403}
+    - {x: 207.18639, y: 18.976725, z: -49.81589}
+    - {x: 207.54463, y: 18.884367, z: -47.848392}
+    - {x: 207.96623, y: 18.789022, z: -45.893505}
+    - {x: 208.44437, y: 18.69085, z: -43.95164}
+    - {x: 208.9719, y: 18.59001, z: -42.02256}
+    - {x: 209.54242, y: 18.486677, z: -40.105705}
+    - {x: 210.15176, y: 18.38103, z: -38.200817}
+    - {x: 210.78862, y: 18.273252, z: -36.304943}
+    - {x: 211.44476, y: 18.163548, z: -34.415653}
+    - {x: 212.10968, y: 18.052122, z: -32.529415}
+    - {x: 212.7709, y: 17.939186, z: -30.641888}
+    - {x: 213.41493, y: 17.824955, z: -28.74844}
+    - {x: 214.028, y: 17.709648, z: -26.844757}
+    - {x: 214.59589, y: 17.593483, z: -24.927128}
+    - {x: 215.1048, y: 17.476673, z: -22.993055}
+    - {x: 215.54878, y: 17.359417, z: -21.04314}
+    - {x: 215.92105, y: 17.241894, z: -19.078352}
+    - {x: 216.21672, y: 17.12426, z: -17.100647}
+    - {x: 216.43289, y: 17.006653, z: -15.112718}
+    - {x: 216.56906, y: 16.889177, z: -13.117707}
+    - {x: 216.6281, y: 16.771914, z: -11.118885}
+    - {x: 216.61679, y: 16.654917, z: -9.119151}
+    - {x: 216.54483, y: 16.538218, z: -7.1206045}
+    - {x: 216.42317, y: 16.421825, z: -5.124404}
+    - {x: 216.26286, y: 16.305723, z: -3.13089}
+    - {x: 216.0744, y: 16.189888, z: -1.1398126}
+    - {x: 215.86739, y: 16.074274, z: 0.8494359}
+    - {x: 215.65073, y: 15.958837, z: 2.8376653}
+    - {x: 215.43306, y: 15.843524, z: 4.825784}
+    - {x: 215.22276, y: 15.728286, z: 6.8146973}
+    - {x: 215.02809, y: 15.613077, z: 8.805198}
+    - {x: 214.85693, y: 15.497859, z: 10.797854}
+    - {x: 214.7151, y: 15.382602, z: 12.792805}
+    - {x: 214.60652, y: 15.267289, z: 14.789833}
+    - {x: 214.53279, y: 15.151917, z: 16.788446}
+    - {x: 214.4942, y: 15.036499, z: 18.78804}
+    - {x: 214.4907, y: 14.921062, z: 20.787998}
+    - {x: 214.52232, y: 14.8056555, z: 22.787706}
+    - {x: 214.58907, y: 14.690345, z: 24.786545}
+    - {x: 214.69075, y: 14.575218, z: 26.78391}
+    - {x: 214.82603, y: 14.460389, z: 28.779285}
+    - {x: 214.99165, y: 14.345991, z: 30.772383}
+    - {x: 215.18257, y: 14.2321825, z: 32.763226}
+    - {x: 215.39299, y: 14.119147, z: 34.752113}
+    - {x: 215.61702, y: 14.007088, z: 36.73952}
+    - {x: 215.8491, y: 13.89623, z: 38.726006}
+    - {x: 216.08426, y: 13.786817, z: 40.712135}
+    - {x: 216.31801, y: 13.679103, z: 42.69843}
+    - {x: 216.54626, y: 13.573356, z: 44.685356}
+    - {x: 216.76503, y: 13.469845, z: 46.673347}
+    - {x: 216.97032, y: 13.368843, z: 48.66277}
+    - {x: 217.1582, y: 13.2706175, z: 50.653904}
+    - {x: 217.32538, y: 13.175428, z: 52.646873}
+    - {x: 217.47005, y: 13.083521, z: 54.641605}
+    - {x: 217.59239, y: 12.995128, z: 56.63783}
+    - {x: 217.69394, y: 12.910458, z: 58.635227}
+    - {x: 217.77672, y: 12.8296995, z: 60.633495}
+    - {x: 217.84277, y: 12.7530155, z: 62.63239}
+    - {x: 217.89406, y: 12.680543, z: 64.63172}
+    - {x: 217.93253, y: 12.612389, z: 66.63134}
+    - {x: 217.9601, y: 12.548627, z: 68.63115}
+    - {x: 217.97867, y: 12.489305, z: 70.63106}
+    - {x: 217.99011, y: 12.434432, z: 72.63102}
+    - {x: 217.99626, y: 12.3839855, z: 74.63101}
+    - {x: 217.99898, y: 12.337909, z: 76.63101}
+    - {x: 217.99983, y: 12.296109, z: 78.631004}
+    - {x: 217.99998, y: 12.258462, z: 80.631004}
+    - {x: 218, y: 12.224808, z: 82.631004}
+    - {x: 218, y: 12.194956, z: 84.631004}
+    - {x: 218, y: 12.168687, z: 86.631004}
+    - {x: 218, y: 12.145755, z: 88.631004}
+    - {x: 218, y: 12.125891, z: 90.631004}
+    - {x: 218, y: 12.108808, z: 92.631004}
+    - {x: 218, y: 12.094201, z: 94.631004}
+    - {x: 218, y: 12.08176, z: 96.631004}
+    - {x: 218, y: 12.071167, z: 98.631004}
+    - {x: 218.00006, y: 12.062102, z: 100.631004}
+    - {x: 218.00056, y: 12.05425, z: 102.631004}
+    - {x: 218.00243, y: 12.047299, z: 104.631004}
+    - {x: 218.00723, y: 12.040955, z: 106.631}
+    - {x: 218.01721, y: 12.03493, z: 108.630974}
+    - {x: 218.03523, y: 12.028955, z: 110.63089}
+    - {x: 218.06491, y: 12.02278, z: 112.63066}
+    - {x: 218.11055, y: 12.016172, z: 114.63012}
+    - {x: 218.17728, y: 12.00892, z: 116.62898}
+    - {x: 218.27104, y: 12.000834, z: 118.62674}
+    - {x: 218.39874, y: 11.991749, z: 120.62259}
+    - {x: 218.56824, y: 11.98152, z: 122.6153}
+    - {x: 218.78824, y: 11.970029, z: 124.60305}
+    - {x: 219.06781, y: 11.957184, z: 126.58327}
+    - {x: 219.41545, y: 11.942916, z: 128.55267}
+    - {x: 219.83833, y: 11.927183, z: 130.50731}
+    - {x: 220.34242, y: 11.909969, z: 132.44266}
+    - {x: 220.93419, y: 11.89128, z: 134.35298}
+    - {x: 221.60896, y: 11.8711405, z: 136.2355}
+    - {x: 222.36365, y: 11.849597, z: 138.08739}
+    - {x: 223.19298, y: 11.826711, z: 139.90706}
+    - {x: 224.08943, y: 11.802559, z: 141.69464}
+    - {x: 225.04353, y: 11.777232, z: 143.45218}
+    - {x: 226.0446, y: 11.750825, z: 145.18347}
+    - {x: 227.08163, y: 11.723439, z: 146.89351}
+    - {x: 228.14444, y: 11.695177, z: 148.5877}
+    - {x: 229.22404, y: 11.666143, z: 150.27129}
+    - {x: 230.31262, y: 11.636444, z: 151.94907}
+    - {x: 231.40353, y: 11.606185, z: 153.62535}
+    - {x: 232.49194, y: 11.57546, z: 155.30325}
+    - {x: 233.57494, y: 11.544346, z: 156.98465}
+    - {x: 234.65077, y: 11.512897, z: 158.67064}
+    - {x: 235.71814, y: 11.481179, z: 160.36201}
+    - {x: 236.77647, y: 11.449249, z: 162.05904}
+    - {x: 237.82678, y: 11.417159, z: 163.76105}
+    - {x: 238.87268, y: 11.384952, z: 165.46577}
+    - {x: 239.91843, y: 11.352659, z: 167.17061}
+    - {x: 240.96735, y: 11.320303, z: 168.87347}
+    - {x: 242.02008, y: 11.287911, z: 170.57399}
+    - {x: 243.07466, y: 11.255531, z: 172.27336}
+    - {x: 244.12828, y: 11.223216, z: 173.97333}
+    - {x: 245.18887, y: 11.190958, z: 175.66895}
+    - {x: 246.25392, y: 11.158703, z: 177.36177}
+    - {x: 247.32092, y: 11.126303, z: 179.05338}
+    - {x: 248.38278, y: 11.093976, z: 180.74817}
+    - {x: 249.41666, y: 11.061642, z: 182.46008}
+    - {x: 250.42314, y: 11.02919, z: 184.1881}
+    - {x: 251.48181, y: 10.996422, z: 185.8849}
+    - {x: 252.51895, y: 10.762315, z: 187.59491}
+    - {x: 253.52519, y: 10.785311, z: 189.32327}
+    - {x: 254.47786, y: 10.80704, z: 191.08072}
+    - {x: 255.24693, y: 10.826478, z: 192.91977}
+    - {x: 255.65785, y: 10.839813, z: 194.45747}
+    s:
+    - 0
+    - 1.9999954
+    - 3.999871
+    - 5.9996896
+    - 7.9993734
+    - 9.998832
+    - 11.998439
+    - 13.998108
+    - 15.997764
+    - 17.997425
+    - 19.997185
+    - 21.997065
+    - 23.997023
+    - 25.997005
+    - 27.997002
+    - 29.997
+    - 31.996979
+    - 33.996933
+    - 35.99686
+    - 37.996742
+    - 39.99656
+    - 41.996357
+    - 43.996185
+    - 45.996033
+    - 47.995876
+    - 49.99571
+    - 51.99557
+    - 53.995483
+    - 55.995438
+    - 57.995415
+    - 59.99539
+    - 61.995384
+    - 63.99538
+    - 65.99538
+    - 67.99536
+    - 69.99532
+    - 71.99527
+    - 73.99518
+    - 75.995
+    - 77.99474
+    - 79.99443
+    - 81.99408
+    - 83.99373
+    - 85.99342
+    - 87.99319
+    - 89.993034
+    - 91.992935
+    - 93.99288
+    - 95.99286
+    - 97.99285
+    - 99.99285
+    - 101.99285
+    - 103.99285
+    - 105.99285
+    - 107.99284
+    - 109.99283
+    - 111.992805
+    - 113.992775
+    - 115.992744
+    - 117.99271
+    - 119.99266
+    - 121.992615
+    - 123.99257
+    - 125.99252
+    - 127.99249
+    - 129.99246
+    - 131.99245
+    - 133.99245
+    - 135.99245
+    - 137.99245
+    - 139.99245
+    - 141.99245
+    - 143.99243
+    - 145.99242
+    - 147.9924
+    - 149.99237
+    - 151.99234
+    - 153.99231
+    - 155.9923
+    - 157.99226
+    - 159.99225
+    - 161.99225
+    - 163.99223
+    - 165.99223
+    - 167.99222
+    - 169.99222
+    - 171.99222
+    - 173.99222
+    - 175.99222
+    - 177.99222
+    - 179.99222
+    - 181.99222
+    - 183.99222
+    - 185.99222
+    - 187.99222
+    - 189.99222
+    - 191.99222
+    - 193.99222
+    - 195.99222
+    - 197.99222
+    - 199.99222
+    - 201.99222
+    - 203.99222
+    - 205.99222
+    - 207.99222
+    - 209.9922
+    - 211.99219
+    - 213.99216
+    - 215.99211
+    - 217.99205
+    - 219.99196
+    - 221.99184
+    - 223.9917
+    - 225.99155
+    - 227.99142
+    - 229.99132
+    - 231.99121
+    - 233.99101
+    - 235.99077
+    - 237.99051
+    - 239.99028
+    - 241.9901
+    - 243.98997
+    - 245.9899
+    - 247.98987
+    - 249.98985
+    - 251.98985
+    - 253.98985
+    - 255.98984
+    - 257.98984
+    - 259.98984
+    - 261.98984
+    - 263.98984
+    - 265.98984
+    - 267.98984
+    - 269.98984
+    - 271.98984
+    - 273.98984
+    - 275.98984
+    - 277.98984
+    - 279.98984
+    - 281.98984
+    - 283.98984
+    - 285.9898
+    - 287.9897
+    - 289.98944
+    - 291.9894
+    - 293.98938
+    - 295.98932
+    - 297.98837
+    - 299.98175
+    - 301.5734
+  - id: 23
+    nodeA: 29
+    nodeB: 30
+    sourceRoad: 7
+    cls: 3
+    halfWidth: 2.7
+    sStart: 0
+    sEnd: 291.45710989512304
+    length: 291.45712
+    points:
+    - {x: -325.88852, y: 20.878792, z: -90.63498}
+    - {x: -324.01718, y: 20.865128, z: -91.34055}
+    - {x: -322.07108, y: 20.84596, z: -91.80128}
+    - {x: -320.0991, y: 20.870104, z: -92.13477}
+    - {x: -318.11942, y: 20.864958, z: -92.41883}
+    - {x: -316.13303, y: 20.859703, z: -92.65159}
+    - {x: -314.14252, y: 20.853727, z: -92.84518}
+    - {x: -312.15857, y: 20.846245, z: -93.09749}
+    - {x: -310.16815, y: 20.83739, z: -93.29267}
+    - {x: -308.17407, y: 20.827517, z: -93.44606}
+    - {x: -306.17807, y: 20.816616, z: -93.57248}
+    - {x: -304.1808, y: 20.804722, z: -93.67662}
+    - {x: -302.18265, y: 20.79201, z: -93.76288}
+    - {x: -300.18396, y: 20.778734, z: -93.8345}
+    - {x: -298.18463, y: 20.765045, z: -93.88664}
+    - {x: -296.185, y: 20.75107, z: -93.92403}
+    - {x: -294.18518, y: 20.73691, z: -93.950935}
+    - {x: -292.18527, y: 20.722683, z: -93.97029}
+    - {x: -290.18533, y: 20.708534, z: -93.983955}
+    - {x: -288.18533, y: 20.694637, z: -93.99365}
+    - {x: -286.18536, y: 20.681192, z: -94.00159}
+    - {x: -284.1854, y: 20.668423, z: -94.01119}
+    - {x: -282.18546, y: 20.656565, z: -94.02621}
+    - {x: -280.1856, y: 20.645931, z: -94.05072}
+    - {x: -278.18597, y: 20.636848, z: -94.08919}
+    - {x: -276.18683, y: 20.629646, z: -94.1466}
+    - {x: -274.18854, y: 20.624657, z: -94.2287}
+    - {x: -272.19183, y: 20.622213, z: -94.34236}
+    - {x: -270.19785, y: 20.622656, z: -94.4959}
+    - {x: -268.20834, y: 20.62632, z: -94.69924}
+    - {x: -266.2262, y: 20.63355, z: -94.96401}
+    - {x: -264.2555, y: 20.644691, z: -95.30292}
+    - {x: -262.30176, y: 20.66009, z: -95.72841}
+    - {x: -260.3721, y: 20.680098, z: -96.25182}
+    - {x: -258.47498, y: 20.705072, z: -96.88278}
+    - {x: -256.62003, y: 20.735369, z: -97.62859}
+    - {x: -254.81744, y: 20.77134, z: -98.4936}
+    - {x: -253.07738, y: 20.81333, z: -99.47879}
+    - {x: -251.41635, y: 20.86167, z: -100.59212}
+    - {x: -249.8331, y: 20.916676, z: -101.81323}
+    - {x: -248.32715, y: 20.978647, z: -103.128456}
+    - {x: -246.8929, y: 21.047867, z: -104.52168}
+    - {x: -245.5202, y: 21.124592, z: -105.97579}
+    - {x: -244.19643, y: 21.209059, z: -107.47477}
+    - {x: -242.90857, y: 21.301476, z: -109.00484}
+    - {x: -241.64398, y: 21.402023, z: -110.55427}
+    - {x: -240.39075, y: 21.510862, z: -112.112915}
+    - {x: -239.13782, y: 21.628122, z: -113.67181}
+    - {x: -237.87491, y: 21.75391, z: -115.22263}
+    - {x: -236.59332, y: 21.888311, z: -116.75804}
+    - {x: -235.28781, y: 22.031387, z: -118.27314}
+    - {x: -233.95581, y: 22.183182, z: -119.76497}
+    - {x: -232.59734, y: 22.343718, z: -121.232735}
+    - {x: -231.21465, y: 22.513004, z: -122.67772}
+    - {x: -229.81148, y: 22.691029, z: -124.10286}
+    - {x: -228.39159, y: 22.877764, z: -125.51133}
+    - {x: -226.95822, y: 23.073162, z: -126.90611}
+    - {x: -225.51459, y: 23.27716, z: -128.29027}
+    - {x: -224.0643, y: 23.489666, z: -129.66747}
+    - {x: -222.6116, y: 23.710558, z: -131.04211}
+    - {x: -221.16016, y: 23.939686, z: -132.41809}
+    - {x: -219.71266, y: 24.17686, z: -133.79822}
+    - {x: -218.26987, y: 24.421852, z: -135.18326}
+    - {x: -216.83067, y: 24.674364, z: -136.57204}
+    - {x: -215.39404, y: 24.934013, z: -137.96347}
+    - {x: -213.95714, y: 25.20033, z: -139.35461}
+    - {x: -212.51779, y: 25.472784, z: -140.74324}
+    - {x: -211.07698, y: 25.750769, z: -142.13036}
+    - {x: -209.63193, y: 26.03364, z: -143.51305}
+    - {x: -208.1706, y: 26.320719, z: -144.87842}
+    - {x: -206.6698, y: 26.6113, z: -146.2002}
+    - {x: -205.10457, y: 26.904673, z: -147.44441}
+    - {x: -203.45119, y: 27.20018, z: -148.5677}
+    - {x: -201.69171, y: 27.497267, z: -149.51599}
+    - {x: -199.81792, y: 27.79547, z: -150.21002}
+    - {x: -197.86057, y: 28.094418, z: -150.60284}
+    - {x: -195.86534, y: 28.393833, z: -150.69339}
+    - {x: -193.87865, y: 28.693508, z: -150.47858}
+    - {x: -191.92496, y: 28.993307, z: -150.0563}
+    - {x: -190.02269, y: 29.293148, z: -149.44084}
+    - {x: -188.16377, y: 29.592997, z: -148.70439}
+    - {x: -186.34204, y: 29.892818, z: -147.87965}
+    - {x: -184.54932, y: 30.192394, z: -146.99324}
+    - {x: -182.77466, y: 30.491127, z: -146.07095}
+    - {x: -181.00015, y: 30.788317, z: -145.14842}
+    - {x: -179.20827, y: 31.083162, z: -144.26039}
+    - {x: -177.3738, y: 31.374767, z: -143.46555}
+    - {x: -175.47046, y: 31.662134, z: -142.85713}
+    - {x: -173.49423, y: 31.944174, z: -142.6024}
+    - {x: -171.54422, y: 32.21972, z: -142.95815}
+    - {x: -169.89342, y: 32.48755, z: -144.05336}
+    - {x: -168.68141, y: 32.74672, z: -145.63315}
+    - {x: -167.78212, y: 32.996933, z: -147.41702}
+    - {x: -167.08763, y: 33.23802, z: -149.29199}
+    - {x: -166.49352, y: 33.469902, z: -151.20142}
+    - {x: -165.96548, y: 33.692616, z: -153.13037}
+    - {x: -165.47697, y: 33.906315, z: -155.06976}
+    - {x: -165.00739, y: 34.111256, z: -157.01385}
+    - {x: -164.54579, y: 34.3078, z: -158.95985}
+    - {x: -164.084, y: 34.49641, z: -160.9058}
+    - {x: -163.61621, y: 34.67746, z: -162.85034}
+    - {x: -163.14005, y: 34.851067, z: -164.79282}
+    - {x: -162.65767, y: 35.017353, z: -166.73378}
+    - {x: -162.17499, y: 35.176445, z: -168.67465}
+    - {x: -161.6982, y: 35.328487, z: -170.61699}
+    - {x: -161.23183, y: 35.473625, z: -172.56184}
+    - {x: -160.77873, y: 35.612007, z: -174.50984}
+    - {x: -160.34007, y: 35.74379, z: -176.46114}
+    - {x: -159.91579, y: 35.86913, z: -178.4156}
+    - {x: -159.50554, y: 35.988174, z: -180.37306}
+    - {x: -159.10896, y: 36.101055, z: -182.33334}
+    - {x: -158.72578, y: 36.207897, z: -184.29628}
+    - {x: -158.35573, y: 36.308777, z: -186.26173}
+    - {x: -157.99858, y: 36.403732, z: -188.22958}
+    - {x: -157.65395, y: 36.492725, z: -190.19965}
+    - {x: -157.32101, y: 36.57571, z: -192.17174}
+    - {x: -156.99902, y: 36.652607, z: -194.14565}
+    - {x: -156.6876, y: 36.7233, z: -196.12125}
+    - {x: -156.38713, y: 36.787647, z: -198.09853}
+    - {x: -156.09868, y: 36.845463, z: -200.07762}
+    - {x: -155.82382, y: 36.89654, z: -202.05862}
+    - {x: -155.56386, y: 36.940666, z: -204.04166}
+    - {x: -155.31947, y: 36.97762, z: -206.02666}
+    - {x: -155.09053, y: 37.00716, z: -208.0135}
+    - {x: -154.87619, y: 37.0289, z: -210.00198}
+    - {x: -154.67471, y: 37.04228, z: -211.9918}
+    - {x: -154.48265, y: 37.046642, z: -213.98256}
+    - {x: -154.2944, y: 37.04217, z: -215.97368}
+    - {x: -154.10228, y: 37.028996, z: -217.96443}
+    - {x: -153.89743, y: 37.00718, z: -219.9539}
+    - {x: -153.6714, y: 36.97671, z: -221.94109}
+    - {x: -153.4131, y: 36.937527, z: -223.92429}
+    - {x: -153.11005, y: 36.889637, z: -225.9011}
+    - {x: -152.74973, y: 36.833237, z: -227.8682}
+    - {x: -152.32057, y: 36.76703, z: -229.82135}
+    - {x: -151.81786, y: 36.689934, z: -231.75688}
+    - {x: -151.24255, y: 36.59934, z: -233.67197}
+    - {x: -150.58212, y: 36.492893, z: -235.55925}
+    - {x: -149.82495, y: 36.369396, z: -237.40968}
+    - {x: -148.96214, y: 36.216694, z: -239.2132}
+    - {x: -147.99652, y: 35.916782, z: -240.964}
+    - {x: -147.07935, y: 35.61685, z: -242.74075}
+    - {x: -146.07262, y: 35.31694, z: -244.46823}
+    - {x: -144.9512, y: 35.01698, z: -246.12393}
+    - {x: -143.71518, y: 34.71712, z: -247.69508}
+    - {x: -142.31372, y: 34.726635, z: -249.12077}
+    - {x: -141.15393, y: 34.72814, z: -250.14374}
+    s:
+    - 0
+    - 1.9999216
+    - 3.9998362
+    - 5.999815
+    - 7.9997826
+    - 9.999747
+    - 11.99966
+    - 13.999588
+    - 15.999544
+    - 17.999525
+    - 19.99951
+    - 21.9995
+    - 23.999495
+    - 25.999483
+    - 27.999475
+    - 29.999472
+    - 31.99947
+    - 33.99947
+    - 35.999466
+    - 37.999466
+    - 39.999466
+    - 41.999466
+    - 43.999466
+    - 45.99946
+    - 47.999447
+    - 49.999428
+    - 51.999393
+    - 53.999336
+    - 55.99924
+    - 57.99909
+    - 59.998844
+    - 61.99849
+    - 63.998
+    - 65.99738
+    - 67.99668
+    - 69.995964
+    - 71.99534
+    - 73.99495
+    - 75.99458
+    - 77.994026
+    - 79.993454
+    - 81.99299
+    - 83.99268
+    - 85.99251
+    - 87.99243
+    - 89.9924
+    - 91.9924
+    - 93.9924
+    - 95.99239
+    - 97.99238
+    - 99.99235
+    - 101.9923
+    - 103.99225
+    - 105.9922
+    - 107.99217
+    - 109.99215
+    - 111.992134
+    - 113.99212
+    - 115.99212
+    - 117.99212
+    - 119.99212
+    - 121.99212
+    - 123.99212
+    - 125.99212
+    - 127.99212
+    - 129.99211
+    - 131.99211
+    - 133.99211
+    - 135.99211
+    - 137.99207
+    - 139.99193
+    - 141.99142
+    - 143.99028
+    - 145.98904
+    - 147.98723
+    - 149.98363
+    - 151.9809
+    - 153.97917
+    - 155.97798
+    - 157.97733
+    - 159.97682
+    - 161.97653
+    - 163.97644
+    - 165.97644
+    - 167.97643
+    - 169.97629
+    - 171.97556
+    - 173.97375
+    - 175.96634
+    - 177.94853
+    - 179.9296
+    - 181.92076
+    - 183.9185
+    - 185.91795
+    - 187.91766
+    - 189.91759
+    - 191.91756
+    - 193.91756
+    - 195.91756
+    - 197.91756
+    - 199.91756
+    - 201.91756
+    - 203.91756
+    - 205.91756
+    - 207.91754
+    - 209.91754
+    - 211.91753
+    - 213.91753
+    - 215.91751
+    - 217.9175
+    - 219.9175
+    - 221.91748
+    - 223.91747
+    - 225.91747
+    - 227.91745
+    - 229.91745
+    - 231.91743
+    - 233.91743
+    - 235.91742
+    - 237.91742
+    - 239.9174
+    - 241.9174
+    - 243.91739
+    - 245.91739
+    - 247.91739
+    - 249.91737
+    - 251.91737
+    - 253.91737
+    - 255.91737
+    - 257.91736
+    - 259.91736
+    - 261.9173
+    - 263.9172
+    - 265.91705
+    - 267.91678
+    - 269.91653
+    - 271.91617
+    - 273.91568
+    - 275.91504
+    - 277.9143
+    - 279.91373
+    - 281.91324
+    - 283.91266
+    - 285.9124
+    - 287.91147
+    - 289.91064
+    - 291.45712
+  - id: 24
+    nodeA: 27
+    nodeB: 28
+    sourceRoad: 8
+    cls: 3
+    halfWidth: 2.7
+    sStart: 0
+    sEnd: 253.02504957409315
+    length: 253.02505
+    points:
+    - {x: -89.606316, y: 2.0138109, z: 152.77899}
+    - {x: -88.59281, y: 2.0232522, z: 151.05486}
+    - {x: -87.41507, y: 2.0366976, z: 149.43842}
+    - {x: -86.16515, y: 2.0654976, z: 147.87712}
+    - {x: -84.8894, y: 2.0985332, z: 146.33685}
+    - {x: -83.58677, y: 2.1292543, z: 144.81924}
+    - {x: -82.262924, y: 2.1654773, z: 143.32013}
+    - {x: -80.97487, y: 2.2069566, z: 141.79015}
+    - {x: -79.657555, y: 2.252555, z: 140.28528}
+    - {x: -78.32313, y: 2.3013458, z: 138.79553}
+    - {x: -76.981895, y: 2.3539047, z: 137.31194}
+    - {x: -75.63897, y: 2.4097521, z: 135.82985}
+    - {x: -74.300125, y: 2.4682565, z: 134.3441}
+    - {x: -72.97165, y: 2.5287895, z: 132.84906}
+    - {x: -71.65591, y: 2.5911987, z: 131.34282}
+    - {x: -70.36215, y: 2.6553779, z: 129.8177}
+    - {x: -69.10082, y: 2.721247, z: 128.26572}
+    - {x: -67.8836, y: 2.788686, z: 126.679}
+    - {x: -66.723885, y: 2.8575346, z: 125.049934}
+    - {x: -65.636856, y: 2.9276092, z: 123.37169}
+    - {x: -64.639435, y: 2.9987173, z: 121.63894}
+    - {x: -63.750404, y: 3.0706618, z: 119.84837}
+    - {x: -62.989616, y: 3.1432369, z: 117.9998}
+    - {x: -62.377235, y: 3.2160199, z: 116.09682}
+    - {x: -61.94144, y: 3.2885807, z: 114.1458}
+    - {x: -61.701996, y: 3.3604913, z: 112.16132}
+    - {x: -61.650745, y: 3.4313354, z: 110.163536}
+    - {x: -61.785507, y: 3.5006928, z: 108.16967}
+    - {x: -62.096973, y: 3.5681403, z: 106.19536}
+    - {x: -62.569176, y: 3.6332533, z: 104.252686}
+    - {x: -63.18803, y: 3.695611, z: 102.35129}
+    - {x: -63.930187, y: 3.7548006, z: 100.49444}
+    - {x: -64.76917, y: 3.810424, z: 98.6793}
+    - {x: -65.68734, y: 3.8621032, z: 96.90283}
+    - {x: -66.66822, y: 3.909483, z: 95.16012}
+    - {x: -67.69655, y: 3.9522376, z: 93.44487}
+    - {x: -68.758736, y: 3.9900832, z: 91.75031}
+    - {x: -69.8432, y: 4.0227814, z: 90.069885}
+    - {x: -70.94005, y: 4.0501432, z: 88.39749}
+    - {x: -72.04107, y: 4.072028, z: 86.72784}
+    - {x: -73.14028, y: 4.088347, z: 85.05699}
+    - {x: -74.23429, y: 4.0990624, z: 83.38274}
+    - {x: -75.3216, y: 4.1041894, z: 81.70412}
+    - {x: -76.40168, y: 4.1037936, z: 80.02084}
+    - {x: -77.4747, y: 4.0979943, z: 78.33306}
+    - {x: -78.54155, y: 4.08696, z: 76.641365}
+    - {x: -79.60388, y: 4.0709076, z: 74.94683}
+    - {x: -80.66482, y: 4.0501027, z: 73.25142}
+    - {x: -81.7298, y: 4.0248547, z: 71.55855}
+    - {x: -82.80502, y: 3.9955137, z: 69.87217}
+    - {x: -83.89644, y: 3.9624677, z: 68.19624}
+    - {x: -85.0089, y: 3.9261363, z: 66.53422}
+    - {x: -86.14558, y: 3.8869655, z: 64.88868}
+    - {x: -87.30779, y: 3.845422, z: 63.26107}
+    - {x: -88.49551, y: 3.8019865, z: 61.65199}
+    - {x: -89.708244, y: 3.757147, z: 60.061684}
+    - {x: -90.9455, y: 3.7113922, z: 58.49038}
+    - {x: -92.20675, y: 3.6652045, z: 56.93827}
+    - {x: -93.49145, y: 3.6190543, z: 55.40551}
+    - {x: -94.79871, y: 3.5733936, z: 53.89195}
+    - {x: -96.12678, y: 3.5286508, z: 52.396595}
+    - {x: -97.472855, y: 3.4852252, z: 50.91742}
+    - {x: -98.8338, y: 3.4434845, z: 49.451897}
+    - {x: -100.2067, y: 3.40376, z: 47.997566}
+    - {x: -101.589165, y: 3.366344, z: 46.552307}
+    - {x: -102.97931, y: 3.3314888, z: 45.114437}
+    - {x: -104.37577, y: 3.299406, z: 43.682697}
+    - {x: -105.77747, y: 3.2702658, z: 42.256084}
+    - {x: -107.18346, y: 3.2441971, z: 40.83369}
+    - {x: -108.59279, y: 3.2212906, z: 39.41461}
+    - {x: -110.004524, y: 3.2015994, z: 37.99793}
+    - {x: -111.41778, y: 3.185142, z: 36.58276}
+    - {x: -112.83176, y: 3.1719067, z: 35.168304}
+    - {x: -114.24594, y: 3.1618543, z: 33.754063}
+    - {x: -115.66015, y: 3.154923, z: 32.339848}
+    - {x: -117.07436, y: 3.1510339, z: 30.925634}
+    - {x: -118.48858, y: 3.150094, z: 29.511421}
+    - {x: -119.902794, y: 3.1520038, z: 28.097206}
+    - {x: -121.31701, y: 3.156661, z: 26.682993}
+    - {x: -122.73122, y: 3.1639683, z: 25.26878}
+    - {x: -124.14543, y: 3.1738374, z: 23.854567}
+    - {x: -125.55965, y: 3.186195, z: 22.440353}
+    - {x: -126.97386, y: 3.200988, z: 21.026138}
+    - {x: -128.38808, y: 3.218189, z: 19.611925}
+    - {x: -129.80229, y: 3.2377968, z: 18.197712}
+    - {x: -131.21648, y: 3.259842, z: 16.783466}
+    - {x: -132.63043, y: 3.2843862, z: 15.368995}
+    - {x: -134.04361, y: 3.3115263, z: 13.953757}
+    - {x: -135.45503, y: 3.3413942, z: 12.536762}
+    - {x: -136.86327, y: 3.3741567, z: 11.116592}
+    - {x: -138.26656, y: 3.4100156, z: 9.691538}
+    - {x: -139.663, y: 3.4492075, z: 8.2597885}
+    - {x: -141.05064, y: 3.4920034, z: 6.819519}
+    - {x: -142.42747, y: 3.538709, z: 5.3689103}
+    - {x: -143.7914, y: 3.5896583, z: 3.906155}
+    - {x: -145.14029, y: 3.6452048, z: 2.4295511}
+    - {x: -146.47227, y: 3.7057018, z: 0.93767977}
+    - {x: -147.7857, y: 3.771501, z: -0.57055324}
+    - {x: -149.07912, y: 3.842952, z: -2.095971}
+    - {x: -150.35167, y: 3.9203973, z: -3.6388338}
+    - {x: -151.60387, y: 4.004167, z: -5.1982784}
+    - {x: -152.83801, y: 4.094572, z: -6.7720532}
+    - {x: -154.05829, y: 4.1919007, z: -8.356628}
+    - {x: -155.27008, y: 4.296427, z: -9.947721}
+    - {x: -156.47922, y: 4.4084215, z: -11.540823}
+    - {x: -157.69167, y: 4.528177, z: -13.131408}
+    - {x: -158.91328, y: 4.655961, z: -14.714965}
+    - {x: -160.1496, y: 4.7919083, z: -16.28707}
+    - {x: -161.40627, y: 4.9357805, z: -17.842941}
+    - {x: -162.6853, y: 5.0873713, z: -19.380466}
+    - {x: -163.98839, y: 5.2465, z: -20.897642}
+    - {x: -165.31621, y: 5.413, z: -22.393204}
+    - {x: -166.66748, y: 5.586674, z: -23.867626}
+    - {x: -168.03815, y: 5.8248925, z: -25.324055}
+    - {x: -169.42168, y: 6.1248918, z: -26.768291}
+    - {x: -170.81488, y: 6.4248896, z: -28.203188}
+    - {x: -172.21602, y: 6.7248893, z: -29.630348}
+    - {x: -173.61604, y: 7.0248885, z: -31.058609}
+    - {x: -175.00607, y: 7.3248854, z: -32.49656}
+    - {x: -176.37503, y: 7.624873, z: -33.954525}
+    - {x: -177.70734, y: 7.924843, z: -35.445885}
+    - {x: -179.05927, y: 8.224776, z: -36.919155}
+    - {x: -180.41771, y: 8.52476, z: -38.38687}
+    - {x: -181.7373, y: 8.824731, z: -39.889496}
+    - {x: -183.0094, y: 8.843442, z: -41.432472}
+    - {x: -184.18617, y: 8.859078, z: -43.047897}
+    - {x: -185.2038, y: 8.877588, z: -44.766136}
+    - {x: -185.69449, y: 8.88748, z: -45.68943}
+    s:
+    - 0
+    - 1.9999688
+    - 3.9999452
+    - 5.99994
+    - 7.9999323
+    - 9.999925
+    - 11.9999
+    - 13.999883
+    - 15.999876
+    - 17.999874
+    - 19.999874
+    - 21.999874
+    - 23.99987
+    - 25.999866
+    - 27.999847
+    - 29.999802
+    - 31.999708
+    - 33.99953
+    - 35.99923
+    - 37.998756
+    - 39.998077
+    - 41.9972
+    - 43.996204
+    - 45.9953
+    - 47.994392
+    - 49.99326
+    - 51.991707
+    - 53.99012
+    - 55.98885
+    - 57.988087
+    - 59.987663
+    - 61.98733
+    - 63.986988
+    - 65.9867
+    - 67.9865
+    - 69.98639
+    - 71.98633
+    - 73.9863
+    - 75.9863
+    - 77.9863
+    - 79.98629
+    - 81.98629
+    - 83.98629
+    - 85.98628
+    - 87.98628
+    - 89.98628
+    - 91.98628
+    - 93.98628
+    - 95.98628
+    - 97.986275
+    - 99.98626
+    - 101.98623
+    - 103.98619
+    - 105.98615
+    - 107.9861
+    - 109.98605
+    - 111.98601
+    - 113.985954
+    - 115.9859
+    - 117.985855
+    - 119.98582
+    - 121.98579
+    - 123.98577
+    - 125.985756
+    - 127.98575
+    - 129.98575
+    - 131.98573
+    - 133.98573
+    - 135.98573
+    - 137.98573
+    - 139.98573
+    - 141.98573
+    - 143.98573
+    - 145.98573
+    - 147.98573
+    - 149.98573
+    - 151.98573
+    - 153.98573
+    - 155.98573
+    - 157.98573
+    - 159.98573
+    - 161.98573
+    - 163.98573
+    - 165.98573
+    - 167.98573
+    - 169.98573
+    - 171.98573
+    - 173.98573
+    - 175.98573
+    - 177.98573
+    - 179.98572
+    - 181.98572
+    - 183.9857
+    - 185.98569
+    - 187.98567
+    - 189.98564
+    - 191.9856
+    - 193.98557
+    - 195.98552
+    - 197.98547
+    - 199.98544
+    - 201.98541
+    - 203.9854
+    - 205.9854
+    - 207.9854
+    - 209.9854
+    - 211.9854
+    - 213.9854
+    - 215.98538
+    - 217.98535
+    - 219.98532
+    - 221.98528
+    - 223.98524
+    - 225.98521
+    - 227.98521
+    - 229.9852
+    - 231.9852
+    - 233.9852
+    - 235.98517
+    - 237.98509
+    - 239.9849
+    - 241.98445
+    - 243.98433
+    - 245.98415
+    - 247.98389
+    - 249.9825
+    - 251.97946
+    - 253.02505
+  - id: 25
+    nodeA: 13
+    nodeB: 14
+    sourceRoad: 9
+    cls: 2
+    halfWidth: 3.1
+    sStart: 0
+    sEnd: 74.80034187222711
+    length: 74.80034
+    points:
+    - {x: 4.156, y: 11.105, z: 186.322}
+    - {x: 5.482, y: 11.105, z: 187.848}
+    - {x: 6.808, y: 11.105, z: 189.374}
+    - {x: 8.134, y: 11.105, z: 190.9}
+    - {x: 9.461, y: 11.056, z: 192.426}
+    - {x: 10.787, y: 10.953, z: 193.952}
+    - {x: 12.113, y: 10.811, z: 195.478}
+    - {x: 13.439, y: 10.648, z: 197.004}
+    - {x: 14.765, y: 10.535, z: 198.529}
+    - {x: 16.091, y: 10.469, z: 200.055}
+    - {x: 17.417, y: 10.392, z: 201.581}
+    - {x: 18.743, y: 10.302, z: 203.107}
+    - {x: 20.069, y: 10.201, z: 204.633}
+    - {x: 21.396, y: 10.087, z: 206.159}
+    - {x: 22.722, y: 9.957, z: 207.685}
+    - {x: 24.048, y: 9.813, z: 209.211}
+    - {x: 25.374, y: 9.655, z: 210.737}
+    - {x: 26.7, y: 9.482, z: 212.263}
+    - {x: 28.026, y: 9.302, z: 213.789}
+    - {x: 29.352, y: 9.122, z: 215.314}
+    - {x: 30.678, y: 8.942, z: 216.84}
+    - {x: 32.004, y: 8.762, z: 218.366}
+    - {x: 33.33, y: 8.582, z: 219.892}
+    - {x: 34.657, y: 8.402, z: 221.418}
+    - {x: 35.983, y: 8.222, z: 222.944}
+    - {x: 37.309, y: 8.042, z: 224.47}
+    - {x: 38.635, y: 7.862, z: 225.996}
+    - {x: 39.961, y: 7.682, z: 227.522}
+    - {x: 41.287, y: 7.537, z: 229.048}
+    - {x: 42.613, y: 7.438, z: 230.574}
+    - {x: 43.939, y: 7.326, z: 232.099}
+    - {x: 45.265, y: 7.213, z: 233.625}
+    - {x: 46.592, y: 7.136, z: 235.151}
+    - {x: 47.918, y: 7.089, z: 236.677}
+    - {x: 49.244, y: 7.071, z: 238.203}
+    - {x: 50.57, y: 7.071, z: 239.729}
+    - {x: 51.896, y: 7.071, z: 241.255}
+    - {x: 53.222, y: 7.071, z: 242.781}
+    s:
+    - 0
+    - 2.0216212
+    - 4.0432425
+    - 6.064863
+    - 8.087141
+    - 10.108762
+    - 12.130383
+    - 14.152004
+    - 16.17287
+    - 18.194492
+    - 20.216112
+    - 22.237734
+    - 24.259356
+    - 26.281631
+    - 28.303253
+    - 30.324875
+    - 32.346497
+    - 34.36812
+    - 36.389736
+    - 38.410603
+    - 40.432224
+    - 42.453846
+    - 44.475468
+    - 46.497746
+    - 48.519367
+    - 50.540985
+    - 52.562607
+    - 54.58423
+    - 56.60585
+    - 58.627472
+    - 60.64834
+    - 62.66996
+    - 64.69224
+    - 66.71386
+    - 68.73548
+    - 70.7571
+    - 72.77872
+    - 74.80034
+  - id: 26
+    nodeA: 9
+    nodeB: 15
+    sourceRoad: 10
+    cls: 2
+    halfWidth: 3.1
+    sStart: 0
+    sEnd: 67.17177596491312
+    length: 67.171776
+    points:
+    - {x: 25.054, y: 13.244, z: 58.946}
+    - {x: 23.779, y: 13.244, z: 57.437}
+    - {x: 22.503, y: 13.244, z: 55.928}
+    - {x: 21.227, y: 13.244, z: 54.42}
+    - {x: 19.952, y: 13.25, z: 52.911}
+    - {x: 18.676, y: 13.264, z: 51.402}
+    - {x: 17.401, y: 13.282, z: 49.894}
+    - {x: 16.125, y: 13.302, z: 48.385}
+    - {x: 14.85, y: 13.315, z: 46.876}
+    - {x: 13.574, y: 13.319, z: 45.368}
+    - {x: 12.298, y: 13.323, z: 43.859}
+    - {x: 11.023, y: 13.326, z: 42.35}
+    - {x: 9.747, y: 13.329, z: 40.842}
+    - {x: 8.472, y: 13.331, z: 39.333}
+    - {x: 7.196, y: 13.332, z: 37.825}
+    - {x: 5.921, y: 13.333, z: 36.316}
+    - {x: 4.645, y: 13.334, z: 34.807}
+    - {x: 3.369, y: 13.335, z: 33.299}
+    - {x: 2.094, y: 13.335, z: 31.79}
+    - {x: 0.818, y: 13.335, z: 30.281}
+    - {x: -0.457, y: 13.335, z: 28.773}
+    - {x: -1.733, y: 13.335, z: 27.264}
+    - {x: -3.008, y: 13.335, z: 25.755}
+    - {x: -4.284, y: 13.335, z: 24.247}
+    - {x: -5.56, y: 13.335, z: 22.738}
+    - {x: -6.835, y: 13.335, z: 21.229}
+    - {x: -8.111, y: 13.335, z: 19.721}
+    - {x: -9.386, y: 13.335, z: 18.212}
+    - {x: -10.662, y: 13.334, z: 16.703}
+    - {x: -11.937, y: 13.334, z: 15.195}
+    - {x: -13.213, y: 13.333, z: 13.686}
+    - {x: -14.489, y: 13.333, z: 12.177}
+    - {x: -15.764, y: 13.333, z: 10.669}
+    - {x: -17.04, y: 13.333, z: 9.16}
+    - {x: -18.315, y: 13.333, z: 7.651}
+    s:
+    - 0
+    - 1.9755268
+    - 3.951699
+    - 5.927108
+    - 7.9026346
+    - 9.878807
+    - 11.85357
+    - 13.829742
+    - 15.805269
+    - 17.780678
+    - 19.75685
+    - 21.732376
+    - 23.707787
+    - 25.683313
+    - 27.658722
+    - 29.634249
+    - 31.61042
+    - 33.58583
+    - 35.561356
+    - 37.53753
+    - 39.51229
+    - 41.488464
+    - 43.46399
+    - 45.4394
+    - 47.415573
+    - 49.391098
+    - 51.36651
+    - 53.342033
+    - 55.318207
+    - 57.29297
+    - 59.269142
+    - 61.245316
+    - 63.220078
+    - 65.19625
+    - 67.171776
+  - id: 27
+    nodeA: 9
+    nodeB: 16
+    sourceRoad: 11
+    cls: 2
+    halfWidth: 3.1
+    sStart: 0
+    sEnd: 82.44016315731744
+    length: 82.44016
+    points:
+    - {x: 25.054, y: 13.244, z: 58.946}
+    - {x: 26.39, y: 13.244, z: 60.449}
+    - {x: 27.726, y: 13.244, z: 61.952}
+    - {x: 29.061, y: 13.244, z: 63.455}
+    - {x: 30.397, y: 13.251, z: 64.958}
+    - {x: 31.733, y: 13.264, z: 66.461}
+    - {x: 33.068, y: 13.282, z: 67.964}
+    - {x: 34.404, y: 13.301, z: 69.467}
+    - {x: 35.74, y: 13.313, z: 70.97}
+    - {x: 37.075, y: 13.317, z: 72.473}
+    - {x: 38.411, y: 13.321, z: 73.976}
+    - {x: 39.747, y: 13.324, z: 75.479}
+    - {x: 41.082, y: 13.327, z: 76.982}
+    - {x: 42.418, y: 13.329, z: 78.485}
+    - {x: 43.754, y: 13.331, z: 79.988}
+    - {x: 45.089, y: 13.332, z: 81.491}
+    - {x: 46.425, y: 13.333, z: 82.994}
+    - {x: 47.761, y: 13.333, z: 84.497}
+    - {x: 49.096, y: 13.334, z: 86}
+    - {x: 50.432, y: 13.334, z: 87.503}
+    - {x: 51.768, y: 13.334, z: 89.006}
+    - {x: 53.103, y: 13.334, z: 90.509}
+    - {x: 54.439, y: 13.334, z: 92.012}
+    - {x: 55.775, y: 13.334, z: 93.515}
+    - {x: 57.11, y: 13.333, z: 95.018}
+    - {x: 58.446, y: 13.333, z: 96.521}
+    - {x: 59.782, y: 13.333, z: 98.024}
+    - {x: 61.117, y: 13.333, z: 99.527}
+    - {x: 62.453, y: 13.333, z: 101.03}
+    - {x: 63.789, y: 13.332, z: 102.533}
+    - {x: 65.124, y: 13.332, z: 104.036}
+    - {x: 66.46, y: 13.331, z: 105.539}
+    - {x: 67.796, y: 13.331, z: 107.042}
+    - {x: 69.131, y: 13.33, z: 108.545}
+    - {x: 70.467, y: 13.327, z: 110.048}
+    - {x: 71.803, y: 13.321, z: 111.551}
+    - {x: 73.138, y: 13.315, z: 113.054}
+    - {x: 74.474, y: 13.31, z: 114.557}
+    - {x: 75.81, y: 13.308, z: 116.06}
+    - {x: 77.145, y: 13.308, z: 117.563}
+    - {x: 78.481, y: 13.308, z: 119.066}
+    - {x: 79.817, y: 13.308, z: 120.569}
+    s:
+    - 0
+    - 2.0109463
+    - 4.0218925
+    - 6.0321746
+    - 8.043121
+    - 10.054068
+    - 12.064349
+    - 14.075295
+    - 16.086243
+    - 18.096523
+    - 20.10747
+    - 22.118416
+    - 24.128698
+    - 26.139645
+    - 28.15059
+    - 30.160873
+    - 32.171818
+    - 34.182766
+    - 36.193047
+    - 38.203995
+    - 40.21494
+    - 42.225224
+    - 44.236168
+    - 46.247116
+    - 48.257397
+    - 50.268345
+    - 52.27929
+    - 54.289574
+    - 56.300518
+    - 58.311466
+    - 60.321747
+    - 62.33269
+    - 64.343636
+    - 66.35392
+    - 68.36487
+    - 70.37582
+    - 72.38609
+    - 74.39704
+    - 76.40799
+    - 78.418274
+    - 80.429214
+    - 82.44016
+  - id: 28
+    nodeA: 16
+    nodeB: 17
+    sourceRoad: 12
+    cls: 2
+    halfWidth: 3.1
+    sStart: 0
+    sEnd: 74.79958713891571
+    length: 74.79958
+    points:
+    - {x: 79.817, y: 13.308, z: 120.569}
+    - {x: 81.143, y: 13.308, z: 122.095}
+    - {x: 82.469, y: 13.308, z: 123.62}
+    - {x: 83.795, y: 13.308, z: 125.146}
+    - {x: 85.121, y: 13.283, z: 126.672}
+    - {x: 86.447, y: 13.226, z: 128.198}
+    - {x: 87.773, y: 13.14, z: 129.724}
+    - {x: 89.099, y: 13.027, z: 131.25}
+    - {x: 90.426, y: 12.934, z: 132.776}
+    - {x: 91.752, y: 12.867, z: 134.302}
+    - {x: 93.078, y: 12.792, z: 135.828}
+    - {x: 94.404, y: 12.709, z: 137.354}
+    - {x: 95.73, y: 12.619, z: 138.88}
+    - {x: 97.056, y: 12.523, z: 140.405}
+    - {x: 98.382, y: 12.423, z: 141.931}
+    - {x: 99.708, y: 12.318, z: 143.457}
+    - {x: 101.034, y: 12.21, z: 144.983}
+    - {x: 102.36, y: 12.101, z: 146.509}
+    - {x: 103.687, y: 11.992, z: 148.035}
+    - {x: 105.013, y: 11.884, z: 149.561}
+    - {x: 106.339, y: 11.779, z: 151.087}
+    - {x: 107.665, y: 11.679, z: 152.613}
+    - {x: 108.991, y: 11.584, z: 154.139}
+    - {x: 110.317, y: 11.496, z: 155.664}
+    - {x: 111.643, y: 11.416, z: 157.19}
+    - {x: 112.969, y: 11.345, z: 158.716}
+    - {x: 114.295, y: 11.283, z: 160.242}
+    - {x: 115.622, y: 11.233, z: 161.768}
+    - {x: 116.948, y: 11.191, z: 163.294}
+    - {x: 118.274, y: 11.158, z: 164.82}
+    - {x: 119.6, y: 11.161, z: 166.346}
+    - {x: 120.926, y: 11.216, z: 167.872}
+    - {x: 122.252, y: 11.292, z: 169.398}
+    - {x: 123.578, y: 11.358, z: 170.924}
+    - {x: 124.904, y: 11.394, z: 172.449}
+    - {x: 126.23, y: 11.394, z: 173.975}
+    - {x: 127.557, y: 11.394, z: 175.501}
+    - {x: 128.883, y: 11.394, z: 177.027}
+    s:
+    - 0
+    - 2.0216212
+    - 4.0424876
+    - 6.064109
+    - 8.08573
+    - 10.107351
+    - 12.128972
+    - 14.150593
+    - 16.17287
+    - 18.194492
+    - 20.216112
+    - 22.237734
+    - 24.259356
+    - 26.280222
+    - 28.301842
+    - 30.323463
+    - 32.345085
+    - 34.366707
+    - 36.388985
+    - 38.410603
+    - 40.432224
+    - 42.453846
+    - 44.475468
+    - 46.496334
+    - 48.517956
+    - 50.539577
+    - 52.5612
+    - 54.583473
+    - 56.605095
+    - 58.626717
+    - 60.64834
+    - 62.66996
+    - 64.69158
+    - 66.7132
+    - 68.73407
+    - 70.75569
+    - 72.77797
+    - 74.79958
+  - id: 29
+    nodeA: 7
+    nodeB: 18
+    sourceRoad: 13
+    cls: 2
+    halfWidth: 3.1
+    sStart: 0
+    sEnd: 68.36110521584784
+    length: 68.36111
+    points:
+    - {x: 104.627, y: 13.344, z: -8.627}
+    - {x: 103.32, y: 13.344, z: -10.155}
+    - {x: 102.013, y: 13.344, z: -11.682}
+    - {x: 100.706, y: 13.344, z: -13.21}
+    - {x: 99.398, y: 13.343, z: -14.738}
+    - {x: 98.091, y: 13.342, z: -16.266}
+    - {x: 96.784, y: 13.341, z: -17.793}
+    - {x: 95.477, y: 13.339, z: -19.321}
+    - {x: 94.17, y: 13.339, z: -20.849}
+    - {x: 92.863, y: 13.339, z: -22.376}
+    - {x: 91.555, y: 13.338, z: -23.904}
+    - {x: 90.248, y: 13.338, z: -25.432}
+    - {x: 88.941, y: 13.338, z: -26.959}
+    - {x: 87.634, y: 13.338, z: -28.487}
+    - {x: 86.327, y: 13.338, z: -30.015}
+    - {x: 85.02, y: 13.338, z: -31.542}
+    - {x: 83.712, y: 13.338, z: -33.07}
+    - {x: 82.405, y: 13.339, z: -34.598}
+    - {x: 81.098, y: 13.339, z: -36.126}
+    - {x: 79.791, y: 13.339, z: -37.653}
+    - {x: 78.484, y: 13.34, z: -39.181}
+    - {x: 77.177, y: 13.34, z: -40.709}
+    - {x: 75.869, y: 13.341, z: -42.236}
+    - {x: 74.562, y: 13.342, z: -43.764}
+    - {x: 73.255, y: 13.344, z: -45.292}
+    - {x: 71.948, y: 13.345, z: -46.819}
+    - {x: 70.641, y: 13.347, z: -48.347}
+    - {x: 69.334, y: 13.355, z: -49.875}
+    - {x: 68.026, y: 13.369, z: -51.402}
+    - {x: 66.719, y: 13.384, z: -52.93}
+    - {x: 65.412, y: 13.396, z: -54.458}
+    - {x: 64.105, y: 13.402, z: -55.986}
+    - {x: 62.798, y: 13.402, z: -57.513}
+    - {x: 61.491, y: 13.402, z: -59.041}
+    - {x: 60.183, y: 13.402, z: -60.569}
+    s:
+    - 0
+    - 2.0107296
+    - 4.020699
+    - 6.031429
+    - 8.042809
+    - 10.053537
+    - 12.063507
+    - 14.074237
+    - 16.084967
+    - 18.094936
+    - 20.106316
+    - 22.117044
+    - 24.127014
+    - 26.137745
+    - 28.148474
+    - 30.158443
+    - 32.169823
+    - 34.180553
+    - 36.19128
+    - 38.201252
+    - 40.211983
+    - 42.22271
+    - 44.23333
+    - 46.24406
+    - 48.25479
+    - 50.26476
+    - 52.27549
+    - 54.286217
+    - 56.296837
+    - 58.307568
+    - 60.3183
+    - 62.329025
+    - 64.339
+    - 66.349724
+    - 68.36111
+  - id: 30
+    nodeA: 7
+    nodeB: 19
+    sourceRoad: 14
+    cls: 2
+    halfWidth: 3.1
+    sStart: 0
+    sEnd: 81.24330328589656
+    length: 81.2433
+    points:
+    - {x: 104.627, y: 13.344, z: -8.627}
+    - {x: 105.937, y: 13.344, z: -7.14}
+    - {x: 107.246, y: 13.344, z: -5.653}
+    - {x: 108.555, y: 13.344, z: -4.165}
+    - {x: 109.865, y: 13.343, z: -2.678}
+    - {x: 111.174, y: 13.342, z: -1.191}
+    - {x: 112.484, y: 13.34, z: 0.296}
+    - {x: 113.793, y: 13.339, z: 1.783}
+    - {x: 115.103, y: 13.338, z: 3.271}
+    - {x: 116.412, y: 13.337, z: 4.758}
+    - {x: 117.722, y: 13.337, z: 6.245}
+    - {x: 119.031, y: 13.337, z: 7.732}
+    - {x: 120.341, y: 13.337, z: 9.219}
+    - {x: 121.65, y: 13.336, z: 10.707}
+    - {x: 122.96, y: 13.336, z: 12.194}
+    - {x: 124.269, y: 13.336, z: 13.681}
+    - {x: 125.579, y: 13.336, z: 15.168}
+    - {x: 126.888, y: 13.336, z: 16.656}
+    - {x: 128.197, y: 13.336, z: 18.143}
+    - {x: 129.507, y: 13.336, z: 19.63}
+    - {x: 130.816, y: 13.336, z: 21.117}
+    - {x: 132.126, y: 13.336, z: 22.604}
+    - {x: 133.435, y: 13.336, z: 24.092}
+    - {x: 134.745, y: 13.336, z: 25.579}
+    - {x: 136.054, y: 13.336, z: 27.066}
+    - {x: 137.364, y: 13.337, z: 28.553}
+    - {x: 138.673, y: 13.337, z: 30.04}
+    - {x: 139.983, y: 13.337, z: 31.528}
+    - {x: 141.292, y: 13.337, z: 33.015}
+    - {x: 142.602, y: 13.338, z: 34.502}
+    - {x: 143.911, y: 13.339, z: 35.989}
+    - {x: 145.221, y: 13.339, z: 37.476}
+    - {x: 146.53, y: 13.34, z: 38.964}
+    - {x: 147.839, y: 13.342, z: 40.451}
+    - {x: 149.149, y: 13.348, z: 41.938}
+    - {x: 150.458, y: 13.357, z: 43.425}
+    - {x: 151.768, y: 13.367, z: 44.913}
+    - {x: 153.077, y: 13.375, z: 46.4}
+    - {x: 154.387, y: 13.378, z: 47.887}
+    - {x: 155.696, y: 13.378, z: 49.374}
+    - {x: 157.006, y: 13.378, z: 50.861}
+    - {x: 158.315, y: 13.378, z: 52.349}
+    s:
+    - 0
+    - 1.9817338
+    - 3.9628067
+    - 5.9446306
+    - 7.9263644
+    - 9.907437
+    - 11.889171
+    - 13.870244
+    - 15.852728
+    - 17.833801
+    - 19.815535
+    - 21.796608
+    - 23.778341
+    - 25.760166
+    - 27.7419
+    - 29.722973
+    - 31.704706
+    - 33.68653
+    - 35.667603
+    - 37.649338
+    - 39.63041
+    - 41.612144
+    - 43.593967
+    - 45.575703
+    - 47.556774
+    - 49.53851
+    - 51.51958
+    - 53.502064
+    - 55.48314
+    - 57.46487
+    - 59.445946
+    - 61.427677
+    - 63.409504
+    - 65.39057
+    - 67.37231
+    - 69.35338
+    - 71.33587
+    - 73.31694
+    - 75.298676
+    - 77.27975
+    - 79.26148
+    - 81.2433
+  - id: 31
+    nodeA: 19
+    nodeB: 20
+    sourceRoad: 15
+    cls: 2
+    halfWidth: 3.1
+    sStart: 0
+    sEnd: 74.7995873838513
+    length: 74.79959
+    points:
+    - {x: 158.315, y: 13.378, z: 52.349}
+    - {x: 159.641, y: 13.378, z: 53.874}
+    - {x: 160.967, y: 13.378, z: 55.4}
+    - {x: 162.294, y: 13.378, z: 56.926}
+    - {x: 163.62, y: 13.386, z: 58.452}
+    - {x: 164.946, y: 13.401, z: 59.978}
+    - {x: 166.272, y: 13.413, z: 61.504}
+    - {x: 167.598, y: 13.411, z: 63.03}
+    - {x: 168.924, y: 13.386, z: 64.556}
+    - {x: 170.25, y: 13.346, z: 66.082}
+    - {x: 171.576, y: 13.29, z: 67.608}
+    - {x: 172.902, y: 13.218, z: 69.134}
+    - {x: 174.229, y: 13.126, z: 70.659}
+    - {x: 175.555, y: 13.014, z: 72.185}
+    - {x: 176.881, y: 12.881, z: 73.711}
+    - {x: 178.207, y: 12.728, z: 75.237}
+    - {x: 179.533, y: 12.555, z: 76.763}
+    - {x: 180.859, y: 12.375, z: 78.289}
+    - {x: 182.185, y: 12.195, z: 79.815}
+    - {x: 183.511, y: 12.015, z: 81.341}
+    - {x: 184.837, y: 11.835, z: 82.867}
+    - {x: 186.163, y: 11.655, z: 84.393}
+    - {x: 187.49, y: 11.475, z: 85.919}
+    - {x: 188.816, y: 11.295, z: 87.444}
+    - {x: 190.142, y: 11.115, z: 88.97}
+    - {x: 191.468, y: 10.935, z: 90.496}
+    - {x: 192.794, y: 10.755, z: 92.022}
+    - {x: 194.12, y: 10.575, z: 93.548}
+    - {x: 195.446, y: 10.395, z: 95.074}
+    - {x: 196.772, y: 10.215, z: 96.6}
+    - {x: 198.098, y: 10.034, z: 98.126}
+    - {x: 199.425, y: 9.946, z: 99.652}
+    - {x: 200.751, y: 9.968, z: 101.178}
+    - {x: 202.077, y: 10.003, z: 102.704}
+    - {x: 203.403, y: 10.028, z: 104.229}
+    - {x: 204.729, y: 10.028, z: 105.755}
+    - {x: 206.055, y: 10.028, z: 107.281}
+    - {x: 207.381, y: 10.028, z: 108.807}
+    s:
+    - 0
+    - 2.0208664
+    - 4.0424876
+    - 6.0647645
+    - 8.086386
+    - 10.108007
+    - 12.129628
+    - 14.151249
+    - 16.17287
+    - 18.194492
+    - 20.216112
+    - 22.237734
+    - 24.259256
+    - 26.280878
+    - 28.302498
+    - 30.32412
+    - 32.34574
+    - 34.367363
+    - 36.388985
+    - 38.410603
+    - 40.432224
+    - 42.453846
+    - 44.476124
+    - 46.49699
+    - 48.518612
+    - 50.540234
+    - 52.561855
+    - 54.583473
+    - 56.605095
+    - 58.626717
+    - 60.64834
+    - 62.670616
+    - 64.69224
+    - 66.71386
+    - 68.734726
+    - 70.75635
+    - 72.77797
+    - 74.79959
+  - id: 32
+    nodeA: 14
+    nodeB: 17
+    sourceRoad: 16
+    cls: 2
+    halfWidth: 3.1
+    sStart: 0
+    sEnd: 100.24058943318715
+    length: 100.24059
+    points:
+    - {x: 53.222, y: 7.071, z: 242.781}
+    - {x: 54.735, y: 7.071, z: 241.466}
+    - {x: 56.248, y: 7.071, z: 240.151}
+    - {x: 57.762, y: 7.071, z: 238.836}
+    - {x: 59.275, y: 7.112, z: 237.521}
+    - {x: 60.788, y: 7.209, z: 236.205}
+    - {x: 62.301, y: 7.348, z: 234.89}
+    - {x: 63.815, y: 7.521, z: 233.575}
+    - {x: 65.328, y: 7.657, z: 232.26}
+    - {x: 66.841, y: 7.735, z: 230.945}
+    - {x: 68.354, y: 7.815, z: 229.63}
+    - {x: 69.867, y: 7.895, z: 228.315}
+    - {x: 71.381, y: 7.972, z: 227}
+    - {x: 72.894, y: 8.043, z: 225.685}
+    - {x: 74.407, y: 8.108, z: 224.37}
+    - {x: 75.92, y: 8.166, z: 223.055}
+    - {x: 77.433, y: 8.216, z: 221.74}
+    - {x: 78.947, y: 8.257, z: 220.425}
+    - {x: 80.46, y: 8.29, z: 219.11}
+    - {x: 81.973, y: 8.315, z: 217.794}
+    - {x: 83.486, y: 8.331, z: 216.479}
+    - {x: 85, y: 8.341, z: 215.164}
+    - {x: 86.513, y: 8.345, z: 213.849}
+    - {x: 88.026, y: 8.346, z: 212.534}
+    - {x: 89.539, y: 8.345, z: 211.219}
+    - {x: 91.052, y: 8.346, z: 209.904}
+    - {x: 92.566, y: 8.349, z: 208.589}
+    - {x: 94.079, y: 8.355, z: 207.274}
+    - {x: 95.592, y: 8.366, z: 205.959}
+    - {x: 97.105, y: 8.384, z: 204.644}
+    - {x: 98.618, y: 8.409, z: 203.329}
+    - {x: 100.132, y: 8.444, z: 202.014}
+    - {x: 101.645, y: 8.49, z: 200.699}
+    - {x: 103.158, y: 8.547, z: 199.383}
+    - {x: 104.671, y: 8.616, z: 198.068}
+    - {x: 106.184, y: 8.696, z: 196.753}
+    - {x: 107.698, y: 8.874, z: 195.438}
+    - {x: 109.211, y: 9.054, z: 194.123}
+    - {x: 110.724, y: 9.234, z: 192.808}
+    - {x: 112.237, y: 9.414, z: 191.493}
+    - {x: 113.751, y: 9.594, z: 190.178}
+    - {x: 115.264, y: 9.774, z: 188.863}
+    - {x: 116.777, y: 9.954, z: 187.548}
+    - {x: 118.29, y: 10.287, z: 186.233}
+    - {x: 119.803, y: 10.715, z: 184.918}
+    - {x: 121.317, y: 11.054, z: 183.603}
+    - {x: 122.83, y: 11.303, z: 182.287}
+    - {x: 124.343, y: 11.394, z: 180.972}
+    - {x: 125.856, y: 11.394, z: 179.657}
+    - {x: 127.369, y: 11.394, z: 178.342}
+    - {x: 128.883, y: 11.394, z: 177.027}
+    s:
+    - 0
+    - 2.0045931
+    - 4.0091863
+    - 6.0145345
+    - 8.019128
+    - 10.024377
+    - 12.028971
+    - 14.034319
+    - 16.038912
+    - 18.043505
+    - 20.048098
+    - 22.05269
+    - 24.058039
+    - 26.062634
+    - 28.067226
+    - 30.07182
+    - 32.076412
+    - 34.08176
+    - 36.086353
+    - 38.091602
+    - 40.096195
+    - 42.101543
+    - 44.106136
+    - 46.11073
+    - 48.115326
+    - 50.11992
+    - 52.125267
+    - 54.12986
+    - 56.134453
+    - 58.139046
+    - 60.14364
+    - 62.148987
+    - 64.15358
+    - 66.15883
+    - 68.16342
+    - 70.168015
+    - 72.17336
+    - 74.177956
+    - 76.18255
+    - 78.18714
+    - 80.19249
+    - 82.19708
+    - 84.201675
+    - 86.20627
+    - 88.21086
+    - 90.21621
+    - 92.22146
+    - 94.22605
+    - 96.23065
+    - 98.235245
+    - 100.24059
+  - id: 33
+    nodeA: 17
+    nodeB: 5
+    sourceRoad: 17
+    cls: 2
+    halfWidth: 3.1
+    sStart: 0
+    sEnd: 52.7958203118868
+    length: 52.795822
+    points:
+    - {x: 128.883, y: 11.394, z: 177.027}
+    - {x: 130.463, y: 11.394, z: 175.752}
+    - {x: 132.043, y: 11.394, z: 174.476}
+    - {x: 133.623, y: 11.394, z: 173.201}
+    - {x: 135.203, y: 11.484, z: 171.926}
+    - {x: 136.783, y: 11.654, z: 170.65}
+    - {x: 138.363, y: 11.87, z: 169.375}
+    - {x: 139.943, y: 12.077, z: 168.099}
+    - {x: 141.524, y: 12.167, z: 166.824}
+    - {x: 143.104, y: 12.174, z: 165.549}
+    - {x: 144.684, y: 12.172, z: 164.273}
+    - {x: 146.264, y: 12.161, z: 162.998}
+    - {x: 147.844, y: 12.136, z: 161.723}
+    - {x: 149.424, y: 12.101, z: 160.447}
+    - {x: 151.004, y: 12.058, z: 159.172}
+    - {x: 152.584, y: 12.006, z: 157.896}
+    - {x: 154.165, y: 11.945, z: 156.621}
+    - {x: 155.745, y: 11.88, z: 155.346}
+    - {x: 157.325, y: 11.814, z: 154.07}
+    - {x: 158.905, y: 11.67, z: 152.795}
+    - {x: 160.485, y: 11.424, z: 151.519}
+    - {x: 162.065, y: 11.198, z: 150.244}
+    - {x: 163.645, y: 11.031, z: 148.969}
+    - {x: 165.225, y: 10.947, z: 147.693}
+    - {x: 166.806, y: 10.947, z: 146.418}
+    - {x: 168.386, y: 10.947, z: 145.143}
+    - {x: 169.966, y: 10.947, z: 143.867}
+    s:
+    - 0
+    - 2.030277
+    - 4.0611825
+    - 6.0914593
+    - 8.121737
+    - 10.152641
+    - 12.182919
+    - 14.213824
+    - 16.244879
+    - 18.275156
+    - 20.30606
+    - 22.336338
+    - 24.366615
+    - 26.39752
+    - 28.427797
+    - 30.458704
+    - 32.489758
+    - 34.520035
+    - 36.55094
+    - 38.58122
+    - 40.61212
+    - 42.6424
+    - 44.672676
+    - 46.703583
+    - 48.73464
+    - 50.764915
+    - 52.795822
+  - id: 34
+    nodeA: 5
+    nodeB: 20
+    sourceRoad: 18
+    cls: 2
+    halfWidth: 3.1
+    sStart: 0
+    sEnd: 51.27461274517566
+    length: 51.274612
+    points:
+    - {x: 169.966, y: 10.947, z: 143.867}
+    - {x: 171.405, y: 10.947, z: 142.519}
+    - {x: 172.844, y: 10.947, z: 141.17}
+    - {x: 174.283, y: 10.947, z: 139.822}
+    - {x: 175.722, y: 10.867, z: 138.473}
+    - {x: 177.161, y: 10.625, z: 137.125}
+    - {x: 178.6, y: 10.294, z: 135.776}
+    - {x: 180.039, y: 9.875, z: 134.428}
+    - {x: 181.478, y: 9.507, z: 133.079}
+    - {x: 182.917, y: 9.327, z: 131.731}
+    - {x: 184.356, y: 9.147, z: 130.383}
+    - {x: 185.795, y: 8.967, z: 129.034}
+    - {x: 187.234, y: 8.787, z: 127.686}
+    - {x: 188.674, y: 8.607, z: 126.337}
+    - {x: 190.113, y: 8.562, z: 124.989}
+    - {x: 191.552, y: 8.622, z: 123.64}
+    - {x: 192.991, y: 8.704, z: 122.292}
+    - {x: 194.43, y: 8.799, z: 120.943}
+    - {x: 195.869, y: 8.903, z: 119.595}
+    - {x: 197.308, y: 9.164, z: 118.246}
+    - {x: 198.747, y: 9.481, z: 116.898}
+    - {x: 200.186, y: 9.754, z: 115.549}
+    - {x: 201.625, y: 9.95, z: 114.201}
+    - {x: 203.064, y: 10.028, z: 112.853}
+    - {x: 204.503, y: 10.028, z: 111.504}
+    - {x: 205.942, y: 10.028, z: 110.156}
+    - {x: 207.381, y: 10.028, z: 108.807}
+    s:
+    - 0
+    - 1.9717568
+    - 3.9441974
+    - 5.915954
+    - 7.888395
+    - 9.860151
+    - 11.832592
+    - 13.804349
+    - 15.77679
+    - 17.748547
+    - 19.720303
+    - 21.692743
+    - 23.664501
+    - 25.63767
+    - 27.609428
+    - 29.58187
+    - 31.553625
+    - 33.526066
+    - 35.49782
+    - 37.470264
+    - 39.44202
+    - 41.41446
+    - 43.38622
+    - 45.357975
+    - 47.330414
+    - 49.302174
+    - 51.274612
+  - id: 35
+    nodeA: 13
+    nodeB: 16
+    sourceRoad: 19
+    cls: 2
+    halfWidth: 3.1
+    sStart: 0
+    sEnd: 100.2399332977047
+    length: 100.23994
+    points:
+    - {x: 4.156, y: 11.105, z: 186.322}
+    - {x: 5.669, y: 11.105, z: 185.007}
+    - {x: 7.183, y: 11.105, z: 183.692}
+    - {x: 8.696, y: 11.105, z: 182.377}
+    - {x: 10.209, y: 11.04, z: 181.062}
+    - {x: 11.722, y: 10.901, z: 179.747}
+    - {x: 13.235, y: 10.714, z: 178.432}
+    - {x: 14.749, y: 10.511, z: 177.117}
+    - {x: 16.262, y: 10.379, z: 175.802}
+    - {x: 17.775, y: 10.335, z: 174.487}
+    - {x: 19.288, y: 10.297, z: 173.172}
+    - {x: 20.801, y: 10.267, z: 171.856}
+    - {x: 22.315, y: 10.252, z: 170.541}
+    - {x: 23.828, y: 10.249, z: 169.226}
+    - {x: 25.341, y: 10.26, z: 167.911}
+    - {x: 26.854, y: 10.285, z: 166.596}
+    - {x: 28.367, y: 10.325, z: 165.281}
+    - {x: 29.881, y: 10.379, z: 163.966}
+    - {x: 31.394, y: 10.446, z: 162.651}
+    - {x: 32.907, y: 10.525, z: 161.336}
+    - {x: 34.42, y: 10.615, z: 160.021}
+    - {x: 35.934, y: 10.714, z: 158.706}
+    - {x: 37.447, y: 10.821, z: 157.391}
+    - {x: 38.96, y: 10.935, z: 156.076}
+    - {x: 40.473, y: 11.055, z: 154.76}
+    - {x: 41.986, y: 11.179, z: 153.445}
+    - {x: 43.5, y: 11.306, z: 152.13}
+    - {x: 45.013, y: 11.434, z: 150.815}
+    - {x: 46.526, y: 11.561, z: 149.5}
+    - {x: 48.039, y: 11.687, z: 148.185}
+    - {x: 49.552, y: 11.812, z: 146.87}
+    - {x: 51.066, y: 11.933, z: 145.555}
+    - {x: 52.579, y: 12.051, z: 144.24}
+    - {x: 54.092, y: 12.165, z: 142.925}
+    - {x: 55.605, y: 12.274, z: 141.61}
+    - {x: 57.119, y: 12.378, z: 140.295}
+    - {x: 58.632, y: 12.477, z: 138.98}
+    - {x: 60.145, y: 12.569, z: 137.665}
+    - {x: 61.658, y: 12.656, z: 136.349}
+    - {x: 63.171, y: 12.738, z: 135.034}
+    - {x: 64.685, y: 12.813, z: 133.719}
+    - {x: 66.198, y: 12.882, z: 132.404}
+    - {x: 67.711, y: 12.944, z: 131.089}
+    - {x: 69.224, y: 13.036, z: 129.774}
+    - {x: 70.737, y: 13.144, z: 128.459}
+    - {x: 72.251, y: 13.228, z: 127.144}
+    - {x: 73.764, y: 13.284, z: 125.829}
+    - {x: 75.277, y: 13.308, z: 124.514}
+    - {x: 76.79, y: 13.308, z: 123.199}
+    - {x: 78.303, y: 13.308, z: 121.884}
+    - {x: 79.817, y: 13.308, z: 120.569}
+    s:
+    - 0
+    - 2.0045931
+    - 4.009941
+    - 6.0145345
+    - 8.019128
+    - 10.023721
+    - 12.028315
+    - 14.033663
+    - 16.038256
+    - 18.042849
+    - 20.047441
+    - 22.05269
+    - 24.058039
+    - 26.062634
+    - 28.067226
+    - 30.07182
+    - 32.076412
+    - 34.08176
+    - 36.086353
+    - 38.090946
+    - 40.09554
+    - 42.100887
+    - 44.10548
+    - 46.110073
+    - 48.115326
+    - 50.11992
+    - 52.125267
+    - 54.12986
+    - 56.134453
+    - 58.139046
+    - 60.14364
+    - 62.148987
+    - 64.15358
+    - 66.15817
+    - 68.162766
+    - 70.16811
+    - 72.17271
+    - 74.1773
+    - 76.18255
+    - 78.18714
+    - 80.19249
+    - 82.19708
+    - 84.201675
+    - 86.20627
+    - 88.21086
+    - 90.21621
+    - 92.2208
+    - 94.225395
+    - 96.229996
+    - 98.23459
+    - 100.23994
+  - id: 36
+    nodeA: 16
+    nodeB: 4
+    sourceRoad: 20
+    cls: 2
+    halfWidth: 3.1
+    sStart: 0
+    sEnd: 54.34477964218093
+    length: 54.34478
+    points:
+    - {x: 79.817, y: 13.308, z: 120.569}
+    - {x: 81.312, y: 13.308, z: 119.221}
+    - {x: 82.807, y: 13.308, z: 117.873}
+    - {x: 84.302, y: 13.308, z: 116.526}
+    - {x: 85.797, y: 13.31, z: 115.178}
+    - {x: 87.292, y: 13.314, z: 113.831}
+    - {x: 88.787, y: 13.32, z: 112.483}
+    - {x: 90.282, y: 13.325, z: 111.135}
+    - {x: 91.777, y: 13.329, z: 109.788}
+    - {x: 93.272, y: 13.33, z: 108.44}
+    - {x: 94.767, y: 13.331, z: 107.093}
+    - {x: 96.262, y: 13.332, z: 105.745}
+    - {x: 97.757, y: 13.332, z: 104.397}
+    - {x: 99.253, y: 13.332, z: 103.05}
+    - {x: 100.748, y: 13.332, z: 101.702}
+    - {x: 102.243, y: 13.331, z: 100.355}
+    - {x: 103.738, y: 13.33, z: 99.007}
+    - {x: 105.233, y: 13.328, z: 97.659}
+    - {x: 106.728, y: 13.326, z: 96.312}
+    - {x: 108.223, y: 13.324, z: 94.964}
+    - {x: 109.718, y: 13.318, z: 93.617}
+    - {x: 111.213, y: 13.307, z: 92.269}
+    - {x: 112.708, y: 13.296, z: 90.921}
+    - {x: 114.203, y: 13.288, z: 89.574}
+    - {x: 115.698, y: 13.284, z: 88.226}
+    - {x: 117.193, y: 13.284, z: 86.879}
+    - {x: 118.688, y: 13.284, z: 85.531}
+    - {x: 120.183, y: 13.284, z: 84.183}
+    s:
+    - 0
+    - 2.01299
+    - 4.02598
+    - 6.0383005
+    - 8.0512905
+    - 10.063611
+    - 12.076601
+    - 14.089591
+    - 16.101912
+    - 18.114902
+    - 20.127222
+    - 22.140213
+    - 24.153202
+    - 26.166265
+    - 28.179256
+    - 30.191576
+    - 32.204567
+    - 34.217556
+    - 36.229877
+    - 38.242867
+    - 40.255188
+    - 42.268177
+    - 44.28117
+    - 46.293488
+    - 48.30648
+    - 50.318798
+    - 52.33179
+    - 54.34478
+  - id: 37
+    nodeA: 4
+    nodeB: 19
+    sourceRoad: 21
+    cls: 2
+    halfWidth: 3.1
+    sStart: 0
+    sEnd: 49.67346504301939
+    length: 49.673466
+    points:
+    - {x: 120.183, y: 13.284, z: 84.183}
+    - {x: 121.709, y: 13.284, z: 82.91}
+    - {x: 123.234, y: 13.284, z: 81.637}
+    - {x: 124.759, y: 13.284, z: 80.363}
+    - {x: 126.285, y: 13.287, z: 79.09}
+    - {x: 127.81, y: 13.295, z: 77.816}
+    - {x: 129.335, y: 13.305, z: 76.543}
+    - {x: 130.86, y: 13.316, z: 75.27}
+    - {x: 132.386, y: 13.323, z: 73.996}
+    - {x: 133.911, y: 13.326, z: 72.723}
+    - {x: 135.436, y: 13.329, z: 71.449}
+    - {x: 136.961, y: 13.332, z: 70.176}
+    - {x: 138.487, y: 13.334, z: 68.903}
+    - {x: 140.012, y: 13.336, z: 67.629}
+    - {x: 141.537, y: 13.339, z: 66.356}
+    - {x: 143.063, y: 13.341, z: 65.083}
+    - {x: 144.588, y: 13.344, z: 63.809}
+    - {x: 146.113, y: 13.346, z: 62.536}
+    - {x: 147.638, y: 13.352, z: 61.262}
+    - {x: 149.164, y: 13.361, z: 59.989}
+    - {x: 150.689, y: 13.369, z: 58.716}
+    - {x: 152.214, y: 13.375, z: 57.442}
+    - {x: 153.739, y: 13.378, z: 56.169}
+    - {x: 155.265, y: 13.378, z: 54.895}
+    - {x: 156.79, y: 13.378, z: 53.622}
+    - {x: 158.315, y: 13.378, z: 52.349}
+    s:
+    - 0
+    - 1.9872607
+    - 3.9737535
+    - 5.9608874
+    - 7.9481483
+    - 9.935282
+    - 11.921775
+    - 13.908268
+    - 15.896169
+    - 17.882662
+    - 19.869797
+    - 21.856289
+    - 23.84355
+    - 25.830683
+    - 27.817177
+    - 29.804438
+    - 31.79157
+    - 33.778065
+    - 35.765198
+    - 37.752457
+    - 39.738953
+    - 41.726086
+    - 43.712578
+    - 45.700478
+    - 47.686974
+    - 49.673466
+  - id: 38
+    nodeA: 15
+    nodeB: 2
+    sourceRoad: 22
+    cls: 2
+    halfWidth: 3.1
+    sStart: 0
+    sEnd: 33.52807863602411
+    length: 33.52808
+    points:
+    - {x: -18.315, y: 13.333, z: 7.651}
+    - {x: -16.901, y: 13.333, z: 6.277}
+    - {x: -15.486, y: 13.333, z: 4.902}
+    - {x: -14.072, y: 13.333, z: 3.528}
+    - {x: -12.657, y: 13.333, z: 2.153}
+    - {x: -11.243, y: 13.331, z: 0.779}
+    - {x: -9.829, y: 13.329, z: -0.596}
+    - {x: -8.414, y: 13.324, z: -1.97}
+    - {x: -7, y: 13.32, z: -3.345}
+    - {x: -5.585, y: 13.317, z: -4.719}
+    - {x: -4.171, y: 13.306, z: -6.094}
+    - {x: -2.756, y: 13.291, z: -7.468}
+    - {x: -1.342, y: 13.278, z: -8.843}
+    - {x: 0.073, y: 13.268, z: -10.217}
+    - {x: 1.487, y: 13.263, z: -11.592}
+    - {x: 2.901, y: 13.263, z: -12.966}
+    - {x: 4.316, y: 13.263, z: -14.341}
+    - {x: 5.73, y: 13.263, z: -15.715}
+    s:
+    - 0
+    - 1.9716166
+    - 3.9446473
+    - 5.916264
+    - 7.8892946
+    - 9.860911
+    - 11.833224
+    - 13.805558
+    - 15.777872
+    - 17.750206
+    - 19.722519
+    - 21.694853
+    - 23.667168
+    - 25.639502
+    - 27.611814
+    - 29.583431
+    - 31.556461
+    - 33.52808
+  - id: 39
+    nodeA: 2
+    nodeB: 18
+    sourceRoad: 23
+    cls: 2
+    halfWidth: 3.1
+    sStart: 0
+    sEnd: 70.5479328300605
+    length: 70.547935
+    points:
+    - {x: 5.73, y: 13.263, z: -15.715}
+    - {x: 7.286, y: 13.263, z: -16.997}
+    - {x: 8.842, y: 13.263, z: -18.278}
+    - {x: 10.398, y: 13.263, z: -19.56}
+    - {x: 11.953, y: 13.269, z: -20.841}
+    - {x: 13.509, y: 13.28, z: -22.123}
+    - {x: 15.065, y: 13.294, z: -23.404}
+    - {x: 16.621, y: 13.31, z: -24.686}
+    - {x: 18.177, y: 13.319, z: -25.967}
+    - {x: 19.732, y: 13.322, z: -27.249}
+    - {x: 21.288, y: 13.325, z: -28.53}
+    - {x: 22.844, y: 13.328, z: -29.812}
+    - {x: 24.4, y: 13.33, z: -31.093}
+    - {x: 25.956, y: 13.331, z: -32.375}
+    - {x: 27.511, y: 13.333, z: -33.657}
+    - {x: 29.067, y: 13.334, z: -34.938}
+    - {x: 30.623, y: 13.334, z: -36.22}
+    - {x: 32.179, y: 13.335, z: -37.501}
+    - {x: 33.735, y: 13.336, z: -38.783}
+    - {x: 35.291, y: 13.336, z: -40.064}
+    - {x: 36.846, y: 13.337, z: -41.346}
+    - {x: 38.402, y: 13.338, z: -42.627}
+    - {x: 39.958, y: 13.339, z: -43.909}
+    - {x: 41.514, y: 13.341, z: -45.19}
+    - {x: 43.07, y: 13.342, z: -46.472}
+    - {x: 44.625, y: 13.345, z: -47.753}
+    - {x: 46.181, y: 13.347, z: -49.035}
+    - {x: 47.737, y: 13.35, z: -50.316}
+    - {x: 49.293, y: 13.359, z: -51.598}
+    - {x: 50.849, y: 13.373, z: -52.879}
+    - {x: 52.404, y: 13.387, z: -54.161}
+    - {x: 53.96, y: 13.397, z: -55.442}
+    - {x: 55.516, y: 13.402, z: -56.724}
+    - {x: 57.072, y: 13.402, z: -58.006}
+    - {x: 58.628, y: 13.402, z: -59.287}
+    - {x: 60.183, y: 13.402, z: -60.569}
+    s:
+    - 0
+    - 2.0161002
+    - 4.0315647
+    - 6.0476646
+    - 8.062357
+    - 10.078458
+    - 12.093922
+    - 14.110023
+    - 16.125486
+    - 18.140816
+    - 20.15628
+    - 22.17238
+    - 24.187845
+    - 26.203945
+    - 28.219273
+    - 30.234737
+    - 32.25084
+    - 34.266304
+    - 36.282402
+    - 38.297867
+    - 40.313194
+    - 42.32866
+    - 44.34476
+    - 46.360226
+    - 48.376324
+    - 50.391018
+    - 52.407116
+    - 54.42258
+    - 56.438683
+    - 58.454147
+    - 60.469475
+    - 62.48494
+    - 64.50104
+    - 66.51714
+    - 68.53261
+    - 70.547935
+  complexPairs:
+  - a: 0
+    b: 1
+    distance: 13.856083
+  townZone:
+  - {x: -38.158676, y: 10.146689}
+  - {x: -38.30658, y: 7.070657}
+  - {x: -37.980488, y: 4.008384}
+  - {x: -37.188133, y: 1.0324765}
+  - {x: -35.948303, y: -1.7865083}
+  - {x: -34.290398, y: -4.3817334}
+  - {x: -32.25372, y: -6.691667}
+  - {x: -23.76772, y: -14.938667}
+  - {x: -23.766874, y: -14.939487}
+  - {x: -9.621875, y: -28.684488}
+  - {x: -9.621801, y: -28.684559}
+  - {x: -8.207801, y: -30.05856}
+  - {x: -6.987622, y: -31.150742}
+  - {x: -5.431622, y: -32.43274}
+  - {x: -5.430018, y: -32.434063}
+  - {x: 14.794982, y: -49.094063}
+  - {x: 14.795265, y: -49.094296}
+  - {x: 47.467266, y: -76.006294}
+  - {x: 50.290012, y: -77.95085}
+  - {x: 53.403343, y: -79.38485}
+  - {x: 56.715816, y: -80.266174}
+  - {x: 60.130127, y: -80.56893}
+  - {x: 63.545994, y: -80.28423}
+  - {x: 66.86308, y: -79.42043}
+  - {x: 69.98395, y: -78.002914}
+  - {x: 72.81694, y: -76.07331}
+  - {x: 75.27883, y: -73.68829}
+  - {x: 189.32483, y: 57.539703}
+  - {x: 189.32497, y: 57.539856}
+  - {x: 218.49896, y: 91.109856}
+  - {x: 218.4998, y: 91.11082}
+  - {x: 219.82579, y: 92.63682}
+  - {x: 219.82579, y: 92.63682}
+  - {x: 222.4778, y: 95.68881}
+  - {x: 224.48306, y: 98.437836}
+  - {x: 225.99329, y: 101.48699}
+  - {x: 226.96478, y: 104.748024}
+  - {x: 227.36942, y: 108.12656}
+  - {x: 227.19548, y: 111.52477}
+  - {x: 226.448, y: 114.84433}
+  - {x: 225.14862, y: 117.989136}
+  - {x: 223.33495, y: 120.86816}
+  - {x: 221.05948, y: 123.39806}
+  - {x: 219.62048, y: 124.74706}
+  - {x: 219.61778, y: 124.74959}
+  - {x: 216.73979, y: 127.44659}
+  - {x: 216.73949, y: 127.44687}
+  - {x: 203.78848, y: 139.58287}
+  - {x: 203.7882, y: 139.58315}
+  - {x: 185.08018, y: 157.11314}
+  - {x: 185.07808, y: 157.11513}
+  - {x: 183.63908, y: 158.46312}
+  - {x: 182.89479, y: 159.1263}
+  - {x: 66.150795, y: 258.0403}
+  - {x: 63.328728, y: 260.03946}
+  - {x: 60.20446, y: 261.52255}
+  - {x: 56.871403, y: 262.44522}
+  - {x: 53.429226, y: 262.77994}
+  - {x: 49.98085, y: 262.51663}
+  - {x: 46.62939, y: 261.6632}
+  - {x: 43.47506, y: 260.24518}
+  - {x: 40.61218, y: 258.30493}
+  - {x: 38.12635, y: 255.9005}
+  - {x: 27.51735, y: 243.6935}
+  - {x: 27.517097, y: 243.6932}
+  - {x: -6.9619026, y: 204.01921}
+  - {x: -6.9627953, y: 204.01819}
+  - {x: -9.614795, y: 200.96619}
+  - {x: -9.614795, y: 200.96619}
+  - {x: -10.940795, y: 199.44019}
+  - {x: -12.705534, y: 197.07787}
+  - {x: -14.103751, y: 194.48175}
+  - {x: -15.105054, y: 191.70825}
+  - {x: -15.687677, y: 188.81769}
+  notes:
+  - 'complex pair: nodes 0 and 1 are 13.86 m apart (< 30 m); they need an override
+    before R1 can shape them'
+  - 'short arm: node 0 (Junction) arm R0 is 14.00 m long; its provisional mouth needs
+    11.4 m (room 4.0 m)'
+  - 'short arm: node 1 (Junction) arm R0 is 14.00 m long; its provisional mouth needs
+    11.6 m (room 4.0 m)'
+  - 'short arm: node 2 (Junction) arm R22 is 33.53 m long; its provisional mouth
+    needs 15.3 m (room 15.1 m)'
+  - 'steep approach: node 3 (Junction) arm R5 +6.2 % over the first 20 m'
+  - 'steep approach: node 5 (Junction) arm R18 -9.1 % over the first 20 m'
+  - 'steep approach: node 17 (Junction) arm R16 -9.0 % over the first 20 m'
+  - 'acute arms: node 23 (DirtApron) has arms only 32.7 degrees apart'
+  - 'steep approach: node 25 (DirtApron) arm R2 +11.0 % over the first 20 m'
+  - 'steep approach: node 25 (DirtApron) arm R2 -11.0 % over the first 20 m'
+  - 'short arm: node 27 (DirtApron) arm R3 is 2.52 m long; its provisional mouth
+    needs 8.5 m (room 1.5 m)'
+  - 'acute arms: node 27 (DirtApron) has arms only 57.5 degrees apart'
+  - 'steep approach: node 28 (DirtApron) arm R8 -10.0 % over the first 20 m'
+  - 'acute arms: node 28 (DirtApron) has arms only 42.7 degrees apart'
+  - 'short arm: node 29 (DirtApron) arm R4 is 6.00 m long; its provisional mouth
+    needs 6.5 m (room 5.0 m)'
+  - 'acute arms: node 29 (DirtApron) has arms only 48.7 degrees apart'
+  - 'steep approach: node 30 (DirtApron) arm R5 +15.1 % over the first 20 m'
+  - 'steep approach: node 30 (DirtApron) arm R5 -15.1 % over the first 20 m'
+  - 'steep approach: node 30 (DirtApron) arm R7 +9.5 % over the first 20 m'
