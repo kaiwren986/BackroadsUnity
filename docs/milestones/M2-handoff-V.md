@@ -1,7 +1,7 @@
 # M2 handoff: lane V, T2.1-T2.3 (BRV V0, four vehicles in Millbrook, BRV v2 head start)
 
 Branch `m2/v-brv` in `D:\Backroads-Unity-wt\v`, cut from `main` at `c42a473`; `main` at `4fb372e` (lane A merged) was
-merged in at `4ffebd0` (no newer `main` commits at hand-off). Nothing was pushed, installed, downloaded or signed into.
+merged in at `4ffebd0`, and `main` at `d31453a` (lane R merged) at `678d12c`. Nothing was pushed, installed, downloaded or signed into.
 The oracle was read only with `git -C D:\Backroads -c core.autocrlf=false archive 552f7807 assets/vehicles` and
 `git show 552f7807:js/<file>.js`; `D:\Backroads`, `CanonData\v1` and the shared contracts (`VehicleContracts.cs`,
 `StampSink.cs`) are untouched. Unity runs went through `tools\ci\*.ps1` only.
@@ -64,8 +64,8 @@ never calls `setPayload`), so "loaded truck" is measured as recorded; see For I 
 
 Also green: EditMode `Vehicle.ClassicDefsMatchCanon`, `DerivedMatchCanon` (ratios, mount height, inertia, hull, wheel
 layout to 1e-13), `DisplayNames`, `TopSpeeds` (148/187/137/97 km/h); PlayMode `Vehicle.BurstMatchesManaged` (Burst and
-plain C# agree to 2e-13 m); the full EditMode suite 101/102 (the one failure is `Repo.OwnersRespected`, listing exactly
-the two `REQUEST FOR I` files); full PlayMode 6/6; `build-player.ps1 -CompileServerScripts` (UNITY_SERVER) green; Dev
+plain C# agree to 2e-13 m); after merging `main` (lane R) the full EditMode suite is 117/118 (the one failure is `Repo.OwnersRespected`, listing exactly
+the two `REQUEST FOR I` files); full PlayMode 7/7; `build-player.ps1 -CompileServerScripts` (UNITY_SERVER) green; Dev
 build, `smoke` and `m1.shots.canon` pass (vehicles now stand on the bays as in the JS shots; mean SSIM 0.870, M1 0.869).
 
 ## Deviations and decisions
