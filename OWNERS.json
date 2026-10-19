@@ -83,6 +83,7 @@
     "docs/milestones/M2-handoff-A.md": "A",
     "docs/adr/ADR-003": "W",
     "docs/adr/ADR-004": "W",
-    "docs/adr/ADR-005": "V"
+    "docs/adr/ADR-005": "V",
+    "Game/Assets/StreamingAssets/Autotest/m2.vehicles.": "V"
   }
 }

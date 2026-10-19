@@ -40,7 +40,7 @@ namespace Backroads.Tests.EditMode
         public void DefineConstraintsAndUnsafeFlags()
         {
             var bad = new List<string>();
-            foreach (var n in TestUtil.Client)
+            foreach (var n in TestUtil.AllClient)
                 if (!(TestUtil.Get(n)?.DefineConstraints.Contains("!UNITY_SERVER") ?? false)) bad.Add(n + " lacks !UNITY_SERVER");
             if (!(TestUtil.Get("Backroads.Server")?.DefineConstraints.Contains("UNITY_SERVER") ?? false)) bad.Add("Backroads.Server lacks UNITY_SERVER");
             if (!(TestUtil.Get("Backroads.Testing")?.DefineConstraints.Any(d => d.Contains("BACKROADS_TESTING")) ?? false)) bad.Add("Backroads.Testing lacks BACKROADS_TESTING");
