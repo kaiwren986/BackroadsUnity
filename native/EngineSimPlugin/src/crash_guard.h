@@ -17,6 +17,10 @@ void run_guarded(void (*fn)(void *), void *ctx);
 // Unity uses for its own crash dumps. company/product default to the GameInfo placeholders BRDev / Backroads.
 const wchar_t *crash_dir();
 
+// Overrides the folder (esp_set_crash_dir, from GameInfo company/product names). NULL or empty restores the default.
+// Returns false if the path is too long.
+bool set_crash_dir(const wchar_t *dir);
+
 // std::thread whose body runs under run_guarded.
 template <class F>
 std::thread start_guarded_thread(F f) {

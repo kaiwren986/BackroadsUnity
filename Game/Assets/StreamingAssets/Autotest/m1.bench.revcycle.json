@@ -1,0 +1,14 @@
+{
+  "id": "m1.bench.revcycle",
+  "kind": "bench-revcycle",
+  "seconds": 20,
+  "screenshot": true,
+  "engine": "f4_boxer_a",
+  "cycleSeconds": 20,
+  "load": true,
+  "pitchTolerance": 0.03,
+  "maxClipFraction": 0.001,
+  "maxUnderruns": 0,
+  "mainThreadP99MsBudget": 0.10,
+  "notes": "PLAN 6.1 M1: the Engine Bench cranks f4_boxer_a, idles, holds 25/60/100 % pedal against a road-like load and returns to idle (20 s). Gates on what Unity received: pitch per PLAN 1.9 within 3 % in each steady window, 0 underruns, clipping below 0.1 %. Run at 60 and at 30 fps (autotest.ps1 -Fps 30)."
+}

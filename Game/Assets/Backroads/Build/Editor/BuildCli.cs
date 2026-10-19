@@ -32,9 +32,21 @@ namespace Backroads.Build.Editor
         /// <summary>Millbrook (lane W, M1) is the first scene when it exists; the test yard stays in the build.</summary>
         public const string MillbrookScenePath = "Assets/Backroads/Scenes/Millbrook.unity";
 
-        public static string[] Scenes => File.Exists(Path.Combine(RepoPaths.Game, MillbrookScenePath))
-            ? new[] { MillbrookScenePath, TestYardBuilder.ScenePath }
-            : new[] { TestYardBuilder.ScenePath };
+        /// <summary>The Engine Bench (lane V, M1): a camera and a light; EngineBench builds itself when the scene loads.</summary>
+        public const string EngineBenchScenePath = "Assets/Backroads/Scenes/EngineBench.unity";
+
+        /// <summary>Millbrook, EngineBench, TestYard: each only when its file exists (the test yard always does).</summary>
+        public static string[] Scenes
+        {
+            get
+            {
+                var list = new List<string>();
+                if (File.Exists(Path.Combine(RepoPaths.Game, MillbrookScenePath))) list.Add(MillbrookScenePath);
+                if (File.Exists(Path.Combine(RepoPaths.Game, EngineBenchScenePath))) list.Add(EngineBenchScenePath);
+                list.Add(TestYardBuilder.ScenePath);
+                return list.ToArray();
+            }
+        }
 
         public sealed class Outcome
         {

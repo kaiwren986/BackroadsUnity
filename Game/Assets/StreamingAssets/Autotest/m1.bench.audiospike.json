@@ -1,0 +1,16 @@
+{
+  "id": "m1.bench.audiospike",
+  "kind": "audio-spike",
+  "seconds": 60,
+  "screenshot": false,
+  "settleSeconds": 0.4,
+  "measureSeconds": 0.6,
+  "toneHz": 440,
+  "toneAmplitude": 0.1,
+  "engine": "f4_boxer_a",
+  "engineSeconds": 5,
+  "minAttenuationDb": 12,
+  "minPanDb": 6,
+  "listenerVolume": 0.01,
+  "notes": "Spike S-AUD-1 (PLAN 3.6 item 4, T1.8): OnAudioFilterRead with spatialBlend 0 and 1, an IAudioGenerator with a Burst [DllImport] esp_read_audio, the DC clip x filter trick and a PCMReaderCallback stream. A tone at 1 m / 20 m in front and 5 m left / right of the listener, measured on the listener (RMS per channel); then a running engine through each path for underruns at Best latency. Writes spike_report.json. Needs a window (audio runs in the player)."
+}
