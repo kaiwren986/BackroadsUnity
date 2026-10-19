@@ -132,7 +132,7 @@ namespace Backroads.EngineSim
             if (_h == IntPtr.Zero) return _last;
             long t0 = Stopwatch.GetTimestamp();
             _controls.simSpeed = Time.timeScale;
-            _controls.frameDtS = Time.unscaledDeltaTime;
+            _controls.frameDtS = FixedStepFrame.FrameDt > 0f ? FixedStepFrame.FrameDt : Time.unscaledDeltaTime;
             _controls.frameIndex = Time.frameCount;
             Native.esp_set_controls(_h, _controls);
 

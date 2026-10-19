@@ -30,6 +30,7 @@ namespace Backroads.Testing
             public float maxClipFraction = 0.001f;
             public int maxUnderruns = 0;
             public float mainThreadP99MsBudget = 0.10f;
+            public float listenerVolume = 0.001f;   // when -br-silent has set 0 (the tap would see zeros, S-AUD-1)
         }
 
         [Serializable]
@@ -47,8 +48,10 @@ namespace Backroads.Testing
             public string engine;
             public int sampleRate, channels, dspBufferFrames;
             public float fps, cycleSeconds;
+            public float listenerVolume;
             public double starterReleaseS, clipFraction, mainThreadP99Ms, mainThreadP50Ms, rtf, workerMs;
             public int underruns, underrunFrames, staleSteps, coastEvents, tapCallbacks, tapBlockFrames;
+            public int underrunsBeforeCycle, coastEventsBeforeCycle;   // engine load and the first frames, not gated
             public long framesProduced, framesConsumed, framesDropped;
             public double ringTargetMs, frameP95Ms;
             public List<Window> windows = new List<Window>();
@@ -72,6 +75,9 @@ namespace Backroads.Testing
             if (bench.Def != def && !bench.Select(def)) { ctx.Fail("engine did not load: " + bench.LastError); yield break; }
             if (bench.Engine == null) { ctx.Fail("engine did not load: " + bench.LastError); yield break; }
             var engine = bench.Engine;
+            // let the load hitches of the first frames pass (they are coast mode's job, not this gate's); count from here
+            for (float w0 = Time.unscaledTime; Time.unscaledTime - w0 < 0.5f;) yield return null;
+            var s0 = engine.Stats();
             bench.ScriptControl = true;
             bench.LoadOn = p.load;
             bench.ScriptIgnition = true;
@@ -79,8 +85,13 @@ namespace Backroads.Testing
             bench.ScriptThrottle = 0f;
             int rate = AudioSettings.outputSampleRate;
             AudioSettings.GetDSPBufferSize(out int dsp, out _);
+            // AudioListener.volume scales what a filter after EngineSimAudio sees (FilterChain.ComponentOrderAndListenerVolume);
+            // -br-silent sets 0, so use a tiny volume (-60 dB, inaudible) and divide it out of the capture.
+            float volumeBefore = AudioListener.volume;
+            if (AudioListener.volume <= 0f) AudioListener.volume = p.listenerVolume;
+            float gain = AudioListener.volume;
 
-            var report = new Report { engine = def.id, sampleRate = rate, dspBufferFrames = dsp, cycleSeconds = p.cycleSeconds };
+            var report = new Report { engine = def.id, sampleRate = rate, dspBufferFrames = dsp, cycleSeconds = p.cycleSeconds, listenerVolume = gain };
             var tap = bench.Tap;
             tap.Clear();
             tap.Recording = true;
@@ -117,9 +128,15 @@ namespace Backroads.Testing
                 yield return null;
             }
             bench.ScriptThrottle = 0f;
+            // counters at the end of the cycle: the tap flush below writes a WAV on the plugin's worker (a debug-only stall)
+            // and the analysis takes a few long frames, neither of which is the cycle's audio
+            var s = engine.Stats();
+            float mainP99 = engine.CostPercentileMs(99), mainP50 = engine.CostPercentileMs(50);
             tap.Drain(captured);
             tap.Recording = false;
+            AudioListener.volume = volumeBefore;
             engine.DebugTap(null, 0);  // flush the plugin's tap at the next render
+            if (gain > 0f && gain != 1f) for (int i = 0; i < captured.Count; i++) captured[i] /= gain;
             float elapsed = Time.unscaledTime - t0;
             report.fps = frames / Mathf.Max(0.001f, elapsed);
             report.starterReleaseS = released;
@@ -160,21 +177,23 @@ namespace Backroads.Testing
                 if (!w.pass) report.failures.Add($"pitch {h.name} at {w.rpm:F0} rpm: acf {w.acfHz:F1} Hz (order {w.acfOrder:F2}), peak {w.peakHz:F1} Hz (order {w.peakOrder:F2})");
             }
 
-            var s = engine.Stats();
-            report.underruns = s.audioUnderruns;
-            report.underrunFrames = s.audioUnderrunFrames;
-            report.staleSteps = s.staleSteps;
-            report.coastEvents = s.coastEvents;
+            report.underruns = s.audioUnderruns - s0.audioUnderruns;
+            report.underrunFrames = s.audioUnderrunFrames - s0.audioUnderrunFrames;
+            report.staleSteps = s.staleSteps - s0.staleSteps;
+            report.coastEvents = s.coastEvents - s0.coastEvents;
+            report.underrunsBeforeCycle = s0.audioUnderruns;
+            report.coastEventsBeforeCycle = s0.coastEvents;
             report.rtf = s.rtf;
             report.workerMs = s.workerMsEma;
-            report.framesProduced = s.audioFramesProduced;
-            report.framesConsumed = s.audioFramesConsumed;
-            report.framesDropped = s.audioFramesDropped;
+            report.framesProduced = s.audioFramesProduced - s0.audioFramesProduced;
+            report.framesConsumed = s.audioFramesConsumed - s0.audioFramesConsumed;
+            report.framesDropped = s.audioFramesDropped - s0.audioFramesDropped;
             report.ringTargetMs = s.ringTargetFrames * 1000.0 / rate;
             report.frameP95Ms = s.frameP95Ms;
-            report.mainThreadP99Ms = engine.CostPercentileMs(99);
-            report.mainThreadP50Ms = engine.CostPercentileMs(50);
+            report.mainThreadP99Ms = mainP99;
+            report.mainThreadP50Ms = mainP50;
 
+            if (bench.Engine != engine) report.failures.Add("the bench changed engines during the cycle");
             if (released < 0 || released > 3.0f) report.failures.Add($"engine did not start within 3 s (starter released at {released:F2} s)");
             if (report.underruns > p.maxUnderruns) report.failures.Add($"{report.underruns} underruns ({report.underrunFrames} frames)");
             if (report.clipFraction >= p.maxClipFraction) report.failures.Add($"clipping {report.clipFraction * 100:F3} % >= {p.maxClipFraction * 100:F2} %");
@@ -192,6 +211,8 @@ namespace Backroads.Testing
             ctx.Metric("worker_ms", report.workerMs);
             ctx.Metric("stale_steps", report.staleSteps);
             ctx.Metric("coast_events", report.coastEvents);
+            ctx.Metric("underruns_before_cycle", report.underrunsBeforeCycle);
+            ctx.Metric("listener_volume", report.listenerVolume);
             ctx.Metric("ring_target_ms", report.ringTargetMs);
             ctx.Metric("frame_p95_ms", report.frameP95Ms);
             ctx.Metric("starter_release_s", report.starterReleaseS);

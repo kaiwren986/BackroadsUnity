@@ -22,6 +22,10 @@ namespace Backroads.EngineSim
 
         public static int Frame { get; private set; } = -1;
 
+        /// <summary>This frame's unscaled delta time, read before the fixed steps (inside FixedUpdate, Time.unscaledDeltaTime
+        /// is the fixed step, not the frame). Feeds EspControls.frame_dt_s: the ring target and the coast threshold.</summary>
+        public static float FrameDt { get; private set; }
+
         public static int LagFor(int stepsThisFrame) => Math.Max(MinLag, Math.Min(MaxLag, stepsThisFrame));
 
         public static int StepsFor(double time, double fixedTime, double fixedDeltaTime)
@@ -39,6 +43,7 @@ namespace Backroads.EngineSim
             StepsThisFrame = 0;
             Lag = MinLag;
             Frame = -1;
+            FrameDt = 0f;
             var loop = PlayerLoop.GetCurrentPlayerLoop();
             if (Insert(ref loop)) PlayerLoop.SetPlayerLoop(loop);
         }
@@ -65,6 +70,7 @@ namespace Backroads.EngineSim
         static void Tick()
         {
             Frame = Time.frameCount;
+            FrameDt = Time.unscaledDeltaTime;
             StepsThisFrame = StepsFor(Time.timeAsDouble, Time.fixedTimeAsDouble, Time.fixedDeltaTime);
             Lag = LagFor(StepsThisFrame);
         }

@@ -69,7 +69,7 @@ namespace Backroads.EngineSim
         public bool LoadOn;
         public readonly DynoSweep Sweep = new DynoSweep();
 
-        /// <summary>Autotests drive the bench through these instead of the keyboard.</summary>
+        /// <summary>Autotests drive the bench through these; while ScriptControl is set, keys and panel clicks are ignored.</summary>
         public bool ScriptControl;
         public float ScriptThrottle;
         public bool ScriptIgnition, ScriptStarter;
@@ -285,7 +285,7 @@ namespace Backroads.EngineSim
             foreach (var def in _engines)
             {
                 var d = def;
-                var b = new Button(() => Select(d)) { text = d.roster ? d.displayName : d.displayName, name = "engine-" + d.id };
+                var b = new Button(() => { if (!ScriptControl) Select(d); }) { text = d.displayName, name = "engine-" + d.id };
                 b.style.unityTextAlign = TextAnchor.MiddleLeft;
                 b.style.fontSize = 13;
                 b.userData = d;
@@ -304,13 +304,13 @@ namespace Backroads.EngineSim
             _readout = new Label { name = "bench-readout", style = { fontSize = 14, color = Ink, whiteSpace = WhiteSpace.Normal } };
             _error = new Label { style = { fontSize = 14, color = new Color(1f, 0.55f, 0.45f), whiteSpace = WhiteSpace.Normal } };
             var buttons = new VisualElement { style = { flexDirection = FlexDirection.Row, marginTop = 8 } };
-            _ignitionButton = new Button(() => _ignition = !_ignition) { text = "Ignition (tap I)" };
+            _ignitionButton = new Button(() => { if (!ScriptControl) _ignition = !_ignition; }) { text = "Ignition (tap I)" };
             var starter = new Button { text = "Starter (hold I)" };
-            starter.RegisterCallback<PointerDownEvent>(_ => _starterHeld = true, TrickleDown.TrickleDown);
-            starter.RegisterCallback<PointerUpEvent>(_ => _starterHeld = false);
-            starter.RegisterCallback<PointerLeaveEvent>(_ => _starterHeld = false);
-            _loadButton = new Button(() => LoadOn = !LoadOn) { text = "Load (L)" };
-            _sweepButton = new Button(StartSweep) { text = "Dyno sweep (D)", name = "bench-dyno" };
+            starter.RegisterCallback<PointerDownEvent>(_ => { if (!ScriptControl) _starterHeld = true; }, TrickleDown.TrickleDown);
+            starter.RegisterCallback<PointerUpEvent>(_ => { if (!ScriptControl) _starterHeld = false; });
+            starter.RegisterCallback<PointerLeaveEvent>(_ => { if (!ScriptControl) _starterHeld = false; });
+            _loadButton = new Button(() => { if (!ScriptControl) LoadOn = !LoadOn; }) { text = "Load (L)" };
+            _sweepButton = new Button(() => { if (!ScriptControl) StartSweep(); }) { text = "Dyno sweep (D)", name = "bench-dyno" };
             buttons.Add(_ignitionButton);
             buttons.Add(starter);
             buttons.Add(_loadButton);
