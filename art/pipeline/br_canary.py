@@ -17,33 +17,16 @@ import sys
 
 import bpy
 
+sys.dont_write_bytecode = True  # no __pycache__ in art/pipeline
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from br_fbx import export_fbx, game_to_blender  # noqa: E402  (shared with every other export)
+
 MARKERS = {
     "MARK_Front": (0.0, 0.0, 2.0),
     "MARK_Left": (1.0, 0.0, 0.0),
     "MARK_Up": (0.0, 1.0, 0.0),
 }
 SIZE = 0.10  # metres
-
-
-def game_to_blender(g):
-    gx, gy, gz = g
-    return (gx, -gz, gy)
-
-
-def export_fbx(path, objs):
-    """07 section 3.2 flags, unchanged (the canary exists to prove them)."""
-    bpy.ops.object.select_all(action='DESELECT')
-    for ob in objs:
-        ob.select_set(True)
-    bpy.ops.export_scene.fbx(
-        filepath=path, use_selection=True, object_types={'EMPTY', 'MESH'},
-        apply_unit_scale=True, apply_scale_options='FBX_SCALE_ALL',   # 1 Blender m = 1 Unity unit, scale 1
-        axis_forward='-Z', axis_up='Y', bake_space_transform=True,   # "Apply Transform": no -90 deg root rotation
-        use_mesh_modifiers=True, mesh_smooth_type='OFF',             # write normals only; Unity imports them
-        use_triangles=True, use_tspace=True,                         # same triangulation and tangents as the bake
-        colors_type='LINEAR',                                        # masks in FLOAT_COLOR attributes stay numeric
-        use_custom_props=True, add_leaf_bones=False, bake_anim=False,
-        path_mode='STRIP', embed_textures=False)                     # textures are written separately as PNG
 
 
 def main(argv):
