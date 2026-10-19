@@ -75,7 +75,12 @@ namespace Backroads.EngineSim
         public static EngineSimVehicleEngine Create(string engineId, EngineAudioTier tier)
         {
             var def = EngineCatalog.Find(engineId);
-            if (def == null) { Warn(engineId, $"no engine '{engineId}' in the catalog"); return null; }
+            if (def == null)
+            {
+                // not an error: a vehicle may list engines this build does not have yet (the hatch asks for i4_vvt_a first)
+                if (s_Failed.Add(engineId ?? "")) Log.Info($"[EngineSim] no engine '{engineId}' in this build's catalog");
+                return null;
+            }
             if (!s_CrashFolderSet) { s_CrashFolderSet = true; EngineSimEngine.SetCrashFolder(); }
             var o = EngineSimEngine.Options.ForPlayback();
             o.ApplyTier(tier);
