@@ -26,6 +26,7 @@ namespace Backroads.Build.Editor
         public const string ThemePath = RuntimeUiFolder + "/BrRuntimeTheme.tss";
         public const string PanelSettingsPath = RuntimeUiFolder + "/BrPanelSettings.asset";
         public const string DefaultPipelinePath = "Assets/Settings/PC_RPAsset.asset";
+        public const string LowPipelinePath = "Assets/Settings/Mobile_RPAsset.asset";
 
         public const float FixedDeltaTime = 1f / 120f;
         public const float MaximumDeltaTime = 4f / 120f;
@@ -174,12 +175,20 @@ namespace Backroads.Build.Editor
                 }
                 EditorUtility.SetDirty(rp);
             }
+            // The Low tier (QualityPreset, "Mobile" level) renders at 0.7 with STP. URP strips the STP shaders from
+            // players unless a pipeline asset in the build uses STP, so the Low asset carries it (lane W, M1).
+            var lowRp = AssetDatabase.LoadAssetAtPath<UniversalRenderPipelineAsset>(LowPipelinePath);
+            if (lowRp != null && lowRp.upscalingFilter != UpscalingFilterSelection.STP)
+            {
+                lowRp.upscalingFilter = UpscalingFilterSelection.STP;
+                EditorUtility.SetDirty(lowRp);
+            }
 
             SetBurstAot(true);
             EnsureNativePluginImport();
             EnsureRuntimeUiAssets();
             TestYardBuilder.EnsureScene(false);
-            EditorBuildSettings.scenes = new[] { new EditorBuildSettingsScene(TestYardBuilder.ScenePath, true) };
+            EditorBuildSettings.scenes = BuildCli.Scenes.Select(s => new EditorBuildSettingsScene(s, true)).ToArray();
 
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
@@ -224,6 +233,11 @@ namespace Backroads.Build.Editor
                 new Check("urp.SrpBatcher", () => EachPipeline(rp => rp.useSRPBatcher ? null : rp.name + " has SRP Batcher off")),
                 new Check("urp.GpuResidentDrawerInstanced", () => EachPipeline(rp => rp.gpuResidentDrawerMode == GPUResidentDrawerMode.InstancedDrawing ? null : $"{rp.name} is {rp.gpuResidentDrawerMode}")),
                 new Check("urp.NoDynamicBatching", () => EachPipeline(rp => rp.supportsDynamicBatching ? rp.name + " has dynamic batching on" : null)),
+                new Check("urp.LowTierKeepsStp", () =>
+                {
+                    var low = AssetDatabase.LoadAssetAtPath<UniversalRenderPipelineAsset>(LowPipelinePath);
+                    return low == null ? LowPipelinePath + " missing" : Expect(low.upscalingFilter, UpscalingFilterSelection.STP);
+                }),
                 new Check("graphics.BrgVariantsKeepAll", () => Expect(EditorGraphicsSettings.batchRendererGroupShaderStrippingMode, BatchRendererGroupStrippingMode.KeepAll)),
                 new Check("editor.EnterPlayModeNoDomainNoSceneReload", () =>
                     EditorSettings.enterPlayModeOptionsEnabled &&
@@ -295,11 +309,13 @@ namespace Backroads.Build.Editor
                     var p = AssetDatabase.LoadAssetAtPath<PanelSettings>(PanelSettingsPath);
                     return p == null ? "missing " + PanelSettingsPath : p.themeStyleSheet == null ? "no theme on PanelSettings" : null;
                 }),
-                new Check("build.ScenesTestYard", () =>
+                new Check("build.ScenesMatchBuildCli", () =>
                 {
-                    var s = EditorBuildSettings.scenes;
-                    return s.Length > 0 && s[0].path == TestYardBuilder.ScenePath && File.Exists(Path.Combine(RepoPaths.Game, TestYardBuilder.ScenePath))
-                        ? null : "boot scene is not " + TestYardBuilder.ScenePath;
+                    var s = EditorBuildSettings.scenes.Select(x => x.path).ToArray();
+                    var want = BuildCli.Scenes;
+                    if (!s.SequenceEqual(want)) return $"scenes are [{string.Join(", ", s)}], BuildCli builds [{string.Join(", ", want)}]";
+                    var missing = want.Where(p => !File.Exists(Path.Combine(RepoPaths.Game, p))).ToList();
+                    return missing.Count == 0 ? null : "missing " + string.Join(", ", missing);
                 }),
             };
             foreach (var l in PhysicsLayers)
