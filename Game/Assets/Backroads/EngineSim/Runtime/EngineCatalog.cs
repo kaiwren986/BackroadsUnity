@@ -16,26 +16,35 @@ namespace Backroads.EngineSim
     {
         public const string StreamingFolder = "EngineSim";
 
+        // idleRpm: the measured no-pedal idle (esp_cli roster, M2), where the PLAN 3.5 rpm map puts the vehicle's idle.
         static readonly EngineDef[] s_Roster =
         {
             new EngineDef
             {
+                id = "v8_bigblock_a", displayName = "Big-block V8 7.4", builtinName = "v8_bigblock_a", cylinders = 8,
+                idleRpmMin = 800, idleRpmMax = 1050, idleRpm = 918, redlineRpm = 5500, peakTorqueNm = 537, peakTorqueRpm = 2500,
+                pitchOrders = EngineDef.CycleHarmonics(16), roster = true,
+                notes = "Box truck (U6: gas big-block V8). C++ port of upstream's gas big-block truck script; esp_bigblock: " +
+                        "the port's WOT dyno equals the script's (537 N m at 2,500 rpm, 233 hp at 4,000 rpm), idle 918 rpm",
+            },
+            new EngineDef
+            {
                 id = "f4_boxer_a", displayName = "Flat-four 2.5", builtinName = "f4_boxer_a", cylinders = 4,
-                idleRpmMin = 700, idleRpmMax = 900, redlineRpm = 6500, peakTorqueNm = 229, peakTorqueRpm = 4500,
+                idleRpmMin = 700, idleRpmMax = 900, idleRpm = 766, redlineRpm = 6500, peakTorqueNm = 229, peakTorqueRpm = 4500,
                 pitchOrders = EngineDef.FiringOrders(4), roster = true,
                 notes = "Engine Bench and rally coupe; validated: 229 N m at 4,500 rpm, 170 hp at 6,500 rpm (research 02 6.2)",
             },
             new EngineDef
             {
                 id = "v8_cross_a", displayName = "Cross-plane V8 5.3", builtinName = "v8_cross_a", cylinders = 8,
-                idleRpmMin = 600, idleRpmMax = 900, redlineRpm = 6500, peakTorqueNm = 715, peakTorqueRpm = 4000,
+                idleRpmMin = 600, idleRpmMax = 900, idleRpm = 676, redlineRpm = 6500, peakTorqueNm = 715, peakTorqueRpm = 4000,
                 pitchOrders = EngineDef.CycleHarmonics(16), roster = true,
                 notes = "Pickup and trophy truck; the C++ rebuild runs hot (research 01 9.2)",
             },
             new EngineDef
             {
                 id = "i4_synth", displayName = "Inline-four 2.7 (synthetic)", builtinName = "i4_synth", cylinders = 4,
-                idleRpmMin = 600, idleRpmMax = 900, redlineRpm = 6500, peakTorqueNm = 357, peakTorqueRpm = 4000,
+                idleRpmMin = 600, idleRpmMax = 900, idleRpm = 729, redlineRpm = 6500, peakTorqueNm = 357, peakTorqueRpm = 4000,
                 pitchOrders = EngineDef.FiringOrders(4), roster = true,
                 notes = "Hatch placeholder (PLAN 3.10)",
             },

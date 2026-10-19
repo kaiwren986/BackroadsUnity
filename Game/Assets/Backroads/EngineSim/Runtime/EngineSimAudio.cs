@@ -19,6 +19,22 @@ namespace Backroads.EngineSim
         int _inCallback;         // 1 while the audio thread is inside esp_read_audio
         public int Callbacks;    // for diagnostics (audio thread writes, main thread reads)
         public int LastFrames;
+        AudioTap _tap;
+
+        /// <summary>
+        /// A tap fed with exactly what esp_read_audio wrote, before Unity scales it by AudioListener.volume (so
+        /// <c>-br-silent</c> does not silence it; M1 carry, card T2.4). Null = none.
+        /// </summary>
+        public AudioTap Tap
+        {
+            get => _tap;
+            set
+            {
+                if (_tap != null && _tap != value) _tap.FedBySource = false;
+                if (value != null) value.FedBySource = true;
+                Volatile.Write(ref _tap, value);
+            }
+        }
 
         public void Attach(EngineSimEngine engine)
         {
@@ -63,6 +79,7 @@ namespace Backroads.EngineSim
                 fixed (float* p = data) Native.esp_read_audio(h, p, frames, channels);
                 LastFrames = frames;
                 Callbacks++;
+                Volatile.Read(ref _tap)?.Feed(data, channels);
             }
             finally
             {

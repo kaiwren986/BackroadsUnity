@@ -46,12 +46,22 @@ namespace Backroads.EngineSim
         public const int CollectWaitUs = 1000;   // PLAN 3.4: bounded wait, counted in the main-thread budget
 
         /// <summary>
-        /// Worker priority (-2..2) for this run's tier. PLAN 3.4 runs workers above normal; measured on the min-spec proxy
-        /// (6 E-cores, Low, 30 fps) that makes the woken worker preempt Unity's main thread for a whole command (main-thread
-        /// cost p95 2.3 ms, p99 2.7 ms at priority 0 or 1); below normal it is 0.009 ms p99 with 0 underruns and RTF 3.1.
-        /// So the Low tier runs the worker below normal; the other tiers above normal.
+        /// Worker priority (-2..2, or 3 = the audio class) for this run's tier. PLAN 3.4 runs workers above normal; measured
+        /// on the min-spec proxy (6 E-cores, Low, 30 fps) that makes the woken worker preempt Unity's main thread for a whole
+        /// command (main-thread cost p95 2.3 ms, p99 2.7 ms at priority 0 or 1); below normal it is 0.009 ms p99 with 0
+        /// underruns and RTF 3.1. So the Low tier runs the worker below normal. M2: High and Ultra run it in the audio class
+        /// (3: MMCSS "Pro Audio", like an audio thread), because in a release soak every thread at or below above normal
+        /// stopped for about 50 ms once in 10 minutes and the 33 ms ring ran dry (M2-handoff-VS).
         /// </summary>
-        public static int DefaultWorkerPriority => QualityPreset.Current.EngineAudio == EngineAudioTier.Low ? -1 : 1;
+        public static int DefaultWorkerPriority => WorkerPriorityFor(QualityPreset.Current.EngineAudio);
+
+        public const int AudioClassPriority = 3;
+
+        public static int WorkerPriorityFor(EngineAudioTier tier) => tier == EngineAudioTier.Low ? -1 : AudioClassPriority;
+
+        /// <summary>-br-esp-priority (-2..3) or the tier's default.</summary>
+        public static int WorkerPriorityFromCommandLine(EngineAudioTier tier) =>
+            Mathf.Clamp(CommandLine.GetInt("-br-esp-priority", WorkerPriorityFor(tier)), -2, AudioClassPriority);
 
         IntPtr _h;
         readonly object _lock = new object();
