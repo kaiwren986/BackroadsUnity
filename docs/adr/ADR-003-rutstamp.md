@@ -58,11 +58,11 @@ from the same calls (`Deform.Deterministic`). Float code is not reproducible acr
 
 ## Evidence (M2, lane W)
 
-| Test | Expected | Measured |
+| Test | Expected | Measured (2026-10-19, Unity 6000.3.20f1, Burst 1.8.29) |
 |---|---|---|
-| `Deform.MatchesJs` (10,000 reference calls through `IStampSink`, max height error curve) | ≤ 0.5 mm over the first 1,000 calls, ≤ 2 mm over all; volume ±2 % | see `docs/milestones/M2-handoff-W.md` |
-| `Deform.SubMmConverges` (0.3 mm per call) | JS target depth within 1 % | see the handoff |
-| `Deform.Deterministic` (same stamp log, Burst on and off) | identical tile hashes | see the handoff |
+| `Deform.MatchesJs` (10,000 reference calls through `IStampSink`, max height error curve) | ≤ 0.5 mm over the first 1,000 calls, ≤ 2 mm over all; volume ±2 % | 0.0191 mm and 0.0191 mm (flat from call 500); displaced volume -0.0006 %; WEAR within 2 units, SURFACE identical |
+| `Deform.SubMmConverges` (0.3 mm per call) | JS target depth within 1 % | dirt 75.602 mm for a 75.600 mm target, grass 37.800 / 37.800 mm; slow pass within 0.34 mm of a 28.7 mm rut |
+| `Deform.Deterministic` (same stamp log, Burst on and off) | identical tile hashes | 10,200 stamps, 113 tiles changed, 0 tile hashes and 0 DeltaUm values differ (Burst/managed and Burst/Burst) |
 
 Before measuring the integer path, `Deform.MatchesJs` proves its reference: `JsDeformReference`, a double-precision
 mirror of the world.js functions on float32 arrays, reproduces all 10,000 per-call fnv1a hashes and
