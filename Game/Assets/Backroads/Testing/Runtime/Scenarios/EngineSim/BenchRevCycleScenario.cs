@@ -49,7 +49,7 @@ namespace Backroads.Testing
             public int sampleRate, channels, dspBufferFrames;
             public float fps, cycleSeconds;
             public float listenerVolume;
-            public double starterReleaseS, clipFraction, mainThreadP99Ms, mainThreadP50Ms, rtf, workerMs;
+            public double starterReleaseS, clipFraction, mainThreadP99Ms, mainThreadP95Ms, mainThreadP50Ms, collectWaitMsMax, collectWaitMsTotal, rtf, workerMs;
             public int underruns, underrunFrames, staleSteps, coastEvents, tapCallbacks, tapBlockFrames;
             public int underrunsBeforeCycle, coastEventsBeforeCycle;   // engine load and the first frames, not gated
             public long framesProduced, framesConsumed, framesDropped;
@@ -131,7 +131,7 @@ namespace Backroads.Testing
             // counters at the end of the cycle: the tap flush below writes a WAV on the plugin's worker (a debug-only stall)
             // and the analysis takes a few long frames, neither of which is the cycle's audio
             var s = engine.Stats();
-            float mainP99 = engine.CostPercentileMs(99), mainP50 = engine.CostPercentileMs(50);
+            float mainP99 = engine.CostPercentileMs(99), mainP95 = engine.CostPercentileMs(95), mainP50 = engine.CostPercentileMs(50);
             tap.Drain(captured);
             tap.Recording = false;
             AudioListener.volume = volumeBefore;
@@ -192,6 +192,9 @@ namespace Backroads.Testing
             report.frameP95Ms = s.frameP95Ms;
             report.mainThreadP99Ms = mainP99;
             report.mainThreadP50Ms = mainP50;
+            report.mainThreadP95Ms = mainP95;
+            report.collectWaitMsMax = s.collectWaitMsMax;
+            report.collectWaitMsTotal = s.collectWaitMsTotal - s0.collectWaitMsTotal;
 
             if (bench.Engine != engine) report.failures.Add("the bench changed engines during the cycle");
             if (released < 0 || released > 3.0f) report.failures.Add($"engine did not start within 3 s (starter released at {released:F2} s)");
@@ -207,6 +210,8 @@ namespace Backroads.Testing
             ctx.Metric("clip_fraction", report.clipFraction);
             ctx.Metric("main_thread_p99_ms", report.mainThreadP99Ms);
             ctx.Metric("main_thread_p50_ms", report.mainThreadP50Ms);
+            ctx.Metric("main_thread_p95_ms", report.mainThreadP95Ms);
+            ctx.Metric("collect_wait_ms_max", report.collectWaitMsMax);
             ctx.Metric("rtf", report.rtf);
             ctx.Metric("worker_ms", report.workerMs);
             ctx.Metric("stale_steps", report.staleSteps);

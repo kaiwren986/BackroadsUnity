@@ -142,7 +142,8 @@ namespace Backroads.EngineSim
             }
             LastError = null;
             Engine = engine;
-            engine.SetWorker(1, true);  // above normal, no power throttling (PLAN 3.4 scheduling)
+            // PLAN 3.4 scheduling by tier (EngineSimEngine.DefaultWorkerPriority); -br-esp-priority -2..2 overrides it
+            engine.SetWorker(Mathf.Clamp(CommandLine.GetInt("-br-esp-priority", EngineSimEngine.DefaultWorkerPriority), -2, 2), true);
             var go = new GameObject("Engine " + def.id);
             go.transform.SetParent(transform, false);
             Source = go.AddComponent<AudioSource>();
