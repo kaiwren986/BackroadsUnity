@@ -108,6 +108,19 @@ with `git cat-file blob ff2955d:LICENSE`: no download. It is byte-identical to s
 compare page above or by an approved fetch of `004fa15` followed by `git ls-tree 004fa15 LICENSE`. piranha is not
 shipped unless U3c is approved (`third-party.json`).
 
+## Generated piranha scanner and parser (U3c)
+
+piranha needs flex and bison at build time and commits no generated parser (research 01 5.4). On 2026-10-18 lane V
+ran win_flex_bison once and committed the output to `native\EngineSimPlugin\generated\piranha\` (outside `vendor\`, so
+vendor-check is unchanged; see `generated\piranha\GENERATED.md` for the commands and file hashes):
+
+| Tool | Release tag | Asset | Bytes | SHA-256 of the zip |
+|---|---|---|---|---|
+| win_flex_bison 2.5.25 (win_flex 2.6.4, win_bison 3.8.2) | `v2.5.25` (https://github.com/lexxmark/winflexbison/releases/tag/v2.5.25) | `win_flex_bison-2.5.25.zip` | 1,083,989 | `8d324b62be33604b2c45ad1dd34ab93d722534448f55a16ca7292de32b6ac135` |
+
+The zip lives in `tools\winflexbison\` (gitignored) and is not needed again. `src\piranha_path_std.cpp` replaces
+piranha's `src\path.cpp` (Boost.Filesystem) with std::filesystem, so piranha builds with MSVC alone (research 01 App. A.6).
+
 ## Rules
 
 - Never edit a vendored file. Plugin fixes go in `native\EngineSimPlugin\src\`; future fork work (turbo, engine brake,

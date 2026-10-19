@@ -21,7 +21,7 @@ set(ESP_VENDOR_SCS e009f4f)
 set(ESP_VENDOR_PIRANHA 432f0b1)
 
 option(ESP_ASAN "Build with /fsanitize=address (preset vs2022-x64-asan, for soaks)" OFF)
-option(ESP_WITH_PIRANHA "Build piranha and es_script for .mr scripts (needs generated/piranha, U3c)" OFF)
+option(ESP_WITH_PIRANHA "Build piranha and es_script for .mr scripts (generated/piranha, U3c approved)" ON)
 option(ESP_LINK_WHOLE_CORE "Link every scs and enginesim_core object into the DLL (M0 link proof; off since T1.6 calls the core)" OFF)
 if (ESP_WITH_PIRANHA AND NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/generated/piranha/parser.auto.cpp")
     message(FATAL_ERROR "ESP_WITH_PIRANHA needs native/EngineSimPlugin/generated/piranha (U3c, PLAN 3.2).")

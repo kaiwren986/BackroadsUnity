@@ -17,7 +17,8 @@
       "binaryDir": "${sourceDir}/../build",
       "cacheVariables": {
         "CMAKE_CONFIGURATION_TYPES": "Release",
-        "ESP_ASAN": "OFF"
+        "ESP_ASAN": "OFF",
+        "ESP_WITH_PIRANHA": "ON"
       }
     },
     {
