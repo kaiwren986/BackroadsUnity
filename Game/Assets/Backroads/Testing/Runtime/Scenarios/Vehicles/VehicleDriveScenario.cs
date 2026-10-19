@@ -51,6 +51,7 @@ namespace Backroads.Testing
             var world = MillbrookWorld.Current;
             var cam = world != null && world.cam != null ? world.cam : Camera.main;
             var player = PlayerVehicle.Current;
+            PlayerVehicle.ScriptedInput = true; // the input driver stands aside while this scenario feeds DriveInput
             ctx.Note($"vehicles: {sys.Vehicles.Count}; player in the {player.DisplayName}");
             if (player.DisplayName != p.startVehicle) ctx.Fail($"the player starts in the {player.DisplayName}, expected the {p.startVehicle}");
             var truck = sys.Player;
@@ -166,6 +167,7 @@ namespace Backroads.Testing
             ctx.Metric("simMsMax", pmax);
             ctx.Metric("engineAttached", truck.Engine != null ? 1 : 0);
             ctx.Metric("fixedSteps", sys.TotalSteps);
+            PlayerVehicle.ScriptedInput = false;
             ctx.Note($"drove {dist:F1} m, top {maxKmh:F1} km/h, {endKmh:F1} km/h after braking; engine {(truck.Engine != null ? truck.Engine.EngineId : "none (silent)")}; " +
                      $"sim main thread per frame p50 {p50:F3} ms, p95 {p95:F3} ms, max {pmax:F3} ms");
             if (dist < p.minDistanceM) ctx.Fail($"the truck moved only {dist:F1} m");

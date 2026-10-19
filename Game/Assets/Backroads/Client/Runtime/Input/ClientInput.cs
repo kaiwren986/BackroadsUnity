@@ -235,6 +235,7 @@ namespace Backroads.Client
         void SendDrive(bool driving)
         {
             var v = PlayerVehicle.Current;
+            if (PlayerVehicle.ScriptedInput) return; // an autotest feeds the vehicle itself
             if (v == null) return;
             var d = _drive;
             if (driving)

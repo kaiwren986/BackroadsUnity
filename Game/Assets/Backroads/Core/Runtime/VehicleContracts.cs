@@ -112,9 +112,15 @@ namespace Backroads.Core
         static IDrivenVehicle s_Current;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-        static void ResetStatics() { s_Current = null; Changed = null; }
+        static void ResetStatics() { s_Current = null; Changed = null; ScriptedInput = false; }
 
         public static event Action<IDrivenVehicle> Changed;
+
+        /// <summary>
+        /// True while a script (an autotest) feeds the player's vehicle itself: the player input driver then leaves
+        /// SetInput alone, so the two sources' press counters never mix. The script sets it back to false when done.
+        /// </summary>
+        public static bool ScriptedInput { get; set; }
 
         public static IDrivenVehicle Current
         {
