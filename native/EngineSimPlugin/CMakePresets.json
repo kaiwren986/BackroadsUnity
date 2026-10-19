@@ -1,12 +1,19 @@
 {
   "version": 3,
-  "cmakeMinimumRequired": { "major": 3, "minor": 21, "patch": 0 },
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 21,
+    "patch": 0
+  },
   "configurePresets": [
     {
       "name": "vs2022-x64",
       "displayName": "VS 2022 x64, Release, /MT",
       "generator": "Visual Studio 17 2022",
-      "architecture": { "value": "x64", "strategy": "set" },
+      "architecture": {
+        "value": "x64",
+        "strategy": "set"
+      },
       "binaryDir": "${sourceDir}/../build",
       "cacheVariables": {
         "CMAKE_CONFIGURATION_TYPES": "Release",
@@ -24,23 +31,41 @@
     }
   ],
   "buildPresets": [
-    { "name": "release", "configurePreset": "vs2022-x64", "configuration": "Release" },
-    { "name": "release-asan", "configurePreset": "vs2022-x64-asan", "configuration": "Release" }
+    {
+      "name": "release",
+      "configurePreset": "vs2022-x64",
+      "configuration": "Release"
+    },
+    {
+      "name": "release-asan",
+      "configurePreset": "vs2022-x64-asan",
+      "configuration": "Release"
+    }
   ],
   "testPresets": [
     {
       "name": "release",
       "configurePreset": "vs2022-x64",
       "configuration": "Release",
-      "output": { "outputOnFailure": true },
-      "execution": { "noTestsAction": "error", "timeout": 120 }
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "noTestsAction": "error",
+        "timeout": 120
+      }
     },
     {
       "name": "release-asan",
       "configurePreset": "vs2022-x64-asan",
       "configuration": "Release",
-      "output": { "outputOnFailure": true },
-      "execution": { "noTestsAction": "error", "timeout": 600 }
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "noTestsAction": "error",
+        "timeout": 600
+      }
     }
   ]
 }

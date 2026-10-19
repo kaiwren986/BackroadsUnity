@@ -1,10 +1,16 @@
 # build-native.ps1: builds EngineSimPlugin.dll, runs ctest and installs the DLL into Game\Assets\Plugins\x86_64\
 # (PLAN 1.6, 1.9).
 #
-#   tools\ci\build-native.ps1          preset vs2022-x64 (native\build): configure, build Release, ctest, install
-#   tools\ci\build-native.ps1 -Asan    preset vs2022-x64-asan (native\build-asan): configure, build, ctest; installs nothing
+#   tools\ci\build-native.ps1          preset vs2022-x64 (native\build): configure, build Release, quick ctest, install
+#   tools\ci\build-native.ps1 -Heavy   the same, always built here (no cache shortcut), then, holding machine.lock, the
+#                                      CPU-heavy reports (ctest label heavy: esp_cosim_matrix, esp_bench_*, esp_all_engines)
+#   tools\ci\build-native.ps1 -Asan    preset vs2022-x64-asan (native\build-asan): configure, build, then, holding
+#                                      machine.lock, every ctest but the heavy ones, incl. the 10-minute soak; installs nothing
 #   -Force        rebuild even if the cache already holds this source hash
 #   -Parallel N   build parallelism (default 16; at most 4 while artifacts\.user-playing exists)
+#
+# The quick ctest run (merge tier) skips the labels heavy and soak. Test reports (JSON, WAV) are copied from
+# native\build*\reports\ into artifacts\<stamp>\native-reports\ and summarised in the gate JSON (metrics.reports).
 #
 # Cache: <main checkout>\artifacts\native-cache\<source hash>\, shared by every worktree. The source hash is SHA-256 over
 # every tracked or untracked-but-not-ignored file under native\EngineSimPlugin (probes\ excluded) plus this script.
@@ -12,41 +18,44 @@
 # Installed: EngineSimPlugin.dll and EngineSimPlugin.version.json {abi, git, sourceHash, built, piranha}; the abi, git and
 # sourceHash values are read back from the DLL's own esp_build_info(). Neither file is committed except at milestone tags.
 #
-# Exit: 0 green; 1 build or test failed; 3 a perf gate holds artifacts\machine.lock; 4 the installed DLL is locked.
-# Writes: artifacts\<yyyyMMdd-HHmm>\build-native.log, artifacts\gates\build-native.json
-param([switch]$Asan, [switch]$Force, [int]$Parallel = 16)
+# Exit: 0 green; 1 build or test failed; 3 a perf gate holds artifacts\machine.lock (or it stayed busy); 4 the installed
+# DLL is locked.
+# Writes: artifacts\<yyyyMMdd-HHmm>\build-native*.log, artifacts\gates\build-native[-asan|-heavy].json
+param([switch]$Asan, [switch]$Heavy, [switch]$Force, [int]$Parallel = 16, [int]$LockTimeoutSec = 3600)
 
 . "$PSScriptRoot\env.ps1"
+. "$PSScriptRoot\ci-lib.ps1"
 $ErrorActionPreference = 'Stop'
+$env:MSBUILDDISABLENODEREUSE = '1'   # leave no idle MSBuild nodes behind (they count as heavy processes for perf gates)
 $sw = [Diagnostics.Stopwatch]::StartNew()
 
 $srcRel = 'native/EngineSimPlugin'
 $src = Join-Path $REPO 'native\EngineSimPlugin'
 $suffix = if ($Asan) { '-asan' } else { '' }
+$gateName = if ($Asan) { 'build-native-asan' } elseif ($Heavy) { 'build-native-heavy' } else { 'build-native' }
 $configurePreset = "vs2022-x64$suffix"
 $preset = "release$suffix"                     # build and test preset
-$outDir = Join-Path $REPO "native\build$suffix\Release"
+$buildDir = Join-Path $REPO "native\build$suffix"
+$outDir = Join-Path $buildDir 'Release'
 if (-not $CMAKE) { Write-Host 'build-native: cmake not found on PATH (see tools\ci\env-check.ps1)' -ForegroundColor Red; exit 1 }
 $CTEST = Join-Path (Split-Path $CMAKE) 'ctest.exe'
 
 # The main checkout holds what all worktrees share: the locks and the native cache.
 $commonGit = (& git -C $REPO rev-parse --path-format=absolute --git-common-dir).Trim()
 $commonRoot = Split-Path -Parent ($commonGit -replace '/', '\')
-$lockDirs = @($ART, (Join-Path $commonRoot 'artifacts')) | Select-Object -Unique
-foreach ($d in $lockDirs) {
-    if (Test-Path (Join-Path $d 'machine.lock')) {
-        Write-Host "build-native: a perf gate holds $d\machine.lock; nothing else may run. Try again when it is gone." -ForegroundColor Yellow
-        exit 3
-    }
+$machineLock = Get-BrLockPath 'machine'
+if (-not ($Asan -or $Heavy) -and (Test-BrLockHeld $machineLock)) {
+    Write-Host "build-native: a perf gate holds $machineLock; nothing else may run. Try again when it is gone." -ForegroundColor Yellow
+    exit 3
 }
-if (@($lockDirs | Where-Object { Test-Path (Join-Path $_ '.user-playing') }).Count -gt 0) {
+if (Test-Path -LiteralPath (Get-BrLockPath 'user')) {
     $Parallel = [Math]::Min($Parallel, 4)
     Write-Host "build-native: the user is playing (artifacts\.user-playing); building with -Parallel $Parallel"
 }
 
 $runDir = Join-Path $ART (Get-Date -Format 'yyyyMMdd-HHmm')
 New-Item -ItemType Directory -Force $runDir | Out-Null
-$logPath = Join-Path $runDir "build-native$suffix.log"
+$logPath = Join-Path $runDir "$gateName.log"
 $log = New-Object IO.StreamWriter($logPath, $false, (New-Object Text.UTF8Encoding $false))
 $script:lastOutput = @()
 
@@ -123,10 +132,38 @@ function Install-Plugin([string]$FromDir) {
     return $plugins
 }
 
-$gate = [ordered]@{
-    gate = "build-native$suffix"; tier = 'merge'; status = 'fail'; hard = $true; headline = (-not $Asan)
-    build = [ordered]@{}; metrics = [ordered]@{}; evidence = @($logPath)
+# Holds machine.lock (every Unity slot and the GPU lock too) and waits for an idle machine, like a perf gate.
+function Enter-NativeHeavy([string]$What) {
+    $r = Enter-BrMachineLock -Purpose "build-native $What" -TimeoutSec $LockTimeoutSec -IdleTimeoutSec 900
+    if (-not $r.Ok) {
+        $script:exitCode = 3
+        throw "machine.lock for $What : $($r.Reason) $(($r.Procs | ForEach-Object { "$($_.name)#$($_.pid)" }) -join ', ')"
+    }
+    Write-Host "build-native: holding machine.lock for $What"
 }
+
+# Copies native\build*\reports\* to the run folder; returns { name: pass } from the JSON reports.
+function Copy-Reports {
+    $from = Join-Path $buildDir 'reports'
+    $res = [ordered]@{}
+    if (-not (Test-Path $from)) { return $res }
+    $to = Join-Path $runDir 'native-reports'
+    New-Item -ItemType Directory -Force $to | Out-Null
+    foreach ($f in Get-ChildItem $from -File) {
+        Copy-Item $f.FullName $to -Force
+        if ($f.Extension -eq '.json') {
+            try { $j = Get-Content -Raw $f.FullName | ConvertFrom-Json; $res[$f.BaseName] = [bool]$j.pass } catch { $res[$f.BaseName] = $null }
+        }
+    }
+    $script:gate.evidence += @($to)
+    return $res
+}
+
+$script:gate = [ordered]@{
+    gate = $gateName; tier = $(if ($Asan -or $Heavy) { 'nightly' } else { 'merge' }); status = 'fail'; hard = $true
+    headline = (-not ($Asan -or $Heavy)); build = [ordered]@{}; metrics = [ordered]@{}; evidence = @($logPath)
+}
+$gate = $script:gate
 $exit = 1
 $script:exitCode = 1
 try {
@@ -140,7 +177,7 @@ try {
 
     $cacheRoot = Join-Path $commonRoot 'artifacts\native-cache'
     $cacheDir = Join-Path $cacheRoot $source.Hash
-    $cacheHit = (-not $Asan) -and (-not $Force) -and
+    $cacheHit = (-not $Asan) -and (-not $Heavy) -and (-not $Force) -and
         (Test-Path (Join-Path $cacheDir 'EngineSimPlugin.dll')) -and
         (Test-Path (Join-Path $cacheDir 'EngineSimPlugin.version.json')) -and
         (Test-Path (Join-Path $cacheDir 'esp_smoke.exe'))
@@ -164,7 +201,13 @@ try {
             Invoke-Logged 'build' $CMAKE @('--build', '--preset', $preset, '--parallel', "$Parallel")
             $warnings = @($script:lastOutput | Where-Object { $_ -match ': warning [A-Z]+\d+' } | Sort-Object -Unique)
             $gate.metrics['warnings'] = $warnings.Count
-            Invoke-Logged 'ctest' $CTEST @('--preset', $preset, '--output-on-failure') -Echo
+            if ($Asan) {
+                # Under ASan everything is slower and the soak must run in real time: hold the machine.
+                Enter-NativeHeavy 'the ASan tests and soak'
+                Invoke-Logged 'ctest' $CTEST @('--preset', $preset, '--output-on-failure', '-LE', 'heavy') -Echo
+            } else {
+                Invoke-Logged 'ctest' $CTEST @('--preset', $preset, '--output-on-failure', '-LE', 'heavy|soak') -Echo
+            }
             $summary = $script:lastOutput | Where-Object { $_ -match 'tests passed' } | Select-Object -Last 1
             $gate.metrics['ctest'] = "$summary".Trim()
         } finally {
@@ -204,6 +247,17 @@ try {
         Write-Host "build-native: installed EngineSimPlugin.dll + EngineSimPlugin.version.json in $plugins"
         Get-Content (Join-Path $plugins 'EngineSimPlugin.version.json') | ForEach-Object { Write-Host "    $_" }
     }
+    if ($Heavy) {
+        Enter-NativeHeavy 'the heavy native reports'
+        Push-Location $src
+        try {
+            Invoke-Logged 'ctest heavy' $CTEST @('--preset', $preset, '--output-on-failure', '-L', 'heavy') -Echo
+            $summary = $script:lastOutput | Where-Object { $_ -match 'tests passed' } | Select-Object -Last 1
+            $gate.metrics['ctestHeavy'] = "$summary".Trim()
+        } finally {
+            Pop-Location
+        }
+    }
     $gate.status = 'pass'
     $exit = 0
 } catch {
@@ -211,13 +265,15 @@ try {
     $gate.metrics['error'] = "$_"
     $exit = $script:exitCode
 } finally {
+    try { $gate.metrics['reports'] = Copy-Reports } catch { }
+    Unlock-BrAll
     $log.Dispose()
 }
 
-$gate.wallClock = [ordered]@{ seconds = [Math]::Round($sw.Elapsed.TotalSeconds, 1); budget = 900 }
+$gate.wallClock = [ordered]@{ seconds = [Math]::Round($sw.Elapsed.TotalSeconds, 1); budget = $(if ($Asan -or $Heavy) { 3600 } else { 900 }) }
 $gates = Join-Path $ART 'gates'
 New-Item -ItemType Directory -Force $gates | Out-Null
-[IO.File]::WriteAllText((Join-Path $gates "build-native$suffix.json"), ($gate | ConvertTo-Json -Depth 4) + "`n", (New-Object Text.UTF8Encoding $false))
+[IO.File]::WriteAllText((Join-Path $gates "$gateName.json"), ($gate | ConvertTo-Json -Depth 5) + "`n", (New-Object Text.UTF8Encoding $false))
 $color = if ($exit -eq 0) { 'Green' } else { 'Red' }
 Write-Host ("build-native: {0} in {1:N1} s (log {2})" -f $gate.status.ToUpper(), $sw.Elapsed.TotalSeconds, $logPath) -ForegroundColor $color
 exit $exit

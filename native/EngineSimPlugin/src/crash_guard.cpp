@@ -23,16 +23,20 @@ INIT_ONCE g_dirOnce = INIT_ONCE_STATIC_INIT;
 wchar_t g_dir[MAX_PATH * 2] = {};
 volatile LONG g_dumped = 0;
 
-BOOL CALLBACK initDir(PINIT_ONCE, PVOID, PVOID *) {
+void defaultDir() {
     DWORD n = GetEnvironmentVariableW(L"BR_CRASH_DIR", g_dir, ARRAYSIZE(g_dir));
-    if (n > 0 && n < ARRAYSIZE(g_dir)) return TRUE;
+    if (n > 0 && n < ARRAYSIZE(g_dir)) return;
     wchar_t tmp[MAX_PATH + 1];
     n = GetTempPathW(ARRAYSIZE(tmp), tmp);  // ends with a backslash
     if (n == 0 || n > MAX_PATH) {
         g_dir[0] = L'\0';
-        return TRUE;
+        return;
     }
     _snwprintf_s(g_dir, _TRUNCATE, L"%ls%ls\\%ls\\Crashes", tmp, ESP_CRASH_COMPANY, ESP_CRASH_PRODUCT);
+}
+
+BOOL CALLBACK initDir(PINIT_ONCE, PVOID, PVOID *) {
+    defaultDir();
     return TRUE;
 }
 
@@ -101,6 +105,18 @@ LONG filter(EXCEPTION_POINTERS *ep) {
 const wchar_t *crash_dir() {
     InitOnceExecuteOnce(&g_dirOnce, initDir, nullptr, nullptr);
     return g_dir;
+}
+
+bool set_crash_dir(const wchar_t *dir) {
+    InitOnceExecuteOnce(&g_dirOnce, initDir, nullptr, nullptr);
+    // Called from the control thread before engines run; a fault racing this call writes to one folder or the other.
+    if (dir == nullptr || dir[0] == L'\0') {
+        defaultDir();
+        return true;
+    }
+    if (wcslen(dir) >= ARRAYSIZE(g_dir)) return false;
+    wcscpy_s(g_dir, dir);
+    return true;
 }
 
 void run_guarded(void (*fn)(void *), void *ctx) {
