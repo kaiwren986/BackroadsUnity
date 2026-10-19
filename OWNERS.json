@@ -84,6 +84,8 @@
     "docs/adr/ADR-003": "W",
     "docs/adr/ADR-004": "W",
     "docs/adr/ADR-005": "V",
-    "Game/Assets/StreamingAssets/Autotest/m2.vehicles.": "V"
+    "Game/Assets/StreamingAssets/Autotest/m2.vehicles.": "V",
+    "Game/Assets/StreamingAssets/Autotest/m2.hud.": "W",
+    "Game/Assets/StreamingAssets/Autotest/m2.ui.": "W"
   }
 }
