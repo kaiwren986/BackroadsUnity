@@ -71,6 +71,7 @@
     "Game/Assets/Backroads/Tests/EditMode/Input/": "W",
     "Game/Assets/Backroads/Tests/PlayMode/Input/": "W",
     "Game/Assets/Backroads/Tests/EditMode/Roads/": "R",
+    "Game/Assets/Backroads/Tests/PlayMode/Roads/": "R",
     "Game/Assets/Backroads/Tests/EditMode/Art/": "A",
     "Game/Assets/Backroads/Testing/Runtime/Scenarios/Vehicles/": "V",
     "Game/Assets/Backroads/Testing/Runtime/Scenarios/Roads/": "R",

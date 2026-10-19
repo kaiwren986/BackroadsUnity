@@ -1,0 +1,27 @@
+{
+    "name": "Backroads.Roads.Client.Editor",
+    "rootNamespace": "Backroads.Roads.Client.Editor",
+    "references": [
+        "Backroads.Core",
+        "Backroads.World",
+        "Backroads.Roads",
+        "Backroads.Roads.Editor",
+        "Backroads.Roads.Client",
+        "Backroads.Client",
+        "Backroads.Client.Rendering",
+        "Backroads.Client.Editor",
+        "Unity.RenderPipelines.Core.Runtime",
+        "Unity.RenderPipelines.Universal.Runtime"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
