@@ -804,7 +804,7 @@ void Instance::process(const Command &c, bool afterCoast) {
     EspStepOut o;
     fillOut(c, acc, acc.n, cpuS, wallS, flags, o);
     if (m_audio) {
-        m_fill.onCommand(c.controls.frame_index, c.controls.frame_dt_s, wallS, now);
+        m_fill.onCommand(c.controls.frame_index, c.controls.frame_dt_s, wallS, now, qpcSeconds(c.kickQpc));
         m_fill.onPushed(m_out.ring.fill());
         m_out.targetFrames.store(m_fill.targetFrames(), std::memory_order_relaxed);
     }

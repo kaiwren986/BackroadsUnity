@@ -92,6 +92,7 @@ void FillController::init(int sampleRate, int dspBufferFrames, int initialTarget
     m_trim = trimEnabled;
     m_eps = 0.0;
     m_frame = INT32_MIN;
+    m_frameKickS = -1.0;
     m_frameDts.assign(256, 0.0);
     m_frameWorks.assign(256, 0.0);
     m_scratch.assign(256, 0.0);
@@ -99,11 +100,13 @@ void FillController::init(int sampleRate, int dspBufferFrames, int initialTarget
     m_lastRecompute = -1.0;
 }
 
-void FillController::onCommand(int32_t frameIndex, double frameDtS, double workerSeconds, double nowS) {
+void FillController::onCommand(int32_t frameIndex, double frameDtS, double workerSeconds, double nowS, double kickS) {
     if (frameDtS <= 0.0) return;  // no frame information (tools, tests): keep the initial target
     if (frameIndex != m_frame) {
         if (m_frame != INT32_MIN) {
-            m_frameDts[m_next] = std::min(m_frameDt, 0.25);
+            // the audio cadence: the frame's own duration, or the kick-to-kick time to the next commanding frame
+            const double cadence = m_frameKickS >= 0.0 ? std::max(m_frameDt, kickS - m_frameKickS) : m_frameDt;
+            m_frameDts[m_next] = std::min(cadence, 0.25);
             m_frameWorks[m_next] = m_frameWork;
             m_next = (m_next + 1) % m_frameDts.size();
             if (m_count < m_frameDts.size()) ++m_count;
@@ -111,6 +114,7 @@ void FillController::onCommand(int32_t frameIndex, double frameDtS, double worke
         m_frame = frameIndex;
         m_frameDt = frameDtS;
         m_frameWork = 0.0;
+        m_frameKickS = kickS;
     }
     m_frameWork += workerSeconds;
     if (m_lastRecompute < 0.0) m_lastRecompute = nowS;

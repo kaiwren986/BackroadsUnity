@@ -158,3 +158,23 @@ ctest (`build-native.ps1`): `esp_smoke`, `esp_abi`, `esp_crash_guard`, `esp_ring
 `esp_cosim_matrix`, `esp_bench_ultra_e/p`, `esp_all_engines`, `esp_soak_release`; ASan: `esp_soak`. Unity:
 `Backroads.Tests.EditMode.EngineSim.*`, `Backroads.Tests.PlayMode.EngineSim.FilterChain.*`, autotests
 `m1.bench.revcycle` and `m1.bench.audiospike`.
+
+## M2 addendum (lane V, card T2.4; compatible, no ABI change; for the integrator's acceptance)
+
+Nothing in the header changed but one comment: every struct, size, function and status code is as frozen above, and
+`esp_version()` is still 1. Three behaviours were refined while fixing the M1 release-soak underrun; they are
+compatible extensions in the sense of "Decision" above (a value that was unused now means something; internal timing):
+
+1. **Worker audio class.** `EspWorkerOptions.priority = 3` (before: clamped to 2, HIGHEST; no caller used it) puts the
+   worker in the audio class: it joins MMCSS "Pro Audio" on itself (`avrt.dll` is loaded at run time, so the DLL still
+   imports only KERNEL32 and dbghelp), or runs at `THREAD_PRIORITY_TIME_CRITICAL` if MMCSS fails; any other value leaves
+   it. Unity uses 3 on the High and Ultra tiers and keeps -1 on Low (item 7 above). Why: in an M2 release soak every
+   thread at or below above-normal priority stopped for about 50 ms while the time-critical audio consumer kept reading,
+   and the 33 ms ring ran dry (M2-handoff-VS). Test: `esp_abi` (3 and back to 0).
+2. **Fill target cadence (Audio, second bullet).** The "p95 frame time" of the fill target is now the p95 of each
+   frame's longer of `frame_dt_s` and the kick-to-kick time to the next frame that sends commands. Above 120 fps (or in
+   a fast editor loop) most frames send no command and audio arrives once per fixed step; the target must cover that
+   cadence (measured: target 13.1 ms with a push every 8.3 ms and a 21 ms DSP buffer gave an underrun).
+3. **Low-water coast (item 6).** Besides the hitch threshold, the worker also coasts when the ring would run dry before
+   the next command: the fill has fallen to one DSP buffer + one coast batch of worker time + 3 ms. Timed worker waits
+   use a high-resolution waitable timer. Borrowing and repayment are unchanged (`esp_step_accounting` still exact).
