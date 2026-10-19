@@ -95,6 +95,10 @@ namespace Backroads.Testing
             while (Time.realtimeSinceStartup - t0 < p.warmupSeconds) yield return null;
 
             var frames = new List<float>(4096);
+            var gpu = new List<float>(4096);
+            var render = new List<float>(4096);
+            var main = new List<float>(4096);
+            var timing = new FrameTiming[1];
             int builds0 = world.Terrain.TotalBuilds;
             if (rec != null) rec.Recording = true;
             for (int leg = 0; leg + 1 < poses.Count; leg++)
@@ -111,6 +115,13 @@ namespace Backroads.Testing
                     cam.transform.SetPositionAndRotation(pos, Quaternion.Slerp(a.rotation, b.rotation, s));
                     yield return null;
                     frames.Add(Time.unscaledDeltaTime * 1000f);
+                    FrameTimingManager.CaptureFrameTimings();
+                    if (FrameTimingManager.GetLatestTimings(1, timing) > 0)
+                    {
+                        if (timing[0].gpuFrameTime > 0) gpu.Add((float)timing[0].gpuFrameTime);
+                        if (timing[0].cpuRenderThreadFrameTime > 0) render.Add((float)timing[0].cpuRenderThreadFrameTime);
+                        if (timing[0].cpuMainThreadFrameTime > 0) main.Add((float)timing[0].cpuMainThreadFrameTime);
+                    }
                     if (u >= 1f) break;
                 }
             }
@@ -131,14 +142,25 @@ namespace Backroads.Testing
             ctx.Metric("flythrough.p99Ms", Math.Round(P(99), 2));
             ctx.Metric("flythrough.maxMs", Math.Round(frames.Count > 0 ? frames[frames.Count - 1] : 0, 2));
             ctx.Metric("flythrough.chunkBuilds", world.Terrain.TotalBuilds - builds0);
+            foreach (var (name, list) in new[] { ("gpu", gpu), ("renderThread", render), ("mainThread", main) })
+            {
+                if (list.Count == 0) continue;
+                list.Sort();
+                float Q(float q) => list[Mathf.Clamp(Mathf.CeilToInt(q / 100f * list.Count) - 1, 0, list.Count - 1)];
+                ctx.Metric($"flythrough.{name}P50Ms", Math.Round(Q(50), 2));
+                ctx.Metric($"flythrough.{name}P95Ms", Math.Round(Q(95), 2));
+            }
             ctx.Note($"flythrough: {frames.Count} frames, p50 {P(50):F2} ms, p95 {P(95):F2} ms, p99 {P(99):F2} ms; all 256 chunks at load {world.TerrainBuildAllMs:F0} ms");
-            bool p95Ok = P(95) <= p.p95GateMs, chunkOk = world.TerrainBuildAllMs <= p.chunkGateMs;
+            int cap = CommandLine.GetInt("-br-fps-cap", 0);
+            float gateMs = cap > 0 ? Mathf.Max(p.p95GateMs, 1000f / cap + 0.5f) : p.p95GateMs;
+            ctx.Metric("gate.p95Ms", Math.Round(gateMs, 2));
+            bool p95Ok = P(95) <= gateMs, chunkOk = world.TerrainBuildAllMs <= p.chunkGateMs;
             ctx.Metric("gate.p95", p95Ok ? 1 : 0);
             ctx.Metric("gate.chunks", chunkOk ? 1 : 0);
             if (!chunkOk) ctx.Fail($"all chunks built in {world.TerrainBuildAllMs:F0} ms at load (gate {p.chunkGateMs} ms)");
             if (!p95Ok)
             {
-                var msg = $"p95 frame {P(95):F2} ms over the {p.p95GateMs} ms gate";
+                var msg = $"p95 frame {P(95):F2} ms over the {gateMs:F1} ms gate";
                 if (p.failOnGate) ctx.Fail(msg); else ctx.Note(msg + " (lane gate, reported)");
             }
         }
