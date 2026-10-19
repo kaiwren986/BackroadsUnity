@@ -193,7 +193,7 @@ namespace Backroads.Vehicles
                     SpeedKmh = (float)(Math.Abs(s.fwdSpeed) * 3.6),
                     Gear = s.gear, LowRange = s.lowRange,
                     Rpm = Engine != null ? Engine.DisplayRpm : (float)s.rpm,
-                    RedlineRpm = Def.hasEngine ? (float)Def.engineRedline : 2200f,
+                    RedlineRpm = Engine != null ? Engine.DisplayRedlineRpm : Def.hasEngine ? (float)Def.engineRedline : 2200f,
                     Surface = surf, SunkCm = (float)(s.mudSink * 100), Ignition = s.engineOn, WinchOn = s.winch.active,
                     EngineName = Engine != null ? Engine.EngineId : "classic",
                 };

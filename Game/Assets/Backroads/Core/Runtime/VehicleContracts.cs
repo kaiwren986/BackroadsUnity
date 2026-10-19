@@ -39,6 +39,9 @@ namespace Backroads.Core
         /// <summary>The rpm to show on the tach (M2: the mapped engine-sim rpm).</summary>
         float DisplayRpm { get; }
 
+        /// <summary>The redline on the same scale as <see cref="DisplayRpm"/>, for the tach (lane V, M2).</summary>
+        float DisplayRedlineRpm { get; }
+
         /// <summary>Where the sound comes from (the exhaust socket); the engine parents its AudioSource here.</summary>
         void AttachTo(Transform exhaust);
     }

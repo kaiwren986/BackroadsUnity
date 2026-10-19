@@ -1,0 +1,15 @@
+{
+  "id": "m2.drive.route9",
+  "kind": "drive-route",
+  "seconds": 1,
+  "screenshot": true,
+  "startVehicle": "Hauler 7.5t",
+  "targetPoi": "fuel",
+  "arriveRadius": 30,
+  "cruiseKmh": 45,
+  "cornerKmh": 22,
+  "maxSeconds": 150,
+  "pitchTolerance": 0.03,
+  "frameP95MsBudget": 16.6,
+  "notes": "PLAN 6.1 M2 headline: the truck from the Millbrook garage to the fuel station on the road graph; pitch per gear, 0 underruns, p95 frame at High. Run at 60 and at 30 fps (autotest.ps1 -Fps)."
+}

@@ -669,6 +669,409 @@
           "heavy": true
         }
       ]
+    },
+    "M2": {
+      "nightly": [
+        {
+          "id": "autotest.m2.drive.route9",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m2.drive.route9",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "headline": true
+        },
+        {
+          "id": "autotest.m2.drive.route9-fps60",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m2.drive.route9",
+            "-Fps",
+            "60",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "headline": true
+        },
+        {
+          "id": "autotest.m2.drive.route9-fps30",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m2.drive.route9",
+            "-Fps",
+            "30",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "headline": true
+        },
+        {
+          "id": "autotest.m2.vehicles.drive",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m2.vehicles.drive",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "owner": "V"
+        },
+        {
+          "id": "autotest.m2.engine.follow-fps60",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m2.engine.follow",
+            "-Fps",
+            "60",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "owner": "V"
+        },
+        {
+          "id": "autotest.m2.engine.follow-minspec",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m2.engine.follow",
+            "-MinSpec",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "owner": "V",
+          "perf": true,
+          "hard": false
+        },
+        {
+          "id": "autotest.m2.bench.v8",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m2.bench.v8",
+            "-Fps",
+            "60",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "owner": "V"
+        },
+        {
+          "id": "autotest.m2.hud.stub",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m2.hud.stub",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "owner": "W"
+        },
+        {
+          "id": "autotest.m2.ui.screens",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m2.ui.screens",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "owner": "W"
+        },
+        {
+          "id": "autotest.m1.shots.canon",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m1.shots.canon",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "autotest.m1.ui.credits",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m1.ui.credits",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "autotest.m0.crash.recover",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m0.crash.recover",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "autotest.m0.net.egress",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m0.net.egress",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "autotest.m0.playtest.f10",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m0.playtest.f10",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "autotest.m1.bench.revcycle",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m1.bench.revcycle",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "autotest.m1.bench.revcycle-fps30",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m1.bench.revcycle",
+            "-Fps",
+            "30",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "autotest.m1.perf.flythrough",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m1.perf.flythrough",
+            "-Repeat",
+            "3",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "perf": true,
+          "hard": false
+        }
+      ],
+      "milestone": [
+        {
+          "id": "autotest.m2.drive.route9",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m2.drive.route9",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "headline": true
+        },
+        {
+          "id": "autotest.m2.drive.route9-fps60",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m2.drive.route9",
+            "-Fps",
+            "60",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "headline": true
+        },
+        {
+          "id": "autotest.m2.drive.route9-fps30",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m2.drive.route9",
+            "-Fps",
+            "30",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "headline": true
+        },
+        {
+          "id": "autotest.m2.vehicles.drive",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m2.vehicles.drive",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "autotest.m2.ui.screens",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m2.ui.screens",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "autotest.m1.ui.credits",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m1.ui.credits",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "autotest.m0.crash.recover",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m0.crash.recover",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "autotest.m0.net.egress",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m0.net.egress",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "autotest.m1.shots.canon",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m1.shots.canon",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        }
+      ]
     }
   }
 }

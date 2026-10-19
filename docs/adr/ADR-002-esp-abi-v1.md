@@ -159,7 +159,7 @@ ctest (`build-native.ps1`): `esp_smoke`, `esp_abi`, `esp_crash_guard`, `esp_ring
 `Backroads.Tests.EditMode.EngineSim.*`, `Backroads.Tests.PlayMode.EngineSim.FilterChain.*`, autotests
 `m1.bench.revcycle` and `m1.bench.audiospike`.
 
-## M2 addendum (lane V, card T2.4; compatible, no ABI change; for the integrator's acceptance)
+## M2 addendum (lane V, card T2.4; compatible, no ABI change; **accepted by the integrator at the M2 merge, 2026-10-19**)
 
 Nothing in the header changed but one comment: every struct, size, function and status code is as frozen above, and
 `esp_version()` is still 1. Three behaviours were refined while fixing the M1 release-soak underrun; they are
