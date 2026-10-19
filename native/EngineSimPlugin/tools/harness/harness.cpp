@@ -2,6 +2,7 @@
 #include "harness.h"
 
 #include <windows.h>
+#include <intrin.h>
 
 #include <algorithm>
 #include <chrono>
@@ -59,7 +60,7 @@ bool Engine::open(const std::string &name, const CreateOpts &o, std::string &err
     d.audio_sample_rate = o.audioRate;
     d.audio_ring_frames = o.ringFrames;
     d.audio_target_frames = o.targetFrames;
-    d.audio_dsp_buffer_frames = 256;
+    d.audio_dsp_buffer_frames = o.dspFrames;
     d.sim_frequency = o.simFrequency;
     d.fluid_steps = o.fluidSteps;
     d.worker_thread = o.workerThread;
@@ -148,6 +149,47 @@ bool waitStep(EspEngine *e, int64_t k, EspStepOut &out, double maxS) {
         if (r != ESP_PENDING || nowS() - t0 > maxS) return false;
         Sleep(0);
     }
+}
+
+void DeviceConsumer::start() {
+    run = true;
+    m_thread = std::thread([this] {
+        SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_TIME_CRITICAL);
+        std::vector<float> buf(static_cast<size_t>(frames) * 2);
+        const double period = static_cast<double>(frames) / 48000.0;
+        double next = nowS();
+        double lastWake = next;
+        while (run.load()) {
+            const double now = nowS();
+            const double stall = now - lastWake;
+            lastWake = now;
+            if (stall * 1e6 > static_cast<double>(longestStallUs.load())) longestStallUs = static_cast<int64_t>(stall * 1e6);
+            // blocks the hardware has played since the last refill
+            int due = 1 + static_cast<int>(std::floor((now - next) / period));
+            if (due < 1) due = 1;
+            if (catchUp) {
+                if (now - next > 0.1) {  // M1: a stall over 100 ms reset the clock
+                    next = now;
+                    due = 1;
+                }
+            } else if (due > blocks) {  // the device ran dry: those blocks are lost on the device side
+                deviceGaps.fetch_add(1);
+                deviceGapFrames.fetch_add(static_cast<int64_t>(due - blocks) * frames);
+                next += (due - blocks) * period;
+                due = blocks;
+            }
+            for (int i = 0; i < due; ++i) esp_read_audio(e, buf.data(), frames, 2);
+            next += due * period;
+            const double wait = next - nowS();
+            if (wait > 0.002) Sleep(static_cast<DWORD>((wait - 0.001) * 1000));
+            while (nowS() < next) _mm_pause();
+        }
+    });
+}
+
+void DeviceConsumer::stop() {
+    run = false;
+    if (m_thread.joinable()) m_thread.join();
 }
 
 bool Driver::step(const EspDrivelineIn &in, const double *crank, int nCrank) {

@@ -192,3 +192,10 @@ compatible extensions in the sense of "Decision" above (a value that was unused 
    event once per low episode (a non-blocking kernel call), so the low-water coast follows the audio clock and not
    only the worker's own timer. Why: in M2 release soaks the worker and the frame loop sometimes woke 45-50 ms after
    their timers while the audio thread kept running.
+6. **What Unity passes as the DSP buffer (Unity's choice).** `EspCreateDesc.audio_dsp_buffer_frames` is Unity's whole
+   output buffer (block x buffers, 256 x 4 = 1,024 frames at Best latency), not one block, so the fill target holds at
+   its lowest what Unity's mixer can drain at once after a stall: about 49 ms at 60 fps instead of 33 (PLAN 3.6's "one
+   DSP buffer"). Why: in M2 release soaks whole-machine stalls of about 50 ms came every 10-20 minutes on this shared
+   laptop; afterwards the output refills its whole buffer at once while the ring held 19-37 ms. The soak harness now
+   models that output (`DeviceConsumer`: it refills at most 4 blocks after a stall and counts the rest as device gaps;
+   M1's harness read every missed block from the ring, up to 100 ms, which no audio device does).

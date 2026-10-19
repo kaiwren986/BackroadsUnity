@@ -170,6 +170,7 @@ int runFollowHitch(const std::string &engine, const std::string &outJson, bool r
     std::string err;
     CreateOpts o;
     o.audioRate = 48000;
+    o.dspFrames = 1024;  // Unity's output buffer at Best latency (256 x 4)
     if (!eng.open(engine, o, err)) {
         std::printf("FAIL %s\n", err.c_str());
         return 1;
@@ -181,21 +182,9 @@ int runFollowHitch(const std::string &engine, const std::string &outJson, bool r
     wo.power_throttling_off = 1;
     wo.coast_max_ms = 300;
     esp_set_worker_options(e, &wo);
-    std::atomic<bool> run{true};
-    std::thread audio([&] {
-        SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_TIME_CRITICAL);
-        std::vector<float> buf(256 * 2);
-        const double period = 256.0 / 48000.0;
-        double next = nowS();
-        while (run.load()) {
-            esp_read_audio(e, buf.data(), 256, 2);
-            next += period;
-            const double wait = next - nowS();
-            if (wait > 0.002) Sleep(static_cast<DWORD>((wait - 0.001) * 1000));
-            while (nowS() < next) _mm_pause();
-            if (nowS() - next > 0.1) next = nowS();
-        }
-    });
+    DeviceConsumer audio;
+    audio.e = e;
+    audio.start();
     timeBeginPeriod(1);
     const double fixedDt = 1.0 / 120.0, frame = 1.0 / 60.0, seconds = 32.0;
     const double hitchAt[2] = {12.0, 22.0}, hitchMs[2] = {100.0, 250.0};
@@ -246,8 +235,7 @@ int runFollowHitch(const std::string &engine, const std::string &outJson, bool r
     }
     timeEndPeriod(1);
     const EspStats s = stats(e);
-    run = false;
-    audio.join();
+    audio.stop();
     const int after100 = underrunsBefore[1] - underrunsBefore[0];
     const int after250 = s.audio_underruns - underrunsBefore[1];
     const int steady = s.audio_underruns - std::max(0, underrunsAt5);

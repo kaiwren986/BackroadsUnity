@@ -25,11 +25,20 @@ namespace Backroads.EngineSim
             public bool workerThread;
             public int flags;
 
-            /// <summary>Audio at the output rate, own worker, and the PLAN 3.8 tier of -br-quality (QualityPreset.EngineAudio).</summary>
+            /// <summary>
+            /// Audio at the output rate, own worker, and the PLAN 3.8 tier of -br-quality (QualityPreset.EngineAudio).
+            /// The "DSP buffer" given to the plugin's fill target is Unity's whole output buffer (block x buffers, 256 x 4 =
+            /// 21 ms at Best latency), not one block (M2): after any stall of the mixer thread, Unity refills its whole
+            /// buffer at once, and the ring must hold that much at its lowest. In the M2 release soaks a stall of the whole
+            /// machine (about 50 ms) was followed by that refill while the ring held 19-37 ms.
+            /// </summary>
             public static Options ForPlayback()
             {
-                AudioSettings.GetDSPBufferSize(out int dsp, out _);
-                var o = new Options { audioSampleRate = AudioSettings.outputSampleRate, dspBufferFrames = dsp, workerThread = true };
+                AudioSettings.GetDSPBufferSize(out int dsp, out int buffers);
+                var o = new Options
+                {
+                    audioSampleRate = AudioSettings.outputSampleRate, dspBufferFrames = dsp * Mathf.Clamp(buffers, 1, 8), workerThread = true,
+                };
                 o.ApplyTier(QualityPreset.Current.EngineAudio);
                 return o;
             }

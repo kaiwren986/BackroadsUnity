@@ -13,7 +13,8 @@
 //   esp_cli cosim [--traces dir] [--threads 8]         esp_cosim_matrix report
 //   esp_cli bench [engine] [--affinity P|E] [--seconds 20] [--quality ultra|high|low]   real-time factor
 //   esp_cli soak [engine] [--minutes 10] [--freq Hz --fluid n --taps n] [--m1-baseline]   real-time soak (underruns,
-//                                                      memory growth; --m1-baseline: M1's worker scheduling and timers)
+//                                                      memory growth; --m1-baseline: M1's worker scheduling, timers
+//                                                      and catch-up audio consumer)
 //   esp_cli all-engines [--threads 8] [--soft]         every upstream script through piranha
 //   esp_cli sanitise <in.mr> <out.mr> <fictional_id>   mr_sanitise
 //   esp_cli sanitise-all [--threads 8]                 mr_sanitise every upstream script; the copies must still load

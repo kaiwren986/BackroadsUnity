@@ -272,7 +272,8 @@ try {
     if (-not $Asan) {
         $plugins = Install-Plugin $cacheDir
         $gate.evidence += @((Join-Path $plugins 'EngineSimPlugin.dll'), (Join-Path $plugins 'EngineSimPlugin.version.json'))
-        Write-Host "build-native: installed EngineSimPlugin.dll + EngineSimPlugin.version.json in $plugins"
+        $verb = if ($gate.metrics['installed'] -eq 'unchanged') { 'kept the installed' } else { 'installed' }
+        Write-Host "build-native: $verb EngineSimPlugin.dll + EngineSimPlugin.version.json in $plugins"
         Get-Content (Join-Path $plugins 'EngineSimPlugin.version.json') | ForEach-Object { Write-Host "    $_" }
     }
     if ($Heavy) {

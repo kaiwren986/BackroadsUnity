@@ -500,6 +500,7 @@ int runSoak(const std::string &engine, double minutes, const std::string &outJso
     std::string err;
     CreateOpts o;
     o.audioRate = 48000;
+    o.dspFrames = m1Baseline ? 256 : 1024;  // Unity's output buffer at Best latency (M1: one block)
     o.simFrequency = simFrequency;  // under ASan (about 10x slower) a lighter configuration keeps real time
     o.fluidSteps = fluidSteps;
     o.firMaxTaps = firMaxTaps;
@@ -518,21 +519,10 @@ int runSoak(const std::string &engine, double minutes, const std::string &outJso
         wo.coast_max_ms = 300;
         esp_set_worker_options(e, &wo);
     }
-    std::atomic<bool> run{true};
-    std::thread audio([&] {
-        SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_TIME_CRITICAL);
-        std::vector<float> buf(256 * 2);
-        const double period = 256.0 / 48000.0;
-        double next = nowS();
-        while (run.load()) {
-            esp_read_audio(e, buf.data(), 256, 2);
-            next += period;
-            const double wait = next - nowS();
-            if (wait > 0.002) Sleep(static_cast<DWORD>((wait - 0.001) * 1000));
-            while (nowS() < next) _mm_pause();
-            if (nowS() - next > 0.1) next = nowS();  // the process was descheduled for a long time
-        }
-    });
+    DeviceConsumer audio;
+    audio.e = e;
+    audio.catchUp = m1Baseline;  // M1's consumer read every missed block after a stall
+    audio.start();
     auto privateBytes = [] {
         PROCESS_MEMORY_COUNTERS_EX pmc{};
         GetProcessMemoryInfo(GetCurrentProcess(), reinterpret_cast<PROCESS_MEMORY_COUNTERS *>(&pmc), sizeof pmc);
@@ -592,8 +582,7 @@ int runSoak(const std::string &engine, double minutes, const std::string &outJso
     EspStepOut last = stepOut();
     waitStep(e, k - 1, last);
     const EspStats s = stats(e);
-    run = false;
-    audio.join();
+    audio.stop();
     const int steadyUnderruns = s.audio_underruns - std::max(0, underrunsAt10);
     const double growthMb = mem1 > 0 ? (memEnd - mem1) / (1024.0 * 1024.0) : 0.0;
     const bool pass = steadyUnderruns == 0 && growthMb < 1.0;
@@ -612,10 +601,12 @@ int runSoak(const std::string &engine, double minutes, const std::string &outJso
     }
     std::printf("soak %s for %.1f min: underruns %d (after 10 s: %d), underrun frames %d, stale collects %d, coast events %d, "
                 "RTF %.2f; private bytes %.1f MB at 1 min, %.1f MB at the end (growth %.3f MB); harness frames: longest %.1f ms, "
-                "%lld over 25 ms, %lld over 33 ms -> %s\n",
+                "%lld over 25 ms, %lld over 33 ms; audio device: %d gaps (%.1f ms lost on the device side), longest stall of "
+                "the audio thread %.1f ms%s -> %s\n",
                 engine.c_str(), minutes, s.audio_underruns, steadyUnderruns, s.audio_underrun_frames, stale, s.coast_events,
                 s.rtf, mem1 / 1048576.0, memEnd / 1048576.0, growthMb, maxFrameMs, static_cast<long long>(framesOver25),
-                static_cast<long long>(framesOver33), pass ? "PASS" : "FAIL");
+                static_cast<long long>(framesOver33), audio.deviceGaps.load(), audio.deviceGapFrames.load() / 48.0,
+                audio.longestStallUs.load() / 1000.0, m1Baseline ? " (M1 catch-up consumer)" : "", pass ? "PASS" : "FAIL");
     if (!outJson.empty()) {
         Json j;
         j.obj().str("gate", "esp_soak").str("engine", engine).num("minutes", minutes, 2).boolean("m1Baseline", m1Baseline)
@@ -625,6 +616,8 @@ int runSoak(const std::string &engine, double minutes, const std::string &outJso
             .integer("staleCollects", stale).integer("coastEvents", s.coast_events).num("rtf", s.rtf, 3)
             .num("harnessMaxFrameMs", maxFrameMs, 2).integer("harnessFramesOver25ms", framesOver25)
             .integer("harnessFramesOver33ms", framesOver33).num("ringTargetMs", s.ring_target_frames / 48.0, 2)
+            .integer("deviceGaps", audio.deviceGaps.load()).num("deviceGapMs", audio.deviceGapFrames.load() / 48.0, 2)
+            .num("audioThreadLongestStallMs", audio.longestStallUs.load() / 1000.0, 2)
             .num("memGrowthMb", growthMb, 4).boolean("pass", pass).end();
         j.save(outJson);
     }
