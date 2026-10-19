@@ -297,7 +297,7 @@ namespace Backroads.EngineSim
             var main = new VisualElement { name = "bench-main" };
             main.style.flexGrow = 1;
             main.style.paddingLeft = 16; main.style.paddingRight = 16; main.style.paddingTop = 12;
-            main.style.backgroundColor = new Color(0f, 0f, 0f, 0.25f);
+            main.style.backgroundColor = new Color(0.07f, 0.08f, 0.09f, 0.78f);  // readable over Millbrook too (the Esc menu or -br-bench)
             _title = new Label { style = { fontSize = 22, color = Ink, unityFontStyleAndWeight = FontStyle.Bold } };
             _rpm = new Label { name = "bench-rpm", style = { fontSize = 64, color = Accent, unityFontStyleAndWeight = FontStyle.Bold } };
             _state = new Label { style = { fontSize = 16, color = Ink } };
