@@ -147,7 +147,10 @@ namespace Backroads.Vehicles.Editor
             {
                 m.SetFloat("_Surface", 1);
                 m.SetFloat("_Blend", 0);
-                m.SetFloat("_SrcBlend", (float)BlendMode.SrcAlpha);
+                // URP 17 "Alpha" with preserved specular: premultiplied in the shader, One / OneMinusSrcAlpha (what its own validation writes)
+                m.SetFloat("_BlendModePreserveSpecular", 1);
+                m.EnableKeyword("_ALPHAPREMULTIPLY_ON");
+                m.SetFloat("_SrcBlend", (float)BlendMode.One);
                 m.SetFloat("_DstBlend", (float)BlendMode.OneMinusSrcAlpha);
                 m.SetFloat("_SrcBlendAlpha", (float)BlendMode.One);
                 m.SetFloat("_DstBlendAlpha", (float)BlendMode.OneMinusSrcAlpha);
@@ -168,9 +171,11 @@ namespace Backroads.Vehicles.Editor
                 m.SetFloat("_SrcBlend", (float)BlendMode.One);
                 m.SetFloat("_DstBlend", (float)BlendMode.Zero);
                 m.DisableKeyword("_SURFACE_TYPE_TRANSPARENT");
+                // URP drops _EMISSION when the emission colour is black (below 0.1/255): keep a trace so the keyword and its
+                // shader variant stay; instances set black (body) or the lamp colour (lights) at run time
                 m.EnableKeyword("_EMISSION");
-                m.globalIlluminationFlags = MaterialGlobalIlluminationFlags.None;
-                m.SetColor("_EmissionColor", Color.black);
+                m.globalIlluminationFlags = MaterialGlobalIlluminationFlags.RealtimeEmissive;
+                m.SetColor("_EmissionColor", new Color(0.001f, 0.001f, 0.001f, 1f));
                 m.SetOverrideTag("RenderType", "Opaque");
                 m.renderQueue = (int)RenderQueue.Geometry;
                 m.SetColor("_BaseColor", Color.grey);
