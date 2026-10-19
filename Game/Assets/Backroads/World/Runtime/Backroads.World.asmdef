@@ -2,11 +2,14 @@
     "name": "Backroads.World",
     "rootNamespace": "Backroads.World",
     "references": [
-        "Backroads.Core"
+        "Backroads.Core",
+        "Unity.Mathematics",
+        "Unity.Collections",
+        "Unity.Burst"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
-    "allowUnsafeCode": false,
+    "allowUnsafeCode": true,
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,

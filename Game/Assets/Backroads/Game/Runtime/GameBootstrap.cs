@@ -26,6 +26,7 @@ namespace Backroads.Game
             Log.Info($"boot {b.Id} unity {Application.unityVersion} batchmode={Application.isBatchMode} " +
                      $"gfx={SystemInfo.graphicsDeviceType} data={BrPaths.DataRoot}");
 
+            QualityApply.AtBoot();
             int cap = CommandLine.GetInt("-br-fps-cap", 0);
             if (cap > 0) { QualitySettings.vSyncCount = 0; Application.targetFrameRate = cap; Log.Info($"fps cap {cap}"); }
             if (CommandLine.Has("-br-silent")) AudioListener.volume = 0f;

@@ -10,7 +10,9 @@
         "Backroads.Traffic",
         "Backroads.Gameplay",
         "Backroads.Persistence",
-        "Backroads.Net"
+        "Backroads.Net",
+        "Unity.RenderPipelines.Core.Runtime",
+        "Unity.RenderPipelines.Universal.Runtime"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

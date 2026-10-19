@@ -29,7 +29,12 @@ namespace Backroads.Build.Editor
         public const string TestingDefine = "BACKROADS_TESTING";
         public const string ServerDefine = "UNITY_SERVER";
 
-        public static string[] Scenes => new[] { TestYardBuilder.ScenePath };
+        /// <summary>Millbrook (lane W, M1) is the first scene when it exists; the test yard stays in the build.</summary>
+        public const string MillbrookScenePath = "Assets/Backroads/Scenes/Millbrook.unity";
+
+        public static string[] Scenes => File.Exists(Path.Combine(RepoPaths.Game, MillbrookScenePath))
+            ? new[] { MillbrookScenePath, TestYardBuilder.ScenePath }
+            : new[] { TestYardBuilder.ScenePath };
 
         public sealed class Outcome
         {
@@ -78,6 +83,16 @@ namespace Backroads.Build.Editor
                 WriteReport(o);
                 return o;
             }
+
+            // Every build carries canon (lane W, T1.1): verify CanonData v1 and import it when missing or stale.
+            if (!Backroads.Canon.Editor.CanonImporter.EnsureImported(out var canonMessage))
+            {
+                o.error = canonMessage;
+                Debug.LogError("[BR] BuildCli: " + canonMessage);
+                WriteReport(o);
+                return o;
+            }
+            Debug.Log("[BR] BuildCli: " + canonMessage);
 
             CleanOutDir(o.outDir, server ? ServerExeName : ExeName);
             Directory.CreateDirectory(o.outDir);
@@ -185,9 +200,15 @@ namespace Backroads.Build.Editor
             var b = new BuildInfo
             {
                 milestone = milestone, git = git, dirty = !string.IsNullOrEmpty(status), profile = profile.ToString(),
-                unity = Application.unityVersion, builtAtUtc = DateTime.UtcNow.ToString("o"), canon = "-", esp = "-",
+                unity = Application.unityVersion, builtAtUtc = DateTime.UtcNow.ToString("o"), canon = CanonStamp(), esp = "-",
             };
             WriteText(Path.Combine(sa, BuildInfo.FileName), JsonUtility.ToJson(b, true));
+        }
+
+        static string CanonStamp()
+        {
+            var a = Backroads.Canon.Editor.CanonImporter.LoadImported();
+            return a == null || string.IsNullOrEmpty(a.manifestSha256) ? "-" : "v1 " + a.manifestSha256.Substring(0, 12) + " H=" + a.HeightsShort;
         }
 
         /// <summary>Play.bat marks the machine as "user playing" (PLAN 1.9 machine locks) while the game runs.</summary>

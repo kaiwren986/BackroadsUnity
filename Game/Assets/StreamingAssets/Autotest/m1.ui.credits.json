@@ -1,0 +1,7 @@
+{
+  "id": "m1.ui.credits",
+  "kind": "ui-credits",
+  "seconds": 2,
+  "screenshot": true,
+  "notes": "Esc menu -> Credits: OSM credit and the build's notices are shown (PLAN [C1, C8])."
+}

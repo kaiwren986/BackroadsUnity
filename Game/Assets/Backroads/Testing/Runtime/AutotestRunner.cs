@@ -60,6 +60,7 @@ namespace Backroads.Testing
             public List<NetEgressProbe.Endpoint> endpoints = new List<NetEgressProbe.Endpoint>();
             public List<NamedValue> metrics = new List<NamedValue>();
             public string gpu;
+            public string quality;
         }
 
         [Serializable]
@@ -115,7 +116,7 @@ namespace Backroads.Testing
         {
             var id = CommandLine.Get(Flag);
             _out = BrPaths.EnsureDir(BrPaths.OutDir ?? Path.Combine(Application.persistentDataPath, "autotest", id));
-            _r = new Result { id = id, build = BuildInfo.Current.Id, developmentBuild = Debug.isDebugBuild, startedUtc = DateTime.UtcNow.ToString("o"), gpu = SystemInfo.graphicsDeviceName };
+            _r = new Result { id = id, build = BuildInfo.Current.Id, developmentBuild = Debug.isDebugBuild, startedUtc = DateTime.UtcNow.ToString("o"), gpu = SystemInfo.graphicsDeviceName, quality = (QualityPreset.Requested ? "" : "default ") + QualityPreset.Describe(QualityPreset.Current) };
             _sc = LoadScenario(id, out _scJson);
             if (_sc == null) { Fail($"no scenario StreamingAssets/Autotest/{id}.json"); Finish(); yield break; }
             _r.kind = _sc.kind;

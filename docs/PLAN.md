@@ -732,7 +732,7 @@ Procedural generation is strongest on boxy classes and weakest on sculpted sport
 | 6 | **GT3-inspired** `VH_GT_A` | GT3 class | F136-class V8, PROXY coupling | M13 |
 | 7 | **Trophy truck** `VH_Trophy_A` | Baja trophy truck class | LS V8 | M14 |
 
-Every vehicle follows 07 §9: fictional brand and model name everywhere (UI, files, code ids, store pages), 3+ mixed inspirations, no badges, no signature grilles, lamp signatures or iconic silhouettes, `brief.md` as the good-faith record. "Ranger 4x4" and "Muncher D3" are renamed before they appear in any Unity build; placeholder display names until you pick (U9). The real names in the "Inspired by" column above stay in internal documents and `brief.md` only; `Content.NoRealMarks` (§3.2) keeps them out of every build.
+Every vehicle has a fictional brand and model name everywhere (UI, files, code ids, store pages) and carries no real badges or logos. Shapes are not policed (grilles, lamps and silhouettes are free; Synty models are used as they are; your call, 2026-10-18). "Ranger 4x4" and "Muncher D3" are renamed before they appear in any Unity build; placeholder display names until you pick (U9). The real names in the "Inspired by" column above stay in internal documents and `brief.md` only; `Content.NoRealMarks` (§3.2) keeps them out of every build.
 
 ### 4.7 Synty
 
