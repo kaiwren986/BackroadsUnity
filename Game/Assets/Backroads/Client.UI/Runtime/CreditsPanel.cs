@@ -27,6 +27,12 @@ namespace Backroads.Client.UI
         VisualElement _panel;
         ScrollView _scroll;
         bool _filled;
+        readonly Action _onClosed;
+
+        public CreditsPanel() { }
+
+        /// <summary>onClosed runs after the Close button (M2: back to the Esc menu).</summary>
+        public CreditsPanel(Action onClosed) { _onClosed = onClosed; }
 
         public bool Visible => _panel != null && _panel.style.display == DisplayStyle.Flex;
 
@@ -51,7 +57,7 @@ namespace Backroads.Client.UI
             _scroll.style.flexGrow = 1; _scroll.style.marginTop = 8; _scroll.style.marginBottom = 8;
             _panel.Add(_scroll);
 
-            var close = new Button(Hide) { text = "Close (Esc)" };
+            var close = new Button(() => { Hide(); _onClosed?.Invoke(); }) { text = "Close (Esc)", name = "credits-close" };
             close.style.alignSelf = Align.FlexEnd;
             _panel.Add(close);
             return _panel;
@@ -62,11 +68,12 @@ namespace Backroads.Client.UI
             if (_panel == null) return;
             if (!_filled) Fill();
             _panel.style.display = DisplayStyle.Flex;
+            _panel.Q<Button>("credits-close")?.Focus();
         }
 
         public void Hide()
         {
-            if (_panel != null) _panel.style.display = DisplayStyle.None;
+            if (_panel != null) Ui.Show(_panel, false);
         }
 
         void Fill()

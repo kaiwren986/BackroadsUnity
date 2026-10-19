@@ -1,4 +1,5 @@
 using System;
+using Backroads.Core;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -6,102 +7,149 @@ using UnityEngine.UIElements;
 namespace Backroads.Client.UI
 {
     /// <summary>
-    /// The M1 Esc menu: jump between the scenes in the build (Millbrook, the Engine Bench, the test yard), open the
-    /// Credits, or quit. M2's PauseMenu (Resume / Controls / Settings / Credits / Quit) replaces it.
+    /// T2.6 Esc menu (PLAN 6.1 M2 [S13]), replacing the M1 stand-in: Resume / Controls / Settings / Credits / Quit, plus
+    /// the playtest checklist, the debug overlay and the scenes in the build (Millbrook, the Engine Bench, the test yard).
+    /// Opening it pauses the game (time scale 0, audio paused, driving input off, mouse free); Controls, Settings and
+    /// Credits open over it and come back to it. Gamepad: Start opens it, the D-pad or stick moves, A presses.
     /// </summary>
-    public sealed class QuickMenu
+    public sealed class PauseMenu
     {
         public static readonly (string label, string scene)[] Scenes =
         {
-            ("Fly over Millbrook", "Millbrook"),
+            ("Drive in Millbrook", "Millbrook"),
             ("Engine Bench", "EngineBench"),
             ("Test yard", "TestYard"),
         };
 
-        static readonly Color Panel = new Color(0.08f, 0.09f, 0.10f, 0.92f);
-        static readonly Color Ink = new Color(0.93f, 0.93f, 0.90f);
-        static readonly Color Dim = new Color(0.65f, 0.66f, 0.64f);
-
-        readonly Action _openCredits;
+        readonly Action _openControls, _openSettings, _openCredits, _toggleChecklist, _toggleDebug;
         VisualElement _panel;
-        CursorLockMode _cursorBefore;
-        bool _cursorVisibleBefore;
+        Button _resume;
+        float _timeScaleBefore = 1f;
 
-        public QuickMenu(Action openCredits) { _openCredits = openCredits; }
+        public PauseMenu(Action openControls, Action openSettings, Action openCredits, Action toggleChecklist, Action toggleDebug)
+        {
+            _openControls = openControls; _openSettings = openSettings; _openCredits = openCredits;
+            _toggleChecklist = toggleChecklist; _toggleDebug = toggleDebug;
+        }
 
-        public static QuickMenu Current { get; private set; }
+        public static PauseMenu Current { get; private set; }
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         static void ResetStatics() => Current = null;
 
-        public bool Visible => _panel != null && _panel.style.display == DisplayStyle.Flex;
+        /// <summary>The menu panel itself is on screen.</summary>
+        public bool Visible => Ui.IsShown(_panel);
+        /// <summary>The game is paused by this menu (also while Controls, Settings or Credits are open from it).</summary>
+        public bool Paused { get; private set; }
 
         public VisualElement Build()
         {
             Current = this;
-            _panel = new VisualElement { name = "quick-menu" };
+            _panel = Ui.PanelBox("quick-menu");   // the M1 name: autotest m1.ui.credits looks for it
             var s = _panel.style;
-            s.position = Position.Absolute; s.left = 40; s.top = Length.Percent(25); s.width = 340;
-            s.backgroundColor = Panel;
-            s.paddingLeft = 18; s.paddingRight = 18; s.paddingTop = 14; s.paddingBottom = 14;
-            s.borderTopLeftRadius = 6; s.borderTopRightRadius = 6; s.borderBottomLeftRadius = 6; s.borderBottomRightRadius = 6;
-            s.display = DisplayStyle.None;
+            s.left = 40; s.top = Length.Percent(18); s.width = 360;
 
-            var title = new Label("Backroads");
-            title.style.fontSize = 24; title.style.color = Ink; title.style.unityFontStyleAndWeight = FontStyle.Bold;
-            _panel.Add(title);
-            var sub = new Label("Esc closes this menu.");
-            sub.style.fontSize = 13; sub.style.color = Dim; sub.style.marginBottom = 10;
+            _panel.Add(Ui.Text("Backroads", 26, Ui.Ink, bold: true));
+            var sub = Ui.Text("Paused. Esc or Start to resume.", 13, Ui.Dim);
+            sub.style.marginBottom = 10;
             _panel.Add(sub);
 
+            _resume = Ui.Btn("Resume", "resume", Resume);
+            _panel.Add(_resume);
+            _panel.Add(Ui.Btn("Controls", "open-controls", () => Open(_openControls)));
+            _panel.Add(Ui.Btn("Settings", "open-settings", () => Open(_openSettings)));
+            _panel.Add(Ui.Btn("Credits", "open-credits", () => Open(_openCredits)));
+            _panel.Add(Ui.Btn("Playtest checklist (F10)", "open-checklist", () => { Resume(); _toggleChecklist?.Invoke(); }));
+            _panel.Add(Ui.Btn("Debug overlay (F3)", "toggle-debug", () => { _toggleDebug?.Invoke(); }));
+            _panel.Add(Ui.Btn("Fly camera for screenshots (F8)", "toggle-fly", () =>
+            {
+                var d = CameraDirector.Main;
+                if (d == null) return;
+                d.UserFly = !d.UserFly;
+                Resume();
+                Toasts.Show(d.UserFly ? "Fly camera (F8 to drive again)" : "Driving camera");
+            }));
+
+            var scenesTitle = Ui.Text("Places", 13, Ui.Dim);
+            scenesTitle.style.marginTop = 10;
+            _panel.Add(scenesTitle);
             foreach (var (label, scene) in Scenes)
             {
                 if (!Application.CanStreamedLevelBeLoaded(scene)) continue;
-                var b = new Button(() => Load(scene)) { text = label, name = "go-" + scene };
-                Style(b);
-                _panel.Add(b);
+                _panel.Add(Ui.Btn(label, "go-" + scene, () => Load(scene), 15));
             }
-            var credits = new Button(() => { Hide(); _openCredits?.Invoke(); }) { text = "Credits", name = "open-credits" };
-            Style(credits);
-            _panel.Add(credits);
-            var quit = new Button(Application.Quit) { text = "Quit", name = "quit" };
-            Style(quit);
+            var quit = Ui.Btn("Quit", "quit", Application.Quit);
+            quit.style.marginTop = 10;
             _panel.Add(quit);
             return _panel;
         }
 
-        static void Style(Button b)
-        {
-            b.style.fontSize = 17; b.style.height = 36; b.style.marginTop = 4;
-        }
+        public void Toggle() { if (Visible) Resume(); else Show(); }
 
-        public void Toggle() { if (Visible) Hide(); else Show(); }
-
+        /// <summary>Shows the menu and pauses the game.</summary>
         public void Show()
         {
             if (_panel == null) return;
-            _cursorBefore = UnityEngine.Cursor.lockState;
-            _cursorVisibleBefore = UnityEngine.Cursor.visible;
-            UnityEngine.Cursor.lockState = CursorLockMode.None;
-            UnityEngine.Cursor.visible = true;
-            _panel.style.display = DisplayStyle.Flex;
+            Pause(true);
+            Ui.Show(_panel, true);
+            _resume?.Focus();
         }
 
-        public void Hide()
+        /// <summary>Back to the menu from a screen opened from it.</summary>
+        public void Return()
         {
-            if (_panel == null || !Visible) return;
-            _panel.style.display = DisplayStyle.None;
-            UnityEngine.Cursor.lockState = _cursorBefore;
-            UnityEngine.Cursor.visible = _cursorVisibleBefore;
+            if (Paused) Ui.Show(_panel, true);
+        }
+
+        /// <summary>Closes the menu and everything paused with it.</summary>
+        public void Resume()
+        {
+            Ui.Show(_panel, false);
+            Pause(false);
+        }
+
+        /// <summary>The M1 name of Resume.</summary>
+        public void Hide() => Resume();
+
+        void Open(Action screen)
+        {
+            Ui.Show(_panel, false);
+            screen?.Invoke();
+        }
+
+        void Pause(bool on)
+        {
+            if (on == Paused) return;
+            Paused = on;
+            if (on)
+            {
+                _timeScaleBefore = Time.timeScale > 0f ? Time.timeScale : 1f;
+                Time.timeScale = 0f;
+                AudioListener.pause = true;
+            }
+            else
+            {
+                Time.timeScale = _timeScaleBefore;
+                AudioListener.pause = false;
+            }
+            var ci = ClientInput.Current;
+            if (ci != null) ci.Paused = on;
+            if (on) { UnityEngine.Cursor.lockState = CursorLockMode.None; UnityEngine.Cursor.visible = true; }
         }
 
         void Load(string scene)
         {
-            _panel.style.display = DisplayStyle.None;
+            Resume();
             UnityEngine.Cursor.lockState = CursorLockMode.None;
             UnityEngine.Cursor.visible = true;
-            Core.Log.Info("menu: load scene " + scene);
+            Log.Info("menu: load scene " + scene);
             SceneManager.LoadScene(scene);
         }
+    }
+
+    /// <summary>The M1 Esc menu's name, kept for the autotests that open it (m1.ui.credits).</summary>
+    public static class QuickMenu
+    {
+        public static PauseMenu Current => PauseMenu.Current;
     }
 }

@@ -1,0 +1,27 @@
+{
+    "name": "Backroads.Tests.EditMode.Input",
+    "rootNamespace": "Backroads.Tests.EditMode.Input",
+    "references": [
+        "Backroads.Core",
+        "Backroads.Client",
+        "Backroads.Game",
+        "Unity.InputSystem",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
