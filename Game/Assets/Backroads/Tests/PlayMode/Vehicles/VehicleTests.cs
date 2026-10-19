@@ -132,6 +132,32 @@ namespace Backroads.Tests.PlayMode.Vehicles
             File.WriteAllText(Path.Combine(ArtifactsDir(), id + ".csv"), sb.ToString());
         }
 
+        /// <summary>The Burst-compiled step and the same code run as plain C# agree (Burst actually runs the step).</summary>
+        [Test]
+        public void BurstMatchesManaged()
+        {
+            var a = Canon();
+            var input = GoldenTraceInput.Load(Path.Combine(RepoRoot, "tools", "oracle", "traces", "pickup_brake_80.json"));
+            GoldenTraceSamples Run(bool burst)
+            {
+                var world = FreshWorld(a);
+                try { return GoldenTraceReplay.Run(input, new GoldenTraceReplay.Options { World = world, Parking = a.placements.parking, Sink = new JsRutSink(world.Grid), UseBurst = burst }); }
+                finally { DisposeWorld(world); }
+            }
+            var sw = Stopwatch.StartNew();
+            var b = Run(true);
+            double msBurst = sw.Elapsed.TotalMilliseconds;
+            sw.Restart();
+            var m = Run(false);
+            double msManaged = sw.Elapsed.TotalMilliseconds;
+            double max = 0;
+            for (int i = 0; i < b.rows.Count; i++)
+                max = Math.Max(max, Math.Sqrt(Math.Pow(b.rows[i][GoldenTraceSamples.Px] - m.rows[i][GoldenTraceSamples.Px], 2) + Math.Pow(b.rows[i][GoldenTraceSamples.Pz] - m.rows[i][GoldenTraceSamples.Pz], 2)));
+            TestContext.WriteLine(string.Format(CultureInfo.InvariantCulture, "Burst {0:F0} ms, managed {1:F0} ms for {2} steps x 4 vehicles; largest position difference {3:E2} m (Burst compiler enabled: {4})",
+                msBurst, msManaged, input.steps, max, Unity.Burst.BurstCompiler.IsEnabled));
+            Assert.Less(max, 0.01);
+        }
+
         // ------------------------------------------------------------------ snapshot round trip
 
         /// <summary>
