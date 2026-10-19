@@ -1,0 +1,25 @@
+{
+    "name": "Backroads.Tests.EditMode.EngineSim",
+    "rootNamespace": "Backroads.Tests.EditMode.EngineSim",
+    "references": [
+        "Backroads.Core",
+        "Backroads.EngineSim",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

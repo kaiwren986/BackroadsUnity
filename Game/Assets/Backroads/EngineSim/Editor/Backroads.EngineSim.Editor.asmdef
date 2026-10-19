@@ -1,0 +1,18 @@
+{
+    "name": "Backroads.EngineSim.Editor",
+    "rootNamespace": "Backroads.EngineSim.Editor",
+    "references": [
+        "Backroads.EngineSim"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

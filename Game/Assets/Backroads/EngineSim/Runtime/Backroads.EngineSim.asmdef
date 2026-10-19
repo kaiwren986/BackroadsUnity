@@ -2,7 +2,9 @@
     "name": "Backroads.EngineSim",
     "rootNamespace": "Backroads.EngineSim",
     "references": [
-        "Backroads.Core"
+        "Backroads.Core",
+        "Unity.InputSystem",
+        "Unity.Burst"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
