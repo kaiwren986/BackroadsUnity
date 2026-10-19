@@ -34,8 +34,11 @@ namespace Backroads.Client
                 if (kb[Keys[i]].wasPressedThisFrame) { Go(i); _showHelp = false; }
             if (kb.pKey.wasPressedThisFrame) { JumpToPoi(kb.leftShiftKey.isPressed ? -1 : 1); _showHelp = false; }
             if (kb.tKey.wasPressedThisFrame) { world.SetHour(world.Sky.Hour >= 6f && world.Sky.Hour < 18f ? 21f : 10f); Say($"{world.Sky.Hour:00}:00"); }
-            if (kb.leftBracketKey.wasPressedThisFrame) { world.SetHour(world.Sky.Hour - 1f); Say($"{Mathf.FloorToInt(world.Sky.Hour):00}:00"); }
-            if (kb.rightBracketKey.wasPressedThisFrame) { world.SetHour(world.Sky.Hour + 1f); Say($"{Mathf.FloorToInt(world.Sky.Hour):00}:00"); }
+            if (ClientInput.Current == null)   // without the input driver [ and ] still move the clock (M1 behaviour)
+            {
+                if (kb.leftBracketKey.wasPressedThisFrame) { world.SetHour(world.Sky.Hour - 1f); Say($"{Mathf.FloorToInt(world.Sky.Hour):00}:00"); }
+                if (kb.rightBracketKey.wasPressedThisFrame) { world.SetHour(world.Sky.Hour + 1f); Say($"{Mathf.FloorToInt(world.Sky.Hour):00}:00"); }
+            }
             if (kb.hKey.wasPressedThisFrame) _showHelp = !_showHelp;
         }
 
@@ -77,7 +80,7 @@ namespace Backroads.Client
 
         void OnGUI()
         {
-            if (ScriptedControl) return;
+            if (ScriptedControl || (ClientInput.Current != null && ClientInput.Current.Paused)) return;
             _style ??= new GUIStyle(GUI.skin.label) { fontSize = 22, fontStyle = FontStyle.Bold, normal = { textColor = Color.white } };
             _small ??= new GUIStyle(GUI.skin.label) { fontSize = 14, normal = { textColor = new Color(1, 1, 1, 0.85f) } };
             if (_label != null && Time.unscaledTime < _labelUntil)
@@ -88,7 +91,7 @@ namespace Backroads.Client
                 GUI.Label(new Rect(22, 22, 900, 40), world.Error != null ? "Millbrook could not load: " + world.Error : "Loading Millbrook...", _style);
             if (_showHelp)
                 GUI.Label(new Rect(22, Screen.height - 58, 1400, 30), // one line above the version stamp
-                    "WASD fly   hold right mouse: look   Q/E down/up   Shift fast   wheel: speed   1-0 - =: the 12 views   P: places   T: day/night   H: hide", _small);
+                    "Fly camera   WASD fly   hold right mouse: look   Q/E down/up   Shift fast   wheel: speed   1-0 - =: the 12 views   P: places   T: day/night   F8: drive   H: hide", _small);
         }
     }
 }

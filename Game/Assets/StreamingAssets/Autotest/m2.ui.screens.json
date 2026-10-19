@@ -1,0 +1,7 @@
+{
+  "id": "m2.ui.screens",
+  "kind": "ui-screens",
+  "seconds": 0,
+  "screenshot": false,
+  "notes": "T2.6 lane W: Esc opens the menu and pauses; Controls (from bindings.json), Settings (a quality change applies and is saved to settings.json) and Credits open from it and Esc returns; Esc resumes; F1 shows and hides the controls list. Needs a window."
+}

@@ -24,11 +24,24 @@ namespace Backroads.Client.Rendering
         public readonly List<Material> Created = new List<Material>();
         Mesh _rockMesh;
 
+        // T2.5 re-snap (props.js onTerrainChanged): trees by 16 m cell, their transforms and current ground height
+        const int SnapCells = 64;
+        readonly VegetationSet _veg;
+        readonly Transform[] _treeTf;
+        readonly float[] _treeY;
+        readonly List<int>[] _treeCells = new List<int>[SnapCells * SnapCells];
+        int[] _treeCollider;
+        /// <summary>Trees moved by Resnap since start.</summary>
+        public int Resnapped { get; private set; }
+
         public VegetationRenderer(CanonAsset canon, MillbrookLook look, Transform parent, float nearRadius)
         {
             Root = new GameObject("Vegetation").transform;
             Root.SetParent(parent, false);
             var veg = canon.vegetation;
+            _veg = veg;
+            _treeTf = new Transform[veg.trees.Length];
+            _treeY = new float[veg.trees.Length];
             var models = canon.trees;
             var lod0 = new Mesh[veg.species.Length];
             var lod1 = new Mesh[veg.species.Length];
@@ -59,6 +72,10 @@ namespace Backroads.Client.Rendering
                 var pose = CanonTransforms.Tree(t);
                 var go = new GameObject("t" + i);
                 var tr = go.transform;
+                _treeTf[i] = tr;
+                _treeY[i] = t.y;
+                int cell = Mathf.Clamp(Mathf.FloorToInt((t.x + 512f) / 16f), 0, SnapCells - 1) + Mathf.Clamp(Mathf.FloorToInt((t.z + 512f) / 16f), 0, SnapCells - 1) * SnapCells;
+                (_treeCells[cell] ??= new List<int>()).Add(i);
                 tr.SetParent(speciesRoots[t.sp], false);
                 tr.SetLocalPositionAndRotation(pose.position, pose.rotation);
                 tr.localScale = pose.scale;
@@ -91,6 +108,63 @@ namespace Backroads.Client.Rendering
                 r.sharedMaterial = look.rock;
                 r.SetShaderUserValue(PackGrey(rk.v));
                 Rocks++;
+            }
+        }
+
+        /// <summary>
+        /// props.js onTerrainChanged: trees inside the changed vertex rectangle (+1 m) follow the ground (mesh 0.2 m
+        /// below it) and their ColliderGrid circle's y range moves with them. Returns the number of trees moved.
+        /// </summary>
+        public int Resnap(int i0, int j0, int i1, int j1, WorldGridView grid, ColliderGrid colliders)
+        {
+            float x0 = i0 * 0.5f - 512f - 1f, x1 = i1 * 0.5f - 512f + 1f, z0 = j0 * 0.5f - 512f - 1f, z1 = j1 * 0.5f - 512f + 1f;
+            int c0 = Mathf.Clamp(Mathf.FloorToInt((x0 + 512f) / 16f), 0, SnapCells - 1), c1 = Mathf.Clamp(Mathf.FloorToInt((x1 + 512f) / 16f), 0, SnapCells - 1);
+            int r0 = Mathf.Clamp(Mathf.FloorToInt((z0 + 512f) / 16f), 0, SnapCells - 1), r1 = Mathf.Clamp(Mathf.FloorToInt((z1 + 512f) / 16f), 0, SnapCells - 1);
+            int moved = 0;
+            for (int r = r0; r <= r1; r++)
+                for (int c = c0; c <= c1; c++)
+                {
+                    var list = _treeCells[c + r * SnapCells];
+                    if (list == null) continue;
+                    foreach (int i in list)
+                    {
+                        var t = _veg.trees[i];
+                        if (t.x < x0 || t.x > x1 || t.z < z0 || t.z > z1 || _treeTf[i] == null) continue;
+                        float ny = WorldGridQueries.HeightAtJs(grid, t.x, t.z);
+                        if (Mathf.Abs(ny - _treeY[i]) < 0.01f) continue;
+                        _treeY[i] = ny;
+                        var p = _treeTf[i].localPosition;
+                        _treeTf[i].localPosition = new Vector3(p.x, ny - 0.2f, p.z);
+                        moved++;
+                        if (colliders != null && colliders.Records.IsCreated)
+                        {
+                            if (_treeCollider == null) BuildColliderMap(colliders);
+                            int ci = _treeCollider[i];
+                            if (ci >= 0)
+                            {
+                                var rec = colliders.Records[ci];
+                                rec.y0 = ny - 1f;
+                                rec.y1 = ny + _veg.species[t.sp].h * t.s;
+                                colliders.Records[ci] = rec;
+                            }
+                        }
+                    }
+                }
+            Resnapped += moved;
+            return moved;
+        }
+
+        /// <summary>The current ground height under tree i (canon y until the ground there changes).</summary>
+        public float TreeGround(int i) => _treeY[i];
+
+        void BuildColliderMap(ColliderGrid colliders)
+        {
+            _treeCollider = new int[_veg.trees.Length];
+            for (int i = 0; i < _treeCollider.Length; i++) _treeCollider[i] = -1;
+            for (int ci = 0; ci < colliders.Records.Length; ci++)
+            {
+                int t = colliders.Records[ci].tree;
+                if (t >= 0 && t < _treeCollider.Length) _treeCollider[t] = ci;
             }
         }
 

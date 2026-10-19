@@ -180,7 +180,7 @@ namespace Backroads.Client.UI
         {
             if (_panel == null) return;
             bool show = _panel.style.display != DisplayStyle.Flex;
-            _panel.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
+            Ui.Show(_panel, show);
             if (!show) Save();
         }
 

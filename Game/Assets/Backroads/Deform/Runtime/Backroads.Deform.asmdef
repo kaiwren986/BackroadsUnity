@@ -3,11 +3,14 @@
     "rootNamespace": "Backroads.Deform",
     "references": [
         "Backroads.Core",
-        "Backroads.World"
+        "Backroads.World",
+        "Unity.Mathematics",
+        "Unity.Collections",
+        "Unity.Burst"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
-    "allowUnsafeCode": false,
+    "allowUnsafeCode": true,
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,

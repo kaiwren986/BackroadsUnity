@@ -3,6 +3,7 @@ using System.Collections;
 using System.Diagnostics;
 using Backroads.Client.Rendering;
 using Backroads.Core;
+using Backroads.Deform;
 using Backroads.World;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -38,6 +39,11 @@ namespace Backroads.Client
         public PropSpawner Props { get; private set; }
         public DayNightPresenter Sky { get; private set; }
         public CanonAsset Canon { get; private set; }
+        /// <summary>T2.5: the ground deformation (registered as StampSinks.Current while Millbrook is loaded).</summary>
+        public DeformSystem Deform { get; private set; }
+        /// <summary>Dirty rectangles handed to the terrain and the trees in the last frame, and trees re-snapped.</summary>
+        public int DirtyRectsLastFrame { get; private set; }
+        public int TreesResnappedLastFrame { get; private set; }
 
         /// <summary>Load timings in milliseconds (reported by the perf autotest).</summary>
         public double CanonLoadMs, TerrainBuildAllMs, BuildingsMs, VegetationMs, PropsMs, TotalLoadMs;
@@ -57,6 +63,8 @@ namespace Backroads.Client
             Canon = CanonRuntime.Asset;
             if (Canon == null) { Fail(CanonRuntime.NotImportedMessage); yield break; }
             if (cam == null) cam = Camera.main;
+            if (cam.GetComponent<VehicleCameraRig>() == null) cam.gameObject.AddComponent<VehicleCameraRig>();
+            if (cam.GetComponent<CameraDirector>() == null) cam.gameObject.AddComponent<CameraDirector>();
             if (startBookmark >= 0 && startBookmark < Canon.world.cameras.Length)
             {
                 var pose = CanonTransforms.Camera(Canon.world.cameras[startBookmark]);
@@ -110,6 +118,9 @@ namespace Backroads.Client
             WaterSurface.Spawn(look.water, Canon.waterNormal, transform);
             PropsMs = sw.Elapsed.TotalMilliseconds;
 
+            Deform = new DeformSystem(grid);
+            StampSinks.Current = Deform;
+
             Sky = new DayNightPresenter(sun, look, Canon.placements, transform, volume) { LampLightCount = Mathf.Max(6, q.LampLights) };
             Sky.SetHour(startHour, cam.transform.position);
             TotalLoadMs = total.Elapsed.TotalMilliseconds;
@@ -141,18 +152,61 @@ namespace Backroads.Client
             Log.Error("Millbrook: " + why);
         }
 
+        void Update()
+        {
+            if (!Ready) return;
+            var input = ClientInput.Current;
+            if (input == null) return;
+            if (input.Pressed("timeForward")) { SetHour((Sky.Hour + 1f) % 24f); Toasts.Show($"{Mathf.FloorToInt(Sky.Hour):00}:00"); }
+            if (input.Pressed("timeBack")) { SetHour((Sky.Hour + 23f) % 24f); Toasts.Show($"{Mathf.FloorToInt(Sky.Hour):00}:00"); }
+        }
+
         void LateUpdate()
         {
             if (!Ready || cam == null) return;
             var p = cam.transform.position;
+            FlushDeformation();
             Terrain.Update(p);
             Sky.Tick(Time.deltaTime, p, !FreezeClock);
+        }
+
+        /// <summary>
+        /// Hands this frame's changed ground rectangles to the terrain chunks (partial vertex updates) and the trees
+        /// (re-snap), main.js order: terrain.flushDirty after the simulation, before the camera.
+        /// </summary>
+        public void FlushDeformation()
+        {
+            if (Deform == null) return;
+            int rects = 0, trees = 0;
+            var grid = CanonRuntime.Grid;
+            ColliderGrid colliders = null;
+            while (Deform.Dirty.TryDequeue(out var r))
+            {
+                rects++;
+                Terrain.MarkDirty(r.x, r.y, r.z, r.w);
+                colliders ??= CanonRuntime.Colliders;
+                trees += Vegetation.Resnap(r.x, r.y, r.z, r.w, grid.View, colliders);
+            }
+            Terrain.FlushDirty();
+            DirtyRectsLastFrame = rects;
+            TreesResnappedLastFrame = trees;
         }
 
         /// <summary>Sets the hour of day (0-24).</summary>
         public void SetHour(float hour)
         {
             if (Sky != null) Sky.SetHour(hour, cam != null ? cam.transform.position : Vector3.zero);
+        }
+
+        /// <summary>Applies a quality tier's world values at run time (F2 and the Settings screen).</summary>
+        public void ApplyQuality(QualityValues q)
+        {
+            if (q == null) return;
+            if (Terrain != null) { Terrain.LodScale = q.TerrainLodScale; Terrain.BuildsPerFrame = q.ChunkBuildsPerFrame; }
+            SetTreeNearRadius(q.TreeNearRadius);
+            if (Sky != null) Sky.LampLightCount = Mathf.Max(6, q.LampLights);
+            if (GraphicsSettings.currentRenderPipeline is UniversalRenderPipelineAsset urp && !Application.isEditor)
+                urp.shadowDistance = q.ShadowDistance;
         }
 
         /// <summary>
@@ -215,6 +269,7 @@ namespace Backroads.Client
             Buildings?.Destroy();
             Vegetation?.Destroy();
             Props?.Destroy();
+            if (Deform != null) { Deform.Dispose(); Deform = null; }
             CanonRuntime.Unload();
         }
     }

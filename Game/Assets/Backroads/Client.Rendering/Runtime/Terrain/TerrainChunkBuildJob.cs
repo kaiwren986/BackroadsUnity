@@ -68,9 +68,6 @@ namespace Backroads.Client.Rendering
         public TerrainPalette Pal;
         public Mesh.MeshDataArray Out;
 
-        const int N = WorldGrid.N, VN = WorldGrid.VN, TintN = WorldGrid.TintN;
-        const byte GRASS = 0, DIRT = 1, SAND = 2, ROCK = 3, ROAD = 4, GRAVEL = 5, CONCRETE = 6, TRACK = 7, MUD = 8;
-
         public static int Step(int lod) => 1 << lod;
         public static int VertexCount(int lod) { int vn = CellsPerChunk / Step(lod) + 1; return vn * vn + 4 * vn; }
         public static int IndexCount(int lod) { int n = CellsPerChunk / Step(lod); return n * n * 6 + 4 * n * 12; }
@@ -99,16 +96,17 @@ namespace Backroads.Client.Rendering
             md.SetIndexBufferParams(IndexCount(lod), IndexFormat.UInt16);
             var pn = md.GetVertexData<TerrainVertexPN>(0);
             var at = md.GetVertexData<TerrainVertexAttr>(1);
+            var wr = new TerrainVertexWriter { Grid = Grid, Pal = Pal };
             int iB = ch.x * CellsPerChunk, jB = ch.y * CellsPerChunk;
             for (int r = 0; r <= n; r++)
                 for (int c = 0; c <= n; c++)
-                    WriteVertex(pn, at, r * vn + c, iB + c * step, jB + r * step, step, 0.0);
+                    wr.Write(pn, at, r * vn + c, iB + c * step, jB + r * step, step, 0.0);
             double depth = 1.2 + step * 0.7;
             for (int e = 0; e < 4; e++)
                 for (int t = 0; t <= n; t++)
                 {
                     EdgeRC(e, t, n, out int r, out int c);
-                    WriteVertex(pn, at, gridCount + e * vn + t, iB + c * step, jB + r * step, step, depth);
+                    wr.Write(pn, at, gridCount + e * vn + t, iB + c * step, jB + r * step, step, depth);
                 }
 
             var idx = md.GetIndexData<ushort>();
@@ -138,7 +136,7 @@ namespace Backroads.Client.Rendering
             md.SetSubMesh(0, new SubMeshDescriptor(0, p), MeshUpdateFlags.DontRecalculateBounds | MeshUpdateFlags.DontValidateIndices | MeshUpdateFlags.DontNotifyMeshUsers);
         }
 
-        static void EdgeRC(int e, int t, int n, out int r, out int c)
+        public static void EdgeRC(int e, int t, int n, out int r, out int c)
         {
             switch (e)
             {
@@ -149,13 +147,62 @@ namespace Backroads.Client.Rendering
             }
         }
 
+    }
+
+    /// <summary>
+    /// T2.5 partial update of one chunk mesh (terrain.js updateRegion): grid rows R0..R1 (every column) into Pn/At at
+    /// [0, rows * vn), then the skirt strips selected by SkirtMask (bit e: edge e of EdgeRC) at rows * vn + e * vn.
+    /// </summary>
+    [BurstCompile]
+    public struct TerrainRegionJob : IJob
+    {
+        public WorldGridView Grid;
+        public TerrainPalette Pal;
+        public int Cx, Cz, Lod, R0, R1, SkirtMask;
+        public NativeArray<TerrainVertexPN> Pn;
+        public NativeArray<TerrainVertexAttr> At;
+
+        public void Execute()
+        {
+            var wr = new TerrainVertexWriter { Grid = Grid, Pal = Pal };
+            int step = TerrainChunkBuildJob.Step(Lod), n = TerrainChunkBuildJob.CellsPerChunk / step, vn = n + 1;
+            int iB = Cx * TerrainChunkBuildJob.CellsPerChunk, jB = Cz * TerrainChunkBuildJob.CellsPerChunk;
+            int rows = R1 - R0 + 1;
+            for (int r = R0; r <= R1; r++)
+                for (int c = 0; c <= n; c++)
+                    wr.Write(Pn, At, (r - R0) * vn + c, iB + c * step, jB + r * step, step, 0.0);
+            double depth = 1.2 + step * 0.7;
+            for (int e = 0; e < 4; e++)
+            {
+                if ((SkirtMask & (1 << e)) == 0) continue;
+                for (int t = 0; t <= n; t++)
+                {
+                    TerrainChunkBuildJob.EdgeRC(e, t, n, out int r, out int c);
+                    wr.Write(Pn, At, rows * vn + e * vn + t, iB + c * step, jB + r * step, step, depth);
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// terrain.js writeVertex/colorAt/surfColor/writeKind for one vertex (shared by the chunk build and the partial
+    /// region update, so a partial update writes exactly what a rebuild would).
+    /// </summary>
+    public struct TerrainVertexWriter
+    {
+        public WorldGridView Grid;
+        public TerrainPalette Pal;
+
+        const int N = WorldGrid.N, VN = WorldGrid.VN, TintN = WorldGrid.TintN;
+        const byte GRASS = 0, DIRT = 1, SAND = 2, ROCK = 3, ROAD = 4, GRAVEL = 5, CONCRETE = 6, TRACK = 7, MUD = 8;
+
         static float Smooth(float a, float b, float x)
         {
             float t = math.saturate((x - a) / (b - a));
             return t * t * (3 - 2 * t);
         }
 
-        void WriteVertex(NativeArray<TerrainVertexPN> pn, NativeArray<TerrainVertexAttr> at, int v, int i, int j, int step, double skirt)
+        public void Write(NativeArray<TerrainVertexPN> pn, NativeArray<TerrainVertexAttr> at, int v, int i, int j, int step, double skirt)
         {
             var H = Grid.H;
             var S = Grid.Surface;
