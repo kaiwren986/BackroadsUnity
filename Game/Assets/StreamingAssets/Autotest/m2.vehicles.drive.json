@@ -1,0 +1,16 @@
+{
+  "id": "m2.vehicles.drive",
+  "kind": "vehicles-drive",
+  "seconds": 30,
+  "screenshot": true,
+  "childTimeoutSeconds": 180,
+  "waitSeconds": 90,
+  "throttle": 0.7,
+  "driveSeconds": 5,
+  "steer": 0,
+  "brakeSeconds": 3,
+  "minDistanceM": 8,
+  "simP95MsBudget": 3.5,
+  "startVehicle": "Hauler 7.5t",
+  "notes": "Card T2.2: Millbrook starts with the four M2 vehicles settled on the garage bays and the player in the truck; E switches into the nearest parked vehicle; L lights, H horn; a scripted DriveInput drives the truck off its bay and stops it. Reports the simulation main-thread time per rendered frame (PLAN 6.1 M2 lane gate: p95 <= 3.5 ms at High)."
+}
