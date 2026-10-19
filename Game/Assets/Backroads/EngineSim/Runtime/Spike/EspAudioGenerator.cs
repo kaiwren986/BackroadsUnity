@@ -1,3 +1,4 @@
+#if UNITY_EDITOR || BACKROADS_TESTING
 using System;
 using System.Runtime.InteropServices;
 using Unity.Burst;
@@ -8,7 +9,7 @@ using UnityEngine.Audio;
 namespace Backroads.EngineSim
 {
     /// <summary>
-    /// Spike S-AUD-1 (b), Unity 6.3 scriptable audio: an IAudioGenerator whose realtime part (a Burst struct) either reads
+    /// Spike S-AUD-1 (b), Dev builds only. Unity 6.3 scriptable audio: an IAudioGenerator whose realtime part (a Burst struct) either reads
     /// the engine ring with a [DllImport] call to esp_read_audio, or makes a test tone. Set as AudioSource.generator, so the
     /// AudioSource's 3D panning, attenuation and mixer routing apply. ChannelBuffer offers per-sample indexing only (no
     /// pointer), so the samples go through a stack buffer. Counters live in unmanaged memory so the main thread can see
@@ -111,7 +112,8 @@ namespace Backroads.EngineSim
                                   out GeneratorInstance.Setup setup, ref GeneratorInstance.Properties properties)
             {
                 realtime.sampleRate = format.sampleRate;
-                setup = new GeneratorInstance.Setup(format.speakerMode, format.sampleRate);
+                // mono, like an engine at one point in space; the AudioSource pans and attenuates it
+                setup = new GeneratorInstance.Setup(AudioSpeakerMode.Mono, format.sampleRate);
             }
 
             public void Dispose(ControlContext context, ref Realtime realtime) { }
@@ -122,3 +124,4 @@ namespace Backroads.EngineSim
         }
     }
 }
+#endif
