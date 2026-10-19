@@ -1,6 +1,14 @@
 {
-  "note": "Which lane owns each path. Repo.OwnersRespected fails a merge when a branch changes a path its lane does not own. Longest prefix wins.",
-  "lanes": { "I": "integrator", "W": "world and rendering", "V": "vehicles and native plugin", "R": "roads and traffic", "A": "art", "N": "netcode", "G": "gameplay and UI" },
+  "note": "Which lane owns each path. Repo.OwnersRespected fails a merge when a branch changes a path its lane does not own. Longest prefix wins. (M2: Client.UI is lane W until lane G starts in M7.)",
+  "lanes": {
+    "I": "integrator",
+    "W": "world and rendering",
+    "V": "vehicles and native plugin",
+    "R": "roads and traffic",
+    "A": "art",
+    "N": "netcode",
+    "G": "gameplay and UI"
+  },
   "paths": {
     "": "I",
     "CanonData/": "W",
@@ -30,7 +38,7 @@
     "Game/Assets/Backroads/Net.Steam/": "N",
     "Game/Assets/Backroads/Gameplay/": "G",
     "Game/Assets/Backroads/Persistence/": "G",
-    "Game/Assets/Backroads/Client.UI/": "G",
+    "Game/Assets/Backroads/Client.UI/": "W",
     "Game/Assets/Art/": "A",
     "Game/Assets/Content/": "V",
     "Game/Assets/Backroads/Scenes/TestYard.unity": "I",
@@ -53,6 +61,27 @@
     "docs/adr/ADR-001": "W",
     "docs/adr/ADR-002": "V",
     "docs/milestones/M1-handoff-W.md": "W",
-    "docs/milestones/M1-handoff-V.md": "V"
+    "docs/milestones/M1-handoff-V.md": "V",
+    "Game/Assets/Content/core/bindings": "W",
+    "Game/Assets/Backroads/Art/": "A",
+    "Game/Assets/Backroads/Tests/EditMode/Vehicles/": "V",
+    "Game/Assets/Backroads/Tests/PlayMode/Vehicles/": "V",
+    "Game/Assets/Backroads/Tests/Perf/Vehicles/": "V",
+    "Game/Assets/Backroads/Tests/EditMode/Deform/": "W",
+    "Game/Assets/Backroads/Tests/EditMode/Input/": "W",
+    "Game/Assets/Backroads/Tests/PlayMode/Input/": "W",
+    "Game/Assets/Backroads/Tests/EditMode/Roads/": "R",
+    "Game/Assets/Backroads/Tests/EditMode/Art/": "A",
+    "Game/Assets/Backroads/Testing/Runtime/Scenarios/Vehicles/": "V",
+    "Game/Assets/Backroads/Testing/Runtime/Scenarios/Roads/": "R",
+    "Game/Assets/Backroads/Scenes/RoadsDebug.unity": "R",
+    "docs/milestones/M2-handoff-V.md": "V",
+    "docs/milestones/M2-handoff-VS.md": "V",
+    "docs/milestones/M2-handoff-W.md": "W",
+    "docs/milestones/M2-handoff-R.md": "R",
+    "docs/milestones/M2-handoff-A.md": "A",
+    "docs/adr/ADR-003": "W",
+    "docs/adr/ADR-004": "W",
+    "docs/adr/ADR-005": "V"
   }
 }
