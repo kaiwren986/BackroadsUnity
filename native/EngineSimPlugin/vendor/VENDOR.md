@@ -91,8 +91,9 @@ unchanged. vendor-check compares `git hash-object --no-filters` of every vendore
 | `simple-2d-constraint-solver-LICENSE` | MIT, "Copyright (c) 2022 Ange Yaghi" | scs `e009f4f:LICENSE` = `231f3f1baf112ac7a71efd68d7be22107c64abb0` |
 | `piranha-LICENSE` | MIT, "Copyright (c) 2022 Ange Yaghi" | piranha `ff2955d:LICENSE` = `231f3f1baf112ac7a71efd68d7be22107c64abb0` (see below) |
 | `flex-NOTICE.txt` | flex's BSD notice (needed in binary distributions only if the generated scanner ships, U3c) | lines 5-28 of `piranha\dependencies\libraries\flex\include\FlexLexer.h`, verbatim |
+| `bison-NOTICE.txt` | the Bison skeleton's copyright, GPL-3.0 notice and special exception (the generated parser ships from M1, U3c; notices.ps1 copies it for the bison entry) | lines 1-31 of `..\generated\piranha\parser.auto.cpp`, verbatim |
 
-vendor-check verifies each of these four files against its source; `piranha-LICENSE` is the only file that has no
+vendor-check verifies each of these five files against its source; `piranha-LICENSE` is the only file that has no
 counterpart in the vendored commits (PLAN §1.6, C9).
 
 ### piranha licence note

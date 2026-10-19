@@ -4,7 +4,8 @@
 # assets/engines LICENSE) and in its submodules simple-2d-constraint-solver @ e009f4f and piranha @ 432f0b1.
 # Actual: `git hash-object --no-filters` of every vendored file, so the result never depends on autocrlf [T5].
 # vendor\LICENSES\ holds verified copies; piranha-LICENSE is the only file with no counterpart at the vendored
-# commits [C9]. vendor\VENDOR.md and LICENSES\* must not contain CR bytes (Repo.NoCrInHashedFiles).
+# commits [C9]; bison-NOTICE.txt is lines 1-31 of generated\piranha\parser.auto.cpp (U3c, M1).
+# vendor\VENDOR.md and LICENSES\* must not contain CR bytes (Repo.NoCrInHashedFiles).
 #
 # Usage:  tools\ci\vendor-check.ps1            exit 0 = 0 differences, 1 = differences, 2 = cannot run
 # Writes: artifacts\gates\vendor-check.json
@@ -25,6 +26,8 @@ $PIRANHA_LICENSE_COMMIT = 'ff2955daddb2a7e0bae93f8e444a9601bf5bf111'   # piranha
 $PIRANHA_LICENSE_BLOB   = '231f3f1baf112ac7a71efd68d7be22107c64abb0'
 $FLEX_HEADER            = 'dependencies/submodules/piranha/dependencies/libraries/flex/include/FlexLexer.h'
 $FLEX_NOTICE_LINES      = @(5, 28)                                       # 1-based, inclusive
+$BISON_SOURCE           = 'native/EngineSimPlugin/generated/piranha/parser.auto.cpp'   # repo-relative (U3c, M1)
+$BISON_NOTICE_LINES     = @(1, 31)                                       # copyright, GPL notice and the Bison exception
 
 $vendorDir = Join-Path $REPO 'native\EngineSimPlugin\vendor'
 $esDir     = Join-Path $vendorDir 'engine-sim'
@@ -120,11 +123,14 @@ try {
     $latin1 = [Text.Encoding]::GetEncoding(28591)
     $flexLines = $latin1.GetString([IO.File]::ReadAllBytes((Join-Path $esDir $FLEX_HEADER))).Split("`n")
     $flexNotice = ($flexLines[($FLEX_NOTICE_LINES[0] - 1)..($FLEX_NOTICE_LINES[1] - 1)] -join "`n") + "`n"
+    $bisonLines = $latin1.GetString([IO.File]::ReadAllBytes((Join-Path $REPO ($BISON_SOURCE -replace '/', '\')))).Split("`n")
+    $bisonNotice = ($bisonLines[($BISON_NOTICE_LINES[0] - 1)..($BISON_NOTICE_LINES[1] - 1)] -join "`n") + "`n"
     $licExpected = [ordered]@{
         'engine-sim-LICENSE'                  = @{ Blob = $expected['LICENSE'] }
         'simple-2d-constraint-solver-LICENSE' = @{ Blob = $expected['dependencies/submodules/simple-2d-constraint-solver/LICENSE'] }
         'piranha-LICENSE'                     = @{ Blob = $PIRANHA_LICENSE_BLOB }
-        'flex-NOTICE.txt'                     = @{ Text = $flexNotice }
+        'flex-NOTICE.txt'                     = @{ Text = $flexNotice; From = "lines $($FLEX_NOTICE_LINES -join '-') of $FLEX_HEADER" }
+        'bison-NOTICE.txt'                    = @{ Text = $bisonNotice; From = "lines $($BISON_NOTICE_LINES -join '-') of $BISON_SOURCE" }
     }
     # piranha-LICENSE: when the source commit is still in the local clone, confirm it still has that blob.
     $pir = Join-Path $ENGINESIM_REF 'dependencies/submodules/piranha'
@@ -147,7 +153,7 @@ try {
             $id = (Invoke-Git $licDir @('hash-object', '--no-filters', '--', $name))[0]
             if ($id -ne $e.Blob) { $diffs.Add("CHANGED  LICENSES/$name (blob $($e.Blob), file $id)") }
         } elseif ($latin1.GetString($bytes) -cne $e.Text) {
-            $diffs.Add("CHANGED  LICENSES/$name is not lines $($FLEX_NOTICE_LINES -join '-') of $FLEX_HEADER")
+            $diffs.Add("CHANGED  LICENSES/$name is not $($e.From)")
         }
     }
     foreach ($name in $licFiles) { if (-not $licExpected.Contains($name)) { $diffs.Add("EXTRA    LICENSES/$name") } }
