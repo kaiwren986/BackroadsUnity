@@ -4,7 +4,8 @@
     "references": [
         "Backroads.Core",
         "Backroads.World",
-        "Backroads.Roads"
+        "Backroads.Roads",
+        "Backroads.Canon.Editor"
     ],
     "includePlatforms": [
         "Editor"
