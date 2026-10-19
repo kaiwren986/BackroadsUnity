@@ -42,6 +42,9 @@ namespace Backroads.EngineSim
             /// <summary>The newest result against this step's mapped rpm (includes the L-step result lag, PLAN 3.4).</summary>
             public int LagCount;
             public double LagSumSq, LagMaxAbs;
+            /// <summary>Results of commands that ran no steps: they repaid steps borrowed while coasting through a hitch
+            /// (ADR-002 item 6), so the engine could not move to their target. Counted, not compared.</summary>
+            public int Repaid;
             public double Rms => Count > 0 ? Math.Sqrt(SumSq / Count) : 0;
             public double LagRms => LagCount > 0 ? Math.Sqrt(LagSumSq / LagCount) : 0;
         }
@@ -203,7 +206,8 @@ namespace Backroads.EngineSim
             {
                 _lastCounted = o.stepIndex;
                 int slot = (int)(o.stepIndex & 63);
-                if (_targetStep[slot] == o.stepIndex)
+                if (_targetStep[slot] == o.stepIndex && o.steps == 0) _tracking.Repaid++;
+                else if (_targetStep[slot] == o.stepIndex)
                 {
                     double e = o.rpm - _target[slot];
                     _tracking.Count++;

@@ -60,7 +60,7 @@ namespace Backroads.Tests.PlayMode.EngineSim
                 var tr = e.TrackingStats;
                 var s = e.Engine.Stats();
                 var map = e.Map;
-                string line = $"{v.Name} -> {v.EngineId}: {map}; tracking RMS {tr.Rms:F2} rpm (max {tr.MaxAbs:F1}) over {tr.Count} steps, " +
+                string line = $"{v.Name} -> {v.EngineId}: {map}; tracking RMS {tr.Rms:F2} rpm (max {tr.MaxAbs:F1}) over {tr.Count} steps ({tr.Repaid} repaying), " +
                               $"newest result vs this step's target RMS {tr.LagRms:F1} rpm (the L-step lag); RTF {s.rtf:F2} " +
                               $"({e.Engine.Info.simFrequency} Hz, {e.Engine.Info.fluidSteps} substeps), worker {s.workerMsEma:F2} ms/step, " +
                               $"stale {s.staleSteps}, coast {s.coastEvents}, underruns {s.audioUnderruns}, P-core share {s.pCoreShare * 100:F0} %";

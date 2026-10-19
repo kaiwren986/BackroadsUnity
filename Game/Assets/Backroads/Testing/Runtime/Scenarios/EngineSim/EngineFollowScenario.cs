@@ -36,7 +36,7 @@ namespace Backroads.Testing
         sealed class Row
         {
             public string vehicle, engine, map, tier;
-            public int simFrequency, fluidSteps, irTaps, steps, compared, staleSteps, coastEvents, underruns, underrunsAtStart;
+            public int simFrequency, fluidSteps, irTaps, steps, compared, repaid, staleSteps, coastEvents, underruns, underrunsAtStart;
             public double rmsRpm, maxAbsRpm, lagRmsRpm, rtf, workerMs, pCoreShare, mainThreadP99Ms, ringTargetMs;
             public bool pass;
         }
@@ -57,6 +57,14 @@ namespace Backroads.Testing
             float minRtf = tier == EngineAudioTier.Low ? p.minRtfLow : p.minRtfHigh;
             var report = new Report { tier = tier.ToString() };
             if (Object.FindAnyObjectByType<AudioListener>() == null) new GameObject("FollowListener", typeof(AudioListener));
+            // start once the load frames are over (30 frames in a row under 50 ms, at most 10 s): a hitch longer than
+            // coast_max_ms is coasted, then repaid (ADR-002 item 6); this gate measures steady following
+            int calm = 0;
+            for (float w = Time.unscaledTime; calm < 30 && Time.unscaledTime - w < 10f;)
+            {
+                calm = Time.unscaledDeltaTime < 0.05f ? calm + 1 : 0;
+                yield return null;
+            }
             int frames = 0;
             float run0 = Time.unscaledTime;
             foreach (var id in p.engines)
@@ -93,6 +101,7 @@ namespace Backroads.Testing
                 row.irTaps = e.Engine.Info.irTaps;
                 row.steps = d.Steps;
                 row.compared = tr.Count;
+                row.repaid = tr.Repaid;
                 row.rmsRpm = tr.Rms;
                 row.maxAbsRpm = tr.MaxAbs;
                 row.lagRmsRpm = tr.LagRms;
@@ -114,7 +123,7 @@ namespace Backroads.Testing
                 row.pass = f.Count == 0;
                 foreach (var x in f) report.failures.Add($"{v.Name} ({id}): {x}");
                 report.rows.Add(row);
-                ctx.Note($"{v.Name} -> {id}: {row.map}; RMS {row.rmsRpm:F2} rpm, lag RMS {row.lagRmsRpm:F1}, RTF {row.rtf:F2}, " +
+                ctx.Note($"{v.Name} -> {id}: {row.map}; RMS {row.rmsRpm:F2} rpm over {row.compared} steps ({row.repaid} repaying), lag RMS {row.lagRmsRpm:F1}, RTF {row.rtf:F2}, " +
                          $"underruns {row.underruns} (+{row.underrunsAtStart} at creation), main thread p99 {row.mainThreadP99Ms:F3} ms");
                 ctx.Metric($"rms_{id}", row.rmsRpm);
                 ctx.Metric($"rtf_{id}", row.rtf);

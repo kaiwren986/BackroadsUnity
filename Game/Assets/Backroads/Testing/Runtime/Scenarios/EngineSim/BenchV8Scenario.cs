@@ -103,11 +103,16 @@ namespace Backroads.Testing
             if (winN > 0 && winTo - winFrom > 4096 * ch)
             {
                 var x = captured.ToArray();
-                var r = PitchAnalysis.Check(x, winFrom, (winTo - winFrom) / ch, ch, rate, winRpm / winN, def.pitchOrders, 0.03);
-                ctx.Note($"pitch at {winRpm / winN:F0} rpm, {p.revPedal * 100:F0} % pedal against the load: {r}");
-                ctx.Metric("pitch_rpm", winRpm / winN);
-                ctx.Metric("pitch_pass", r.Pass ? 1 : 0);
-                if (!r.Pass) ctx.Fail($"pitch at {winRpm / winN:F0} rpm: acf {r.acfHz:F1} Hz (order {r.acfOrder:F2}), peak {r.peakHz:F1} Hz (order {r.peakOrder:F2})");
+                try
+                {
+                    int frames = Math.Min((winTo - winFrom) / ch, x.Length / ch - winFrom / ch);
+                    var r = PitchAnalysis.Check(x, winFrom / ch, frames, ch, rate, winRpm / winN, def.pitchOrders, 0.03);   // offset in frames
+                    ctx.Note($"pitch at {winRpm / winN:F0} rpm, {p.revPedal * 100:F0} % pedal against the load: {r}");
+                    ctx.Metric("pitch_rpm", winRpm / winN);
+                    ctx.Metric("pitch_pass", r.Pass ? 1 : 0);
+                    if (!r.Pass) ctx.Fail($"pitch at {winRpm / winN:F0} rpm: acf {r.acfHz:F1} Hz (order {r.acfOrder:F2}), peak {r.peakHz:F1} Hz (order {r.peakOrder:F2})");
+                }
+                catch (Exception ex) { ctx.Fail("pitch analysis: " + ex.Message); }
             }
             else ctx.Fail("no audio in the pitch window");
             var s1 = engine.Stats();
@@ -156,12 +161,16 @@ namespace Backroads.Testing
             double rms = 0, lagRms = 0;
             int compared = 0;
             EspStats d1 = default;
+            int underrunsBeforeShot = 0;
             while (bench.DemoRunning && driver != null && !driver.Done)
             {
                 if (!d0Set && driver.T >= FollowRamp.KeyOnS + 1f) { d0 = demo.Engine.Stats(); d0Set = true; }
                 demoTap.Drain(demoAudio);
                 if (!shot && driver.T >= 4.0f)
                 {
+                    // the gated window ends here: the screenshot stalls the main thread for longer than the plugin coasts
+                    // (300 ms), and the steps borrowed meanwhile are repaid in silence afterwards (ADR-002 item 6)
+                    underrunsBeforeShot = demo.Engine.Stats().audioUnderruns - d0.audioUnderruns;
                     shot = true;
                     yield return ctx.Screenshot("bench_v8_demo");
                     continue;
@@ -178,7 +187,8 @@ namespace Backroads.Testing
             demoTap.Drain(demoAudio);
             AudioTap.SaveWav(Path.Combine(ctx.OutDir, "demo_v8.wav"), demoAudio.ToArray(), demoAudio.Count, Math.Max(1, demoTap.Channels), rate);
             ctx.Evidence(Path.Combine(ctx.OutDir, "demo_v8.wav"));
-            int demoUnderruns = d1.audioUnderruns - d0.audioUnderruns;
+            int demoUnderruns = underrunsBeforeShot;
+            ctx.Metric("demo_underruns_after_screenshot", d1.audioUnderruns - d0.audioUnderruns - underrunsBeforeShot);
             ctx.Metric("demo_rms_rpm", rms);
             ctx.Metric("demo_lag_rms_rpm", lagRms);
             ctx.Metric("demo_compared", compared);
