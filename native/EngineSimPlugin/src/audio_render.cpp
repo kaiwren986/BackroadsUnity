@@ -1,7 +1,10 @@
 // audio_render.cpp: see audio_render.h.
 #include "audio_render.h"
 
+#include "platform.h"
 #include "synthesizer.h"
+
+#include <windows.h>
 
 #include <algorithm>
 #include <cmath>
@@ -61,7 +64,10 @@ int32_t AudioOutput::read(float *dst, int32_t frames, int32_t channels) {
         const bool active = producerActive.load(std::memory_order_relaxed);
         if (m_primed) {  // ran dry
             m_primed = false;
-            if (active && !m_inUnderrun) underruns.fetch_add(1, std::memory_order_relaxed);
+            if (active && !m_inUnderrun) {
+                lastUnderrunQpc.store(qpcNow(), std::memory_order_relaxed);
+                underruns.fetch_add(1, std::memory_order_relaxed);
+            }
             m_inUnderrun = active;
         }
         if (active && m_everPrimed) underrunFrames.fetch_add(frames - got, std::memory_order_relaxed);
@@ -75,6 +81,20 @@ int32_t AudioOutput::read(float *dst, int32_t frames, int32_t channels) {
         m_inUnderrun = false;
     }
     consumed.fetch_add(got, std::memory_order_relaxed);
+    // wake the worker once per low episode (SetEvent neither blocks nor allocates; the worker decides what to do)
+    const int32_t low = lowWaterFrames.load(std::memory_order_relaxed);
+    if (low > 0 && wakeEvent != nullptr) {
+        if (ring.fill() <= static_cast<size_t>(low)) {
+            if (!m_lowSignalled) {
+                m_lowSignalled = true;
+                lowWakeQpc.store(qpcNow(), std::memory_order_relaxed);
+                lowWakes.fetch_add(1, std::memory_order_relaxed);
+                SetEvent(static_cast<HANDLE>(wakeEvent));
+            }
+        } else {
+            m_lowSignalled = false;
+        }
+    }
     return got;
 }
 
@@ -88,6 +108,7 @@ void FillController::init(int sampleRate, int dspBufferFrames, int initialTarget
     m_trim = trimEnabled;
     m_eps = 0.0;
     m_frame = INT32_MIN;
+    m_frameKickS = -1.0;
     m_frameDts.assign(256, 0.0);
     m_frameWorks.assign(256, 0.0);
     m_scratch.assign(256, 0.0);
@@ -95,11 +116,13 @@ void FillController::init(int sampleRate, int dspBufferFrames, int initialTarget
     m_lastRecompute = -1.0;
 }
 
-void FillController::onCommand(int32_t frameIndex, double frameDtS, double workerSeconds, double nowS) {
+void FillController::onCommand(int32_t frameIndex, double frameDtS, double workerSeconds, double nowS, double kickS) {
     if (frameDtS <= 0.0) return;  // no frame information (tools, tests): keep the initial target
     if (frameIndex != m_frame) {
         if (m_frame != INT32_MIN) {
-            m_frameDts[m_next] = std::min(m_frameDt, 0.25);
+            // the audio cadence: the frame's own duration, or the kick-to-kick time to the next commanding frame
+            const double cadence = m_frameKickS >= 0.0 ? std::max(m_frameDt, kickS - m_frameKickS) : m_frameDt;
+            m_frameDts[m_next] = std::min(cadence, 0.25);
             m_frameWorks[m_next] = m_frameWork;
             m_next = (m_next + 1) % m_frameDts.size();
             if (m_count < m_frameDts.size()) ++m_count;
@@ -107,6 +130,7 @@ void FillController::onCommand(int32_t frameIndex, double frameDtS, double worke
         m_frame = frameIndex;
         m_frameDt = frameDtS;
         m_frameWork = 0.0;
+        m_frameKickS = kickS;
     }
     m_frameWork += workerSeconds;
     if (m_lastRecompute < 0.0) m_lastRecompute = nowS;

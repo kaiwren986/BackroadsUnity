@@ -93,6 +93,13 @@ private:
     void updateSlope(double omega, double torque, double dt);
 
     void workerMain();
+    // Worker wait for the next command or for `seconds`, whichever comes first, on a high-resolution waitable timer
+    // (independent of the process timer resolution); falls back to WaitForSingleObject's millisecond timeout.
+    void workerWait(double seconds);
+    // Underrun diagnostics (worker): every produced batch is noted; a new underrun logs the batches before it.
+    void notePush(double startS, double wallS, double cpuS, double kickLatencyS, size_t fillBefore, size_t pushed,
+                  bool coast, int64_t step);
+    void logWorkerSummary();
 
     // offline helpers (m_simLock held)
     void offlineFrames(double seconds, double frameDt, bool render, std::vector<float> *audio,
@@ -136,6 +143,15 @@ private:
     // worker
     std::thread m_worker;
     void *m_wake = nullptr;  // auto-reset event
+    void *m_timer = nullptr; // high-resolution waitable timer for the worker's timed waits (null: not available)
+    // audio class (EspWorkerOptions.priority 3): wanted by the control thread, applied by the worker on itself
+    std::atomic<int32_t> m_wantPriority{0};   // the requested priority, -2..3
+    std::atomic<bool> m_priorityDirty{false};
+    void *m_mmcss = nullptr;                  // worker only: MMCSS token while in the audio class
+    const char *m_schedClass = "default";     // worker only: what the worker runs as (for the summary)
+    void applyWorkerPriority();
+    bool m_lowWaterCoast = true;  // coast as soon as the ring would run dry before the next command (ESP_COAST_LOWWATER=0: off)
+    bool m_followSpareRepay = true;  // FOLLOW_RPM repays borrowed steps from spare audio only (ESP_FOLLOW_REPAY_ALL=1: off)
     std::atomic<bool> m_stop{false};
     std::atomic<int64_t> m_lastKickQpc{0};
     std::atomic<int32_t> m_coastMaxMs{300};
@@ -155,6 +171,27 @@ private:
     bool m_coasting = false;
     double m_coastStartS = 0.0, m_coastNextS = 0.0;
     double m_lastProduceS = 0.0;
+
+    // underrun diagnostics (worker only)
+    struct PushNote {
+        double t, gapMs, fillBeforeMs, fillAfterMs, wallMs, cpuMs, kickLatencyMs;
+        int64_t step;
+        bool coast;
+    };
+    struct WorkerDiag {
+        PushNote hist[24] = {};
+        int next = 0, count = 0;
+        double t0 = 0.0, lastPushS = 0.0;
+        double maxGapMs = 0.0, maxGapAtS = 0.0, minFillBeforeMs = 1e9, minFillAtS = 0.0;
+        double maxKickLatencyMs = 0.0, maxDeschedMs = 0.0, maxWallMs = 0.0;
+        int64_t pushes = 0, lowFill[4] = {};  // fill before a push below 2, 5, 10, 15 ms
+        int32_t underrunsSeen = 0, underrunsLogged = 0, lowWaterCoasts = 0;
+        // timed waits: how late the worker woke after its deadline (wake-up latency: timer DPCs, scheduling, paging)
+        double maxWakeLateMs = 0.0, maxWakeLateAtS = 0.0;
+        int64_t wakesLate5 = 0, wakesLate20 = 0;
+        double lastWaitDeadlineS = 0.0, lastWaitWokeS = 0.0;
+        bool lastWaitTimed = false, lastWaitByEvent = false;
+    } m_diag;
     double m_slope = 0.0, m_mx = 0.0, m_my = 0.0, m_sxx = 0.0, m_sxy = 0.0;
     bool m_slopeInit = false;
     double m_peakHint = 0.0, m_idleHint = 800.0;

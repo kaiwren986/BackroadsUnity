@@ -1,0 +1,11 @@
+{
+  "id": "m2.bench.v8",
+  "kind": "bench-shot",
+  "seconds": 90,
+  "screenshot": true,
+  "engine": "v8_bigblock_a",
+  "revPedal": 0.45,
+  "peakTolerance": 0.10,
+  "maxRmsRpm": 40,
+  "notes": "Card T2.4: the truck's gas big-block V8 (U6) on the Engine Bench. Cranks v8_bigblock_a, idles, revs it against the bench load, runs the dyno sweep (screenshot bench_v8_dyno), then plays the truck demo through IVehicleEngine (screenshot bench_v8_demo mid-pull). Saves bench_v8.wav and demo_v8.wav (what Unity received, from the source-fed AudioTap). Gates: starts within 3 s, idles in its declared range, pitch per PLAN 1.9 within 3 % at the rev hold, sweep peak within 10 % of the catalog, demo tracking < 40 rpm RMS, no underruns while revving or in the demo. Needs a window (audio runs in the player)."
+}

@@ -132,4 +132,40 @@ bool setCurrentThreadAffinity(uint64_t mask) {
     return SetThreadAffinityMask(GetCurrentThread(), static_cast<DWORD_PTR>(mask)) != 0;
 }
 
+namespace {
+
+using AvSetFn = HANDLE(WINAPI *)(LPCWSTR, LPDWORD);
+using AvRevertFn = BOOL(WINAPI *)(HANDLE);
+AvSetFn g_avSet = nullptr;
+AvRevertFn g_avRevert = nullptr;
+std::once_flag g_avOnce;
+
+void loadAvrt() {
+    HMODULE m = LoadLibraryExW(L"avrt.dll", nullptr, LOAD_LIBRARY_SEARCH_SYSTEM32);
+    if (m == nullptr) return;
+    g_avSet = reinterpret_cast<AvSetFn>(GetProcAddress(m, "AvSetMmThreadCharacteristicsW"));
+    g_avRevert = reinterpret_cast<AvRevertFn>(GetProcAddress(m, "AvRevertMmThreadCharacteristics"));
+}
+
+} // namespace
+
+void *enterAudioClass(const char **how) {
+    std::call_once(g_avOnce, loadAvrt);
+    if (g_avSet != nullptr && g_avRevert != nullptr) {
+        DWORD task = 0;
+        HANDLE h = g_avSet(L"Pro Audio", &task);
+        if (h != nullptr) {
+            if (how) *how = "mmcss";
+            return h;
+        }
+    }
+    const bool ok = SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_TIME_CRITICAL) != 0;
+    if (how) *how = ok ? "time-critical" : "failed";
+    return nullptr;
+}
+
+void leaveAudioClass(void *token) {
+    if (token != nullptr && g_avRevert != nullptr) g_avRevert(static_cast<HANDLE>(token));
+}
+
 } // namespace esp

@@ -6,9 +6,11 @@
 
 #include <cstdint>
 #include <cstdio>
+#include <atomic>
 #include <functional>
 #include <map>
 #include <string>
+#include <thread>
 #include <vector>
 
 namespace esph {
@@ -29,6 +31,9 @@ struct CreateOpts {
     int flags = 0;
     int ringFrames = 0;
     int targetFrames = 0;
+    // EspCreateDesc.audio_dsp_buffer_frames: what the output can drain at once. Unity passes its whole output buffer
+    // (block x buffers, 256 x 4 = 1,024 at Best latency, M2); the real-time runs here (soak, follow-hitch) do the same.
+    int dspFrames = 256;
 };
 
 class Engine {
@@ -57,6 +62,8 @@ EspStats stats(EspEngine *e);
 
 // Drains the plugin log to stderr (prefix "  ").
 void drainLog(FILE *to = stderr);
+// Drains the plugin log to stderr and also returns it (one line per entry).
+std::string drainLogText(FILE *to = stderr);
 
 // Polls esp_step_end (timeout 0) and yields between polls until step k is there; false after maxS seconds.
 bool waitStep(EspEngine *e, int64_t k, EspStepOut &out, double maxS = 10.0);
@@ -70,6 +77,29 @@ struct Driver {
     EspStepOut last{};
     // Runs one physics step and returns its result (waits up to 2 s).
     bool step(const EspDrivelineIn &in, const double *crank = nullptr, int nCrank = 0);
+};
+
+// ---- the audio output of a real-time run ----
+// A model of Unity's audio output at Best latency (S-AUD-1: 48 kHz, DSP buffer 256 frames x 4): the mixer thread wakes
+// once per block at time-critical priority and reads one block from the engine; when it wakes late it refills at most the
+// device buffer (what the hardware played meanwhile, up to `blocks` blocks). Audio the hardware could not play during a
+// longer stall is lost on the device side, counted as a device gap, and never read from the engine's ring.
+// catchUp = M1's harness consumer: after a stall it read every missed block from the ring at once (up to 100 ms), which
+// no audio device does, so a stall of the whole process (all threads) showed up as a ring underrun.
+struct DeviceConsumer {
+    EspEngine *e = nullptr;
+    int frames = 256;
+    int blocks = 4;
+    bool catchUp = false;
+    std::atomic<bool> run{false};
+    std::atomic<int32_t> deviceGaps{0};
+    std::atomic<int64_t> deviceGapFrames{0};
+    std::atomic<int64_t> longestStallUs{0};
+    void start();
+    void stop();
+
+private:
+    std::thread m_thread;
 };
 
 // ---- audio analysis (PLAN 1.9 pitch rule [T12]) ----
@@ -148,9 +178,16 @@ int runPitchGate(const std::string &engine, const std::string &outJson, const st
 int runCosimMatrix(const std::string &traceDir, const std::string &outJson, int threads);
 int runBench(const std::string &engine, const std::string &affinity, double seconds, const std::string &quality,
              const std::string &outJson);
+// m1Baseline: the M1 soak conditions, for comparison (worker at normal priority with power throttling allowed, the
+// millisecond worker timer, no low-water coasting, and M1's catch-up audio consumer instead of the device model).
 int runSoak(const std::string &engine, double minutes, const std::string &outJson, int simFrequency = 0, int fluidSteps = 0,
-            int firMaxTaps = 0);
+            int firMaxTaps = 0, bool m1Baseline = false);
 int runAllEngines(const std::string &outJson, int threads, bool hardRoster);
 int runSanitiseAll(const std::string &outJson, int threads);
+// M2 (roster.cpp): v8_bigblock_a against the upstream script it ports; the roster report.
+int runBigBlockGate(const std::string &outJson);
+// FOLLOW_RPM through main-thread hitches with Unity's clock (at most 4 fixed steps per frame): underruns after each hitch.
+int runFollowHitch(const std::string &engine, const std::string &outJson, bool repayAll);
+int runRosterReport(const std::string &outJson);
 
 } // namespace esph

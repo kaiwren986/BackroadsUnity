@@ -24,6 +24,9 @@ namespace Backroads.EngineSim
         public string topNode;          // Script without main(): set_engine(<topNode>())
         public int cylinders;
         public float idleRpmMin = 600, idleRpmMax = 1000;
+        /// <summary>The engine's own no-pedal idle, measured (esp_cli roster); 0 = the middle of the declared range. The
+        /// M2 rpm map (PLAN 3.5, <see cref="RpmMap"/>) puts the vehicle's idle here.</summary>
+        public float idleRpm;
         public float redlineRpm = 6500;
         public float peakTorqueNm;      // brief or measured peak, for the load model and the conformance check
         public float peakTorqueRpm;
@@ -37,6 +40,8 @@ namespace Backroads.EngineSim
         public bool devOnly;            // never in a Client build
         public float jEffKgm2;          // baked by EngineBake (M4); 0 = not baked yet
         public string notes;
+
+        public float IdleRpm => idleRpm > 0 ? idleRpm : 0.5f * (idleRpmMin + idleRpmMax);
 
         public override string ToString() => $"{id} ({displayName}, {cylinders} cyl, {source})";
 

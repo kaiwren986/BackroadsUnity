@@ -6,6 +6,10 @@
 #                                      CPU-heavy reports (ctest label heavy: esp_cosim_matrix, esp_bench_*, esp_all_engines)
 #   tools\ci\build-native.ps1 -Asan    preset vs2022-x64-asan (native\build-asan): configure, build, then, holding
 #                                      machine.lock, every ctest but the heavy ones, incl. the 10-minute soak; installs nothing
+#   tools\ci\build-native.ps1 -Soak 3 the same as the plain run, then, holding machine.lock, N release soaks in a row
+#                                      (esp_cli soak f4_boxer_a, -SoakMinutes each, default 10): green only when every
+#                                      soak has 0 steady-state underruns and < 1 MB growth (M2 card T2.4);
+#                                      -SoakBaseline runs them under M1's conditions instead (esp_cli soak --m1-baseline)
 #   -Force        rebuild even if the cache already holds this source hash
 #   -Parallel N   build parallelism (default 16; at most 4 while artifacts\.user-playing exists)
 #
@@ -17,11 +21,14 @@
 # Unchanged sources skip the build: the cached DLL and version file are installed and esp_smoke re-checks the copy.
 # Installed: EngineSimPlugin.dll and EngineSimPlugin.version.json {abi, git, sourceHash, built, piranha}; the abi, git and
 # sourceHash values are read back from the DLL's own esp_build_info(). Neither file is committed except at milestone tags.
+# An installed DLL whose version file already names the same abi, git and sourceHash is left alone (not rewritten), so
+# a -Heavy or -Force rebuild of unchanged, committed sources never dirties a committed DLL (M1 carry, card T2.4).
 #
 # Exit: 0 green; 1 build or test failed; 3 a perf gate holds artifacts\machine.lock (or it stayed busy); 4 the installed
 # DLL is locked.
 # Writes: artifacts\<yyyyMMdd-HHmm>\build-native*.log, artifacts\gates\build-native[-asan|-heavy].json
-param([switch]$Asan, [switch]$Heavy, [switch]$Force, [int]$Parallel = 16, [int]$LockTimeoutSec = 3600)
+param([switch]$Asan, [switch]$Heavy, [switch]$Force, [int]$Parallel = 16, [int]$LockTimeoutSec = 3600,
+      [int]$Soak = 0, [double]$SoakMinutes = 10, [switch]$SoakBaseline)
 
 . "$PSScriptRoot\env.ps1"
 . "$PSScriptRoot\ci-lib.ps1"
@@ -32,7 +39,8 @@ $sw = [Diagnostics.Stopwatch]::StartNew()
 $srcRel = 'native/EngineSimPlugin'
 $src = Join-Path $REPO 'native\EngineSimPlugin'
 $suffix = if ($Asan) { '-asan' } else { '' }
-$gateName = if ($Asan) { 'build-native-asan' } elseif ($Heavy) { 'build-native-heavy' } else { 'build-native' }
+if ($Asan -and $Soak -gt 0) { Write-Host 'build-native: -Soak runs the release build; use it without -Asan' -ForegroundColor Red; exit 1 }
+$gateName = if ($Asan) { 'build-native-asan' } elseif ($Heavy) { 'build-native-heavy' } elseif ($Soak -gt 0) { 'build-native-soak' } else { 'build-native' }
 $configurePreset = "vs2022-x64$suffix"
 $preset = "release$suffix"                     # build and test preset
 $buildDir = Join-Path $REPO "native\build$suffix"
@@ -44,7 +52,7 @@ $CTEST = Join-Path (Split-Path $CMAKE) 'ctest.exe'
 $commonGit = (& git -C $REPO rev-parse --path-format=absolute --git-common-dir).Trim()
 $commonRoot = Split-Path -Parent ($commonGit -replace '/', '\')
 $machineLock = Get-BrLockPath 'machine'
-if (-not ($Asan -or $Heavy) -and (Test-BrLockHeld $machineLock)) {
+if (-not ($Asan -or $Heavy -or $Soak -gt 0) -and (Test-BrLockHeld $machineLock)) {
     Write-Host "build-native: a perf gate holds $machineLock; nothing else may run. Try again when it is gone." -ForegroundColor Yellow
     exit 3
 }
@@ -126,10 +134,30 @@ function Install-Plugin([string]$FromDir) {
             throw "installed DLL is locked: $dst"
         }
     }
-    Copy-Item (Join-Path $FromDir 'EngineSimPlugin.dll') $dst -Force
-    Copy-Item (Join-Path $FromDir 'EngineSimPlugin.version.json') $plugins -Force
+    $dstVersion = Join-Path $plugins 'EngineSimPlugin.version.json'
+    if ((Test-Path $dst) -and (Test-SameBuild $dstVersion (Join-Path $FromDir 'EngineSimPlugin.version.json'))) {
+        Write-Host 'build-native: the installed DLL is already this build (same abi, git and sourceHash); left alone'
+        $script:gate.metrics['installed'] = 'unchanged'
+    } else {
+        Copy-Item (Join-Path $FromDir 'EngineSimPlugin.dll') $dst -Force
+        Copy-Item (Join-Path $FromDir 'EngineSimPlugin.version.json') $plugins -Force
+        $script:gate.metrics['installed'] = 'copied'
+    }
     Invoke-Logged 'check installed DLL' (Join-Path $FromDir 'esp_smoke.exe') @($dst) -Echo
     return $plugins
+}
+
+# True when two EngineSimPlugin.version.json files name the same abi, git and sourceHash of committed sources (the
+# build time may differ). A build of uncommitted sources ("-dirty") is always copied.
+function Test-SameBuild([string]$A, [string]$B) {
+    if (-not ((Test-Path $A) -and (Test-Path $B))) { return $false }
+    try {
+        $x = Get-Content -Raw $A | ConvertFrom-Json
+        $y = Get-Content -Raw $B | ConvertFrom-Json
+    } catch { return $false }
+    $git = [string]$x.git
+    if (-not $git -or $git.EndsWith('-dirty')) { return $false }
+    return ([string]$x.abi -eq [string]$y.abi) -and ($git -eq [string]$y.git) -and ([string]$x.sourceHash -eq [string]$y.sourceHash)
 }
 
 # Holds machine.lock (every Unity slot and the GPU lock too) and waits for an idle machine, like a perf gate.
@@ -160,8 +188,8 @@ function Copy-Reports {
 }
 
 $script:gate = [ordered]@{
-    gate = $gateName; tier = $(if ($Asan -or $Heavy) { 'nightly' } else { 'merge' }); status = 'fail'; hard = $true
-    headline = (-not ($Asan -or $Heavy)); build = [ordered]@{}; metrics = [ordered]@{}; evidence = @($logPath)
+    gate = $gateName; tier = $(if ($Asan -or $Heavy -or $Soak -gt 0) { 'nightly' } else { 'merge' }); status = 'fail'; hard = $true
+    headline = (-not ($Asan -or $Heavy -or $Soak -gt 0)); build = [ordered]@{}; metrics = [ordered]@{}; evidence = @($logPath)
 }
 $gate = $script:gate
 $exit = 1
@@ -244,7 +272,8 @@ try {
     if (-not $Asan) {
         $plugins = Install-Plugin $cacheDir
         $gate.evidence += @((Join-Path $plugins 'EngineSimPlugin.dll'), (Join-Path $plugins 'EngineSimPlugin.version.json'))
-        Write-Host "build-native: installed EngineSimPlugin.dll + EngineSimPlugin.version.json in $plugins"
+        $verb = if ($gate.metrics['installed'] -eq 'unchanged') { 'kept the installed' } else { 'installed' }
+        Write-Host "build-native: $verb EngineSimPlugin.dll + EngineSimPlugin.version.json in $plugins"
         Get-Content (Join-Path $plugins 'EngineSimPlugin.version.json') | ForEach-Object { Write-Host "    $_" }
     }
     if ($Heavy) {
@@ -258,6 +287,34 @@ try {
             Pop-Location
         }
     }
+    if ($Soak -gt 0) {
+        Enter-NativeHeavy "$Soak release soak(s)"
+        $cli = Join-Path $outDir 'esp_cli.exe'
+        $reports = Join-Path $buildDir 'reports'
+        New-Item -ItemType Directory -Force $reports | Out-Null
+        $runs = @()
+        for ($i = 1; $i -le $Soak; $i++) {
+            $json = Join-Path $reports ('esp_soak_release_{0}.json' -f $i)
+            if (Test-Path $json) { Remove-Item -Force $json }
+            $code = 0
+            $soakArgs = @('soak', 'f4_boxer_a', '--minutes', "$SoakMinutes", '--json', $json)
+            if ($SoakBaseline) { $soakArgs += '--m1-baseline' }
+            try { Invoke-Logged "soak $i of $Soak" $cli $soakArgs -Echo }
+            catch { $code = 1 }
+            $r = [ordered]@{ run = $i; exit = $code; pass = $false }
+            if (Test-Path $json) {
+                $j = Get-Content -Raw $json | ConvertFrom-Json
+                $r.underrunsSteady = $j.underrunsSteady; $r.underrunsAll = $j.underrunsAll; $r.memGrowthMb = $j.memGrowthMb
+                $r.coastEvents = $j.coastEvents; $r.staleCollects = $j.staleCollects; $r.rtf = $j.rtf; $r.pass = [bool]$j.pass
+                $r.workerSummary = $j.workerSummary; $r.m1Baseline = [bool]$j.m1Baseline
+            }
+            $runs += $r
+            Write-Host ('build-native: soak {0} of {1}: {2}' -f $i, $Soak, $(if ($r.pass) { 'PASS' } else { 'FAIL' }))
+        }
+        $gate.metrics['soaks'] = $runs
+        $gate.metrics['soaksPassed'] = @($runs | Where-Object { $_.pass }).Count
+        if (@($runs | Where-Object { -not $_.pass }).Count -gt 0) { throw "release soaks: $($gate.metrics['soaksPassed']) of $Soak passed" }
+    }
     $gate.status = 'pass'
     $exit = 0
 } catch {
@@ -270,7 +327,7 @@ try {
     $log.Dispose()
 }
 
-$gate.wallClock = [ordered]@{ seconds = [Math]::Round($sw.Elapsed.TotalSeconds, 1); budget = $(if ($Asan -or $Heavy) { 3600 } else { 900 }) }
+$gate.wallClock = [ordered]@{ seconds = [Math]::Round($sw.Elapsed.TotalSeconds, 1); budget = $(if ($Asan -or $Heavy -or $Soak -gt 0) { 3600 + 900 * $Soak } else { 900 }) }
 $gates = Join-Path $ART 'gates'
 New-Item -ItemType Directory -Force $gates | Out-Null
 [IO.File]::WriteAllText((Join-Path $gates "$gateName.json"), ($gate | ConvertTo-Json -Depth 5) + "`n", (New-Object Text.UTF8Encoding $false))

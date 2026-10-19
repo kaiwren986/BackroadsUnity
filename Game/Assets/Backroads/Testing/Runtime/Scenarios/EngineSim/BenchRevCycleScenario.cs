@@ -30,7 +30,7 @@ namespace Backroads.Testing
             public float maxClipFraction = 0.001f;
             public int maxUnderruns = 0;
             public float mainThreadP99MsBudget = 0.10f;
-            public float listenerVolume = 0.001f;   // when -br-silent has set 0 (the tap would see zeros, S-AUD-1)
+            public float listenerVolume = 0.001f;   // only for a tap after the source (not fed by it): -br-silent sets 0 (S-AUD-1)
         }
 
         [Serializable]
@@ -49,6 +49,7 @@ namespace Backroads.Testing
             public int sampleRate, channels, dspBufferFrames;
             public float fps, cycleSeconds;
             public float listenerVolume;
+            public bool tapFedBySource;   // M2: the tap sees EngineSimAudio's output before AudioListener.volume
             public double starterReleaseS, clipFraction, mainThreadP99Ms, mainThreadP95Ms, mainThreadP50Ms, collectWaitMsMax, collectWaitMsTotal, rtf, workerMs;
             public int underruns, underrunFrames, staleSteps, coastEvents, tapCallbacks, tapBlockFrames;
             public int underrunsBeforeCycle, coastEventsBeforeCycle;   // engine load and the first frames, not gated
@@ -85,14 +86,15 @@ namespace Backroads.Testing
             bench.ScriptThrottle = 0f;
             int rate = AudioSettings.outputSampleRate;
             AudioSettings.GetDSPBufferSize(out int dsp, out _);
-            // AudioListener.volume scales what a filter after EngineSimAudio sees (FilterChain.ComponentOrderAndListenerVolume);
-            // -br-silent sets 0, so use a tiny volume (-60 dB, inaudible) and divide it out of the capture.
+            // AudioListener.volume scales what a filter after EngineSimAudio sees (FilterChain.ComponentOrderAndListenerVolume).
+            // Since M2 the bench's tap is fed by EngineSimAudio itself, before that scaling, so -br-silent (volume 0) leaves
+            // it alone. A tap that is not source-fed needs a tiny volume (-60 dB, inaudible) divided out of the capture.
             float volumeBefore = AudioListener.volume;
-            if (AudioListener.volume <= 0f) AudioListener.volume = p.listenerVolume;
-            float gain = AudioListener.volume;
-
-            var report = new Report { engine = def.id, sampleRate = rate, dspBufferFrames = dsp, cycleSeconds = p.cycleSeconds, listenerVolume = gain };
             var tap = bench.Tap;
+            if (!tap.FedBySource && AudioListener.volume <= 0f) AudioListener.volume = p.listenerVolume;
+            float gain = tap.FedBySource ? 1f : AudioListener.volume;
+
+            var report = new Report { engine = def.id, sampleRate = rate, dspBufferFrames = dsp, cycleSeconds = p.cycleSeconds, listenerVolume = AudioListener.volume, tapFedBySource = tap.FedBySource };
             tap.Clear();
             tap.Recording = true;
             engine.DebugTap(Path.Combine(ctx.OutDir, "esp_tap.wav"), p.cycleSeconds + 1.0);
@@ -218,6 +220,7 @@ namespace Backroads.Testing
             ctx.Metric("coast_events", report.coastEvents);
             ctx.Metric("underruns_before_cycle", report.underrunsBeforeCycle);
             ctx.Metric("listener_volume", report.listenerVolume);
+            ctx.Metric("tap_fed_by_source", report.tapFedBySource ? 1 : 0);
             ctx.Metric("ring_target_ms", report.ringTargetMs);
             ctx.Metric("frame_p95_ms", report.frameP95Ms);
             ctx.Metric("starter_release_s", report.starterReleaseS);

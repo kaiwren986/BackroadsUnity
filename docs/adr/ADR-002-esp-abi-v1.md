@@ -158,3 +158,44 @@ ctest (`build-native.ps1`): `esp_smoke`, `esp_abi`, `esp_crash_guard`, `esp_ring
 `esp_cosim_matrix`, `esp_bench_ultra_e/p`, `esp_all_engines`, `esp_soak_release`; ASan: `esp_soak`. Unity:
 `Backroads.Tests.EditMode.EngineSim.*`, `Backroads.Tests.PlayMode.EngineSim.FilterChain.*`, autotests
 `m1.bench.revcycle` and `m1.bench.audiospike`.
+
+## M2 addendum (lane V, card T2.4; compatible, no ABI change; for the integrator's acceptance)
+
+Nothing in the header changed but one comment: every struct, size, function and status code is as frozen above, and
+`esp_version()` is still 1. Three behaviours were refined while fixing the M1 release-soak underrun; they are
+compatible extensions in the sense of "Decision" above (a value that was unused now means something; internal timing):
+
+1. **Worker audio class.** `EspWorkerOptions.priority = 3` (before: clamped to 2, HIGHEST; no caller used it) puts the
+   worker in the audio class: it joins MMCSS "Pro Audio" on itself (`avrt.dll` is loaded at run time, so the DLL still
+   imports only KERNEL32 and dbghelp), or runs at `THREAD_PRIORITY_TIME_CRITICAL` if MMCSS fails; any other value leaves
+   it. Unity uses 3 on the High and Ultra tiers and keeps -1 on Low (item 7 above). Why: in an M2 release soak every
+   thread at or below above-normal priority stopped for about 50 ms while the time-critical audio consumer kept reading,
+   and the 33 ms ring ran dry (M2-handoff-VS). Test: `esp_abi` (3 and back to 0).
+2. **Fill target cadence (Audio, second bullet).** The "p95 frame time" of the fill target is now the p95 of each
+   frame's longer of `frame_dt_s` and the kick-to-kick time to the next frame that sends commands. Above 120 fps (or in
+   a fast editor loop) most frames send no command and audio arrives once per fixed step; the target must cover that
+   cadence (measured: target 13.1 ms with a push every 8.3 ms and a 21 ms DSP buffer gave an underrun).
+3. **Low-water coast (item 6).** Besides the hitch threshold, the worker also coasts when the ring would run dry before
+   the next command: the fill has fallen to one DSP buffer + one coast batch of worker time + 3 ms; not while commands
+   are repaying borrowed steps with no steps of their own (that only borrowed again). Timed worker waits use a
+   high-resolution waitable timer. In FREE and SLAVED_CRANK borrowing and repayment are unchanged
+   (`esp_step_accounting` still exact).
+4. **FOLLOW_RPM repays from spare audio (items 1 and 6).** In FOLLOW_RPM with audio, a command repays borrowed steps
+   only from audio the ring holds above its target and keeps the rest as debt (`EspStats.steps_borrowed`), so engine
+   time may run ahead of physics time in this mode. Why: after a hitch Unity advances physics by at most
+   `maximumDeltaTime` (33 ms), so most coasted steps are never earned back, and repaying them at once ran commands with
+   no steps: about 65 ms of silence after a 100 ms frame (`m2.vehicles.drive`). FOLLOW_RPM is sound only (the vehicle
+   model drives), so the debt costs nothing. Test: `esp_follow_hitch` (heavy): 0 underruns through 100 and 250 ms
+   main-thread stalls with Unity's clock; `--repay-all` (`ESP_FOLLOW_REPAY_ALL=1`) shows the M1 rule for comparison.
+5. **The audio thread wakes the worker (Thread contract, Audio).** `esp_read_audio` stays lock-free and
+   allocation-free; when the fill falls to the worker's low-water mark it now calls `SetEvent` on the worker's wake
+   event once per low episode (a non-blocking kernel call), so the low-water coast follows the audio clock and not
+   only the worker's own timer. Why: in M2 release soaks the worker and the frame loop sometimes woke 45-50 ms after
+   their timers while the audio thread kept running.
+6. **What Unity passes as the DSP buffer (Unity's choice).** `EspCreateDesc.audio_dsp_buffer_frames` is Unity's whole
+   output buffer (block x buffers, 256 x 4 = 1,024 frames at Best latency), not one block, so the fill target holds at
+   its lowest what Unity's mixer can drain at once after a stall: about 49 ms at 60 fps instead of 33 (PLAN 3.6's "one
+   DSP buffer"). Why: in M2 release soaks whole-machine stalls of about 50 ms came every 10-20 minutes on this shared
+   laptop; afterwards the output refills its whole buffer at once while the ring held 19-37 ms. The soak harness now
+   models that output (`DeviceConsumer`: it refills at most 4 blocks after a stall and counts the rest as device gaps;
+   M1's harness read every missed block from the ring, up to 100 ms, which no audio device does).

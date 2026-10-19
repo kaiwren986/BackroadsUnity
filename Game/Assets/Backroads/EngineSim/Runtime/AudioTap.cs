@@ -9,6 +9,12 @@ namespace Backroads.EngineSim
     /// Records what Unity's audio chain carries at this point (PLAN 1.9): after EngineSimAudio on the engine's AudioSource
     /// (what Unity received from the plugin), or on the AudioListener's GameObject (the mixed, spatialised output). The
     /// audio thread copies into a preallocated ring; the main thread drains it. No allocation on the audio thread.
+    /// <para>
+    /// Fed by the source (<see cref="EngineSimAudio.Tap"/>, M2): EngineSimAudio copies what esp_read_audio wrote straight
+    /// into the tap, before Unity applies <c>AudioListener.volume</c> to the samples a later filter sees
+    /// (FilterChain.ComponentOrderAndListenerVolume). So <c>-br-silent</c> (listener volume 0) mutes the output but not
+    /// the tap; the tap's own filter callback then records nothing.
+    /// </para>
     /// </summary>
     public sealed class AudioTap : MonoBehaviour
     {
@@ -21,7 +27,17 @@ namespace Backroads.EngineSim
         public long Overflowed;                     // frames the main thread did not drain in time
         public bool Recording = true;
 
+        /// <summary>Set by EngineSimAudio when it feeds this tap directly (pre listener volume).</summary>
+        public volatile bool FedBySource;
+
         void OnAudioFilterRead(float[] data, int channels)
+        {
+            if (FedBySource) return;
+            Feed(data, channels);
+        }
+
+        /// <summary>Audio thread: copies one block into the ring (no allocation).</summary>
+        public void Feed(float[] data, int channels)
         {
             if (!Recording) return;
             Channels = channels;

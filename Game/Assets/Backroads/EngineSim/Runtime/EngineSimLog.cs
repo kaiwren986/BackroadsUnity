@@ -24,18 +24,31 @@ namespace Backroads.EngineSim
             return sb.ToString();
         }
 
-        /// <summary>Drains into Debug.Log (call once per frame from whoever owns engines).</summary>
+        /// <summary>
+        /// Drains into Debug.Log (call once per frame from whoever owns engines). A plugin entry may span lines (its
+        /// continuation lines start with spaces, e.g. the batches before an underrun): one Unity log entry each.
+        /// </summary>
         public static void Flush()
         {
             var text = Drain();
             if (string.IsNullOrEmpty(text)) return;
+            var entry = new System.Text.StringBuilder();
             foreach (var line in text.Split('\n'))
             {
                 if (line.Length == 0) continue;
-                if (line.Contains("] error:")) Debug.LogError(line);
-                else if (line.Contains("] warn:")) Debug.LogWarning(line);
-                else Debug.Log(line);
+                if (line[0] == ' ' && entry.Length > 0) { entry.Append('\n').Append(line); continue; }
+                Emit(entry.ToString());
+                entry.Clear().Append(line);
             }
+            Emit(entry.ToString());
+        }
+
+        static void Emit(string entry)
+        {
+            if (entry.Length == 0) return;
+            if (entry.Contains("] error:")) Debug.LogError(entry);
+            else if (entry.Contains("] warn:")) Debug.LogWarning(entry);
+            else Debug.Log(entry);
         }
     }
 }

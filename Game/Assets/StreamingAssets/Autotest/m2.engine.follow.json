@@ -1,0 +1,12 @@
+{
+  "id": "m2.engine.follow",
+  "kind": "engine-follow",
+  "seconds": 60,
+  "screenshot": false,
+  "engines": ["v8_bigblock_a", "v8_cross_a", "f4_boxer_a", "i4_synth"],
+  "maxRmsRpm": 40,
+  "minRtfHigh": 2.0,
+  "minRtfLow": 1.5,
+  "maxUnderruns": 0,
+  "notes": "PLAN 6.1 M2 lane gate EngineSim.FollowInVehicle in the player (card T2.4): each roster engine, created through VehicleEngines.Create as a vehicle gets it, follows a scripted classic-engine drive (FollowRamp: key on, idle, full-pedal pulls with an upshift, lift-off, key off) in FixedUpdate. Gates per engine: engine-sim rpm vs the mapped rpm of the same step < 40 rpm RMS; real-time factor >= 2.0 at High (default) or >= 1.5 at Low (autotest.ps1 -MinSpec, the min-spec proxy); 0 underruns from 1 s after the key turns. Writes follow_report.json and follow_<engine>.csv."
+}

@@ -227,7 +227,8 @@ typedef struct EspStats {
 /* esp_set_worker_options (M4 tuning; usable now). */
 typedef struct EspWorkerOptions {
     uint32_t struct_size;
-    int32_t priority;                /* -2..2 (THREAD_PRIORITY_LOWEST..HIGHEST); default 0 */
+    int32_t priority;                /* -2..2 (THREAD_PRIORITY_LOWEST..HIGHEST); default 0. 3 (M2): audio class, the
+                                        worker joins MMCSS "Pro Audio" (THREAD_PRIORITY_TIME_CRITICAL if MMCSS fails) */
     int32_t power_throttling_off;    /* 1 = ask Windows not to throttle the worker (EcoQoS off) */
     int32_t coast_max_ms;            /* default 300; 0 = never coast */
     uint64_t affinity_mask;          /* 0 = leave as is */
@@ -262,7 +263,7 @@ ESP_API EspEngine *ESP_CALL esp_create(const EspCreateDesc *desc, const char *es
 /* Stops the worker and frees everything. Stop the AudioSource first: the ring stays valid until this returns. */
 ESP_API void ESP_CALL esp_destroy(EspEngine *e);
 
-/* C++ engines under fictional ids (PLAN 3.10): "f4_boxer_a", "v8_cross_a", "i4_synth" ("v8_bigblock_a" from M2). */
+/* C++ engines under fictional ids (PLAN 3.10): "f4_boxer_a", "v8_cross_a", "i4_synth", "v8_bigblock_a" (from M2). */
 ESP_API int32_t ESP_CALL esp_load_builtin(EspEngine *e, const char *name_utf8, char *err_utf8, int32_t err_capacity);
 /* A piranha .mr engine script (builds with ESP_WITH_PIRANHA only; ESP_ERR_STATE otherwise). top_node NULL or "" =
  * call main(), else set_engine(<top_node>()) for older scripts without main. */

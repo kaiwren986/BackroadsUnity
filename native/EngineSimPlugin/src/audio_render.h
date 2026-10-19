@@ -9,7 +9,11 @@
 //   last sample over 2 ms, counts the event, and waits for half the target before fading back in.
 // FillController (worker): target = p95 frame time + worker time for one frame's commands + one DSP buffer + 5 ms,
 //   re-computed every 2 s with hysteresis; drift trim epsilon = clamp(k (fill - target) / target, +-0.5 %), smoothed,
-//   applied as setInputSampleRate(f * sim_speed * (1 + epsilon)).
+//   applied as setInputSampleRate(f * sim_speed * (1 + epsilon)). M2: the "frame time" of a frame is the longer of its
+//   frame_dt and the time from its first command to the next frame's first command (kick to kick): when frames are
+//   shorter than the fixed step (above 120 fps, or a fast editor loop) most frames issue no command, the audio arrives
+//   once per fixed step, and a target from the frame time alone would sit below that cadence (measured in the M2
+//   PlayMode run: target 13.1 ms with a push every 8.3 ms and a 21 ms DSP buffer, one underrun).
 #pragma once
 
 #include "fir.h"
@@ -35,6 +39,13 @@ public:
     std::atomic<bool> producerActive{false};  // the worker produced recently (underruns count only then)
     std::atomic<int32_t> underruns{0};
     std::atomic<int32_t> underrunFrames{0};
+    std::atomic<int64_t> lastUnderrunQpc{0};  // QPC ticks of the last counted underrun (worker diagnostics)
+    // M2: the worker's wake event and its low-water mark (frames, 0 = off). The audio thread sets the event once when the
+    // fill falls to the mark, so the worker's low-water coast follows the audio clock, not only its own timer.
+    void *wakeEvent = nullptr;
+    std::atomic<int32_t> lowWaterFrames{0};
+    std::atomic<int64_t> lowWakeQpc{0};      // when the audio thread last woke the worker (diagnostics)
+    std::atomic<int32_t> lowWakes{0};
     std::atomic<int64_t> consumed{0};
 
 private:
@@ -46,19 +57,22 @@ private:
     bool m_primed = false;    // false until the ring first reaches the target (start) or half of it (after underrun)
     bool m_inUnderrun = false;
     bool m_everPrimed = false;
+    bool m_lowSignalled = false;  // audio thread: the worker was woken for this low episode
 };
 
 class FillController {
 public:
     void init(int sampleRate, int dspBufferFrames, int initialTargetFrames, bool trimEnabled);
-    // Per command: the frame it belongs to, that frame's duration (s, 0 = unknown) and the worker wall time spent.
-    void onCommand(int32_t frameIndex, double frameDtS, double workerSeconds, double nowS);
+    // Per command: the frame it belongs to, that frame's duration (s, 0 = unknown), the worker wall time spent and the
+    // command's kick time (s, on the nowS clock).
+    void onCommand(int32_t frameIndex, double frameDtS, double workerSeconds, double nowS, double kickS);
     // After pushing a batch: returns the new epsilon.
     double onPushed(size_t fillFrames);
     int32_t targetFrames() const { return m_target; }
     double epsilon() const { return m_eps; }
     double frameP95Ms() const { return m_p95FrameMs; }
     double workerFrameMs() const { return m_workerFrameMs; }
+    int dspFrames() const { return m_dsp; }
 
 private:
     void recompute(double nowS);
@@ -69,7 +83,7 @@ private:
     bool m_trim = true;
     double m_eps = 0.0;
     int32_t m_frame = INT32_MIN;
-    double m_frameDt = 0.0, m_frameWork = 0.0;
+    double m_frameDt = 0.0, m_frameWork = 0.0, m_frameKickS = -1.0;
     std::vector<double> m_frameDts, m_frameWorks;  // ring of the last 256 frames
     std::vector<double> m_scratch;                // p95 work space, allocated once (no steady-state allocation)
     size_t m_next = 0, m_count = 0;

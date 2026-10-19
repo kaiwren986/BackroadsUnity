@@ -14,12 +14,17 @@ namespace Backroads.EngineSim
     /// road-like load, D (or the button) for a dyno sweep. The panel shows rpm, torque, MAP, AFR, worker time, real-time
     /// factor, ring fill and target, underruns and coast events. Client builds list the roster engines; Dev builds add the
     /// upstream scripts. Built in code, so it works in EngineBench.unity or, with -br-bench, in any scene.
+    /// M2: it opens on the truck's big-block V8 (-br-bench-engine (id) picks another), and V (or the button) plays the
+    /// "vehicle demo": the vehicle that uses this engine drives a scripted pull through the gears with its classic engine,
+    /// and engine-sim follows it through IVehicleEngine exactly as in the game (FOLLOW_RPM, the PLAN 3.5 rpm map).
     /// </summary>
     public sealed class EngineBench : MonoBehaviour
     {
         public const string Flag = "-br-bench";
         public const string SceneName = "EngineBench";
         public const string PanelSettingsResource = "BrPanelSettings";
+        public const string EngineFlag = "-br-bench-engine";
+        public const string DefaultEngine = "v8_bigblock_a";
         const float HoldForStarter = 0.3f;
 
         public static EngineBench Current { get; private set; }
@@ -74,6 +79,18 @@ namespace Backroads.EngineSim
         public float ScriptThrottle;
         public bool ScriptIgnition, ScriptStarter;
 
+        // vehicle demo (M2): an EngineSimVehicleEngine driven by FollowRamp
+        EngineSimVehicleEngine _demo;
+        FollowRampDriver _demoDriver;
+        GameObject _demoGo;
+        public EngineSimVehicleEngine Demo => _demo;
+        public FollowRampDriver DemoDriver => _demoDriver;
+        public bool DemoRunning => _demo != null;
+        /// <summary>The dyno sweep's points so far (the plot's), for autotests.</summary>
+        public IReadOnlyList<DynoSweep.Point> SweepPoints => _plot != null ? _plot.Points : (IReadOnlyList<DynoSweep.Point>)Array.Empty<DynoSweep.Point>();
+        /// <summary>The newest step result of the bench's own engine.</summary>
+        public EspStepOut LastStep => _last;
+
         IReadOnlyList<EngineDef> _engines;
         float _throttle, _pressStart = -1f;
         bool _ignition, _starterHeld;
@@ -84,7 +101,7 @@ namespace Backroads.EngineSim
         // ---- UI ----
         UIDocument _doc;
         Label _title, _rpm, _state, _readout, _help, _error;
-        Button _loadButton, _sweepButton, _ignitionButton;
+        Button _loadButton, _sweepButton, _ignitionButton, _demoButton;
         DynoPlot _plot;
         readonly List<Button> _engineButtons = new List<Button>();
 
@@ -106,12 +123,13 @@ namespace Backroads.EngineSim
         void Start()
         {
             BuildUi();
-            Select(EngineCatalog.Find("f4_boxer_a") ?? _engines[0]);
+            Select(EngineCatalog.Find(CommandLine.Get(EngineFlag, DefaultEngine)) ?? EngineCatalog.Find(DefaultEngine) ?? _engines[0]);
         }
 
         void OnDestroy()
         {
             Sweep.Cancel();
+            StopDemo(false);
             Unload();
             if (Current == this) Current = null;
         }
@@ -125,6 +143,7 @@ namespace Backroads.EngineSim
         /// <summary>Loads an engine (stops the previous one first). False and LastError when it fails.</summary>
         public bool Select(EngineDef def)
         {
+            StopDemo(false);
             Unload();
             Def = def;
             Sweep.Cancel();
@@ -142,8 +161,8 @@ namespace Backroads.EngineSim
             }
             LastError = null;
             Engine = engine;
-            // PLAN 3.4 scheduling by tier (EngineSimEngine.DefaultWorkerPriority); -br-esp-priority -2..2 overrides it
-            engine.SetWorker(Mathf.Clamp(CommandLine.GetInt("-br-esp-priority", EngineSimEngine.DefaultWorkerPriority), -2, 2), true);
+            // PLAN 3.4 scheduling by tier (EngineSimEngine.DefaultWorkerPriority); -br-esp-priority -2..3 overrides it
+            engine.SetWorker(EngineSimEngine.WorkerPriorityFromCommandLine(QualityPreset.Current.EngineAudio), true);
             var go = new GameObject("Engine " + def.id);
             go.transform.SetParent(transform, false);
             Source = go.AddComponent<AudioSource>();
@@ -151,13 +170,64 @@ namespace Backroads.EngineSim
             Source.loop = true;
             Source.spatialBlend = 0f;   // the bench is "at the engine"; S-AUD-1 covers 3D
             Audio = go.AddComponent<EngineSimAudio>();
-            Tap = go.AddComponent<AudioTap>();   // after EngineSimAudio: sees what Unity received
+            Tap = go.AddComponent<AudioTap>();   // fed by EngineSimAudio: what Unity received, before the listener volume
             Tap.Recording = false;
+            Audio.Tap = Tap;
             Audio.Attach(engine);
             Source.Play();
             if (_plot != null) _plot.MaxRpm = Math.Max(4000, Math.Ceiling((engine.Info.revLimitRadS * 9.5492966 + 600) / 1000) * 1000);
             RefreshUi();
             return true;
+        }
+
+        /// <summary>
+        /// Plays the vehicle demo for the selected engine (the vehicle of FollowRamp.Roster that uses it): the bench's own
+        /// engine is unloaded and an IVehicleEngine follows the scripted drive; when it ends the bench engine comes back.
+        /// </summary>
+        public bool StartDemo()
+        {
+            if (Def == null || !FollowRamp.TryFind(Def.id, out var v))
+            {
+                LastError = Def == null ? "no engine" : $"no vehicle uses {Def.displayName} yet (the demo is for the vehicles' engines)";
+                RefreshUi();
+                return false;
+            }
+            StopDemo(false);
+            Sweep.Cancel();
+            Unload();
+            var e = EngineSimVehicleEngine.Create(Def.id, QualityPreset.Current.EngineAudio);
+            if (e == null)
+            {
+                LastError = "the vehicle engine did not load (see the log)";
+                RefreshUi();
+                return false;
+            }
+            LastError = null;
+            _demo = e;
+            _demoGo = new GameObject("VehicleDemo " + v.Name);
+            _demoGo.transform.SetParent(transform, false);
+            _demoDriver = _demoGo.AddComponent<FollowRampDriver>();
+            _demoDriver.Vehicle = v;
+            _demoDriver.Engine = e;
+            e.AttachTo(_demoGo.transform);
+            Tap = e.AudioObject.AddComponent<AudioTap>();
+            Tap.Recording = false;
+            e.Audio.Tap = Tap;
+            RefreshUi();
+            return true;
+        }
+
+        /// <summary>Ends the demo; with reload, the bench's own engine is loaded again.</summary>
+        public void StopDemo(bool reload)
+        {
+            if (_demo == null) return;
+            _demo.Dispose();
+            _demo = null;
+            if (_demoGo != null) Destroy(_demoGo);
+            _demoGo = null;
+            _demoDriver = null;
+            Tap = null;
+            if (reload && Def != null) Select(Def);
         }
 
         void Unload()
@@ -211,7 +281,8 @@ namespace Backroads.EngineSim
                 if (pad != null) want = Mathf.Max(want, pad.rightTrigger.ReadValue());
                 _throttle = Mathf.MoveTowards(_throttle, want, Time.unscaledDeltaTime * 12f);
                 if (kb != null && kb.lKey.wasPressedThisFrame) LoadOn = !LoadOn;
-                if (kb != null && kb.dKey.wasPressedThisFrame) StartSweep();
+                if (kb != null && kb.dKey.wasPressedThisFrame && !DemoRunning) StartSweep();
+                if (kb != null && kb.vKey.wasPressedThisFrame) { if (DemoRunning) StopDemo(true); else StartDemo(); }
             }
             else
             {
@@ -225,6 +296,7 @@ namespace Backroads.EngineSim
                 Engine.Ignition = _ignition;
                 Engine.Starter = _starterHeld;
             }
+            if (_demoDriver != null && _demoDriver.Done) StopDemo(true);
             while (Sweep.TryDequeue(out var pt))
             {
                 _plot?.Points.Add(pt);
@@ -311,13 +383,17 @@ namespace Backroads.EngineSim
             starter.RegisterCallback<PointerUpEvent>(_ => { if (!ScriptControl) _starterHeld = false; });
             starter.RegisterCallback<PointerLeaveEvent>(_ => { if (!ScriptControl) _starterHeld = false; });
             _loadButton = new Button(() => { if (!ScriptControl) LoadOn = !LoadOn; }) { text = "Load (L)" };
-            _sweepButton = new Button(() => { if (!ScriptControl) StartSweep(); }) { text = "Dyno sweep (D)", name = "bench-dyno" };
+            _sweepButton = new Button(() => { if (!ScriptControl && !DemoRunning) StartSweep(); }) { text = "Dyno sweep (D)", name = "bench-dyno" };
+            _demoButton = new Button(() => { if (ScriptControl) return; if (DemoRunning) StopDemo(true); else StartDemo(); })
+            { text = "Vehicle demo (V)", name = "bench-demo" };
             buttons.Add(_ignitionButton);
             buttons.Add(starter);
             buttons.Add(_loadButton);
             buttons.Add(_sweepButton);
+            buttons.Add(_demoButton);
             _plot = new DynoPlot { name = "bench-plot" };
-            _help = new Label("Tap I: ignition on/off.  Hold I: crank the engine.  W or right trigger: throttle.  L: road-like load.  D: dyno sweep.")
+            _help = new Label("Tap I: ignition on/off.  Hold I: crank the engine.  W or right trigger: throttle.  L: road-like load.  D: dyno sweep.  " +
+                              "V: vehicle demo (the vehicle with this engine pulls through the gears; engine-sim follows its rpm as in the game).")
             { style = { fontSize = 13, color = Dim, marginTop = 8, whiteSpace = WhiteSpace.Normal } };
             main.Add(_title);
             main.Add(_rpm);
@@ -341,6 +417,34 @@ namespace Backroads.EngineSim
             }
             _title.text = Def == null ? "Engine Bench" : $"Engine Bench: {Def.displayName}";
             _error.text = LastError ?? "";
+            if (_demoButton != null)
+            {
+                FollowRamp.Vehicle dv = default;
+                bool has = Def != null && FollowRamp.TryFind(Def.id, out dv);
+                _demoButton.text = DemoRunning ? "Stop demo (V)" : has ? $"{Cap(dv.Name)} demo (V)" : "Vehicle demo (V)";
+                _demoButton.SetEnabled(has || DemoRunning);
+            }
+            if (_demo != null && _demo.Engine != null)
+            {
+                var ds = _demo.Engine.Stats();
+                var dl = _demo.Engine.Last;
+                var v = _demoDriver.Vehicle;
+                _rpm.text = $"{_demo.DisplayRpm:F0} rpm";
+                _state.text = $"{Cap(v.Name)} demo ({_demoDriver.T:F1} of {FollowRamp.EndS:F1} s): classic engine {_demoDriver.RpmJs:F0} rpm " +
+                              $"-> engine-sim {_demo.EngineRpm:F0} rpm, {(_demo.Phase == EngineSimVehicleEngine.EnginePhase.Following ? "following (FOLLOW_RPM)" : _demo.Phase.ToString().ToLowerInvariant())}" +
+                              $"   pedal {_demo.Engine.Throttle * 100:F0} %";
+                float rate0 = AudioSettings.outputSampleRate;
+                var tr = _demo.TrackingStats;
+                _readout.text =
+                    $"rpm map {_demo.Map}\n" +
+                    $"tracking: engine-sim vs mapped rpm RMS {tr.Rms:F1} rpm (max {tr.MaxAbs:F0}) over {tr.Count} steps   " +
+                    $"MAP {dl.manifoldPressurePa / 1000:F1} kPa   throttle plate {dl.throttleOpen * 100:F0} % open\n" +
+                    $"worker {ds.workerMsEma:F2} ms per step   real-time factor {ds.rtf:F2}   audio ring {ds.ringFillFrames / rate0 * 1000:F1} ms " +
+                    $"(target {ds.ringTargetFrames / rate0 * 1000:F1} ms)   underruns {ds.audioUnderruns}   coast events {ds.coastEvents}\n" +
+                    $"{_demo.Engine.Info.cylinders} cyl, {_demo.Engine.Info.simFrequency} Hz, {_demo.Engine.Info.fluidSteps} gas substeps, IR {_demo.Engine.Info.irTaps} taps, tier {_demo.Tier}";
+                _sweepButton.SetEnabled(false);
+                return;
+            }
             if (Engine == null)
             {
                 _rpm.text = "--";
@@ -365,5 +469,7 @@ namespace Backroads.EngineSim
             _ignitionButton.text = _ignition ? "Ignition: ON (tap I)" : "Ignition: off (tap I)";
             _sweepButton.SetEnabled(!Sweep.Running);
         }
+
+        static string Cap(string s) => string.IsNullOrEmpty(s) ? s : char.ToUpperInvariant(s[0]) + s.Substring(1);
     }
 }

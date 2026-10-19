@@ -12,10 +12,15 @@
 //   esp_cli calibrate [engine]                         esp_calibrate_inertia
 //   esp_cli cosim [--traces dir] [--threads 8]         esp_cosim_matrix report
 //   esp_cli bench [engine] [--affinity P|E] [--seconds 20] [--quality ultra|high|low]   real-time factor
-//   esp_cli soak [engine] [--minutes 10] [--freq Hz --fluid n --taps n]   real-time soak (underruns, memory growth)
+//   esp_cli soak [engine] [--minutes 10] [--freq Hz --fluid n --taps n] [--m1-baseline]   real-time soak (underruns,
+//                                                      memory growth; --m1-baseline: M1's worker scheduling, timers
+//                                                      and catch-up audio consumer)
 //   esp_cli all-engines [--threads 8] [--soft]         every upstream script through piranha
 //   esp_cli sanitise <in.mr> <out.mr> <fictional_id>   mr_sanitise
 //   esp_cli sanitise-all [--threads 8]                 mr_sanitise every upstream script; the copies must still load
+//   esp_cli bigblock                                   v8_bigblock_a vs the upstream script it ports (dyno, start)
+//   esp_cli roster                                     every builtin: crank, idle, WOT peak (report)
+//   esp_cli follow-hitch [engine] [--repay-all]        FOLLOW_RPM through 100 and 250 ms hitches, real time (underruns)
 //   esp_cli selftest                                   start + dyno + follow gates
 // Every report also takes --json <file>.
 #include "harness/harness.h"
@@ -146,7 +151,7 @@ int main(int argc, char **argv) {
         return runBench(engineArg("f4_boxer_a"), a.get("affinity"), a.num("seconds", 20), a.get("quality", "ultra"), json);
     if (cmd == "soak")
         return runSoak(engineArg("f4_boxer_a"), a.num("minutes", 10), json, static_cast<int>(a.num("freq", 0)),
-                       static_cast<int>(a.num("fluid", 0)), static_cast<int>(a.num("taps", 0)));
+                       static_cast<int>(a.num("fluid", 0)), static_cast<int>(a.num("taps", 0)), a.has("m1-baseline"));
     if (cmd == "all-engines") return runAllEngines(json, static_cast<int>(a.num("threads", 8)), !a.has("soft"));
     if (cmd == "sanitise-all") return runSanitiseAll(json, static_cast<int>(a.num("threads", 8)));
     if (cmd == "sanitise") {
@@ -156,6 +161,9 @@ int main(int argc, char **argv) {
         std::printf("%s: %s\n", r == ESP_OK ? "ok" : "FAIL", err);
         return r == ESP_OK ? 0 : 1;
     }
+    if (cmd == "bigblock") return runBigBlockGate(json);
+    if (cmd == "roster") return runRosterReport(json);
+    if (cmd == "follow-hitch") return runFollowHitch(engineArg("v8_bigblock_a"), json, a.has("repay-all"));
     if (cmd == "selftest") {
         int fails = 0;
         fails += runStartGate("f4_boxer_a", "") != 0;
