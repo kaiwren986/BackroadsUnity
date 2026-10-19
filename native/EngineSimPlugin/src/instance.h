@@ -144,6 +144,12 @@ private:
     std::thread m_worker;
     void *m_wake = nullptr;  // auto-reset event
     void *m_timer = nullptr; // high-resolution waitable timer for the worker's timed waits (null: not available)
+    // audio class (EspWorkerOptions.priority 3): wanted by the control thread, applied by the worker on itself
+    std::atomic<int32_t> m_wantPriority{0};   // the requested priority, -2..3
+    std::atomic<bool> m_priorityDirty{false};
+    void *m_mmcss = nullptr;                  // worker only: MMCSS token while in the audio class
+    const char *m_schedClass = "default";     // worker only: what the worker runs as (for the summary)
+    void applyWorkerPriority();
     bool m_lowWaterCoast = true;  // coast as soon as the ring would run dry before the next command (ESP_COAST_LOWWATER=0: off)
     std::atomic<bool> m_stop{false};
     std::atomic<int64_t> m_lastKickQpc{0};

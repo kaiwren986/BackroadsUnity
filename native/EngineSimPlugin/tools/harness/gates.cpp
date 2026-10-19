@@ -508,12 +508,12 @@ int runSoak(const std::string &engine, double minutes, const std::string &outJso
         return 1;
     }
     EspEngine *e = eng.h();
-    // the worker scheduling Unity uses on the High and Ultra tiers (EngineSimEngine.DefaultWorkerPriority, PLAN 3.4):
-    // above normal, power throttling (EcoQoS) off
+    // the worker scheduling Unity uses on the High and Ultra tiers (EngineSimEngine.DefaultWorkerPriority, PLAN 3.4;
+    // M2: the audio class, priority 3), power throttling (EcoQoS) off
     if (!m1Baseline) {
         EspWorkerOptions wo{};
         wo.struct_size = sizeof wo;
-        wo.priority = 1;
+        wo.priority = 3;
         wo.power_throttling_off = 1;
         wo.coast_max_ms = 300;
         esp_set_worker_options(e, &wo);

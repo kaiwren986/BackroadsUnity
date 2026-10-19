@@ -15,6 +15,7 @@
 // resolution is (Windows 11 keeps background and console processes at 15.6 ms; a 12 ms wait could last 31 ms).
 #include "instance.h"
 
+#include "esp_log.h"
 #include "platform.h"
 
 #include <windows.h>
@@ -41,11 +42,38 @@ void Instance::workerWait(double seconds) {
     WaitForSingleObject(wake, ms);
 }
 
+// The audio class (EspWorkerOptions.priority 3, M2) is applied here, on the worker itself: MMCSS registers the calling
+// thread. Measured in the M2 release soaks: once in 10 minutes, every thread at or below above-normal priority in the
+// process (the harness's frame loop and the worker) stopped for about 50 ms while the time-critical audio consumer kept
+// running; the ring (33 ms) ran dry before the worker could coast. In the audio class the worker keeps running then.
+void Instance::applyWorkerPriority() {
+    if (!m_priorityDirty.exchange(false, std::memory_order_acq_rel)) return;
+    const int p = m_wantPriority.load(std::memory_order_relaxed);
+    if (p >= 3) {
+        if (m_mmcss == nullptr) {
+            const char *how = "failed";
+            m_mmcss = enterAudioClass(&how);
+            m_schedClass = how;
+            logf(LogLevel::Info, "%s: worker in the audio class (%s)", m_bundle.name.c_str(), how);
+        }
+        return;
+    }
+    if (m_mmcss != nullptr) {
+        leaveAudioClass(m_mmcss);
+        m_mmcss = nullptr;
+    }
+    static const int kPriorities[5] = {THREAD_PRIORITY_LOWEST, THREAD_PRIORITY_BELOW_NORMAL, THREAD_PRIORITY_NORMAL,
+                                       THREAD_PRIORITY_ABOVE_NORMAL, THREAD_PRIORITY_HIGHEST};
+    SetThreadPriority(GetCurrentThread(), kPriorities[std::max(-2, std::min(2, p)) + 2]);
+    m_schedClass = "priority";
+}
+
 void Instance::workerMain() {
     setCurrentThreadName(L"esp-worker");
     bool coastSpent = false;  // coasted to the limit; wait for a command before coasting again
     for (;;) {
         if (m_stop.load(std::memory_order_acquire)) break;
+        applyWorkerPriority();
 
         Command c;
         if (m_cmds.pop(c)) {
@@ -106,6 +134,10 @@ void Instance::workerMain() {
         }
         if (!m_coasting && now - m_lastProduceS > 0.1) m_out.producerActive.store(false, std::memory_order_relaxed);
         workerWait(waitS);
+    }
+    if (m_mmcss != nullptr) {
+        leaveAudioClass(m_mmcss);
+        m_mmcss = nullptr;
     }
 }
 

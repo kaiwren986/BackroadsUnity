@@ -132,6 +132,40 @@ int main() {
     char log[8192];
     while (esp_poll_log(log, sizeof log) > 0) {
     }
+    // worker options: priority 3 (M2) puts the worker in the audio class (MMCSS Pro Audio, else time critical) and back
+    {
+        Engine eng;
+        std::string err;
+        CreateOpts o;
+        o.audioRate = 48000;
+        CHECK(eng.open("i4_synth", o, err));
+        EspEngine *e = eng.h();
+        EspWorkerOptions wo{};
+        wo.struct_size = sizeof wo;
+        wo.priority = 3;
+        wo.power_throttling_off = 1;
+        wo.coast_max_ms = 300;
+        CHECK(esp_set_worker_options(e, &wo) == ESP_OK);
+        EspDrivelineIn in = driveline(ESP_MODE_FREE);
+        EspStepOut out = stepOut();
+        for (int64_t k = 0; k < 24; ++k) CHECK(esp_step_begin(e, k, 1.0 / 120, &in, nullptr, 0) == ESP_OK);
+        CHECK(waitStep(e, 23, out));
+        wo.priority = 0;
+        CHECK(esp_set_worker_options(e, &wo) == ESP_OK);
+        for (int64_t k = 24; k < 48; ++k) CHECK(esp_step_begin(e, k, 1.0 / 120, &in, nullptr, 0) == ESP_OK);
+        CHECK(waitStep(e, 47, out));
+        wo.struct_size = 8;
+        CHECK(esp_set_worker_options(e, &wo) == ESP_ERR_ARG);
+        std::string text;
+        for (int i = 0; i < 4; ++i) {
+            const int32_t n = esp_poll_log(log, sizeof log);
+            if (n <= 0) break;
+            text.append(log, static_cast<size_t>(n));
+        }
+        const size_t at = text.find("audio class (");
+        CHECK(at != std::string::npos);
+        if (at != std::string::npos) std::printf("  worker %s\n", text.substr(at, text.find(')', at) - at + 1).c_str());
+    }
     std::printf("esp_abi: %s (%d failures)\n", g_fail == 0 ? "PASS" : "FAIL", g_fail);
     return g_fail == 0 ? 0 : 1;
 }

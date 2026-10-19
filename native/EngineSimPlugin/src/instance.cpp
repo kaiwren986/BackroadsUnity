@@ -366,7 +366,21 @@ int32_t Instance::setWorkerOptions(const EspWorkerOptions &o) {
     static const int kPriorities[5] = {THREAD_PRIORITY_LOWEST, THREAD_PRIORITY_BELOW_NORMAL, THREAD_PRIORITY_NORMAL,
                                        THREAD_PRIORITY_ABOVE_NORMAL, THREAD_PRIORITY_HIGHEST};
     const int p = std::max(-2, std::min(2, o.priority));
-    bool ok = SetThreadPriority(h, kPriorities[p + 2]) != 0;
+    bool ok = true;
+    if (o.priority >= 3) {  // audio class: the worker joins MMCSS itself (it must be the calling thread)
+        m_wantPriority.store(3, std::memory_order_relaxed);
+        m_priorityDirty.store(true, std::memory_order_release);
+        SetEvent(static_cast<HANDLE>(m_wake));
+    } else {
+        if (m_mmcss != nullptr || m_wantPriority.load(std::memory_order_relaxed) >= 3) {
+            m_wantPriority.store(p, std::memory_order_relaxed);  // the worker leaves MMCSS, then takes this priority
+            m_priorityDirty.store(true, std::memory_order_release);
+            SetEvent(static_cast<HANDLE>(m_wake));
+        } else {
+            ok = SetThreadPriority(h, kPriorities[p + 2]) != 0;
+            m_wantPriority.store(p, std::memory_order_relaxed);
+        }
+    }
     if (o.power_throttling_off) {
         THREAD_POWER_THROTTLING_STATE s = {};
         s.Version = THREAD_POWER_THROTTLING_CURRENT_VERSION;
@@ -913,12 +927,12 @@ void Instance::logWorkerSummary() {
          "worker summary %s: %lld batches; steady state (from 10 s): longest gap between pushes %.1f ms (at %.1f s), "
          "lowest fill before a push %.1f ms (at %.1f s), pushes with fill < 2/5/10/15 ms: %lld/%lld/%lld/%lld, "
          "longest batch %.2f ms, most descheduled %.2f ms, longest kick->start %.2f ms; low-water coasts %d; "
-         "underruns %d; timer %s, low-water coast %s",
+         "underruns %d; timer %s, low-water coast %s, worker %s",
          m_bundle.name.c_str(), static_cast<long long>(d.pushes), d.maxGapMs, d.maxGapAtS, d.minFillBeforeMs < 1e8 ? d.minFillBeforeMs : 0.0,
          d.minFillAtS, static_cast<long long>(d.lowFill[0]), static_cast<long long>(d.lowFill[1]),
          static_cast<long long>(d.lowFill[2]), static_cast<long long>(d.lowFill[3]), d.maxWallMs, d.maxDeschedMs,
          d.maxKickLatencyMs, d.lowWaterCoasts, m_out.underruns.load(), m_timer != nullptr ? "high-resolution" : "ms",
-         m_lowWaterCoast ? "on" : "off");
+         m_lowWaterCoast ? "on" : "off", m_schedClass);
 }
 
 } // namespace esp

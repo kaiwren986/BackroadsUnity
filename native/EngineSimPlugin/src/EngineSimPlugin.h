@@ -227,7 +227,8 @@ typedef struct EspStats {
 /* esp_set_worker_options (M4 tuning; usable now). */
 typedef struct EspWorkerOptions {
     uint32_t struct_size;
-    int32_t priority;                /* -2..2 (THREAD_PRIORITY_LOWEST..HIGHEST); default 0 */
+    int32_t priority;                /* -2..2 (THREAD_PRIORITY_LOWEST..HIGHEST); default 0. 3 (M2): audio class, the
+                                        worker joins MMCSS "Pro Audio" (THREAD_PRIORITY_TIME_CRITICAL if MMCSS fails) */
     int32_t power_throttling_off;    /* 1 = ask Windows not to throttle the worker (EcoQoS off) */
     int32_t coast_max_ms;            /* default 300; 0 = never coast */
     uint64_t affinity_mask;          /* 0 = leave as is */

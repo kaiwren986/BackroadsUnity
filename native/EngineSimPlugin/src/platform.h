@@ -27,4 +27,10 @@ void setCurrentThreadName(const wchar_t *name);
 bool setCurrentThreadScheduling(int priority, bool powerThrottlingOff);
 bool setCurrentThreadAffinity(uint64_t mask);
 
+// Audio class for the calling thread (M2): MMCSS "Pro Audio" through avrt.dll, loaded at run time so the DLL's imports stay
+// KERNEL32 and dbghelp (ADR-002); THREAD_PRIORITY_TIME_CRITICAL if MMCSS is unavailable. Returns a token for
+// leaveAudioClass (nullptr = MMCSS not used). *how gets "mmcss", "time-critical" or "failed".
+void *enterAudioClass(const char **how);
+void leaveAudioClass(void *token);
+
 } // namespace esp
