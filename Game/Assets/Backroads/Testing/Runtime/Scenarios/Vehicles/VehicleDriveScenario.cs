@@ -24,8 +24,8 @@ namespace Backroads.Testing
         sealed class Params
         {
             public float waitSeconds = 90f;
-            public float throttle = 0.7f;
-            public float driveSeconds = 5f;
+            public float throttle = 0.6f;
+            public float driveSeconds = 3f;
             public float steer = 0f;
             public float brakeSeconds = 3f;
             public float minDistanceM = 8f;
@@ -121,7 +121,7 @@ namespace Backroads.Testing
             // drive off the bay and stop
             sys.ResetTiming();
             var start = truck.Position;
-            float maxKmh = 0, tEnd = Time.time + p.driveSeconds;
+            float maxKmh = 0, maxImpact = 0, tEnd = Time.time + p.driveSeconds;
             bool shot = false;
             int engineSteps = 0;
             while (Time.time < tEnd)
@@ -129,19 +129,30 @@ namespace Backroads.Testing
                 _in.Throttle = p.throttle; _in.Brake = 0; _in.Steer = p.steer;
                 Feed(player);
                 maxKmh = Mathf.Max(maxKmh, player.Hud.SpeedKmh);
+                maxImpact = Mathf.Max(maxImpact, (float)truck.LastImpact);
                 if (truck.Engine != null) engineSteps++;
                 Follow(cam, player);
                 if (!shot && Time.time > tEnd - p.driveSeconds * 0.4f) { shot = true; yield return ctx.Screenshot("truck_driving"); }
                 yield return null;
             }
+            // brake to a stop, then let go (held S would select reverse, as in the browser game)
             tEnd = Time.time + p.brakeSeconds;
+            var brakeFrom = truck.Position;
+            float brakeKmh = player.Hud.SpeedKmh;
+            float stopAfter = -1, brakeStart = Time.time, brakeDist = 0;
             while (Time.time < tEnd)
             {
-                _in.Throttle = 0; _in.Brake = 1; _in.Steer = 0;
+                bool stopped = stopAfter >= 0 || player.Hud.SpeedKmh < 1f;
+                if (stopped && stopAfter < 0) { stopAfter = Time.time - brakeStart; brakeDist = Vector3.Distance(brakeFrom, truck.Position); }
+                _in.Throttle = 0; _in.Brake = stopped ? 0 : 1; _in.Steer = 0;
                 Feed(player);
                 Follow(cam, player);
                 yield return null;
             }
+            ctx.Metric("brakeFromKmh", brakeKmh);
+            ctx.Metric("impactMaxNs", maxImpact);
+            ctx.Metric("stopSeconds", stopAfter);
+            ctx.Metric("brakeDistanceM", brakeDist);
             _in.Brake = 0;
             Feed(player);
             float dist = Vector3.Distance(start, truck.Position);
@@ -160,6 +171,23 @@ namespace Backroads.Testing
             if (dist < p.minDistanceM) ctx.Fail($"the truck moved only {dist:F1} m");
             if (endKmh > 2f) ctx.Fail($"the truck did not stop ({endKmh:F1} km/h)");
             if (p95 > p.simP95MsBudget) ctx.Fail($"simulation main-thread time per frame p95 {p95:F2} ms > {p.simP95MsBudget} ms");
+            // night: L puts the headlights on (vehicleModels.js setLights + the two spots of main.js)
+            if (world != null && cam != null && ctx.Renders)
+            {
+                world.SetHour(21f);
+                _in.LightsPresses++;
+                Feed(player);
+                yield return new WaitForFixedUpdate();
+                yield return null;
+                var b = player.Body;
+                var f = b.rotation * Vector3.forward; f.y = 0; f = f.sqrMagnitude > 1e-4f ? f.normalized : Vector3.forward;
+                cam.transform.position = b.position + f * 11f + Vector3.Cross(Vector3.up, f) * 4f + Vector3.up * 2.2f;
+                cam.transform.LookAt(b.position + Vector3.up * 0.8f);
+                yield return ctx.Wait(0.5f);
+                yield return ctx.Screenshot("truck_night_lights");
+                if (!truck.State.lightsOn) ctx.Fail("L did not switch the lights on at night");
+                world.SetHour(10f);
+            }
             File.WriteAllText(Path.Combine(ctx.OutDir, "vehicles.txt"),
                 $"player {player.DisplayName}\ndistance {dist:F2} m\nmax {maxKmh:F1} km/h\nsim ms p50 {p50:F3} p95 {p95:F3} max {pmax:F3}\n");
         }
