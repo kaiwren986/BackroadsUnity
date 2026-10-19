@@ -1,6 +1,7 @@
 // audio_render.cpp: see audio_render.h.
 #include "audio_render.h"
 
+#include "platform.h"
 #include "synthesizer.h"
 
 #include <algorithm>
@@ -61,7 +62,10 @@ int32_t AudioOutput::read(float *dst, int32_t frames, int32_t channels) {
         const bool active = producerActive.load(std::memory_order_relaxed);
         if (m_primed) {  // ran dry
             m_primed = false;
-            if (active && !m_inUnderrun) underruns.fetch_add(1, std::memory_order_relaxed);
+            if (active && !m_inUnderrun) {
+                lastUnderrunQpc.store(qpcNow(), std::memory_order_relaxed);
+                underruns.fetch_add(1, std::memory_order_relaxed);
+            }
             m_inUnderrun = active;
         }
         if (active && m_everPrimed) underrunFrames.fetch_add(frames - got, std::memory_order_relaxed);

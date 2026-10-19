@@ -133,7 +133,7 @@ set(ESP_INTERNAL_SOURCES
     src/audio_render.cpp src/crash_guard.cpp src/esp_log.cpp src/fir_avx2.cpp src/fir_sse2.cpp src/instance.cpp
     src/offline.cpp src/platform.cpp src/resample.cpp src/unity_sim.cpp src/wav_io.cpp src/worker.cpp
     src/builders/builders.cpp src/builders/f4_boxer_a.cpp src/builders/i4_synth.cpp src/builders/p01_generic.cpp
-    src/builders/v8_cross_a.cpp)
+    src/builders/v8_cross_a.cpp src/builders/v8_bigblock_a.cpp)
 if (ESP_WITH_PIRANHA)
     list(APPEND ESP_INTERNAL_SOURCES src/script_loader.cpp src/mr_sanitise.cpp)
 endif ()
@@ -160,7 +160,7 @@ endif ()
 
 # ---- tools: the harness (public ABI only), the co-simulation (also internals), esp_cli ----
 add_library(esp_harness STATIC
-    tools/harness/harness.cpp tools/harness/gates.cpp tools/harness/allengines.cpp)
+    tools/harness/harness.cpp tools/harness/gates.cpp tools/harness/allengines.cpp tools/harness/roster.cpp)
 target_include_directories(esp_harness PUBLIC src tools)
 target_compile_definitions(esp_harness PUBLIC WIN32_LEAN_AND_MEAN NOMINMAX "ESP_VENDOR_DIR=\"${VENDOR_ES}\"")
 target_compile_options(esp_harness PRIVATE ${ESP_OWN_FLAGS})
@@ -244,6 +244,8 @@ if (ESP_WITH_PIRANHA)
     add_test(NAME esp_all_engines COMMAND esp_cli all-engines --threads 8 --json "${ESP_REPORTS}/esp_all_engines.json")
     set_tests_properties(esp_all_engines PROPERTIES LABELS heavy TIMEOUT 1200)
     add_test(NAME esp_mr_sanitise COMMAND esp_cli sanitise-all --threads 8 --json "${ESP_REPORTS}/esp_mr_sanitise.json")
+    # M2 lane gate (card T2.4): the truck's big-block V8 port against the upstream script it ports
+    add_test(NAME esp_bigblock COMMAND esp_cli bigblock --json "${ESP_REPORTS}/esp_bigblock.json")
 endif ()
 # Soaks, real time (PLAN 6.1 M1 lane gate): under ASan, engine-sim runs about 10x slower, so the ASan soak uses the
 # light i4_synth configuration that still keeps real time there; the release soak runs f4_boxer_a at full quality.

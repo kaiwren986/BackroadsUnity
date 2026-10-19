@@ -491,7 +491,11 @@ int runBench(const std::string &engine, const std::string &affinity, double seco
 // Real-time soak (ASan preset): 60 fps commands paced by the wall clock, a 48 kHz consumer pulling 256 frames every
 // 5.33 ms, a slow rev cycle. Gates: 0 steady-state underruns, < 1 MB private-memory growth after the first minute.
 int runSoak(const std::string &engine, double minutes, const std::string &outJson, int simFrequency, int fluidSteps,
-            int firMaxTaps) {
+            int firMaxTaps, bool m1Baseline) {
+    if (m1Baseline) {  // read by the Instance when it is created
+        _putenv_s("ESP_HIRES_TIMER", "0");
+        _putenv_s("ESP_COAST_LOWWATER", "0");
+    }
     Engine eng;
     std::string err;
     CreateOpts o;
@@ -504,6 +508,16 @@ int runSoak(const std::string &engine, double minutes, const std::string &outJso
         return 1;
     }
     EspEngine *e = eng.h();
+    // the worker scheduling Unity uses on the High and Ultra tiers (EngineSimEngine.DefaultWorkerPriority, PLAN 3.4):
+    // above normal, power throttling (EcoQoS) off
+    if (!m1Baseline) {
+        EspWorkerOptions wo{};
+        wo.struct_size = sizeof wo;
+        wo.priority = 1;
+        wo.power_throttling_off = 1;
+        wo.coast_max_ms = 300;
+        esp_set_worker_options(e, &wo);
+    }
     std::atomic<bool> run{true};
     std::thread audio([&] {
         SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_TIME_CRITICAL);
@@ -536,9 +550,21 @@ int runSoak(const std::string &engine, double minutes, const std::string &outJso
     int underrunsAt10 = -1, stale = 0;
     double w = 0;
     const double wRef = rpmToRad(5000);
+    // the harness's own pacing: frames that came late (the plugin coasts from 25 ms without a command at 60 fps)
+    double lastFrameS = t0, maxFrameMs = 0;
+    int64_t framesOver25 = 0, framesOver33 = 0;
     while (true) {
         const double t = nowS() - t0;
         if (t >= minutes * 60.0) break;
+        {
+            const double fms = 1000.0 * (t0 + t - lastFrameS);
+            lastFrameS = t0 + t;
+            if (t > 10.0) {
+                maxFrameMs = std::max(maxFrameMs, fms);
+                if (fms > 25.0) ++framesOver25;
+                if (fms > 33.4) ++framesOver33;
+            }
+        }
         // rev cycle: 20 s period between idle and 70 % pedal against the road load
         const double phase = std::fmod(t, 20.0);
         const float pedal = t < 3 ? 0.0f : (phase < 10 ? static_cast<float>(0.7 * phase / 10) : static_cast<float>(0.7 * (20 - phase) / 10));
@@ -571,21 +597,37 @@ int runSoak(const std::string &engine, double minutes, const std::string &outJso
     const int steadyUnderruns = s.audio_underruns - std::max(0, underrunsAt10);
     const double growthMb = mem1 > 0 ? (memEnd - mem1) / (1024.0 * 1024.0) : 0.0;
     const bool pass = steadyUnderruns == 0 && growthMb < 1.0;
+    const int infoFreq = eng.info().sim_frequency, infoFluid = eng.info().fluid_steps, irTaps = eng.info().ir_taps;
+    eng.close();  // the worker logs its summary (longest gaps, lowest fill, underrun context) when it stops
+    const std::string logText = drainLogText();
+    std::string summary;
+    int underrunReports = 0;
+    for (size_t at = 0; at < logText.size();) {
+        size_t end = logText.find('\n', at);
+        if (end == std::string::npos) end = logText.size();
+        const std::string line = logText.substr(at, end - at);
+        if (line.find("worker summary") != std::string::npos) summary = line;
+        if (line.find("underrun #") != std::string::npos) ++underrunReports;
+        at = end + 1;
+    }
     std::printf("soak %s for %.1f min: underruns %d (after 10 s: %d), underrun frames %d, stale collects %d, coast events %d, "
-                "RTF %.2f; private bytes %.1f MB at 1 min, %.1f MB at the end (growth %.3f MB) -> %s\n",
+                "RTF %.2f; private bytes %.1f MB at 1 min, %.1f MB at the end (growth %.3f MB); harness frames: longest %.1f ms, "
+                "%lld over 25 ms, %lld over 33 ms -> %s\n",
                 engine.c_str(), minutes, s.audio_underruns, steadyUnderruns, s.audio_underrun_frames, stale, s.coast_events,
-                s.rtf, mem1 / 1048576.0, memEnd / 1048576.0, growthMb, pass ? "PASS" : "FAIL");
+                s.rtf, mem1 / 1048576.0, memEnd / 1048576.0, growthMb, maxFrameMs, static_cast<long long>(framesOver25),
+                static_cast<long long>(framesOver33), pass ? "PASS" : "FAIL");
     if (!outJson.empty()) {
         Json j;
-        j.obj().str("gate", "esp_soak").str("engine", engine).num("minutes", minutes, 2)
-            .integer("simFrequency", eng.info().sim_frequency).integer("fluidSteps", eng.info().fluid_steps)
-            .integer("irTaps", eng.info().ir_taps)
+        j.obj().str("gate", "esp_soak").str("engine", engine).num("minutes", minutes, 2).boolean("m1Baseline", m1Baseline)
+            .integer("simFrequency", infoFreq).integer("fluidSteps", infoFluid)
+            .integer("irTaps", irTaps).str("workerSummary", summary).integer("underrunReports", underrunReports)
             .integer("underrunsSteady", steadyUnderruns).integer("underrunsAll", s.audio_underruns)
             .integer("staleCollects", stale).integer("coastEvents", s.coast_events).num("rtf", s.rtf, 3)
+            .num("harnessMaxFrameMs", maxFrameMs, 2).integer("harnessFramesOver25ms", framesOver25)
+            .integer("harnessFramesOver33ms", framesOver33).num("ringTargetMs", s.ring_target_frames / 48.0, 2)
             .num("memGrowthMb", growthMb, 4).boolean("pass", pass).end();
         j.save(outJson);
     }
-    drainLog();
     return pass ? 0 : 1;
 }
 

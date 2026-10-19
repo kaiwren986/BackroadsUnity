@@ -119,7 +119,10 @@ EspStats stats(EspEngine *e) {
     return s;
 }
 
-void drainLog(FILE *to) {
+void drainLog(FILE *to) { drainLogText(to); }
+
+std::string drainLogText(FILE *to) {
+    std::string all;
     char buf[8192];
     for (;;) {
         const int32_t n = esp_poll_log(buf, sizeof buf);
@@ -127,8 +130,13 @@ void drainLog(FILE *to) {
         std::istringstream in(std::string(buf, static_cast<size_t>(n)));
         std::string line;
         while (std::getline(in, line))
-            if (!line.empty()) std::fprintf(to, "  %s\n", line.c_str());
+            if (!line.empty()) {
+                std::fprintf(to, "  %s\n", line.c_str());
+                all += line;
+                all += '\n';
+            }
     }
+    return all;
 }
 
 bool waitStep(EspEngine *e, int64_t k, EspStepOut &out, double maxS) {

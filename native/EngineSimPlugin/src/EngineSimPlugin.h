@@ -262,7 +262,7 @@ ESP_API EspEngine *ESP_CALL esp_create(const EspCreateDesc *desc, const char *es
 /* Stops the worker and frees everything. Stop the AudioSource first: the ring stays valid until this returns. */
 ESP_API void ESP_CALL esp_destroy(EspEngine *e);
 
-/* C++ engines under fictional ids (PLAN 3.10): "f4_boxer_a", "v8_cross_a", "i4_synth" ("v8_bigblock_a" from M2). */
+/* C++ engines under fictional ids (PLAN 3.10): "f4_boxer_a", "v8_cross_a", "i4_synth", "v8_bigblock_a" (from M2). */
 ESP_API int32_t ESP_CALL esp_load_builtin(EspEngine *e, const char *name_utf8, char *err_utf8, int32_t err_capacity);
 /* A piranha .mr engine script (builds with ESP_WITH_PIRANHA only; ESP_ERR_STATE otherwise). top_node NULL or "" =
  * call main(), else set_engine(<top_node>()) for older scripts without main. */

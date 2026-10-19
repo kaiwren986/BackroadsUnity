@@ -20,6 +20,8 @@
 
 #include <algorithm>
 #include <cmath>
+#include <cstdarg>
+#include <cstdio>
 #include <cstring>
 #include <map>
 
@@ -42,6 +44,15 @@ struct IgnitionPeek : IgnitionModule {
 
 double clampd(double v, double lo, double hi) { return v < lo ? lo : (v > hi ? hi : v); }
 
+std::string fmtLine(const char *f, ...) {
+    char buf[512];
+    va_list ap;
+    va_start(ap, f);
+    const int n = vsnprintf(buf, sizeof buf, f, ap);
+    va_end(ap);
+    return n > 0 ? std::string(buf, static_cast<size_t>(std::min(n, static_cast<int>(sizeof buf) - 1))) : std::string();
+}
+
 size_t roundUpPow2(size_t v) {
     size_t p = 1;
     while (p < v) p <<= 1;
@@ -55,6 +66,7 @@ struct Instance::StepAcc {
     double sumPd = 0.0, sumDyno = 0.0, sumClutch = 0.0;
     int64_t n = 0;
     bool revLimited = false;
+    size_t fillBefore = 0, pushed = 0;  // audio ring fill before this batch's push, frames pushed
 };
 
 // ---------------------------------------------------------------------------------------------------------------
@@ -74,6 +86,20 @@ Instance::Instance(const EspCreateDesc &desc, const std::string &esDir, const st
     m_out.init(ring, rate, target);
     m_fill.init(rate, dsp, target, (desc.flags & ESP_CREATE_NO_DRIFT_TRIM) == 0);
     m_wake = CreateEventW(nullptr, FALSE, FALSE, nullptr);
+    // CREATE_WAITABLE_TIMER_HIGH_RESOLUTION (Windows 10 1803+): sub-millisecond timed waits whatever the process timer
+    // resolution is (a console or background process can be held at 15.6 ms on Windows 11).
+    m_timer = CreateWaitableTimerExW(nullptr, nullptr, 0x00000002 /* CREATE_WAITABLE_TIMER_HIGH_RESOLUTION */,
+                                     TIMER_ALL_ACCESS);
+    {
+        // A/B switches for the soak (esp_cli soak --m1-baseline). The process environment, not the CRT's: the DLL has its
+        // own static CRT, whose copy of the environment is taken when the DLL loads.
+        char v[8] = {};
+        if (GetEnvironmentVariableA("ESP_COAST_LOWWATER", v, sizeof v) > 0 && v[0] == '0') m_lowWaterCoast = false;
+        if (GetEnvironmentVariableA("ESP_HIRES_TIMER", v, sizeof v) > 0 && v[0] == '0' && m_timer != nullptr) {
+            CloseHandle(static_cast<HANDLE>(m_timer));
+            m_timer = nullptr;
+        }
+    }
     m_controls.struct_size = sizeof(EspControls);
     m_controls.sim_speed = 1.0f;
     if (desc.flags & ESP_CREATE_NO_COAST) m_coastMaxMs.store(0);
@@ -90,6 +116,7 @@ Instance::~Instance() {
     delete m_trans;
     m_trans = nullptr;
     if (m_wake != nullptr) CloseHandle(static_cast<HANDLE>(m_wake));
+    if (m_timer != nullptr) CloseHandle(static_cast<HANDLE>(m_timer));
     m_magic = 0;
 }
 
@@ -103,6 +130,7 @@ void Instance::stopWorker() {
     m_stop.store(true);
     SetEvent(static_cast<HANDLE>(m_wake));
     m_worker.join();
+    logWorkerSummary();
 }
 
 // ---------------------------------------------------------------------------------------------------------------
@@ -645,7 +673,8 @@ void Instance::runSteps(int64_t n, const Command &c, StepAcc &acc) {
             }
         }
         if (m_tap.active) tap = &m_tap;
-        m_renderer.renderSync(m_out, tap);
+        acc.fillBefore = m_out.ring.fill();
+        acc.pushed = m_renderer.renderSync(m_out, tap);
         if (m_tap.full()) {
             std::string err;
             if (!writeWav16Mono(m_tap.path, m_tap.data.data(), m_tap.data.size(), m_rate, err))
@@ -784,6 +813,8 @@ void Instance::process(const Command &c, bool afterCoast) {
     m_lastCmd = c;
     m_haveLastCmd = true;
     m_lastProduceS = now;
+    if (m_audio && m_desc.worker_thread)
+        notePush(w0, wallS, cpuS, w0 - qpcSeconds(c.kickQpc), acc.fillBefore, acc.pushed, false, c.stepIndex);
 }
 
 void Instance::coastBatch() {
@@ -809,6 +840,85 @@ void Instance::coastBatch() {
     m_stats.wallSeconds += now - w0;
     m_stats.cpuSeconds += cpuS;
     m_lastProduceS = now;
+    if (m_audio) notePush(w0, now - w0, cpuS, 0.0, acc.fillBefore, acc.pushed, true, c.stepIndex);
+}
+
+// ---------------------------------------------------------------------------------------------------------------
+// underrun diagnostics (worker only; card T2.4: "log which step stalled")
+
+void Instance::notePush(double startS, double wallS, double cpuS, double kickLatencyS, size_t fillBefore, size_t pushed,
+                        bool coast, int64_t step) {
+    WorkerDiag &d = m_diag;
+    const double now = startS + wallS;
+    const double toMs = 1000.0 / (m_rate > 0 ? m_rate : 48000);
+    if (d.pushes == 0) {
+        d.t0 = startS;
+        d.lastPushS = now;
+    }
+    PushNote &n = d.hist[d.next];
+    n.t = now - d.t0;
+    n.gapMs = 1000.0 * (now - d.lastPushS);
+    n.fillBeforeMs = fillBefore * toMs;
+    n.fillAfterMs = (fillBefore + pushed) * toMs;
+    n.wallMs = 1000.0 * wallS;
+    n.cpuMs = 1000.0 * cpuS;
+    n.kickLatencyMs = 1000.0 * kickLatencyS;
+    n.step = step;
+    n.coast = coast;
+    d.next = (d.next + 1) % 24;
+    if (d.count < 24) ++d.count;
+    // steady-state statistics from 10 s on (load, priming and the first frames are not the steady state)
+    if (now - d.t0 >= 10.0) {
+        if (n.gapMs > d.maxGapMs) {
+            d.maxGapMs = n.gapMs;
+            d.maxGapAtS = n.t;
+        }
+        if (n.fillBeforeMs < d.minFillBeforeMs) {
+            d.minFillBeforeMs = n.fillBeforeMs;
+            d.minFillAtS = n.t;
+        }
+        d.maxKickLatencyMs = std::max(d.maxKickLatencyMs, n.kickLatencyMs);
+        d.maxDeschedMs = std::max(d.maxDeschedMs, n.wallMs - n.cpuMs);
+        d.maxWallMs = std::max(d.maxWallMs, n.wallMs);
+        if (n.fillBeforeMs < 2) ++d.lowFill[0];
+        if (n.fillBeforeMs < 5) ++d.lowFill[1];
+        if (n.fillBeforeMs < 10) ++d.lowFill[2];
+        if (n.fillBeforeMs < 15) ++d.lowFill[3];
+    }
+    ++d.pushes;
+    d.lastPushS = now;
+
+    const int32_t u = m_out.underruns.load(std::memory_order_relaxed);
+    if (u == d.underrunsSeen) return;
+    d.underrunsSeen = u;
+    if (d.underrunsLogged >= 8) return;  // a bad run logs its first few only
+    ++d.underrunsLogged;
+    const double at = qpcSeconds(m_out.lastUnderrunQpc.load(std::memory_order_relaxed)) - d.t0;
+    std::string lines = fmtLine("underrun #%d at %.3f s (ring target %.1f ms); the batches before it (t s, gap ms, fill "
+                                "before -> after ms, wall/cpu ms, kick->start ms, step):",
+                                u, at, m_out.targetFrames.load(std::memory_order_relaxed) * toMs);
+    for (int i = 0; i < d.count; ++i) {
+        const PushNote &h = d.hist[(d.next - d.count + i + 24) % 24];
+        lines += fmtLine("\n    %s %.3f gap %.1f fill %.1f -> %.1f wall %.2f cpu %.2f kick %.2f step %lld", h.coast ? "coast" : "cmd  ",
+                         h.t, h.gapMs, h.fillBeforeMs, h.fillAfterMs, h.wallMs, h.cpuMs, h.kickLatencyMs,
+                         static_cast<long long>(h.step));
+    }
+    log(LogLevel::Warn, lines);
+}
+
+void Instance::logWorkerSummary() {
+    if (!m_audio || m_diag.pushes == 0) return;
+    const WorkerDiag &d = m_diag;
+    logf(LogLevel::Info,
+         "worker summary %s: %lld batches; steady state (from 10 s): longest gap between pushes %.1f ms (at %.1f s), "
+         "lowest fill before a push %.1f ms (at %.1f s), pushes with fill < 2/5/10/15 ms: %lld/%lld/%lld/%lld, "
+         "longest batch %.2f ms, most descheduled %.2f ms, longest kick->start %.2f ms; low-water coasts %d; "
+         "underruns %d; timer %s, low-water coast %s",
+         m_bundle.name.c_str(), static_cast<long long>(d.pushes), d.maxGapMs, d.maxGapAtS, d.minFillBeforeMs < 1e8 ? d.minFillBeforeMs : 0.0,
+         d.minFillAtS, static_cast<long long>(d.lowFill[0]), static_cast<long long>(d.lowFill[1]),
+         static_cast<long long>(d.lowFill[2]), static_cast<long long>(d.lowFill[3]), d.maxWallMs, d.maxDeschedMs,
+         d.maxKickLatencyMs, d.lowWaterCoasts, m_out.underruns.load(), m_timer != nullptr ? "high-resolution" : "ms",
+         m_lowWaterCoast ? "on" : "off");
 }
 
 } // namespace esp

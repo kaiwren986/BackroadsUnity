@@ -52,9 +52,9 @@ int main() {
     CHECK(esp_set_crash_dir("") == ESP_OK);
 
     // builtins: fictional ids, sane info
-    const char *names[3] = {"f4_boxer_a", "v8_cross_a", "i4_synth"};
-    const int cylinders[3] = {4, 8, 4};
-    for (int i = 0; i < 3; ++i) {
+    const char *names[4] = {"f4_boxer_a", "v8_cross_a", "i4_synth", "v8_bigblock_a"};
+    const int cylinders[4] = {4, 8, 4, 8};
+    for (int i = 0; i < 4; ++i) {
         Engine eng;
         std::string err;
         CreateOpts o;

@@ -35,6 +35,7 @@ public:
     std::atomic<bool> producerActive{false};  // the worker produced recently (underruns count only then)
     std::atomic<int32_t> underruns{0};
     std::atomic<int32_t> underrunFrames{0};
+    std::atomic<int64_t> lastUnderrunQpc{0};  // QPC ticks of the last counted underrun (worker diagnostics)
     std::atomic<int64_t> consumed{0};
 
 private:
@@ -59,6 +60,7 @@ public:
     double epsilon() const { return m_eps; }
     double frameP95Ms() const { return m_p95FrameMs; }
     double workerFrameMs() const { return m_workerFrameMs; }
+    int dspFrames() const { return m_dsp; }
 
 private:
     void recompute(double nowS);

@@ -57,6 +57,8 @@ EspStats stats(EspEngine *e);
 
 // Drains the plugin log to stderr (prefix "  ").
 void drainLog(FILE *to = stderr);
+// Drains the plugin log to stderr and also returns it (one line per entry).
+std::string drainLogText(FILE *to = stderr);
 
 // Polls esp_step_end (timeout 0) and yields between polls until step k is there; false after maxS seconds.
 bool waitStep(EspEngine *e, int64_t k, EspStepOut &out, double maxS = 10.0);
@@ -148,9 +150,14 @@ int runPitchGate(const std::string &engine, const std::string &outJson, const st
 int runCosimMatrix(const std::string &traceDir, const std::string &outJson, int threads);
 int runBench(const std::string &engine, const std::string &affinity, double seconds, const std::string &quality,
              const std::string &outJson);
+// m1Baseline: the M1 soak conditions, for comparison (worker at normal priority with power throttling allowed, the
+// millisecond worker timer, no low-water coasting).
 int runSoak(const std::string &engine, double minutes, const std::string &outJson, int simFrequency = 0, int fluidSteps = 0,
-            int firMaxTaps = 0);
+            int firMaxTaps = 0, bool m1Baseline = false);
 int runAllEngines(const std::string &outJson, int threads, bool hardRoster);
 int runSanitiseAll(const std::string &outJson, int threads);
+// M2 (roster.cpp): v8_bigblock_a against the upstream script it ports; the roster report.
+int runBigBlockGate(const std::string &outJson);
+int runRosterReport(const std::string &outJson);
 
 } // namespace esph

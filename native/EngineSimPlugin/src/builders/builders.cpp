@@ -18,11 +18,12 @@ const Entry kBuiltins[] = {
     {"f4_boxer_a", buildF4BoxerA},
     {"v8_cross_a", buildV8CrossA},
     {"i4_synth", buildI4Synth},
+    {"v8_bigblock_a", buildV8BigblockA},
 };
 
 } // namespace
 
-const char *builtinNameList() { return "f4_boxer_a,v8_cross_a,i4_synth"; }
+const char *builtinNameList() { return "f4_boxer_a,v8_cross_a,i4_synth,v8_bigblock_a"; }
 
 bool buildBuiltin(const std::string &name, const std::string &esDir, EngineBundle &out, std::string &err) {
     for (const Entry &e : kBuiltins) {

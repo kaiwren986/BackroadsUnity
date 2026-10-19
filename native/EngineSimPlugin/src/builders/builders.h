@@ -4,6 +4,8 @@
 //               against the real engine: 229 N m at 4,500 rpm, 170 hp at 6,500 rpm, research 02 6.2)
 //   v8_cross_a  a cross-plane V8 rebuilt from an engine-sim example (probes\p01\bench.cpp specLsV8, 01 App. A.1)
 //   i4_synth    the synthetic inline four of the same probe (specInline(4))
+//   v8_bigblock_a  a 7.4 L big-block V8, line-by-line port of upstream's gas big-block truck example script (M2, U6:
+//               the box truck's engine); `esp_cli compare` checks it against the script's dyno sweep
 // Builders create the Engine, Vehicle and Transmission only; the Instance makes the simulator (UnitySim).
 // Every name string here is a fictional id; real names stay in the vendor tree and internal docs.
 #pragma once
@@ -28,7 +30,7 @@ struct EngineBundle {
 
 // Builds a builtin. esDir: the es library folder (for sound-library\*.wav). False + err on an unknown name.
 bool buildBuiltin(const std::string &name, const std::string &esDir, EngineBundle &out, std::string &err);
-// "f4_boxer_a,v8_cross_a,i4_synth"
+// "f4_boxer_a,v8_cross_a,i4_synth,v8_bigblock_a"
 const char *builtinNameList();
 
 // Frees what a builder or a script made (Functions, camshafts and valvetrains leak as upstream does, 01 7.3).
@@ -38,5 +40,6 @@ void destroyBundle(EngineBundle &b);
 bool buildF4BoxerA(const std::string &esDir, EngineBundle &out);
 bool buildV8CrossA(const std::string &esDir, EngineBundle &out);
 bool buildI4Synth(const std::string &esDir, EngineBundle &out);
+bool buildV8BigblockA(const std::string &esDir, EngineBundle &out);
 
 } // namespace esp
