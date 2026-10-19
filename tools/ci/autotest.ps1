@@ -34,7 +34,7 @@ param(
     [Alias('Profile')][ValidateSet('', 'Dev', 'Client')][string]$BuildProfile = '',
     [string]$Milestone = '',
     [switch]$MinSpec,
-    [ValidateSet(0, 30, 45, 60)][int]$Fps = 0,
+    [ValidateSet(0, 30, 45, 60, 120)][int]$Fps = 0,
     [switch]$Perf,
     [ValidateRange(1, 9)][int]$Repeat = 1,
     [int]$TimeoutSec = 600,

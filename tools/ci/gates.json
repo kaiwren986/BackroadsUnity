@@ -1,75 +1,673 @@
 {
   "schema": 1,
   "note": "What tools/ci/gate.ps1 runs per tier (PLAN 1.9). Each step runs one tools/ci script in its own PowerShell. '{milestone}' becomes the milestone (-Gate M<n>, else from the branch or the tags). gateJson: the script writes artifacts/gates/<id>.json itself; otherwise gate.ps1 records its exit code and log. heavy: gate.ps1 pauses before it while the user plays. perf: needs mains power (otherwise 'invalid'). oracle: skipped by -SkipOracle. hard false: reported, never fails the tier. headline: at the milestone tier only headline steps decide (PLAN 1.10). requiresParam: skipped (with a note) until the script has that switch. 'milestones' adds steps per milestone to a tier.",
-  "budgetSeconds": { "merge": 1200, "nightly": 10800, "milestone": null },
+  "budgetSeconds": {
+    "merge": 1200,
+    "nightly": 10800,
+    "milestone": null
+  },
   "tiers": {
     "merge": {
       "steps": [
-        { "id": "oracle.hash", "script": "oracle.ps1", "args": [], "gateJson": true, "oracle": true, "headline": true, "owner": "W" },
-        { "id": "vendor.check", "script": "vendor-check.ps1", "args": [], "gateJson": false, "headline": true, "owner": "V", "fallbackIfFail": "re-vendor engine-sim from git blobs (T0.4)" },
-        { "id": "native.ctest", "script": "build-native.ps1", "args": [], "gateJson": false, "heavy": true, "headline": true, "owner": "V" },
-        { "id": "unity.editmode", "script": "unity-tests.ps1", "args": ["-Platform", "EditMode", "-Category", "!Slow;!PlayerOnly"], "gateJson": true, "heavy": true, "owner": "I" },
-        { "id": "unity.playmode", "script": "unity-tests.ps1", "args": ["-Platform", "PlayMode", "-Category", "!Slow;!PlayerOnly"], "gateJson": true, "heavy": true, "owner": "I" },
-        { "id": "build.servercompile", "script": "build-player.ps1", "args": ["-CompileServerScripts", "-Milestone", "{milestone}"], "gateJson": true, "heavy": true, "owner": "I" },
-        { "id": "build.dev", "script": "build-player.ps1", "args": ["-Profile", "Dev", "-Milestone", "{milestone}"], "gateJson": true, "heavy": true, "owner": "I" },
-        { "id": "autotest.smoke", "script": "autotest.ps1", "args": ["-Scenario", "smoke", "-Profile", "Dev", "-Milestone", "{milestone}"], "gateJson": true, "heavy": true, "owner": "I" }
+        {
+          "id": "oracle.hash",
+          "script": "oracle.ps1",
+          "args": [],
+          "gateJson": true,
+          "oracle": true,
+          "headline": true,
+          "owner": "W"
+        },
+        {
+          "id": "vendor.check",
+          "script": "vendor-check.ps1",
+          "args": [],
+          "gateJson": false,
+          "headline": true,
+          "owner": "V",
+          "fallbackIfFail": "re-vendor engine-sim from git blobs (T0.4)"
+        },
+        {
+          "id": "native.ctest",
+          "script": "build-native.ps1",
+          "args": [],
+          "gateJson": false,
+          "heavy": true,
+          "headline": true,
+          "owner": "V"
+        },
+        {
+          "id": "unity.editmode",
+          "script": "unity-tests.ps1",
+          "args": [
+            "-Platform",
+            "EditMode",
+            "-Category",
+            "!Slow;!PlayerOnly"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "owner": "I"
+        },
+        {
+          "id": "unity.playmode",
+          "script": "unity-tests.ps1",
+          "args": [
+            "-Platform",
+            "PlayMode",
+            "-Category",
+            "!Slow;!PlayerOnly"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "owner": "I"
+        },
+        {
+          "id": "build.servercompile",
+          "script": "build-player.ps1",
+          "args": [
+            "-CompileServerScripts",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "owner": "I"
+        },
+        {
+          "id": "build.dev",
+          "script": "build-player.ps1",
+          "args": [
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "owner": "I"
+        },
+        {
+          "id": "autotest.smoke",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "smoke",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "owner": "I"
+        }
       ]
     },
     "nightly": {
-      "include": ["merge"],
+      "include": [
+        "merge"
+      ],
       "steps": [
-        { "id": "unity.editmode.slow", "script": "unity-tests.ps1", "args": ["-Platform", "EditMode", "-Category", "Slow;!PlayerOnly", "-MinTests", "0"], "gateJson": true, "heavy": true },
-        { "id": "unity.playmode.slow", "script": "unity-tests.ps1", "args": ["-Platform", "PlayMode", "-Category", "Slow;!PlayerOnly", "-MinTests", "0"], "gateJson": true, "heavy": true },
-        { "id": "native.asan", "script": "build-native.ps1", "args": ["-Asan"], "requiresParam": "Asan", "gateJson": false, "heavy": true, "hard": false, "owner": "V" },
-        { "id": "build.server", "script": "build-player.ps1", "args": ["-Profile", "ServerHeadless", "-Milestone", "{milestone}"], "gateJson": true, "heavy": true },
-        { "id": "soak.server-canary", "script": "soak.ps1", "args": ["-Clients", "0", "-Milestone", "{milestone}"], "gateJson": true, "heavy": true },
-        { "id": "lfs.budget", "script": "lfs-budget.ps1", "args": [], "gateJson": true },
-        { "id": "licence.notices", "script": "notices.ps1", "args": ["-Check"], "gateJson": true },
-        { "id": "backup", "script": "backup.ps1", "args": [], "gateJson": true, "hard": false }
+        {
+          "id": "unity.editmode.slow",
+          "script": "unity-tests.ps1",
+          "args": [
+            "-Platform",
+            "EditMode",
+            "-Category",
+            "Slow;!PlayerOnly",
+            "-MinTests",
+            "0"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "unity.playmode.slow",
+          "script": "unity-tests.ps1",
+          "args": [
+            "-Platform",
+            "PlayMode",
+            "-Category",
+            "Slow;!PlayerOnly",
+            "-MinTests",
+            "0"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "native.asan",
+          "script": "build-native.ps1",
+          "args": [
+            "-Asan"
+          ],
+          "requiresParam": "Asan",
+          "gateJson": false,
+          "heavy": true,
+          "hard": false,
+          "owner": "V"
+        },
+        {
+          "id": "native.heavy",
+          "script": "build-native.ps1",
+          "args": [
+            "-Heavy"
+          ],
+          "requiresParam": "Heavy",
+          "gateJson": false,
+          "heavy": true,
+          "hard": false,
+          "owner": "V"
+        },
+        {
+          "id": "build.server",
+          "script": "build-player.ps1",
+          "args": [
+            "-Profile",
+            "ServerHeadless",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "soak.server-canary",
+          "script": "soak.ps1",
+          "args": [
+            "-Clients",
+            "0",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "lfs.budget",
+          "script": "lfs-budget.ps1",
+          "args": [],
+          "gateJson": true
+        },
+        {
+          "id": "licence.notices",
+          "script": "notices.ps1",
+          "args": [
+            "-Check"
+          ],
+          "gateJson": true
+        },
+        {
+          "id": "backup",
+          "script": "backup.ps1",
+          "args": [],
+          "gateJson": true,
+          "hard": false
+        }
       ]
     },
     "milestone": {
       "steps": [
-        { "id": "nightly.green", "builtin": "lastNightly", "headline": true },
-        { "id": "env.check", "script": "env-check.ps1", "args": [], "gateJson": false, "headline": true },
-        { "id": "oracle.export", "script": "oracle.ps1", "args": ["-Export"], "gateJson": true, "oracle": true, "heavy": true, "headline": true, "owner": "W" },
-        { "id": "vendor.check", "script": "vendor-check.ps1", "args": [], "gateJson": false, "headline": true, "owner": "V" },
-        { "id": "native.ctest", "script": "build-native.ps1", "args": [], "gateJson": false, "heavy": true, "headline": true, "owner": "V" },
-        { "id": "unity.editmode", "script": "unity-tests.ps1", "args": ["-Platform", "EditMode", "-Category", "!PlayerOnly"], "gateJson": true, "heavy": true },
-        { "id": "build.client", "script": "build-player.ps1", "args": ["-Profile", "Client", "-Milestone", "{milestone}"], "gateJson": true, "heavy": true, "headline": true },
-        { "id": "build.dev", "script": "build-player.ps1", "args": ["-Profile", "Dev", "-Milestone", "{milestone}"], "gateJson": true, "heavy": true },
-        { "id": "build.server", "script": "build-player.ps1", "args": ["-Profile", "ServerHeadless", "-Milestone", "{milestone}"], "gateJson": true, "heavy": true, "headline": true },
-        { "id": "autotest.br-smoke", "script": "autotest.ps1", "args": ["-Smoke", "-Profile", "Client", "-Milestone", "{milestone}"], "gateJson": true, "heavy": true, "headline": true },
-        { "id": "soak.server-canary", "script": "soak.ps1", "args": ["-Clients", "0", "-Milestone", "{milestone}"], "gateJson": true, "heavy": true, "headline": true },
-        { "id": "lfs.budget", "script": "lfs-budget.ps1", "args": [], "gateJson": true },
-        { "id": "licence.notices", "script": "notices.ps1", "args": ["-Check"], "gateJson": true }
+        {
+          "id": "nightly.green",
+          "builtin": "lastNightly",
+          "headline": true
+        },
+        {
+          "id": "env.check",
+          "script": "env-check.ps1",
+          "args": [],
+          "gateJson": false,
+          "headline": true
+        },
+        {
+          "id": "oracle.export",
+          "script": "oracle.ps1",
+          "args": [
+            "-Export"
+          ],
+          "gateJson": true,
+          "oracle": true,
+          "heavy": true,
+          "headline": true,
+          "owner": "W"
+        },
+        {
+          "id": "vendor.check",
+          "script": "vendor-check.ps1",
+          "args": [],
+          "gateJson": false,
+          "headline": true,
+          "owner": "V"
+        },
+        {
+          "id": "native.ctest",
+          "script": "build-native.ps1",
+          "args": [],
+          "gateJson": false,
+          "heavy": true,
+          "headline": true,
+          "owner": "V"
+        },
+        {
+          "id": "unity.editmode",
+          "script": "unity-tests.ps1",
+          "args": [
+            "-Platform",
+            "EditMode",
+            "-Category",
+            "!PlayerOnly"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "build.client",
+          "script": "build-player.ps1",
+          "args": [
+            "-Profile",
+            "Client",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "headline": true
+        },
+        {
+          "id": "build.dev",
+          "script": "build-player.ps1",
+          "args": [
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "build.server",
+          "script": "build-player.ps1",
+          "args": [
+            "-Profile",
+            "ServerHeadless",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "headline": true
+        },
+        {
+          "id": "autotest.br-smoke",
+          "script": "autotest.ps1",
+          "args": [
+            "-Smoke",
+            "-Profile",
+            "Client",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "headline": true
+        },
+        {
+          "id": "soak.server-canary",
+          "script": "soak.ps1",
+          "args": [
+            "-Clients",
+            "0",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "headline": true
+        },
+        {
+          "id": "lfs.budget",
+          "script": "lfs-budget.ps1",
+          "args": [],
+          "gateJson": true
+        },
+        {
+          "id": "licence.notices",
+          "script": "notices.ps1",
+          "args": [
+            "-Check"
+          ],
+          "gateJson": true
+        }
       ]
     }
   },
   "milestones": {
     "M0": {
       "nightly": [
-        { "id": "autotest.m0.crash.recover", "script": "autotest.ps1", "args": ["-Scenario", "m0.crash.recover", "-Profile", "Dev", "-Milestone", "{milestone}"], "gateJson": true, "heavy": true },
-        { "id": "autotest.m0.net.egress", "script": "autotest.ps1", "args": ["-Scenario", "m0.net.egress", "-Profile", "Dev", "-Milestone", "{milestone}"], "gateJson": true, "heavy": true },
-        { "id": "autotest.m0.playtest.f10", "script": "autotest.ps1", "args": ["-Scenario", "m0.playtest.f10", "-Profile", "Dev", "-Milestone", "{milestone}"], "gateJson": true, "heavy": true }
+        {
+          "id": "autotest.m0.crash.recover",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m0.crash.recover",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "autotest.m0.net.egress",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m0.net.egress",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "autotest.m0.playtest.f10",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m0.playtest.f10",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        }
       ],
       "milestone": [
-        { "id": "autotest.m0.crash.recover", "script": "autotest.ps1", "args": ["-Scenario", "m0.crash.recover", "-Profile", "Dev", "-Milestone", "{milestone}"], "gateJson": true, "heavy": true },
-        { "id": "autotest.m0.net.egress", "script": "autotest.ps1", "args": ["-Scenario", "m0.net.egress", "-Profile", "Dev", "-Milestone", "{milestone}"], "gateJson": true, "heavy": true },
-        { "id": "autotest.m0.playtest.f10", "script": "autotest.ps1", "args": ["-Scenario", "m0.playtest.f10", "-Profile", "Dev", "-Milestone", "{milestone}"], "gateJson": true, "heavy": true }
+        {
+          "id": "autotest.m0.crash.recover",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m0.crash.recover",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "autotest.m0.net.egress",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m0.net.egress",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "autotest.m0.playtest.f10",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m0.playtest.f10",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        }
       ]
     },
     "M1": {
       "nightly": [
-        { "id": "autotest.m1.bench.revcycle", "script": "autotest.ps1", "args": ["-Scenario", "m1.bench.revcycle", "-Profile", "Dev", "-Milestone", "{milestone}"], "gateJson": true, "heavy": true },
-        { "id": "autotest.m1.bench.revcycle-fps30", "script": "autotest.ps1", "args": ["-Scenario", "m1.bench.revcycle", "-Fps", "30", "-Profile", "Dev", "-Milestone", "{milestone}"], "gateJson": true, "heavy": true },
-        { "id": "autotest.m1.perf.flythrough", "script": "autotest.ps1", "args": ["-Scenario", "m1.perf.flythrough", "-Repeat", "3", "-Profile", "Dev", "-Milestone", "{milestone}"], "gateJson": true, "heavy": true, "perf": true, "hard": false },
-        { "id": "autotest.m1.perf.flythrough-minspec", "script": "autotest.ps1", "args": ["-Scenario", "m1.perf.flythrough", "-MinSpec", "-Repeat", "3", "-Profile", "Dev", "-Milestone", "{milestone}"], "gateJson": true, "heavy": true, "perf": true, "hard": false }
+        {
+          "id": "autotest.m1.bench.revcycle",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m1.bench.revcycle",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "autotest.m1.bench.revcycle-fps30",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m1.bench.revcycle",
+            "-Fps",
+            "30",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "autotest.m1.perf.flythrough",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m1.perf.flythrough",
+            "-Repeat",
+            "3",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "perf": true,
+          "hard": false
+        },
+        {
+          "id": "autotest.m1.perf.flythrough-minspec",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m1.perf.flythrough",
+            "-MinSpec",
+            "-Repeat",
+            "3",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "perf": true,
+          "hard": false
+        },
+        {
+          "id": "autotest.m1.ui.credits",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m1.ui.credits",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "autotest.m1.bench.audiospike",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m1.bench.audiospike",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "hard": false,
+          "owner": "V"
+        },
+        {
+          "id": "autotest.m0.crash.recover",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m0.crash.recover",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "autotest.m0.net.egress",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m0.net.egress",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "autotest.m0.playtest.f10",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m0.playtest.f10",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        }
       ],
       "milestone": [
-        { "id": "autotest.m1.shots.canon", "script": "autotest.ps1", "args": ["-Scenario", "m1.shots.canon", "-Profile", "Dev", "-Milestone", "{milestone}"], "gateJson": true, "heavy": true, "headline": true },
-        { "id": "autotest.m1.bench.revcycle", "script": "autotest.ps1", "args": ["-Scenario", "m1.bench.revcycle", "-Profile", "Dev", "-Milestone", "{milestone}"], "gateJson": true, "heavy": true, "headline": true },
-        { "id": "autotest.m1.bench.revcycle-fps30", "script": "autotest.ps1", "args": ["-Scenario", "m1.bench.revcycle", "-Fps", "30", "-Profile", "Dev", "-Milestone", "{milestone}"], "gateJson": true, "heavy": true, "headline": true }
+        {
+          "id": "autotest.m1.shots.canon",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m1.shots.canon",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "headline": true
+        },
+        {
+          "id": "autotest.m1.bench.revcycle",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m1.bench.revcycle",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "headline": true
+        },
+        {
+          "id": "autotest.m1.bench.revcycle-fps30",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m1.bench.revcycle",
+            "-Fps",
+            "30",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "headline": true
+        },
+        {
+          "id": "autotest.m1.ui.credits",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m1.ui.credits",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "autotest.m0.crash.recover",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m0.crash.recover",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "autotest.m0.net.egress",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m0.net.egress",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        }
       ]
     }
   }

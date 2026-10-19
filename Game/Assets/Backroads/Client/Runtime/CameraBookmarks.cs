@@ -87,7 +87,7 @@ namespace Backroads.Client
             if (world != null && !world.Ready)
                 GUI.Label(new Rect(22, 22, 900, 40), world.Error != null ? "Millbrook could not load: " + world.Error : "Loading Millbrook...", _style);
             if (_showHelp)
-                GUI.Label(new Rect(22, Screen.height - 34, 1400, 30),
+                GUI.Label(new Rect(22, Screen.height - 58, 1400, 30), // one line above the version stamp
                     "WASD fly   hold right mouse: look   Q/E down/up   Shift fast   wheel: speed   1-0 - =: the 12 views   P: places   T: day/night   H: hide", _small);
         }
     }
