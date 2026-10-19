@@ -31,6 +31,8 @@ namespace Backroads.Testing
             if (fly != null) fly.ScriptedControl = scripted;
             var bm = w.cam.GetComponent<CameraBookmarks>();
             if (bm != null) bm.ScriptedControl = scripted;
+            var dir = w.cam.GetComponent<CameraDirector>();
+            if (dir != null) dir.Scripted = scripted;
         }
 
         /// <summary>The repository root (the folder with CanonData/v1/manifest.json) above the player, or null.</summary>
