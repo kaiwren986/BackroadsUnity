@@ -1,0 +1,27 @@
+{
+    "name": "Backroads.Tests.PlayMode.Roads",
+    "rootNamespace": "Backroads.Tests.PlayMode.Roads",
+    "references": [
+        "Backroads.Core",
+        "Backroads.World",
+        "Backroads.Roads",
+        "Backroads.Roads.Client",
+        "Backroads.Client",
+        "Backroads.Client.Rendering",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
