@@ -4,6 +4,8 @@
     "references": [
         "Backroads.Core",
         "Backroads.Game",
+        "Backroads.World",
+        "Backroads.Canon.Editor",
         "Unity.RenderPipelines.Core.Runtime",
         "Unity.RenderPipelines.GPUDriven.Runtime",
         "Unity.RenderPipelines.Universal.Runtime",

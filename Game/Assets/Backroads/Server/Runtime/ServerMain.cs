@@ -34,6 +34,10 @@ namespace Backroads.Server
             var b = BuildInfo.Current;
             Log.Info($"{BootOkLine} build={b.Id} bind={BindAddress} batchmode={Application.isBatchMode} gfx={SystemInfo.graphicsDeviceType}");
             System.Console.Out.WriteLine(BootOkLine);
+            // M1 server canary (lane W, T1.2): the server loads canon and checks the H layer hash.
+            if (Backroads.World.CanonRuntime.LoadAndVerify(out var canonLine)) Log.Info(canonLine);
+            else Log.Error(canonLine);
+            System.Console.Out.WriteLine(canonLine);
         }
 
         void Update()

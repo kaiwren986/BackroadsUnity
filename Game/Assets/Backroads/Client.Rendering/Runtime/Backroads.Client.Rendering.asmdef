@@ -5,7 +5,12 @@
         "Backroads.Core",
         "Backroads.World",
         "Backroads.Deform",
-        "Backroads.Roads"
+        "Backroads.Roads",
+        "Unity.Mathematics",
+        "Unity.Collections",
+        "Unity.Burst",
+        "Unity.RenderPipelines.Core.Runtime",
+        "Unity.RenderPipelines.Universal.Runtime"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
