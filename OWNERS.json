@@ -56,6 +56,8 @@
     "Game/Assets/StreamingAssets/Autotest/m1.shots.": "W",
     "Game/Assets/StreamingAssets/Autotest/m1.perf.": "W",
     "Game/Assets/StreamingAssets/Autotest/m1.bench.": "V",
+    "Game/Assets/StreamingAssets/Autotest/m2.engine.": "V",
+    "Game/Assets/StreamingAssets/Autotest/m2.bench.": "V",
     "Game/Assets/StreamingAssets/EngineSim/": "V",
     "docs/spikes/S-AUD-1.md": "V",
     "docs/adr/ADR-001": "W",
