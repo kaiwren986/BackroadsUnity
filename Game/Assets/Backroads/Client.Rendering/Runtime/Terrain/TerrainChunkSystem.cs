@@ -40,6 +40,8 @@ namespace Backroads.Client.Rendering
         readonly TerrainPalette _pal = TerrainPalette.Create();
         NativeArray<VertexAttributeDescriptor> _layout;
         readonly List<Chunk> _queue = new List<Chunk>();
+        readonly Dictionary<int, int4> _dirty = new Dictionary<int, int4>();
+        readonly List<int> _dirtyKeys = new List<int>();
 
         public float LodScale = 1f;
         /// <summary>Chunks at this LOD or finer cast shadows (default 1: within 250 m x lodScale).</summary>
@@ -50,6 +52,19 @@ namespace Backroads.Client.Rendering
         public double LastBuildAllMs { get; private set; }
         public int BuildsLastFrame { get; private set; }
         public int TotalBuilds { get; private set; }
+        /// <summary>Partial vertex updates since start (T2.5: deformation never rebuilds a whole chunk).</summary>
+        public int PartialUpdates { get; private set; }
+        /// <summary>Vertices rewritten by the last FlushDirty.</summary>
+        public int PartialVerticesLastFlush { get; private set; }
+        /// <summary>Cached meshes of other LODs dropped because the ground under them changed.</summary>
+        public int DroppedCachedMeshes { get; private set; }
+        public int DirtyChunks => _dirty.Count;
+
+        /// <summary>
+        /// Vertex attributes read neighbours: normals +-1 vertex, the surface blend +-2 steps of up to 4 vertices. A dirty
+        /// rectangle grows by this much so a partial update writes exactly what a rebuild would.
+        /// </summary>
+        public const int DirtyMargin = 8;
 
         public TerrainChunkSystem(WorldGrid grid, Material material, Transform parent)
         {
@@ -182,6 +197,96 @@ namespace Backroads.Client.Rendering
         {
             using var layout = TerrainChunkBuildJob.CreateLayout(Allocator.TempJob);
             return BuildMeshes(grid, chunks, lods, TerrainPalette.Create(), layout);
+        }
+
+        // ------------------------------------------------------------------ partial updates (T2.5, terrain.js markDirty/flushDirty)
+
+        /// <summary>The ground changed in the vertex rectangle [i0..i1] x [j0..j1]: queue the chunks that show it.</summary>
+        public void MarkDirty(int i0, int j0, int i1, int j1)
+        {
+            i0 = Math.Max(0, i0 - DirtyMargin); j0 = Math.Max(0, j0 - DirtyMargin);
+            i1 = Math.Min(WorldGrid.N, i1 + DirtyMargin); j1 = Math.Min(WorldGrid.N, j1 + DirtyMargin);
+            if (i0 > i1 || j0 > j1) return;
+            const int CH = TerrainChunkBuildJob.CellsPerChunk;
+            int cx0 = Math.Max(0, (i0 - 1) / CH), cx1 = Math.Min(ChunksPerSide - 1, i1 / CH);
+            int cz0 = Math.Max(0, (j0 - 1) / CH), cz1 = Math.Min(ChunksPerSide - 1, j1 / CH);
+            for (int cz = cz0; cz <= cz1; cz++)
+                for (int cx = cx0; cx <= cx1; cx++)
+                {
+                    int key = cz * ChunksPerSide + cx;
+                    if (_dirty.TryGetValue(key, out var r)) _dirty[key] = new int4(Math.Min(r.x, i0), Math.Min(r.y, j0), Math.Max(r.z, i1), Math.Max(r.w, j1));
+                    else _dirty[key] = new int4(i0, j0, i1, j1);
+                }
+        }
+
+        /// <summary>
+        /// Rewrites the dirty rows of each dirty chunk's current mesh in place (Mesh.SetVertexBufferData, no rebuild) and
+        /// drops its cached meshes of other LODs (rebuilt when needed). Call once per frame, before Update.
+        /// </summary>
+        public void FlushDirty()
+        {
+            PartialVerticesLastFlush = 0;
+            if (_dirty.Count == 0) return;
+            _dirtyKeys.Clear();
+            _dirtyKeys.AddRange(_dirty.Keys);
+            _dirtyKeys.Sort();
+            foreach (int key in _dirtyKeys)
+            {
+                var c = _chunks[key];
+                var rect = _dirty[key];
+                for (int l = 0; l < 4; l++)
+                {
+                    var m = c.meshes[l];
+                    if (m == null) continue;
+                    if (l == c.lod) { PartialVerticesLastFlush += UpdateRegion(_grid.View, c.cx, c.cz, l, m, rect, _pal); PartialUpdates++; }
+                    else { Kill(m); c.meshes[l] = null; DroppedCachedMeshes++; }
+                }
+            }
+            _dirty.Clear();
+        }
+
+        /// <summary>
+        /// Rewrites, in mesh m of chunk (cx, cz) at the given LOD, every grid row that has a vertex inside the vertex
+        /// rectangle (x = i0, y = j0, z = i1, w = j1), and the skirt strips along any chunk edge the rectangle touches.
+        /// Returns the number of vertices written.
+        /// </summary>
+        public static int UpdateRegion(WorldGridView grid, int cx, int cz, int lod, Mesh m, int4 rect, TerrainPalette pal)
+        {
+            int step = TerrainChunkBuildJob.Step(lod), n = TerrainChunkBuildJob.CellsPerChunk / step, vn = n + 1, gridCount = vn * vn;
+            int iB = cx * TerrainChunkBuildJob.CellsPerChunk, jB = cz * TerrainChunkBuildJob.CellsPerChunk;
+            int c0 = Math.Max(0, CeilDiv(rect.x - iB, step)), c1 = Math.Min(n, FloorDiv(rect.z - iB, step));
+            int r0 = Math.Max(0, CeilDiv(rect.y - jB, step)), r1 = Math.Min(n, FloorDiv(rect.w - jB, step));
+            if (c0 > c1 || r0 > r1) return 0;
+            int rows = r1 - r0 + 1;
+            int mask = (r0 == 0 ? 1 : 0) | (r1 == n ? 2 : 0) | (c0 == 0 ? 4 : 0) | (c1 == n ? 8 : 0);
+            int total = rows * vn + 4 * vn;
+            var pn = new NativeArray<TerrainVertexPN>(total, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
+            var at = new NativeArray<TerrainVertexAttr>(total, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
+            new TerrainRegionJob { Grid = grid, Pal = pal, Cx = cx, Cz = cz, Lod = lod, R0 = r0, R1 = r1, SkirtMask = mask, Pn = pn, At = at }.Run();
+            const MeshUpdateFlags F = MeshUpdateFlags.DontRecalculateBounds | MeshUpdateFlags.DontValidateIndices;
+            m.SetVertexBufferData(pn, 0, r0 * vn, rows * vn, 0, F);
+            m.SetVertexBufferData(at, 0, r0 * vn, rows * vn, 1, F);
+            int written = rows * vn;
+            for (int e = 0; e < 4; e++)
+            {
+                if ((mask & (1 << e)) == 0) continue;
+                m.SetVertexBufferData(pn, rows * vn + e * vn, gridCount + e * vn, vn, 0, F);
+                m.SetVertexBufferData(at, rows * vn + e * vn, gridCount + e * vn, vn, 1, F);
+                written += vn;
+            }
+            pn.Dispose();
+            at.Dispose();
+            return written;
+        }
+
+        static int FloorDiv(int a, int b) => a >= 0 ? a / b : -((-a + b - 1) / b);
+        static int CeilDiv(int a, int b) => -FloorDiv(-a, b);
+
+        /// <summary>The mesh chunk (cx, cz) shows now (tests).</summary>
+        public Mesh CurrentMesh(int cx, int cz)
+        {
+            var c = _chunks[cz * ChunksPerSide + cx];
+            return c.lod >= 0 ? c.meshes[c.lod] : null;
         }
 
         void SetLod(Chunk c, int lod)

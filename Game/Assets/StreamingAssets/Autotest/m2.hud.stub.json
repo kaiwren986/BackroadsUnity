@@ -1,0 +1,10 @@
+{
+  "id": "m2.hud.stub",
+  "kind": "hud-stub",
+  "seconds": 0,
+  "screenshot": false,
+  "loadTimeoutSeconds": 120,
+  "bogSeconds": 14,
+  "bogKmh": 18,
+  "notes": "T2.7 lane W: a stub IDrivenVehicle at the Millbrook garage; DriveInput from the keyboard (W, tap and hold I, X), chase and hood cameras (C), HUD values and no HUD allocation, F3 overlay, F8 fly camera; then the stub crosses Blackwater Bog and the ground ruts (stamps, partial chunk updates). Needs a window."
+}

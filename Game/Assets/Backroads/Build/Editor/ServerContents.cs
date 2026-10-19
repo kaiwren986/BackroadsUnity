@@ -14,7 +14,9 @@ namespace Backroads.Build.Editor
         public static readonly string[] Required = { "Backroads.Core.dll", "Backroads.Game.dll", "Backroads.Server.dll" };
 
         public static bool IsForbiddenAssembly(string fileName) =>
-            fileName.StartsWith("Backroads.Client") || fileName == "Backroads.EngineSim.dll" || fileName == "Backroads.Testing.dll";
+            fileName.StartsWith("Backroads.Client") || fileName == "Backroads.EngineSim.dll" || fileName == "Backroads.Testing.dll" ||
+            // lane presentation assemblies such as Backroads.Vehicles.Client and Backroads.Roads.Client (M2)
+            (fileName.StartsWith("Backroads.") && fileName.EndsWith(".Client.dll"));
 
         public static List<string> Check(string buildDir)
         {

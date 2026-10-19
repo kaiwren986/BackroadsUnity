@@ -24,3 +24,4 @@ artifacts/
 Game/Assets/Plugins/x86_64/*.dll
 Game/Assets/Plugins/x86_64/*.pdb
 Game/Assets/Plugins/x86_64/EngineSimPlugin.version.json
+__pycache__/

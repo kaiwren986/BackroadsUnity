@@ -25,6 +25,8 @@ namespace Backroads.Client.Editor
         public const string MatDir = "Assets/Backroads/Client.Rendering/Materials";
         public const string LookPath = MatDir + "/MillbrookLook.asset";
         public const string VolumePath = MatDir + "/MillbrookVolume.asset";
+        public const string ClientConfigPath = "Assets/Backroads/Client/Resources/BrClientConfig.asset";
+        public const string BindingsPath = "Assets/Content/core/bindings.json";
 
         [MenuItem("Backroads/Build Millbrook scene")]
         public static void BuildMenu() => BuildAll();
@@ -41,6 +43,7 @@ namespace Backroads.Client.Editor
         {
             Directory.CreateDirectory(Path.Combine(Application.dataPath, "Backroads/Client.Rendering/Materials"));
             var look = CreateLook();
+            CreateClientConfig();
             CreateScene(look);
             AssetDatabase.SaveAssets();
             Debug.Log("[BR] Millbrook scene and look assets written");
@@ -169,6 +172,23 @@ namespace Backroads.Client.Editor
             return profile;
         }
 
+        // ------------------------------------------------------------------ client config (T2.6)
+
+        /// <summary>Resources/BrClientConfig.asset, which carries Content/core/bindings.json into every client build.</summary>
+        public static void CreateClientConfig()
+        {
+            Directory.CreateDirectory(Path.Combine(Application.dataPath, "Backroads/Client/Resources"));
+            var bindings = AssetDatabase.LoadAssetAtPath<TextAsset>(BindingsPath) ?? throw new InvalidOperationException("missing " + BindingsPath);
+            var cfg = AssetDatabase.LoadAssetAtPath<ClientConfig>(ClientConfigPath);
+            if (cfg == null)
+            {
+                cfg = ScriptableObject.CreateInstance<ClientConfig>();
+                AssetDatabase.CreateAsset(cfg, ClientConfigPath);
+            }
+            cfg.bindings = bindings;
+            EditorUtility.SetDirty(cfg);
+        }
+
         // ------------------------------------------------------------------ scene
 
         static void CreateScene(MillbrookLook look)
@@ -209,6 +229,8 @@ namespace Backroads.Client.Editor
             world.volume = vol;
             var bm = camGo.AddComponent<CameraBookmarks>();
             bm.world = world;
+            camGo.AddComponent<VehicleCameraRig>();
+            camGo.AddComponent<CameraDirector>();
             _ = fly;
 
             RenderSettings.skybox = look.sky;

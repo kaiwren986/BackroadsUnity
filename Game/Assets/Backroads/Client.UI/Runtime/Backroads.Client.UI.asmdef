@@ -7,7 +7,11 @@
         "Backroads.Gameplay",
         "Backroads.Net",
         "Unity.InputSystem",
-        "UnityEngine.UI"
+        "UnityEngine.UI",
+        "Backroads.Client",
+        "Backroads.Client.Rendering",
+        "Backroads.World",
+        "Backroads.Deform"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

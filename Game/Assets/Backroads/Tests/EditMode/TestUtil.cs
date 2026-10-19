@@ -65,7 +65,21 @@ namespace Backroads.Tests.EditMode
 
         public static readonly string[] Client = { "Backroads.EngineSim", "Backroads.Client.Rendering", "Backroads.Client", "Backroads.Client.UI" };
 
-        public static bool IsClientName(string n) => n == "Backroads.EngineSim" || n.StartsWith("Backroads.Client", StringComparison.Ordinal);
+        /// <summary>
+        /// Client assemblies: the planned ones, plus any lane presentation assembly named "<Area>.Client" (for example
+        /// Backroads.Roads.Client, Backroads.Vehicles.Client). Each must carry "!UNITY_SERVER"; no shared assembly may reference one.
+        /// </summary>
+        public static bool IsClientName(string n) =>
+            n == "Backroads.EngineSim" || n.StartsWith("Backroads.Client", StringComparison.Ordinal) ||
+            (n.StartsWith("Backroads.", StringComparison.Ordinal) && n.EndsWith(".Client", StringComparison.Ordinal));
+
+        /// <summary>
+        /// The planned client assemblies and every player asmdef whose name marks it as client. Editor-only assemblies
+        /// (Backroads.Client.Editor, Backroads.Roads.Client.Editor) never reach a player and need no "!UNITY_SERVER".
+        /// </summary>
+        public static IEnumerable<string> AllClient => Client.Concat(Asmdefs()
+            .Where(a => IsClientName(a.Name) && !a.IncludePlatforms.SequenceEqual(new[] { "Editor" }))
+            .Select(a => a.Name)).Distinct();
 
         /// <summary>Every .cs file under Assets/Backroads with its text, comments removed (// and /* */), strings kept.</summary>
         public static IEnumerable<(string path, string code)> Sources(Func<string, bool> include = null)

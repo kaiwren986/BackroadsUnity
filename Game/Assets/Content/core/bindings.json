@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "note": "Backroads control table (PLAN 6.1 M2, ADR-004). One table for keyboard, mouse and gamepad; the Input System actions are generated from it at start-up and Input.NoDuplicateBindings checks it. Paths are Input System control paths. kind: button = one press, hold = held level, value = 0..1, axis = -1..1, vector = 2D move, delta = look, scroll = zoom. hold: the action that holding this binding for holdSeconds triggers instead (a tap triggers the binding's own action). padVia: menu = reached with the gamepad through the Start menu. since: the milestone in which the action starts to do something. The UI map is always on; Driving or OnFoot is on with it.",
+  "deadzone": 0.14,
+  "holdSeconds": 0.3,
+  "maps": [
+    {
+      "name": "Driving",
+      "bindings": [
+        { "action": "throttle", "kind": "value", "keys": ["<Keyboard>/w", "<Keyboard>/upArrow"], "pad": ["<Gamepad>/rightTrigger"], "help": "Throttle (reels the winch in while it is attached)", "since": "M2" },
+        { "action": "brake", "kind": "value", "keys": ["<Keyboard>/s", "<Keyboard>/downArrow"], "pad": ["<Gamepad>/leftTrigger"], "help": "Brake, then reverse", "since": "M2" },
+        { "action": "steer", "kind": "axis", "negative": ["<Keyboard>/a", "<Keyboard>/leftArrow"], "positive": ["<Keyboard>/d", "<Keyboard>/rightArrow"], "pad": ["<Gamepad>/leftStick/x"], "help": "Steer", "since": "M2" },
+        { "action": "handbrake", "kind": "hold", "keys": ["<Keyboard>/space"], "pad": ["<Gamepad>/buttonSouth"], "help": "Handbrake", "since": "M2" },
+        { "action": "horn", "kind": "hold", "keys": ["<Keyboard>/h"], "pad": ["<Gamepad>/buttonWest"], "help": "Horn", "since": "M2" },
+        { "action": "ignition", "kind": "button", "keys": ["<Keyboard>/i"], "pad": ["<Gamepad>/dpad/left"], "hold": "starter", "help": "Ignition on / off (tap)", "since": "M2" },
+        { "action": "starter", "kind": "hold", "help": "Starter: crank the engine (hold the ignition key)", "since": "M2" },
+        { "action": "gearUp", "kind": "button", "keys": ["<Keyboard>/leftShift"], "pad": ["<Gamepad>/dpad/up"], "help": "Gear up", "since": "M4" },
+        { "action": "gearDown", "kind": "button", "keys": ["<Keyboard>/leftCtrl"], "pad": ["<Gamepad>/dpad/down"], "help": "Gear down", "since": "M4" },
+        { "action": "clutch", "kind": "hold", "keys": ["<Keyboard>/v"], "pad": ["<Gamepad>/buttonEast"], "help": "Clutch", "since": "M4" },
+        { "action": "manualToggle", "kind": "button", "keys": ["<Keyboard>/f4"], "help": "Manual / automatic gearbox (gamepad: hold Back)", "since": "M4" },
+        { "action": "camera", "kind": "button", "keys": ["<Keyboard>/c"], "help": "Chase / hood camera", "since": "M2" },
+        { "action": "camera", "kind": "button", "pad": ["<Gamepad>/select"], "hold": "manualToggle", "help": "Chase / hood camera (hold Back: manual / automatic)", "since": "M2" },
+        { "action": "lights", "kind": "button", "keys": ["<Keyboard>/l"], "help": "Lights", "since": "M2" },
+        { "action": "lights", "kind": "button", "pad": ["<Gamepad>/dpad/right"], "hold": "diffLock", "help": "Lights (hold D-pad right: diff lock)", "since": "M2" },
+        { "action": "diffLock", "kind": "button", "keys": ["<Keyboard>/k"], "help": "Diff lock (gamepad: hold D-pad right)", "since": "M7" },
+        { "action": "lowRange", "kind": "button", "keys": ["<Keyboard>/x"], "pad": ["<Gamepad>/leftStickPress"], "help": "Low range", "since": "M2" },
+        { "action": "getInOut", "kind": "button", "keys": ["<Keyboard>/e"], "help": "Get in / out", "since": "M2" },
+        { "action": "getInOut", "kind": "button", "pad": ["<Gamepad>/buttonNorth"], "hold": "winch", "help": "Get in / out (hold Y: winch on / off)", "since": "M2" },
+        { "action": "winch", "kind": "button", "keys": ["<Keyboard>/g"], "help": "Winch on / off (gamepad: hold Y)", "since": "M2" },
+        { "action": "resetUpright", "kind": "button", "keys": ["<Keyboard>/r"], "help": "Reset upright, below 4 m/s (gamepad: hold Start)", "since": "M2" },
+        { "action": "bladeUp", "kind": "button", "keys": ["<Keyboard>/q"], "pad": ["<Gamepad>/rightShoulder"], "help": "Blade up (dozer)", "since": "M7" },
+        { "action": "bladeDown", "kind": "button", "keys": ["<Keyboard>/z"], "pad": ["<Gamepad>/leftShoulder"], "help": "Blade down (dozer)", "since": "M7" },
+        { "action": "look", "kind": "delta", "keys": ["<Mouse>/delta"], "pad": ["<Gamepad>/rightStick"], "help": "Look around", "since": "M2" },
+        { "action": "zoom", "kind": "scroll", "keys": ["<Mouse>/scroll/y"], "pad": ["<Gamepad>/rightStickPress"], "help": "Zoom (gamepad: click the right stick)", "since": "M2" }
+      ]
+    },
+    {
+      "name": "OnFoot",
+      "bindings": [
+        { "action": "move", "kind": "vector", "up": ["<Keyboard>/w"], "down": ["<Keyboard>/s"], "left": ["<Keyboard>/a"], "right": ["<Keyboard>/d"], "pad": ["<Gamepad>/leftStick"], "help": "Walk", "since": "M7" },
+        { "action": "run", "kind": "hold", "keys": ["<Keyboard>/leftShift"], "pad": ["<Gamepad>/buttonEast"], "help": "Run", "since": "M7" },
+        { "action": "jump", "kind": "button", "keys": ["<Keyboard>/space"], "pad": ["<Gamepad>/buttonSouth"], "help": "Jump", "since": "M7" },
+        { "action": "getInOut", "kind": "button", "keys": ["<Keyboard>/e"], "pad": ["<Gamepad>/buttonNorth"], "help": "Get in", "since": "M7" },
+        { "action": "dig", "kind": "hold", "keys": ["<Mouse>/leftButton"], "pad": ["<Gamepad>/rightShoulder"], "help": "Dig with the shovel", "since": "M7" },
+        { "action": "pile", "kind": "hold", "keys": ["<Mouse>/rightButton"], "pad": ["<Gamepad>/leftShoulder"], "help": "Pile soil", "since": "M7" },
+        { "action": "look", "kind": "delta", "keys": ["<Mouse>/delta"], "pad": ["<Gamepad>/rightStick"], "help": "Look around", "since": "M7" },
+        { "action": "zoom", "kind": "scroll", "keys": ["<Mouse>/scroll/y"], "pad": ["<Gamepad>/rightStickPress"], "help": "Zoom", "since": "M7" }
+      ]
+    },
+    {
+      "name": "UI",
+      "bindings": [
+        { "action": "menu", "kind": "button", "keys": ["<Keyboard>/escape"], "help": "Menu (pauses the game)", "since": "M2" },
+        { "action": "menu", "kind": "button", "pad": ["<Gamepad>/start"], "hold": "resetUpright", "help": "Menu (gamepad Start; hold Start: reset upright)", "since": "M2" },
+        { "action": "help", "kind": "button", "keys": ["<Keyboard>/f1"], "padVia": "menu", "help": "Controls (this list)", "since": "M2" },
+        { "action": "graphics", "kind": "button", "keys": ["<Keyboard>/f2"], "padVia": "menu", "help": "Graphics quality: Low, Mid, High", "since": "M2" },
+        { "action": "debug", "kind": "button", "keys": ["<Keyboard>/f3"], "padVia": "menu", "help": "Debug overlay", "since": "M2" },
+        { "action": "checklist", "kind": "button", "keys": ["<Keyboard>/f10"], "padVia": "menu", "help": "Playtest checklist", "since": "M0" },
+        { "action": "map", "kind": "button", "keys": ["<Keyboard>/m"], "padVia": "menu", "help": "Map", "since": "M9" },
+        { "action": "timeBack", "kind": "button", "keys": ["<Keyboard>/leftBracket"], "padVia": "menu", "help": "Time of day -1 hour", "since": "M2" },
+        { "action": "timeForward", "kind": "button", "keys": ["<Keyboard>/rightBracket"], "padVia": "menu", "help": "Time of day +1 hour", "since": "M2" },
+        { "action": "flyCamera", "kind": "button", "keys": ["<Keyboard>/f8"], "padVia": "menu", "help": "Free fly camera (screenshots) on / off", "since": "M2" }
+      ]
+    }
+  ]
+}

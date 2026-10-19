@@ -73,6 +73,7 @@
     "Game/Assets/Backroads/Tests/EditMode/Input/": "W",
     "Game/Assets/Backroads/Tests/PlayMode/Input/": "W",
     "Game/Assets/Backroads/Tests/EditMode/Roads/": "R",
+    "Game/Assets/Backroads/Tests/PlayMode/Roads/": "R",
     "Game/Assets/Backroads/Tests/EditMode/Art/": "A",
     "Game/Assets/Backroads/Testing/Runtime/Scenarios/Vehicles/": "V",
     "Game/Assets/Backroads/Testing/Runtime/Scenarios/Roads/": "R",
@@ -84,6 +85,9 @@
     "docs/milestones/M2-handoff-A.md": "A",
     "docs/adr/ADR-003": "W",
     "docs/adr/ADR-004": "W",
-    "docs/adr/ADR-005": "V"
+    "docs/adr/ADR-005": "V",
+    "Game/Assets/StreamingAssets/Autotest/m2.vehicles.": "V",
+    "Game/Assets/StreamingAssets/Autotest/m2.hud.": "W",
+    "Game/Assets/StreamingAssets/Autotest/m2.ui.": "W"
   }
 }
