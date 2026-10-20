@@ -71,9 +71,9 @@ Totals: R 21 AD, S 19 AD, I 2 AD. Lane S is a proposal: a new worktree `s` (bran
 | Parameter | Meaning | Stockport value | Who fills in the rest |
 |---|---|---|---|
 | `TOWN_ID`, `TOWN_NAME` | the real town and its in-game name | `stockport-oh`, "Millbrook" | set |
-| `ORIGIN_LATLON` | local frame origin, the centre of the play area | Stockport's OSM `place` node (about 39.55 N, 81.79 W) | S0 reads the exact node and writes it into the `TownData` manifest |
-| `PLAY_AREA` | the drivable world | 2,000 × 2,000 m square centred on `ORIGIN_LATLON`, axis-aligned in the local frame (x east, z north), ±1,000 m | set |
-| `EXTRACT_BBOX` | OSM extract | `PLAY_AREA` + 250 m on every side, so roads that cross the edge keep their junctions just outside; everything is clipped back to `PLAY_AREA` after the graph is built | set |
+| `ORIGIN_LATLON` | local frame origin, the centre of the play area | the scout's 2 km square centre: 300 m west and 400 m south of Stockport's OSM `place` node 154045239 (node about 39.548 N, 81.793 W; `tools/scout/towns.json`), so the quarry hollow, the depot on the old rail grade and the marsh fit | T3.0 computes it and writes it into the `TownData` manifest |
+| `PLAY_AREA` | the drivable world | 2,048 × 2,048 m square centred on `ORIGIN_LATLON` (the 4,097² grid at 0.5 m, ADR-006 §4), axis-aligned in the local frame (x east, z north), ±1,024 m | set |
+| `EXTRACT_BBOX` | OSM extract | `PLAY_AREA` + 300 m on every side (ADR-006 §2), so roads that cross the edge keep their junctions just outside; everything is clipped back to `PLAY_AREA` after the graph is built | set |
 | `DEM_EXTENT`, `DEM_RES` | elevation | `PLAY_AREA` + the skirt lane W chooses for distant terrain; USGS 3DEP 1 m DEM (Ohio has statewide 1 m lidar coverage in 3DEP) [verify: lane W checks the tile index] | lane W |
 | `EDGE_RULE` | what a road does at the play-area edge | it ends 50 m inside the edge with the terrain closing it off (a bend into trees or a rise), no visible stub; lane R reports every road that crosses the edge | lane R, R0o |
 | `KERB_ZONE` | where streets get kerbs and walks | streets with `sidewalk=*` tags, else the village's built-up hull + 20 m (a village of a few hundred people: expect kerbs only in the village core) | R2 from the extract |

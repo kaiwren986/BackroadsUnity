@@ -1,5 +1,5 @@
 {
-  "note": "Which lane owns each path. Repo.OwnersRespected fails a merge when a branch changes a path its lane does not own. Longest prefix wins. (M2: Client.UI is lane W until lane G starts in M7.)",
+  "note": "Which lane owns each path. Repo.OwnersRespected fails a merge when a branch changes a path its lane does not own. Longest prefix wins. (M2: Client.UI is lane W until lane G starts in M7; M3: lane S (sites) added, ADR-006 paths.)",
   "lanes": {
     "I": "integrator",
     "W": "world and rendering",
@@ -7,7 +7,8 @@
     "R": "roads and traffic",
     "A": "art",
     "N": "netcode",
-    "G": "gameplay and UI"
+    "G": "gameplay and UI",
+    "S": "sites (lots, yards, driveways, site props; M3)"
   },
   "paths": {
     "": "I",
@@ -88,6 +89,22 @@
     "docs/adr/ADR-005": "V",
     "Game/Assets/StreamingAssets/Autotest/m2.vehicles.": "V",
     "Game/Assets/StreamingAssets/Autotest/m2.hud.": "W",
-    "Game/Assets/StreamingAssets/Autotest/m2.ui.": "W"
+    "Game/Assets/StreamingAssets/Autotest/m2.ui.": "W",
+    "WorldData/": "W",
+    "TownData/": "W",
+    "tools/world/": "W",
+    "tools/world/roads/": "R",
+    "tools/world/sites/": "S",
+    "tools/sites/": "S",
+    "Game/Assets/Backroads/Sites/": "S",
+    "Game/Assets/Backroads/Tests/EditMode/Sites/": "S",
+    "Game/Assets/Backroads/Tests/PlayMode/Sites/": "S",
+    "Game/Assets/Backroads/Testing/Runtime/Scenarios/Sites/": "S",
+    "Game/Assets/Content/sites/": "S",
+    "Game/Assets/Backroads/Scenes/CanonTestWorld.unity": "W",
+    "Game/Assets/StreamingAssets/Autotest/m3.shots.junctions": "R",
+    "Game/Assets/StreamingAssets/Autotest/m3.shots.sites": "S",
+    "Game/Assets/StreamingAssets/Autotest/m3.shots.millbrook": "W",
+    "Game/Assets/StreamingAssets/Autotest/m3.perf.": "W"
   }
 }

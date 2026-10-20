@@ -1,4 +1,6 @@
-# sites-S0: town source — one OSM extract, typed buildings, hashed `TownData` (I, or W, main, ≈ 2 AD) — draft
+# sites-S0: town source (superseded by T3.0)
+
+**Superseded:** the integrator does this as card [T3.0](T3.0-town-source-and-contracts.md), which follows ADR-006 (the 2,048 m square at the scout's centre, the DEM, name stripping). The steps below stay as the site research's notes for T3.0.
 
 **Inputs:** the town: Stockport, Ohio (`TOWN_ID` `stockport-oh`, `TOWN_NAME` Millbrook; the 2 km × 2 km play area and the extract box are in the overview's parameters), `tools/osm/` (fetch, lib, measure: the Overpass query, the building classifier `typeOf`, the street frame), the ODbL credit rule (PLAN §3.10, `Licence.OsmAttribution`). The single Stockport extract is approved; the integrator runs this card.
 
