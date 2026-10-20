@@ -486,11 +486,14 @@ function render(town, f, dem, osm, F, brs, sq1, sq2, stats, cov, picks) {
   const bds = osm.areas.filter((a) => a.tags.building && a.tags.building !== 'no').map(areaD).join('');
   if (bds) o.push(`<path fill-rule="evenodd" fill="#6e3f33" stroke="#3b211a" stroke-width="0.5" d="${bds}"/>`);
   // play-area squares
+  const placed = [];
+  const free = (r) => !placed.some((q) => !(r[2] < q[0] || r[0] > q[2] || r[3] < q[1] || r[1] > q[3]));
   const sqr = (sq, side, style, label) => {
     const x0 = sq.cx - side / 2, y1 = sq.cy + side / 2;
     const [px, py] = P([x0, y1]).split(',').map(Number);
     o.push(`<rect x="${px}" y="${py}" width="${side * K}" height="${side * K}" fill="none" ${style}/>`);
     const lx = side > 1000 ? px + side * K - 10 : px + side * K - 10, ly = side > 1000 ? py + side * K - 12 : py + 28;
+    placed.push([lx - label.length * 12, ly - 22, lx, ly + 4]);
     o.push(`<text class="h" x="${lx}" y="${ly}" text-anchor="end" style="font-size:22px;font-weight:700;fill:${style.match(/stroke="([^"]+)"/)[1]}">${esc(label)}</text>`);
   };
   sqr(sq2, 2000, 'stroke="#e07b00" stroke-width="4" stroke-dasharray="18 10"', '2 km play area');
@@ -503,8 +506,14 @@ function render(town, f, dem, osm, F, brs, sq1, sq2, stats, cov, picks) {
     const rn = Object.entries(byName).sort((a, b) => b[1] - a[1])[0][0];
     const pts = rivs.filter((l) => l.tags.name === rn).flatMap((l) => l.pts).filter((p) => inBox(p, [100, 100, S - 100, S - 100]));
     const target = [sq1.cx + 600, sq1.cy - 600];
-    const p = pts.sort((a, b) => Math.hypot(a[0] - target[0], a[1] - target[1]) - Math.hypot(b[0] - target[0], b[1] - target[1]))[0];
-    if (p) { const [x, y] = P(p).split(','); o.push(`<text class="h" x="${x}" y="${+y + 40}" style="font-size:24px;font-style:italic;fill:#1f5f8b">${esc(rn)}</text>`); }
+    pts.sort((a, b) => Math.hypot(a[0] - target[0], a[1] - target[1]) - Math.hypot(b[0] - target[0], b[1] - target[1]));
+    for (const p of pts) {
+      const [x, y] = P(p).split(',').map(Number), r = [x, y + 18, x + rn.length * 12.5, y + 46];
+      if (r[2] > PAD + MAP - 10 || !free(r)) continue;
+      placed.push(r);
+      o.push(`<text class="h" x="${x}" y="${y + 40}" style="font-size:24px;font-style:italic;fill:#1f5f8b">${esc(rn)}</text>`);
+      break;
+    }
   }
   // town name
   const [tx, ty] = P(f.local(town.lat, town.lon)).split(',').map(Number);
@@ -518,7 +527,7 @@ function render(town, f, dem, osm, F, brs, sq1, sq2, stats, cov, picks) {
     o.push(`<path d="M${px} ${py - 9}l8 14h-16z" fill="#3b2a1a"/><text class="h sm" x="${px + 11}" y="${py + 5}">${v.toFixed(0)} m</text>`);
   }
   // sites
-  const placed = [[tx - town.name.length * 13, ty - 60, tx + town.name.length * 13, ty - 22]];
+  placed.push([tx - town.name.length * 13, ty - 60, tx + town.name.length * 13, ty - 22]);
   const marks = [];
   for (const s of picks) {
     const st = SITE_STYLE[s.cat];
