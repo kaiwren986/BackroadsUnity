@@ -1,8 +1,8 @@
 # ADR-006: The new world: a real river town as WorldData v2 (draft)
 
-- **Status:** **proposed** (integrator, 2026-10-19). Decision U25 is made; two things stay open until you choose:
-  the town (from the scout's shortlist, `docs\research\09-new-world-candidates.md`) and the play-area size (§4).
-  Proposed to accept when you pick the town, and to freeze at the M3 tag together with the first `WorldData\v2` export.
+- **Status:** **accepted** 2026-10-19 (U25 new world, U26 the town: **Stockport, Ohio**, U27 a **2 km square**;
+  shortlist and maps in `docs\research\09-new-world-candidates.md`). Freezes at the M3 tag together with the first
+  `WorldData\v2-millbrook` export.
 - **Date:** 2026-10-19
 - **Owners:** lane W (terrain, world data, the scene), lane R (road graph, junctions, lots), lane A (buildings),
   lane G (game places, jobs). Changes after the freeze need a new ADR and the integrator's merge.
@@ -54,18 +54,24 @@ moves to the new world.
 - Data files use the **same JS-space convention as CanonData v1** (`x_js = -east`, `z = north`, Unity `= (-x, y, z)`),
   so `WorldGrid`, the stamp kernels and `BrvState` work unchanged on both worlds.
 
-### 4. World size (open until you pick the town)
+### 4. World size: 2 km square (U27)
 
-`WorldGrid` gets its size from the world's manifest instead of compile-time constants (`N`, `Half`, `TintN`). The test
-world keeps 2,049 samples at 0.5 m; the new world chooses:
+`WorldGrid` gets its size from the world's manifest instead of compile-time constants (`N`, `VN`, `Half`, `TintN`;
+`ColliderGrid.Cells` follows). The test world keeps 2,049² samples at 0.5 m over 1,024 m. The new Millbrook is
+**4,097² samples at 0.5 m over 2,048 m**, all resident, with the village in the middle (the scout's 2 km square,
+`tools\scout\towns.json`, centre offset 300 m west and 400 m south of the village's OSM node so the quarry, depot,
+marsh and hollows fit).
 
-| Option | Grid | Memory for the ground layers | Fits |
-|---|---|---|---|
-| A. 1 km square | 2,049² at 0.5 m, as today | ~60 MB | A compact town with the mill, landing and fuel inside 1 km; farms and woods at the edge |
-| **B. 2 km square (recommended unless the scout shows A is enough)** | 4,097² at 0.5 m, all resident | ~230 MB, deltas kept sparse per 64 m tile | The town in the middle and its farms, quarry, woods and wetland around it: the size real hauling needs |
-| C. 4 km square | 256 m tiles at 0.5 m, streamed | ~230 MB resident (the tiles within ~1 km) | A river valley with neighbouring hamlets; needs tile streaming (W) and per-tile colliders, about 2 extra lane-weeks |
+| | Test world (v1) | Millbrook (v2) |
+|---|---|---|
+| Grid | 2,049², 1,024 m | 4,097², 2,048 m |
+| Runtime ground layers (client and server) | ~113 MB | ~450 MB; the deform deltas become sparse per 64 m tile if the memory budget (M5) needs it |
+| Terrain chunks (64 m) | 256 | 1,024 |
+| Collider grid (16 m cells) | 64² | 128² |
+| Net position field (draft `VehicleStateCodec`, not yet frozen) | 21 bits over 1,024 m | 22 bits over 2,048 m, the same ~0.5 mm step |
 
-Option B keeps everything resident and needs only the size change; C waits until B is playing.
+The rejected options: 1 km (hauls of a few hundred metres) and 4 km (mostly empty ridges, and it would need tile
+streaming).
 
 ### 5. The bake pipeline (offline, deterministic, `tools\world\` + Unity editor)
 
@@ -133,7 +139,7 @@ accepted.
 
 ## Open questions
 
-1. The town and the size (§4): you pick from the scout's shortlist.
+1. ~~The town and the size~~: decided (U26 Stockport, U27 2 km).
 2. Seasons and era: OSM is today's town. Do we keep modern details (a dollar store's box shape, a cell tower) or
    lean older (1990s small town)? Default: today's shapes, no brands.
 3. Rail: if the town has a rail line, a static line with a siding at the depot in M3 (driving over level crossings);
