@@ -261,7 +261,8 @@ function bridges(osm) {
     if (crosses(segs, rivers) || water.some((w) => pointInRings(c[0], c[1], w.rings))) over = 'river';
     else if (crosses(segs, streams)) over = 'stream';
     const t = ps[0].tags;
-    out.push({ c, over, len: Math.round(len), rail: !!t.railway, name: t.name ?? t.ref ?? '', road: t.highway ?? `railway=${t.railway}`, parts: ps.map((p) => p.id) });
+    const old = ['abandoned', 'disused', 'razed', 'dismantled'].includes(t.railway) || (!!t.railway && ['cycleway', 'path', 'footway'].includes(t.highway));
+    out.push({ c, over, len: Math.round(len), rail: !!t.railway, old, name: t.name ?? t.ref ?? '', road: t.highway ?? `railway=${t.railway}`, parts: ps.map((p) => p.id) });
   }
   return out;
 }
@@ -349,6 +350,15 @@ function measure(osm, dem, F, brs, box, extra = {}) {
   };
 }
 
+function reliefQuick(dem, b) {
+  const { z, W, res, meta } = dem;
+  let lo = Infinity, hi = -Infinity;
+  const i0 = Math.max(0, Math.ceil(b[0] / res)), i1 = Math.min(W - 1, Math.floor(b[2] / res));
+  const j0 = Math.max(0, Math.ceil((meta.size - b[3]) / res)), j1 = Math.min(W - 1, Math.floor((meta.size - b[1]) / res));
+  for (let j = j0; j <= j1; j += 3) for (let i = i0; i <= i1; i += 3) { const v = z[j * W + i]; if (v < lo) lo = v; if (v > hi) hi = v; }
+  return hi - lo;
+}
+
 // Picks the play-area centre (offset from frame centre, 100 m steps) that best covers the game's places.
 function autoSquare(osm, dem, F, brs, S, side, core, inner = null) {
   const blds = osm.areas.filter((a) => a.tags.building && a.tags.building !== 'no').map((a) => a.c);
@@ -368,6 +378,8 @@ function autoSquare(osm, dem, F, brs, S, side, core, inner = null) {
     score += Math.min(3, rb) * 1.2;
     score += (has('mill') || has('dam') || has('hydro') ? 2 : 0) + (has('fuel') ? 1 : 0) + (has('quarry') ? 1 : 0) + (has('depot') ? 1 : 0) +
       (has('rail') ? 0.5 : 0) + (has('landing') ? 1 : 0) + (has('wetland') ? 1 : 0) + (has('farm', 2) ? 1 : 0) + (has('track', 2) ? 1 : 0);
+    const rel = reliefQuick(dem, b);
+    score += rel <= 200 ? Math.min(2.5, rel / 24) : 2.5 - (rel - 200) / 40; // real hills: 60-200 m
     score -= Math.max(0, Math.hypot(cx - core[0], cy - core[1]) - side * 0.25) / (side * 0.2); // keep the town core in the square
     if (!best || score > best.score) best = { dx, dy, score: +score.toFixed(2) };
   }
@@ -649,7 +661,10 @@ function pickSites(town, f, F, brs, sq1, sq2) {
   const dist = (p) => Math.hypot(p[0] - c1[0], p[1] - c1[1]);
   const inFrame = (p) => inBox(p, [0, 0, f.size, f.size]);
   const picks = [];
-  const nearest = (list) => list.filter((x) => inFrame(x.e.c)).sort((a, b) => dist(a.e.c) - dist(b.e.c))[0];
+  const nearest = (list) => { // nearest inside the 2 km square, else nearest on the map
+    const l = list.filter((x) => inFrame(x.e.c)).sort((a, b) => dist(a.e.c) - dist(b.e.c));
+    return l.find((x) => inBox(x.e.c, b2)) ?? l[0];
+  };
   const largestIn = (list) => list.filter((x) => inBox(x.e.c, b2)).sort((a, b) => (b.e.area ?? 0) - (a.e.area ?? 0))[0] ?? nearest(list);
   const longestIn = (list) => list.filter((x) => inBox(x.e.c, b2) && x.e.tags.highway === 'track').sort((a, b) => polyLenIn(b.e.pts, b2) - polyLenIn(a.e.pts, b2))[0] ?? nearest(list);
   const choose = { mill: nearest, dam: nearest, hydro: nearest, quarry: nearest, fuel: nearest, depot: (l) => largestIn(l.filter((x) => x.e.tags.landuse === 'industrial' || x.e.tags.landuse === 'railway')) ?? nearest(l),
@@ -673,7 +688,7 @@ function pickSites(town, f, F, brs, sq1, sq2) {
   }
   // river bridges, nearest first, numbered
   brs.filter((x) => x.over === 'river' && inBox(x.c, [0, 0, f.size, f.size])).sort((a, b) => dist(a.c) - dist(b.c)).slice(0, 6).forEach((x, i) =>
-    picks.push({ cat: 'bridge', n: i + 1, p: x.c, label: `${x.rail ? 'rail bridge' : x.name || 'bridge'}`, d: dist(x.c), rail: x.rail }));
+    picks.push({ cat: 'bridge', n: i + 1, p: x.c, label: x.rail ? (x.old ? 'old rail bridge (trail)' : 'rail bridge') : x.name || 'bridge', d: dist(x.c), rail: x.rail }));
   return picks;
 }
 
@@ -761,12 +776,22 @@ function png(svgPath, pngPath) {
   const cands = ['C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe', 'C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe', 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'];
   const exe = cands.find((c) => fs.existsSync(c));
   if (!exe) { console.log('  no Edge or Chrome found: PNG skipped'); return; }
-  const profile = path.join(REPO, 'artifacts', 'scout', '.browser-profile');
-  fs.mkdirSync(profile, { recursive: true });
+  const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'scout-edge-')); // fresh each time: a stale profile makes Edge exit without a shot
+  fs.rmSync(pngPath, { force: true });
   const r = spawnSync(exe, ['--headless=new', '--disable-gpu', '--hide-scrollbars', '--no-first-run', '--no-default-browser-check', '--disable-extensions',
     `--user-data-dir=${profile}`, `--window-size=${SVG_W},${SVG_H}`, '--force-device-scale-factor=1', `--screenshot=${pngPath}`, 'file:///' + svgPath.replace(/\\/g, '/')], { timeout: 120_000, encoding: 'utf8' });
+  // The msedge.exe launcher can return before the browser has written the shot: wait for a stable file.
+  const nap = (ms) => Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms);
+  let last = -1;
+  for (let t = 0; t < 180; t++) {
+    const size = fs.existsSync(pngPath) ? fs.statSync(pngPath).size : -1;
+    if (size > 0 && size === last) break;
+    last = size; nap(500);
+  }
+  nap(1000);
+  try { fs.rmSync(profile, { recursive: true, force: true }); } catch { /* Edge may still hold a file for a moment */ }
   if (fs.existsSync(pngPath)) console.log(`  ${pngPath} (${(fs.statSync(pngPath).size / 1e6).toFixed(2)} MB)`);
-  else console.log(`  PNG failed: ${r.stderr?.slice(0, 300)}`);
+  else console.log(`  PNG failed: status ${r?.status} ${r?.error ?? ""} ${(r?.stderr ?? "").slice(0, 300)}`);
 }
 
 function summary() {
