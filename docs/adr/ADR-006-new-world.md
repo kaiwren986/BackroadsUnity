@@ -1,8 +1,8 @@
-# ADR-006: The new world: a real river town as WorldData v2 (draft)
+# ADR-006: The new world: a real river town (TownData and WorldData)
 
 - **Status:** **accepted** 2026-10-19 (U25 new world, U26 the town: **Stockport, Ohio**, U27 a **2 km square**;
   shortlist and maps in `docs\research\09-new-world-candidates.md`). Freezes at the M3 tag together with the first
-  `WorldData\v2-millbrook` export.
+  `WorldData\millbrook\v1` export.
 - **Date:** 2026-10-19
 - **Owners:** lane W (terrain, world data, the scene), lane R (road graph, junctions, lots), lane A (buildings),
   lane G (game places, jobs). Changes after the freeze need a new ADR and the integrator's merge.
@@ -31,7 +31,7 @@ Two things must not break on the way:
 | World | Data | Scene | Used for |
 |---|---|---|---|
 | **Test world** (the old Millbrook) | `CanonData\v1`, frozen, unchanged (ADR-001) | `CanonTestWorld.unity` (today's `Millbrook.unity`, renamed) | Golden traces, deformation and probe references, `Vehicle.*` and `Deform.*` parity tests, the M2 route test. Never shipped in Client builds after M3 |
-| **Millbrook** (the new, real town) | `WorldData\v2-<slug>\` (new, this ADR) | `Millbrook.unity` (new) | Everything you play, and every look, roads, traffic, jobs and net test from M3 on |
+| **Millbrook** (the new, real town) | `TownData\stockport-oh\v1\` (the source extract) → `WorldData\millbrook\v1\` (the bake; both new, this ADR) | `Millbrook.unity` (new) | Everything you play, and every look, roads, traffic, jobs and net test from M3 on |
 
 The test world keeps its name in code (`CanonData`), so nothing that reads it changes. The shipped name "Millbrook"
 moves to the new world.
@@ -39,8 +39,8 @@ moves to the new world.
 ### 2. Sources, downloaded once and pinned
 
 - **Elevation:** USGS 3D Elevation Program, the 1 m lidar DEM where the town has it (otherwise 1/3 arc-second, about
-  10 m), public domain. Fetched through the 3DEP ImageServer, cached in `artifacts\world-src\<slug>\` (not in git),
-  pinned by SHA-256 in `WorldData\v2-<slug>\sources.json` with the request, date and resolution.
+  10 m), public domain. Fetched through the 3DEP ImageServer, cached in `artifacts\world-src\stockport-oh\` (not in git),
+  pinned by SHA-256 in `TownData\stockport-oh\v1\sources.json` with the request, date and resolution.
 - **Map data:** an OpenStreetMap extract for the play area plus 300 m (one Overpass query), ODbL, pinned the same way
   with its timestamp. Re-fetching is a deliberate act: a new extract is a new `WorldData` version.
 - **Not used:** Google Maps and any other source whose terms forbid copying (you asked; their terms say no), and
@@ -51,8 +51,10 @@ moves to the new world.
 - The town is projected from its UTM zone to a **local flat frame** with the origin at a chosen town-centre point:
   east and north in metres, elevation in metres above the lowest river point in the area, minus 2 m (so the river is a
   little above zero).
-- Data files use the **same JS-space convention as CanonData v1** (`x_js = -east`, `z = north`, Unity `= (-x, y, z)`),
-  so `WorldGrid`, the stamp kernels and `BrvState` work unchanged on both worlds.
+- `TownData` and the bake tools (R, S, A) work in Unity's frame: x east, z north, y up, metres.
+- The grid layers in `WorldData` keep **CanonData v1's JS-space layout** (`x_js = -east`, `z = north`; Unity
+  `= (-x, y, z)`), so `WorldGrid`, the stamp kernels and `BrvState` work unchanged on both worlds. W8 does the flip
+  once, at export.
 
 ### 4. World size: 2 km square (U27)
 
@@ -80,7 +82,7 @@ nothing is hand-edited except the override files named below.
 
 | Stage | Lane | In → out |
 |---|---|---|
-| W0 fetch | W | sources → `artifacts\world-src\<slug>\` (DEM GeoTIFF or raw floats, OSM JSON), pinned in `sources.json` |
+| W0 fetch + extract | I (T3.0) | sources → `artifacts\world-src\stockport-oh\` → `TownData\stockport-oh\v1\` (roads, buildings, sites, land use, water, the DEM; real names stripped), pinned in `sources.json` and `manifest.json` |
 | W1 terrain | W | DEM → `terrain\dem.f32` resampled to the grid (bilinear from 1 m, bicubic from 10 m); river surface levelled per reach; banks smoothed; `surface`, `mud` and `tint` from OSM landuse (`natural=wetland` → bog mud, farmland, meadow, forest floor, gravel) |
 | W2 graph | R | OSM ways → `roads\graph.json`: centrelines in the local frame, class, width, lanes, surface, one-way, bridge and ford, junction type from tags (`junction=roundabout`, `highway=stop`, `traffic_signals`), otherwise rules by class (05 §6) |
 | W3 roads | R | graph + terrain → junction surfaces, corners, kerbs, sidewalks, markings, stop lines, bridges' decks; the road footprint flattens `heights` and writes `roadd` and `surface` (05 §5, now generic) |
@@ -88,9 +90,9 @@ nothing is hand-edited except the override files named below.
 | W5 buildings | A | OSM footprints with `building`, `building:levels`, `roof:shape`, `shop`/`amenity`/`craft` → `buildings\instances.json` (footprint, storeys, roof, type, style seed) → Blender procedural models (07, Synty-matched style guide) → `art\buildings\` GLB/FBX |
 | W6 nature | W | OSM `landuse=forest`, `natural=wood`, `scrub`, hedgerows and the DEM's slope → tree, bush and grass scatter with our eight species and the grass tufts |
 | W7 places | G | the game places on real features: garage, mill, quarry, fuel, depot, river landing (replaces the harbour), farms, bog → `world.json` `pois` with delivery rings |
-| W8 export | W | everything above → `WorldData\v2-<slug>\` with `manifest.json` (SHA-256 per file, source pins, bake commit), layer files in the CanonData v1 formats (`heights`, `base`, `surface`, `wear`, `roadd`, `mud`, `tint`) |
+| W8 export | W | everything above → `WorldData\millbrook\v1\` with `manifest.json` (SHA-256 per file, source pins, bake commit), layer files in the CanonData v1 formats (`heights`, `base`, `surface`, `wear`, `roadd`, `mud`, `tint`) |
 
-Overrides, the only hand-made inputs: `WorldData\v2-<slug>\overrides\` holds `roads.json` (a junction the solver
+Overrides, the only hand-made inputs: `WorldData\millbrook\overrides\` holds `roads.json` (a junction the solver
 can't do; a road to add or drop), `sites.json` (a lot to change), `places.json` (move a game place). Every override
 has a one-line reason.
 
@@ -135,7 +137,7 @@ accepted.
   shipped world changes.
 - The world grows (option B is four times the area): the M5 perf gates are re-measured on the new world, and the
   flythrough route is redrawn on it.
-- The bake is code from public data, so another town (a second map, a sequel) is a new `<slug>`, not new art.
+- The bake is code from public data, so another town (a second map, a sequel) is a new `TownData` extract and `WorldData` name, not new art.
 
 ## Open questions
 
