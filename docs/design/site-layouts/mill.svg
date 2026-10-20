@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="336" height="391" viewBox="0 0 336 391">
+<defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#7d7d82"/><line x1="0" y1="0" x2="0" y2="6" stroke="#2f6fc0" stroke-width="2"/></pattern>
+<marker id="tick" viewBox="0 0 4 4" refX="2" refY="2" markerWidth="4" markerHeight="4"><rect width="4" height="4" fill="#333"/></marker></defs>
+<rect width="100%" height="100%" fill="white"/><rect width="336" height="307" fill="#cfe0b4"/>
+<polygon points="0.0,298.8 336.0,298.8 336.0,277.2 0.0,277.2" fill="#6b6b70"/>
+<polyline points="0.0,287.8 336.0,287.8" fill="none" stroke="#f2c230" stroke-width="1.2" stroke-linejoin="round"/>
+<polyline points="0.0,288.2 336.0,288.2" fill="none" stroke="#f2c230" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="0.0,277.2 336.0,277.2 336.0,274.3 0.0,274.3" fill="#b9ad97"/>
+<polygon points="12.0,274.3 324.0,274.3 324.0,12.0 12.0,12.0" fill="#b9ad97" fill-opacity="0.9"/>
+<polygon points="120.0,168.0 240.0,168.0 240.0,120.0 120.0,120.0" fill="#7d6a55" stroke="#5b3d2b" stroke-width="1"/>
+<text x="159.2" y="144.0" font-size="10" font-family="sans-serif" fill="#fff">saw shed</text>
+<polygon points="36.0,240.0 84.0,240.0 84.0,211.2 36.0,211.2" fill="#b9a07e" stroke="#5b3d2b" stroke-width="1"/>
+<text x="44.4" y="225.6" font-size="10" font-family="sans-serif" fill="#fff">office</text>
+<polygon points="252.0,144.0 312.0,144.0 312.0,48.0 252.0,48.0" fill="#8a8f94" stroke="#5b3d2b" stroke-width="1"/>
+<text x="253.4" y="96.0" font-size="10" font-family="sans-serif" fill="#fff">kiln / shed</text>
+<polygon points="24.0,108.0 33.6,108.0 33.6,36.0 24.0,36.0" fill="#a07850"/>
+<polygon points="38.4,108.0 48.0,108.0 48.0,36.0 38.4,36.0" fill="#a07850"/>
+<polygon points="52.8,108.0 62.4,108.0 62.4,36.0 52.8,36.0" fill="#a07850"/>
+<polygon points="67.2,108.0 76.8,108.0 76.8,36.0 67.2,36.0" fill="#a07850"/>
+<polygon points="81.6,108.0 91.2,108.0 91.2,36.0 81.6,36.0" fill="#a07850"/>
+<polygon points="96.0,108.0 105.6,108.0 105.6,36.0 96.0,36.0" fill="#a07850"/>
+<text x="24.0" y="31.2" font-size="8" font-family="sans-serif" fill="#222">log decks</text>
+<polygon points="132.0,96.0 148.8,96.0 148.8,67.2 132.0,67.2" fill="#d8c39a" stroke="#8a6a3a" stroke-width="1"/>
+<polygon points="153.6,96.0 170.4,96.0 170.4,67.2 153.6,67.2" fill="#d8c39a" stroke="#8a6a3a" stroke-width="1"/>
+<polygon points="175.2,96.0 192.0,96.0 192.0,67.2 175.2,67.2" fill="#d8c39a" stroke="#8a6a3a" stroke-width="1"/>
+<polygon points="196.8,96.0 213.6,96.0 213.6,67.2 196.8,67.2" fill="#d8c39a" stroke="#8a6a3a" stroke-width="1"/>
+<polygon points="218.4,96.0 235.2,96.0 235.2,67.2 218.4,67.2" fill="#d8c39a" stroke="#8a6a3a" stroke-width="1"/>
+<text x="132.0" y="62.4" font-size="8" font-family="sans-serif" fill="#222">lumber stacks</text>
+<polygon points="127.2,277.2 160.8,277.2 158.4,274.0 129.6,274.0" fill="#b9ad97"/>
+<circle cx="72.0" cy="192.0" r="3.2" fill="#d0402f"/>
+<text x="73.9" y="190.6" font-size="8" font-family="sans-serif" fill="#222">X</text>
+<circle cx="244.8" cy="180.0" r="3.2" fill="#d0402f"/>
+<text x="246.7" y="178.6" font-size="8" font-family="sans-serif" fill="#222">P</text>
+<line x1="8" y1="299" x2="32" y2="299" stroke="#000" stroke-width="3"/><text x="8" y="295" font-size="9" font-family="sans-serif" fill="#fff">10 m</text>
+<text x="8" y="320" font-size="12" font-family="sans-serif" font-weight="bold">Sawmill: log yard, saw shed, lumber stacks, loading</text>
+<circle cx="10" cy="329.2" r="3.2" fill="#d0402f"/><text x="18" y="332.2" font-size="10" font-family="sans-serif">X: PolygonGeneric SM_Gen_Prop_Barrel_Metal_01</text><circle cx="10" cy="343.2" r="3.2" fill="#d0402f"/><text x="18" y="346.2" font-size="10" font-family="sans-serif">P: PolygonCity SM_Prop_Pallet_01</text>
+<text x="8" y="385" font-size="9" font-family="sans-serif" fill="#555">Gravel yard; truck entrance; grain elevators use the same frame with a rail siding, a truck scale and a concrete apron at the pit shed.</text>
+</svg>

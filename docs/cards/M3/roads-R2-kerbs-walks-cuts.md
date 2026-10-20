@@ -1,0 +1,15 @@
+# roads-R2: kerbs, sidewalks, ramps, driveway cuts and road plates (R, worktree `r`, ≈ 5 AD) — draft
+
+**Inputs:** roads-R1, research 05 §5.7 and §5.10, Clipper2 (U3, approved), lane W's plates API (overview contract 4), parameters `KERB_ZONE`, `CUT_SHIFT_MAX`. This card owns two contracts of the overview: **`KerbFrontage`** and **`DrivewayRequest` → `DrivewayCut`**.
+
+**Steps**
+1. Kerb zone: streets with `sidewalk=both|left|right|yes` (or `sidewalk:*`) get kerbs and walks on the tagged sides; untagged streets inside `KERB_ZONE` get both; rural roads get unkerbed edges with a 1.2 m gravel shoulder. Walk width from `sidewalk:width` or the rule (1.5 m residential, fill to the building line downtown, 1.8 m on MainStreet outside downtown).
+2. Kerb loops by Clipper2 booleans (05 §5.7): footprint = road corridors ∪ junction surfaces; blocks = zone − footprint; walk band by inward offset. Kerb types `Barrier150` (default), `Mountable100` (newer residential, optional), `Apron75`, `Dropped25`.
+3. Corner ramps: depressed corners on narrow walks, perpendicular ramps where the walk band is ≥ 3.2 m deep; landings and detectable-warning strips (texture, not geometry).
+4. **`KerbFrontage` export** (an asset next to the road network): per block face the kerb polyline, walk back edge, s, top-of-kerb and gutter heights, class, speed, oneway and forbidden intervals (corner return + 3 m on local streets, + 9 m on MainStreet/Highway, crosswalk landings, ramps, stop-line zones ± 2 m, inlets, poles). Until this lands, R0o's provisional frontage serves sites-S1.
+5. **Driveway cuts:** `DrivewayCutBaker.Resolve(DrivewayRequest[]) → DrivewayCut[]`, deterministic in request order sorted by (face, s0): `Dropped25` over the throat, linear flares (1.0 m residential, 1.5-3 m commercial, radius returns 6-12 m for truck entrances on unkerbed roads), the walk crossing at ≤ 2 % cross slope, the apron slab to the lot edge. Overlapping requests merge (shared driveways); a request in a forbidden interval moves by up to `CUT_SHIFT_MAX` or is rejected with the interval's reason. Mapped OSM service roads and driveways that meet a street become requests too (from sites-S1, `mapped = true`).
+6. Road plates (05 §5.10) on the new DEM terrain through W's plates API: footprint sink 0.06 m (asphalt) / 0.05 m (kerb and walk), side slopes ≤ 1V:3H, NoDeform on paved surfaces. Lot plates (sites-S4) come after road plates and must match the walk back edge at every cut; R2 publishes those edge heights in `KerbFrontage`.
+
+**Done when:** every block face of the town has a kerb loop or an unkerbed edge; kerb-to-building clearance ≥ the walk width (1.0 m minimum at downtown corners) or reported; ramps on every kerbed corner; a synthetic test of `Resolve` (overlaps, forbidden intervals, shifts, rejections, mapped requests) passes; terrain 0.25 m inside every road footprint ≤ surface − 0.03 m and within 0.1 m of the edge 1 m outside; two bakes give identical hashes.
+
+**Gate:** feeds `Roads.Validation`, `Sites.Validation` (cuts) and `Vehicle.KerbBump` (moved here from M4 if R2 lands in M3).

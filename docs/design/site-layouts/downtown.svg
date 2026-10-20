@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="288" height="396" viewBox="0 0 288 396">
+<defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#7d7d82"/><line x1="0" y1="0" x2="0" y2="6" stroke="#2f6fc0" stroke-width="2"/></pattern>
+<marker id="tick" viewBox="0 0 4 4" refX="2" refY="2" markerWidth="4" markerHeight="4"><rect width="4" height="4" fill="#333"/></marker></defs>
+<rect width="100%" height="100%" fill="white"/><rect width="288" height="256" fill="#cfe0b4"/>
+<polygon points="0.0,250.2 288.0,250.2 288.0,196.2 0.0,196.2" fill="#6b6b70"/>
+<polyline points="0.0,222.8 288.0,222.8" fill="none" stroke="#f2c230" stroke-width="1.2" stroke-linejoin="round"/>
+<polyline points="0.0,223.6 288.0,223.6" fill="none" stroke="#f2c230" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="0.0,196.2 288.0,196.2 288.0,195.7 0.0,195.7" fill="#f2f1ec"/>
+<polygon points="0.0,195.7 288.0,195.7 288.0,184.9 0.0,184.9" fill="#d9d6cf"/>
+<polygon points="7.2,204.8 29.2,204.8 29.2,196.2 7.2,196.2" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="29.2,204.8 51.1,204.8 51.1,196.2 29.2,196.2" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="51.1,204.8 73.1,204.8 73.1,196.2 51.1,196.2" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="73.1,204.8 95.0,204.8 95.0,196.2 73.1,196.2" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="95.0,204.8 117.0,204.8 117.0,196.2 95.0,196.2" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="117.0,204.8 139.0,204.8 139.0,196.2 117.0,196.2" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="139.0,204.8 160.9,204.8 160.9,196.2 139.0,196.2" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="160.9,204.8 182.9,204.8 182.9,196.2 160.9,196.2" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="182.9,204.8 204.8,204.8 204.8,196.2 182.9,196.2" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="204.8,204.8 226.8,204.8 226.8,196.2 204.8,196.2" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="226.8,204.8 248.8,204.8 248.8,196.2 226.8,196.2" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="248.8,204.8 270.7,204.8 270.7,196.2 248.8,196.2" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="270.7,204.8 292.7,204.8 292.7,196.2 270.7,196.2" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="7.2,184.9 57.6,184.9 57.6,98.5 7.2,98.5" fill="#8a5c42" stroke="#5b3d2b" stroke-width="1"/>
+<polygon points="57.6,184.9 93.6,184.9 93.6,112.9 57.6,112.9" fill="#9c6b4c" stroke="#5b3d2b" stroke-width="1"/>
+<polygon points="93.6,184.9 144.0,184.9 144.0,98.5 93.6,98.5" fill="#8a5c42" stroke="#5b3d2b" stroke-width="1"/>
+<text x="108.4" y="141.7" font-size="10" font-family="sans-serif" fill="#fff">shop</text>
+<polygon points="144.0,184.9 176.4,184.9 176.4,112.9 144.0,112.9" fill="#9c6b4c" stroke="#5b3d2b" stroke-width="1"/>
+<polygon points="176.4,184.9 223.2,184.9 223.2,98.5 176.4,98.5" fill="#8a5c42" stroke="#5b3d2b" stroke-width="1"/>
+<polygon points="223.2,184.9 280.8,184.9 280.8,112.9 223.2,112.9" fill="#9c6b4c" stroke="#5b3d2b" stroke-width="1"/>
+<polygon points="0.0,64.8 288.0,64.8 288.0,43.2 0.0,43.2" fill="#6b6b70"/>
+<text x="7.2" y="57.6" font-size="9" font-family="sans-serif" fill="#fff">alley 6 m</text>
+<polygon points="93.6,41.4 223.2,41.4 223.2,1.8 93.6,1.8" fill="#7d7d82"/>
+<circle cx="237.6" cy="75.6" r="3.2" fill="#d0402f"/>
+<text x="240.5" y="73.4" font-size="8" font-family="sans-serif" fill="#222">D</text>
+<circle cx="36.0" cy="191.9" r="3.2" fill="#d0402f"/>
+<text x="38.9" y="189.7" font-size="8" font-family="sans-serif" fill="#222">B</text>
+<circle cx="72.0" cy="191.9" r="3.2" fill="#d0402f"/>
+<text x="74.9" y="189.7" font-size="8" font-family="sans-serif" fill="#222">P</text>
+<circle cx="122.4" cy="194.4" r="3.2" fill="#d0402f"/>
+<text x="125.3" y="192.2" font-size="8" font-family="sans-serif" fill="#222">L</text>
+<circle cx="187.2" cy="191.9" r="3.2" fill="#d0402f"/>
+<text x="190.1" y="189.7" font-size="8" font-family="sans-serif" fill="#222">R</text>
+<circle cx="252.0" cy="194.8" r="3.2" fill="#d0402f"/>
+<text x="254.9" y="192.6" font-size="8" font-family="sans-serif" fill="#222">H</text>
+<polyline points="3.6,196.2 3.6,184.9" fill="none" stroke="#333" stroke-width="0.8" marker-start="url(#tick)" marker-end="url(#tick)" stroke-linejoin="round"/>
+<text x="7.2" y="188.4" font-size="8" font-family="sans-serif" fill="#222">walk 3 m</text>
+<line x1="8" y1="248" x2="44" y2="248" stroke="#000" stroke-width="3"/><text x="8" y="244" font-size="9" font-family="sans-serif" fill="#fff">10 m</text>
+<text x="8" y="269" font-size="12" font-family="sans-serif" font-weight="bold">Downtown: street-front shops, on-street parking, alley and rear lot</text>
+<circle cx="10" cy="277.6" r="3.2" fill="#d0402f"/><text x="18" y="280.6" font-size="10" font-family="sans-serif">D: PolygonProRacer SM_Prop_Dumpster_01</text><circle cx="10" cy="291.6" r="3.2" fill="#d0402f"/><text x="18" y="294.6" font-size="10" font-family="sans-serif">B: PolygonCity SM_Prop_ParkBench_01</text><circle cx="10" cy="305.6" r="3.2" fill="#d0402f"/><text x="18" y="308.6" font-size="10" font-family="sans-serif">P: PolygonCity SM_Prop_Planter_01</text><circle cx="10" cy="319.6" r="3.2" fill="#d0402f"/><text x="18" y="322.6" font-size="10" font-family="sans-serif">L: PolygonCity SM_Prop_LightPole_Base_02</text><circle cx="10" cy="333.6" r="3.2" fill="#d0402f"/><text x="18" y="336.6" font-size="10" font-family="sans-serif">R: PolygonCity SM_Prop_Trashbin_02</text><circle cx="10" cy="347.6" r="3.2" fill="#d0402f"/><text x="18" y="350.6" font-size="10" font-family="sans-serif">H: PolygonCity SM_Prop_Hydrant_01</text>
+<text x="8" y="390" font-size="9" font-family="sans-serif" fill="#555">Walls on the walk line, shared side walls; parallel stalls 6.1 m in the parking lane; deliveries and staff from the alley; a rear lot off the alley where a gap allows.</text>
+</svg>

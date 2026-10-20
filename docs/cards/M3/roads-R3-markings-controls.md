@@ -1,0 +1,14 @@
+# roads-R3: markings, controls, signs, chunks, LOD and colliders (R, worktree `r`, ≈ 4 AD) — draft
+
+**Inputs:** roads-R1 (surfaces), roads-R2 (ramps, crosswalk landings), roads-R0o (controls from tags), research 05 §5.8-§5.9, §5.13, §6; the user's Synty City props (U24) for signs and signals.
+
+**Steps**
+1. Markings (05 §5.8, MUTCD 11th edition): centre lines by class and tags (`lanes`, `oneway`, `lane_markings=no` → none; double yellow on MainStreet and in-town Highway; rural broken yellow with no-passing zones from sight distance; none on residential streets), edge lines on rural highways, stop lines 0.45 m, yield lines at roundabout entries, crosswalks from `crossing=marked|zebra|traffic_signals` nodes (continental downtown, transverse elsewhere) plus 05's rule set where OSM is silent; parking-lane T-marks where `parking:*` says marked. Dashes phase-locked to s = 0; quad strips draped + 4 mm.
+2. Controls (05 §6.2) with their source recorded (`tag` or `rule`): tagged STOP, all-way STOP, YIELD and signals first; rules fill the rest (two-way stop where a street meets a Highway/MainStreet, stop on the stem of a street T, all-way stop at a street-by-street X with similar arms, nothing at L-bends, stop on unpaved approaches).
+3. Sign and signal placement (05 §6.3: near side, right, ≤ 15.2 m from the intersected edge, 0.6 m behind the kerb face, 2.1 m mounting in town). Prefabs: `PolygonCity/Prefabs/Props/SM_Prop_Sign_Stop_01`, `SM_Prop_Sign_GiveWay_01`, `SM_Prop_Sign_Street_01`, `SM_Prop_TrafficLight_01..03` (placed as they are; a MUTCD-shaped re-skin, if wanted, is our own material in `Game/Assets/Art/SyntyOverrides/`, never an edited mesh). Street-name blades from `name` tags (the town's real street names are map data, not brands).
+4. Materials, UVs and vertex data (05 §5.9): world-planar asphalt UVs, lane-space UV1, wear baked from the lane graph when R5 exists (flat until then).
+5. 64 m chunks, LOD0/LOD1, one MeshCollider per chunk for asphalt + concrete with kerb faces (05 §5.13); surface ids consistent with W's grid.
+
+**Done when:** exactly one STOP per controlled approach on its right, 0.6-2 m from the kerb face, ≤ 15.2 m from the intersected edge; stop lines only with STOP or signals; yield lines only with YIELD; every tagged control honoured or listed with a reason; centre lines never cross a junction surface; the bake is ≤ 60k triangles per km² of town and deterministic.
+
+**Gate:** feeds `Roads.Validation` and `m3.shots.junctions`.

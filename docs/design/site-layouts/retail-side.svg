@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="258" height="326" viewBox="0 0 258 326">
+<defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#7d7d82"/><line x1="0" y1="0" x2="0" y2="6" stroke="#2f6fc0" stroke-width="2"/></pattern>
+<marker id="tick" viewBox="0 0 4 4" refX="2" refY="2" markerWidth="4" markerHeight="4"><rect width="4" height="4" fill="#333"/></marker></defs>
+<rect width="100%" height="100%" fill="white"/><rect width="258" height="228" fill="#cfe0b4"/>
+<polygon points="0.0,220.4 258.4,220.4 258.4,174.8 0.0,174.8" fill="#6b6b70"/>
+<polyline points="0.0,197.2 258.4,197.2" fill="none" stroke="#f2c230" stroke-width="1.2" stroke-linejoin="round"/>
+<polyline points="0.0,198.0 258.4,198.0" fill="none" stroke="#f2c230" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="0.0,174.8 258.4,174.8 258.4,174.2 0.0,174.2" fill="#f2f1ec"/>
+<polygon points="0.0,174.2 258.4,174.2 258.4,168.5 0.0,168.5" fill="#d9d6cf"/>
+<polygon points="15.2,157.1 114.0,157.1 114.0,45.6 15.2,45.6" fill="#9c6b4c" stroke="#5b3d2b" stroke-width="1"/>
+<text x="54.2" y="101.4" font-size="10" font-family="sans-serif" fill="#fff">shop</text>
+<polygon points="121.6,162.8 250.8,162.8 250.8,30.4 121.6,30.4" fill="#7d7d82"/>
+<polygon points="127.1,132.8 148.0,132.8 148.0,122.7 127.1,122.7" fill="#8fb36c" stroke="#f2f1ec" stroke-width="1"/>
+<polygon points="127.1,70.5 148.0,70.5 148.0,60.4 127.1,60.4" fill="#8fb36c" stroke="#f2f1ec" stroke-width="1"/>
+<polygon points="175.8,132.8 196.6,132.8 196.6,122.7 175.8,122.7" fill="#8fb36c" stroke="#f2f1ec" stroke-width="1"/>
+<polygon points="175.8,70.5 196.6,70.5 196.6,60.4 175.8,60.4" fill="#8fb36c" stroke="#f2f1ec" stroke-width="1"/>
+<polygon points="224.4,132.8 245.3,132.8 245.3,122.7 224.4,122.7" fill="#8fb36c" stroke="#f2f1ec" stroke-width="1"/>
+<polygon points="224.4,70.5 245.3,70.5 245.3,60.4 224.4,60.4" fill="#8fb36c" stroke="#f2f1ec" stroke-width="1"/>
+<polygon points="127.1,122.7 148.0,122.7 148.0,112.3 127.1,112.3" fill="#2f6fc0" fill-opacity="0.85"/>
+<polygon points="127.1,122.7 148.0,122.7 148.0,112.3 127.1,112.3" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="127.1,112.3 148.0,112.3 148.0,101.8 127.1,101.8" fill="url(#hatch)"/>
+<polygon points="127.1,112.3 148.0,112.3 148.0,101.8 127.1,101.8" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="127.1,101.8 148.0,101.8 148.0,91.4 127.1,91.4" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="127.1,91.4 148.0,91.4 148.0,80.9 127.1,80.9" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="127.1,80.9 148.0,80.9 148.0,70.5 127.1,70.5" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="175.8,122.7 196.6,122.7 196.6,112.3 175.8,112.3" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="175.8,112.3 196.6,112.3 196.6,101.8 175.8,101.8" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="175.8,101.8 196.6,101.8 196.6,91.4 175.8,91.4" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="175.8,91.4 196.6,91.4 196.6,80.9 175.8,80.9" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="175.8,80.9 196.6,80.9 196.6,70.5 175.8,70.5" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="224.4,122.7 245.3,122.7 245.3,112.3 224.4,112.3" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="224.4,112.3 245.3,112.3 245.3,101.8 224.4,101.8" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="224.4,101.8 245.3,101.8 245.3,91.4 224.4,91.4" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="224.4,91.4 245.3,91.4 245.3,80.9 224.4,80.9" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="224.4,80.9 245.3,80.9 245.3,70.5 224.4,70.5" fill="none" stroke="#ffffff" stroke-width="1"/>
+<circle cx="137.6" cy="127.8" r="3.2" fill="#d0402f"/>
+<text x="140.6" y="125.5" font-size="8" font-family="sans-serif" fill="#222">L</text>
+<circle cx="186.2" cy="127.8" r="3.2" fill="#d0402f"/>
+<text x="189.2" y="125.5" font-size="8" font-family="sans-serif" fill="#222">L</text>
+<circle cx="234.8" cy="127.8" r="3.2" fill="#d0402f"/>
+<text x="237.9" y="125.5" font-size="8" font-family="sans-serif" fill="#222">L</text>
+<polygon points="152.2,174.8 187.5,174.8 183.7,168.5 156.0,168.5" fill="#7d7d82"/>
+<circle cx="247.0" cy="22.8" r="3.2" fill="#d0402f"/>
+<text x="250.0" y="20.5" font-size="8" font-family="sans-serif" fill="#222">D</text>
+<circle cx="117.8" cy="152.0" r="3.2" fill="#d0402f"/>
+<text x="120.8" y="149.7" font-size="8" font-family="sans-serif" fill="#222">C</text>
+<line x1="8" y1="220" x2="46" y2="220" stroke="#000" stroke-width="3"/><text x="8" y="216" font-size="9" font-family="sans-serif" fill="#fff">10 m</text>
+<text x="8" y="241" font-size="12" font-family="sans-serif" font-weight="bold">Retail with a side lot (the most common measured position)</text>
+<circle cx="10" cy="250" r="3.2" fill="#d0402f"/><text x="18" y="253" font-size="10" font-family="sans-serif">L: PolygonCity SM_Prop_LightPole_Base_01 + SM_Prop_LightPole_Lights_01</text><circle cx="10" cy="264" r="3.2" fill="#d0402f"/><text x="18" y="267" font-size="10" font-family="sans-serif">D: PolygonProRacer SM_Prop_Dumpster_01</text><circle cx="10" cy="278" r="3.2" fill="#d0402f"/><text x="18" y="281" font-size="10" font-family="sans-serif">C: PolygonProRacer SM_Prop_Bollard_01</text>
+<text x="8" y="320" font-size="9" font-family="sans-serif" fill="#555">14 stalls; the aisle runs away from the street so the entrance leads straight in; accessible stalls by the side door.</text>
+</svg>

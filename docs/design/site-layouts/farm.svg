@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="308" height="460" viewBox="0 0 308 460">
+<defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#7d7d82"/><line x1="0" y1="0" x2="0" y2="6" stroke="#2f6fc0" stroke-width="2"/></pattern>
+<marker id="tick" viewBox="0 0 4 4" refX="2" refY="2" markerWidth="4" markerHeight="4"><rect width="4" height="4" fill="#333"/></marker></defs>
+<rect width="100%" height="100%" fill="white"/><rect width="308" height="348" fill="#cfe0b4"/>
+<polygon points="0.0,337.7 308.0,337.7 308.0,322.3 0.0,322.3" fill="#6b6b70"/>
+<polyline points="0.0,329.8 308.0,329.8" fill="none" stroke="#f2c230" stroke-width="1.2" stroke-linejoin="round"/>
+<polyline points="0.0,330.2 308.0,330.2" fill="none" stroke="#f2c230" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="0.0,322.3 308.0,322.3 308.0,319.7 0.0,319.7" fill="#b9ad97"/>
+<polyline points="176.0,322.3 176.0,198.0 154.0,121.0" fill="none" stroke="#b9ad97" stroke-width="8.8" stroke-linejoin="round"/>
+<polygon points="88.0,143.0 253.0,154.0 264.0,22.0 77.0,11.0" fill="#b9ad97" fill-opacity="0.8"/>
+<polygon points="189.2,242.0 215.6,242.0 215.6,215.6 189.2,215.6" fill="#9c6b4c" stroke="#5b3d2b" stroke-width="1"/>
+<text x="189.4" y="228.8" font-size="10" font-family="sans-serif" fill="#fff">house</text>
+<polygon points="110.0,88.0 162.8,88.0 162.8,22.0 110.0,22.0" fill="#8f3b2e" stroke="#5b3d2b" stroke-width="1"/>
+<text x="126.0" y="55.0" font-size="10" font-family="sans-serif" fill="#fff">barn</text>
+<polygon points="187.0,66.0 253.0,66.0 253.0,30.8 187.0,30.8" fill="#8a8f94" stroke="#5b3d2b" stroke-width="1"/>
+<text x="188.8" y="48.4" font-size="10" font-family="sans-serif" fill="#fff">machine shed</text>
+<circle cx="118.8" cy="127.6" r="14" fill="#c9c6bf"/>
+<circle cx="149.6" cy="127.6" r="10" fill="#c9c6bf"/>
+<text x="105.6" y="127.6" font-size="8" font-family="sans-serif" fill="#222">grain bins</text>
+<polyline points="11.0,198.0 11.0,22.0 77.0,11.0" fill="none" stroke="#4f7d3a" stroke-width="2" stroke-dasharray="4 2" stroke-linejoin="round"/>
+<polygon points="11.0,22.0 77.0,22.0 77.0,4.4 11.0,4.4" fill="none"/>
+<circle cx="182.6" cy="317.9" r="3.2" fill="#d0402f"/>
+<text x="184.4" y="316.6" font-size="8" font-family="sans-serif" fill="#222">M</text>
+<circle cx="220.0" cy="110.0" r="3.2" fill="#d0402f"/>
+<text x="221.8" y="108.7" font-size="8" font-family="sans-serif" fill="#222">F</text>
+<circle cx="99.0" cy="110.0" r="3.2" fill="#d0402f"/>
+<text x="100.8" y="108.7" font-size="8" font-family="sans-serif" fill="#222">H</text>
+<circle cx="231.0" cy="132.0" r="3.2" fill="#d0402f"/>
+<text x="232.8" y="130.7" font-size="8" font-family="sans-serif" fill="#222">X</text>
+<line x1="8" y1="340" x2="30" y2="340" stroke="#000" stroke-width="3"/><text x="8" y="336" font-size="9" font-family="sans-serif" fill="#fff">10 m</text>
+<text x="8" y="361" font-size="12" font-family="sans-serif" font-weight="bold">Farm: long gravel drive, house near the road, barnyard behind</text>
+<circle cx="10" cy="369.6" r="3.2" fill="#d0402f"/><text x="18" y="372.6" font-size="10" font-family="sans-serif">M: PolygonCity SM_Prop_Mailbox_01</text><circle cx="10" cy="383.6" r="3.2" fill="#d0402f"/><text x="18" y="386.6" font-size="10" font-family="sans-serif">F: fuel tank (own model)</text><circle cx="10" cy="397.6" r="3.2" fill="#d0402f"/><text x="18" y="400.6" font-size="10" font-family="sans-serif">H: hay bales (own model)</text><circle cx="10" cy="411.6" r="3.2" fill="#d0402f"/><text x="18" y="414.6" font-size="10" font-family="sans-serif">X: PolygonGeneric SM_Gen_Prop_Barrel_Metal_01</text>
+<text x="8" y="454" font-size="9" font-family="sans-serif" fill="#555">Gravel drive and yard; the drive length, yard size and building mix come from the measured farmyards; fences around paddocks; no kerbs.</text>
+</svg>

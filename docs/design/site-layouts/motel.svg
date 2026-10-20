@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="286" height="329" viewBox="0 0 286 329">
+<defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#7d7d82"/><line x1="0" y1="0" x2="0" y2="6" stroke="#2f6fc0" stroke-width="2"/></pattern>
+<marker id="tick" viewBox="0 0 4 4" refX="2" refY="2" markerWidth="4" markerHeight="4"><rect width="4" height="4" fill="#333"/></marker></defs>
+<rect width="100%" height="100%" fill="white"/><rect width="286" height="231" fill="#cfe0b4"/>
+<polygon points="0.0,224.4 285.6,224.4 285.6,183.6 0.0,183.6" fill="#6b6b70"/>
+<polyline points="0.0,203.7 285.6,203.7" fill="none" stroke="#f2c230" stroke-width="1.2" stroke-linejoin="round"/>
+<polyline points="0.0,204.3 285.6,204.3" fill="none" stroke="#f2c230" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="0.0,183.6 285.6,183.6 285.6,183.1 0.0,183.1" fill="#f2f1ec"/>
+<polygon points="0.0,183.1 285.6,183.1 285.6,178.0 0.0,178.0" fill="#d9d6cf"/>
+<polygon points="13.6,68.0 272.0,68.0 272.0,27.2 13.6,27.2" fill="#9c6b4c" stroke="#5b3d2b" stroke-width="1"/>
+<text x="129.8" y="47.6" font-size="10" font-family="sans-serif" fill="#fff">rooms</text>
+<polygon points="217.6,170.0 272.0,170.0 272.0,68.0 217.6,68.0" fill="#9c6b4c" stroke="#5b3d2b" stroke-width="1"/>
+<polygon points="13.6,163.2 47.6,163.2 47.6,129.2 13.6,129.2" fill="#b9a07e" stroke="#5b3d2b" stroke-width="1"/>
+<text x="15.0" y="146.2" font-size="10" font-family="sans-serif" fill="#fff">office</text>
+<polygon points="54.4,173.4 210.8,173.4 210.8,73.1 54.4,73.1" fill="#7d7d82"/>
+<polygon points="81.3,154.4 88.9,154.4 88.9,135.7 81.3,135.7" fill="#8fb36c" stroke="#f2f1ec" stroke-width="1"/>
+<polygon points="201.1,154.4 208.8,154.4 208.8,135.7 201.1,135.7" fill="#8fb36c" stroke="#f2f1ec" stroke-width="1"/>
+<polygon points="81.3,110.8 88.9,110.8 88.9,92.1 81.3,92.1" fill="#8fb36c" stroke="#f2f1ec" stroke-width="1"/>
+<polygon points="201.1,110.8 208.8,110.8 208.8,92.1 201.1,92.1" fill="#8fb36c" stroke="#f2f1ec" stroke-width="1"/>
+<polygon points="88.9,154.4 98.3,154.4 98.3,135.7 88.9,135.7" fill="#2f6fc0" fill-opacity="0.85"/>
+<polygon points="88.9,154.4 98.3,154.4 98.3,135.7 88.9,135.7" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="98.3,154.4 107.6,154.4 107.6,135.7 98.3,135.7" fill="url(#hatch)"/>
+<polygon points="98.3,154.4 107.6,154.4 107.6,135.7 98.3,135.7" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="107.6,154.4 117.0,154.4 117.0,135.7 107.6,135.7" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="117.0,154.4 126.3,154.4 126.3,135.7 117.0,135.7" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="126.3,154.4 135.7,154.4 135.7,135.7 126.3,135.7" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="135.7,154.4 145.0,154.4 145.0,135.7 135.7,135.7" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="145.0,154.4 154.4,154.4 154.4,135.7 145.0,135.7" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="154.4,154.4 163.7,154.4 163.7,135.7 154.4,135.7" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="163.7,154.4 173.1,154.4 173.1,135.7 163.7,135.7" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="173.1,154.4 182.4,154.4 182.4,135.7 173.1,135.7" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="182.4,154.4 191.8,154.4 191.8,135.7 182.4,135.7" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="191.8,154.4 201.1,154.4 201.1,135.7 191.8,135.7" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="88.9,110.8 98.3,110.8 98.3,92.1 88.9,92.1" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="98.3,110.8 107.6,110.8 107.6,92.1 98.3,92.1" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="107.6,110.8 117.0,110.8 117.0,92.1 107.6,92.1" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="117.0,110.8 126.3,110.8 126.3,92.1 117.0,92.1" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="126.3,110.8 135.7,110.8 135.7,92.1 126.3,92.1" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="135.7,110.8 145.0,110.8 145.0,92.1 135.7,92.1" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="145.0,110.8 154.4,110.8 154.4,92.1 145.0,92.1" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="154.4,110.8 163.7,110.8 163.7,92.1 154.4,92.1" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="163.7,110.8 173.1,110.8 173.1,92.1 163.7,92.1" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="173.1,110.8 182.4,110.8 182.4,92.1 173.1,92.1" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="182.4,110.8 191.8,110.8 191.8,92.1 182.4,92.1" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="191.8,110.8 201.1,110.8 201.1,92.1 191.8,92.1" fill="none" stroke="#ffffff" stroke-width="1"/>
+<circle cx="85.1" cy="145.0" r="3.2" fill="#d0402f"/>
+<text x="87.8" y="143.0" font-size="8" font-family="sans-serif" fill="#222">L</text>
+<circle cx="85.1" cy="101.5" r="3.2" fill="#d0402f"/>
+<text x="87.8" y="99.5" font-size="8" font-family="sans-serif" fill="#222">L</text>
+<polygon points="18.2,183.6 49.8,183.6 46.4,178.0 21.6,178.0" fill="#7d7d82"/>
+<circle cx="20.4" cy="173.4" r="3.2" fill="#d0402f"/>
+<text x="23.1" y="171.4" font-size="8" font-family="sans-serif" fill="#222">S</text>
+<circle cx="204.0" cy="70.0" r="3.2" fill="#d0402f"/>
+<text x="206.7" y="68.0" font-size="8" font-family="sans-serif" fill="#222">I</text>
+<line x1="8" y1="223" x2="42" y2="223" stroke="#000" stroke-width="3"/><text x="8" y="219" font-size="9" font-family="sans-serif" fill="#fff">10 m</text>
+<text x="8" y="244" font-size="12" font-family="sans-serif" font-weight="bold">Motel: L-shaped building around its front lot</text>
+<circle cx="10" cy="253.2" r="3.2" fill="#d0402f"/><text x="18" y="256.2" font-size="10" font-family="sans-serif">L: PolygonCity SM_Prop_LightPole_Base_01 + SM_Prop_LightPole_Lights_01</text><circle cx="10" cy="267.2" r="3.2" fill="#d0402f"/><text x="18" y="270.2" font-size="10" font-family="sans-serif">S: motel sign (own model)</text><circle cx="10" cy="281.2" r="3.2" fill="#d0402f"/><text x="18" y="284.2" font-size="10" font-family="sans-serif">I: ice machine (own model)</text>
+<text x="8" y="323" font-size="9" font-family="sans-serif" fill="#555">About one stall per room, rows along the room doors, entrance by the office.</text>
+</svg>

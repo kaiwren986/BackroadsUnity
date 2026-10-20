@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="258" height="355" viewBox="0 0 258 355">
+<defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#7d7d82"/><line x1="0" y1="0" x2="0" y2="6" stroke="#2f6fc0" stroke-width="2"/></pattern>
+<marker id="tick" viewBox="0 0 4 4" refX="2" refY="2" markerWidth="4" markerHeight="4"><rect width="4" height="4" fill="#333"/></marker></defs>
+<rect width="100%" height="100%" fill="white"/><rect width="258" height="243" fill="#cfe0b4"/>
+<polygon points="0.0,235.6 258.4,235.6 258.4,190.0 0.0,190.0" fill="#6b6b70"/>
+<polyline points="0.0,212.4 258.4,212.4" fill="none" stroke="#f2c230" stroke-width="1.2" stroke-linejoin="round"/>
+<polyline points="0.0,213.2 258.4,213.2" fill="none" stroke="#f2c230" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="0.0,190.0 258.4,190.0 258.4,189.4 0.0,189.4" fill="#f2f1ec"/>
+<polygon points="0.0,189.4 258.4,189.4 258.4,183.7 0.0,183.7" fill="#d9d6cf"/>
+<polygon points="15.2,177.8 243.2,177.8 243.2,15.2 15.2,15.2" fill="#7d7d82"/>
+<polygon points="98.8,136.8 167.2,136.8 167.2,76.0 98.8,76.0" fill="#9c6b4c" stroke="#5b3d2b" stroke-width="1"/>
+<text x="107.0" y="106.4" font-size="10" font-family="sans-serif" fill="#fff">restaurant</text>
+<polyline points="197.6,174.8 197.6,45.6 76.0,45.6 76.0,159.6 167.2,159.6" fill="none" stroke="#f2c230" stroke-width="2" stroke-dasharray="6 3" stroke-linejoin="round"/>
+<text x="79.8" y="38.0" font-size="8" font-family="sans-serif" fill="#222">one-way 3.7 m drive-through: order board, then window; 8 cars of stacking</text>
+<polygon points="45.2,175.6 66.1,175.6 66.1,163.0 45.2,163.0" fill="#8fb36c" stroke="#f2f1ec" stroke-width="1"/>
+<polygon points="45.2,37.6 66.1,37.6 66.1,25.1 45.2,25.1" fill="#8fb36c" stroke="#f2f1ec" stroke-width="1"/>
+<polygon points="45.2,163.0 66.1,163.0 66.1,152.6 45.2,152.6" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="45.2,152.6 66.1,152.6 66.1,142.1 45.2,142.1" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="45.2,142.1 66.1,142.1 66.1,131.7 45.2,131.7" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="45.2,131.7 66.1,131.7 66.1,121.2 45.2,121.2" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="45.2,121.2 66.1,121.2 66.1,110.8 45.2,110.8" fill="url(#hatch)"/>
+<polygon points="45.2,121.2 66.1,121.2 66.1,110.8 45.2,110.8" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="45.2,110.8 66.1,110.8 66.1,100.3 45.2,100.3" fill="#2f6fc0" fill-opacity="0.85"/>
+<polygon points="45.2,110.8 66.1,110.8 66.1,100.3 45.2,100.3" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="45.2,100.3 66.1,100.3 66.1,89.9 45.2,89.9" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="45.2,89.9 66.1,89.9 66.1,79.4 45.2,79.4" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="45.2,79.4 66.1,79.4 66.1,69.0 45.2,69.0" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="45.2,69.0 66.1,69.0 66.1,58.5 45.2,58.5" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="45.2,58.5 66.1,58.5 66.1,48.1 45.2,48.1" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="45.2,48.1 66.1,48.1 66.1,37.6 45.2,37.6" fill="none" stroke="#ffffff" stroke-width="1"/>
+<circle cx="55.7" cy="169.3" r="3.2" fill="#d0402f"/>
+<text x="58.7" y="167.0" font-size="8" font-family="sans-serif" fill="#222">L</text>
+<polygon points="185.3,190.0 209.9,190.0 206.1,183.7 189.0,183.7" fill="#7d7d82"/>
+<polygon points="27.9,190.0 63.3,190.0 59.5,183.7 31.7,183.7" fill="#7d7d82"/>
+<circle cx="121.6" cy="42.6" r="3.2" fill="#d0402f"/>
+<text x="124.6" y="40.3" font-size="8" font-family="sans-serif" fill="#222">M</text>
+<circle cx="169.1" cy="98.8" r="3.2" fill="#d0402f"/>
+<text x="172.1" y="96.5" font-size="8" font-family="sans-serif" fill="#222">W</text>
+<circle cx="228.0" cy="22.8" r="3.2" fill="#d0402f"/>
+<text x="231.0" y="20.5" font-size="8" font-family="sans-serif" fill="#222">D</text>
+<line x1="8" y1="235" x2="46" y2="235" stroke="#000" stroke-width="3"/><text x="8" y="231" font-size="9" font-family="sans-serif" fill="#fff">10 m</text>
+<text x="8" y="256" font-size="12" font-family="sans-serif" font-weight="bold">Fast food: drive-through lane wrapping the building</text>
+<circle cx="10" cy="265.2" r="3.2" fill="#d0402f"/><text x="18" y="268.2" font-size="10" font-family="sans-serif">L: PolygonCity SM_Prop_LightPole_Base_01 + SM_Prop_LightPole_Lights_01</text><circle cx="10" cy="279.2" r="3.2" fill="#d0402f"/><text x="18" y="282.2" font-size="10" font-family="sans-serif">M: menu board (own model)</text><circle cx="10" cy="293.2" r="3.2" fill="#d0402f"/><text x="18" y="296.2" font-size="10" font-family="sans-serif">W: pickup window (building model)</text><circle cx="10" cy="307.2" r="3.2" fill="#d0402f"/><text x="18" y="310.2" font-size="10" font-family="sans-serif">D: PolygonProRacer SM_Prop_Dumpster_01</text>
+<text x="8" y="349" font-size="9" font-family="sans-serif" fill="#555">Entrance-only throat for the drive-through, two-way throat for the lot; stacking lane kerbed off from the stalls.</text>
+</svg>
