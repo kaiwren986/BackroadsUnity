@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="340" height="440" viewBox="0 0 340 440">
+<defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#7d7d82"/><line x1="0" y1="0" x2="0" y2="6" stroke="#2f6fc0" stroke-width="2"/></pattern>
+<marker id="tick" viewBox="0 0 4 4" refX="2" refY="2" markerWidth="4" markerHeight="4"><rect width="4" height="4" fill="#333"/></marker></defs>
+<rect width="100%" height="100%" fill="white"/><rect width="340" height="356" fill="#cfe0b4"/>
+<polygon points="0.0,348.0 340.0,348.0 340.0,332.0 0.0,332.0" fill="#6b6b70"/>
+<polyline points="0.0,339.8 340.0,339.8" fill="none" stroke="#f2c230" stroke-width="1.2" stroke-linejoin="round"/>
+<polyline points="0.0,340.2 340.0,340.2" fill="none" stroke="#f2c230" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="0.0,332.0 340.0,332.0 340.0,329.6 0.0,329.6" fill="#b9ad97"/>
+<polyline points="120.0,332.0 120.0,260.0 180.0,180.0 200.0,100.0" fill="none" stroke="#a88b68" stroke-width="18" stroke-linejoin="round"/>
+<polygon points="40.0,140.0 320.0,160.0 330.0,10.0 30.0,10.0" fill="#a88b68" fill-opacity="0.85"/>
+<polygon points="140.0,100.0 300.0,120.0 310.0,20.0 130.0,16.0" fill="#8c7a63" stroke="#5a4a3a" stroke-width="1"/>
+<text x="180.0" y="60.0" font-size="10" font-family="sans-serif" fill="#fff">pit (benches)</text>
+<polygon points="136.0,284.0 152.0,284.0 152.0,272.0 136.0,272.0" fill="#b9a07e" stroke="#5b3d2b" stroke-width="1"/>
+<text x="131.0" y="278.0" font-size="10" font-family="sans-serif" fill="#fff">scale</text>
+<polygon points="108.0,290.0 132.0,290.0 132.0,254.0 108.0,254.0" fill="#555"/>
+<text x="110.0" y="252.0" font-size="8" font-family="sans-serif" fill="#222">truck scale 3.5 x 18 m</text>
+<circle cx="70.0" cy="120.0" r="18" fill="#9d917f"/>
+<circle cx="110.0" cy="132.0" r="14" fill="#9d917f"/>
+<circle cx="240.0" cy="140.0" r="16" fill="#9d917f"/>
+<polygon points="260.0,180.0 290.0,180.0 290.0,160.0 260.0,160.0" fill="#8a8f94" stroke="#5b3d2b" stroke-width="1"/>
+<text x="256.8" y="170.0" font-size="10" font-family="sans-serif" fill="#fff">crusher</text>
+<polyline points="20.0,300.0 104.0,300.0" fill="none" stroke="#4f7d3a" stroke-width="2" stroke-linejoin="round"/>
+<polyline points="136.0,300.0 320.0,300.0" fill="none" stroke="#4f7d3a" stroke-width="2" stroke-linejoin="round"/>
+<circle cx="120.0" cy="300.0" r="3.2" fill="#d0402f"/>
+<text x="121.6" y="298.8" font-size="8" font-family="sans-serif" fill="#222">G</text>
+<circle cx="96.0" cy="220.0" r="3.2" fill="#d0402f"/>
+<text x="97.6" y="218.8" font-size="8" font-family="sans-serif" fill="#222">C</text>
+<line x1="8" y1="348" x2="28" y2="348" stroke="#000" stroke-width="3"/><text x="8" y="344" font-size="9" font-family="sans-serif" fill="#fff">10 m</text>
+<text x="8" y="369" font-size="12" font-family="sans-serif" font-weight="bold">Quarry: gate, scale house, haul road, stockpiles, pit</text>
+<circle cx="10" cy="378" r="3.2" fill="#d0402f"/><text x="18" y="381" font-size="10" font-family="sans-serif">G: PolygonProRacer SM_Prop_Boom_Gate_01</text><circle cx="10" cy="392" r="3.2" fill="#d0402f"/><text x="18" y="395" font-size="10" font-family="sans-serif">C: PolygonCity SM_Prop_Cone_01</text>
+<text x="8" y="434" font-size="9" font-family="sans-serif" fill="#555">Dirt and gravel throughout, a 9 m haul road with a 15 m paved apron at the public road (mud tracking), scale by the gate.</text>
+</svg>

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="292" viewBox="0 0 160 292">
+<defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#7d7d82"/><line x1="0" y1="0" x2="0" y2="6" stroke="#2f6fc0" stroke-width="2"/></pattern>
+<marker id="tick" viewBox="0 0 4 4" refX="2" refY="2" markerWidth="4" markerHeight="4"><rect width="4" height="4" fill="#333"/></marker></defs>
+<rect width="100%" height="100%" fill="white"/><rect width="160" height="208" fill="#cfe0b4"/>
+<polygon points="0.0,202.0 160.0,202.0 160.0,166.0 0.0,166.0" fill="#6b6b70"/>
+<polyline points="0.0,183.6 160.0,183.6" fill="none" stroke="#f2c230" stroke-width="1.2" stroke-linejoin="round"/>
+<polyline points="0.0,184.4 160.0,184.4" fill="none" stroke="#f2c230" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="0.0,166.0 160.0,166.0 160.0,165.4 0.0,165.4" fill="#f2f1ec"/>
+<polygon points="0.0,165.4 160.0,165.4 160.0,159.4 0.0,159.4" fill="#d9d6cf"/>
+<polygon points="36.0,159.4 124.0,159.4 124.0,8.0 36.0,8.0" fill="#cfe0b4" stroke="#9fb98a" stroke-width="1" stroke-dasharray="4 3"/>
+<polygon points="94.8,166.0 117.2,166.0 113.2,159.4 98.8,159.4" fill="#7d7d82"/>
+<polygon points="98.8,159.4 113.2,159.4 113.2,40.0 98.8,40.0" fill="#c9c6bf"/>
+<polygon points="95.2,64.0 118.4,64.0 118.4,38.0 95.2,38.0" fill="#c9c6bf"/>
+<polygon points="48.0,136.0 94.0,136.0 94.0,96.0 48.0,96.0" fill="#9c6b4c" stroke="#5b3d2b" stroke-width="1"/>
+<text x="58.0" y="116.0" font-size="10" font-family="sans-serif" fill="#fff">house</text>
+<polygon points="94.0,63.2 118.4,63.2 118.4,36.0 94.0,36.0" fill="#b9a07e" stroke="#5b3d2b" stroke-width="1"/>
+<text x="90.6" y="49.6" font-size="10" font-family="sans-serif" fill="#fff">garage</text>
+<polygon points="65.6,159.4 70.4,159.4 70.4,136.0 65.6,136.0" fill="#d9d6cf"/>
+<circle cx="118.4" cy="157.2" r="3.2" fill="#d0402f"/>
+<text x="121.6" y="154.8" font-size="8" font-family="sans-serif" fill="#222">M</text>
+<circle cx="44.0" cy="28.0" r="3.2" fill="#d0402f"/>
+<text x="47.2" y="25.6" font-size="8" font-family="sans-serif" fill="#222">T</text>
+<polyline points="36.0,80.0 36.0,8.0 124.0,8.0 124.0,32.0" fill="none" stroke="#4f7d3a" stroke-width="2" stroke-dasharray="3 2" stroke-linejoin="round"/>
+<polyline points="98.8,88.0 113.2,88.0" fill="none" stroke="#333" stroke-width="0.8" marker-start="url(#tick)" marker-end="url(#tick)" stroke-linejoin="round"/>
+<text x="98.0" y="85.6" font-size="8" font-family="sans-serif" fill="#222">3.6 m</text>
+<polyline points="30.0,159.4 30.0,136.0" fill="none" stroke="#333" stroke-width="0.8" marker-start="url(#tick)" marker-end="url(#tick)" stroke-linejoin="round"/>
+<text x="30.0" y="145.3" font-size="8" font-family="sans-serif" fill="#222">setback</text>
+<line x1="8" y1="200" x2="48" y2="200" stroke="#000" stroke-width="3"/><text x="8" y="196" font-size="9" font-family="sans-serif" fill="#fff">10 m</text>
+<text x="8" y="221" font-size="12" font-family="sans-serif" font-weight="bold">House: driveway to a rear garage (residential street)</text>
+<circle cx="10" cy="230" r="3.2" fill="#d0402f"/><text x="18" y="233" font-size="10" font-family="sans-serif">M: PolygonCity SM_Prop_Mailbox_01</text><circle cx="10" cy="244" r="3.2" fill="#d0402f"/><text x="18" y="247" font-size="10" font-family="sans-serif">T: PolygonCity SM_Prop_Trashbin_01</text>
+<text x="8" y="286" font-size="9" font-family="sans-serif" fill="#555">Driveway 3.0-3.6 m on the house's side, to a garage behind or beside the house; dropped kerb and flared apron across the walk (lane R cut); fence behind.</text>
+</svg>

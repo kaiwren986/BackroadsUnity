@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="312" height="405" viewBox="0 0 312 405">
+<defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#7d7d82"/><line x1="0" y1="0" x2="0" y2="6" stroke="#2f6fc0" stroke-width="2"/></pattern>
+<marker id="tick" viewBox="0 0 4 4" refX="2" refY="2" markerWidth="4" markerHeight="4"><rect width="4" height="4" fill="#333"/></marker></defs>
+<rect width="100%" height="100%" fill="white"/><rect width="312" height="307" fill="#cfe0b4"/>
+<polygon points="0.0,297.7 312.0,297.7 312.0,274.3 0.0,274.3" fill="#6b6b70"/>
+<polyline points="0.0,285.7 312.0,285.7" fill="none" stroke="#f2c230" stroke-width="1.2" stroke-linejoin="round"/>
+<polyline points="0.0,286.3 312.0,286.3" fill="none" stroke="#f2c230" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="0.0,274.3 312.0,274.3 312.0,273.9 0.0,273.9" fill="#f2f1ec"/>
+<polygon points="0.0,273.9 312.0,273.9 312.0,270.0 0.0,270.0" fill="#d9d6cf"/>
+<polygon points="0.0,104.0 312.0,104.0 312.0,0.0 0.0,0.0" fill="#8fb7d6"/>
+<polygon points="13.0,270.0 299.0,270.0 299.0,104.0 13.0,104.0" fill="#b9ad97" fill-opacity="0.9"/>
+<polygon points="26.0,249.6 57.2,249.6 57.2,240.5 26.0,240.5" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="26.0,240.2 57.2,240.2 57.2,231.1 26.0,231.1" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="26.0,230.9 57.2,230.9 57.2,221.8 26.0,221.8" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="26.0,221.5 57.2,221.5 57.2,212.4 26.0,212.4" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="26.0,212.2 57.2,212.2 57.2,203.1 26.0,203.1" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="26.0,202.8 57.2,202.8 57.2,193.7 26.0,193.7" fill="none" stroke="#ffffff" stroke-width="1"/>
+<text x="26.0" y="189.8" font-size="8" font-family="sans-serif" fill="#222">trailer stalls 3.6 x 12 m</text>
+<polygon points="74.4,248.0 81.8,248.0 81.8,233.7 74.4,233.7" fill="#8fb36c" stroke="#f2f1ec" stroke-width="1"/>
+<polygon points="173.0,248.0 180.4,248.0 180.4,233.7 173.0,233.7" fill="#8fb36c" stroke="#f2f1ec" stroke-width="1"/>
+<polygon points="74.4,214.8 81.8,214.8 81.8,200.5 74.4,200.5" fill="#8fb36c" stroke="#f2f1ec" stroke-width="1"/>
+<polygon points="173.0,214.8 180.4,214.8 180.4,200.5 173.0,200.5" fill="#8fb36c" stroke="#f2f1ec" stroke-width="1"/>
+<polygon points="81.8,248.0 88.8,248.0 88.8,233.7 81.8,233.7" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="88.8,248.0 95.8,248.0 95.8,233.7 88.8,233.7" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="95.8,248.0 102.8,248.0 102.8,233.7 95.8,233.7" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="102.8,248.0 109.9,248.0 109.9,233.7 102.8,233.7" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="109.9,248.0 116.9,248.0 116.9,233.7 109.9,233.7" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="116.9,248.0 123.9,248.0 123.9,233.7 116.9,233.7" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="123.9,248.0 130.9,248.0 130.9,233.7 123.9,233.7" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="130.9,248.0 137.9,248.0 137.9,233.7 130.9,233.7" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="137.9,248.0 145.0,248.0 145.0,233.7 137.9,233.7" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="145.0,248.0 152.0,248.0 152.0,233.7 145.0,233.7" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="152.0,248.0 159.0,248.0 159.0,233.7 152.0,233.7" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="159.0,248.0 166.0,248.0 166.0,233.7 159.0,233.7" fill="url(#hatch)"/>
+<polygon points="159.0,248.0 166.0,248.0 166.0,233.7 159.0,233.7" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="166.0,248.0 173.0,248.0 173.0,233.7 166.0,233.7" fill="#2f6fc0" fill-opacity="0.85"/>
+<polygon points="166.0,248.0 173.0,248.0 173.0,233.7 166.0,233.7" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="81.8,214.8 88.8,214.8 88.8,200.5 81.8,200.5" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="88.8,214.8 95.8,214.8 95.8,200.5 88.8,200.5" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="95.8,214.8 102.8,214.8 102.8,200.5 95.8,200.5" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="102.8,214.8 109.9,214.8 109.9,200.5 102.8,200.5" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="109.9,214.8 116.9,214.8 116.9,200.5 109.9,200.5" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="116.9,214.8 123.9,214.8 123.9,200.5 116.9,200.5" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="123.9,214.8 130.9,214.8 130.9,200.5 123.9,200.5" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="130.9,214.8 137.9,214.8 137.9,200.5 130.9,200.5" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="137.9,214.8 145.0,214.8 145.0,200.5 137.9,200.5" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="145.0,214.8 152.0,214.8 152.0,200.5 145.0,200.5" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="152.0,214.8 159.0,214.8 159.0,200.5 152.0,200.5" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="159.0,214.8 166.0,214.8 166.0,200.5 159.0,200.5" fill="url(#hatch)"/>
+<polygon points="159.0,214.8 166.0,214.8 166.0,200.5 159.0,200.5" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="166.0,214.8 173.0,214.8 173.0,200.5 166.0,200.5" fill="#2f6fc0" fill-opacity="0.85"/>
+<polygon points="166.0,214.8 173.0,214.8 173.0,200.5 166.0,200.5" fill="none" stroke="#ffffff" stroke-width="1"/>
+<circle cx="78.1" cy="240.9" r="3.2" fill="#d0402f"/>
+<text x="80.1" y="239.3" font-size="8" font-family="sans-serif" fill="#222">L</text>
+<circle cx="78.1" cy="207.6" r="3.2" fill="#d0402f"/>
+<text x="80.1" y="206.1" font-size="8" font-family="sans-serif" fill="#222">L</text>
+<polygon points="208.0,143.0 228.8,143.0 228.8,52.0 208.0,52.0" fill="#c9c6bf"/>
+<text x="231.4" y="65.0" font-size="8" font-family="sans-serif" fill="#222">ramp</text>
+<polygon points="104.0,114.4 111.8,114.4 111.8,13.0 104.0,13.0" fill="#a07850"/>
+<polygon points="156.0,114.4 163.8,114.4 163.8,26.0 156.0,26.0" fill="#a07850"/>
+<polygon points="88.4,98.8 104.0,98.8 104.0,95.7 88.4,95.7" fill="#a07850"/>
+<polygon points="163.8,98.8 179.4,98.8 179.4,95.7 163.8,95.7" fill="#a07850"/>
+<polygon points="88.4,83.2 104.0,83.2 104.0,80.1 88.4,80.1" fill="#a07850"/>
+<polygon points="163.8,83.2 179.4,83.2 179.4,80.1 163.8,80.1" fill="#a07850"/>
+<polygon points="88.4,67.6 104.0,67.6 104.0,64.5 88.4,64.5" fill="#a07850"/>
+<polygon points="163.8,67.6 179.4,67.6 179.4,64.5 163.8,64.5" fill="#a07850"/>
+<polygon points="88.4,52.0 104.0,52.0 104.0,48.9 88.4,48.9" fill="#a07850"/>
+<polygon points="163.8,52.0 179.4,52.0 179.4,48.9 163.8,48.9" fill="#a07850"/>
+<polygon points="88.4,36.4 104.0,36.4 104.0,33.3 88.4,33.3" fill="#a07850"/>
+<polygon points="163.8,36.4 179.4,36.4 179.4,33.3 163.8,33.3" fill="#a07850"/>
+<polygon points="234.0,234.0 275.6,234.0 275.6,202.8 234.0,202.8" fill="#9c6b4c" stroke="#5b3d2b" stroke-width="1"/>
+<text x="231.4" y="218.4" font-size="10" font-family="sans-serif" fill="#fff">bait shop</text>
+<circle cx="202.8" cy="150.8" r="3.2" fill="#d0402f"/>
+<text x="204.9" y="149.2" font-size="8" font-family="sans-serif" fill="#222">S</text>
+<circle cx="52.0" cy="130.0" r="3.2" fill="#d0402f"/>
+<text x="54.1" y="128.4" font-size="8" font-family="sans-serif" fill="#222">B</text>
+<line x1="8" y1="299" x2="34" y2="299" stroke="#000" stroke-width="3"/><text x="8" y="295" font-size="9" font-family="sans-serif" fill="#fff">10 m</text>
+<text x="8" y="320" font-size="12" font-family="sans-serif" font-weight="bold">Marina or harbour: ramp, trailer parking, piers</text>
+<circle cx="10" cy="328.8" r="3.2" fill="#d0402f"/><text x="18" y="331.8" font-size="10" font-family="sans-serif">L: PolygonCity SM_Prop_LightPole_Base_01 + SM_Prop_LightPole_Lights_01</text><circle cx="10" cy="342.8" r="3.2" fill="#d0402f"/><text x="18" y="345.8" font-size="10" font-family="sans-serif">S: PolygonCity SM_Prop_Sign_Warning_01</text><circle cx="10" cy="356.8" r="3.2" fill="#d0402f"/><text x="18" y="359.8" font-size="10" font-family="sans-serif">B: PolygonCity SM_Prop_ParkBench_01</text>
+<text x="8" y="399" font-size="9" font-family="sans-serif" fill="#555">Gravel lot with long trailer stalls; concrete ramp; timber piers; a shop or harbour office by the entrance.</text>
+</svg>
