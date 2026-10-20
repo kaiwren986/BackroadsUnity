@@ -25,7 +25,7 @@ Key numbers (medians, the middle half in brackets):
 | Harbours (29 waterfront groups) | no harbour or marina areas are mapped; piers are: 43 m long (22-60, n 68), 14 m wide where mapped as areas (12-20, n 10), 2 per waterfront (1-3) |
 | Houses (18,614) | 21 m apart along the street (15-31), 10.7 m from the road edge (7-15); driveway beside the house 79 %, 27 m long (17-50) to the house, mapped for only 4 % of houses; garage behind 64 %, beside 28 %, in front 8 %, 4.4 m from the house, 6.8 × 8.2 m |
 
-**For lane A's buildings:** footprints are well measured for every type (n in the hundreds to thousands), but storeys are tagged on 1 % of buildings (284 of 28,246) and roof shapes on 58 (37 gabled). Footprint shapes: houses 63 % rectangles, 17 % L, 13 % T/U; downtown shops 62 % rectangles, 16 % L. §9 and `buildingProfile.json`.
+**For lane A's buildings:** footprints are well measured for every type (n in the hundreds to tens of thousands over 29 North American towns; houses 54 % rectangles, 18 % L, 15 % T/U, 13 % more complex; downtown shops 59 % rectangles, 16 % L). Storeys and roof shapes were tagged on only 1 % of these towns' buildings, so a second download of 14 towns chosen for dense storey and roof tags (U28) measures them: `08b-storeys-and-roofs.md`. §9 and `buildingProfile.json`.
 
 **What is thin:** stall polygons (17), aisle widths measured between stalls (1), docks (0), sawmills (0), building tags. Where OSM is silent the design uses standards (§11), marked [doc].
 
@@ -188,38 +188,38 @@ Docks, aprons and yard fences are therefore design standards [doc]: docks on the
 
 ## 9. Buildings for Blender (lane A) [measured]
 
-`buildingProfile.json` keys every number by this study's business type (`type:house`, `type:downtown_shop`, ...) and by OSM tag value (`building:*`, `shop:*`, `amenity:*`, `craft:*`; a building counts under each of its tags and under those of the shops mapped inside it). Per key: footprint area, short and long side, aspect, rectangularity, corner count, shape class (rectangle, L, T/U, complex), storeys (`building:levels`), `height`, `roof:shape`, `roof:levels`, `roof:orientation`, materials and colours, long axis to the street, setback, shared walls, and the side of mapped main and service doors.
+`buildingProfile.json` keys every number by this study's business type (`type:house`, `type:downtown_shop`, ...) and by OSM tag value (`building:*`, `shop:*`, `amenity:*`, `craft:*`; a building counts under each of its tags and under those of the shops mapped inside it). Per key: footprint area, short and long side, aspect, rectangularity, corner count, shape class (rectangle, L, T/U, complex), materials and colours (North American towns), storeys, roof shape, roof levels, ridge orientation, height, eave height, storey height and roof pitch (every town, each with n, the towns behind it and a North America / Germany split: 08b), long axis to the street, setback, shared walls, and the side of mapped main and service doors.
 
-| Type | n | Footprint m² | Short × long m | Shape | Storeys tagged | Roofs tagged |
+| Type | n (North America) | Footprint m² | Short × long m | Shape | Storeys tagged (na): counts | Roof shapes tagged (na) |
 |---|---|---|---|---|---|---|
-| house | 19,046 | 128 (93-179) | 9.4 (8.0-11.4) × 14.5 (11.6-18.2) | rect 63, L 17, T/U 13 | 142: 1×73 2×66 3×2 | 39: gabled 28, hipped 5, quadruple_saltbox 3 |
-| accessory | 4,491 | 34 (21-46) | 4.7 (3.6-6.0) × 6.9 (5.5-7.9) | rect 97, L 2, T/U 1 | 4: 1×4 | 0 |
-| apartments | 116 | 348 (175-476) | 13.2 (10.4-17.0) × 27.9 (17.1-38.6) | rect 46, complex 22, T/U 20 | 15: 1×5 2×5 4×4 | 1: flat 1 |
-| downtown shop | 713 | 294 (156-496) | 12.2 (7.8-18.3) × 25.7 (19.0-34.6) | rect 62, L 16, complex 11 | 36: 2×22 1×10 3×4 | 1: flat 1 |
-| downtown restaurant | 132 | 277 (181-473) | 13.3 (9.3-19.5) × 24.2 (20.0-31.2) | rect 61, L 16, complex 13 | 11: 2×6 1×3 3×2 | 2: hipped 1, flat 1 |
-| downtown office | 52 | 286 (200-551) | 13.3 (10.6-19.0) × 27.5 (20.1-31.4) | rect 52, complex 17, L 15 | 6: 2×4 1×1 3×1 | 2: flat 2 |
-| downtown civic | 42 | 609 (410-1,036) | 20.0 (16.2-30.4) × 38.2 (25.8-48.6) | rect 33, complex 31, T/U 17 | 0 | 0 |
-| shop | 1,976 | 377 (228-541) | 15.6 (11.0-20.3) × 27.4 (20.1-35.9) | rect 51, complex 19, L 15 | 22: 1×15 2×6 3×1 | 4: gabled 4 |
-| restaurant | 110 | 337 (159-539) | 15.0 (9.4-18.5) × 25.3 (16.5-36.0) | rect 63, complex 14, L 12 | 3: 2×2 1×1 | 1: gabled 1 |
-| fast food | 32 | 280 (191-407) | 13.3 (10.6-14.6) × 22.4 (16.9-30.1) | rect 63, L 13, complex 13 | 1: 1×1 | 0 |
-| office | 97 | 334 (184-585) | 14.1 (11.3-20.8) × 24.7 (18.2-33.1) | rect 54, complex 21, T/U 17 | 3: 3×2 1×1 | 0 |
-| supermarket | 17 | 2,585 (1,235-3,375) | 36.0 (33.4-54.3) × 70.3 (41.6-83.7) | T/U 35, L 24, complex 24 | 0 | 0 |
-| fuel shop | 51 | 187 (147-336) | 11.4 (9.1-14.3) × 17.8 (15.2-24.3) | rect 78, L 10, T/U 8 | 1: 1×1 | 0 |
-| fuel canopy | 53 | 141 (94-232) | 7.8 (6.8-10.5) × 16.2 (12.1-25.8) | rect 94, T/U 2, convex_other 2 | 1: 1×1 | 0 |
-| car repair | 51 | 376 (253-651) | 16.6 (10.5-20.4) × 26.2 (20.1-38.0) | rect 59, L 20, complex 12 | 0 | 0 |
-| motel | 91 | 471 (286-1,119) | 19.9 (14.5-26.8) × 34.0 (20.4-57.4) | complex 44, rect 24, T/U 19 | 10: 2×6 3×3 1×1 | 1: gabled 1 |
-| church | 100 | 579 (359-986) | 22.2 (15.3-30.3) × 32.8 (25.3-45.9) | complex 44, rect 25, T/U 16 | 0 | 0 |
-| school | 88 | 1,110 (273-3,636) | 28.8 (13.8-55.7) × 41.2 (22.7-87.8) | complex 48, rect 28, T/U 14 | 11: 2×6 3×3 1×2 | 0 |
-| civic | 124 | 818 (452-1,515) | 25.7 (17.7-38.2) × 38.0 (28.7-55.2) | complex 49, rect 23, T/U 19 | 9: 2×4 1×3 3×2 | 1: gabled 1 |
-| warehouse | 166 | 1,953 (1,541-3,271) | 39.7 (30.8-53.3) × 68.4 (53.1-88.3) | complex 43, rect 33, L 14 | 2: 1×1 2×1 | 4: round 2, gabled 2 |
-| industrial | 409 | 384 (196-656) | 13.8 (10.0-18.4) × 27.4 (18.9-38.3) | rect 80, L 7, complex 7 | 1: 1×1 | 0 |
-| farm | 162 | 87 (27-224) | 6.7 (4.1-12.8) × 12.7 (6.4-19.2) | rect 77, T/U 7, complex 7 | 0 | 0 |
+| house | 34,213 | 131 (97-181) | 9.6 (8.1-11.7) × 14.9 (12.1-18.1) | rect 54, L 18, T/U 15 | 1330: 2×804 1×427 3×83 | 358: gabled 59 %, pyramidal 12 %, many 10 % |
+| accessory | 8,278 | 32 (18-45) | 4.6 (3.5-6.0) × 6.7 (5.1-7.8) | rect 96, L 3, T/U 1 | 52: 1×47 2×4 3×1 | 7: gabled 29 %, skillion 29 %, hipped 29 % |
+| apartments | 537 | 351 (176-621) | 13.9 (10.3-19.3) × 27.6 (17.9-39.8) | rect 39, complex 32, T/U 16 | 103: 2×41 3×35 4×13 | 7: gabled 57 %, flat 14 %, quadruple saltbox 14 % |
+| downtown shop | 1,325 | 324 (166-516) | 12.8 (8.2-18.6) × 26.5 (19.4-35.1) | rect 59, L 16, complex 14 | 244: 2×108 1×62 3×60 | 16: flat 69 %, gabled 13 %, quadruple saltbox 6 % |
+| downtown restaurant | 302 | 263 (175-460) | 11.8 (8.6-18.1) × 24.4 (19.4-30.7) | rect 60, L 16, T/U 11 | 53: 2×23 1×14 3×12 | 6: flat 67 %, hipped 17 %, double saltbox 17 % |
+| downtown office | 150 | 300 (178-552) | 14.0 (10.2-19.3) × 25.3 (19.2-34.3) | rect 53, L 19, complex 17 | 59: 2×33 3×15 1×5 | 7: flat 57 %, gabled 43 % |
+| downtown civic | 103 | 582 (348-902) | 19.4 (14.9-27.2) × 33.2 (24.9-46.1) | rect 42, complex 30, T/U 16 | 20: 2×9 3×6 1×3 | 1: flat 100 % |
+| shop | 3,401 | 403 (317-601) | 16.7 (12.2-21.2) × 29.0 (22.0-37.3) | rect 46, complex 26, T/U 14 | 177: 1×88 2×54 3×26 | 17: gabled 59 %, flat 18 %, hipped 12 % |
+| restaurant | 218 | 337 (163-619) | 14.4 (9.7-20.9) × 25.8 (17.0-36.4) | rect 53, complex 18, L 17 | 35: 1×20 2×10 3×5 | 9: flat 33 %, gabled 22 %, many 22 % |
+| fast food | 76 | 312 (232-451) | 13.8 (11.3-16.3) × 24.8 (18.9-31.1) | rect 54, complex 20, L 14 | 7: 1×5 3×1 5×1 | 0 |
+| office | 250 | 308 (179-555) | 14.5 (11.1-20.5) × 23.6 (17.3-33.8) | rect 40, complex 27, T/U 17 | 65: 2×29 1×24 3×12 | 9: flat 33 %, many 33 %, pyramidal 11 % |
+| supermarket | 28 | 2,300 (1,229-3,375) | 38.9 (32.7-54.3) × 65.1 (41.6-81.4) | complex 43, T/U 21, rect 21 | 1: 1×1 | 0 |
+| fuel shop | 61 | 175 (135-334) | 11.4 (8.9-14.3) × 17.7 (14.8-23.2) | rect 79, T/U 8, L 8 | 1: 1×1 | 0 |
+| fuel canopy | 76 | 158 (105-248) | 8.9 (7.0-11.3) × 16.2 (13.0-25.8) | rect 93, T/U 3, convex_other 3 | 1: 1×1 | 0 |
+| car repair | 130 | 390 (195-740) | 16.8 (10.4-21.4) × 27.8 (18.8-38.5) | rect 58, L 19, complex 15 | 29: 1×26 2×2 3×1 | 1: flat 100 % |
+| motel | 161 | 533 (262-1,214) | 20.0 (14.4-28.0) × 35.2 (21.9-57.6) | complex 42, rect 30, T/U 17 | 28: 3×12 2×11 4×4 | 2: gabled 100 % |
+| church | 234 | 581 (308-961) | 20.9 (14.4-29.5) × 33.3 (24.7-44.0) | complex 45, rect 25, T/U 18 | 18: 1×8 2×7 3×3 | 1: gabled 100 % |
+| school | 363 | 893 (342-2,061) | 26.2 (16.6-43.7) × 42.1 (25.8-69.5) | complex 57, rect 21, T/U 15 | 66: 2×21 3×15 5×14 | 4: flat 50 %, gabled 25 %, many 25 % |
+| civic | 276 | 711 (386-1,412) | 23.1 (17.2-35.5) × 36.5 (26.7-51.8) | complex 45, rect 28, T/U 16 | 38: 1×17 2×13 3×7 | 7: gabled 43 %, flat 29 %, hipped 14 % |
+| warehouse | 298 | 1,938 (1,526-3,252) | 38.9 (29.1-53.3) × 68.2 (52.0-88.3) | complex 45, rect 29, L 13 | 29: 1×11 2×8 4×6 | 5: gabled 60 %, round 40 % |
+| industrial | 487 | 384 (199-668) | 13.9 (10.1-18.8) × 27.4 (19.0-38.3) | rect 78, complex 8, L 8 | 17: 1×10 2×6 4×1 | 5: gabled 60 %, flat 40 % |
+| farm | 204 | 81 (23-224) | 6.2 (3.8-12.1) × 12.3 (5.4-20.6) | rect 80, L 6, T/U 6 | 1: 2×1 | 0 |
 | quarry | 50 | 113 (59-387) | 8.3 (6.7-15.2) × 15.0 (8.8-27.0) | rect 82, T/U 8, complex 6 | 0 | 0 |
-| mill | 17 | 28 (10-196) | 6.0 (3.6-11.2) × 6.0 (3.7-17.2) | convex_other 88, rect 12 | 0 | 0 |
+| mill | 28 | 99 (28-196) | 9.9 (6.0-13.1) × 11.3 (6.0-16.2) | convex_other 89, rect 7, T/U 4 | 0 | 0 |
 
-- **Tag coverage is the limit:** of 28,246 classified buildings, 284 have `building:levels`, 58 `roof:shape`, 23 `height` (all on small sheds). Houses: 1 storey 73, 2 storeys 66, 3 storeys 2 (n 142); roofs: gabled 28, hipped 5, saltbox 3, others 1 each (n 39). Downtown shops: 2 storeys 22, 1 storey 10, 3 storeys 4 (n 36). All types: gabled 37, hipped 7, flat 6, saltbox 3, round 2.
-- So lane A should take **sizes and shapes** from the measured keys and **storeys and roofs** from the tagged subsets where n ≥ 20, otherwise from the regional norm (one- and two-storey gabled houses, two-storey flat-roofed downtown blocks with parapets, low-pitch or flat warehouses), and use the chosen town's own tags first where it has them (sites-S0 measures the town too).
-- Houses face the street with the long side about as often as with the gable end (46 % / 49 %): both front-gabled and side-gabled houses are needed.
+- **Storeys and roofs come mostly from the second download** (U28, `08b-storeys-and-roofs.md`): over both studies, 5,809 of 60,939 buildings have storeys, 3,972 a roof shape, 247 a height and 163 a measurable pitch; the counts above are North American, the German towns of 08b add roof shapes, eaves and pitches.
+- Lane A takes **sizes and shapes** from these keys and **storeys, roofs, eaves and pitch** as 08b §6 says: the building's own Stockport tags first, then the `na` numbers of its key, then the standards of 08b §5.
+- Houses face the street with the gable end slightly more often than with the long side (across 53 %, along 42 %, n 33,007): both front-gabled and side-gabled houses are needed.
 
 ## 10. Real templates (`siteTemplates.json`)
 
@@ -263,7 +263,7 @@ Each template is in the street frame (u along the street, v away from it, v = 0 
 - **Mapping density varies a lot:** Viroqua has 2,819 buildings but 2 mapped parking lots; Barre maps 94 lots and 50 spaces. Pooled numbers lean towards the well-mapped towns (Barre, Salida, Lander, Nevada City).
 - **Under-mapped features** (stalls, aisle widths, docks, pumps, on-street parking, building storeys and roofs) are filled by standards and rules, and the generator's `Sites.MatchesProfile` check only tests what was measured.
 - **The chosen town comes first.** sites-S0 runs the same measurer on the chosen town's own extract; its numbers are blended with this profile (`PROFILE_BLEND`).
-- **Optional second batch** (needs the user's approval): ~15 towns known for detailed mapping would firm up stalls, canopies and building tags; the query and cache are ready (`fetch.mjs`).
+- **Second batch done** (U28): 14 towns chosen for dense storey and roof tags, for lane A; see `08b-storeys-and-roofs.md`. Stalls, canopies and docks stay as thin as above.
 - Google Maps or Street View data is not used (its terms forbid it); OSM only.
 
 ## Credit

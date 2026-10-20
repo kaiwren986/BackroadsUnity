@@ -10,6 +10,10 @@
 //   Game/Assets/Content/sites/siteTemplates.json    real example layouts in the building's street frame, with OSM ids
 // and (not committed) artifacts/osm/report.md, artifacts/osm/candidates.json for the research note and render.mjs.
 //
+// Two town sets: artifacts/osm/raw/ (the 17 site-study towns, U23) feeds everything; artifacts/osm/raw-tags/ (the towns
+// with dense storey and roof tags, U28, fetched by fetch-tags.mjs) feeds only buildingProfile.json: its North American
+// towns add to the footprint numbers, and all of them to the storey, height and roof numbers, which are split by region
+// (na = North America, eu = Germany) and name their towns.
 // Distributions are {n, p10, p25, p50, p75, p90, min, max}, pooled over all towns. Lengths in metres, areas in m2,
 // angles in degrees. "Edge" distances assume a road half-width (centreline to kerb/edge) from the width or lanes
 // tags, else 6.0 m on through roads and 4.5 m on local streets (the browser game's town study used the same).
@@ -26,6 +30,7 @@ import {
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '..', '..');
 const RAW = path.join(ROOT, 'artifacts', 'osm', 'raw');
+const RAW_TAGS = path.join(ROOT, 'artifacts', 'osm', 'raw-tags');
 const OUT_ART = path.join(ROOT, 'artifacts', 'osm');
 const OUT_CONTENT = path.join(ROOT, 'Game', 'Assets', 'Content', 'sites');
 const CREDIT = '(c) OpenStreetMap contributors, ODbL 1.0';
@@ -89,7 +94,7 @@ function typeOf(b) {
 
 function buildTown(file) {
   const T = loadTown(JSON.parse(fs.readFileSync(file, 'utf8')));
-  const town = { name: T.name, slug: path.basename(file, '.json'), streets: [], service: [], tracks: [], buildings: [], parking: [], spaces: [], spaceNodes: [],
+  const town = { name: T.name, slug: path.basename(file, '.json'), parts: [], streets: [], service: [], tracks: [], buildings: [], parking: [], spaces: [], spaceNodes: [],
     fuelAreas: [], fuelNodes: [], landuse: [], barriers: [], gates: [], doors: [], piers: [], marinas: [], works: [], sawmills: [], areaHw: [], pois: [], lamps: [], slipways: [], railways: [] };
   const publicNode = new Map(); // node id -> street
 
@@ -107,6 +112,7 @@ function buildTown(file) {
     }
     if (t['area:highway'] && poly) town.areaHw.push({ id: w.id, kind: t['area:highway'], poly, tags: t });
     if (t.building && poly && poly.length >= 3) town.buildings.push({ id: w.id, tags: t, poly });
+    else if (t['building:part'] && poly && poly.length >= 3) town.parts.push({ id: w.id, tags: t, poly });
     if (t.amenity === 'parking' && poly && !t.building && !/^(underground|multi-storey|rooftop)$/.test(t.parking || '')) town.parking.push({ id: w.id, poly, tags: t });
     if (t.amenity === 'parking_space' && poly) town.spaces.push({ id: w.id, poly, tags: t });
     if (t.amenity === 'fuel' && poly && !t.building) town.fuelAreas.push({ id: w.id, poly, tags: t });
@@ -123,6 +129,7 @@ function buildTown(file) {
   for (const r of T.rels) {
     const t = r.tags;
     if (t.building) town.buildings.push({ id: r.id, tags: t, poly: r.poly });
+    else if (t['building:part']) town.parts.push({ id: r.id, tags: t, poly: r.poly });
     else if (t.amenity === 'parking' && !/^(underground|multi-storey|rooftop)$/.test(t.parking || '')) town.parking.push({ id: r.id, poly: r.poly, tags: t });
     else if (t.landuse) town.landuse.push({ id: r.id, use: t.landuse, poly: r.poly, tags: t });
   }
@@ -172,6 +179,12 @@ function buildTown(file) {
     if (host) host.pois.push(n.tags);
   }
   town.bgrid = bg;
+  for (const p of town.parts) {
+    p.A = absArea(p.poly); p.c = centroid(p.poly); p.r = minRect(p.poly);
+    let host = null;
+    for (const b of bg.near(p.c, 5)) if (inPoly(p.c, b.poly) && (!host || b.A < host.A)) host = b;
+    if (host) (host.parts = host.parts || []).push(p);
+  }
   for (const b of town.buildings) {
     b.lu = luAt(b.c);
     b.inFuel = !!inAny(b.c, town.fuelAreas) && !/^(roof|canopy)$/.test(b.tags.building || '');
@@ -640,12 +653,21 @@ function main() {
     for (const k of Object.keys(allHouse)) allHouse[k].push(...house[k]);
     console.log(`${town.name}: ${town.buildings.length} buildings, ${town.streets.length} streets, ${lots.length} lots, ${fuel.length} fuel, ${ind.length} industrial, ${sites.farms.length} farmyards, ${house.drives.length} driveways`);
   }
+  const tagTowns = [];
+  if (fs.existsSync(RAW_TAGS)) for (const f of fs.readdirSync(RAW_TAGS).filter((x) => x.endsWith('.json')).sort()) {
+    const town = buildTown(path.join(RAW_TAGS, f));
+    tagTowns.push(town);
+    console.log(`${town.name} (storeys and roofs): ${town.buildings.length} buildings, ${town.parts.length} building parts`);
+  }
   const P = profile(towns, allLots, allFuel, allDown, allInd, allSites, allHouse);
-  const B = buildingProfile(towns);
+  const B = buildingProfile(towns.map((t) => t.town), tagTowns);
   const Tm = pickTemplates(towns);
   fs.mkdirSync(OUT_CONTENT, { recursive: true });
   fs.writeFileSync(path.join(OUT_CONTENT, 'siteProfile.json'), JSON.stringify(P, null, 1) + '\n');
-  fs.writeFileSync(path.join(OUT_CONTENT, 'buildingProfile.json'), JSON.stringify(B, null, 1) + '\n');
+  // one line per key keeps the file small and its diffs readable
+  const keyLines = Object.entries(B.keys).map(([k, v]) => '  ' + JSON.stringify(k) + ': ' + JSON.stringify(v)).join(',\n');
+  const bHead = JSON.stringify({ ...B, keys: '__KEYS__' }, null, 1).replace('"__KEYS__"', '{\n' + keyLines + '\n }');
+  fs.writeFileSync(path.join(OUT_CONTENT, 'buildingProfile.json'), bHead + '\n');
   fs.writeFileSync(path.join(OUT_CONTENT, 'siteTemplates.json'), JSON.stringify(Tm.out, null, 1) + '\n');
   fs.writeFileSync(path.join(OUT_ART, 'candidates.json'), JSON.stringify(Tm.cands, null, 1));
   console.log('wrote siteProfile.json, buildingProfile.json, siteTemplates.json (' + Tm.out.templates.length + ' templates)');
@@ -790,8 +812,50 @@ function surfaceStats(towns) {
 
 // ------------------------------------------------------------------ the building profile (for lane A's Blender generator)
 
-function buildingProfile(towns) {
-  const all = towns.flatMap((t) => t.town.buildings.filter((b) => b.type !== 'roof'));
+const regionOf = (townName) => (/Germany$/.test(townName) ? 'eu' : 'na');
+const PITCHED = new Set(['gabled', 'hipped', 'half-hipped', 'pyramidal', 'skillion', 'saltbox', 'side_hipped', 'gabled_row']);
+
+// storeys, height and roof of one building: its own tags first, else those of its largest building:part that has them
+function threeDOf(b) {
+  const els = [{ t: b.tags, poly: b.poly, r: b.r, A: b.A }].concat((b.parts || []).map((p) => ({ t: p.tags, poly: p.poly, r: p.r, A: p.A })).sort((x, y) => y.A - x.A));
+  const pick = (k) => els.find((e) => e.t[k] !== undefined && e.t[k] !== '') || null;
+  const lvE = pick('building:levels'), shE = pick('roof:shape'), rlE = pick('roof:levels'), orE = pick('roof:orientation'), anE = pick('roof:angle');
+  const hE = els.find((e) => num(e.t.height) > 2) || null;
+  const both = els.find((e) => num(e.t.height) > 2 && num(e.t['roof:height']) >= 0 && num(e.t['roof:height']) < num(e.t.height)) || null;
+  const o = {};
+  if (lvE) { const v = num(lvE.t['building:levels']); if (v >= 1 && v < 30) o.levels = Math.round(v); }
+  if (hE) { const v = num(hE.t.height); if (v < 150) o.height = v; }
+  if (shE) o.roofShape = String(shE.t['roof:shape']).trim();
+  if (rlE) { const v = num(rlE.t['roof:levels']); if (v >= 0 && v < 5) o.roofLevels = v; }
+  if (orE) o.roofOrientation = orE.t['roof:orientation'];
+  // eave height: height minus roof height on the same element (a flat roof: the eave is the height)
+  const shapeOf = (e) => e.t['roof:shape'] || (e === both ? o.roofShape : undefined);
+  const eaveE = both || (hE && shapeOf(hE) === 'flat' ? hE : null);
+  if (both) o.eave = num(both.t.height) - num(both.t['roof:height']);
+  else if (eaveE) o.eave = num(hE.t.height);
+  if (o.eave !== undefined && !(o.eave > 1.8 && o.eave < 60)) delete o.eave;
+  if (o.eave !== undefined && o.levels) { const sh = (o.eave - (num(eaveE.t.min_height) || 0)) / o.levels; if (sh > 2.2 && sh < 5.5) o.storeyHeight = sh; }
+  // roof pitch: roof:angle where tagged, else roof height over the half span (the full span for a skillion)
+  if (anE) { const v = num(anE.t['roof:angle']); if (v >= 3 && v <= 75) { o.pitch = v; o.pitchSource = 'angle'; } }
+  if (o.pitch === undefined && both) {
+    const shape = shapeOf(both), rh = num(both.t['roof:height']), r = both.r || minRect(both.poly);
+    if (PITCHED.has(shape) && rh > 0.3 && r.w > 2) {
+      const across = (both.t['roof:orientation'] || o.roofOrientation) === 'across';
+      const half = shape === 'skillion' ? (across ? r.d : r.w) : (across ? r.d / 2 : r.w / 2);
+      const v = (Math.atan(rh / half) * 180) / Math.PI;
+      if (v >= 3 && v <= 75) { o.pitch = v; o.pitchSource = 'roof:height'; o.pitchShape = shape; }
+    }
+  }
+  if (o.pitch !== undefined && !o.pitchShape) o.pitchShape = o.roofShape || 'unknown';
+  return Object.keys(o).length ? o : null;
+}
+
+function buildingProfile(siteTowns, tagTowns) {
+  const tagOf = (town) => (b) => { b.townName = town.name; b.region = regionOf(town.name); b.set = 'site'; return b; };
+  const site = siteTowns.flatMap((t) => t.buildings.filter((b) => b.type !== 'roof').map(tagOf(t)));
+  const tags = tagTowns.flatMap((t) => t.buildings.filter((b) => b.type !== 'roof').map((b) => { tagOf(t)(b); b.set = 'tags'; return b; }));
+  const all = site.concat(tags);
+  for (const b of all) b.d3 = threeDOf(b);
   const keyed = {};
   const add = (k, b) => (keyed[k] = keyed[k] || []).push(b);
   for (const b of all) {
@@ -799,21 +863,16 @@ function buildingProfile(towns) {
     add('building:' + (b.tags.building || 'yes'), b);
     for (const p of [b.tags, ...b.pois]) { if (p.shop) add('shop:' + p.shop, b); if (p.amenity && p.amenity !== 'parking') add('amenity:' + p.amenity, b); if (p.craft) add('craft:' + p.craft, b); }
   }
-  const stat = (L) => {
-    const levels = L.map((b) => num(b.tags['building:levels'])).filter((v) => v > 0 && v < 30);
-    const height = L.map((b) => num(b.tags.height)).filter((v) => v > 1.5 && v < 120);
-    const both = L.filter((b) => num(b.tags['building:levels']) > 0 && num(b.tags.height) > 1.5).map((b) => num(b.tags.height) / num(b.tags['building:levels']));
+  const byTown = (L) => counts(L.map((b) => b.townName));
+  const hist = (vals) => counts(vals.map((v) => String(v)));
+  const split = (L, f) => { const o = { n: L.length, ...f(L), towns: byTown(L) }; for (const r of ['na', 'eu']) { const R = L.filter((b) => b.region === r); if (R.length) o[r] = { n: R.length, ...f(R) }; } return o; };
+  const footprintStats = (L) => {
     const simp = L.map((b) => simplify(b.poly, 0.4));
     return {
       n: L.length, tagged: L.filter((b) => !b.inferred).length,
       footprint: { area: dist(L.map((b) => b.A), 0), short: dist(L.map((b) => b.r.w), 1), long: dist(L.map((b) => b.r.d), 1), aspect: dist(L.map((b) => b.r.d / Math.max(0.1, b.r.w)), 2),
         rectangularity: dist(L.map((b) => b.A / Math.max(1, b.r.A)), 2), corners: dist(simp.map((p) => p.length), 0),
         shape: shares(simp.map((p) => { const rc = reflexCount(p); return p.length <= 4 ? 'rect' : rc === 1 ? 'L' : rc === 2 ? 'T_or_U' : rc === 0 ? 'convex_other' : 'complex'; })) },
-      levels: { tagged: levels.length, dist: dist(levels, 1), counts: counts(levels.map((v) => String(Math.round(v)))) },
-      height: { tagged: height.length, dist: dist(height, 1), perLevel: dist(both, 2) },
-      roofShape: { tagged: L.filter((b) => b.tags['roof:shape']).length, counts: counts(L.filter((b) => b.tags['roof:shape']).map((b) => b.tags['roof:shape'])) },
-      roofLevels: dist(L.map((b) => num(b.tags['roof:levels'])).filter((v) => v >= 0 && v < 5), 1),
-      roofOrientation: counts(L.filter((b) => b.tags['roof:orientation']).map((b) => b.tags['roof:orientation'])),
       roofMaterial: counts(L.filter((b) => b.tags['roof:material']).map((b) => b.tags['roof:material'])),
       roofColour: counts(L.filter((b) => b.tags['roof:colour']).map((b) => b.tags['roof:colour'])),
       wallMaterial: counts(L.filter((b) => b.tags['building:material']).map((b) => b.tags['building:material'])),
@@ -825,11 +884,43 @@ function buildingProfile(towns) {
       serviceDoorSide: shares(L.flatMap((b) => (b.doorSides || []).filter((d) => /^(service|loading_dock|overhead|garage)$/.test(d.kind || '')).map((d) => d.side))),
     };
   };
-  const out = { note: 'Per building type and per OSM tag: footprint, storeys (building:levels), height, roof shape, materials, orientation and setback, measured from real small towns, for the procedural Blender buildings (lane A). ' +
-      '"type:" keys are this study\'s business types (downtown_* = street-front commerce); "building:", "shop:", "amenity:", "craft:" keys are OSM tag values (a building counts under each of its tags and under the tags of the shops and amenities mapped inside it). ' +
-      'Keys with fewer than 5 buildings are left out. Tag coverage is low in rural North America (see levels.tagged, height.tagged, roofShape.tagged): use the type keys for sizes and the tagged subsets for storeys and roofs.',
-    credit: CREDIT, generatedBy: 'tools/osm/measure.mjs', towns: towns.map((t) => t.town.name), keys: {} };
-  for (const [k, L] of Object.entries(keyed).sort((a, b) => b[1].length - a[1].length)) if (L.length >= 5) out.keys[k] = stat(L);
+  const threeDStats = (L) => {
+    const W = (k) => L.filter((b) => b.d3 && b.d3[k] !== undefined);
+    const st = W('levels'), rs = W('roofShape'), rl = W('roofLevels'), ro = W('roofOrientation'), ht = W('height'), ev = W('eave'), sh = W('storeyHeight'), pt = W('pitch');
+    const pitchByShape = {};
+    for (const b of pt) (pitchByShape[b.d3.pitchShape] = pitchByShape[b.d3.pitchShape] || []).push(b.d3.pitch);
+    return {
+      storeys: split(st, (X) => ({ hist: hist(X.map((b) => b.d3.levels)), dist: dist(X.map((b) => b.d3.levels), 1) })),
+      roofShape: split(rs, (X) => ({ shares: shares(X.map((b) => b.d3.roofShape)) })),
+      roofLevels: split(rl, (X) => ({ hist: hist(X.map((b) => b.d3.roofLevels)) })),
+      roofOrientation: split(ro, (X) => ({ shares: shares(X.map((b) => b.d3.roofOrientation)) })),
+      height: split(ht, (X) => ({ dist: dist(X.map((b) => b.d3.height), 1) })),
+      eaveHeight: split(ev, (X) => ({ dist: dist(X.map((b) => b.d3.eave), 1) })),
+      storeyHeight: split(sh, (X) => ({ dist: dist(X.map((b) => b.d3.storeyHeight), 2) })),
+      roofPitchDeg: { ...split(pt, (X) => ({ dist: dist(X.map((b) => b.d3.pitch), 0) })),
+        byShape: Object.fromEntries(Object.entries(pitchByShape).filter(([, v]) => v.length >= 3).map(([k, v]) => [k, dist(v, 0)])),
+        source: counts(pt.map((b) => b.d3.pitchSource)) },
+    };
+  };
+  const out = {
+    note: 'Per building type and per OSM tag, for the procedural Blender buildings (lane A). Footprint, shape, materials, orientation, setback and doors: North American towns only ' +
+      '(the 17 site-study towns and the 12 North American storey-and-roof towns). storeys, roofShape, roofLevels, roofOrientation, height, eaveHeight, storeyHeight, roofPitchDeg: every town, ' +
+      'each with n, the towns behind it (towns: {town: n}) and a split by region (na = North America, eu = the two German towns, used only for roof shapes per type and for pitch and eave where ' +
+      'North America has no heights). A building takes its own tags, else those of its largest building:part. Eave = height - roof:height (flat roofs: the height). Pitch = roof:angle, else ' +
+      'atan(roof:height / half span), the span being the footprint\'s short side (the long side with roof:orientation=across; the full span for skillions). ' +
+      '"type:" keys are this study\'s business types (downtown_* = street-front commerce); "building:", "shop:", "amenity:", "craft:" keys are OSM tag values. Keys with fewer than 5 buildings are left out.',
+    credit: CREDIT, generatedBy: 'tools/osm/measure.mjs',
+    towns: { site: siteTowns.map((t) => t.name), storeysAndRoofs: tagTowns.map((t) => t.name) },
+    coverage: { buildings: all.length, withStoreys: all.filter((b) => b.d3 && b.d3.levels).length, withRoofShape: all.filter((b) => b.d3 && b.d3.roofShape).length,
+      withHeight: all.filter((b) => b.d3 && b.d3.height).length, withEave: all.filter((b) => b.d3 && b.d3.eave).length, withPitch: all.filter((b) => b.d3 && b.d3.pitch).length,
+      byTown: Object.fromEntries([...siteTowns, ...tagTowns].map((t) => { const L = all.filter((b) => b.townName === t.name); return [t.name, { buildings: L.length, storeys: L.filter((b) => b.d3 && b.d3.levels).length, roofShape: L.filter((b) => b.d3 && b.d3.roofShape).length, height: L.filter((b) => b.d3 && b.d3.height).length }]; })) },
+    keys: {},
+  };
+  for (const [k, L] of Object.entries(keyed).sort((a, b) => b[1].length - a[1].length)) {
+    if (L.length < 5) continue;
+    const NA = L.filter((b) => b.region === 'na');
+    out.keys[k] = { ...(NA.length >= 5 ? footprintStats(NA) : { n: NA.length }), ...threeDStats(L) };
+  }
   return out;
 }
 
