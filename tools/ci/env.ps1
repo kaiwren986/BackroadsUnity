@@ -44,6 +44,13 @@ $script:BACKUP_DEST = 'D:\Backroads-Unity-backups'     # until the user names a 
 $script:LFS_BUDGET_GIB = 6                              # PLAN 1.2
 $script:UNITY_SLOTS = 4                                 # PLAN 1.10
 $script:WSL_DISTRO = 'Ubuntu-24.04'
+# Test windows (QUEUE U31): player autotests run hidden; timing tests use a visible window only when the
+# PC has had no keyboard or mouse input for BR_TIMING_IDLE_MINUTES, or inside BR_TIMING_NIGHT (local
+# time). Nightly and milestone timing steps wait at most BR_TIMING_MAX_WAIT_HOURS, then are 'blocked'.
+# Environment variables of the same names override these (README "Test windows").
+$script:BR_TIMING_IDLE_MINUTES = 10
+$script:BR_TIMING_NIGHT = '01:00-07:00'
+$script:BR_TIMING_MAX_WAIT_HOURS = 12
 $script:POWERSHELL = Join-Path $PSHOME 'powershell.exe'
 if (-not (Test-Path -LiteralPath $POWERSHELL)) { $script:POWERSHELL = Join-Path $PSHOME 'pwsh.exe' }
 New-Item -ItemType Directory -Force $ART | Out-Null

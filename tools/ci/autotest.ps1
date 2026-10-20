@@ -50,6 +50,7 @@ param(
     [switch]$Loud,
     [switch]$Force,
     [switch]$WaitForUser,
+    [ValidateSet('Auto', 'Hidden', 'Visible')][string]$Window = 'Auto',
     [switch]$DryRun
 )
 . "$PSScriptRoot\env.ps1"
@@ -247,7 +248,8 @@ try {
                 if ($checkEgress) { $tick = $egressTick; $tickSec = 1 }
                 $pa = Get-PlayerArgs $ro $mode
                 Write-BrLog ('"' + $Exe + '" ' + (ConvertTo-BrArgString $pa)) 'cmd'
-                $r = Invoke-BrProcess -FilePath $Exe -ArgumentList $pa -TimeoutSec $TimeoutSec -AffinityMask $mask -OnTick $tick -TickSec $tickSec -WorkingDirectory (Split-Path -Parent $Exe)
+                $wm = 'Hidden'; if ($Window -eq 'Visible') { $wm = 'Visible' }
+                $r = Invoke-BrProcess -FilePath $Exe -ArgumentList $pa -TimeoutSec $TimeoutSec -AffinityMask $mask -OnTick $tick -TickSec $tickSec -WorkingDirectory (Split-Path -Parent $Exe) -Window $wm -Width $Width -Height $Height -HostReport (Join-Path $ro 'offscreen-host.json')
                 $res = Read-Result $ro
                 $runInfo = [ordered]@{ run = $k; exitCode = $r.ExitCode; result = (Get-ExitText $r.ExitCode $r.TimedOut); seconds = $r.Seconds; affinity = $r.Affinity; resultFile = ($null -ne $res); status = $null; failures = @(); metrics = (Get-ResultMetrics $res) }
                 if ($res) {

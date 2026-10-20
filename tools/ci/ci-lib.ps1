@@ -187,42 +187,301 @@ function Invoke-BrProcess {
     # handles: the Unity Licensing client outlives the editor, and with inherited pipe handles it
     # would keep a caller that reads our output waiting (Start-Process -Wait hangs for that reason).
     # The Process object keeps its handle, so ExitCode stays readable after the exit.
+    # -Window Hidden (players only, QUEUE U31): an off-screen host window (OffscreenHost.cs) of
+    # -Width x -Height is started first and the player gets -parentHWND <host>, so it renders and
+    # plays audio normally but nothing appears on the desktop or takes focus. The host's report
+    # (focus changes, windows shown) goes to -HostReport and into the result as .Host.
+    # -Window Visible or '' (the default): a normal window, as before.
     param(
         [string]$FilePath, [string[]]$ArgumentList, [int]$TimeoutSec = 0, [string]$WorkingDirectory = '',
-        [UInt64]$AffinityMask = 0, [scriptblock]$OnTick = $null, [int]$TickSec = 5, [string]$WindowStyle = ''
+        [UInt64]$AffinityMask = 0, [scriptblock]$OnTick = $null, [int]$TickSec = 5, [string]$WindowStyle = '',
+        [ValidateSet('', 'Visible', 'Hidden')][string]$Window = '', [int]$Width = 1280, [int]$Height = 720, [string]$HostReport = ''
     )
+    $hostInfo = $null
+    $argList = @($ArgumentList)
+    if ($Window -eq 'Hidden') {
+        $hostInfo = Start-BrOffscreenHost -Width $Width -Height $Height -Report $HostReport -MaxSeconds ([Math]::Max(0, $TimeoutSec) + 300) -WatchName ([IO.Path]::GetFileNameWithoutExtension($FilePath))
+        $argList += @('-parentHWND', "$($hostInfo.Hwnd)")
+    }
     $psi = New-Object System.Diagnostics.ProcessStartInfo
     $psi.FileName = $FilePath
-    $psi.Arguments = ConvertTo-BrArgString $ArgumentList
+    $psi.Arguments = ConvertTo-BrArgString $argList
     $psi.UseShellExecute = $true
-    if (-not $WindowStyle) { $WindowStyle = Get-BrFirst $env:BR_PLAYER_WINDOWSTYLE 'Normal' }   # the self-test minimises its stubs
+    if (-not $WindowStyle) { $WindowStyle = Get-BrFirst $env:BR_PLAYER_WINDOWSTYLE 'Normal' }   # the self-test hides its console stubs
     $psi.WindowStyle = [System.Diagnostics.ProcessWindowStyle]$WindowStyle
     if ($WorkingDirectory) { $psi.WorkingDirectory = $WorkingDirectory }
     $sw = [Diagnostics.Stopwatch]::StartNew()
-    $p = [System.Diagnostics.Process]::Start($psi)
-    $affinitySet = $null
-    if ($AffinityMask -ne 0) {
-        try { $p.ProcessorAffinity = [IntPtr][Int64]$AffinityMask; $affinitySet = ('0x{0:X}' -f $AffinityMask) }
-        catch { Write-BrLog "could not set affinity: $($_.Exception.Message)" 'warn' }
-    }
-    $timedOut = $false
-    while (-not $p.WaitForExit([Math]::Max(1, $TickSec) * 1000)) {
-        if ($OnTick) { try { & $OnTick $p $sw.Elapsed } catch { Write-BrLog "tick: $($_.Exception.Message)" 'warn' } }
-        if ($TimeoutSec -gt 0 -and $sw.Elapsed.TotalSeconds -ge $TimeoutSec) {
-            $timedOut = $true
-            Write-BrLog "timeout after $TimeoutSec s: stopping pid $($p.Id) and its children" 'error'
-            [void](Stop-BrProcessTree $p.Id)
-            [void]$p.WaitForExit(15000)
-            break
+    try {
+        $p = [System.Diagnostics.Process]::Start($psi)
+        $affinitySet = $null
+        if ($AffinityMask -ne 0) {
+            try { $p.ProcessorAffinity = [IntPtr][Int64]$AffinityMask; $affinitySet = ('0x{0:X}' -f $AffinityMask) }
+            catch { Write-BrLog "could not set affinity: $($_.Exception.Message)" 'warn' }
         }
+        $timedOut = $false
+        while (-not $p.WaitForExit([Math]::Max(1, $TickSec) * 1000)) {
+            if ($OnTick) { try { & $OnTick $p $sw.Elapsed } catch { Write-BrLog "tick: $($_.Exception.Message)" 'warn' } }
+            if ($TimeoutSec -gt 0 -and $sw.Elapsed.TotalSeconds -ge $TimeoutSec) {
+                $timedOut = $true
+                Write-BrLog "timeout after $TimeoutSec s: stopping pid $($p.Id) and its children" 'error'
+                [void](Stop-BrProcessTree $p.Id)
+                [void]$p.WaitForExit(15000)
+                break
+            }
+        }
+        $p.WaitForExit()
+        $code = -1
+        if (-not $timedOut) { $code = $p.ExitCode }
+    } finally {
+        $hostReport = $null
+        if ($hostInfo) { $hostReport = Stop-BrOffscreenHost $hostInfo }
     }
-    $p.WaitForExit()
-    $code = -1
-    if (-not $timedOut) { $code = $p.ExitCode }
     return [pscustomobject]@{
         ExitCode = $code; TimedOut = $timedOut; Seconds = [Math]::Round($sw.Elapsed.TotalSeconds, 1)
-        ProcessId = $p.Id; Affinity = $affinitySet
+        ProcessId = $p.Id; Affinity = $affinitySet; Window = $(if ($Window) { $Window } else { 'Visible' }); Host = $hostReport
     }
+}
+
+# ------------------------------------------------------------------------------------------------
+# Hidden player windows (QUEUE U31): the off-screen host, user idle time, the night window
+# ------------------------------------------------------------------------------------------------
+function Initialize-BrWin32 {
+    if ('BrWin32' -as [type]) { return }
+    Add-Type -TypeDefinition @'
+using System;
+using System.Runtime.InteropServices;
+public static class BrWin32 {
+    [StructLayout(LayoutKind.Sequential)] struct LASTINPUTINFO { public uint cbSize; public uint dwTime; }
+    [DllImport("user32.dll")] static extern bool GetLastInputInfo(ref LASTINPUTINFO p);
+    [DllImport("kernel32.dll")] static extern uint GetTickCount();
+    [DllImport("user32.dll")] public static extern bool PostMessage(IntPtr hwnd, uint msg, IntPtr w, IntPtr l);
+    [DllImport("user32.dll")] public static extern IntPtr GetForegroundWindow();
+    [DllImport("user32.dll")] public static extern uint GetWindowThreadProcessId(IntPtr hwnd, out uint pid);
+    public static double IdleSeconds() {
+        LASTINPUTINFO l = new LASTINPUTINFO(); l.cbSize = (uint)Marshal.SizeOf(typeof(LASTINPUTINFO));
+        if (!GetLastInputInfo(ref l)) return -1;
+        return unchecked(GetTickCount() - l.dwTime) / 1000.0;
+    }
+    public static int ForegroundPid() { uint pid; GetWindowThreadProcessId(GetForegroundWindow(), out pid); return (int)pid; }
+}
+'@
+}
+
+function Get-BrOffscreenHostExe {
+    # Compiles tools\ci\OffscreenHost.cs (a Windows program: no console window) once per source hash
+    # into artifacts\ci-tools\. Nothing is installed; deleting the folder just recompiles it.
+    $src = Join-Path $PSScriptRoot 'OffscreenHost.cs'
+    if (-not (Test-Path -LiteralPath $src)) { throw "tools\ci\OffscreenHost.cs is missing" }
+    $code = Read-BrText $src
+    $sha = [Security.Cryptography.SHA256]::Create()
+    $hash = ([BitConverter]::ToString($sha.ComputeHash([Text.Encoding]::UTF8.GetBytes($code))) -replace '-', '').Substring(0, 12).ToLowerInvariant()
+    $dir = Join-Path $ART 'ci-tools'
+    $exe = Join-Path $dir "OffscreenHost-$hash.exe"
+    if (Test-Path -LiteralPath $exe) { return $exe }
+    New-Item -ItemType Directory -Force $dir | Out-Null
+    $tmp = Join-Path $dir ("OffscreenHost-$hash-" + [guid]::NewGuid().ToString('N').Substring(0, 8) + '.exe')
+    Add-Type -TypeDefinition $code -OutputAssembly $tmp -OutputType WindowsApplication -ReferencedAssemblies 'System.Windows.Forms'
+    try { Move-Item -LiteralPath $tmp -Destination $exe -ErrorAction Stop } catch { Remove-Item -LiteralPath $tmp -Force -ErrorAction SilentlyContinue }
+    return $exe
+}
+
+function Start-BrOffscreenHost {
+    # Starts the off-screen host and returns @{ Process; Hwnd; Report; HwndFile } once it has a window.
+    param([int]$Width, [int]$Height, [string]$Report = '', [int]$MaxSeconds = 0, [string]$WatchName = 'Backroads')
+    $exe = Get-BrOffscreenHostExe
+    $x = Get-BrFirst $env:BR_HOST_X '-32000'
+    $y = Get-BrFirst $env:BR_HOST_Y '-32000'
+    $tag = [guid]::NewGuid().ToString('N').Substring(0, 12)
+    $hwndFile = Join-Path ([IO.Path]::GetTempPath()) "br-offscreen-host-$tag.hwnd"
+    if (-not $Report) { $Report = Join-Path ([IO.Path]::GetTempPath()) "br-offscreen-host-$tag.json" }
+    $a = @('--x', "$x", '--y', "$y", '--width', "$Width", '--height', "$Height", '--owner-pid', "$PID", '--hwnd-file', $hwndFile, '--report', $Report, '--watch-name', $WatchName)
+    if ($MaxSeconds -gt 0) { $a += @('--max-seconds', "$MaxSeconds") }
+    if ($env:BR_HOST_SHOW) { $a += @('--show', $env:BR_HOST_SHOW) }
+    $psi = New-Object System.Diagnostics.ProcessStartInfo
+    $psi.FileName = $exe
+    $psi.Arguments = ConvertTo-BrArgString $a
+    $psi.UseShellExecute = $false
+    $psi.CreateNoWindow = $true
+    $p = [System.Diagnostics.Process]::Start($psi)
+    $null = $p.Handle
+    $sw = [Diagnostics.Stopwatch]::StartNew()
+    while (-not (Test-Path -LiteralPath $hwndFile)) {
+        if ($p.HasExited) { throw "the off-screen host exited at once (exit $($p.ExitCode))" }
+        if ($sw.Elapsed.TotalSeconds -gt 20) { try { $p.Kill() } catch { }; throw 'the off-screen host made no window within 20 s' }
+        Start-Sleep -Milliseconds 50
+    }
+    $hwnd = [Int64](Get-Content -LiteralPath $hwndFile -TotalCount 1)
+    Remove-Item -LiteralPath $hwndFile -Force -ErrorAction SilentlyContinue
+    Write-BrLog ("hidden window: off-screen host pid {0}, hwnd {1}, {2}x{3} at {4},{5} (-parentHWND)" -f $p.Id, $hwnd, $Width, $Height, $x, $y)
+    return [pscustomobject]@{ Process = $p; Hwnd = $hwnd; Report = $Report; HwndFile = $hwndFile }
+}
+
+function Stop-BrOffscreenHost($HostInfo) {
+    # The host exits by itself when the player's window closes; otherwise WM_CLOSE, then kill.
+    # Returns its report (or $null).
+    if (-not $HostInfo) { return $null }
+    $p = $HostInfo.Process
+    if (-not $p.WaitForExit(3000)) {
+        Initialize-BrWin32
+        [void][BrWin32]::PostMessage([IntPtr]$HostInfo.Hwnd, 0x0010, [IntPtr]::Zero, [IntPtr]::Zero)
+        if (-not $p.WaitForExit(5000)) { try { $p.Kill(); [void]$p.WaitForExit(3000) } catch { } }
+    }
+    $r = $null
+    try { $r = Read-BrJson $HostInfo.Report } catch { }
+    return $r
+}
+
+function Get-BrIdleSeconds {
+    # Seconds since the last keyboard or mouse input in this session (GetLastInputInfo).
+    # BR_FAKE_IDLE_SECONDS fakes it (CI self-test only): a number, or @<file> holding a number that is
+    # re-read on every call (so a test can make the PC "go idle" while a script waits).
+    $fake = "$env:BR_FAKE_IDLE_SECONDS"
+    if ($fake -ne '') {
+        if ($fake.StartsWith('@')) { $fake = "$(Get-Content -LiteralPath $fake.Substring(1) -TotalCount 1 -ErrorAction SilentlyContinue)".Trim(); if (-not $fake) { $fake = '0' } }
+        return [double]::Parse($fake, [Globalization.CultureInfo]::InvariantCulture)
+    }
+    Initialize-BrWin32
+    return [BrWin32]::IdleSeconds()
+}
+
+function Get-BrNow {
+    # Local time. BR_FAKE_NOW (HH:mm, or a full date and time) fakes it (CI self-test only).
+    if ("$env:BR_FAKE_NOW" -ne '') {
+        $f = "$env:BR_FAKE_NOW".Trim()
+        if ($f -match '^\d{1,2}:\d{2}$') { return [datetime]::ParseExact((Get-Date).ToString('yyyy-MM-dd') + ' ' + $f.PadLeft(5, '0'), 'yyyy-MM-dd HH:mm', [Globalization.CultureInfo]::InvariantCulture) }
+        return [datetime]::Parse($f, [Globalization.CultureInfo]::InvariantCulture)
+    }
+    return (Get-Date)
+}
+
+function Get-BrTimingSettings {
+    # env.ps1 holds the defaults; BR_TIMING_IDLE_MINUTES, BR_TIMING_NIGHT ('01:00-07:00', or 'off'),
+    # BR_TIMING_MAX_WAIT_HOURS and BR_TIMING_POLL_SEC override them.
+    $inv = [Globalization.CultureInfo]::InvariantCulture
+    $idle = $BR_TIMING_IDLE_MINUTES; if ("$env:BR_TIMING_IDLE_MINUTES" -ne '') { $idle = [double]::Parse("$env:BR_TIMING_IDLE_MINUTES", $inv) }
+    $night = $BR_TIMING_NIGHT; if ("$env:BR_TIMING_NIGHT" -ne '') { $night = "$env:BR_TIMING_NIGHT" }
+    $maxH = $BR_TIMING_MAX_WAIT_HOURS; if ("$env:BR_TIMING_MAX_WAIT_HOURS" -ne '') { $maxH = [double]::Parse("$env:BR_TIMING_MAX_WAIT_HOURS", $inv) }
+    $poll = 30; if ("$env:BR_TIMING_POLL_SEC" -ne '') { $poll = [int]$env:BR_TIMING_POLL_SEC }
+    return [pscustomobject]@{ IdleMinutes = [double]$idle; Night = "$night"; MaxWaitHours = [double]$maxH; PollSec = [Math]::Max(1, $poll) }
+}
+
+function Test-BrNightWindow([datetime]$Now, [string]$Window) {
+    # 'HH:mm-HH:mm' in local time; may wrap past midnight ('22:00-06:00'). 'off' or '' = never.
+    # Returns @{ Inside; MinutesToStart }.
+    if (-not $Window -or $Window -eq 'off') { return [pscustomobject]@{ Inside = $false; MinutesToStart = $null } }
+    if ($Window -notmatch '^\s*(\d{1,2}):(\d{2})\s*-\s*(\d{1,2}):(\d{2})\s*$') { throw "night window must look like 01:00-07:00 (got '$Window')" }
+    $s = [int]$Matches[1] * 60 + [int]$Matches[2]
+    $e = [int]$Matches[3] * 60 + [int]$Matches[4]
+    $m = $Now.Hour * 60 + $Now.Minute
+    if ($s -eq $e) { $inside = $false }
+    elseif ($s -lt $e) { $inside = ($m -ge $s -and $m -lt $e) }
+    else { $inside = ($m -ge $s -or $m -lt $e) }
+    $to = ($s - $m + 1440) % 1440
+    return [pscustomobject]@{ Inside = $inside; MinutesToStart = $to }
+}
+
+function Get-BrTimingWindow {
+    # Whether a timing test may use a visible window now: the PC has had no input for
+    # IdleMinutes, or the local time is inside the night window. Returns @{ Open; Reason; ... }.
+    $st = Get-BrTimingSettings
+    $idle = Get-BrIdleSeconds
+    $now = Get-BrNow
+    $n = Test-BrNightWindow $now $st.Night
+    $idleMin = [Math]::Round($idle / 60.0, 1)
+    $open = $false; $reason = ''
+    if ($idle -ge $st.IdleMinutes * 60) { $open = $true; $reason = "the PC has been idle $idleMin min (>= $($st.IdleMinutes))" }
+    elseif ($n.Inside) { $open = $true; $reason = "night window $($st.Night) (now $($now.ToString('HH:mm')))" }
+    else {
+        $reason = "the user is active (idle $idleMin of $($st.IdleMinutes) min)"
+        if ($null -ne $n.MinutesToStart) { $reason += (" and it is {0}, outside the night window {1} (opens in {2} h {3:00} min)" -f $now.ToString('HH:mm'), $st.Night, [Math]::Floor($n.MinutesToStart / 60), ($n.MinutesToStart % 60)) }
+        else { $reason += ' (no night window)' }
+    }
+    return [pscustomobject]@{ Open = $open; Reason = $reason; IdleSeconds = [Math]::Round($idle, 1); Night = $n.Inside; NightWindow = $st.Night; IdleMinutes = $st.IdleMinutes; Now = $now.ToString('yyyy-MM-ddTHH:mm:ss') }
+}
+
+function Wait-BrTimingWindow {
+    # Waits (polling every PollSec) until Get-BrTimingWindow is open, at most MaxWaitHours.
+    # Logs what it waits for at the start and every 15 min. Returns @{ Ok; WaitedSeconds; Reason }.
+    param([string]$What, [double]$MaxWaitHours = -1)
+    $st = Get-BrTimingSettings
+    if ($MaxWaitHours -lt 0) { $MaxWaitHours = $st.MaxWaitHours }
+    $sw = [Diagnostics.Stopwatch]::StartNew()
+    $w = Get-BrTimingWindow
+    $nextLog = 0
+    while (-not $w.Open) {
+        if ($sw.Elapsed.TotalSeconds -ge $nextLog) {
+            Write-BrLog ("waiting to run $What in a visible window: $($w.Reason); waited {0:N0} of {1:N0} min (U31)" -f $sw.Elapsed.TotalMinutes, ($MaxWaitHours * 60)) 'warn'
+            $nextLog += 900
+        }
+        if ($sw.Elapsed.TotalHours -ge $MaxWaitHours) {
+            return [pscustomobject]@{ Ok = $false; WaitedSeconds = [Math]::Round($sw.Elapsed.TotalSeconds, 1); Reason = $w.Reason }
+        }
+        $left = ($MaxWaitHours * 3600 - $sw.Elapsed.TotalSeconds) * 1000
+        Start-Sleep -Milliseconds ([int][Math]::Max(100, [Math]::Min($st.PollSec * 1000, $left)))
+        $w = Get-BrTimingWindow
+    }
+    if ($sw.Elapsed.TotalSeconds -ge 1) { Write-BrLog ("timing window open after {0:N0} s: $($w.Reason)" -f $sw.Elapsed.TotalSeconds) }
+    return [pscustomobject]@{ Ok = $true; WaitedSeconds = [Math]::Round($sw.Elapsed.TotalSeconds, 1); Reason = $w.Reason }
+}
+
+function Resolve-BrWindowMode {
+    # The window for one player run (QUEUE U31). Returns @{ Mode = Hidden|Visible|Wait; TimingEnforced
+    # ($null for a test that is not a timing test); Reason; Timing }.
+    #   -Requested Hidden  : hidden; a timing test's budgets are reported, not enforced
+    #   -Requested Visible : a normal window (deliberate comparisons only; lanes do not use it)
+    #   -Requested Auto    : hidden unless it is a timing test; a timing test is visible when the PC has
+    #                        been idle BR_TIMING_IDLE_MINUTES or it is inside BR_TIMING_NIGHT; otherwise
+    #                        Wait (-WaitForIdle: nightly and milestone tiers) or hidden with its timing
+    #                        not enforced ("timing not enforced (user active)": merge tier, ad hoc runs).
+    param([ValidateSet('Auto', 'Hidden', 'Visible')][string]$Requested = 'Auto', [bool]$Timing = $false, [bool]$WaitForIdle = $false)
+    $te = $null
+    if ($Requested -eq 'Hidden') {
+        if ($Timing) { $te = $false; $why = 'timing not enforced (-Window Hidden)' } else { $why = 'hidden (-Window Hidden)' }
+        return [pscustomobject]@{ Mode = 'Hidden'; TimingEnforced = $te; Reason = $why; Timing = $Timing }
+    }
+    if ($Requested -eq 'Visible') {
+        if ($Timing) { $te = $true }
+        return [pscustomobject]@{ Mode = 'Visible'; TimingEnforced = $te; Reason = 'visible (-Window Visible)'; Timing = $Timing }
+    }
+    if (-not $Timing) { return [pscustomobject]@{ Mode = 'Hidden'; TimingEnforced = $null; Reason = 'hidden (not a timing test)'; Timing = $false } }
+    $w = Get-BrTimingWindow
+    if ($w.Open) { return [pscustomobject]@{ Mode = 'Visible'; TimingEnforced = $true; Reason = "visible timing run: $($w.Reason)"; Timing = $true } }
+    if ($WaitForIdle) { return [pscustomobject]@{ Mode = 'Wait'; TimingEnforced = $true; Reason = "waiting for an idle PC or the night window: $($w.Reason)"; Timing = $true } }
+    return [pscustomobject]@{ Mode = 'Hidden'; TimingEnforced = $false; Reason = "timing not enforced (user active): $($w.Reason)"; Timing = $true }
+}
+
+# Failure texts of the player's scenarios that are timing budgets (frame time, audio underruns, the
+# engine's real-time factor, main-thread cost, chunk build time). When a timing test runs hidden these
+# are reported, not enforced; every other failure (pitch, clipping, arrival, input, exceptions) still
+# fails the run. A text this pattern does not know counts as functional.
+$script:BR_TIMING_FAILURE_PATTERN = 'underrun|\bp(50|95|99)\b|main[- ]thread|\bRTF\b|real-time factor|fps cap|frame time|chunks built in'
+
+function Test-BrTimingFailure([string]$Text) { return ($Text -match $BR_TIMING_FAILURE_PATTERN) }
+
+function Test-BrTimingScenario {
+    # True when a gates.json step runs this autotest scenario with "timing": true or "perf": true
+    # (the step flags are the one list of timing tests; autotest.ps1 -Timing and perf runs add to it).
+    param([string]$Id, [string]$Config = '')
+    if (-not $Id) { return $false }
+    if (-not $Config) { $Config = Join-Path $PSScriptRoot 'gates.json' }
+    $cfg = $null
+    try { $cfg = Read-BrJson $Config } catch { }
+    if (-not $cfg) { return $false }
+    $lists = New-Object System.Collections.ArrayList
+    foreach ($t in @($cfg.tiers.PSObject.Properties)) { [void]$lists.Add(@($t.Value.steps)) }
+    if ($cfg.milestones) {
+        foreach ($m in @($cfg.milestones.PSObject.Properties)) { foreach ($t in @($m.Value.PSObject.Properties)) { [void]$lists.Add(@($t.Value)) } }
+    }
+    foreach ($l in $lists) {
+        foreach ($s in $l) {
+            if (-not $s -or "$($s.script)" -ne 'autotest.ps1') { continue }
+            if (-not ($s.timing -or $s.perf)) { continue }
+            $a = @($s.args)
+            $i = [array]::IndexOf($a, '-Scenario')
+            if ($i -ge 0 -and $i + 1 -lt $a.Count -and "$($a[$i + 1])" -eq $Id) { return $true }
+        }
+    }
+    return $false
 }
 
 function Invoke-BrChildScript {

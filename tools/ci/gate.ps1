@@ -11,6 +11,11 @@
   plus docs\gates\M<n>\<step>.json.
   Locks: refuses to start while the user plays (-WaitForUser waits) and pauses before every heavy
   step while they play; the scripts themselves take the Unity slots, .gpu.lock and machine.lock.
+  Test windows (QUEUE U31): player autotests run hidden. Steps flagged "timing" (or "perf") get
+  autotest.ps1 -Timing: at the nightly and milestone tiers each one waits until the PC has been idle
+  10 min or the night window (env.ps1) is open, then runs in a visible window; the wait counts as
+  paused time, and all timing steps of one run share BR_TIMING_MAX_WAIT_HOURS, after which they are
+  'blocked'. At the merge tier they run hidden with their timing budgets reported, not enforced.
   Merge stops at the first failed hard step unless -KeepGoing; the other tiers always run everything.
   At the milestone tier only headline steps decide; failed lane gates are listed, not blocking.
 
@@ -95,6 +100,7 @@ function Get-StepFlag($Step, [string]$Name, [bool]$Default) {
 # ---------------------------------------------------------------- run
 $results = New-Object System.Collections.ArrayList
 $stop = $false
+$timingLeftH = (Get-BrTimingSettings).MaxWaitHours   # shared by every timing step of this run
 $playingAtStart = $false
 if (-not $DryRun) {
     if (-not (Assert-BrUserNotPlaying -What "the $Tier gate" -Wait:$WaitForUser)) { $playingAtStart = $true }
@@ -107,8 +113,9 @@ foreach ($s in $steps) {
     $headline = Get-StepFlag $s 'headline' $false
     $heavy = Get-StepFlag $s 'heavy' $false
     $perf = Get-StepFlag $s 'perf' $false
+    $timing = (Get-StepFlag $s 'timing' $false) -or $perf
     $stepDir = Join-Path $runDir $id
-    $rec = [ordered]@{ id = $id; status = 'error'; hard = $hard; headline = $headline; seconds = 0; message = ''; exitCode = $null; json = $null; owner = $s.owner }
+    $rec = [ordered]@{ id = $id; status = 'error'; hard = $hard; headline = $headline; seconds = 0; message = ''; exitCode = $null; json = $null; owner = $s.owner; timing = $timing; window = $null; timingEnforced = $null }
     $sw = [Diagnostics.Stopwatch]::StartNew()
     $skipWhy = $null
     if ($playingAtStart) { $rec.status = 'blocked'; $rec.message = "not started: the user is playing ($BR_PLAYING_REASON)" }
@@ -166,13 +173,23 @@ foreach ($s in $steps) {
                     }
                     if ($rec.status -eq 'error') {
                         if ($gateJson) { $sargs += @('-Out', $stepDir, '-GateName', $id) }
+                        if ($timing -and "$($s.script)" -eq 'autotest.ps1') { $sargs += '-Timing' }
                         if ($DryRun -and $gateJson) { $sargs += '-DryRun' }
                         $log = Join-Path $stepDir "$id.log"
                         if ($DryRun -and -not $gateJson) {
                             Write-BrLog ("powershell -File tools/ci/$($s.script) " + (ConvertTo-BrArgString $sargs) + '   (foreign script: not run in a dry run)') 'cmd'
                             $rec.status = 'dryrun'; $rec.message = 'dry run'
                         } else {
-                            $code = Invoke-BrChildScript -Script $script -Arguments $sargs -LogFile $log
+                            $savedMaxWait = $env:BR_TIMING_MAX_WAIT_HOURS
+                            if ($timing) {
+                                $tw = Get-BrTimingWindow
+                                if ($tw.Open) { Write-BrLog "timing step $id : visible window ($($tw.Reason))" }
+                                elseif ($Tier -eq 'merge') { Write-BrLog "timing step $id : hidden, timing not enforced ($($tw.Reason))" 'warn' }
+                                else { Write-BrLog ("timing step $id : waits for an idle PC or the night window ({0:N1} h of waiting left in this run): $($tw.Reason)" -f $timingLeftH) 'warn' }
+                                $env:BR_TIMING_MAX_WAIT_HOURS = ([Math]::Max(0, $timingLeftH)).ToString([Globalization.CultureInfo]::InvariantCulture)
+                            }
+                            try { $code = Invoke-BrChildScript -Script $script -Arguments $sargs -LogFile $log }
+                            finally { if ($null -eq $savedMaxWait) { Remove-Item Env:\BR_TIMING_MAX_WAIT_HOURS -ErrorAction SilentlyContinue } else { $env:BR_TIMING_MAX_WAIT_HOURS = $savedMaxWait } }
                             $rec.exitCode = $code
                             $jsonPath = Join-Path $stepDir 'gate.json'
                             if ($gateJson -and -not $DryRun) { $jsonPath = Join-Path $ART "gates\$id.json" }
@@ -181,6 +198,13 @@ foreach ($s in $steps) {
                             if ($sj -and "$($sj.run)" -ne $env:BR_GATE_RUN) { $sj = $null }   # left over from an older run
                             if ($sj) {
                                 $rec.status = "$($sj.status)"; $rec.message = "$($sj.message)"
+                                if ($sj.conditions -and $sj.conditions.window) { $rec.window = "$($sj.conditions.window)"; $rec.timingEnforced = $sj.conditions.timingEnforced }
+                                $paused = 0.0
+                                if ($sj.wallClock -and $sj.wallClock.pausedSeconds) { $paused = [double]$sj.wallClock.pausedSeconds }
+                                if ($paused -gt 0) {
+                                    $tg.wallClock.pausedSeconds += $paused
+                                    if ($timing) { $timingLeftH = [Math]::Max(0, $timingLeftH - $paused / 3600.0) }
+                                }
                                 $sj.hard = $hard; $sj.headline = $headline; $sj.tier = $Tier
                                 if ($s.fallbackIfFail) { $sj.fallbackIfFail = "$($s.fallbackIfFail)" }
                                 Write-BrJson $jsonPath $sj

@@ -139,7 +139,8 @@ try {
             $code = $srv.ExitCode
             foreach ($bp in $bots) { if (-not $bp.WaitForExit(60000)) { [void](Stop-BrProcessTree $bp.Id); $problems += "bot pid $($bp.Id) did not quit" } elseif ($bp.ExitCode -ne 0) { $problems += "bot pid $($bp.Id) exited $($bp.ExitCode)" } }
         } else {
-            $r = Invoke-BrProcess -FilePath $srvFile -ArgumentList $srvFull -TimeoutSec ($quitAfter + 120) -OnTick $tick -TickSec 1
+            # BackroadsServer.exe is a console program that logs to -logFile: no console window (QUEUE U31).
+            $r = Invoke-BrProcess -FilePath $srvFile -ArgumentList $srvFull -TimeoutSec ($quitAfter + 120) -OnTick $tick -TickSec 1 -WindowStyle (Get-BrFirst $env:BR_PLAYER_WINDOWSTYLE 'Hidden')
             $code = $r.ExitCode
             if ($r.TimedOut) { $problems += 'server did not quit in time (-br-quit-after ignored?)' }
         }
