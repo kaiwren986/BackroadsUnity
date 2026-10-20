@@ -1,0 +1,49 @@
+{
+    "schema":  1,
+    "gate":  "vendor.check",
+    "tier":  "milestone",
+    "status":  "pass",
+    "hard":  true,
+    "headline":  true,
+    "message":  "exit 0: vendor-check: 584 vendored files vs 584 upstream blobs (engine-sim 249, scs 74, piranha 261), 5 licence files; 0 differences (PASS, 0.5 s)",
+    "startedAt":  "2026-10-19T20:47:17.5054133-05:00",
+    "finishedAt":  "2026-10-19T20:47:18.2274133-05:00",
+    "build":  {
+                  "git":  "93e465647472d4eb58c2c5618d05eadd9c0c7800",
+                  "branch":  "main",
+                  "dirty":  true,
+                  "unity":  "6000.3.20f1",
+                  "native":  "0f61c7cf2e96ed2e70c6d4d2a5070f6f13bd6046fe32ed52ff313768528a83da",
+                  "abi":  1
+              },
+    "machine":  null,
+    "wallClock":  {
+                      "seconds":  0.7,
+                      "budget":  null,
+                      "pausedSeconds":  0,
+                      "overBudget":  false
+                  },
+    "conditions":  {
+                       "script":  "tools/ci/vendor-check.ps1",
+                       "args":  [
+
+                                ]
+                   },
+    "metrics":  {
+                    "exitCode":  0
+                },
+    "thresholds":  {
+                       "exitCode":  0
+                   },
+    "evidence":  [
+                     "artifacts/20261019-2046/gate-M2/vendor.check/vendor.check.log"
+                 ],
+    "warnings":  [
+
+                 ],
+    "fallbackIfFail":  null,
+    "exitCode":  0,
+    "out":  "artifacts/20261019-2046/gate-M2/vendor.check",
+    "run":  "artifacts/20261019-2046/gate-M2",
+    "script":  "tools/ci/vendor-check.ps1"
+}

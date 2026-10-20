@@ -1,6 +1,6 @@
 # ADR-004: bindings.json, the control table
 
-- **Status:** **draft** (lane W, M2 T2.6). Freezes with the M2 gate; changes after that need a new ADR and updated tests in the same commit.
+- **Status:** **accepted and frozen** at the `m2` tag (2026-10-19; M2 milestone gate 22/22, `docs\gates\M2.json`). Lane W, M2 T2.6. Changes need a new ADR and updated tests in the same commit.
 - **Date:** 2026-10-19
 - **Owners:** lane W for M2 (Client, Client.UI, `Game/Assets/Content/core/bindings.json`); lane G takes the screens from M7.
 - **Plan:** PLAN §6.1 M2 "Controls and screens" [S13]; 03 §4.26 (the browser game's bindings); `Backroads.Core.DriveInput`.

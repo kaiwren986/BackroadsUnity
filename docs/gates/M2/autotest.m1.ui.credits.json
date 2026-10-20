@@ -1,0 +1,196 @@
+{
+    "schema":  1,
+    "gate":  "autotest.m1.ui.credits",
+    "tier":  "milestone",
+    "status":  "pass",
+    "hard":  true,
+    "headline":  false,
+    "message":  "1 of 1 runs passed (AUTOTEST m1.ui.credits PASS (0 failures) -\u003e D:\\Backroads-Unity\\artifacts\\20261019-2046\\gate-M2\\autotest.m1.ui.credits)",
+    "startedAt":  "2026-10-19T20:52:45.3457050-05:00",
+    "finishedAt":  "2026-10-19T20:52:53.5658089-05:00",
+    "build":  {
+                  "git":  "93e465647472d4eb58c2c5618d05eadd9c0c7800",
+                  "branch":  "main",
+                  "dirty":  true,
+                  "unity":  "6000.3.20f1",
+                  "native":  "0f61c7cf2e96ed2e70c6d4d2a5070f6f13bd6046fe32ed52ff313768528a83da",
+                  "abi":  1
+              },
+    "machine":  {
+                    "summary":  "Intel(R) Core(TM) Ultra 9 275HX / NVIDIA GeForce RTX 5080 Laptop GPU / Microsoft Windows 11 Home 26200",
+                    "power":  "mains",
+                    "batteryPercent":  80,
+                    "gpu":  {
+                                "active":  "NVIDIA GeForce RTX 5080 Laptop GPU",
+                                "discretePresent":  true,
+                                "controllers":  [
+                                                    {
+                                                        "name":  "Intel(R) Graphics",
+                                                        "discrete":  false,
+                                                        "drivesDisplay":  true,
+                                                        "driver":  "32.0.101.8826"
+                                                    },
+                                                    {
+                                                        "name":  "NVIDIA GeForce RTX 5080 Laptop GPU",
+                                                        "discrete":  true,
+                                                        "drivesDisplay":  true,
+                                                        "driver":  "32.0.16.1664"
+                                                    }
+                                                ],
+                                "note":  "active = discrete GPU if present; the player reports the GPU it really used in result.json"
+                            },
+                    "powerMode":  {
+                                      "overlayAc":  "Balanced",
+                                      "overlayDc":  "Balanced",
+                                      "scheme":  "64a64f24-65b9-4b56-befd-5ec1eaced9b3  (Silent)"
+                                  },
+                    "cores":  {
+                                  "logical":  24,
+                                  "p":  [
+                                            0,
+                                            1,
+                                            10,
+                                            11,
+                                            12,
+                                            13,
+                                            22,
+                                            23
+                                        ],
+                                  "e":  [
+                                            2,
+                                            3,
+                                            4,
+                                            5,
+                                            6,
+                                            7,
+                                            8,
+                                            9,
+                                            14,
+                                            15,
+                                            16,
+                                            17,
+                                            18,
+                                            19,
+                                            20,
+                                            21
+                                        ],
+                                  "minSpecMask":  "0xFC",
+                                  "source":  "artifacts/env.json"
+                              },
+                    "cpuLoadPercent":  46,
+                    "otherProcs":  [
+
+                                   ]
+                },
+    "wallClock":  {
+                      "seconds":  8,
+                      "budget":  600,
+                      "pausedSeconds":  0,
+                      "overBudget":  false
+                  },
+    "conditions":  {
+                       "scenario":  "m1.ui.credits",
+                       "profile":  "Dev",
+                       "milestone":  "M2",
+                       "quality":  "player default",
+                       "coreClass":  "unpinned",
+                       "fpsCap":  "uncapped",
+                       "resolution":  "2560x1440",
+                       "perf":  false,
+                       "repeat":  1,
+                       "minSpecProxy":  false,
+                       "egressCheck":  false
+                   },
+    "metrics":  {
+                    "exe":  "builds/M2-dev/Backroads.exe",
+                    "buildGit":  "93e465647472d4eb58c2c5618d05eadd9c0c7800",
+                    "buildProfile":  "Dev",
+                    "buildMilestone":  "M2",
+                    "runs":  [
+                                 {
+                                     "run":  1,
+                                     "exitCode":  0,
+                                     "result":  "exit 0",
+                                     "seconds":  7.8,
+                                     "affinity":  null,
+                                     "resultFile":  true,
+                                     "status":  "pass",
+                                     "failures":  [
+
+                                                  ],
+                                     "metrics":  {
+                                                     "developmentBuild":  true,
+                                                     "seconds":  2.48329496383667,
+                                                     "frames":  161,
+                                                     "p50FrameMs":  6.552204132080078,
+                                                     "p95FrameMs":  14.990299224853516,
+                                                     "p99FrameMs":  713.8237915039063,
+                                                     "exceptions":  0,
+                                                     "errors":  0,
+                                                     "firstProblem":  "",
+                                                     "gpu":  "NVIDIA GeForce RTX 5080 Laptop GPU",
+                                                     "quality":  "default High (render 1.00, cap none, shadows 4/4096/400 m, engine audio Ultra)",
+                                                     "Count":  1,
+                                                     "Length":  1,
+                                                     "LongLength":  1,
+                                                     "Rank":  1,
+                                                     "SyncRoot":  [
+                                                                      {
+                                                                          "name":  "credits_labels",
+                                                                          "value":  230.0
+                                                                      }
+                                                                  ],
+                                                     "IsReadOnly":  false,
+                                                     "IsFixedSize":  true,
+                                                     "IsSynchronized":  false
+                                                 },
+                                     "logVerdict":  "[BR] AUTOTEST m1.ui.credits PASS (0 failures) -\u003e D:\\Backroads-Unity\\artifacts\\20261019-2046\\gate-M2\\autotest.m1.ui.credits"
+                                 }
+                             ],
+                    "developmentBuild":  true,
+                    "seconds":  2.48329496383667,
+                    "frames":  161,
+                    "p50FrameMs":  6.552204132080078,
+                    "p95FrameMs":  14.990299224853516,
+                    "p99FrameMs":  713.8237915039063,
+                    "exceptions":  0,
+                    "errors":  0,
+                    "firstProblem":  "",
+                    "gpu":  "NVIDIA GeForce RTX 5080 Laptop GPU",
+                    "quality":  "default High (render 1.00, cap none, shadows 4/4096/400 m, engine audio Ultra)",
+                    "Count":  1,
+                    "Length":  1,
+                    "LongLength":  1,
+                    "Rank":  1,
+                    "SyncRoot":  [
+                                     {
+                                         "name":  "credits_labels",
+                                         "value":  230.0
+                                     }
+                                 ],
+                    "IsReadOnly":  false,
+                    "IsFixedSize":  true,
+                    "IsSynchronized":  false
+                },
+    "thresholds":  {
+
+                   },
+    "evidence":  [
+                     "artifacts/20261019-2046/gate-M2/autotest.m1.ui.credits/autotest.m1.ui.credits.log",
+                     "artifacts/20261019-2046/gate-M2/autotest.m1.ui.credits/autotest.m1.ui.credits.log.stderr",
+                     "artifacts/20261019-2046/gate-M2/autotest.m1.ui.credits/contact_sheet.png",
+                     "artifacts/20261019-2046/gate-M2/autotest.m1.ui.credits/credits.png",
+                     "artifacts/20261019-2046/gate-M2/autotest.m1.ui.credits/frametimes.csv",
+                     "artifacts/20261019-2046/gate-M2/autotest.m1.ui.credits/menu.png",
+                     "artifacts/20261019-2046/gate-M2/autotest.m1.ui.credits/player.log",
+                     "artifacts/20261019-2046/gate-M2/autotest.m1.ui.credits/result.json"
+                 ],
+    "warnings":  [
+
+                 ],
+    "fallbackIfFail":  "see the scenario\u0027s fallback in the milestone card",
+    "exitCode":  0,
+    "out":  "artifacts/20261019-2046/gate-M2/autotest.m1.ui.credits",
+    "run":  "artifacts/20261019-2046/gate-M2",
+    "script":  "tools/ci/autotest.ps1"
+}

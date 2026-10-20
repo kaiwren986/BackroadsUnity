@@ -1,6 +1,6 @@
 # ADR-003: RutStamp and the integer ground kernels
 
-- **Status:** **draft** (lane W, M2 T2.5). Freezes with the M2 gate; changes after that need a new ADR and updated tests in the same commit.
+- **Status:** **accepted and frozen** at the `m2` tag (2026-10-19; M2 milestone gate 22/22, `docs\gates\M2.json`). Lane W, M2 T2.5. Changes need a new ADR and updated tests in the same commit.
 - **Date:** 2026-10-19
 - **Owners:** lane W (world, deformation). Callers: lane V (vehicles, through `Backroads.Deform.IStampSink`); lane N (M5 stamp batches).
 - **Plan:** PLAN §2.2 (WorldGrid, DirtyRectQueue), §2.4 step 6, §2.6 (DeltaUm, "why micrometres"), §6.1 M2; 03 §4.4; 06 §5.4, §5.6.

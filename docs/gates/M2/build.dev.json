@@ -1,0 +1,144 @@
+{
+    "schema":  1,
+    "gate":  "build.dev",
+    "tier":  "milestone",
+    "status":  "pass",
+    "hard":  true,
+    "headline":  false,
+    "message":  "Dev build at builds/M2-dev (225.2 MiB)",
+    "startedAt":  "2026-10-19T20:48:42.5498099-05:00",
+    "finishedAt":  "2026-10-19T20:49:09.3700770-05:00",
+    "build":  {
+                  "git":  "93e465647472d4eb58c2c5618d05eadd9c0c7800",
+                  "branch":  "main",
+                  "dirty":  true,
+                  "unity":  "6000.3.20f1",
+                  "native":  "0f61c7cf2e96ed2e70c6d4d2a5070f6f13bd6046fe32ed52ff313768528a83da",
+                  "abi":  1
+              },
+    "machine":  {
+                    "summary":  "Intel(R) Core(TM) Ultra 9 275HX / NVIDIA GeForce RTX 5080 Laptop GPU / Microsoft Windows 11 Home 26200",
+                    "power":  "mains",
+                    "batteryPercent":  80,
+                    "gpu":  {
+                                "active":  "NVIDIA GeForce RTX 5080 Laptop GPU",
+                                "discretePresent":  true,
+                                "controllers":  [
+                                                    {
+                                                        "name":  "Intel(R) Graphics",
+                                                        "discrete":  false,
+                                                        "drivesDisplay":  true,
+                                                        "driver":  "32.0.101.8826"
+                                                    },
+                                                    {
+                                                        "name":  "NVIDIA GeForce RTX 5080 Laptop GPU",
+                                                        "discrete":  true,
+                                                        "drivesDisplay":  true,
+                                                        "driver":  "32.0.16.1664"
+                                                    }
+                                                ],
+                                "note":  "active = discrete GPU if present; the player reports the GPU it really used in result.json"
+                            },
+                    "powerMode":  {
+                                      "overlayAc":  "Balanced",
+                                      "overlayDc":  "Balanced",
+                                      "scheme":  "64a64f24-65b9-4b56-befd-5ec1eaced9b3  (Silent)"
+                                  },
+                    "cores":  {
+                                  "logical":  24,
+                                  "p":  [
+                                            0,
+                                            1,
+                                            10,
+                                            11,
+                                            12,
+                                            13,
+                                            22,
+                                            23
+                                        ],
+                                  "e":  [
+                                            2,
+                                            3,
+                                            4,
+                                            5,
+                                            6,
+                                            7,
+                                            8,
+                                            9,
+                                            14,
+                                            15,
+                                            16,
+                                            17,
+                                            18,
+                                            19,
+                                            20,
+                                            21
+                                        ],
+                                  "minSpecMask":  "0xFC",
+                                  "source":  "artifacts/env.json"
+                              },
+                    "cpuLoadPercent":  10,
+                    "otherProcs":  [
+
+                                   ]
+                },
+    "wallClock":  {
+                      "seconds":  26.6,
+                      "budget":  900,
+                      "pausedSeconds":  0,
+                      "overBudget":  false
+                  },
+    "conditions":  {
+                       "profile":  "Dev",
+                       "milestone":  "M2",
+                       "compileServerScripts":  false,
+                       "buildDir":  "builds/M2-dev"
+                   },
+    "metrics":  {
+                    "unityExitCode":  0,
+                    "unitySeconds":  25.4,
+                    "buildCli":  {
+                                     "profile":  "Dev",
+                                     "milestone":  "M2",
+                                     "success":  true,
+                                     "seconds":  19.1,
+                                     "bytes":  235656190,
+                                     "exe":  "D:\\Backroads-Unity\\builds\\M2-dev\\Backroads.exe",
+                                     "error":  null,
+                                     "problems":  [
+
+                                                  ]
+                                 },
+                    "buildInfo":  {
+                                      "milestone":  "M2",
+                                      "git":  "93e465647472d4eb58c2c5618d05eadd9c0c7800",
+                                      "dirty":  true,
+                                      "profile":  "Dev",
+                                      "unity":  "6000.3.20f1",
+                                      "builtAtUtc":  "2026-10-20T01:49:07.6080341Z",
+                                      "canon":  "v1 a112c66d5c51 H=a8908d7f",
+                                      "esp":  "-"
+                                  },
+                    "hasTestingAssembly":  true,
+                    "exe":  "builds/M2-dev/Backroads.exe",
+                    "fileCount":  358,
+                    "sizeBytes":  236113401
+                },
+    "thresholds":  {
+
+                   },
+    "evidence":  [
+                     "artifacts/20261019-2046/gate-M2/build.dev/build.log",
+                     "artifacts/build-Dev-M2.json",
+                     "builds/M2-dev/Play.bat",
+                     "builds/M2-dev/THIRD_PARTY_NOTICES.txt"
+                 ],
+    "warnings":  [
+
+                 ],
+    "fallbackIfFail":  "fix the build on the lane branch; main must always build (PLAN 1.10)",
+    "exitCode":  0,
+    "out":  "artifacts/20261019-2046/gate-M2/build.dev",
+    "run":  "artifacts/20261019-2046/gate-M2",
+    "script":  "tools/ci/build-player.ps1"
+}

@@ -1,0 +1,71 @@
+{
+    "schema":  1,
+    "gate":  "licence.notices",
+    "tier":  "milestone",
+    "status":  "pass",
+    "hard":  true,
+    "headline":  false,
+    "message":  "10 shipped entries: each has a licence, a source and its licence text",
+    "startedAt":  "2026-10-19T20:50:19.5258983-05:00",
+    "finishedAt":  "2026-10-19T20:50:19.9519414-05:00",
+    "build":  {
+                  "git":  "93e465647472d4eb58c2c5618d05eadd9c0c7800",
+                  "branch":  "main",
+                  "dirty":  true,
+                  "unity":  "6000.3.20f1",
+                  "native":  "0f61c7cf2e96ed2e70c6d4d2a5070f6f13bd6046fe32ed52ff313768528a83da",
+                  "abi":  1
+              },
+    "machine":  null,
+    "wallClock":  {
+                      "seconds":  0.1,
+                      "budget":  60,
+                      "pausedSeconds":  0,
+                      "overBudget":  false
+                  },
+    "conditions":  {
+
+                   },
+    "metrics":  {
+                    "entries":  11,
+                    "shippedEntries":  10,
+                    "licences":  [
+                                     "MIT",
+                                     "BSD",
+                                     "GPL",
+                                     "Apache-2.0",
+                                     "Unity-Companion",
+                                     "OFL-1.1",
+                                     "ODbL-1.0"
+                                 ],
+                    "upstreamTexts":  [
+                                          "native/EngineSimPlugin/vendor/LICENSES/engine-sim-LICENSE",
+                                          "native/EngineSimPlugin/vendor/LICENSES/simple-2d-constraint-solver-LICENSE",
+                                          "native/EngineSimPlugin/vendor/LICENSES/piranha-LICENSE",
+                                          "native/EngineSimPlugin/vendor/LICENSES/flex-NOTICE.txt",
+                                          "native/EngineSimPlugin/vendor/LICENSES/bison-NOTICE.txt"
+                                      ],
+                    "unverifiedTexts":  [
+                                            "Apache-2.0.txt",
+                                            "ODbL-1.0.txt",
+                                            "OFL-1.1.txt"
+                                        ],
+                    "assetEntries":  0
+                },
+    "thresholds":  {
+
+                   },
+    "evidence":  [
+
+                 ],
+    "warnings":  [
+                     "Barlow Condensed : no copyright line; set licenceFile to the font\u0027s own OFL.txt when the font is added",
+                     "Inter : no copyright line; set licenceFile to the font\u0027s own OFL.txt when the font is added",
+                     "agent-written licence texts in use (verify before any public release): Apache-2.0.txt, ODbL-1.0.txt, OFL-1.1.txt"
+                 ],
+    "fallbackIfFail":  "add the missing licence, source or text to third-party.json before the build ships",
+    "exitCode":  0,
+    "out":  "artifacts/20261019-2046/gate-M2/licence.notices",
+    "run":  "artifacts/20261019-2046/gate-M2",
+    "script":  "tools/ci/notices.ps1"
+}

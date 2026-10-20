@@ -1,0 +1,49 @@
+{
+    "schema":  1,
+    "gate":  "native.ctest",
+    "tier":  "milestone",
+    "status":  "pass",
+    "hard":  true,
+    "headline":  true,
+    "message":  "exit 0: build-native: PASS in 0.5 s (log D:\\Backroads-Unity\\artifacts\\20261019-2047\\build-native.log)",
+    "startedAt":  "2026-10-19T20:47:18.2300470-05:00",
+    "finishedAt":  "2026-10-19T20:47:19.1060470-05:00",
+    "build":  {
+                  "git":  "93e465647472d4eb58c2c5618d05eadd9c0c7800",
+                  "branch":  "main",
+                  "dirty":  true,
+                  "unity":  "6000.3.20f1",
+                  "native":  "0f61c7cf2e96ed2e70c6d4d2a5070f6f13bd6046fe32ed52ff313768528a83da",
+                  "abi":  1
+              },
+    "machine":  null,
+    "wallClock":  {
+                      "seconds":  0.9,
+                      "budget":  null,
+                      "pausedSeconds":  0,
+                      "overBudget":  false
+                  },
+    "conditions":  {
+                       "script":  "tools/ci/build-native.ps1",
+                       "args":  [
+
+                                ]
+                   },
+    "metrics":  {
+                    "exitCode":  0
+                },
+    "thresholds":  {
+                       "exitCode":  0
+                   },
+    "evidence":  [
+                     "artifacts/20261019-2046/gate-M2/native.ctest/native.ctest.log"
+                 ],
+    "warnings":  [
+
+                 ],
+    "fallbackIfFail":  null,
+    "exitCode":  0,
+    "out":  "artifacts/20261019-2046/gate-M2/native.ctest",
+    "run":  "artifacts/20261019-2046/gate-M2",
+    "script":  "tools/ci/build-native.ps1"
+}

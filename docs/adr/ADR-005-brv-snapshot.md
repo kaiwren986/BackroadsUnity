@@ -1,7 +1,7 @@
 # ADR-005: BRV V0 snapshot format v1 (draft)
 
-- **Status:** **draft** (lane V, M2, card T2.1). Proposed to freeze at the `m2` tag; until then it may change with this
-  ADR updated and `Vehicle.SnapshotRoundTrip` kept green.
+- **Status:** **accepted and frozen** at the `m2` tag (2026-10-19; M2 milestone gate 22/22, `docs\gates\M2.json`). Lane V, M2, card
+  T2.1. BRV v2 adds version 2 with a v1 reader (below); other changes need a new ADR.
 - **Date:** 2026-10-19
 - **Owners:** lane V (vehicles). Changes after the freeze need a new ADR, updated tests in the same commit (PLAN §1.10)
   and the integrator's merge.

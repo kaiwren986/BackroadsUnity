@@ -1,0 +1,359 @@
+{
+    "schema":  1,
+    "gate":  "autotest.m2.drive.route9-fps30",
+    "tier":  "milestone",
+    "status":  "pass",
+    "hard":  true,
+    "headline":  true,
+    "message":  "1 of 1 runs passed (AUTOTEST m2.drive.route9 PASS (0 failures) -\u003e D:\\Backroads-Unity\\artifacts\\20261019-2046\\gate-M2\\autotest.m2.drive.route9-fps30)",
+    "startedAt":  "2026-10-19T20:51:41.4786854-05:00",
+    "finishedAt":  "2026-10-19T20:52:15.3068226-05:00",
+    "build":  {
+                  "git":  "93e465647472d4eb58c2c5618d05eadd9c0c7800",
+                  "branch":  "main",
+                  "dirty":  true,
+                  "unity":  "6000.3.20f1",
+                  "native":  "0f61c7cf2e96ed2e70c6d4d2a5070f6f13bd6046fe32ed52ff313768528a83da",
+                  "abi":  1
+              },
+    "machine":  {
+                    "summary":  "Intel(R) Core(TM) Ultra 9 275HX / NVIDIA GeForce RTX 5080 Laptop GPU / Microsoft Windows 11 Home 26200",
+                    "power":  "mains",
+                    "batteryPercent":  80,
+                    "gpu":  {
+                                "active":  "NVIDIA GeForce RTX 5080 Laptop GPU",
+                                "discretePresent":  true,
+                                "controllers":  [
+                                                    {
+                                                        "name":  "Intel(R) Graphics",
+                                                        "discrete":  false,
+                                                        "drivesDisplay":  true,
+                                                        "driver":  "32.0.101.8826"
+                                                    },
+                                                    {
+                                                        "name":  "NVIDIA GeForce RTX 5080 Laptop GPU",
+                                                        "discrete":  true,
+                                                        "drivesDisplay":  true,
+                                                        "driver":  "32.0.16.1664"
+                                                    }
+                                                ],
+                                "note":  "active = discrete GPU if present; the player reports the GPU it really used in result.json"
+                            },
+                    "powerMode":  {
+                                      "overlayAc":  "Balanced",
+                                      "overlayDc":  "Balanced",
+                                      "scheme":  "64a64f24-65b9-4b56-befd-5ec1eaced9b3  (Silent)"
+                                  },
+                    "cores":  {
+                                  "logical":  24,
+                                  "p":  [
+                                            0,
+                                            1,
+                                            10,
+                                            11,
+                                            12,
+                                            13,
+                                            22,
+                                            23
+                                        ],
+                                  "e":  [
+                                            2,
+                                            3,
+                                            4,
+                                            5,
+                                            6,
+                                            7,
+                                            8,
+                                            9,
+                                            14,
+                                            15,
+                                            16,
+                                            17,
+                                            18,
+                                            19,
+                                            20,
+                                            21
+                                        ],
+                                  "minSpecMask":  "0xFC",
+                                  "source":  "artifacts/env.json"
+                              },
+                    "cpuLoadPercent":  8,
+                    "otherProcs":  [
+
+                                   ]
+                },
+    "wallClock":  {
+                      "seconds":  33.6,
+                      "budget":  600,
+                      "pausedSeconds":  0,
+                      "overBudget":  false
+                  },
+    "conditions":  {
+                       "scenario":  "m2.drive.route9",
+                       "profile":  "Dev",
+                       "milestone":  "M2",
+                       "quality":  "player default",
+                       "coreClass":  "unpinned",
+                       "fpsCap":  "30",
+                       "resolution":  "2560x1440",
+                       "perf":  false,
+                       "repeat":  1,
+                       "minSpecProxy":  false,
+                       "egressCheck":  false
+                   },
+    "metrics":  {
+                    "exe":  "builds/M2-dev/Backroads.exe",
+                    "buildGit":  "93e465647472d4eb58c2c5618d05eadd9c0c7800",
+                    "buildProfile":  "Dev",
+                    "buildMilestone":  "M2",
+                    "runs":  [
+                                 {
+                                     "run":  1,
+                                     "exitCode":  0,
+                                     "result":  "exit 0",
+                                     "seconds":  33.3,
+                                     "affinity":  null,
+                                     "resultFile":  true,
+                                     "status":  "pass",
+                                     "failures":  [
+
+                                                  ],
+                                     "metrics":  {
+                                                     "developmentBuild":  true,
+                                                     "seconds":  27.80512046813965,
+                                                     "frames":  790,
+                                                     "p50FrameMs":  33.333595275878909,
+                                                     "p95FrameMs":  33.34120559692383,
+                                                     "p99FrameMs":  33.55659484863281,
+                                                     "exceptions":  0,
+                                                     "errors":  0,
+                                                     "firstProblem":  "",
+                                                     "gpu":  "NVIDIA GeForce RTX 5080 Laptop GPU",
+                                                     "quality":  "default High (render 1.00, cap none, shadows 4/4096/400 m, engine audio Ultra)",
+                                                     "Count":  21,
+                                                     "Length":  21,
+                                                     "LongLength":  21,
+                                                     "Rank":  1,
+                                                     "SyncRoot":  [
+                                                                      {
+                                                                          "name":  "pitch_gear2_rpm",
+                                                                          "value":  4831.2389573317305
+                                                                      },
+                                                                      {
+                                                                          "name":  "pitch_gear2_pass",
+                                                                          "value":  1.0
+                                                                      },
+                                                                      {
+                                                                          "name":  "pitch_gear3_rpm",
+                                                                          "value":  3122.5930989583335
+                                                                      },
+                                                                      {
+                                                                          "name":  "pitch_gear3_pass",
+                                                                          "value":  1.0
+                                                                      },
+                                                                      {
+                                                                          "name":  "pitch_gear4_rpm",
+                                                                          "value":  2066.4955851236978
+                                                                      },
+                                                                      {
+                                                                          "name":  "pitch_gear4_pass",
+                                                                          "value":  1.0
+                                                                      },
+                                                                      {
+                                                                          "name":  "pitch_gear5_rpm",
+                                                                          "value":  3351.4130045572915
+                                                                      },
+                                                                      {
+                                                                          "name":  "pitch_gear5_pass",
+                                                                          "value":  1.0
+                                                                      },
+                                                                      {
+                                                                          "name":  "frame_cap",
+                                                                          "value":  30.0
+                                                                      },
+                                                                      {
+                                                                          "name":  "arrived",
+                                                                          "value":  1.0
+                                                                      },
+                                                                      {
+                                                                          "name":  "seconds",
+                                                                          "value":  25.391170501708986
+                                                                      },
+                                                                      {
+                                                                          "name":  "distance_m",
+                                                                          "value":  210.1634063720703
+                                                                      },
+                                                                      {
+                                                                          "name":  "max_kmh",
+                                                                          "value":  44.97011184692383
+                                                                      },
+                                                                      {
+                                                                          "name":  "gears_used",
+                                                                          "value":  5.0
+                                                                      },
+                                                                      {
+                                                                          "name":  "gears_pitch_checked",
+                                                                          "value":  4.0
+                                                                      },
+                                                                      {
+                                                                          "name":  "underruns",
+                                                                          "value":  0.0
+                                                                      },
+                                                                      {
+                                                                          "name":  "underruns_across_shots",
+                                                                          "value":  0.0
+                                                                      },
+                                                                      {
+                                                                          "name":  "coast_events",
+                                                                          "value":  1.0
+                                                                      },
+                                                                      {
+                                                                          "name":  "tracking_rms_rpm",
+                                                                          "value":  1.9686773254206516E-13
+                                                                      },
+                                                                      {
+                                                                          "name":  "frame_p95_ms",
+                                                                          "value":  33.3404541015625
+                                                                      },
+                                                                      {
+                                                                          "name":  "frame_p50_ms",
+                                                                          "value":  33.33282470703125
+                                                                      }
+                                                                  ],
+                                                     "IsReadOnly":  false,
+                                                     "IsFixedSize":  true,
+                                                     "IsSynchronized":  false
+                                                 },
+                                     "logVerdict":  "[BR] AUTOTEST m2.drive.route9 PASS (0 failures) -\u003e D:\\Backroads-Unity\\artifacts\\20261019-2046\\gate-M2\\autotest.m2.drive.route9-fps30"
+                                 }
+                             ],
+                    "developmentBuild":  true,
+                    "seconds":  27.80512046813965,
+                    "frames":  790,
+                    "p50FrameMs":  33.333595275878909,
+                    "p95FrameMs":  33.34120559692383,
+                    "p99FrameMs":  33.55659484863281,
+                    "exceptions":  0,
+                    "errors":  0,
+                    "firstProblem":  "",
+                    "gpu":  "NVIDIA GeForce RTX 5080 Laptop GPU",
+                    "quality":  "default High (render 1.00, cap none, shadows 4/4096/400 m, engine audio Ultra)",
+                    "Count":  21,
+                    "Length":  21,
+                    "LongLength":  21,
+                    "Rank":  1,
+                    "SyncRoot":  [
+                                     {
+                                         "name":  "pitch_gear2_rpm",
+                                         "value":  4831.2389573317305
+                                     },
+                                     {
+                                         "name":  "pitch_gear2_pass",
+                                         "value":  1.0
+                                     },
+                                     {
+                                         "name":  "pitch_gear3_rpm",
+                                         "value":  3122.5930989583335
+                                     },
+                                     {
+                                         "name":  "pitch_gear3_pass",
+                                         "value":  1.0
+                                     },
+                                     {
+                                         "name":  "pitch_gear4_rpm",
+                                         "value":  2066.4955851236978
+                                     },
+                                     {
+                                         "name":  "pitch_gear4_pass",
+                                         "value":  1.0
+                                     },
+                                     {
+                                         "name":  "pitch_gear5_rpm",
+                                         "value":  3351.4130045572915
+                                     },
+                                     {
+                                         "name":  "pitch_gear5_pass",
+                                         "value":  1.0
+                                     },
+                                     {
+                                         "name":  "frame_cap",
+                                         "value":  30.0
+                                     },
+                                     {
+                                         "name":  "arrived",
+                                         "value":  1.0
+                                     },
+                                     {
+                                         "name":  "seconds",
+                                         "value":  25.391170501708986
+                                     },
+                                     {
+                                         "name":  "distance_m",
+                                         "value":  210.1634063720703
+                                     },
+                                     {
+                                         "name":  "max_kmh",
+                                         "value":  44.97011184692383
+                                     },
+                                     {
+                                         "name":  "gears_used",
+                                         "value":  5.0
+                                     },
+                                     {
+                                         "name":  "gears_pitch_checked",
+                                         "value":  4.0
+                                     },
+                                     {
+                                         "name":  "underruns",
+                                         "value":  0.0
+                                     },
+                                     {
+                                         "name":  "underruns_across_shots",
+                                         "value":  0.0
+                                     },
+                                     {
+                                         "name":  "coast_events",
+                                         "value":  1.0
+                                     },
+                                     {
+                                         "name":  "tracking_rms_rpm",
+                                         "value":  1.9686773254206516E-13
+                                     },
+                                     {
+                                         "name":  "frame_p95_ms",
+                                         "value":  33.3404541015625
+                                     },
+                                     {
+                                         "name":  "frame_p50_ms",
+                                         "value":  33.33282470703125
+                                     }
+                                 ],
+                    "IsReadOnly":  false,
+                    "IsFixedSize":  true,
+                    "IsSynchronized":  false
+                },
+    "thresholds":  {
+
+                   },
+    "evidence":  [
+                     "artifacts/20261019-2046/gate-M2/autotest.m2.drive.route9-fps30/autotest.m2.drive.route9-fps30.log",
+                     "artifacts/20261019-2046/gate-M2/autotest.m2.drive.route9-fps30/autotest.m2.drive.route9-fps30.log.stderr",
+                     "artifacts/20261019-2046/gate-M2/autotest.m2.drive.route9-fps30/contact_sheet.png",
+                     "artifacts/20261019-2046/gate-M2/autotest.m2.drive.route9-fps30/engine_tap.wav",
+                     "artifacts/20261019-2046/gate-M2/autotest.m2.drive.route9-fps30/frametimes.csv",
+                     "artifacts/20261019-2046/gate-M2/autotest.m2.drive.route9-fps30/player.log",
+                     "artifacts/20261019-2046/gate-M2/autotest.m2.drive.route9-fps30/result.json",
+                     "artifacts/20261019-2046/gate-M2/autotest.m2.drive.route9-fps30/route_report.json",
+                     "artifacts/20261019-2046/gate-M2/autotest.m2.drive.route9-fps30/route9_fuel.png",
+                     "artifacts/20261019-2046/gate-M2/autotest.m2.drive.route9-fps30/route9_mid.png",
+                     "artifacts/20261019-2046/gate-M2/autotest.m2.drive.route9-fps30/route9_start.png"
+                 ],
+    "warnings":  [
+
+                 ],
+    "fallbackIfFail":  "see the scenario\u0027s fallback in the milestone card",
+    "exitCode":  0,
+    "out":  "artifacts/20261019-2046/gate-M2/autotest.m2.drive.route9-fps30",
+    "run":  "artifacts/20261019-2046/gate-M2",
+    "script":  "tools/ci/autotest.ps1"
+}

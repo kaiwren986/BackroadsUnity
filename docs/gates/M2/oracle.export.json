@@ -1,0 +1,56 @@
+{
+    "schema":  1,
+    "gate":  "oracle.export",
+    "tier":  "milestone",
+    "status":  "pass",
+    "hard":  true,
+    "headline":  true,
+    "message":  "gen-hash + verify-canon + export twice (identical) green",
+    "startedAt":  "2026-10-19T20:46:28.3702858-05:00",
+    "finishedAt":  "2026-10-19T20:47:17.4657719-05:00",
+    "build":  {
+                  "git":  "93e465647472d4eb58c2c5618d05eadd9c0c7800",
+                  "branch":  "main",
+                  "dirty":  true,
+                  "unity":  "6000.3.20f1",
+                  "native":  "0f61c7cf2e96ed2e70c6d4d2a5070f6f13bd6046fe32ed52ff313768528a83da",
+                  "abi":  1
+              },
+    "machine":  null,
+    "wallClock":  {
+                      "seconds":  48.8,
+                      "budget":  1800,
+                      "pausedSeconds":  0,
+                      "overBudget":  false
+                  },
+    "conditions":  {
+                       "oracle":  "D:\\Backroads",
+                       "commit":  "552f7807f4ad56547815c32a5e8407a7c324d556",
+                       "canon":  "CanonData/v1",
+                       "export":  true,
+                       "twice":  true
+                   },
+    "metrics":  {
+                    "genhashExitCode":  0,
+                    "genhashSummary":  "gen-hash: 46/46 equal; generate() 0.60 s in Node v24.18.0",
+                    "verifycanonExitCode":  0,
+                    "verifycanonSummary":  "verify-canon: 68/68 checks green in D:\\Backroads-Unity\\CanonData\\v1 (renderer: ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 Laptop GPU (0x00002C59) Direct3D11 vs_5_0 ps_5_0, D3D11))",
+                    "exportExitCode":  0
+                },
+    "thresholds":  {
+
+                   },
+    "evidence":  [
+                     "artifacts/20261019-2046/gate-M2/oracle.export/genhash.log",
+                     "artifacts/20261019-2046/gate-M2/oracle.export/verifycanon.log",
+                     "artifacts/20261019-2046/gate-M2/oracle.export/export.log"
+                 ],
+    "warnings":  [
+
+                 ],
+    "fallbackIfFail":  "none: canon identity is a headline gate (PLAN 6.1)",
+    "exitCode":  0,
+    "out":  "artifacts/20261019-2046/gate-M2/oracle.export",
+    "run":  "artifacts/20261019-2046/gate-M2",
+    "script":  "tools/ci/oracle.ps1"
+}

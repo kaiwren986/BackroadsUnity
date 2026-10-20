@@ -1,0 +1,25 @@
+{
+  "milestone": "M2",
+  "title": "Playtest checklist",
+  "summary": "M2 is the first drive: the browser game's vehicles in Unity, the bog that ruts and grabs, and a real big-block V8 that follows your foot.",
+  "tryThis": [
+    "Double-click Play.bat. You start in the truck at the Millbrook garage.",
+    "Drive with W A S D (or the arrow keys); Space is the handbrake. C switches between the chase and hood cameras.",
+    "Take Route 9 to the fuel station, the dirt road to the farm, then drive into the bog: it ruts and grabs like the browser game.",
+    "At the garage, drive up beside another vehicle and press E to switch into it. L lights, H horn, G winch. Esc pauses and has Settings and Controls; F1 shows the controls; your settings are remembered.",
+    "Esc, then Engine Bench, to hear the truck's V8 on its own and run a dyno sweep."
+  ],
+  "items": [
+    { "id": "m2.handles-like-browser", "text": "Does it handle like the browser game? (say what feels different in the comment)" },
+    { "id": "m2.sound-follows-foot", "text": "Does the sound follow your foot?" },
+    { "id": "m2.v8-sounds-right", "text": "Does the truck sound like a big gas V8?" },
+    { "id": "m2.bog-feels-right", "text": "Does the bog rut and grab like the browser game?" },
+    { "id": "m2.crackles", "text": "Any crackles or dropouts in the engine sound?" }
+  ],
+  "knownIssues": [
+    "This is still the old Millbrook. From M3 the game moves to the new town (real Stockport, Ohio, renamed Millbrook).",
+    "Junctions are plain overlapping road ribbons and lots are the old round gravel pads; M3 replaces both.",
+    "Vehicles have no collisions with each other or with buildings yet (M3).",
+    "The other vehicles use the browser game's engine sounds mapped to the new engines; only the truck has its real V8."
+  ]
+}
