@@ -1,6 +1,6 @@
 # roads-R4: roundabouts, bridges, unpaved aprons and class changes (R, worktree `r`, ≈ 4 AD) — draft
 
-**Inputs:** roads-R1, research 05 §5.11-§5.12; OSM tags `junction=roundabout`, `highway=mini_roundabout`, `bridge=*`, `layer=*`, `surface=*`, `tunnel=*`. A river town will have bridges; whether it has a roundabout depends on the town (none in the 10 towns of 05 §6.1).
+**Inputs:** roads-R1, research 05 §5.11-§5.12; OSM tags `junction=roundabout`, `highway=mini_roundabout`, `bridge=*`, `layer=*`, `surface=*`, `tunnel=*`. A river town will have bridges; whether it has a roundabout depends on the town (none in the 10 towns of 05 §6.1). Stockport: expect the Muskingum River road bridge, the river lock and dam by the old mill, and no roundabout (S0 confirms from the extract).
 
 **Steps**
 1. **Roundabouts from the map:** a closed `junction=roundabout` way (or a ring of ways) becomes one roundabout node. The mapped ring is the circulatory centreline; ICD = 2 × (mean ring radius + half the circulatory width); legs are the ways that meet the ring. Splitter islands, truck apron, central island, yield lines and crosswalks per 05 §5.11, with every dimension clamped to the mapped ring (a ring smaller than a 26 m ICD becomes a mini-roundabout: painted or domed island, fully mountable). `highway=mini_roundabout` nodes become mini-roundabouts (ICD 14-27 m). No roundabout is invented where the map has none.

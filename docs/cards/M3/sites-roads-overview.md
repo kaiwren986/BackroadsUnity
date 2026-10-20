@@ -1,6 +1,6 @@
 # M3 draft cards: the street and site program (overview)
 
-**Status: draft.** Written against decision **U25** (2026-10-19): the new Millbrook is a real small US river town in rolling hills, renamed, with elevation from USGS 3DEP and streets, lots and building footprints from OpenStreetMap; every building is new (lane A, Blender, Synty-matched). U8a-e, U15 and U22 are superseded. The town itself is not chosen yet, so every town-specific number below is a **parameter** (table at the end); nothing here depends on the old Millbrook's nodes, widths or roundabout.
+**Status: draft.** Written against decision **U25** (2026-10-19): the new Millbrook is a real small US river town in rolling hills, renamed, with elevation from USGS 3DEP and streets, lots and building footprints from OpenStreetMap; every building is new (lane A, Blender, Synty-matched). U8a-e, U15 and U22 are superseded. The town is **Stockport, Ohio** (chosen 2026-10-19), a Muskingum-valley village renamed Millbrook, on a 2 km × 2 km play area; town-specific numbers stay **parameters** (table at the end, Stockport values filled in where known) so the programs run on any OSM town. Nothing here depends on the old Millbrook's nodes, widths or roundabout.
 
 Design: `docs/design/site-layouts.md` (sites) and `docs/research/05-roads-intersections.md` §3-§8 (the junction algorithms, which carry over). Measurements: `docs/research/08-site-layouts.md`, `Game/Assets/Content/sites/{siteProfile,buildingProfile,siteTemplates}.json`.
 
@@ -66,17 +66,21 @@ Totals: R 21 AD, S 19 AD, I 2 AD. Lane S is a proposal: a new worktree `s` (bran
 - Autotests `m3.shots.junctions` and `m3.shots.sites` (fixed cameras: 8 junctions, 12 sites across the business types, noon and night).
 - F10: "Do these look like real small-town streets, parking lots and yards?"
 
-## Parameters (filled in when the town is picked)
+## Parameters for Stockport, Ohio (decided 2026-10-19: Stockport, a Muskingum-valley village, renamed Millbrook, on a 2 km x 2 km play area)
 
-| Parameter | Meaning | Default until then |
-|---|---|---|
-| `TOWN_ID`, `TOWN_NAME` | the real town and its in-game name ("Millbrook") | none |
-| `ORIGIN_LATLON` | local frame origin | the town's place node |
-| `EXTRACT_BBOX` | OSM and DEM extract | town radius + 2 km |
-| `DEM_RES` | DEM grid (3DEP 1 m or 1/3 arc-second) | 1 m where available |
-| `KERB_ZONE` | where streets get kerbs and walks | streets with `sidewalk=*` tags, else the built-up hull + 20 m |
-| `DOWNTOWN_ZONE` | street-front commerce area | hull of `form = streetfront` buildings + 30 m |
-| `CORNER_R` | kerb radii by class pair | 05 §5.3 (6 / 7.5 / 9 / 12 m) |
-| `CUT_SHIFT_MAX` | how far R may move a driveway cut | 3 m |
-| `SITE_SEED` | per-site seed = hash(`TOWN_ID`, OSM type, OSM id) | n/a |
-| `PROFILE_BLEND` | weight of the chosen town's own measurements against the 17-town profile | 0.5 once the town's extract is measured |
+| Parameter | Meaning | Stockport value | Who fills in the rest |
+|---|---|---|---|
+| `TOWN_ID`, `TOWN_NAME` | the real town and its in-game name | `stockport-oh`, "Millbrook" | set |
+| `ORIGIN_LATLON` | local frame origin, the centre of the play area | Stockport's OSM `place` node (about 39.55 N, 81.79 W) | S0 reads the exact node and writes it into the `TownData` manifest |
+| `PLAY_AREA` | the drivable world | 2,000 × 2,000 m square centred on `ORIGIN_LATLON`, axis-aligned in the local frame (x east, z north), ±1,000 m | set |
+| `EXTRACT_BBOX` | OSM extract | `PLAY_AREA` + 250 m on every side, so roads that cross the edge keep their junctions just outside; everything is clipped back to `PLAY_AREA` after the graph is built | set |
+| `DEM_EXTENT`, `DEM_RES` | elevation | `PLAY_AREA` + the skirt lane W chooses for distant terrain; USGS 3DEP 1 m DEM (Ohio has statewide 1 m lidar coverage in 3DEP) [verify: lane W checks the tile index] | lane W |
+| `EDGE_RULE` | what a road does at the play-area edge | it ends 50 m inside the edge with the terrain closing it off (a bend into trees or a rise), no visible stub; lane R reports every road that crosses the edge | lane R, R0o |
+| `KERB_ZONE` | where streets get kerbs and walks | streets with `sidewalk=*` tags, else the village's built-up hull + 20 m (a village of a few hundred people: expect kerbs only in the village core) | R2 from the extract |
+| `DOWNTOWN_ZONE` | street-front commerce | hull of `form = streetfront` buildings + 30 m (expected: a short riverside block) | S1 from the extract |
+| `CORNER_R` | kerb radii by class pair | 05 §5.3 (6 / 7.5 / 9 / 12 m); state routes 12 m | set |
+| `CUT_SHIFT_MAX` | how far R may move a driveway cut | 3 m | set |
+| `RURAL_DEPTH` | rural block depth where no road closes it | 120 m | set |
+| `SITE_SEED` | per-site seed | hash(`TOWN_ID`, OSM type, OSM id) | set |
+| `PROFILE_BLEND` | weight of Stockport's own measurements against the 17-town profile | per measure, w = n_stockport / (n_stockport + 30): a village this small has few lots of each kind, so the 17-town profile carries most numbers | set |
+| Expected special sites | to check in the extract | the Muskingum River crossing (bridge, roads-R4), the river lock and dam and the historic mill (mill and harbour types: a river landing), farms on the valley slopes | S0 lists what the map really has |
