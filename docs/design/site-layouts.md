@@ -192,7 +192,8 @@ Each `PropSpot` records the reason (rule id) so lane A or a later pass can swap 
 
 ## 7a. Contract with lane A (buildings)
 
-- **Footprints are the map's.** Lane A's procedural Blender buildings take the OSM footprint polygon exactly (simplified within 0.2 m) and the business type and form from `buildings.json`; sizes the map lacks come from `buildingProfile.json`, keyed by type (`type:downtown_shop`) and by OSM tag (`building:house`, `shop:hardware`, `amenity:fuel`, `craft:*`). Storeys and roofs: the building's own `building:levels`, `height`, `roof:shape` tags first, then the tagged subset of its key where n ≥ 20, else the regional norm (08 §9).
+- **Footprints are the map's.** Lane A's procedural Blender buildings take the OSM footprint polygon exactly (simplified within 0.2 m) and the business type and form from `buildings.json`; sizes the map lacks come from `buildingProfile.json`, keyed by type (`type:downtown_shop`) and by OSM tag (`building:house`, `shop:hardware`, `amenity:fuel`, `craft:*`).
+- **Storeys, roof shape, eave and pitch, in this order** (08b): (1) the building's own OSM tags in the Stockport extract (`building:levels`, `height`, `roof:shape`, `roof:height`, `roof:levels`, `roof:orientation`, `roof:angle`, or those of its largest `building:part`); (2) the North American (`na`) numbers of its key in `buildingProfile.json` (`storeys.na.hist`, `roofShape.na.shares`), drawn with `SITE_SEED` so the same building always gets the same answer, when that key has n ≥ 20, else the type key, else `type:house` or `type:shop`; (3) eave height and pitch, which North American OSM almost never has: storey height × storeys + plinth, and the pitch, from the table of 08b §5 ([doc] values; the German `eu` measurements are a range check only). Every number in the profile names its sample size and towns, so lane A can show where a choice came from.
 - **Doors are decided once, by the site plan.** The plan records `DoorSpec {kind (main, service, garage, dock, bay, drive-through window), wall edge index, offset along it, width}`: main doors from mapped `entrance=main|yes` nodes, else the wall facing the street (downtown, houses) or the lot (standalone shops); garage, bay and dock doors where the yard or apron needs them. Lane A models openings at those spots, so accessible stalls, aprons and docks always line up with real doors.
 - **What the site program models itself:** surfaces, kerbs, islands, markings, fences, simple procedural props (wheel stops). What lane A models: buildings, fuel canopies and dispensers (canopy at the footprint the map or template gives), price pylons, grain bins, scale houses, dock levellers; listed per plan as `ModelRequest {key, footprint, height hint}`.
 
@@ -243,11 +244,12 @@ The real templates the generator fits are drawn in `docs/research/08-site-layout
 
 `Sites.Validation` (plans complete; no overlaps with buildings, roads or other plans; every stall inside its lot and reachable from an entrance; ADA counts; entrances are baked cuts; grades; terrain under surfaces; props clear of stalls, aisles and doors), `Sites.MatchesProfile` (the generated town measured with the study's own code against the p10-p90 bands; ≥ 70 % inside), bake twice → identical hashes, `m3.shots.sites`.
 
-## 14. Open points for the user
+## 14. Decisions
 
-| # | Question | Recommendation |
+| # | Question | Status |
 |---|---|---|
-| 1 | Use the chosen town's own map for lots where it has them, and fill only the gaps with templates and rules? | **Yes** (this design). It keeps the town recognisable. |
-| 2 | Generate driveways for houses the map leaves without one (most: only 4 % of the 18,614 houses have a mapped driveway)? | **Yes**, by the measured rules (side drive, garage behind or beside). |
-| 3 | Paint accessible stalls, arrows and fire lanes? | **Yes**: small cost, strong "real place" cue. |
-| 4 | More OSM samples: the 17-town sample is thin for stalls (17 mapped), docks (none) and building tags (storeys on < 1 % of buildings, roof shapes on 46). Allow one more Overpass batch of ~15 well-mapped towns (same query, ODbL)? | **Optional.** The chosen town's own extract will be measured anyway (sites-S0 step 5); a second batch mainly helps lane A's roof shapes and storeys. |
+| 1 | Use the chosen town's own map for lots where it has them, and fill only the gaps with templates and rules? | **Decided 2026-10-19: yes** (default applied). |
+| 2 | Generate driveways for houses the map leaves without one (only 4 % of the 18,614 measured houses have a mapped driveway)? | **Decided: yes** (default applied), by the measured rules (side drive, garage behind or beside). |
+| 3 | Paint accessible stalls, arrows and fire lanes? | **Decided: yes** (default applied). |
+| 4 | A second OSM batch for storeys and roofs? | **Decided (U28): yes**; done, 14 towns, `docs/research/08b-storeys-and-roofs.md`. |
+| 5 | Real building heights and roof pitches for Stockport itself: North American OSM has almost no `height` or `roof:height` tags (08b), but USGS 3DEP lidar point clouds (public domain, the same source as the DEM) record every roof. Measure eave and ridge heights of Stockport's buildings from the lidar tiles of the play area? | **Open; recommended.** A download (the 3DEP LAZ point-cloud tiles that cover the 2 km square: a few hundred MB to about 2 GB, depending on the tiling), so it needs the user's approval; lane W or S0 would run it. Without it, lane A uses storey counts from OSM and the storey heights and pitches of 08b §5. |

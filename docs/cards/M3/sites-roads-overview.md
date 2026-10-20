@@ -2,7 +2,7 @@
 
 **Status: draft.** Written against decision **U25** (2026-10-19): the new Millbrook is a real small US river town in rolling hills, renamed, with elevation from USGS 3DEP and streets, lots and building footprints from OpenStreetMap; every building is new (lane A, Blender, Synty-matched). U8a-e, U15 and U22 are superseded. The town is **Stockport, Ohio** (chosen 2026-10-19), a Muskingum-valley village renamed Millbrook, on a 2 km × 2 km play area; town-specific numbers stay **parameters** (table at the end, Stockport values filled in where known) so the programs run on any OSM town. Nothing here depends on the old Millbrook's nodes, widths or roundabout.
 
-Design: `docs/design/site-layouts.md` (sites) and `docs/research/05-roads-intersections.md` §3-§8 (the junction algorithms, which carry over). Measurements: `docs/research/08-site-layouts.md`, `Game/Assets/Content/sites/{siteProfile,buildingProfile,siteTemplates}.json`.
+Design: `docs/design/site-layouts.md` (sites) and `docs/research/05-roads-intersections.md` §3-§8 (the junction algorithms, which carry over). Measurements: `docs/research/08-site-layouts.md` (sites), `08b-storeys-and-roofs.md` (storeys and roofs for lane A), `Game/Assets/Content/sites/{siteProfile,buildingProfile,siteTemplates}.json`.
 
 ## In plain words
 

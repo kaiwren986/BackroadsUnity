@@ -2,6 +2,8 @@
 
 **Inputs:** sites-S1 (parcels, fixed areas, mapped driveway requests), sites-S2 (parking engine), `siteTemplates.json` and `siteProfile.json` (blended with the town's own `profile.json` by `PROFILE_BLEND`), design `docs/design/site-layouts.md` §4 (business types) and §6 (template fitting).
 
+**Decided (2026-10-19, defaults applied; design §14):** the town's own mapped lots are kept and only the gaps are filled; houses the map leaves without a driveway get one by the measured rules; accessible stalls, arrows and fire lanes are painted.
+
 **Steps**
 1. `SitePlanner.Plan(parcel) → SitePlan`, three sources tried in order and recorded on the plan:
    - **Mapped:** the parcel has mapped lots, aisles, spaces, fuel areas or yards. Keep their outlines exactly; fill what the map leaves out (stall rows inside a mapped lot without spaces; aisles inside a lot without aisles; a canopy's islands; a yard's surfaces), never move mapped geometry.
