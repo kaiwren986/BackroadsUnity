@@ -46,6 +46,8 @@ Two programs turn the real town's map data into something you can drive through.
 | [sites-S4](sites-S4-surfaces-props.md) | S | Surfaces, grading plates, kerbs, markings, props, colliders | S3, R2 cut API, W plates API | 4 AD |
 | [sites-S5](sites-S5-validation.md) | S | Validation, determinism, screenshots, profile check | S4, R3 | 2 AD |
 
+**Ownership (for `OWNERS.json`, integrator):** lane S would own `Game/Assets/Backroads/Sites/`, `Game/Assets/Backroads/Tests/EditMode/Sites/`, `Game/Assets/Backroads/Tests/PlayMode/Sites/`, `Game/Assets/Backroads/Testing/Runtime/Scenarios/Sites/` and `Game/Assets/Content/sites/` (today under lane V's `Game/Assets/Content/`; the three study files were written there on this research branch); `TownData/` goes to W (like `CanonData/`) or I; `tools/osm/` and `tools/sites/` stay I.
+
 Totals: R 21 AD, S 19 AD, I 2 AD. Lane S is a proposal: a new worktree `s` (branch `m3/s-sites`), or lane R takes S1-S5 after R4 if the integrator prefers fewer lanes (then M3 grows by ~3 weeks for R).
 
 ## Contracts between the lanes (frozen at the start of M3, ADR in `docs/adr/`)
