@@ -56,24 +56,24 @@
 <polyline points="11.2,212.8 11.2,11.2 291.2,11.2 291.2,212.8 156.8,212.8" fill="none" stroke="#4f7d3a" stroke-width="2" stroke-dasharray="4 2" stroke-linejoin="round"/>
 <circle cx="140.0" cy="212.8" r="3.2" fill="#d0402f"/>
 <text x="142.2" y="211.1" font-size="8" font-family="sans-serif" fill="#222">G</text>
-<polygon points="82.9,230.0 89.9,230.0 89.9,214.6 82.9,214.6" fill="#8fb36c" stroke="#f2f1ec" stroke-width="1"/>
-<polygon points="120.1,230.0 127.1,230.0 127.1,214.6 120.1,214.6" fill="#8fb36c" stroke="#f2f1ec" stroke-width="1"/>
-<polygon points="82.9,194.2 89.9,194.2 89.9,178.8 82.9,178.8" fill="#8fb36c" stroke="#f2f1ec" stroke-width="1"/>
-<polygon points="120.1,194.2 127.1,194.2 127.1,178.8 120.1,178.8" fill="#8fb36c" stroke="#f2f1ec" stroke-width="1"/>
-<polygon points="89.9,230.0 97.4,230.0 97.4,214.6 89.9,214.6" fill="none" stroke="#ffffff" stroke-width="1"/>
-<polygon points="97.4,230.0 105.0,230.0 105.0,214.6 97.4,214.6" fill="none" stroke="#ffffff" stroke-width="1"/>
-<polygon points="105.0,230.0 112.6,230.0 112.6,214.6 105.0,214.6" fill="none" stroke="#ffffff" stroke-width="1"/>
-<polygon points="112.6,230.0 120.1,230.0 120.1,214.6 112.6,214.6" fill="none" stroke="#ffffff" stroke-width="1"/>
-<polygon points="89.9,194.2 97.4,194.2 97.4,178.8 89.9,178.8" fill="#2f6fc0" fill-opacity="0.85"/>
-<polygon points="89.9,194.2 97.4,194.2 97.4,178.8 89.9,178.8" fill="none" stroke="#ffffff" stroke-width="1"/>
-<polygon points="97.4,194.2 105.0,194.2 105.0,178.8 97.4,178.8" fill="url(#hatch)"/>
-<polygon points="97.4,194.2 105.0,194.2 105.0,178.8 97.4,178.8" fill="none" stroke="#ffffff" stroke-width="1"/>
-<polygon points="105.0,194.2 112.6,194.2 112.6,178.8 105.0,178.8" fill="none" stroke="#ffffff" stroke-width="1"/>
-<polygon points="112.6,194.2 120.1,194.2 120.1,178.8 112.6,178.8" fill="none" stroke="#ffffff" stroke-width="1"/>
-<circle cx="86.4" cy="222.3" r="3.2" fill="#d0402f"/>
-<text x="88.6" y="220.6" font-size="8" font-family="sans-serif" fill="#222">L</text>
-<circle cx="86.4" cy="186.5" r="3.2" fill="#d0402f"/>
-<text x="88.6" y="184.8" font-size="8" font-family="sans-serif" fill="#222">L</text>
+<polygon points="82.9,230.0 89.6,230.0 89.6,214.6 82.9,214.6" fill="#8fb36c" stroke="#f2f1ec" stroke-width="1"/>
+<polygon points="120.4,230.0 127.1,230.0 127.1,214.6 120.4,214.6" fill="#8fb36c" stroke="#f2f1ec" stroke-width="1"/>
+<polygon points="82.9,194.2 89.6,194.2 89.6,178.8 82.9,178.8" fill="#8fb36c" stroke="#f2f1ec" stroke-width="1"/>
+<polygon points="120.4,194.2 127.1,194.2 127.1,178.8 120.4,178.8" fill="#8fb36c" stroke="#f2f1ec" stroke-width="1"/>
+<polygon points="89.6,230.0 97.3,230.0 97.3,214.6 89.6,214.6" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="97.3,230.0 105.0,230.0 105.0,214.6 97.3,214.6" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="105.0,230.0 112.7,230.0 112.7,214.6 105.0,214.6" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="112.7,230.0 120.4,230.0 120.4,214.6 112.7,214.6" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="89.6,194.2 97.3,194.2 97.3,178.8 89.6,178.8" fill="#2f6fc0" fill-opacity="0.85"/>
+<polygon points="89.6,194.2 97.3,194.2 97.3,178.8 89.6,178.8" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="97.3,194.2 105.0,194.2 105.0,178.8 97.3,178.8" fill="url(#hatch)"/>
+<polygon points="97.3,194.2 105.0,194.2 105.0,178.8 97.3,178.8" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="105.0,194.2 112.7,194.2 112.7,178.8 105.0,178.8" fill="none" stroke="#ffffff" stroke-width="1"/>
+<polygon points="112.7,194.2 120.4,194.2 120.4,178.8 112.7,178.8" fill="none" stroke="#ffffff" stroke-width="1"/>
+<circle cx="86.2" cy="222.3" r="3.2" fill="#d0402f"/>
+<text x="88.5" y="220.6" font-size="8" font-family="sans-serif" fill="#222">L</text>
+<circle cx="86.2" cy="186.5" r="3.2" fill="#d0402f"/>
+<text x="88.5" y="184.8" font-size="8" font-family="sans-serif" fill="#222">L</text>
 <polygon points="90.6,240.8 116.6,240.8 113.8,237.0 93.4,237.0" fill="#c9c6bf"/>
 <polygon points="128.8,240.8 168.0,240.8 165.2,237.0 131.6,237.0" fill="#c9c6bf"/>
 <circle cx="16.8" cy="22.4" r="3.2" fill="#d0402f"/>

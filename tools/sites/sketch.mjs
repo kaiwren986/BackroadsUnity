@@ -24,7 +24,7 @@ const prof = fs.existsSync(PROFILE) ? JSON.parse(fs.readFileSync(PROFILE, 'utf8'
 const pick = (f, dflt, lo = -Infinity, hi = Infinity) => { try { const v = f(prof); return Number.isFinite(v) && v >= lo && v <= hi ? v : dflt; } catch { return dflt; } };
 const K = {
   stallW: pick((p) => p.parking.stalls.width.p50, 2.7, 2.4, 3.0),
-  stallL: pick((p) => p.parking.stalls.length.p50, 5.5, 4.8, 6.1),
+  stallL: pick((p) => (p.parking.stalls.length.n >= 20 ? p.parking.stalls.length.p50 : NaN), 5.5, 4.8, 6.1), // 17 mapped stalls: too few, use 18 ft
   aisle2: pick((p) => p.parking.aisles.widthBetweenStalls.p50, 7.3, 6.0, 8.0),
   adaW: 2.44, adaAisle: 1.52, vanAisle: 2.44,           // 2010 ADA Standards 502.2, 502.3
   throat: 7.3, throatRes: 3.6, throatTruck: 12.0,       // driveway throats (two-way commercial, house, truck)
@@ -241,19 +241,19 @@ sketches['fast-food'] = () => {
 };
 
 sketches.fuel = () => {
-  const S = new Sheet('Fuel station: canopy parallel to the road, shop behind', R(-36, -8, 36, 58), 3.8);
+  const S = new Sheet('Fuel station: canopy parallel to the road, shop behind (measured medians)', R(-34, -8, 34, 52), 3.8);
   const hw = 6.0; S.street(hw);
-  S.rect(R(-32, hw + 1.65, 32, 54), C.concrete);
-  const cv0 = hw + 1.65 + 8, cv1 = cv0 + 12; // canopy 30 x 12, four islands across it
-  for (let i = 0; i < 4; i++) { const u = -11.25 + i * 7.5; S.rect(R(u - 0.6, cv0 + 2.5, u + 0.6, cv1 - 2.5), '#e8e4d8', { stroke: '#555' }); S.rect(R(u - 0.4, cv0 + 4, u + 0.4, cv0 + 5), C.prop).rect(R(u - 0.4, cv1 - 5, u + 0.4, cv1 - 4), C.prop); }
-  S.rect(R(-15, cv0, 15, cv1), C.canopy, { stroke: '#888', dash: '4 2' }).text(-14, cv1 + 1, 'canopy 30 x 12 m (dashed), islands 7.5 m apart', 8);
-  S.bld(R(-12, cv1 + 12, 12, cv1 + 26), 'shop');
-  const p = packLot(R(-31, cv1 + 6, -14, 53.5), { dir: 'v', frontLane: false, backLane: false, door: { u: -12, v: cv1 + 18 } }); S.lot(p);
-  S.cut(-24, 10, hw, K.walk, C.concrete).cut(24, 10, hw, K.walk, C.concrete);
-  S.prop(27, hw + 3, 'S', 'price pylon (own model)').prop(28, cv1 + 14, 'A', 'air and water (own model)').prop(20, cv1 + 22, 'D', 'PolygonProRacer SM_Prop_Dumpster_01')
-    .prop(-14, cv1 + 13, 'I', 'ice chest / propane cage (own model)').prop(15.5, cv0 + 1, 'B', 'PolygonProRacer SM_Prop_Bollard_01').prop(-16, cv0 + 6, 'T', 'PolygonCity SM_Prop_Trashbin_01');
-  S.dim([-15, cv0 - 1.5], [15, cv0 - 1.5], '30 m', -2);
-  S.note = 'Concrete forecourt; two wide (10 m) entrance aprons; pumps are islands under the canopy (lane A models them: Synty has no fuel pump); underground-tank fill caps as decals.'; return S;
+  S.rect(R(-30, hw + 1.65, 30, 48), C.concrete);
+  const cv0 = hw + 8.6, cv1 = cv0 + 10; // canopy 24 x 10 m (measured p75 of both sides), 8.6 m from the road edge (p50)
+  for (let i = 0; i < 3; i++) { const u = -7.5 + i * 7.5; S.rect(R(u - 0.6, cv0 + 2, u + 0.6, cv1 - 2), '#e8e4d8', { stroke: '#555' }); S.rect(R(u - 0.4, cv0 + 3, u + 0.4, cv0 + 4), C.prop).rect(R(u - 0.4, cv1 - 4, u + 0.4, cv1 - 3), C.prop); }
+  S.rect(R(-12, cv0, 12, cv1), C.canopy, { stroke: '#888', dash: '4 2' }).text(-11.5, cv1 + 1, 'canopy 24 x 10 m (dashed), 3 islands 7.5 m apart', 8);
+  S.bld(R(-10, cv1 + 5.6, 10, cv1 + 19.6), 'shop 20 x 14');
+  const p = packLot(R(-29.5, cv1 + 2, -12, 47.5), { dir: 'v', frontLane: false, backLane: false, door: { u: -10, v: cv1 + 12 } }); S.lot(p);
+  S.cut(-21, 10, hw, K.walk, C.concrete).cut(21, 10, hw, K.walk, C.concrete);
+  S.prop(26, hw + 3, 'S', 'price pylon (own model)').prop(25, cv1 + 10, 'A', 'air and water (own model)').prop(16, cv1 + 18, 'D', 'PolygonProRacer SM_Prop_Dumpster_01')
+    .prop(10.5, cv1 + 8, 'I', 'ice chest / propane cage (own model)').prop(12.5, cv0 + 1, 'B', 'PolygonProRacer SM_Prop_Bollard_01').prop(-13, cv0 + 5, 'T', 'PolygonCity SM_Prop_Trashbin_01');
+  S.dim([-12, cv0 - 1.5], [12, cv0 - 1.5], '24 m', -2).dim([31, hw], [31, cv0], '8.6 m', 0.5);
+  S.note = 'Concrete forecourt; two wide (10 m) entrance aprons about 42 m apart; shop 5.6 m behind the canopy; pumps are islands under the canopy (lane A models them: Synty has no fuel pump).'; return S;
 };
 
 sketches.warehouse = () => {
