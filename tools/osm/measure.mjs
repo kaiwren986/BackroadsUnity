@@ -19,7 +19,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
-  R2D, dist, counts, shares, round, mean, loadTown, area, absArea, centroid, perimeter, dist2, lineLength, minRect, segDist,
+  R2D, dist, counts, shares, round, mean, loadTown, area, absArea, centroid, hull, perimeter, dist2, lineLength, minRect, segDist,
   inPoly, polyDist, polyPolyDist, lineCrossesPoly, rayHit, simplify, reflexCount, sampleInside, angDiff, Grid, num,
 } from './lib.mjs';
 
@@ -51,7 +51,7 @@ function typeOf(b) {
   const t = b.tags, all = [t, ...b.pois];
   const has = (k, re) => all.some((x) => x[k] !== undefined && re.test(x[k]));
   const lu = b.lu, bt = t.building || '';
-  if (/^(roof|canopy)$/.test(bt) || t.man_made === 'canopy') return { type: b.nearFuel ? 'fuel_canopy' : 'roof' };
+  if (/^(roof|canopy)$/.test(bt) || t.man_made === 'canopy') return { type: b.nearFuel || t.amenity === 'fuel' ? 'fuel_canopy' : 'roof' };
   if (b.inFuel || has('amenity', /^fuel$/)) return { type: 'fuel_shop' };
   if (lu.quarry) return { type: 'quarry' };
   if (b.inSawmill || has('craft', /^sawmill$/) || has('industrial', /^sawmill$/)) return { type: 'mill', sub: 'sawmill' };
@@ -107,7 +107,7 @@ function buildTown(file) {
     }
     if (t['area:highway'] && poly) town.areaHw.push({ id: w.id, kind: t['area:highway'], poly, tags: t });
     if (t.building && poly && poly.length >= 3) town.buildings.push({ id: w.id, tags: t, poly });
-    if (t.amenity === 'parking' && poly && !/^(underground|multi-storey|rooftop)$/.test(t.parking || '')) town.parking.push({ id: w.id, poly, tags: t });
+    if (t.amenity === 'parking' && poly && !t.building && !/^(underground|multi-storey|rooftop)$/.test(t.parking || '')) town.parking.push({ id: w.id, poly, tags: t });
     if (t.amenity === 'parking_space' && poly) town.spaces.push({ id: w.id, poly, tags: t });
     if (t.amenity === 'fuel' && poly && !t.building) town.fuelAreas.push({ id: w.id, poly, tags: t });
     if (t.landuse && poly) town.landuse.push({ id: w.id, use: t.landuse, poly, tags: t });
@@ -183,8 +183,20 @@ function buildTown(file) {
     b.dCentre = Math.hypot(b.c.x, b.c.y);
     frameFor(town, b);
   }
+  // doors and entrances mapped on outlines: which side of the building they face (front = towards its street)
+  for (const d of town.doors) {
+    let host = null;
+    for (const b of bg.near(d.p, 3)) if (polyDist(d.p, b.poly) < 0.6 || inPoly(d.p, b.poly)) { host = b; break; }
+    if (!host || !host.f) continue;
+    let be = null, bd = Infinity;
+    for (let i = 0; i < host.poly.length; i++) { const h = segDist(d.p, host.poly[i], host.poly[(i + 1) % host.poly.length]); if (h.d < bd) { bd = h.d; be = h; } }
+    let nx = -be.ty, ny = be.tx;
+    if (inPoly({ x: d.p.x + nx * 0.4, y: d.p.y + ny * 0.4 }, host.poly)) { nx = -nx; ny = -ny; }
+    const dot = nx * host.f.n.x + ny * host.f.n.y;
+    (host.doorSides = host.doorSides || []).push({ kind: d.tags.entrance || d.tags.door, side: dot < -0.7 ? 'front' : dot > 0.7 ? 'rear' : 'side' });
+  }
   // street-front commerce: a commercial building whose wall is at most 3 m behind the road edge (main street)
-  const COM = new Set(['shop', 'restaurant', 'fast_food', 'office', 'supermarket', 'civic', 'motel', 'car_repair']);
+  const COM =new Set(['shop', 'restaurant', 'fast_food', 'office', 'supermarket', 'civic', 'motel', 'car_repair']);
   // (a wall within 4 m of the assumed road edge, or within 10 m and sharing a wall with a neighbour; a lot in front
   //  of it, found later, turns it back into a standalone building)
   for (const b of town.buildings) b.form = COM.has(b.type) ? 'standalone' : null;
@@ -274,7 +286,7 @@ function lotAnalysis(town) {
         const onStreet = town.publicNode.has(s.refs[i]) || (i === 0 || i === s.g.length - 1) && (() => { const ns = town.nearestStreet(s.g[i], 3); return !!ns; })();
         if (onStreet) {
           const p = s.g[i];
-          if (!ents.some((e) => dist2(e.p, p) < 10)) ents.push({ p, svc: s.svc, width: num(s.tags.width), id: s.id, oneway: s.tags.oneway || null });
+          if (polyDist(p, L.poly) < 40 && !ents.some((e) => dist2(e.p, p) < 10)) ents.push({ p, svc: s.svc, width: num(s.tags.width), id: s.id, oneway: s.tags.oneway || null });
         }
       }
     }
@@ -327,6 +339,10 @@ function fuelAnalysis(town) {
   const out = [];
   const roofs = town.buildings.filter((b) => /^(roof|canopy)$/.test(b.tags.building || '') || b.tags.man_made === 'canopy');
   const sites = town.fuelAreas.map((a) => ({ id: a.id, poly: a.poly, c: centroid(a.poly), tags: a.tags }));
+  const near = (p, r) => sites.some((s) => (s.poly ? inPoly(p, s.poly) || polyDist(p, s.poly) < r : dist2(p, s.c) < r));
+  // most stations are mapped on the canopy itself (building=roof + amenity=fuel), some on the shop building
+  for (const b of roofs) if (b.tags.amenity === 'fuel' && !near(b.c, 25)) sites.push({ id: b.id, poly: null, c: b.c, tags: b.tags, canopyHint: b });
+  for (const b of town.buildings) if (b.tags.amenity === 'fuel' && !roofs.includes(b) && !near(b.c, 40)) sites.push({ id: b.id, poly: null, c: b.c, tags: b.tags, shopHint: b });
   for (const n of town.fuelNodes) {
     if (sites.some((s) => (s.poly ? inPoly(n.p, s.poly) || polyDist(n.p, s.poly) < 30 : dist2(n.p, s.c) < 30))) continue;
     if (town.buildings.some((b) => b.type === 'fuel_canopy' && inPoly(n.p, b.poly) && sites.some((s) => s.poly && inPoly(b.c, s.poly)))) continue;
@@ -334,7 +350,7 @@ function fuelAnalysis(town) {
   }
   for (const s of sites) {
     const cand = roofs.filter((r) => (s.poly ? inPoly(r.c, s.poly) || polyPolyDist(r.poly, s.poly) < 3 : dist2(r.c, s.c) < 45));
-    const canopy = cand.sort((a, b) => b.A - a.A)[0] || null;
+    const canopy = s.canopyHint || cand.sort((a, b) => b.A - a.A)[0] || null;
     const rec = { id: s.id, town: town.name, site: s.poly, tags: s.tags, canopy, brandless: !s.tags.brand };
     if (!canopy) { rec.noCanopy = true; out.push(rec); continue; }
     const ns = town.nearestStreet(canopy.c, 120);
@@ -354,8 +370,10 @@ function fuelAnalysis(town) {
     // the shop: a non-roof building in the site, or the fuel/convenience-tagged building nearest the canopy
     const shopCand = town.bgrid.near(canopy.c, 70).filter((b) => b !== canopy && !/^(roof|canopy)$/.test(b.tags.building || '') && b.type !== 'house' && b.type !== 'accessory' &&
       ((s.poly && inPoly(b.c, s.poly)) || polyPolyDist(b.poly, canopy.poly) < 35));
-    shopCand.sort((a, b) => (b.type === 'fuel_shop') - (a.type === 'fuel_shop') || polyPolyDist(a.poly, canopy.poly) - polyPolyDist(b.poly, canopy.poly));
+    shopCand.sort((a, b) => (b === s.shopHint) - (a === s.shopHint) || (b.type === 'fuel_shop') - (a.type === 'fuel_shop') || polyPolyDist(a.poly, canopy.poly) - polyPolyDist(b.poly, canopy.poly));
     const shop = shopCand[0] || null;
+    if (shop && ['shop', 'house', 'restaurant', 'fast_food'].includes(shop.type) && (shop.inferred || shop.pois.some((p) => /^(convenience|kiosk)$/.test(p.shop || '')))) shop.type = 'fuel_shop';
+    canopy.type = 'fuel_canopy';
     rec.shop = shop;
     if (shop) {
       const sl = shop.poly.map(F.toL);
@@ -377,7 +395,7 @@ function fuelAnalysis(town) {
     for (const w of town.service) {
       const touches = s.poly ? (w.g.some((p) => inPoly(p, s.poly)) || lineCrossesPoly(w.g, s.poly) > 0) : w.g.some((p) => dist2(p, canopy.c) < 30);
       if (!touches) continue;
-      for (let i = 0; i < w.g.length; i++) if (town.publicNode.has(w.refs[i])) { const p = w.g[i]; if (!ents.some((e) => dist2(e.p, p) < 8)) ents.push({ p, street: town.publicNode.get(w.refs[i]).id, oneway: w.tags.oneway || null, width: num(w.tags.width) }); }
+      for (let i = 0; i < w.g.length; i++) if (town.publicNode.has(w.refs[i])) { const p = w.g[i]; if (dist2(p, canopy.c) < 60 && !ents.some((e) => dist2(e.p, p) < 8)) ents.push({ p, street: town.publicNode.get(w.refs[i]).id, oneway: w.tags.oneway || null, width: num(w.tags.width) }); }
     }
     rec.entrances = ents;
     rec.streets = new Set(ents.map((e) => e.street)).size;
@@ -486,6 +504,19 @@ function areaSites(town) {
   for (const m of town.marinas) {
     const bs = inside(m.poly);
     harbors.push({ id: m.id, town: town.name, kind: 'marina', poly: m.poly, A: absArea(m.poly), buildings: bs, gap: roadGap(m.poly) });
+  }
+  // piers and quays outside any mapped harbour or marina: group them (within 60 m) into waterfront sites
+  const loose = town.piers.filter((p) => !harbors.some((h) => p.g.some((q) => polyDist(q, h.poly) < 30)));
+  const groups = [];
+  for (const p of loose) {
+    const g = groups.find((G) => G.some((o) => o.g.some((a) => p.g.some((b) => dist2(a, b) < 60))));
+    if (g) g.push(p); else groups.push([p]);
+  }
+  for (const G of groups) {
+    const pts = G.flatMap((p) => p.g), H = hull(pts);
+    if (H.length < 3) continue;
+    const bs = town.buildings.filter((b) => polyDist(b.c, H) < 40 && b.type !== 'roof');
+    harbors.push({ id: G[0].id, town: town.name, kind: 'piers', poly: H, A: absArea(H), buildings: bs, gap: roadGap(H) });
   }
   for (const h of harbors) {
     h.piers = town.piers.filter((p) => p.g.some((q) => polyDist(q, h.poly) < 30)).map((p) => ({ id: p.id, kind: p.kind, len: p.poly ? minRect(p.poly).d : lineLength(p.g), width: p.poly ? minRect(p.poly).w : num(p.tags.width) }));
@@ -602,7 +633,7 @@ function main() {
   const templates = [];
   for (const f of files) {
     const town = buildTown(path.join(RAW, f));
-    const lots = lotAnalysis(town), fuel = fuelAnalysis(town), down = downtownAnalysis(town, lots), ind = industrialAnalysis(town, lots), sites = areaSites(town), house = houseAnalysis(town);
+    const fuel = fuelAnalysis(town), lots = lotAnalysis(town), down = downtownAnalysis(town, lots), ind = industrialAnalysis(town, lots), sites = areaSites(town), house = houseAnalysis(town);
     towns.push({ town, lots, fuel, down, ind, sites, house });
     allLots.push(...lots); allFuel.push(...fuel); allDown.push(down); allInd.push(...ind);
     for (const k of Object.keys(allSites)) allSites[k].push(...sites[k]);
@@ -790,6 +821,8 @@ function buildingProfile(towns) {
       longAxisToStreet: shares(L.filter((b) => b.f && b.f.centreDist < 50).map((b) => b.f.axis)),
       setbackFromRoadEdge: dist(L.filter((b) => b.f && b.f.setback < 80).map((b) => b.f.setback), 1),
       sharesAWall: L.some((b) => b.form === 'streetfront') ? round(L.filter((b) => b.touching).length / L.length, 2) : undefined,
+      mainEntranceSide: shares(L.flatMap((b) => (b.doorSides || []).filter((d) => /^(main|yes)$/.test(d.kind || '')).map((d) => d.side))),
+      serviceDoorSide: shares(L.flatMap((b) => (b.doorSides || []).filter((d) => /^(service|loading_dock|overhead|garage)$/.test(d.kind || '')).map((d) => d.side))),
     };
   };
   const out = { note: 'Per building type and per OSM tag: footprint, storeys (building:levels), height, roof shape, materials, orientation and setback, measured from real small towns, for the procedural Blender buildings (lane A). ' +
@@ -821,7 +854,7 @@ function pickTemplates(towns) {
     // retail and other lots: building + its lot, by position
     for (const l of T.lots) {
       const b = l.building;
-      if (!b || !b.f || l.shared || !l.sameSide) continue;
+      if (!b || !b.f || l.shared || !l.sameSide || b.A < 150) continue;
       const kind = b.form === 'streetfront' ? 'downtown' : b.type;
       if (!['shop', 'supermarket', 'restaurant', 'fast_food', 'office', 'downtown', 'motel', 'car_repair', 'church', 'civic', 'school', 'warehouse', 'industrial'].includes(kind)) continue;
       const F = b.f, polys = [localPoly(F, b.poly), localPoly(F, l.poly)], box = boxOf(polys);
@@ -859,14 +892,18 @@ function pickTemplates(towns) {
       const bs = (y.buildings || []).map((b) => ({ osm: b.id, role: b.tags.building, tags: pickTags(b.tags), poly: localPoly(F, b.poly) }));
       const acc = [...town.service, ...town.tracks].map((w) => ({ w, l: clipLine(F, w.g, box) })).filter((x) => x.l).map((x) => ({ osm: x.w.id, kind: x.w.tags.highway === 'track' ? 'track' : x.w.svc || 'service', surface: x.w.tags.surface || null, line: x.l }));
       const score = 1 + Math.min(4, bs.length) + Math.min(2, acc.length) + (extra.bonus || 0);
-      cands.push({ score, t: templateBase(type, town, F, null, { osm: { yard: y.id }, yard: { osm: y.id, poly: yp, area: Math.round(y.A) }, buildings: bs, access: acc, fences: fencesIn(town, F, box), streets: streetsIn(town, F, box), dims: { area: Math.round(y.A), buildings: bs.length } }) });
+      const piers = (y.piers || []).map((p) => town.piers.find((q) => q.id === p.id)).filter(Boolean).map((p) => ({ osm: p.id, kind: p.kind, line: localLine(F, p.poly ? p.poly.concat([p.poly[0]]) : p.g) }));
+      const lots = type === 'harbor' ? town.parking.filter((p) => polyPolyDist(p.poly, y.poly) < 80).map((p) => ({ osm: p.id, poly: localPoly(F, p.poly) })) : undefined;
+      cands.push({ score, t: templateBase(type, town, F, null, { osm: { yard: y.id }, yard: { osm: y.id, kind: y.kind, poly: yp, area: Math.round(y.A) }, buildings: bs, access: acc, piers, lots, fences: fencesIn(town, F, box), streets: streetsIn(town, F, box), dims: { area: Math.round(y.A), buildings: bs.length, piers: piers.length } }) });
     };
     for (const y of T.sites.farms) if (y.A > 800 && y.A < 60000 && y.buildings.length >= 2) yardTemplate('farm', y);
-    for (const y of T.sites.quarries) if (y.A > 2000) yardTemplate('quarry', y, { bonus: y.buildings.length ? 1 : 0 });
+    for (const y of T.sites.quarries) if (y.A > 2000 && y.A < 400000) yardTemplate('quarry', y, { bonus: y.buildings.length ? 1 : 0 });
     for (const y of T.sites.mills) if (y.kind === 'sawmill') yardTemplate('mill', y);
     for (const y of T.sites.harbors) if (y.A < 200000) yardTemplate('harbor', y, { bonus: y.piers.length ? 2 : 0 });
     // grain elevators: the building group around the elevator
-    for (const m of T.sites.mills) if (m.kind === 'grain_elevator' && m.b.f) {
+    const elevs = [];
+    for (const m of T.sites.mills) if (m.kind === 'grain_elevator' && m.b.f && m.A >= 50 && !elevs.some((e) => dist2(e.c, m.b.c) < 80)) {
+      elevs.push(m.b);
       const F = m.b.f, box = boxOf([localPoly(F, m.b.poly)], 40);
       cands.push({ score: 2 + (m.height ? 1 : 0) + (m.nearRail ? 1 : 0), t: templateBase('mill', town, F, m.b, { osm: { building: m.b.id }, sub: 'grain_elevator', service: serviceIn(town, F, box), streets: streetsIn(town, F, box), others: contextOf(town, F, box, new Set([m.b])), dims: { footprint: Math.round(m.A), height: m.height || null } }) });
     }
@@ -903,7 +940,7 @@ function pickTemplates(towns) {
     if (have >= lim) continue;
     const k = t.type + '|' + t.town;
     if ((perTown[k] || 0) >= 2) continue;
-    const sig = JSON.stringify(t.osm);
+    const sig = t.osm.building || t.osm.yard || t.osm.site || JSON.stringify(t.osm);
     if (seen.has(sig)) continue;
     seen.add(sig); perTown[k] = (perTown[k] || 0) + 1;
     chosen.push({ id: `${t.type}-${String(have + 1).padStart(2, '0')}`, score: round(c.score, 1), ...t });

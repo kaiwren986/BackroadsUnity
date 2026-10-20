@@ -6,7 +6,7 @@
 //
 // Colours: street (dark grey, its assumed width), lot (light grey), building (brown), canopy (orange),
 // other buildings (tan), aisles and service ways (blue), stalls (white outlines), entrances (red dots),
-// docks (purple), fences (green), yards (pale green), driveways (blue). Zero dependencies (PNG via node:zlib).
+// docks (purple), fences (green), yards (pale green), driveways (blue), piers (brown). Zero dependencies (PNG via node:zlib).
 // Map data (c) OpenStreetMap contributors, ODbL 1.0.
 
 import fs from 'node:fs';
@@ -21,7 +21,7 @@ const PNG_OUT = path.join(ROOT, 'artifacts', 'osm', 'templates.png');
 const SVG_DIR = path.join(ROOT, 'docs', 'research', '08-site-layouts');
 
 const COL = { bg: [246, 244, 238], street: [92, 92, 96], lot: [196, 196, 192], yard: [214, 228, 196], bld: [150, 104, 72], canopy: [236, 150, 40], other: [214, 196, 160],
-  aisle: [60, 110, 200], stall: [255, 255, 255], ent: [220, 40, 40], dock: [130, 60, 170], fence: [40, 140, 60], drive: [60, 110, 200], frame: [120, 120, 120] };
+  aisle: [60, 110, 200], stall: [255, 255, 255], ent: [220, 40, 40], dock: [130, 60, 170], fence: [40, 140, 60], drive: [60, 110, 200], frame: [120, 120, 120], pier: [150, 105, 60] };
 
 // ------------------------------------------------------------------ drawing one template
 
@@ -42,6 +42,7 @@ function layers(t) {
   for (const a of t.access || []) L.push({ k: 'aisle', line: a.line, thin: true });
   if (t.driveway) L.push({ k: 'drive', line: t.driveway.line });
   for (const f of t.fences || []) L.push({ k: 'fence', line: f.line });
+  for (const p of t.piers || []) L.push({ k: 'pier', line: p.line });
   for (const e of t.entrances || []) L.push({ k: 'ent', p: [e.u, e.v] });
   for (const d of t.docks || []) L.push({ k: 'dock', p: [d.u, d.v] });
   return L;
@@ -58,6 +59,7 @@ function extent(t) {
 function drawPng(cv, t, ox, oy, size) {
   const E = extent(t), s = Math.min(size / (E.u1 - E.u0), size / (E.v1 - E.v0));
   const X = ([u, v]) => [ox + (u - E.u0) * s, oy + size - (v - E.v0) * s]; // v up (street at the bottom)
+  cv.clip = [ox, oy, ox + size, oy + size];
   for (const l of layers(t)) {
     const c = COL[l.k];
     if (l.k === 'street') cv.pline(l.line.map(X), c, Math.max(1, l.w * s));
@@ -68,6 +70,7 @@ function drawPng(cv, t, ox, oy, size) {
   }
   // 10 m scale bar
   cv.line([ox + 4, oy + size - 4], [ox + 4 + 10 * s, oy + size - 4], [0, 0, 0], 2);
+  cv.clip = null;
 }
 
 function svgOf(t, size) {
@@ -106,7 +109,7 @@ function main() {
     const W = c2 * (tile + gap) + gap, H = r2 * (tile + lab + gap) + gap + 22;
     const body = list.map((t, i) => {
       const x = gap + (i % c2) * (tile + gap), y = 22 + gap + Math.floor(i / c2) * (tile + lab + gap);
-      return `<g transform="translate(${x},${y})"><rect width="${tile}" height="${tile}" fill="rgb(${COL.bg.join(',')})" stroke="#bbb"/>${svgOf(t, tile)}` +
+      return `<g transform="translate(${x},${y})"><clipPath id="c${g}${i}"><rect width="${tile}" height="${tile}"/></clipPath><rect width="${tile}" height="${tile}" fill="rgb(${COL.bg.join(',')})" stroke="#bbb"/><g clip-path="url(#c${g}${i})">${svgOf(t, tile)}</g>` +
         `<text x="0" y="${tile + 13}" font-size="11" font-family="sans-serif">${t.id}: ${esc(t.town)}</text>` +
         `<text x="0" y="${tile + 27}" font-size="9" font-family="sans-serif" fill="#555">${esc(Object.values(t.osm).filter(Boolean).join(' '))}</text></g>`;
     }).join('\n');

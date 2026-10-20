@@ -18,7 +18,7 @@ export function png(w, h, rgba) {
 }
 export class Canvas {
   constructor(w, h) { this.w = w; this.h = h; this.d = Buffer.alloc(w * h * 4); for (let i = 0; i < w * h; i++) { this.d[i * 4] = BG[0]; this.d[i * 4 + 1] = BG[1]; this.d[i * 4 + 2] = BG[2]; this.d[i * 4 + 3] = 255; } }
-  px(x, y, c, a = 1) { x |= 0; y |= 0; if (x < 0 || y < 0 || x >= this.w || y >= this.h) return; const i = (y * this.w + x) * 4; for (let k = 0; k < 3; k++) this.d[i + k] = this.d[i + k] * (1 - a) + c[k] * a; }
+  px(x, y, c, a = 1) { x |= 0; y |= 0; if (x < 0 || y < 0 || x >= this.w || y >= this.h) return; const k = this.clip; if (k && (x < k[0] || y < k[1] || x >= k[2] || y >= k[3])) return; const i = (y * this.w + x) * 4; for (let k = 0; k < 3; k++) this.d[i + k] = this.d[i + k] * (1 - a) + c[k] * a; }
   poly(P, c, a = 1) { // even-odd scanline fill
     let y0 = Infinity, y1 = -Infinity; for (const p of P) { y0 = Math.min(y0, p[1]); y1 = Math.max(y1, p[1]); }
     for (let y = Math.max(0, Math.floor(y0)); y <= Math.min(this.h - 1, Math.ceil(y1)); y++) {
