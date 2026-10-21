@@ -9,6 +9,9 @@ native/EngineSimPlugin/vendor/** -text
 native/EngineSimPlugin/generated/** -text
 Game/Assets/StreamingAssets/** -text
 tools/oracle/traces/** -text
+# The new world's source extract and bake (ADR-006): hashed like CanonData; their *.f32 / *.u8 go through LFS below.
+TownData/** -text
+WorldData/** -text
 
 # Large and binary files live in Git LFS.
 *.f32 filter=lfs diff=lfs merge=lfs -text
