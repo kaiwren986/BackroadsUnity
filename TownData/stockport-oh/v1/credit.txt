@@ -1,0 +1,3 @@
+Map data (c) OpenStreetMap contributors, available under the Open Database Licence 1.0 (ODbL): https://www.openstreetmap.org/copyright
+Elevation: U.S. Geological Survey, 3D Elevation Program (3DEP), 1 m lidar DEM (public domain).
+This folder is a derivative database of OpenStreetMap (ODbL 1.0): names, addresses and contact details removed, re-projected to a local frame.

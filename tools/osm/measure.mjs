@@ -51,8 +51,10 @@ function streetHalfWidth(t, cls) {
   return cls === 'through' ? 6.0 : 4.5;
 }
 
-// the business type of a building, from its own tags, the points mapped inside it and the land use around it
-function typeOf(b) {
+// the business type of a building, from its own tags, the points mapped inside it and the land use around it.
+// Exported for tools/world/extract-town.mjs; the C# port (Backroads.Core.WorldBake.BusinessClassifier) is kept in step
+// with it by the fixture test Town.ClassifierFixture (tools/world/classifier-fixture.mjs --check runs this side).
+export function typeOf(b) {
   const t = b.tags, all = [t, ...b.pois];
   const has = (k, re) => all.some((x) => x[k] !== undefined && re.test(x[k]));
   const lu = b.lu, bt = t.building || '';
@@ -92,9 +94,14 @@ function typeOf(b) {
 
 // ------------------------------------------------------------------ one town
 
-function buildTown(file) {
-  const T = loadTown(JSON.parse(fs.readFileSync(file, 'utf8')));
-  const town = { name: T.name, slug: path.basename(file, '.json'), parts: [], streets: [], service: [], tracks: [], buildings: [], parking: [], spaces: [], spaceNodes: [],
+export function buildTown(file) {
+  return buildTownFrom(loadTown(JSON.parse(fs.readFileSync(file, 'utf8'))), path.basename(file, '.json'));
+}
+
+// T: { name, nodes, ways, rels } as lib.mjs loadTown returns them (local metres, x east, y north); extract-town.mjs
+// passes its own UTM-projected town.
+export function buildTownFrom(T, slug) {
+  const town = { name: T.name, slug, parts: [], streets: [], service: [], tracks: [], buildings: [], parking: [], spaces: [], spaceNodes: [],
     fuelAreas: [], fuelNodes: [], landuse: [], barriers: [], gates: [], doors: [], piers: [], marinas: [], works: [], sawmills: [], areaHw: [], pois: [], lamps: [], slipways: [], railways: [] };
   const publicNode = new Map(); // node id -> street
 
@@ -245,7 +252,7 @@ function frameFor(town, b) {
 
 // ------------------------------------------------------------------ analyses
 
-function lotAnalysis(town) {
+export function lotAnalysis(town) {
   const out = [];
   const big = town.buildings.filter((b) => !['house', 'accessory', 'roof', 'fuel_canopy'].includes(b.type) || b.type === 'apartments');
   const g = new Grid(50);
@@ -1042,4 +1049,5 @@ function pickTemplates(towns) {
   return { out, cands: cands.map((c) => ({ score: c.score, type: c.t.type, town: c.t.town, osm: c.t.osm, dims: c.t.dims })) };
 }
 
-main();
+// Run only as a script (extract-town.mjs imports typeOf, buildTownFrom and lotAnalysis).
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main();

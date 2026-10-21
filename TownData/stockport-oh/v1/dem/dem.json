@@ -1,0 +1,22 @@
+{
+  "Y0": 190.796,
+  "elevationMax": 311.312,
+  "elevationMin": 192.796,
+  "encoding": "float32 little-endian, no header",
+  "file": "dem_1m.f32",
+  "format": "backroads-towndata-dem",
+  "layout": "k = j*n + i; x = x0 + i*res, z = z0 + j*res (rows south to north, columns west to east); value = y = elevation - Y0",
+  "lowestRiver": {"Y0rule":"Y0 = lowest river point - 2 m","alongRiverLines":192.796,"inRiverAreas":192.796},
+  "n": 2649,
+  "nodata": 0,
+  "playArea": {"elevationMax":304.335,"elevationMin":192.796},
+  "res": 1,
+  "seams": {"compared":170560,"differing":0,"maxAbs":0,"overlaps":16,"tiles":9},
+  "source": "USGS 3D Elevation Program (3DEP) 1 m lidar DEM via the 3DEPElevation ImageServer, bilinear to whole metres of the local frame (public domain)",
+  "version": 1,
+  "verticalDatum": "NAVD88 (3DEP), metres",
+  "x0": -1324,
+  "yMax": 120.516,
+  "yMin": 2,
+  "z0": -1324
+}
