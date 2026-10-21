@@ -3,6 +3,7 @@
 // Zero dependencies (the optional PNG uses the Edge or Chrome already on this PC, headless).
 //
 //   node tools/scout/render-map.mjs <town-id> [...] [--all] [--png] [--summary]
+//   node tools/scout/render-map.mjs --town-data TownData/<town>/v1 [--out <file>.png]   (render-towndata.mjs: the extract itself)
 //
 // Reads artifacts/scout/<town>/{osm.json, dem.f32, dem.json, coverage.json} (fetch-osm.mjs, fetch-dem.mjs).
 // Writes docs/research/new-world/<town>.svg (and .png with --png) and artifacts/scout/<town>/stats.json.
@@ -17,9 +18,10 @@ import fs from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
 import { spawnSync } from 'node:child_process';
-import { REPO, getTown, townFrame, townDir, townIds, flag, loadTowns } from './geo.mjs';
+import { REPO, getTown, townFrame, townDir, townIds, flag, arg, loadTowns } from './geo.mjs';
 import { loadOsm, roadClass, isUnpaved, ringArea, polyLenIn, segIntersect, pointInRings, inBox, rasterize } from './osm.mjs';
 import { encodePNG } from './png.mjs';
+import { renderTownData, TD_W, TD_H } from './render-towndata.mjs';
 
 const OUT_DIR = path.join(REPO, 'docs', 'research', 'new-world');
 const MAP = 2000, PAD = 24, PANEL = 660;
@@ -772,14 +774,14 @@ function runTown(id) {
   if (flag('--png')) png(svgPath, path.join(OUT_DIR, `${id}.png`));
 }
 
-function png(svgPath, pngPath) {
+function png(svgPath, pngPath, w = SVG_W, h = SVG_H) {
   const cands = ['C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe', 'C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe', 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'];
   const exe = cands.find((c) => fs.existsSync(c));
   if (!exe) { console.log('  no Edge or Chrome found: PNG skipped'); return; }
   const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'scout-edge-')); // fresh each time: a stale profile makes Edge exit without a shot
   fs.rmSync(pngPath, { force: true });
   const r = spawnSync(exe, ['--headless=new', '--disable-gpu', '--hide-scrollbars', '--no-first-run', '--no-default-browser-check', '--disable-extensions',
-    `--user-data-dir=${profile}`, `--window-size=${SVG_W},${SVG_H}`, '--force-device-scale-factor=1', `--screenshot=${pngPath}`, 'file:///' + svgPath.replace(/\\/g, '/')], { timeout: 120_000, encoding: 'utf8' });
+    `--user-data-dir=${profile}`, `--window-size=${w},${h}`, '--force-device-scale-factor=1', `--screenshot=${pngPath}`, 'file:///' + svgPath.replace(/\\/g, '/')], { timeout: 120_000, encoding: 'utf8' });
   // The msedge.exe launcher can return before the browser has written the shot: wait for a stable file.
   const nap = (ms) => Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms);
   let last = -1;
@@ -808,6 +810,18 @@ function summary() {
 }
 
 if (flag('--summary')) { summary(); process.exit(0); }
+if (arg('--town-data')) {
+  const dir = path.resolve(arg('--town-data'));
+  const out = path.resolve(arg('--out', path.join(REPO, 'docs', 'milestones', 'M3', 'town-source.png')));
+  const svg = renderTownData(dir, { hillshadeImage, contours, esc });
+  const svgPath = path.join(REPO, 'artifacts', 'scout', 'town-source.svg');
+  fs.mkdirSync(path.dirname(svgPath), { recursive: true });
+  fs.mkdirSync(path.dirname(out), { recursive: true });
+  fs.writeFileSync(svgPath, svg);
+  console.log(`town data map: ${svgPath} (${(svg.length / 1e6).toFixed(2)} MB)`);
+  png(svgPath, out, TD_W, TD_H);
+  process.exit(fs.existsSync(out) ? 0 : 1);
+}
 const ids = townIds();
 if (!ids.length) { console.error('usage: node tools/scout/render-map.mjs <town-id> ... | --all [--png] | --summary'); process.exit(1); }
 let failed = 0;
