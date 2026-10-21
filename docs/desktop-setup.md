@@ -1,6 +1,6 @@
 # Working on Backroads from your desktop
 
-The project lives in your private GitHub repo `kaiwren986/Backroads-Unity` (U1). Your laptop pushes to it; your desktop
+The project lives in your private GitHub repo `kaiwren986/BackroadsUnity` (U1). Your laptop pushes to it; your desktop
 clones it. Everything you need comes down with the clone, apart from the things listed under "Not in GitHub".
 
 ## 1. Install (once)
@@ -23,7 +23,7 @@ The scripts use fixed folders on a **D:** drive. If your desktop has no D: drive
 the folders configurable first.
 
 ```bash
-git clone https://github.com/kaiwren986/Backroads-Unity.git D:/Backroads-Unity
+git clone https://github.com/kaiwren986/BackroadsUnity.git D:/Backroads-Unity
 ```
 
 ```bash

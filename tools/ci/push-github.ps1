@@ -28,7 +28,7 @@ param(
 . "$PSScriptRoot\env.ps1"
 . "$PSScriptRoot\ci-lib.ps1"
 
-$GitHubRemote = 'https://github.com/kaiwren986/Backroads-Unity.git'
+$GitHubRemote = 'https://github.com/kaiwren986/BackroadsUnity.git'
 
 function Invoke-Git([string[]]$GitArgs) {
     & git -C $MAIN_REPO @GitArgs
