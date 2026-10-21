@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "note": "What tools/ci/gate.ps1 runs per tier (PLAN 1.9). Each step runs one tools/ci script in its own PowerShell. '{milestone}' becomes the milestone (-Gate M<n>, else from the branch or the tags). gateJson: the script writes artifacts/gates/<id>.json itself; otherwise gate.ps1 records its exit code and log. heavy: gate.ps1 pauses before it while the user plays. perf: needs mains power (otherwise 'invalid'). oracle: skipped by -SkipOracle. hard false: reported, never fails the tier. headline: at the milestone tier only headline steps decide (PLAN 1.10). requiresParam: skipped (with a note) until the script has that switch. 'milestones' adds steps per milestone to a tier.",
+  "note": "What tools/ci/gate.ps1 runs per tier (PLAN 1.9). Each step runs one tools/ci script in its own PowerShell. '{milestone}' becomes the milestone (-Gate M<n>, else from the branch or the tags). gateJson: the script writes artifacts/gates/<id>.json itself; otherwise gate.ps1 records its exit code and log. heavy: gate.ps1 pauses before it while the user plays. perf: needs mains power (otherwise 'invalid'). oracle: skipped by -SkipOracle. hard false: reported, never fails the tier. headline: at the milestone tier only headline steps decide (PLAN 1.10). requiresParam: skipped (with a note) until the script has that switch. 'milestones' adds steps per milestone to a tier. pending: the step's test or scenario is not on main yet; such steps are hard false (reported, never deciding) until the integrator drops pending and the hard flag when the lane lands (M3 placeholders from card T3.7).",
   "budgetSeconds": {
     "merge": 1200,
     "nightly": 10800,
@@ -986,6 +986,939 @@
           "gateJson": true,
           "heavy": true,
           "headline": true
+        },
+        {
+          "id": "autotest.m2.vehicles.drive",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m2.vehicles.drive",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "autotest.m2.ui.screens",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m2.ui.screens",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "autotest.m1.ui.credits",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m1.ui.credits",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "autotest.m0.crash.recover",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m0.crash.recover",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "autotest.m0.net.egress",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m0.net.egress",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "autotest.m1.shots.canon",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m1.shots.canon",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        }
+      ]
+    },
+    "M3": {
+      "nightly": [
+        {
+          "id": "unity.editmode.town",
+          "script": "unity-tests.ps1",
+          "args": [
+            "-Platform",
+            "EditMode",
+            "-Category",
+            "!PlayerOnly",
+            "-TestFilter",
+            "Backroads.Tests.EditMode.Town.Town.ManifestHashes;Backroads.Tests.EditMode.Town.Town.NoRealNames",
+            "-MinTests",
+            "2"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "headline": true,
+          "owner": "I"
+        },
+        {
+          "id": "unity.editmode.roads-validation",
+          "script": "unity-tests.ps1",
+          "args": [
+            "-Platform",
+            "EditMode",
+            "-Category",
+            "!PlayerOnly",
+            "-TestFilter",
+            "Backroads.Tests.EditMode.Roads.Roads.Validation",
+            "-MinTests",
+            "1"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "headline": true,
+          "hard": false,
+          "pending": "Roads.Validation (roads-R1..R3) (lane R) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "owner": "R"
+        },
+        {
+          "id": "unity.editmode.sites",
+          "script": "unity-tests.ps1",
+          "args": [
+            "-Platform",
+            "EditMode",
+            "-Category",
+            "!PlayerOnly",
+            "-TestFilter",
+            "Backroads.Tests.EditMode.Sites.Sites.Validation;Backroads.Tests.EditMode.Sites.Sites.MatchesProfile",
+            "-MinTests",
+            "2"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "headline": true,
+          "hard": false,
+          "pending": "Sites.Validation, Sites.MatchesProfile (sites-S5) (lane S) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "owner": "S"
+        },
+        {
+          "id": "unity.editmode.world",
+          "script": "unity-tests.ps1",
+          "args": [
+            "-Platform",
+            "EditMode",
+            "-Category",
+            "!PlayerOnly",
+            "-TestFilter",
+            "Backroads.Tests.EditMode.World.World.BakeDeterministic;Backroads.Tests.EditMode.World.World.ManifestHashes;Backroads.Tests.EditMode.World.World.RiverLevels;Backroads.Tests.EditMode.World.World.DemFidelity",
+            "-MinTests",
+            "4"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "headline": true,
+          "hard": false,
+          "pending": "World.BakeDeterministic, ManifestHashes, RiverLevels, DemFidelity (T3.2) (lane W) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "owner": "W"
+        },
+        {
+          "id": "unity.playmode.building-impact",
+          "script": "unity-tests.ps1",
+          "args": [
+            "-Platform",
+            "PlayMode",
+            "-Category",
+            "!PlayerOnly",
+            "-TestFilter",
+            "Backroads.Tests.PlayMode.Vehicles.Vehicle.BuildingImpact",
+            "-MinTests",
+            "1"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "headline": true,
+          "hard": false,
+          "pending": "Vehicle.BuildingImpact on both worlds (T3.6) (lane V) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "owner": "V"
+        },
+        {
+          "id": "autotest.m3.drive.millbrook",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m3.drive.millbrook",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "headline": true,
+          "hard": false,
+          "pending": "m3.drive.millbrook (T3.7) (lane I) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "owner": "I"
+        },
+        {
+          "id": "autotest.m3.drive.millbrook-fps60",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m3.drive.millbrook",
+            "-Fps",
+            "60",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "headline": true,
+          "hard": false,
+          "pending": "m3.drive.millbrook (T3.7) (lane I) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "owner": "I"
+        },
+        {
+          "id": "autotest.m3.drive.millbrook-fps30",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m3.drive.millbrook",
+            "-Fps",
+            "30",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "headline": true,
+          "hard": false,
+          "pending": "m3.drive.millbrook (T3.7) (lane I) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "owner": "I"
+        },
+        {
+          "id": "autotest.m3.shots.junctions",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m3.shots.junctions",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "headline": true,
+          "hard": false,
+          "pending": "m3.shots.junctions (roads-R3) (lane R) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "owner": "R"
+        },
+        {
+          "id": "autotest.m3.shots.sites",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m3.shots.sites",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "headline": true,
+          "hard": false,
+          "pending": "m3.shots.sites (sites-S5) (lane S) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "owner": "S"
+        },
+        {
+          "id": "autotest.m3.shots.millbrook",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m3.shots.millbrook",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "headline": true,
+          "hard": false,
+          "pending": "m3.shots.millbrook (T3.3) (lane W) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "owner": "W"
+        },
+        {
+          "id": "unity.editmode.art-buildings",
+          "script": "unity-tests.ps1",
+          "args": [
+            "-Platform",
+            "EditMode",
+            "-Category",
+            "!PlayerOnly",
+            "-TestFilter",
+            "Backroads.Tests.EditMode.Art.Art.BuildingsBudget;Backroads.Tests.EditMode.Art.Art.BuildingsDeterministic;Backroads.Tests.EditMode.Art.Art.DoorsMatchSites",
+            "-MinTests",
+            "3"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "hard": false,
+          "pending": "Art.BuildingsBudget, BuildingsDeterministic, DoorsMatchSites (T3.4) (lane A) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "owner": "A"
+        },
+        {
+          "id": "unity.playmode.brv-v2",
+          "script": "unity-tests.ps1",
+          "args": [
+            "-Platform",
+            "PlayMode",
+            "-Category",
+            "BrvV2;!PlayerOnly",
+            "-MinTests",
+            "1"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "hard": false,
+          "pending": "the BRV v2 lane gates (T3.5; the category name is a placeholder until T3.5 names them) (lane V) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "owner": "V"
+        },
+        {
+          "id": "autotest.m3.perf.flythrough-high",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m3.perf.flythrough",
+            "-Quality",
+            "High",
+            "-Repeat",
+            "3",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "perf": true,
+          "hard": false,
+          "pending": "m3.perf.flythrough on Millbrook, report only until the M5 budget (T3.3) (lane W) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "owner": "W"
+        },
+        {
+          "id": "autotest.m2.drive.route9",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m2.drive.route9",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "autotest.m2.drive.route9-fps60",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m2.drive.route9",
+            "-Fps",
+            "60",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "autotest.m2.drive.route9-fps30",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m2.drive.route9",
+            "-Fps",
+            "30",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "autotest.m2.vehicles.drive",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m2.vehicles.drive",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "owner": "V"
+        },
+        {
+          "id": "autotest.m2.engine.follow-fps60",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m2.engine.follow",
+            "-Fps",
+            "60",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "owner": "V"
+        },
+        {
+          "id": "autotest.m2.engine.follow-minspec",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m2.engine.follow",
+            "-MinSpec",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "owner": "V",
+          "perf": true,
+          "hard": false
+        },
+        {
+          "id": "autotest.m2.bench.v8",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m2.bench.v8",
+            "-Fps",
+            "60",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "owner": "V"
+        },
+        {
+          "id": "autotest.m2.hud.stub",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m2.hud.stub",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "owner": "W"
+        },
+        {
+          "id": "autotest.m2.ui.screens",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m2.ui.screens",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "owner": "W"
+        },
+        {
+          "id": "autotest.m1.shots.canon",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m1.shots.canon",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "autotest.m1.ui.credits",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m1.ui.credits",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "autotest.m0.crash.recover",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m0.crash.recover",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "autotest.m0.net.egress",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m0.net.egress",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "autotest.m0.playtest.f10",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m0.playtest.f10",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "autotest.m1.bench.revcycle",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m1.bench.revcycle",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "autotest.m1.bench.revcycle-fps30",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m1.bench.revcycle",
+            "-Fps",
+            "30",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "autotest.m1.perf.flythrough",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m1.perf.flythrough",
+            "-Repeat",
+            "3",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "perf": true,
+          "hard": false
+        }
+      ],
+      "milestone": [
+        {
+          "id": "unity.editmode.town",
+          "script": "unity-tests.ps1",
+          "args": [
+            "-Platform",
+            "EditMode",
+            "-Category",
+            "!PlayerOnly",
+            "-TestFilter",
+            "Backroads.Tests.EditMode.Town.Town.ManifestHashes;Backroads.Tests.EditMode.Town.Town.NoRealNames",
+            "-MinTests",
+            "2"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "headline": true,
+          "owner": "I"
+        },
+        {
+          "id": "unity.editmode.roads-validation",
+          "script": "unity-tests.ps1",
+          "args": [
+            "-Platform",
+            "EditMode",
+            "-Category",
+            "!PlayerOnly",
+            "-TestFilter",
+            "Backroads.Tests.EditMode.Roads.Roads.Validation",
+            "-MinTests",
+            "1"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "headline": true,
+          "hard": false,
+          "pending": "Roads.Validation (roads-R1..R3) (lane R) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "owner": "R"
+        },
+        {
+          "id": "unity.editmode.sites",
+          "script": "unity-tests.ps1",
+          "args": [
+            "-Platform",
+            "EditMode",
+            "-Category",
+            "!PlayerOnly",
+            "-TestFilter",
+            "Backroads.Tests.EditMode.Sites.Sites.Validation;Backroads.Tests.EditMode.Sites.Sites.MatchesProfile",
+            "-MinTests",
+            "2"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "headline": true,
+          "hard": false,
+          "pending": "Sites.Validation, Sites.MatchesProfile (sites-S5) (lane S) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "owner": "S"
+        },
+        {
+          "id": "unity.editmode.world",
+          "script": "unity-tests.ps1",
+          "args": [
+            "-Platform",
+            "EditMode",
+            "-Category",
+            "!PlayerOnly",
+            "-TestFilter",
+            "Backroads.Tests.EditMode.World.World.BakeDeterministic;Backroads.Tests.EditMode.World.World.ManifestHashes;Backroads.Tests.EditMode.World.World.RiverLevels;Backroads.Tests.EditMode.World.World.DemFidelity",
+            "-MinTests",
+            "4"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "headline": true,
+          "hard": false,
+          "pending": "World.BakeDeterministic, ManifestHashes, RiverLevels, DemFidelity (T3.2) (lane W) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "owner": "W"
+        },
+        {
+          "id": "unity.playmode.building-impact",
+          "script": "unity-tests.ps1",
+          "args": [
+            "-Platform",
+            "PlayMode",
+            "-Category",
+            "!PlayerOnly",
+            "-TestFilter",
+            "Backroads.Tests.PlayMode.Vehicles.Vehicle.BuildingImpact",
+            "-MinTests",
+            "1"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "headline": true,
+          "hard": false,
+          "pending": "Vehicle.BuildingImpact on both worlds (T3.6) (lane V) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "owner": "V"
+        },
+        {
+          "id": "autotest.m3.drive.millbrook",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m3.drive.millbrook",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "headline": true,
+          "hard": false,
+          "pending": "m3.drive.millbrook (T3.7) (lane I) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "owner": "I"
+        },
+        {
+          "id": "autotest.m3.drive.millbrook-fps60",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m3.drive.millbrook",
+            "-Fps",
+            "60",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "headline": true,
+          "hard": false,
+          "pending": "m3.drive.millbrook (T3.7) (lane I) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "owner": "I"
+        },
+        {
+          "id": "autotest.m3.drive.millbrook-fps30",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m3.drive.millbrook",
+            "-Fps",
+            "30",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "headline": true,
+          "hard": false,
+          "pending": "m3.drive.millbrook (T3.7) (lane I) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "owner": "I"
+        },
+        {
+          "id": "autotest.m3.shots.junctions",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m3.shots.junctions",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "headline": true,
+          "hard": false,
+          "pending": "m3.shots.junctions (roads-R3) (lane R) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "owner": "R"
+        },
+        {
+          "id": "autotest.m3.shots.sites",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m3.shots.sites",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "headline": true,
+          "hard": false,
+          "pending": "m3.shots.sites (sites-S5) (lane S) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "owner": "S"
+        },
+        {
+          "id": "autotest.m3.shots.millbrook",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m3.shots.millbrook",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "headline": true,
+          "hard": false,
+          "pending": "m3.shots.millbrook (T3.3) (lane W) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "owner": "W"
+        },
+        {
+          "id": "unity.editmode.art-buildings",
+          "script": "unity-tests.ps1",
+          "args": [
+            "-Platform",
+            "EditMode",
+            "-Category",
+            "!PlayerOnly",
+            "-TestFilter",
+            "Backroads.Tests.EditMode.Art.Art.BuildingsBudget;Backroads.Tests.EditMode.Art.Art.BuildingsDeterministic;Backroads.Tests.EditMode.Art.Art.DoorsMatchSites",
+            "-MinTests",
+            "3"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "hard": false,
+          "pending": "Art.BuildingsBudget, BuildingsDeterministic, DoorsMatchSites (T3.4) (lane A) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "owner": "A"
+        },
+        {
+          "id": "unity.playmode.brv-v2",
+          "script": "unity-tests.ps1",
+          "args": [
+            "-Platform",
+            "PlayMode",
+            "-Category",
+            "BrvV2;!PlayerOnly",
+            "-MinTests",
+            "1"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "hard": false,
+          "pending": "the BRV v2 lane gates (T3.5; the category name is a placeholder until T3.5 names them) (lane V) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "owner": "V"
+        },
+        {
+          "id": "autotest.m3.perf.flythrough-high",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m3.perf.flythrough",
+            "-Quality",
+            "High",
+            "-Repeat",
+            "3",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true,
+          "perf": true,
+          "hard": false,
+          "pending": "m3.perf.flythrough on Millbrook, report only until the M5 budget (T3.3) (lane W) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "owner": "W"
+        },
+        {
+          "id": "autotest.m2.drive.route9",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m2.drive.route9",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "autotest.m2.drive.route9-fps60",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m2.drive.route9",
+            "-Fps",
+            "60",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
+        },
+        {
+          "id": "autotest.m2.drive.route9-fps30",
+          "script": "autotest.ps1",
+          "args": [
+            "-Scenario",
+            "m2.drive.route9",
+            "-Fps",
+            "30",
+            "-Profile",
+            "Dev",
+            "-Milestone",
+            "{milestone}"
+          ],
+          "gateJson": true,
+          "heavy": true
         },
         {
           "id": "autotest.m2.vehicles.drive",
