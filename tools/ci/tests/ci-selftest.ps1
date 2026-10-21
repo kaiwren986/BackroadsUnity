@@ -252,6 +252,107 @@ Check 'lib' 'machine facts: power, GPU, power mode, cores, other processes' {
     Assert ($m.Contains('powerMode') -and $m.Contains('cores') -and $m.Contains('otherProcs')) 'fields'
 }
 
+# ---------------------------------------------------------------- test windows and the idle rule (QUEUE U31)
+function With-Env([hashtable]$Vars, [scriptblock]$Body) {
+    # Sets environment variables for the body (and the scripts it runs), then restores them.
+    $old = @{}
+    foreach ($k in $Vars.Keys) { $old[$k] = [Environment]::GetEnvironmentVariable($k); [Environment]::SetEnvironmentVariable($k, "$($Vars[$k])") }
+    try { return (& $Body) } finally { foreach ($k in $Vars.Keys) { [Environment]::SetEnvironmentVariable($k, $old[$k]) } }
+}
+Check 'window' 'night window: inside, outside, past midnight, off' {
+    $d = [datetime]'2026-10-20'
+    Assert (Test-BrNightWindow $d.AddHours(2) '01:00-07:00').Inside '02:00 not inside 01:00-07:00'
+    Assert (-not (Test-BrNightWindow $d.AddHours(7) '01:00-07:00').Inside '07:00 inside (the end is exclusive)'
+    $n = Test-BrNightWindow $d.AddHours(21).AddMinutes(30) '01:00-07:00'
+    Assert ((-not $n.Inside) -and $n.MinutesToStart -eq 210) "21:30: $($n.Inside) $($n.MinutesToStart)"
+    Assert (Test-BrNightWindow $d.AddHours(23) '22:00-06:00').Inside '23:00 not inside 22:00-06:00'
+    Assert (Test-BrNightWindow $d.AddHours(5) '22:00-06:00').Inside '05:00 not inside 22:00-06:00'
+    Assert (-not (Test-BrNightWindow $d.AddHours(12) '22:00-06:00').Inside '12:00 inside 22:00-06:00'
+    Assert (-not (Test-BrNightWindow $d.AddHours(2) 'off').Inside 'off'
+    $threw = $false; try { [void](Test-BrNightWindow $d 'nights') } catch { $threw = $true }
+    Assert $threw 'a bad window was accepted'
+}
+Check 'window' 'idle rule with a faked idle time and clock (BR_FAKE_IDLE_SECONDS, BR_FAKE_NOW)' {
+    $s = With-Env @{ BR_TIMING_IDLE_MINUTES = ''; BR_TIMING_NIGHT = ''; BR_TIMING_MAX_WAIT_HOURS = '' } { Get-BrTimingSettings }
+    Assert ($s.IdleMinutes -eq 10 -and $s.Night -eq '01:00-07:00' -and $s.MaxWaitHours -eq 12) "defaults: $($s.IdleMinutes) / $($s.Night) / $($s.MaxWaitHours)"
+    $w = With-Env @{ BR_FAKE_IDLE_SECONDS = '30'; BR_FAKE_NOW = '21:00' } { Get-BrTimingWindow }
+    Assert ((-not $w.Open) -and $w.Reason -match 'user is active' -and $w.Reason -match 'opens in 4 h 00 min') "active: $($w.Reason)"
+    $w = With-Env @{ BR_FAKE_IDLE_SECONDS = '600'; BR_FAKE_NOW = '21:00' } { Get-BrTimingWindow }
+    Assert ($w.Open -and $w.Reason -match 'idle 10 min') "idle: $($w.Reason)"
+    $w = With-Env @{ BR_FAKE_IDLE_SECONDS = '0'; BR_FAKE_NOW = '03:15' } { Get-BrTimingWindow }
+    Assert ($w.Open -and $w.Night -and $w.Reason -match 'night window') "night: $($w.Reason)"
+    $w = With-Env @{ BR_FAKE_IDLE_SECONDS = '0'; BR_FAKE_NOW = '03:15'; BR_TIMING_NIGHT = 'off' } { Get-BrTimingWindow }
+    Assert (-not $w.Open) 'BR_TIMING_NIGHT=off still opened at night'
+    $w = With-Env @{ BR_FAKE_IDLE_SECONDS = '300'; BR_FAKE_NOW = '12:00'; BR_TIMING_IDLE_MINUTES = '5' } { Get-BrTimingWindow }
+    Assert $w.Open 'BR_TIMING_IDLE_MINUTES=5 not honoured'
+    $f = Join-Path $scratch 'idle.txt'
+    Write-BrText $f "42`n"
+    Assert ((With-Env @{ BR_FAKE_IDLE_SECONDS = "@$f" } { Get-BrIdleSeconds }) -eq 42) 'BR_FAKE_IDLE_SECONDS=@file'
+    Assert ((Get-BrIdleSeconds) -ge 0) 'GetLastInputInfo'
+}
+Check 'window' 'Wait-BrTimingWindow gives up after the bounded wait and says what it waited for' {
+    $r = With-Env @{ BR_FAKE_IDLE_SECONDS = '0'; BR_FAKE_NOW = '21:00'; BR_TIMING_POLL_SEC = '1' } { Wait-BrTimingWindow -What 'selftest' -MaxWaitHours 0.0004 }
+    Assert ((-not $r.Ok) -and $r.WaitedSeconds -ge 1 -and $r.Reason -match 'user is active') "wait: $($r.Ok) $($r.WaitedSeconds) $($r.Reason)"
+    $r = With-Env @{ BR_FAKE_IDLE_SECONDS = '900'; BR_FAKE_NOW = '21:00' } { Wait-BrTimingWindow -What 'selftest' -MaxWaitHours 1 }
+    Assert ($r.Ok -and $r.WaitedSeconds -lt 1) 'an open window still waited'
+}
+Check 'window' 'Resolve-BrWindowMode: Hidden, Visible, and Auto by timing x idle x wait' {
+    $env2 = @{ BR_FAKE_IDLE_SECONDS = '0'; BR_FAKE_NOW = '21:00' }
+    $m = With-Env $env2 { Resolve-BrWindowMode -Requested Auto -Timing $false -WaitForIdle $true }
+    Assert ($m.Mode -eq 'Hidden' -and $null -eq $m.TimingEnforced) 'non-timing: hidden'
+    $m = With-Env $env2 { Resolve-BrWindowMode -Requested Auto -Timing $true -WaitForIdle $false }
+    Assert ($m.Mode -eq 'Hidden' -and $m.TimingEnforced -eq $false -and $m.Reason -match '^timing not enforced \(user active\)') "timing, active, no wait: $($m.Mode) $($m.Reason)"
+    $m = With-Env $env2 { Resolve-BrWindowMode -Requested Auto -Timing $true -WaitForIdle $true }
+    Assert ($m.Mode -eq 'Wait') "timing, active, wait: $($m.Mode)"
+    $m = With-Env @{ BR_FAKE_IDLE_SECONDS = '601'; BR_FAKE_NOW = '21:00' } { Resolve-BrWindowMode -Requested Auto -Timing $true -WaitForIdle $true }
+    Assert ($m.Mode -eq 'Visible' -and $m.TimingEnforced -eq $true) 'timing, idle: visible'
+    $m = With-Env @{ BR_FAKE_IDLE_SECONDS = '0'; BR_FAKE_NOW = '01:30' } { Resolve-BrWindowMode -Requested Auto -Timing $true -WaitForIdle $false }
+    Assert ($m.Mode -eq 'Visible') 'timing, night: visible'
+    $m = With-Env @{ BR_FAKE_IDLE_SECONDS = '900' } { Resolve-BrWindowMode -Requested Hidden -Timing $true }
+    Assert ($m.Mode -eq 'Hidden' -and $m.TimingEnforced -eq $false) '-Window Hidden on a timing test'
+    $m = With-Env $env2 { Resolve-BrWindowMode -Requested Visible -Timing $true }
+    Assert ($m.Mode -eq 'Visible' -and $m.TimingEnforced -eq $true) '-Window Visible'
+}
+Check 'window' 'timing failures are told apart from functional ones (the scenarios'' own texts)' {
+    foreach ($t in @('3 underruns (768 frames)', 'demo: 4 underruns', '4 underruns while revving', 'p95 frame 21.30 ms > 16.6 ms at High',
+                     'p95 frame 34.10 ms does not hold the 30 fps cap (33.33 ms)', 'simulation main-thread time per frame p95 4.10 ms > 3.5 ms',
+                     'rally (f4_boxer_a): RTF 1.67 < 2 at Ultra', 'all chunks built in 1800 ms at load (gate 1500 ms)', 'p95 frame 17.00 ms over the 16.6 ms gate')) {
+        Assert (Test-BrTimingFailure $t) "not timing: $t"
+    }
+    foreach ($t in @('pitch idle at 715 rpm: acf 145.1 Hz (order 24.37), peak 162.0 Hz (order 27.21)', 'engine did not start within 3 s (starter released at 3.02 s)',
+                     'clipping 0.200 % >= 0.10 %', 'the AudioTap saw no audio callbacks', 'did not reach the fuel within 150 s (40 m left)', 'demo tracking RMS 45.0 rpm',
+                     'E did not switch into the nearest vehicle (none within 12 m); now Hauler 7.5t', '1 exception(s) logged; first: NullReferenceException', 'screenshot failed')) {
+        Assert (-not (Test-BrTimingFailure $t)) "counted as timing: $t"
+    }
+}
+Check 'window' 'timing tests come from the gates.json step flags (timing, perf)' {
+    foreach ($i in @('m1.bench.revcycle', 'm1.bench.audiospike', 'm1.perf.flythrough', 'm2.drive.route9', 'm2.engine.follow', 'm2.bench.v8', 'm2.vehicles.drive')) { Assert (Test-BrTimingScenario $i) "$i is not a timing test" }
+    foreach ($i in @('smoke', 'm1.shots.canon', 'm1.ui.credits', 'm0.crash.recover', 'm0.net.egress', 'm0.playtest.f10', 'm2.ui.screens', 'm2.hud.stub', 'no.such.id')) { Assert (-not (Test-BrTimingScenario $i)) "$i counted as a timing test" }
+    $cfg = Read-BrJson (Join-Path $CI 'gates.json')
+    $bad = @()
+    foreach ($t in @($cfg.tiers.PSObject.Properties)) { foreach ($s in @($t.Value.steps)) { if ($s.timing -and $s.script -ne 'autotest.ps1') { $bad += $s.id } } }
+    foreach ($m in @($cfg.milestones.PSObject.Properties)) { foreach ($t in @($m.Value.PSObject.Properties)) { foreach ($s in @($t.Value)) { if ($s.timing -and $s.script -ne 'autotest.ps1') { $bad += $s.id } } } }
+    Assert ($bad.Count -eq 0) ('"timing" on a step that is not an autotest: ' + ($bad -join ', '))
+}
+Check 'window' 'off-screen host: compiles, off screen, disabled, no-activate tool window, closes on WM_CLOSE' {
+    $rep = Join-Path $scratch 'host-alone.json'
+    $h = Start-BrOffscreenHost -Width 800 -Height 600 -Report $rep -MaxSeconds 60
+    try {
+        Add-Type -TypeDefinition 'using System; using System.Runtime.InteropServices; public static class SelftestWin { [StructLayout(LayoutKind.Sequential)] public struct RECT { public int l, t, r, b; } [DllImport("user32.dll")] public static extern bool GetWindowRect(IntPtr h, out RECT r); [DllImport("user32.dll")] public static extern bool IsWindowVisible(IntPtr h); [DllImport("user32.dll")] public static extern bool IsWindowEnabled(IntPtr h); [DllImport("user32.dll")] public static extern int GetWindowLong(IntPtr h, int i); }' -ErrorAction SilentlyContinue
+        $hw = [IntPtr]$h.Hwnd
+        Assert ([SelftestWin]::IsWindowVisible($hw)) 'host window not shown (the child would not render)'
+        Assert (-not [SelftestWin]::IsWindowEnabled($hw)) 'host window enabled (it could be activated)'
+        $ex = [SelftestWin]::GetWindowLong($hw, -20)
+        Assert (($ex -band 0x08000080) -eq 0x08000080) ('ex style 0x{0:X8} lacks WS_EX_NOACTIVATE | WS_EX_TOOLWINDOW' -f $ex)
+        $r = New-Object SelftestWin+RECT; [void][SelftestWin]::GetWindowRect($hw, [ref]$r)
+        Add-Type -AssemblyName System.Windows.Forms
+        $vs = [System.Windows.Forms.SystemInformation]::VirtualScreen
+        Assert ($r.r -le $vs.X -or $r.b -le $vs.Y -or $r.l -ge $vs.Right -or $r.t -ge $vs.Bottom) "host window on screen at $($r.l),$($r.t)"
+    } finally { $rr = Stop-BrOffscreenHost $h }
+    Assert $h.Process.HasExited 'host still running'
+    Assert ($rr -and $rr.exitReason -eq 'WM_CLOSE' -and $rr.hostRect -eq '-32000,-32000,800x600' -and -not $rr.hostOnScreen) ("report: " + ($rr | ConvertTo-Json -Compress))
+}
+
 # ================================================================ dry runs and not-ready errors
 $dry = @(
     @('unity-tests.ps1', @('-Platform', 'EditMode')), @('unity-tests.ps1', @('-Platform', 'PlayMode', '-Category', 'Slow', '-MinTests', '0')),

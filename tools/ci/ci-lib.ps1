@@ -213,6 +213,17 @@ function Invoke-BrProcess {
     $sw = [Diagnostics.Stopwatch]::StartNew()
     try {
         $p = [System.Diagnostics.Process]::Start($psi)
+        $throttling = $null
+        if ($Window -eq 'Hidden') {
+            # Windows throttles processes whose window the user cannot see (EcoQoS, and timer resolution on
+            # Windows 11); the engine-sim worker and the audio thread then starve. Not for BR_HIDDEN_THROTTLE=keep.
+            if ($env:BR_HIDDEN_THROTTLE -eq 'keep') { $throttling = 'windows default (BR_HIDDEN_THROTTLE=keep)' }
+            else {
+                Initialize-BrWin32
+                $e = [BrWin32]::NoPowerThrottling($p.Handle)
+                if ($e -eq 0) { $throttling = 'off (execution speed and timer resolution)' } else { $throttling = "could not turn off (error $e)"; Write-BrLog "power throttling: SetProcessInformation failed ($e)" 'warn' }
+            }
+        }
         $affinitySet = $null
         if ($AffinityMask -ne 0) {
             try { $p.ProcessorAffinity = [IntPtr][Int64]$AffinityMask; $affinitySet = ('0x{0:X}' -f $AffinityMask) }
@@ -238,7 +249,7 @@ function Invoke-BrProcess {
     }
     return [pscustomobject]@{
         ExitCode = $code; TimedOut = $timedOut; Seconds = [Math]::Round($sw.Elapsed.TotalSeconds, 1)
-        ProcessId = $p.Id; Affinity = $affinitySet; Window = $(if ($Window) { $Window } else { 'Visible' }); Host = $hostReport
+        ProcessId = $p.Id; Affinity = $affinitySet; Window = $(if ($Window) { $Window } else { 'Visible' }); Host = $hostReport; PowerThrottling = $throttling
     }
 }
 
@@ -263,6 +274,14 @@ public static class BrWin32 {
         return unchecked(GetTickCount() - l.dwTime) / 1000.0;
     }
     public static int ForegroundPid() { uint pid; GetWindowThreadProcessId(GetForegroundWindow(), out pid); return (int)pid; }
+    [StructLayout(LayoutKind.Sequential)] struct PPTS { public uint Version, ControlMask, StateMask; }
+    [DllImport("kernel32.dll", SetLastError = true)] static extern bool SetProcessInformation(IntPtr h, int cls, ref PPTS info, uint size);
+    // ProcessPowerThrottling: never EcoQoS-throttle (EXECUTION_SPEED) and keep honouring timeBeginPeriod
+    // (IGNORE_TIMER_RESOLUTION), which Windows 11 otherwise drops for processes without a visible window.
+    public static int NoPowerThrottling(IntPtr process) {
+        PPTS s = new PPTS(); s.Version = 1; s.ControlMask = 0x1 | 0x4; s.StateMask = 0;
+        return SetProcessInformation(process, 4, ref s, (uint)Marshal.SizeOf(typeof(PPTS))) ? 0 : Marshal.GetLastWin32Error();
+    }
 }
 '@
 }
