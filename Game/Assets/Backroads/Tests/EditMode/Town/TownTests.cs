@@ -213,7 +213,7 @@ namespace Backroads.Tests.EditMode.Town
                             foreach (var part in (kv.Value as string ?? "").Split(';'))
                             {
                                 var s = part.Trim().ToLowerInvariant();
-                                if (s.Length >= 4 && names.Add(s)) rawNames++;
+                                if (s.Length >= 4 && !IsGenericName(s) && names.Add(s)) rawNames++;
                             }
                 }
             }
@@ -226,6 +226,18 @@ namespace Backroads.Tests.EditMode.Town
             TestContext.WriteLine($"{tagObjects} tag objects checked, {refsKept} state-route refs kept; {texts.Count} files scanned for {names.Count} names ({rawNames} from the raw download)");
             Assert.IsEmpty(leaks, string.Join("\n", leaks.Distinct().Take(40)));
         }
+
+        /// <summary>Every word generic ("main street", "2nd street", "county road 2"): ordinary English that code comments
+        /// may hold (lane R's "Main Street" class), so it is not scanned. Names with any distinctive word stay in.</summary>
+        static readonly HashSet<string> GenericWords = new HashSet<string>(StringComparer.Ordinal)
+        {
+            "main", "north", "south", "east", "west", "northeast", "northwest", "southeast", "southwest", "street", "road", "lane", "avenue",
+            "drive", "way", "court", "place", "river", "water", "county", "township", "state", "route", "highway", "first", "second", "third",
+        };
+        static readonly Regex Ordinal = new Regex(@"^\d+(st|nd|rd|th)?$");
+
+        public static bool IsGenericName(string lower) =>
+            lower.Split(new[] { ' ', '-', '.', ',', '(', ')' }, StringSplitOptions.RemoveEmptyEntries).All(w => GenericWords.Contains(w) || Ordinal.IsMatch(w));
 
         /// <summary>artifacts/world-src/(town)/osm.json of this checkout, or of the main checkout when this is a worktree.</summary>
         static string RawCache(string id)

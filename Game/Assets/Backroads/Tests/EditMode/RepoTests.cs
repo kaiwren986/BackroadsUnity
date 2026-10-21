@@ -16,6 +16,7 @@ namespace Backroads.Tests.EditMode
         public static readonly string[] HashedTrees =
         {
             "CanonData", "native/EngineSimPlugin/vendor", "native/EngineSimPlugin/generated", "Game/Assets/StreamingAssets", "tools/oracle/traces",
+            "TownData", "WorldData",
         };
 
         /// <summary>Binary by extension: the LFS patterns of .gitattributes plus other formats git treats as binary.</summary>

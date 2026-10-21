@@ -10,7 +10,7 @@ Read this before doing anything. The full design is `docs/PLAN.md`; cite its sec
 4. **Millbrook is canon.** `CanonData/v1` is frozen. Any deviation is recorded in `CanonData/CHANGES.md` with the user's approval and before/after hashes.
 5. **No real brand names or logos** in shipped content: vehicle names, engine names and ids, badges, logos (PLAN §3.10, test `Content.NoRealMarks`). Shapes are not policed: grilles, lamps and silhouettes are fine, and Synty models are used as they are (the user, 2026-10-18).
 6. **Frozen contracts** change only with an ADR in `docs/adr/` and updated tests in the same commit (PLAN §1.10).
-7. Hashed trees (`CanonData/**`, `native/EngineSimPlugin/vendor/**`, `native/EngineSimPlugin/generated/**`, `Game/Assets/StreamingAssets/**`, `tools/oracle/traces/**`) must never contain CR bytes (test `Repo.NoCrInHashedFiles`).
+7. Hashed trees (`CanonData/**`, `native/EngineSimPlugin/vendor/**`, `native/EngineSimPlugin/generated/**`, `Game/Assets/StreamingAssets/**`, `tools/oracle/traces/**`, `TownData/**`, `WorldData/**`) must never contain CR bytes (test `Repo.NoCrInHashedFiles`).
 
 ## Lanes and ownership
 

@@ -1,0 +1,26 @@
+{
+    "name": "Backroads.Tests.EditMode.Town",
+    "rootNamespace": "Backroads.Tests.EditMode.Town",
+    "references": [
+        "Backroads.Core",
+        "Backroads.Build.Editor",
+        "Unity.Mathematics",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

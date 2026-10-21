@@ -74,7 +74,7 @@ namespace Backroads.Core.WorldBake
         /// <summary>JavaScript's /./ : at least one character that is not a line terminator (\n, \r, U+2028, U+2029).</summary>
         static bool AnyValue(string v)
         {
-            foreach (var c in v) if (c != '\n' && c != '\r' && c != ' ' && c != ' ') return true;
+            foreach (var c in v) if (c != '\n' && c != '\r' && c != (char)0x2028 && c != (char)0x2029) return true;
             return false;
         }
 
