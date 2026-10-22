@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using Backroads.Vehicles;
 using NUnit.Framework;
@@ -25,51 +24,6 @@ namespace Backroads.Tests.Perf
     {
         const double BudgetUs = 30, Budget50Ms = 1.0;
         static readonly CultureInfo Ci = CultureInfo.InvariantCulture;
-
-        // ---- Windows: P-cores and E-cores (EfficiencyClass), thread affinity
-        [DllImport("kernel32.dll", SetLastError = true)]
-        static extern bool GetLogicalProcessorInformationEx(int relationship, IntPtr buffer, ref uint length);
-        [DllImport("kernel32.dll")] static extern IntPtr GetCurrentThread();
-        [DllImport("kernel32.dll")] static extern UIntPtr SetThreadAffinityMask(IntPtr thread, UIntPtr mask);
-
-        /// <summary>Affinity masks (group 0) of one core of the fastest and one of the slowest class; true on a hybrid CPU.</summary>
-        static bool CoreMasks(out ulong pMask, out ulong eMask, out string what)
-        {
-            pMask = eMask = 0; what = "unknown";
-            if (Application.platform != RuntimePlatform.WindowsEditor && Application.platform != RuntimePlatform.WindowsPlayer) return false;
-            uint len = 0;
-            GetLogicalProcessorInformationEx(0, IntPtr.Zero, ref len);
-            if (len == 0) return false;
-            var buf = Marshal.AllocHGlobal((int)len);
-            try
-            {
-                if (!GetLogicalProcessorInformationEx(0, buf, ref len)) return false;
-                var cores = new List<(byte cls, ulong mask)>();
-                for (int off = 0; off < len;)
-                {
-                    var p = IntPtr.Add(buf, off);
-                    int rel = Marshal.ReadInt32(p), size = Marshal.ReadInt32(p, 4);
-                    if (rel == 0)
-                    {
-                        byte cls = Marshal.ReadByte(p, 9);
-                        ulong mask = (ulong)Marshal.ReadInt64(p, 32);
-                        ushort group = (ushort)Marshal.ReadInt16(p, 40);
-                        if (group == 0) cores.Add((cls, mask));
-                    }
-                    if (size <= 0) break;
-                    off += size;
-                }
-                if (cores.Count == 0) return false;
-                byte hi = cores.Max(c => c.cls), lo = cores.Min(c => c.cls);
-                // one core of each class (its first logical processor), so the step runs on a single physical core
-                ulong First(ulong m) => m & (~m + 1);
-                pMask = First(cores.First(c => c.cls == hi).mask);
-                eMask = First(cores.Last(c => c.cls == lo).mask);
-                what = hi == lo ? $"{cores.Count} cores, one class (not hybrid: no E-cores, every core counts as a P-core)" : $"{cores.Count(c => c.cls == hi)} P-cores (class {hi}), {cores.Count(c => c.cls == lo)} E-cores (class {lo})";
-                return hi != lo;
-            }
-            finally { Marshal.FreeHGlobal(buf); }
-        }
 
         struct Result { public int n; public string core; public double usPerVehicle, msPerStepMedian, msPerStepP95; }
 
@@ -103,7 +57,7 @@ namespace Backroads.Tests.Perf
                 }
             }
             for (int s = 0; s < 240; s++) { Inputs(s); fleet.Step(); }   // warm up (Burst compiled, everyone moving)
-            var old = mask != 0 ? SetThreadAffinityMask(GetCurrentThread(), (UIntPtr)mask) : UIntPtr.Zero;
+            ulong old = CpuCores.Pin(mask);
             const int Steps = 1200;
             var times = new double[Steps];
             try
@@ -117,7 +71,7 @@ namespace Backroads.Tests.Perf
                     times[s] = sw.Elapsed.TotalMilliseconds;
                 }
             }
-            finally { if (old != UIntPtr.Zero) SetThreadAffinityMask(GetCurrentThread(), old); }
+            finally { CpuCores.Restore(old); }
             Array.Sort(times);
             return new Result
             {
@@ -132,7 +86,7 @@ namespace Backroads.Tests.Perf
         public void StepCost()
         {
             bool gate = Environment.GetEnvironmentVariable("BR_PERF_GATE") == "1";
-            bool hybrid = CoreMasks(out ulong p, out ulong e, out string cpu);
+            bool hybrid = CpuCores.Masks(out ulong p, out ulong e, out string cpu);
             var world = BrvTestTrack.BuildWorld();
             var res = new List<Result>();
             try

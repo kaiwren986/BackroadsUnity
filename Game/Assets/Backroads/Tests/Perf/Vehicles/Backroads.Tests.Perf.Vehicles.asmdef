@@ -5,6 +5,7 @@
         "Backroads.Core",
         "Backroads.World",
         "Backroads.Vehicles",
+        "Backroads.Tests.Perf.EngineSim",
         "Unity.Mathematics",
         "Unity.Collections",
         "Unity.Burst",
