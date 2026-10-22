@@ -116,8 +116,14 @@ tools\ci\unity-tests.ps1 -Platform EditMode -Category "World;Deform;Render"
 
 ## Merge
 
-`$env:BR_OWNERS_BASE = 'ac17549'; $env:BR_OWNERS_LANE = 'W'; tools\ci\gate.ps1 -Tier merge` (T3.2's changes only, lane W paths;
-`ac17549` is T3.1's tip, which main does not have yet): **pass, 8 of 8 steps** (2026-10-22, run
+**Final, after merging main** (`36d9330`: T3.1, S1, S2, T3.4 phase 1; merge commit `c11d005`, no conflicts, nothing
+in it touches the bake's inputs): `$env:BR_OWNERS_BASE = 'main'; $env:BR_OWNERS_LANE = 'W'; tools\ci\gate.ps1 -Tier
+merge`: **pass, 8 of 8 steps** (2026-10-22, run `artifacts\20261022-1242\gate-merge`): unity.editmode 266 passed, 1
+skipped (ServerContents), 0 failed, `Repo.OwnersRespected` 40 changed paths for lane W, `World.BakeDeterministic` equal
+to the committed hashes; unity.playmode 9 of 9; build.servercompile; build.dev (231.1 MiB); autotest.smoke.
+
+Before the merge: `$env:BR_OWNERS_BASE = 'ac17549'; $env:BR_OWNERS_LANE = 'W'; tools\ci\gate.ps1 -Tier merge` (T3.2's changes only, lane W paths;
+`ac17549` is T3.1's tip, which main did not have yet): **pass, 8 of 8 steps** (2026-10-22, run
 `artifacts\20261022-1236\gate-merge`, on `1c4a88f`): oracle.hash; vendor.check (584 files); native.ctest; unity.editmode 225
 passed, 1 skipped (ServerContents: no server build), 0 failed, `Repo.OwnersRespected` 33 changed paths for lane W,
 `Town.NoRealNames` pass; unity.playmode 9 of 9; build.servercompile; build.dev (230.6 MiB); autotest.smoke. A first
