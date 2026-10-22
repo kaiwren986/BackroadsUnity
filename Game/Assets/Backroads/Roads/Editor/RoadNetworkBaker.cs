@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Backroads.Canon.Editor;
@@ -197,6 +198,18 @@ namespace Backroads.Roads.Editor
             return true;
         }
 
+        /// <summary>A junction's approaches as "R12 stop, R13 -, ...", for the close-pair lines.</summary>
+        static string ArmControls(RoadGraph g, GraphNode n)
+        {
+            var parts = new List<string>();
+            foreach (var id in n.arms)
+            {
+                var a = g.arms[id];
+                parts.Add($"R{a.sourceRoad} {(a.control == Control.None ? "-" : a.control.ToString())}");
+            }
+            return string.Join(", ", parts);
+        }
+
         /// <summary>
         /// artifacts/roads/(town)/graph-report.txt: the card's report (junctions by kind, controls by source, complex pairs,
         /// steepest approaches), the import (ways used and skipped, cross sections, heights, the edge, mapped driveways),
@@ -232,9 +245,11 @@ namespace Backroads.Roads.Editor
             foreach (var f in g.features.Where(f => f.problem.Length > 0)) sb.AppendLine($"  osm node {f.osmNode} {f.kind}: {f.problem}");
             sb.AppendLine($"signs overriding the class-first through road: {g.nodes.Count(n => (n.flags & NodeFlags.TagOverridesRule) != 0)}");
             sb.AppendLine();
-            sb.AppendLine("== Complex pairs (junctions < 30 m apart; R4 resolves them one by one)");
+            sb.AppendLine($"== Close junction pairs (roads-R4): {r.mergedJunctions.Count} merged at import (joined by a way under {new OsmImportSettings().mergeJunctions:F0} m), {g.complexPairs.Count} kept as two junctions (< 30 m)");
+            foreach (var x in r.mergedJunctions) sb.AppendLine("  merged: " + x);
             foreach (var p in g.complexPairs.OrderBy(p => p.distance))
-                sb.AppendLine(string.Format(inv, "  nodes {0} and {1}: {2:F1} m  at ({3:F0}, {4:F0})", p.a, p.b, p.distance, g.nodes[p.a].p.x, g.nodes[p.a].p.z));
+                sb.AppendLine(string.Format(inv, "  kept: nodes {0} and {1}: {2:F1} m at ({3:F0}, {4:F0}); controls {5} / {6}", p.a, p.b, p.distance, g.nodes[p.a].p.x, g.nodes[p.a].p.z,
+                    ArmControls(g, g.nodes[p.a]), ArmControls(g, g.nodes[p.b])));
             sb.AppendLine();
             sb.AppendLine("== Steepest approaches (first 20 m, junctions)");
             foreach (var x in g.arms.Where(a => g.nodes[a.node].IsJunctionLike).OrderByDescending(a => Math.Abs(a.grade)).Take(15))

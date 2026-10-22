@@ -28,6 +28,8 @@ namespace Backroads.Roads
     {
         /// <summary>Kerb radii (05 §5.3, CORNER_R): street corners, then the downtown steps; two through roads; rural and service corners; L-bend inner corners.</summary>
         public double rStreet = 7.5, rDowntown = 6.0, rDowntownMin = 4.5, rThrough = 12.0, rRural = 9.0, rBendInner = 6.0, rMin = 2.0;
+        /// <summary>roads-R4 step 5: an alley meets a street like a wide driveway, with small kerb returns.</summary>
+        public double rAlley = 3.0;
         /// <summary>A 7.5 m kerb passing closer than this to a building steps down to 6 then 4.5 m; closer than clearanceMin is reported.</summary>
         public double clearanceWanted = 2.5, clearanceMin = 1.0, clearanceReach = 40.0;
         public double maxTangent = 25.0, backOff = 0.8;
@@ -41,6 +43,8 @@ namespace Backroads.Roads
         public double warp = 12.0, crownPaved = 0.02, crownGravel = 0.04, gutterPan = 0.45, gutterDrop = 0.027, beyondClamp = 0.15, planeMaxSlope = 0.03;
         /// <summary>Curb inlets: upstream of the kerb return tangent on uphill approaches, at flowline low points, every 90 m on grades.</summary>
         public double inletUpstream = 1.5, inletSpacing = 90.0;
+        /// <summary>roads-R4 step 3 (05 §5.12): a gravel or dirt road meeting a paved junction is paved this far from the mouth.</summary>
+        public double apron = 12.0;
     }
 
     /// <summary>One arm of a node with a surface, in its own frame (s outward from the node, +u = left of outward).</summary>
@@ -52,6 +56,8 @@ namespace Backroads.Roads
         public RoadFrame frame;
         public double hwL, hwR;
         public bool kerbed, gravel;
+        /// <summary>A service road tagged service=alley (roads-R4): small corners, no STOP, no marked crosswalk, a dropped-kerb mouth.</summary>
+        public bool alley;
         public double maxMouth;
         /// <summary>Where the left and right kerbs leave this arm for their corners (0 for straight corners).</summary>
         public double tangentL, tangentR;
@@ -109,6 +115,8 @@ namespace Backroads.Roads
         public int edge;
         public double s0, s1;
         public bool kerbed;
+        /// <summary>roads-R4: metres of paved apron from each end of an unpaved road (0: none), measured from s0 and back from s1.</summary>
+        public double apronA, apronB;
         /// <summary>Lateral positions right to left in the edge's frame.</summary>
         public double[] profile;
         public readonly List<double> stationS = new List<double>();
@@ -158,7 +166,7 @@ namespace Backroads.Roads
     /// </summary>
     public static class SurfaceBuilder
     {
-        public const int Version = 1;
+        public const int Version = 2;
         static readonly CultureInfo Inv = CultureInfo.InvariantCulture;
 
         public static RoadSurfaces Build(RoadGraph g, RoadGraphInput input, IReadOnlyDictionary<long, NodeOverride> overrides = null, SurfaceSettings st = null)
@@ -178,6 +186,7 @@ namespace Backroads.Roads
                 res.Add(BuildNode(g, n, frames, buildings, ov, st, res.notes));
             }
             foreach (var e in g.edges) { var r = BuildRibbon(g, e, frames[e.id], res, st); if (r != null) res.ribbons.Add(r); }
+            Aprons(g, res, st);
             Inlets(g, res, frames, st);
             return res;
         }
@@ -196,7 +205,7 @@ namespace Backroads.Roads
                 frame = a.atA ? frames[e.id] : frames[e.id].Reversed(),
                 hwL = a.atA ? eL : eR, hwR = a.atA ? eR : eL,
                 kerbed = KerbRules.Kerbed(road, e.cls),
-                gravel = e.cls == RoadClass.Dirt, control = a.control,
+                gravel = e.cls == RoadClass.Dirt, control = a.control, alley = road?.service == "alley",
             };
             var far = g.nodes[g.FarNode(a)];
             double L = e.Length;
@@ -390,6 +399,7 @@ namespace Backroads.Roads
         {
             clearanceRule = false;
             if (n.kind == NodeKind.Bend) return st.rBendInner;
+            if (I.alley || J.alley) return st.rAlley;
             RoadClass a = I.cls, b = J.cls;
             if (a == RoadClass.Dirt || b == RoadClass.Dirt || a == RoadClass.Yard || b == RoadClass.Yard) return st.rRural;
             if (RoadClasses.IsThroughRoad(a) && RoadClasses.IsThroughRoad(b)) return st.rThrough;
@@ -552,7 +562,9 @@ namespace Backroads.Roads
             foreach (var f in g.features)
                 if (f.kind == RoadFeatureKind.Crossing && f.node == n.id && f.arm == a.arm &&
                     (f.crossing == "marked" || f.crossing == "zebra" || f.crossing == "traffic_signals" || f.crossing == "uncontrolled")) return true;
-            // 05 §5.8: marked at junctions of a main street downtown and at signals
+            // 05 §5.8: marked at junctions of a main street downtown and at signals (never across an alley mouth: the walk
+            // crosses it at the dropped kerb, roads-R4)
+            if (a.alley) return false;
             if (n.control == Control.Signal) return true;
             if (g.downtown == null || g.downtown.Length < 3 || !TownZone.InPolygon(g.downtown, n.p.XZ) || n.Degree < 3) return false;
             foreach (var id in n.arms) if (g.arms[id].cls == RoadClass.MainStreet) return true;
@@ -616,7 +628,9 @@ namespace Backroads.Roads
             bool onA = s < ns.throughNodeS;
             var arm = onA ? ns.arms[ns.majorArmA] : ns.arms[ns.majorArmB];
             double hwLeft = onA ? arm.hwR : arm.hwL, hwRight = onA ? arm.hwL : arm.hwR;
-            return ns.through.Y(s) + Crown(u, hwLeft, hwRight, arm.kerbed, arm.gravel, st);
+            // roads-R4 step 4: where a kerbed road meets an unkerbed one the gutter pan runs out (the kerbed ribbon warps onto this)
+            bool kerbed = ns.arms[ns.majorArmA].kerbed && ns.arms[ns.majorArmB].kerbed;
+            return ns.through.Y(s) + Crown(u, hwLeft, hwRight, kerbed, arm.gravel, st);
         }
 
         /// <summary>The cross slope at lateral offset u (05 §5.6): crown, the gutter pan on kerbed roads, the last slope continued beyond the edge clamped to 0.15 m.</summary>
@@ -978,6 +992,68 @@ namespace Backroads.Roads
             if (t <= 0) return 0;
             if (t >= 1) return 1;
             return t * t * (3 - 2 * t);
+        }
+
+        // ------------------------------------------------------------------ paved aprons (roads-R4 step 3, 05 §5.12)
+
+        static bool EdgePaved(RoadGraph g, int edge)
+        {
+            var e = g.edges[edge];
+            return KerbRules.Paved(KerbRules.Surface(e.cls, g.RoadOf(e.sourceRoad)?.surface));
+        }
+
+        /// <summary>
+        /// Where an unpaved road (gravel, dirt; not an alley) meets a junction whose own surface is paved, its first
+        /// `apron` metres from the mouth are paved too, so gravel never spills onto the asphalt and the stop line has paint.
+        /// </summary>
+        static void Aprons(RoadGraph g, RoadSurfaces res, SurfaceSettings st)
+        {
+            foreach (var r in res.ribbons)
+            {
+                if (EdgePaved(g, r.edge)) continue;
+                var e = g.edges[r.edge];
+                foreach (var (node, atA) in new[] { (e.nodeA, true), (e.nodeB, false) })
+                {
+                    var ns = res.Of(node);
+                    if (ns == null || ns.mode == SurfaceMode.Fallback || ns.arms.Count < 2) continue;
+                    ArmSurface self = null, main = null;
+                    foreach (var a in ns.arms)
+                    {
+                        if (a.edge == e.id && a.atA == atA) self = a;
+                        if (main == null || RoadClasses.Rank(a.cls) > RoadClasses.Rank(main.cls)) main = a;
+                    }
+                    if (self == null || self.alley || !EdgePaved(g, main.edge)) continue;
+                    double len = Math.Min(st.apron, 0.5 * (r.s1 - r.s0));
+                    if (atA) r.apronA = len; else r.apronB = len;
+                }
+            }
+        }
+
+        /// <summary>Is the road surface at arc length s of an edge paved (its class and tags, or a paved apron)?</summary>
+        public static bool PavedAt(RoadGraph g, RoadSurfaces surf, int edge, double s)
+        {
+            if (EdgePaved(g, edge)) return true;
+            foreach (var r in surf.ribbons)
+            {
+                if (r.edge != edge) continue;
+                if (r.apronA > 0 && s <= r.s0 + r.apronA + 1e-6) return true;
+                if (r.apronB > 0 && s >= r.s1 - r.apronB - 1e-6) return true;
+            }
+            // inside a junction surface: paved when the junction is
+            var e = g.edges[edge];
+            foreach (var (node, atA) in new[] { (e.nodeA, true), (e.nodeB, false) })
+            {
+                var ns = surf.Of(node);
+                if (ns == null || ns.mode == SurfaceMode.Fallback) continue;
+                foreach (var a in ns.arms)
+                    if (a.edge == edge && a.atA == atA && (atA ? s : e.Length - s) <= a.sMouth + 1e-6)
+                    {
+                        ArmSurface main = null;
+                        foreach (var b in ns.arms) if (main == null || RoadClasses.Rank(b.cls) > RoadClasses.Rank(main.cls)) main = b;
+                        return EdgePaved(g, main.edge);
+                    }
+            }
+            return false;
         }
 
         // ------------------------------------------------------------------ curb inlets (05 §5.6)

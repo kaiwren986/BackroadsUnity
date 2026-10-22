@@ -19,7 +19,7 @@ namespace Backroads.Roads.Editor
     /// </summary>
     public static class RoadPlateBuilder
     {
-        public const int Version = 1;
+        public const int Version = 2;
         public const int PriorityVerge = 0, PriorityWalk = 10, PriorityRibbon = 20, PriorityJunction = 30, PriorityApron = 40;
         public const byte Grass = 0, Gravel = 5, Concrete = 6;
         static readonly CultureInfo Inv = CultureInfo.InvariantCulture;
@@ -58,11 +58,15 @@ namespace Backroads.Roads.Editor
                 if (OnStructure(g, r.edge)) continue;
                 var e = g.edges[r.edge];
                 var road = g.RoadOf(e.sourceRoad);
-                byte surface = KerbRules.Surface(e.cls, road?.surface);
-                bool paved = KerbRules.Paved(surface);
-                double sink = paved ? st.sinkAsphalt : 0;
+                byte own = KerbRules.Surface(e.cls, road?.surface);
                 int P = r.profile.Length;
                 for (int q = 0; q + 1 < r.stations.Count; q++)
+                {
+                    // roads-R4: an unpaved road's paved apron at a junction is asphalt like the junction
+                    bool apron = !KerbRules.Paved(own) && InApron(r, r.stationS[q], r.stationS[q + 1]);
+                    byte surface = apron ? (byte)4 : own;
+                    bool paved = KerbRules.Paved(surface);
+                    double sink = paved ? st.sinkAsphalt : 0;
                     for (int k = 0; k + 1 < P; k++)
                     {
                         var A = r.stations[q][k];
@@ -72,8 +76,13 @@ namespace Backroads.Roads.Editor
                         string id = string.Format(Inv, "road:e{0:D4}:{1:D4}:{2}", r.edge, q, k);
                         Piece(plates, id, PlateKind.Road, surface, paved, PriorityRibbon, 2f, new[] { A, B, C, D }, sink);
                     }
+                }
             }
         }
+
+        /// <summary>The stretch [a, b] of a ribbon lies within one of its paved aprons (roads-R4).</summary>
+        public static bool InApron(RibbonSurface r, double a, double b) =>
+            (r.apronA > 0 && b <= r.s0 + r.apronA + 1e-6) || (r.apronB > 0 && a >= r.s1 - r.apronB - 1e-6);
 
         static void Junctions(RoadGraph g, RoadSurfaces surf, KerbSettings st, List<Plate> plates)
         {

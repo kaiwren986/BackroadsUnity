@@ -24,6 +24,10 @@ namespace Backroads.Roads
         public double cornerReturnLocal = 3.0, cornerReturnMajor = 9.0;
         /// <summary>Depressed corners (05 §5.7): the lowered stretch is half the arc, clamped to these; ramps of rampRun either side.</summary>
         public double depressedMin = 2.4, depressedMax = 6.0, rampRun = 1.83, landing = 1.2, warningDepth = 0.61;
+        /// <summary>roads-R4: an alley mouth's dropped kerb flares back to the barrier over this length each side (the corner ramp run: 6.8 %).</summary>
+        public double alleyFlare = 1.83;
+        /// <summary>roads-R4 step 4 (05 §5.12): where kerbs end at an unkerbed road the kerb tapers to flush over this length; the walk ramps down with it.</summary>
+        public double taper = 3.0;
         /// <summary>Perpendicular ramps where the walk is at least this deep: two openings this wide per corner, run, landing.</summary>
         public double perpendicularDepth = 3.2, perpRampWidth = 1.5, perpRampRun = 2.0;
         /// <summary>Forbidden margins: stop-line zone half length, crosswalk margin, inlet half length.</summary>

@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: BrRoadNetwork
   m_EditorClassIdentifier: Backroads.Roads::Backroads.Roads.RoadNetworkAsset
   formatVersion: 4
-  builderVersion: 2
+  builderVersion: 3
   importerVersion: 0
   surfaceVersion: 0
   source: CanonData/v1
   sourceManifestSha256: a112c66d5c517e52673ed84197fb692202177e52e02ade57ac3c607b42825b2b
-  contentHash: f22328f64d190799cf58b5df1749b29589043fef27439562d2107d5e65d1b858
+  contentHash: 411af22d8b818ba3128f7b82d00a84ab49b2d8b6c8fb6658b103c7e2d28d622a
   inputRoads: 24
   inputPoints: 1722
   nodes:
@@ -27,8 +27,8 @@ MonoBehaviour:
     osmNode: 0
     position: {x: 70, y: 13.335372, z: 30}
     kind: 0
-    control: 0
-    controlSource: 0
+    control: 3
+    controlSource: 1
     flags: 3
     firstArm: 0
     armCount: 3
@@ -43,8 +43,8 @@ MonoBehaviour:
     osmNode: 0
     position: {x: 56.82801, y: 13.335274, z: 25.700035}
     kind: 0
-    control: 0
-    controlSource: 0
+    control: 2
+    controlSource: 1
     flags: 3
     firstArm: 3
     armCount: 3
@@ -536,8 +536,8 @@ MonoBehaviour:
     mouth: 11.4297
     maxMouth: 3.9966578
     shortArm: 1
-    control: 0
-    controlSource: 0
+    control: 3
+    controlSource: 1
     controlOsmNode: 0
     controlDistance: 0
     sMouth: 0
@@ -563,8 +563,8 @@ MonoBehaviour:
     mouth: 11.578672
     maxMouth: 23.399904
     shortArm: 0
-    control: 0
-    controlSource: 0
+    control: 3
+    controlSource: 1
     controlOsmNode: 0
     controlDistance: 0
     sMouth: 0
@@ -590,8 +590,8 @@ MonoBehaviour:
     mouth: 11.578672
     maxMouth: 33.299904
     shortArm: 0
-    control: 0
-    controlSource: 0
+    control: 3
+    controlSource: 1
     controlOsmNode: 0
     controlDistance: 0
     sMouth: 0
@@ -671,8 +671,8 @@ MonoBehaviour:
     mouth: 19.511164
     maxMouth: 20.699999
     shortArm: 0
-    control: 0
-    controlSource: 0
+    control: 2
+    controlSource: 1
     controlOsmNode: 0
     controlDistance: 0
     sMouth: 0
@@ -8383,8 +8383,8 @@ MonoBehaviour:
   mappedDriveways: []
   steep: []
   notes:
-  - 'complex pair: nodes 0 and 1 are 13.86 m apart (< 30 m); they need an override
-    before R1 can shape them'
+  - 'complex pair: nodes 0 and 1 are 13.86 m apart (< 30 m); two junctions, each
+    shaped and controlled by the usual rules (roads-R4)'
   - 'short arm: node 0 (Junction) arm R0 is 14.00 m long; its provisional mouth needs
     11.4 m (room 4.0 m)'
   - 'short arm: node 1 (Junction) arm R0 is 14.00 m long; its provisional mouth needs

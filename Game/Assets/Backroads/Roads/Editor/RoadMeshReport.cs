@@ -105,7 +105,9 @@ namespace Backroads.Roads.Editor
                     if (k < 0) continue;
                     bool hasLine = meshes.parts.Any(p => p.marking == MarkingKind.StopLine && p.node == arm.node && p.arm == k);
                     var e = g.edges[arm.edge];
-                    bool paved = KerbRules.Paved(KerbRules.Surface(e.cls, g.RoadOf(e.sourceRoad)?.surface));
+                    var sa = ns.arms[k];
+                    bool paved = KerbRules.Paved(KerbRules.Surface(e.cls, g.RoadOf(e.sourceRoad)?.surface))
+                        || (sa.sStop >= 0 && SurfaceBuilder.PavedAt(g, surf, arm.edge, sa.atA ? sa.sStop : e.Length - sa.sStop));
                     if (StopLike(arm.control) && paved && ns.mode != SurfaceMode.Fallback && !hasLine) c.lineProblems.Add($"node {arm.node} arm {k}: a {arm.control} approach without a stop line");
                 }
             // every mapped sign or signal is honoured, or says why not

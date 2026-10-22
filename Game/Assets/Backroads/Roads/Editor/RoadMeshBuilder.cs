@@ -32,7 +32,7 @@ namespace Backroads.Roads.Editor
     /// </summary>
     public static class RoadMeshBuilder
     {
-        public const int Version = 1;
+        public const int Version = 2;
         public const double PieceLength = 32.0, PaintLift = 0.004, SkirtDepth = 0.15;
         public static readonly Color32 White = new Color32(217, 217, 209, 255), Yellow = new Color32(217, 158, 26, 255), WarningYellow = new Color32(232, 186, 36, 255);
         static readonly Vector3 Up = new Vector3(0, 1, 0);
@@ -68,34 +68,47 @@ namespace Backroads.Roads.Editor
             foreach (var i in surf.inlets) inlets.Add(i.p.XZ);
             foreach (var r in surf.ribbons)
             {
-                if (!Paved(g, r.edge) || r.stations.Count < 2) continue;
                 int P = r.profile.Length, n = r.stations.Count;
-                int q0 = 0;
-                while (q0 < n - 1)
+                if (n < 2) continue;
+                // paved runs of stations: the whole ribbon, or only an unpaved road's aprons (roads-R4), their gravel end feathered
+                var runs = new List<(int a, int b, bool apronEnd)>();
+                if (Paved(g, r.edge)) runs.Add((0, n - 1, false));
+                else
                 {
-                    int q1 = q0 + 1;
-                    while (q1 < n - 1 && r.stationS[q1] - r.stationS[q0] < PieceLength) q1++;
-                    var part = new RoadMeshPart { material = RoadMaterial.Asphalt, collider = true, smooth = 1, edge = r.edge };
-                    var ix = new int[q1 - q0 + 1, P];
-                    for (int q = q0; q <= q1; q++)
-                        for (int k = 0; k < P; k++)
-                        {
-                            var p = r.stations[q][k];
-                            bool edgeVert = k == 0 || k == P - 1;
-                            byte wet = (byte)(r.kerbed && edgeVert ? 255 : NearInlet(inlets, p.XZ) ? 160 : 0);
-                            byte blend = (byte)(!r.kerbed && edgeVert ? 0 : 255);
-                            ix[q - q0, k] = part.Add(p, World(p, 4), new Vector2((float)r.profile[k], (float)r.stationS[q]), new Color32(0, wet, Patch(r.edge, 1), blend));
-                        }
-                    for (int q = q0; q < q1; q++)
-                        for (int k = 0; k + 1 < P; k++)
-                        {
-                            int a = ix[q - q0, k], b = ix[q + 1 - q0, k], c = ix[q + 1 - q0, k + 1], d = ix[q - q0, k + 1];
-                            part.Tri(a, b, c, Up);
-                            part.Tri(a, c, d, Up);
-                        }
-                    idx.Add(part);
-                    m.parts.Add(part);
-                    q0 = q1;
+                    int qa = 0, qb = n - 1;
+                    if (r.apronA > 0) { while (qa + 1 < n && r.stationS[qa + 1] <= r.s0 + r.apronA + 1e-6) qa++; if (qa > 0) runs.Add((0, qa, true)); }
+                    if (r.apronB > 0) { while (qb - 1 >= 0 && r.stationS[qb - 1] >= r.s1 - r.apronB - 1e-6) qb--; if (qb < n - 1) runs.Add((qb, n - 1, true)); }
+                }
+                foreach (var (ra, rb, apronEnd) in runs)
+                {
+                    int q0 = ra;
+                    while (q0 < rb)
+                    {
+                        int q1 = q0 + 1;
+                        while (q1 < rb && r.stationS[q1] - r.stationS[q0] < PieceLength) q1++;
+                        var part = new RoadMeshPart { material = RoadMaterial.Asphalt, collider = true, smooth = 1, edge = r.edge };
+                        var ix = new int[q1 - q0 + 1, P];
+                        for (int q = q0; q <= q1; q++)
+                            for (int k = 0; k < P; k++)
+                            {
+                                var p = r.stations[q][k];
+                                bool edgeVert = k == 0 || k == P - 1;
+                                bool gravelEnd = apronEnd && ((ra == 0 && q == rb) || (rb == n - 1 && q == ra));
+                                byte wet = (byte)(r.kerbed && edgeVert ? 255 : NearInlet(inlets, p.XZ) ? 160 : 0);
+                                byte blend = (byte)((!r.kerbed && edgeVert) || gravelEnd ? 0 : 255);
+                                ix[q - q0, k] = part.Add(p, World(p, 4), new Vector2((float)r.profile[k], (float)r.stationS[q]), new Color32(0, wet, Patch(r.edge, 1), blend));
+                            }
+                        for (int q = q0; q < q1; q++)
+                            for (int k = 0; k + 1 < P; k++)
+                            {
+                                int a = ix[q - q0, k], b = ix[q + 1 - q0, k], c = ix[q + 1 - q0, k + 1], d = ix[q - q0, k + 1];
+                                part.Tri(a, b, c, Up);
+                                part.Tri(a, c, d, Up);
+                            }
+                        idx.Add(part);
+                        m.parts.Add(part);
+                        q0 = q1;
+                    }
                 }
             }
         }
@@ -300,7 +313,8 @@ namespace Backroads.Roads.Editor
                 for (int k = 0; k < ns.arms.Count; k++)
                 {
                     var a = ns.arms[k];
-                    if (!Paved(g, a.edge)) continue;
+                    // an unpaved approach is painted only where its apron makes it paved (roads-R4)
+                    if (!Paved(g, a.edge) && !(a.sStop >= 0 && SurfaceBuilder.PavedAt(g, surf, a.edge, a.atA ? a.sStop : g.edges[a.edge].Length - a.sStop))) continue;
                     var road = g.RoadOf(g.edges[a.edge].sourceRoad);
                     int ow = road?.oneway ?? 0;
                     bool inboundOnly = (ow == 1 && !a.atA) || (ow == -1 && a.atA);
@@ -409,7 +423,7 @@ namespace Backroads.Roads.Editor
                 for (int i = 0; i < f.Count; i++)
                 {
                     double h = KerbBuilder.KerbHeight(kn, f, f.t0 + f.s[i], st);
-                    bool lowered = h <= st.dropped + 1e-6 && f.width[i] >= st.kerbTop + 0.4;
+                    bool lowered = h <= st.dropped + 1e-6 && f.width[i] >= st.kerbTop + 0.4 && KerbBuilder.WarningAt(kn, f, f.t0 + f.s[i], st);
                     if (!lowered) { part = null; continue; }
                     double u0 = st.kerbTop, u1 = Math.Min(f.width[i], st.kerbTop + st.warningDepth);
                     var pa = f.kerb[i] + f.normal[i] * u0;

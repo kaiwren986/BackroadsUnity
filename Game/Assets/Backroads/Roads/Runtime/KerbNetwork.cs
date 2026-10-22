@@ -8,7 +8,8 @@ namespace Backroads.Roads
     public enum KerbOwner : byte { None = 0, Side = 1, Cap = 2, Mouth = 3, Edge = 4 }
 
     /// <summary>How a kerbed corner lets people down to the street (05 §5.7).</summary>
-    public enum RampKind : byte { None = 0, Depressed = 1, Perpendicular = 2 }
+    /// <summary>None, a depressed corner, perpendicular ramps, or an alley mouth (roads-R4: a dropped kerb along the whole return, flush for cars and people).</summary>
+    public enum RampKind : byte { None = 0, Depressed = 1, Perpendicular = 2, AlleyMouth = 3 }
 
     /// <summary>
     /// One block outline (roads-R2, 05 §5.7): the boundary of (play area − roads and junction surfaces), with the block on
@@ -76,6 +77,8 @@ namespace Backroads.Roads
         public readonly List<D2> normal = new List<D2>();
         public readonly List<ForbiddenInterval> forbidden = new List<ForbiddenInterval>();
         public int cornerStart = -1, cornerEnd = -1;
+        /// <summary>roads-R4: the kerb tapers to flush over KerbSettings.taper at this end (an unkerbed face follows on the loop).</summary>
+        public bool taperStart, taperEnd;
         /// <summary>Every kerb return whose arc, lowered stretch or ramps reach this face.</summary>
         public readonly List<int> corners = new List<int>();
         /// <summary>The smallest kerb-to-building distance on the face and where (NaN when no building is near).</summary>
@@ -113,6 +116,8 @@ namespace Backroads.Roads
         /// <summary>Kerbed stations closer to a building than the walk needs (05 §8.4), one line per face.</summary>
         public readonly List<string> clearance = new List<string>();
         public int slivers;
+        /// <summary>roads-R4 step 4: kerb ends tapered to flush where a kerbed face meets an unkerbed one (class changes, rural corners).</summary>
+        public int tapers;
 
         public KerbFace Face(int id) => id >= 0 && id < faces.Count ? faces[id] : null;
     }

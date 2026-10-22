@@ -132,7 +132,7 @@ namespace Backroads.Tests.EditMode.Roads
             Major(9, 3, 3, Control.MinorStop);
             Major(17, 16, 17, Control.MinorStop);
             Major(19, 14, 15, Control.MinorStop);
-            Major(1, 0, 0, Control.None); // complex pair with node 0: no control until decision U8
+            Major(1, 0, 0, Control.MinorStop); // complex pair with node 0: the usual rules since roads-R4
 
             // node 16: the only street-by-street X, all-way stop, so no major (05 §5.1 step 7, §6.2 rule 4)
             Assert.IsFalse(N(16).HasMajor);

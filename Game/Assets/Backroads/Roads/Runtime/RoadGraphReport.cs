@@ -43,7 +43,7 @@ namespace Backroads.Roads
 
         /// <summary>
         /// Every junction-like node with a major road has it on the highest-ranked arms (class first, 05 §5.1 step 7); one
-        /// without has a reason (equal classes under an all-way stop, a bend over the limit, or an unresolved complex pair).
+        /// without has a reason (equal classes under an all-way stop, or a bend over the limit; complex pairs take the same rules since roads-R4).
         /// </summary>
         public static List<string> MajorProblems(RoadGraph g)
         {
@@ -68,8 +68,7 @@ namespace Backroads.Roads
                     bool allSame = true;
                     foreach (var id in n.arms) if (g.arms[id].cls != g.Arm(n, 0).cls) allSame = false;
                     bool ok = (allSame && (n.control == Control.AllWayStop || n.control == Control.Signal))
-                              || n.bestPairBend > g.settings.majorMaxBend
-                              || (n.flags & NodeFlags.ComplexPair) != 0;
+                              || n.bestPairBend > g.settings.majorMaxBend;
                     if (!ok) bad.Add($"node {n.id} ({n.kind}): no major road and no reason for it");
                 }
             }
