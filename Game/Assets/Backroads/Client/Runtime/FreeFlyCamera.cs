@@ -17,6 +17,8 @@ namespace Backroads.Client
         public float speed = 30f;
         public float lookSensitivity = 0.12f;
         public float minClearance = 1.2f;
+        [Tooltip("How far from the world's centre the camera may go (700 m over the canon test world's 512 m half; T3.3: the world root sets it).")]
+        public float extent = 700f;
         public bool ScriptedControl;
 
         float _yaw, _pitch;
@@ -66,12 +68,12 @@ namespace Backroads.Client
         /// <summary>Moves to a position, kept above the ground and over the island.</summary>
         public void MoveTo(Vector3 p)
         {
-            p.x = Mathf.Clamp(p.x, -700f, 700f);
-            p.z = Mathf.Clamp(p.z, -700f, 700f);
+            p.x = Mathf.Clamp(p.x, -extent, extent);
+            p.z = Mathf.Clamp(p.z, -extent, extent);
             p.y = Mathf.Clamp(p.y, -20f, 2000f);
-            if (CanonRuntime.IsLoaded)
+            if (ActiveWorld.TryGrid(out var grid))
             {
-                float ground = WorldGridQueries.HeightAt(CanonRuntime.Grid.View, new float3(p.x, 0, p.z));
+                float ground = WorldGridQueries.HeightAt(grid.View, new float3(p.x, 0, p.z));
                 p.y = Mathf.Max(p.y, Mathf.Max(ground, 0f) + minClearance);
             }
             transform.position = p;

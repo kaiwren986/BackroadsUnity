@@ -1,0 +1,13 @@
+{
+  "id": "m3.perf.flythrough",
+  "kind": "perf-flythrough-millbrook",
+  "seconds": 0,
+  "screenshot": false,
+  "childTimeoutSeconds": 600,
+  "legSeconds": 4,
+  "warmupSeconds": 2,
+  "loadTimeoutSeconds": 240,
+  "p95GateMs": 16.6,
+  "failOnGate": false,
+  "notes": "T3.3 done-when (report only, the budget is set at M5): a flight through the 12 views of the new Millbrook and a low pass along the village street at the run quality (default High) and 2560x1440; frame-time percentiles, chunk builds, load times."
+}
