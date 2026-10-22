@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Backroads.Testing
 {
-    /// <summary>Shared helpers of lane W's player autotests (Millbrook).</summary>
+    /// <summary>Shared helpers of lane W's player autotests (the canon test world, CanonTestWorld.unity).</summary>
     static class WorldScenarioUtil
     {
         /// <summary>Waits until MillbrookWorld has built everything (or failed, or the timeout ran out).</summary>
@@ -19,7 +19,7 @@ namespace Backroads.Testing
                 yield return null;
             }
             var world = MillbrookWorld.Current;
-            if (world == null) ctx.Fail("no MillbrookWorld in the first scene (is Millbrook.unity the first scene of the build?)");
+            if (world == null) ctx.Fail("no MillbrookWorld in the first scene (is CanonTestWorld.unity the first scene of the build?)");
             else if (world.Error != null) ctx.Fail("Millbrook failed to load: " + world.Error);
             else if (!world.Ready) ctx.Fail($"Millbrook not ready after {timeoutSeconds:F0} s");
         }
