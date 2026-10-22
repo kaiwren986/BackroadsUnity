@@ -80,7 +80,7 @@ Plan maps: `artifacts\sites\s2\*.svg` (written by the tests).
 ## Merge
 
 `$env:BR_OWNERS_BASE = 'main'; $env:BR_OWNERS_LANE = 'S'; tools\ci\gate.ps1 -Tier merge` (lane S paths only):
-**pass, 8 of 8 steps** (2026-10-22, run `artifacts61022-1109\gate-merge`, on `c9634f2`): oracle.hash; vendor.check
+**pass, 8 of 8 steps** (2026-10-22, run `artifacts\20261022-1109\gate-merge`, on `c9634f2`): oracle.hash; vendor.check
 (584 files, 0 differences); native.ctest; unity.editmode 236 passed, 1 skipped (ServerContents: no server build), 0
 failed; unity.playmode 9 of 9; build.servercompile; build.dev (231 MiB); autotest.smoke. The native step's
 `EngineSimPlugin.dll` was restored afterwards (lane V's, committed only at milestone tags).
