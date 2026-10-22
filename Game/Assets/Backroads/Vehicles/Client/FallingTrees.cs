@@ -23,12 +23,13 @@ namespace Backroads.Vehicles.Client
         public void Knock(TreeKnock k)
         {
             Knocked++;
-            var canon = CanonRuntime.Asset;
-            if (canon == null || k.tree < 0 || k.tree >= canon.vegetation.trees.Length) return;
+            // the world the vehicles drive in (T3.6), else the canon
+            var veg = ActiveWorld.IsSet ? ActiveWorld.Vegetation : CanonRuntime.Asset != null ? CanonRuntime.Asset.vegetation : null;
+            if (veg == null || k.tree < 0 || k.tree >= veg.trees.Length) return;
             if (_vegetation == null) { var go = GameObject.Find("Vegetation"); if (go != null) _vegetation = go.transform; }
             if (_vegetation == null) return;
-            var tree = canon.vegetation.trees[k.tree];
-            var sp = _vegetation.Find(canon.vegetation.species[tree.sp].name);
+            var tree = veg.trees[k.tree];
+            var sp = _vegetation.Find(veg.species[tree.sp].name);
             var t = sp != null ? sp.Find("t" + k.tree) : null;
             if (t == null) return;
             _falling.Add(new Falling { t = t, fall = 0, yawJs = Mathf.Atan2(k.dirX, k.dirZ), pos = t.localPosition });
