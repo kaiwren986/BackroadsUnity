@@ -31,6 +31,10 @@ namespace Backroads.Roads.Editor
             public List<BridgeDeck> bridges;
             /// <summary>roads-R3: the road meshes before chunking (filled by RoadNetworkBaker.BakeMeshes).</summary>
             public RoadMeshes meshes;
+            /// <summary>Lane S's driveway cuts, resolved against this bake's frontage (RoadDriveways.ForBake; null without a driveways file), the cutter that made them and the file's SHA-256.</summary>
+            public DrivewayCut[] cuts;
+            public DrivewayCutter cutter;
+            public string drivewaysSha256 = "";
             public string town => roads.town;
         }
 

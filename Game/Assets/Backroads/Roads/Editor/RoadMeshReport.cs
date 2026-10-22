@@ -172,6 +172,8 @@ namespace Backroads.Roads.Editor
                 int maxT = chunks.chunks.Length > 0 ? chunks.chunks.Max(x => x.lod0Triangles) : 0, maxV = chunks.chunks.Length > 0 ? chunks.chunks.Max(x => x.vertices) : 0;
                 sb.AppendLine(string.Format(inv, "largest chunk: {0} LOD0 triangles, {1} vertices", maxT, maxV));
             }
+            sb.AppendLine(string.Format(inv, "driveway cuts (lane S's driveways.json {0}): {1} kerbed (dropped kerb and lowered walk, {2:F0} m of throat), {3} paved slabs across a shoulder, {4} unpaved on the ground",
+                string.IsNullOrEmpty(k.drivewaysSha256) ? "none" : k.drivewaysSha256.Substring(0, 12), k.meshes.cutsKerbed, k.meshes.droppedKerbM, k.meshes.cutsSlab, k.meshes.cutsUnpaved));
             var parts = k.meshes.parts;
             sb.AppendLine("parts: " + string.Join(", ", parts.GroupBy(p => (p.material, p.material == RoadMaterial.Paint ? p.marking.ToString() : ""))
                 .OrderBy(x => x.Key.material).Select(x => string.Format(inv, "{0}{1} {2} ({3} tris)", x.Key.material, x.Key.Item2.Length > 0 ? "/" + x.Key.Item2 : "", x.Count(), x.Sum(p => p.Triangles)))));

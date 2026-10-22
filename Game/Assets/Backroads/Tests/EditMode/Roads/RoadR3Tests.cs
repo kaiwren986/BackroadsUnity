@@ -42,9 +42,11 @@ namespace Backroads.Tests.EditMode.Roads
             var streets = StreetNamer.Assign(k.g, names.names, names.approved);
             var props = RoadPropBuilder.Build(k.g, k.s, k.kn, streets, k.k.settings);
             var bridges = BridgeBuilder.Build(k.g, k.k.roads.source.dem, null, k.k.roads.source.bridgeOver);
-            var meshes = RoadMeshBuilder.Build(k.g, k.s, k.kn, streets, k.k.settings, bridges, k.k.roads.source.dem);
+            // lane S's driveway cuts, as the bake drops them into the kerbs and walks (the town only)
+            var cuts = RoadDriveways.ForBake(k.k);
+            var meshes = RoadMeshBuilder.Build(k.g, k.s, k.kn, streets, k.k.settings, bridges, k.k.roads.source.dem, cuts, k.k.cutter);
             double half = k.k.roads.source.playHalf;
-            var chunks = RoadChunkBaker.Build(meshes, half, k.g.source, "", "", out _, out _);
+            var chunks = RoadChunkBaker.Build(meshes, half, k.g.source, "", "", k.k.drivewaysSha256, out _, out _);
             b = new Bake { k = k, streets = streets, props = props, meshes = meshes, bridges = bridges, chunks = chunks, half = half, checks = RoadMeshReport.Run(k.g, k.s, props, meshes, chunks, half) };
             s_Cache[which] = b;
             return b;
@@ -190,7 +192,7 @@ namespace Backroads.Tests.EditMode.Roads
             Assert.LessOrEqual(set.lod1Triangles, set.lod0Triangles);
             foreach (var c in set.chunks) Assert.Less(c.vertices, 65536, "a chunk fits 16-bit indices");
             // determinism: the same bake twice
-            var again = RoadChunkBaker.Build(RoadMeshBuilder.Build(b.k.g, b.k.s, b.k.kn, b.streets, b.k.k.settings, b.bridges, b.k.k.roads.source.dem), b.half, b.k.g.source, "", "", out _, out _);
+            var again = RoadChunkBaker.Build(RoadMeshBuilder.Build(b.k.g, b.k.s, b.k.kn, b.streets, b.k.k.settings, b.bridges, b.k.k.roads.source.dem, b.k.k.cuts, b.k.k.cutter), b.half, b.k.g.source, "", "", b.k.k.drivewaysSha256, out _, out _);
             try { Assert.AreEqual(set.contentHash, again.contentHash, "two mesh bakes agree"); }
             finally { UnityEngine.Object.DestroyImmediate(again); }
         }
@@ -211,7 +213,8 @@ namespace Backroads.Tests.EditMode.Roads
             Assert.Greater(road.props.Length, 0);
             // the committed set matches a fresh bake (same network and frontage hashes)
             var b = Get("town");
-            var fresh = RoadChunkBaker.Build(b.meshes, b.half, b.k.g.source, road.contentHash, frontage.contentHash, out _, out _);
+            Assert.AreEqual(b.k.k.drivewaysSha256, baked.drivewaysSha256, "the committed chunks carry the cuts of the current driveways.json");
+            var fresh = RoadChunkBaker.Build(b.meshes, b.half, b.k.g.source, road.contentHash, frontage.contentHash, b.k.k.drivewaysSha256, out _, out _);
             try { Assert.AreEqual(baked.contentHash, fresh.contentHash, "the committed road chunks are current (run RoadBakeCli.BakeTowns)"); }
             finally { UnityEngine.Object.DestroyImmediate(fresh); }
             // every chunk decodes into meshes and a collider

@@ -40,7 +40,8 @@ namespace Backroads.Tests.EditMode.Roads
             var sw = Stopwatch.StartNew();
             var net = RoadNetworkBaker.BakeTownWithKerbs(town, out var b, out var k, out var frontage);
             var chunks = RoadNetworkBaker.BakeMeshes(k, net.contentHash, frontage.contentHash, out _);
-            var plates = RoadPlateBuilder.Build(b.graph, b.surfaces, k.kerbs, b.source?.dem, k.settings);
+            // the plates as lane W bakes them: with the apron plates of lane S's driveway cuts
+            var plates = RoadPlateBuilder.Build(b.graph, b.surfaces, k.kerbs, b.source?.dem, k.settings, k.cuts, k.cutter);
             double bakeS = sw.Elapsed.TotalSeconds;
             RoadNetworkAsset net2 = null;
             KerbFrontageAsset frontage2 = null;
@@ -137,7 +138,7 @@ namespace Backroads.Tests.EditMode.Roads
                 var sw2 = Stopwatch.StartNew();
                 net2 = RoadNetworkBaker.BakeTownWithKerbs(town, out var b2, out var k2, out frontage2);
                 chunks2 = RoadNetworkBaker.BakeMeshes(k2, net2.contentHash, frontage2.contentHash, out _);
-                var plates2 = RoadPlateBuilder.Build(b2.graph, b2.surfaces, k2.kerbs, b2.source?.dem, k2.settings);
+                var plates2 = RoadPlateBuilder.Build(b2.graph, b2.surfaces, k2.kerbs, b2.source?.dem, k2.settings, k2.cuts, k2.cutter);
                 string ph1 = Kerbs.PlateHash(plates), ph2 = Kerbs.PlateHash(plates2);
                 if (net.contentHash != net2.contentHash) errors.Add($"§8.9: two bakes give road networks {net.contentHash} and {net2.contentHash}");
                 if (frontage.contentHash != frontage2.contentHash) errors.Add($"§8.9: two bakes give frontages {frontage.contentHash} and {frontage2.contentHash}");
@@ -165,6 +166,7 @@ namespace Backroads.Tests.EditMode.Roads
                 {
                     if (cChunks.contentHash != chunks.contentHash) errors.Add($"§8.9: the committed road chunks are stale ({cChunks.contentHash} vs fresh {chunks.contentHash}): run RoadBakeCli.BakeTowns");
                     if (cChunks.roadContentHash != net.contentHash || cChunks.frontageContentHash != frontage.contentHash) errors.Add("§8.9: the committed chunks were baked from another network or frontage");
+                    if (cChunks.drivewaysSha256 != k.drivewaysSha256) errors.Add("§8.9: the committed chunks carry the cuts of another driveways.json");
                 }
                 Say(string.Format(Inv, "§8.9 determinism ({0:F1} s for the second bake): network {1}, frontage {2}, chunks {3}, plates {4}: two bakes {5}; committed: network {6}, frontage {7}, chunks {8}",
                     sw2.Elapsed.TotalSeconds, Short(net.contentHash), Short(frontage.contentHash), Short(chunks.contentHash), Short(ph1),

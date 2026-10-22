@@ -22,7 +22,11 @@ namespace Backroads.Roads.Editor
         public static string TownDataPath(string townId) => RoadNetworkBaker.BakedDir + "/" + RoadChunkSet.TownResourceName(townId) + ".roadbake.bytes";
 
         /// <summary>The chunk set (not saved; data not yet attached) and the decompressed and compressed payloads.</summary>
-        public static RoadChunkSet Build(RoadMeshes m, double playHalf, string source, string roadHash, string frontageHash, out byte[] raw, out byte[] packed)
+        public static RoadChunkSet Build(RoadMeshes m, double playHalf, string source, string roadHash, string frontageHash, out byte[] raw, out byte[] packed) =>
+            Build(m, playHalf, source, roadHash, frontageHash, "", out raw, out packed);
+
+        /// <summary>The same, naming the driveways file whose cuts the meshes carry (its hash joins the content hash when not empty).</summary>
+        public static RoadChunkSet Build(RoadMeshes m, double playHalf, string source, string roadHash, string frontageHash, string drivewaysSha256, out byte[] raw, out byte[] packed)
         {
             int gridN = (int)Math.Ceiling(2 * playHalf / ChunkSize);
             var byChunk = new SortedDictionary<int, List<RoadMeshPart>>();
@@ -40,6 +44,7 @@ namespace Backroads.Roads.Editor
             set.source = source ?? "";
             set.roadContentHash = roadHash ?? "";
             set.frontageContentHash = frontageHash ?? "";
+            set.drivewaysSha256 = drivewaysSha256 ?? "";
             set.chunkSize = (float)ChunkSize;
             set.originX = set.originZ = (float)-playHalf;
             set.gridN = gridN;
@@ -137,6 +142,8 @@ namespace Backroads.Roads.Editor
             using (var w = new BinaryWriter(ms))
             {
                 w.Write(s.formatVersion); w.Write(s.meshVersion); w.Write(s.source ?? ""); w.Write(s.roadContentHash ?? ""); w.Write(s.frontageContentHash ?? "");
+                // only when the meshes carry driveway cuts (lane S's site chunks and older sets hash as before)
+                if (!string.IsNullOrEmpty(s.drivewaysSha256)) w.Write(s.drivewaysSha256);
                 w.Write(s.chunkSize); w.Write(s.originX); w.Write(s.originZ); w.Write(s.gridN);
                 w.Write(s.chunks.Length);
                 foreach (var c in s.chunks) { w.Write(c.ix); w.Write(c.iz); w.Write(c.offset); w.Write(c.length); w.Write(c.vertices); w.Write(c.lod0Triangles); w.Write(c.lod1Triangles); w.Write(c.colliderTriangles); }
