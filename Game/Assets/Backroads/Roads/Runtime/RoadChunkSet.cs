@@ -48,6 +48,8 @@ namespace Backroads.Roads
         public int formatVersion = FormatVersion;
         public int meshVersion;
         public string source = "", roadContentHash = "", frontageContentHash = "";
+        /// <summary>SHA-256 of the driveways file (lane S's tools/world/sites/(town)/driveways.json) whose cuts the meshes carry; "" when none.</summary>
+        public string drivewaysSha256 = "";
         /// <summary>SHA-256 of the decompressed data and the chunk table.</summary>
         public string contentHash = "";
         public float chunkSize = 64, originX, originZ;

@@ -13,6 +13,11 @@ namespace Backroads.Roads.Editor
         public readonly List<string> notes = new List<string>();
         public double centreLineM, noPassingM, edgeLineM, warningM;
         public int stopLines, crosswalks, yieldLines;
+        /// <summary>Lane S's driveway cuts in the meshes: kerbed cuts (dropped kerb, lowered walk), unkerbed cuts with a paved slab across the shoulder, unkerbed unpaved ones (the ground's own surface), and metres of dropped kerb (throats).</summary>
+        public int cutsKerbed, cutsSlab, cutsUnpaved;
+        /// <summary>Kerbed cuts whose throat or flare carries on into the next face of the block loop.</summary>
+        public int cutsCarried;
+        public double droppedKerbM;
     }
 
     /// <summary>
@@ -29,6 +34,11 @@ namespace Backroads.Roads.Editor
     /// draped 4 mm over the surface it lies on, with dashes phase-locked to s = 0 of their edge. Vertex data per 05 §5.9:
     /// UV0 world planar (x/4, z/4), UV1 lane space (lateral, s) on ribbons, colour R wear (flat until R5), G wet (the
     /// gutter flowline, curb inlets), B patch id, A edge blend (0 at unkerbed pavement edges).
+    /// Driveway cuts (lane S's sites-S4 request; DrivewayCutter's cuts): on a kerbed face the kerb drops to Dropped25 over
+    /// the throat and rises back to the barrier over the cut's flare, and the walk over the whole stretch comes down with
+    /// it (the apron slab: the walk lowered by as much as the kerb top, so its back edge meets the site's driveway at the
+    /// cut's lot-edge height), the same profile as RoadPlateBuilder's apron plates; on an unkerbed face a paved request
+    /// gets a slab of its surface across the shoulder (the cut's apron outline, flat at the pavement edge's height).
     /// </summary>
     public static class RoadMeshBuilder
     {
@@ -39,14 +49,16 @@ namespace Backroads.Roads.Editor
         static readonly CultureInfo Inv = CultureInfo.InvariantCulture;
 
         public static RoadMeshes Build(RoadGraph g, RoadSurfaces surf, KerbNetwork kn, IReadOnlyList<StreetInfo> streets, KerbSettings st = null,
-            IReadOnlyList<BridgeDeck> bridges = null, IHeightField dem = null)
+            IReadOnlyList<BridgeDeck> bridges = null, IHeightField dem = null, IReadOnlyList<DrivewayCut> cuts = null, DrivewayCutter cutter = null)
         {
             st = st ?? new KerbSettings();
             var m = new RoadMeshes();
             var asphalt = new SurfaceIndex();
             Ribbons(g, surf, m, asphalt);
             Junctions(g, surf, m, asphalt);
-            Concrete(kn, st, m);
+            var zones = CutZones(kn, cuts, cutter, st, m);
+            Concrete(kn, st, m, zones);
+            Slabs(kn, m, zones);
             BridgeMeshBuilder.Build(bridges, dem, null, m);
             Markings(g, surf, kn, streets, st, m, asphalt);
             RoundaboutMeshBuilder.Build(surf, m, asphalt);
@@ -140,9 +152,9 @@ namespace Backroads.Roads.Editor
 
         // ------------------------------------------------------------------ concrete
 
-        static void Concrete(KerbNetwork kn, KerbSettings st, RoadMeshes m)
+        static void Concrete(KerbNetwork kn, KerbSettings st, RoadMeshes m, Dictionary<int, List<CutZone>> zones)
         {
-            // walks: R2's kerbside partition (each piece convex; a fan from its first vertex)
+            // walks: R2's kerbside partition (each piece convex; a fan from its first vertex), lowered at driveway cuts
             var groups = new Dictionary<(int, int), RoadMeshPart>();
             var order = new List<(int, int)>();
             foreach (var pc in kn.pieces)
@@ -154,19 +166,29 @@ namespace Backroads.Roads.Editor
                     groups[key] = part = new RoadMeshPart { material = RoadMaterial.Concrete, collider = true, smooth = 2, edge = kn.faces[pc.face].edge };
                     order.Add(key);
                 }
-                int b0 = part.pos.Count;
-                for (int k = 0; k < pc.poly.Length; k++)
+                var f = kn.faces[pc.face];
+                zones.TryGetValue(pc.face, out var zs);
+                foreach (var (poly, ys) in AtCuts(f, pc, zs, st))
                 {
-                    var p = new D3(pc.poly[k].x, pc.surfaceY[k], pc.poly[k].z);
-                    part.Add(p, World(p, 2), Vector2.zero, new Color32(0, 0, Patch(pc.face, 3), 255));
+                    int b0 = part.pos.Count;
+                    var mid = Mid(poly);
+                    bool apron = zs != null && InZone(zs, Station(f, pc.seg, mid));
+                    var colour = new Color32(0, 0, Patch(pc.face, apron ? 5 : 3), 255);
+                    for (int k = 0; k < poly.Count; k++)
+                    {
+                        double y = ys[k] - (zs != null ? Lower(f, zs, Station(f, pc.seg, poly[k]), st) : 0);
+                        var p = new D3(poly[k].x, y, poly[k].z);
+                        part.Add(p, World(p, 2), Vector2.zero, colour);
+                    }
+                    for (int k = 1; k + 1 < poly.Count; k++) part.Tri(b0, b0 + k, b0 + k + 1, Up);
                 }
-                for (int k = 1; k + 1 < pc.poly.Length; k++) part.Tri(b0, b0 + k, b0 + k + 1, Up);
             }
             foreach (var key in order) m.parts.Add(groups[key]);
 
             foreach (var f in kn.faces)
             {
                 if (!f.kerbed || f.bridge) continue;
+                zones.TryGetValue(f.id, out var zs);
                 // the kerb face, gutter to top, facing the street (flat shaded), in pieces of at most 32 m
                 RoadMeshPart face = null, skirt = null;
                 double start = 0;
@@ -183,30 +205,251 @@ namespace Backroads.Roads.Editor
                     if (d.Length < 1e-6) continue;
                     var left = d.Normalized.Left;
                     var toStreet = new Vector3((float)-left.x, 0, (float)-left.z);
-                    if (Math.Max(f.top[i] - f.gutter[i], f.top[i + 1] - f.gutter[i + 1]) > 0.005)
+                    // the segment's stations, split where a cut's throat or flare starts or ends
+                    var ss = SegmentStations(f, i, zs, st);
+                    for (int q = 0; q + 1 < ss.Count; q++)
                     {
-                        var c = new Color32(0, 0, Patch(f.id, 4), 255);
-                        int a0 = face.Add(new D3(f.kerb[i].x, f.gutter[i], f.kerb[i].z), new Vector2((float)f.s[i], 0), Vector2.zero, c, toStreet);
-                        int a1 = face.Add(new D3(f.kerb[i + 1].x, f.gutter[i + 1], f.kerb[i + 1].z), new Vector2((float)f.s[i + 1], 0), Vector2.zero, c, toStreet);
-                        int b1 = face.Add(new D3(f.kerb[i + 1].x, f.top[i + 1], f.kerb[i + 1].z), new Vector2((float)f.s[i + 1], (float)(f.top[i + 1] - f.gutter[i + 1])), Vector2.zero, c, toStreet);
-                        int b0 = face.Add(new D3(f.kerb[i].x, f.top[i], f.kerb[i].z), new Vector2((float)f.s[i], (float)(f.top[i] - f.gutter[i])), Vector2.zero, c, toStreet);
-                        face.Tri(a0, a1, b1, toStreet);
-                        face.Tri(a0, b1, b0, toStreet);
-                    }
-                    if (skirt != null && f.width[i] > st.kerbTop + 0.05 && f.width[i + 1] > st.kerbTop + 0.05)
-                    {
-                        var outward = new Vector3((float)left.x, 0, (float)left.z);
-                        var c = new Color32(0, 0, 0, 255);
-                        int a0 = skirt.Add(new D3(f.back[i].x, f.backY[i], f.back[i].z), Vector2.zero, Vector2.zero, c, outward);
-                        int a1 = skirt.Add(new D3(f.back[i + 1].x, f.backY[i + 1], f.back[i + 1].z), Vector2.zero, Vector2.zero, c, outward);
-                        int b1 = skirt.Add(new D3(f.back[i + 1].x, f.backY[i + 1] - SkirtDepth, f.back[i + 1].z), Vector2.zero, Vector2.zero, c, outward);
-                        int b0 = skirt.Add(new D3(f.back[i].x, f.backY[i] - SkirtDepth, f.back[i].z), Vector2.zero, Vector2.zero, c, outward);
-                        skirt.Tri(a0, a1, b1, outward);
-                        skirt.Tri(a0, b1, b0, outward);
+                        double sa = ss[q], sb = ss[q + 1];
+                        double ta = (sa - f.s[i]) / (f.s[i + 1] - f.s[i]), tb = (sb - f.s[i]) / (f.s[i + 1] - f.s[i]);
+                        D2 ka = Lerp(f.kerb[i], f.kerb[i + 1], ta), kb = Lerp(f.kerb[i], f.kerb[i + 1], tb);
+                        double ga = Lerp(f.gutter[i], f.gutter[i + 1], ta), gb = Lerp(f.gutter[i], f.gutter[i + 1], tb);
+                        double la = zs != null ? Lower(f, zs, sa, st) : 0, lb = zs != null ? Lower(f, zs, sb, st) : 0;
+                        double topA = Lerp(f.top[i], f.top[i + 1], ta) - la, topB = Lerp(f.top[i], f.top[i + 1], tb) - lb;
+                        if (Math.Max(topA - ga, topB - gb) > 0.005)
+                        {
+                            var c = new Color32(0, 0, Patch(f.id, 4), 255);
+                            int a0 = face.Add(new D3(ka.x, ga, ka.z), new Vector2((float)sa, 0), Vector2.zero, c, toStreet);
+                            int a1 = face.Add(new D3(kb.x, gb, kb.z), new Vector2((float)sb, 0), Vector2.zero, c, toStreet);
+                            int b1 = face.Add(new D3(kb.x, topB, kb.z), new Vector2((float)sb, (float)(topB - gb)), Vector2.zero, c, toStreet);
+                            int b0 = face.Add(new D3(ka.x, topA, ka.z), new Vector2((float)sa, (float)(topA - ga)), Vector2.zero, c, toStreet);
+                            face.Tri(a0, a1, b1, toStreet);
+                            face.Tri(a0, b1, b0, toStreet);
+                        }
+                        if (skirt != null && f.width[i] > st.kerbTop + 0.05 && f.width[i + 1] > st.kerbTop + 0.05)
+                        {
+                            var outward = new Vector3((float)left.x, 0, (float)left.z);
+                            var c = new Color32(0, 0, 0, 255);
+                            D2 pa = Lerp(f.back[i], f.back[i + 1], ta), pb = Lerp(f.back[i], f.back[i + 1], tb);
+                            double ya = Lerp(f.backY[i], f.backY[i + 1], ta) - la, yb = Lerp(f.backY[i], f.backY[i + 1], tb) - lb;
+                            int a0 = skirt.Add(new D3(pa.x, ya, pa.z), Vector2.zero, Vector2.zero, c, outward);
+                            int a1 = skirt.Add(new D3(pb.x, yb, pb.z), Vector2.zero, Vector2.zero, c, outward);
+                            int b1 = skirt.Add(new D3(pb.x, yb - SkirtDepth, pb.z), Vector2.zero, Vector2.zero, c, outward);
+                            int b0 = skirt.Add(new D3(pa.x, ya - SkirtDepth, pa.z), Vector2.zero, Vector2.zero, c, outward);
+                            skirt.Tri(a0, a1, b1, outward);
+                            skirt.Tri(a0, b1, b0, outward);
+                        }
                     }
                 }
             }
             m.parts.RemoveAll(p => p.tri.Count == 0);
+        }
+
+        // ------------------------------------------------------------------ driveway cuts (lane S's sites-S4 request)
+
+        /// <summary>One cut on a face: its throat [s0, s1] on the face, the flare either side, the apron surface, the cut.</summary>
+        sealed class CutZone
+        {
+            public double s0, s1, flare;
+            public SiteSurface surface;
+            public DrivewayCut cut;
+            public bool carried;
+        }
+
+        /// <summary>The resolved cuts by face (one zone per baked group: merged requests share theirs), counted into m.</summary>
+        static Dictionary<int, List<CutZone>> CutZones(KerbNetwork kn, IReadOnlyList<DrivewayCut> cuts, DrivewayCutter cutter, KerbSettings st, RoadMeshes m)
+        {
+            var byFace = new Dictionary<int, List<CutZone>>();
+            foreach (var span in RoadPlateBuilder.CutSpans(kn, cuts, cutter))
+            {
+                var f = span.face;
+                if (!byFace.TryGetValue(f.id, out var l)) byFace[f.id] = l = new List<CutZone>();
+                l.Add(new CutZone { s0 = span.s0, s1 = span.s1, flare = span.flare, surface = span.surface, cut = span.cut, carried = span.carried });
+                if (span.carried) m.cutsCarried++;
+                else if (f.kerbed) { m.cutsKerbed++; m.droppedKerbM += span.s1 - span.s0; }
+                else if (KerbRules.Paved(KerbRules.Surface(span.surface))) m.cutsSlab++;
+                else m.cutsUnpaved++;
+            }
+            foreach (var l in byFace.Values) l.Sort((a, b) => a.s0.CompareTo(b.s0));
+            return byFace;
+        }
+
+        /// <summary>How far the kerb top (and the walk with it) comes down at s on a kerbed face: to the gutter + RoadPlateBuilder.CutKerbHeight, never up.</summary>
+        static double Lower(KerbFace f, List<CutZone> zs, double s, KerbSettings st)
+        {
+            if (!f.kerbed || zs == null) return 0;
+            int i = Seg(f, s, out double t);
+            double g = Lerp(f.gutter[i], f.gutter[i + 1], t), top = Lerp(f.top[i], f.top[i + 1], t), lower = 0;
+            foreach (var z in zs)
+            {
+                if (s < z.s0 - z.flare - 1e-9 || s > z.s1 + z.flare + 1e-9) continue;
+                lower = Math.Max(lower, top - (g + RoadPlateBuilder.Dropped(s, z.s0, z.s1, z.flare, st)));
+            }
+            return lower;
+        }
+
+        static bool InZone(List<CutZone> zs, double s)
+        {
+            foreach (var z in zs) if (s >= z.s0 - z.flare - 1e-6 && s <= z.s1 + z.flare + 1e-6) return true;
+            return false;
+        }
+
+        /// <summary>Where the profile bends: each zone's flare and throat ends and where the kerb already there crosses it, inside the face.</summary>
+        static IEnumerable<double> Breaks(KerbFace f, List<CutZone> zs, KerbSettings st)
+        {
+            if (zs == null || !f.kerbed) yield break;
+            foreach (var z in zs)
+                foreach (var b in RoadPlateBuilder.CutBreaks(f, z.s0, z.s1, z.flare, st, false))
+                    if (b > 1e-6 && b < f.Length - 1e-6) yield return b;
+        }
+
+        /// <summary>Segment i's ends and every break inside it, in order.</summary>
+        static List<double> SegmentStations(KerbFace f, int i, List<CutZone> zs, KerbSettings st)
+        {
+            var o = new List<double> { f.s[i] };
+            foreach (var b in Breaks(f, zs, st)) if (b > f.s[i] + 1e-4 && b < f.s[i + 1] - 1e-4) o.Add(b);
+            o.Add(f.s[i + 1]);
+            o.Sort();
+            return o;
+        }
+
+        /// <summary>
+        /// A walk piece as convex polygons with surface heights: whole away from cuts; at a cut, split across the kerb at
+        /// every break its stations span (a line square to the kerb segment holding the break), heights interpolated along
+        /// the cut edges, so the lowered profile is exact along the kerb.
+        /// </summary>
+        static List<(List<D2> poly, List<double> ys)> AtCuts(KerbFace f, KerbPiece pc, List<CutZone> zs, KerbSettings st)
+        {
+            var poly = new List<D2>(pc.poly);
+            var ys = new List<double>(pc.surfaceY);
+            var o = new List<(List<D2>, List<double>)> { (poly, ys) };
+            if (zs == null || !f.kerbed) return o;
+            double lo = double.MaxValue, hi = double.MinValue;
+            foreach (var q in poly) { double s = Station(f, pc.seg, q); lo = Math.Min(lo, s); hi = Math.Max(hi, s); }
+            foreach (var b in Breaks(f, zs, st))
+            {
+                if (b <= lo + 1e-4 || b >= hi - 1e-4) continue;
+                int j = Seg(f, b, out double t);
+                var at = Lerp(f.kerb[j], f.kerb[j + 1], t);
+                var dir = (f.kerb[j + 1] - f.kerb[j]).Normalized;
+                var next = new List<(List<D2>, List<double>)>();
+                foreach (var (pp, yy) in o)
+                {
+                    Clip(pp, yy, at, dir, 1, out var p1, out var y1);
+                    Clip(pp, yy, at, dir, -1, out var p2, out var y2);
+                    if (p1.Count >= 3) next.Add((p1, y1));
+                    if (p2.Count >= 3) next.Add((p2, y2));
+                }
+                o = next;
+            }
+            return o;
+        }
+
+        /// <summary>The part of a convex polygon on one side of the line through `at` square to `dir` (side +1: ahead of it).</summary>
+        static void Clip(List<D2> p, List<double> y, D2 at, D2 dir, int side, out List<D2> op, out List<double> oy)
+        {
+            op = new List<D2>();
+            oy = new List<double>();
+            int n = p.Count;
+            for (int k = 0; k < n; k++)
+            {
+                D2 a = p[k], b = p[(k + 1) % n];
+                double da = side * (a - at).Dot(dir), db = side * (b - at).Dot(dir);
+                if (da >= 0) { op.Add(a); oy.Add(y[k]); }
+                if ((da >= 0) != (db >= 0))
+                {
+                    double t = da / (da - db);
+                    op.Add(a + (b - a) * t);
+                    oy.Add(y[k] + (y[(k + 1) % n] - y[k]) * t);
+                }
+            }
+        }
+
+        /// <summary>The station s of a point on the face: its projection on the kerb segments around the piece's own.</summary>
+        static double Station(KerbFace f, int seg, D2 q)
+        {
+            double best = double.MaxValue, s = 0;
+            for (int i = Math.Max(0, seg - 1); i <= Math.Min(f.Count - 2, seg + 1); i++)
+            {
+                var a = f.kerb[i];
+                var d = f.kerb[i + 1] - a;
+                double l2 = d.Dot(d);
+                double t = l2 > 0 ? Math.Max(0, Math.Min(1, (q - a).Dot(d) / l2)) : 0;
+                double dist = D2.Distance(a + d * t, q);
+                if (dist < best - 1e-9) { best = dist; s = f.s[i] + t * (f.s[i + 1] - f.s[i]); }
+            }
+            return s;
+        }
+
+        /// <summary>Unkerbed faces: a paved request gets a slab of its surface across the shoulder (the cut's apron outline), flat at the pavement edge's height.</summary>
+        static void Slabs(KerbNetwork kn, RoadMeshes m, Dictionary<int, List<CutZone>> zones)
+        {
+            foreach (var kv in zones)
+            {
+                var f = kn.Face(kv.Key);
+                if (f == null || f.kerbed) continue;
+                foreach (var z in kv.Value)
+                {
+                    byte sf = KerbRules.Surface(z.surface);
+                    if (!KerbRules.Paved(sf) || z.cut.apron == null || z.cut.apron.Length < 3) continue;
+                    var poly = new List<D2>();
+                    foreach (var q in z.cut.apron) poly.Add(new D2(q.x, q.y));
+                    poly = Geom2.Weld(poly, 0.005);
+                    if (poly.Count < 3) continue;
+                    if (Geom2.SignedArea(poly) < 0) poly.Reverse();
+                    var tris = Geom2.EarClip(poly);
+                    if (tris == null || tris.Count < (poly.Count - 2) * 3) { m.notes.Add(string.Format(Inv, "driveway slab on face {0} at {1:F1}-{2:F1} m: its outline does not triangulate", f.id, z.s0, z.s1)); continue; }
+                    bool asphalt = sf == 4;
+                    var part = new RoadMeshPart { material = asphalt ? RoadMaterial.Asphalt : RoadMaterial.Concrete, collider = true, smooth = 1, edge = f.edge };
+                    var colour = asphalt ? new Color32(0, 0, Patch(f.id, 6), 255) : new Color32(0, 0, Patch(f.id, 5), 255);
+                    var ix = new int[poly.Count];
+                    for (int k = 0; k < poly.Count; k++)
+                    {
+                        int i = Seg(f, NearestS(f, poly[k]), out double t);
+                        var p = new D3(poly[k].x, Lerp(f.gutter[i], f.gutter[i + 1], t), poly[k].z);
+                        ix[k] = part.Add(p, World(p, asphalt ? 4 : 2), Vector2.zero, colour);
+                    }
+                    for (int k = 0; k + 2 < tris.Count; k += 3) part.Tri(ix[tris[k]], ix[tris[k + 1]], ix[tris[k + 2]], Up);
+                    m.parts.Add(part);
+                }
+            }
+        }
+
+        /// <summary>The station of the nearest point of the whole kerb line.</summary>
+        static double NearestS(KerbFace f, D2 q)
+        {
+            double best = double.MaxValue, s = 0;
+            for (int i = 0; i + 1 < f.Count; i++)
+            {
+                var a = f.kerb[i];
+                var d = f.kerb[i + 1] - a;
+                double l2 = d.Dot(d);
+                double t = l2 > 0 ? Math.Max(0, Math.Min(1, (q - a).Dot(d) / l2)) : 0;
+                double dist = D2.Distance(a + d * t, q);
+                if (dist < best - 1e-9) { best = dist; s = f.s[i] + t * (f.s[i + 1] - f.s[i]); }
+            }
+            return s;
+        }
+
+        static int Seg(KerbFace f, double s, out double t)
+        {
+            int n = f.Count;
+            if (s <= f.s[0]) { t = 0; return 0; }
+            if (s >= f.s[n - 1]) { t = 1; return n - 2; }
+            int lo = 0, hi = n - 1;
+            while (hi - lo > 1) { int mid = (lo + hi) >> 1; if (f.s[mid] <= s) lo = mid; else hi = mid; }
+            double l = f.s[hi] - f.s[lo];
+            t = l > 0 ? (s - f.s[lo]) / l : 0;
+            return lo;
+        }
+
+        static double Lerp(double a, double b, double t) => a + (b - a) * t;
+        static D2 Lerp(D2 a, D2 b, double t) => a + (b - a) * t;
+
+        static D2 Mid(List<D2> p)
+        {
+            double x = 0, z = 0;
+            foreach (var q in p) { x += q.x; z += q.z; }
+            return new D2(x / p.Count, z / p.Count);
         }
 
         // ------------------------------------------------------------------ markings (05 §5.8)

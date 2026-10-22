@@ -221,19 +221,25 @@ namespace Backroads.Roads.Editor
 
         static void Aprons(KerbNetwork kn, IReadOnlyList<DrivewayCut> cuts, DrivewayCutter cutter, KerbSettings st, List<Plate> plates)
         {
-            var done = new HashSet<(int, float, float)>();
-            foreach (var c in cuts)
+            foreach (var span in CutSpans(kn, cuts, cutter))
             {
-                if (c == null || c.outcome == CutOutcome.Rejected) continue;
-                if (!done.Add((c.faceId, c.s0, c.s1))) continue;
-                var f = kn.Face(c.faceId);
-                if (f == null || f.bridge || !cutter.CutShape(c.requestId, out float flare, out bool returns, out var surface)) continue;
+                var f = span.face;
+                var c = new { span.s0, span.s1 };
+                float flare = (float)span.flare;
+                var surface = span.surface;
                 double a = c.s0 - flare, b = c.s1 + flare;
                 string key = string.Format(Inv, "apron:f{0:D5}:{1:F2}", f.id, c.s0);
                 int piece = 0;
-                for (int i = 0; i + 1 < f.Count; i++)
+                // kerbed: pieces between every bend of the profile (throat and flare ends, stations, where the kerb already
+                // there crosses it), so the ground follows the lowered walk exactly; unkerbed: between stations
+                var bends = f.kerbed ? CutBreaks(f, c.s0, c.s1, flare, st, true) : null;
+                int count = f.kerbed ? bends.Count - 1 : f.Count - 1;
+                for (int q = 0; q < count; q++)
                 {
-                    double sa = Math.Max(a, f.s[i]), sb = Math.Min(b, f.s[i + 1]);
+                    int i;
+                    double sa, sb;
+                    if (f.kerbed) { sa = bends[q]; sb = bends[q + 1]; i = Seg(f.s, 0.5 * (sa + sb), out _); }
+                    else { i = q; sa = Math.Max(a, f.s[i]); sb = Math.Min(b, f.s[i + 1]); }
                     if (sb <= sa + 1e-6) continue;
                     var k0 = At(f, sa);
                     var k1 = At(f, sb);
@@ -242,7 +248,7 @@ namespace Backroads.Roads.Editor
                     if (f.kerbed)
                     {
                         double w0 = Interp(f.s, f.width, sa), w1 = Interp(f.s, f.width, sb);
-                        double h0 = Dropped(sa, c.s0, c.s1, flare, st), h1 = Dropped(sb, c.s0, c.s1, flare, st);
+                        double h0 = CutKerbHeight(f, sa, c.s0, c.s1, flare, st), h1 = CutKerbHeight(f, sb, c.s0, c.s1, flare, st);
                         double y0 = g0 + h0 + st.walkCrossSlope * Math.Max(0, w0 - st.kerbTop), y1 = g1 + h1 + st.walkCrossSlope * Math.Max(0, w1 - st.kerbTop);
                         Piece(plates, string.Format(Inv, "{0}:{1:D3}", key, piece++), PlateKind.Walk, Concrete, true, PriorityApron, 2f,
                             new[] { new D3(k0.x, g0 - st.sinkAsphalt, k0.z), new D3(k1.x, g1 - st.sinkAsphalt, k1.z), Lift(k1 + n * w1, y1 - st.sinkWalk), Lift(k0 + n * w0, y0 - st.sinkWalk) }, 0);
@@ -257,6 +263,101 @@ namespace Backroads.Roads.Editor
                     }
                 }
             }
+        }
+
+        /// <summary>One resolved cut on one face (s along that face): its throat, flare and apron surface.</summary>
+        public struct CutSpan
+        {
+            public KerbFace face;
+            public double s0, s1, flare;
+            public SiteSurface surface;
+            public DrivewayCut cut;
+            /// <summary>The cut's reach carried on from the face it was cut in onto the next kerbed face of the loop.</summary>
+            public bool carried;
+        }
+
+        /// <summary>
+        /// The cuts by face, one per baked group (merged requests share theirs; rejected ones are left out). A kerbed cut
+        /// whose throat or flare reaches past its face's end carries on along the next kerbed face of the block loop (the
+        /// two faces meet there without a corner), so the walk comes down on both sides of the face boundary.
+        /// </summary>
+        public static List<CutSpan> CutSpans(KerbNetwork kn, IReadOnlyList<DrivewayCut> cuts, DrivewayCutter cutter)
+        {
+            var o = new List<CutSpan>();
+            if (cuts == null || cutter == null) return o;
+            var done = new HashSet<(int, float, float)>();
+            foreach (var c in cuts)
+            {
+                if (c == null || c.outcome == CutOutcome.Rejected) continue;
+                if (!done.Add((c.faceId, c.s0, c.s1))) continue;
+                var f = kn.Face(c.faceId);
+                if (f == null || f.bridge || !cutter.CutShape(c.requestId, out float flare, out _, out var surface)) continue;
+                o.Add(new CutSpan { face = f, s0 = c.s0, s1 = c.s1, flare = flare, surface = surface, cut = c });
+                if (!f.kerbed) continue;
+                if (c.s0 - flare < -1e-6 && Neighbour(kn, f, -1) is KerbFace p)
+                    o.Add(new CutSpan { face = p, s0 = c.s0 + p.Length, s1 = c.s1 + p.Length, flare = flare, surface = surface, cut = c, carried = true });
+                if (c.s1 + flare > f.Length + 1e-6 && Neighbour(kn, f, 1) is KerbFace q)
+                    o.Add(new CutSpan { face = q, s0 = c.s0 - f.Length, s1 = c.s1 - f.Length, flare = flare, surface = surface, cut = c, carried = true });
+            }
+            return o;
+        }
+
+        /// <summary>The kerbed face (not on a bridge) that ends where f starts (dir -1) or starts where f ends (dir +1) on its loop, or null.</summary>
+        static KerbFace Neighbour(KerbNetwork kn, KerbFace f, int dir)
+        {
+            var loop = kn.loops[f.loop];
+            double L = loop.Length;
+            bool Same(double x, double y) { double d = Math.Abs(x - y); return d < 1e-6 || Math.Abs(d - L) < 1e-6; }
+            foreach (int id in loop.faces)
+            {
+                var g = kn.faces[id];
+                if (g.id == f.id || !g.kerbed || g.bridge) continue;
+                if (dir < 0 ? Same(g.t1, f.t0) : Same(g.t0, f.t1)) return g;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// The kerb face height along a cut on a kerbed face as the meshes draw it: the cut's Dropped profile, or the kerb
+        /// already there (the face's stations, linear between) where that is lower (a corner ramp, a taper).
+        /// </summary>
+        public static double CutKerbHeight(KerbFace f, double s, double s0, double s1, double flare, KerbSettings st) =>
+            Math.Min(OldKerbHeight(f, s), Dropped(s, s0, s1, flare, st));
+
+        static double OldKerbHeight(KerbFace f, double s)
+        {
+            int i = Seg(f.s, s, out double t);
+            double h0 = f.top[i] - f.gutter[i], h1 = f.top[i + 1] - f.gutter[i + 1];
+            return h0 + (h1 - h0) * t;
+        }
+
+        /// <summary>
+        /// Where a cut's kerb profile bends on a face, sorted, within the face and the cut's reach: the flare and throat ends,
+        /// where the kerb already there crosses the profile, and (stations true) the face's stations between them.
+        /// </summary>
+        public static List<double> CutBreaks(KerbFace f, double s0, double s1, double flare, KerbSettings st, bool stations)
+        {
+            double a = Math.Max(0, s0 - flare), b = Math.Min(f.Length, s1 + flare);
+            var o = new List<double> { a, b };
+            foreach (var x in new[] { s0, s1 }) if (x > a && x < b) o.Add(x);
+            var inner = new List<double>();
+            for (int i = 0; i < f.Count; i++) if (f.s[i] > a && f.s[i] < b) inner.Add(f.s[i]);
+            var all = new List<double>(o);
+            all.AddRange(inner);
+            all.Sort();
+            // both the old height (linear between stations) and the profile (linear between its ends) are linear here
+            for (int k = 0; k + 1 < all.Count; k++)
+            {
+                double p = all[k], q = all[k + 1];
+                if (q - p < 1e-6) continue;
+                double dp = OldKerbHeight(f, p) - Dropped(p, s0, s1, flare, st), dq = OldKerbHeight(f, q) - Dropped(q, s0, s1, flare, st);
+                if ((dp > 1e-9 && dq < -1e-9) || (dp < -1e-9 && dq > 1e-9)) o.Add(p + (q - p) * dp / (dp - dq));
+            }
+            if (stations) o.AddRange(inner);
+            o.Sort();
+            var u = new List<double>();
+            foreach (var x in o) if (u.Count == 0 || x - u[u.Count - 1] > 1e-6) u.Add(x);
+            return u;
         }
 
         /// <summary>Kerb face height along a cut: dropped over the throat, linear back to the barrier over each flare.</summary>

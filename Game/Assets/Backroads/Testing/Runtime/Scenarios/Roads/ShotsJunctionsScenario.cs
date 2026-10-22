@@ -34,6 +34,17 @@ namespace Backroads.Testing
             /// <summary>The camera stays at least this far over the ground (a bank higher than the road beside it).</summary>
             public float minClearance = 1.5f;
             public int minShots = 16;
+            /// <summary>The eight road places picked from the network (false: only the fixed views below).</summary>
+            public bool places = true;
+            /// <summary>Extra fixed views (world positions), e.g. a look at particular driveway mouths.</summary>
+            public View[] views = new View[0];
+        }
+
+        [Serializable]
+        sealed class View
+        {
+            public string id = "", what = "";
+            public float[] pos = new float[3], target = new float[3];
         }
 
         public IEnumerator Run(AutotestContext ctx)
@@ -52,8 +63,12 @@ namespace Backroads.Testing
             foreach (var a in Resources.LoadAll<RoadNetworkAsset>(""))
                 if (chunks != null && a.contentHash == chunks.roadContentHash) net = a;
             if (net == null) { ctx.Fail("the road network of the scene's chunks (" + (chunks != null ? chunks.roadContentHash : "no chunks") + ") is not in the build"); yield break; }
-            var shots = JunctionShots.Pick(net, out var missing);
+            var missing = new List<string>();
+            var shots = p.places ? JunctionShots.Pick(net, out missing) : new List<JunctionShots.Shot>();
             foreach (var m in missing) ctx.Fail("no place for the " + m + " shot in the road network");
+            foreach (var v in p.views ?? new View[0])
+                if (v.pos != null && v.pos.Length == 3 && v.target != null && v.target.Length == 3)
+                    shots.Add(new JunctionShots.Shot { id = v.id, what = v.what, node = -1, arm = -1, position = new Vector3(v.pos[0], v.pos[1], v.pos[2]), target = new Vector3(v.target[0], v.target[1], v.target[2]), why = "a fixed view" });
             var list = new StringBuilder();
             list.AppendLine($"m3.shots.junctions: {shots.Count} places from road network {net.contentHash} ({net.source})");
             foreach (var s in shots) list.AppendLine(JunctionShots.Describe(s));
