@@ -54,6 +54,8 @@ namespace Backroads.Roads
         public D3 p;
         public NodeKind kind;
         public Control control;
+        /// <summary>Tag when any approach's control comes from a mapped sign or signal, Rule when 05 §6.2 set it, None without control.</summary>
+        public ControlSource controlSource;
         public NodeFlags flags;
         /// <summary>Global arm ids, sorted counter-clockwise seen from above (05 §4).</summary>
         public readonly List<int> arms = new List<int>();
@@ -105,6 +107,29 @@ namespace Backroads.Roads
         /// </summary>
         public double tangentL, tangentR, mouth, maxMouth;
         public bool shortArm;
+        /// <summary>What traffic arriving at the node along this arm must do (MinorStop = a STOP sign on this approach).</summary>
+        public Control control;
+        public ControlSource controlSource;
+        /// <summary>The mapped sign's OSM node and its distance from the node along the arm (0 for rule controls).</summary>
+        public long controlOsmNode;
+        public double controlDistance;
+    }
+
+    /// <summary>A mapped feature placed on the graph (roads-R0o step 5).</summary>
+    public sealed class GraphFeature
+    {
+        public RoadFeatureKind kind;
+        public long osmNode;
+        public int edge;
+        /// <summary>Arc length on the edge from nodeA.</summary>
+        public double s;
+        /// <summary>+1 applies to traffic towards the edge's nodeB, -1 towards nodeA, 0 both or unknown.</summary>
+        public int direction;
+        /// <summary>The node it controls and the approach arm there, or -1 (crossings mid-block, or a sign that controls nothing).</summary>
+        public int node = -1, arm = -1;
+        public string crossing = "";
+        /// <summary>Empty when placed; else why the feature controls nothing (reported).</summary>
+        public string problem = "";
     }
 
     public sealed class GraphCorner
@@ -142,11 +167,22 @@ namespace Backroads.Roads
         public readonly List<GraphArm> arms = new List<GraphArm>();
         public readonly List<GraphCorner> corners = new List<GraphCorner>();
         public readonly List<ComplexPair> complexPairs = new List<ComplexPair>();
+        public readonly List<GraphFeature> features = new List<GraphFeature>();
         /// <summary>Human-readable findings for the later steps (complex pairs, short arms, steep approaches, acute arms).</summary>
         public readonly List<string> notes = new List<string>();
         public TownZone zone;
-        public string canonManifestSha256 = "";
+        /// <summary>The downtown zone polygon (towns), or null.</summary>
+        public D2[] downtown;
+        /// <summary>The input roads (edges point at them through sourceRoad); the asset keeps their tag data.</summary>
+        public List<RoadGraphInput.Road> roads = new List<RoadGraphInput.Road>();
+        public string source = "", sourceManifestSha256 = "";
         public int inputRoads, inputPoints;
+
+        public RoadGraphInput.Road RoadOf(int sourceRoad)
+        {
+            foreach (var r in roads) if (r.id == sourceRoad) return r;
+            return null;
+        }
 
         public GraphArm Arm(GraphNode n, int k) => arms[n.arms[k]];
 

@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 236a4a59903a9e140b14fd9b2669c3e2, type: 3}
   m_Name: BrRoadNetwork
   m_EditorClassIdentifier: Backroads.Roads::Backroads.Roads.RoadNetworkAsset
-  formatVersion: 1
-  builderVersion: 1
-  canonManifestSha256: a112c66d5c517e52673ed84197fb692202177e52e02ade57ac3c607b42825b2b
-  contentHash: 442832e898f63b69e2e85eaaa7e33b02b39e71ed70d3f2d0fc101309c5b5a1d5
+  formatVersion: 2
+  builderVersion: 2
+  importerVersion: 0
+  source: CanonData/v1
+  sourceManifestSha256: a112c66d5c517e52673ed84197fb692202177e52e02ade57ac3c607b42825b2b
+  contentHash: 3460365e59fcced65adb00975d96238cd0cd38a6a783c66c78960af48e8c8123
   inputRoads: 24
   inputPoints: 1722
   nodes:
@@ -24,6 +26,7 @@ MonoBehaviour:
     position: {x: 70, y: 13.335372, z: 30}
     kind: 0
     control: 0
+    controlSource: 0
     flags: 3
     firstArm: 0
     armCount: 3
@@ -38,6 +41,7 @@ MonoBehaviour:
     position: {x: 56.82801, y: 13.335274, z: 25.700035}
     kind: 0
     control: 0
+    controlSource: 0
     flags: 3
     firstArm: 3
     armCount: 3
@@ -52,6 +56,7 @@ MonoBehaviour:
     position: {x: 5.7302723, y: 13.263414, z: -15.715099}
     kind: 0
     control: 2
+    controlSource: 1
     flags: 2
     firstArm: 6
     armCount: 4
@@ -66,6 +71,7 @@ MonoBehaviour:
     position: {x: -85, y: 9.385864, z: -85}
     kind: 0
     control: 2
+    controlSource: 1
     flags: 4
     firstArm: 10
     armCount: 3
@@ -80,6 +86,7 @@ MonoBehaviour:
     position: {x: 120.18341, y: 13.284002, z: 84.18341}
     kind: 0
     control: 2
+    controlSource: 1
     flags: 0
     firstArm: 13
     armCount: 4
@@ -94,6 +101,7 @@ MonoBehaviour:
     position: {x: 169.96587, y: 10.946743, z: 143.86714}
     kind: 0
     control: 2
+    controlSource: 1
     flags: 4
     firstArm: 17
     armCount: 4
@@ -108,6 +116,7 @@ MonoBehaviour:
     position: {x: 300, y: 11.097646, z: 225}
     kind: 3
     control: 0
+    controlSource: 0
     flags: 0
     firstArm: 21
     armCount: 1
@@ -122,6 +131,7 @@ MonoBehaviour:
     position: {x: 104.62706, y: 13.343751, z: -8.627061}
     kind: 0
     control: 2
+    controlSource: 1
     flags: 8
     firstArm: 22
     armCount: 4
@@ -136,6 +146,7 @@ MonoBehaviour:
     position: {x: 255, y: 29.44951, z: -175}
     kind: 3
     control: 0
+    controlSource: 0
     flags: 0
     firstArm: 26
     armCount: 1
@@ -150,6 +161,7 @@ MonoBehaviour:
     position: {x: 25.054167, y: 13.243988, z: 58.945683}
     kind: 0
     control: 2
+    controlSource: 1
     flags: 8
     firstArm: 27
     armCount: 4
@@ -164,6 +176,7 @@ MonoBehaviour:
     position: {x: -92, y: 2.0075908, z: 152}
     kind: 3
     control: 0
+    controlSource: 0
     flags: 0
     firstArm: 31
     armCount: 1
@@ -178,6 +191,7 @@ MonoBehaviour:
     position: {x: -330, y: 20.912043, z: -95}
     kind: 3
     control: 0
+    controlSource: 0
     flags: 0
     firstArm: 32
     armCount: 1
@@ -192,6 +206,7 @@ MonoBehaviour:
     position: {x: -150, y: 44.3806, z: -315}
     kind: 3
     control: 0
+    controlSource: 0
     flags: 0
     firstArm: 33
     armCount: 1
@@ -206,6 +221,7 @@ MonoBehaviour:
     position: {x: 4.156, y: 11.105, z: 186.322}
     kind: 1
     control: 0
+    controlSource: 0
     flags: 0
     firstArm: 34
     armCount: 2
@@ -220,6 +236,7 @@ MonoBehaviour:
     position: {x: 53.222, y: 7.071, z: 242.781}
     kind: 1
     control: 0
+    controlSource: 0
     flags: 0
     firstArm: 36
     armCount: 2
@@ -234,6 +251,7 @@ MonoBehaviour:
     position: {x: -18.315, y: 13.333, z: 7.651}
     kind: 1
     control: 0
+    controlSource: 0
     flags: 0
     firstArm: 38
     armCount: 2
@@ -248,6 +266,7 @@ MonoBehaviour:
     position: {x: 79.817, y: 13.308, z: 120.569}
     kind: 0
     control: 3
+    controlSource: 1
     flags: 0
     firstArm: 40
     armCount: 4
@@ -262,6 +281,7 @@ MonoBehaviour:
     position: {x: 128.883, y: 11.394, z: 177.027}
     kind: 0
     control: 2
+    controlSource: 1
     flags: 4
     firstArm: 44
     armCount: 3
@@ -276,6 +296,7 @@ MonoBehaviour:
     position: {x: 60.183, y: 13.402, z: -60.569}
     kind: 1
     control: 0
+    controlSource: 0
     flags: 0
     firstArm: 47
     armCount: 2
@@ -290,6 +311,7 @@ MonoBehaviour:
     position: {x: 158.315, y: 13.378, z: 52.349}
     kind: 0
     control: 2
+    controlSource: 1
     flags: 0
     firstArm: 49
     armCount: 3
@@ -304,6 +326,7 @@ MonoBehaviour:
     position: {x: 207.381, y: 10.028, z: 108.807}
     kind: 1
     control: 0
+    controlSource: 0
     flags: 0
     firstArm: 52
     armCount: 2
@@ -318,6 +341,7 @@ MonoBehaviour:
     position: {x: -12.956526, y: 13.044396, z: -25.444136}
     kind: 6
     control: 0
+    controlSource: 0
     flags: 0
     firstArm: 54
     armCount: 2
@@ -332,6 +356,7 @@ MonoBehaviour:
     position: {x: 185.47977, y: 10.350772, z: 156.73874}
     kind: 6
     control: 0
+    controlSource: 0
     flags: 0
     firstArm: 56
     armCount: 2
@@ -346,6 +371,7 @@ MonoBehaviour:
     position: {x: 255.65785, y: 10.839856, z: 194.45747}
     kind: 5
     control: 2
+    controlSource: 1
     flags: 16
     firstArm: 58
     armCount: 3
@@ -360,6 +386,7 @@ MonoBehaviour:
     position: {x: 119.17673, y: 13.364841, z: -23.17681}
     kind: 6
     control: 0
+    controlSource: 0
     flags: 0
     firstArm: 61
     armCount: 2
@@ -374,6 +401,7 @@ MonoBehaviour:
     position: {x: 203.6809, y: 20.453825, z: -95.32215}
     kind: 5
     control: 2
+    controlSource: 1
     flags: 4
     firstArm: 63
     armCount: 3
@@ -388,6 +416,7 @@ MonoBehaviour:
     position: {x: -25.419407, y: 9.31347, z: 111.43894}
     kind: 6
     control: 0
+    controlSource: 0
     flags: 0
     firstArm: 66
     armCount: 2
@@ -402,6 +431,7 @@ MonoBehaviour:
     position: {x: -89.606316, y: 2.0128691, z: 152.77899}
     kind: 5
     control: 2
+    controlSource: 1
     flags: 18
     firstArm: 68
     armCount: 3
@@ -416,6 +446,7 @@ MonoBehaviour:
     position: {x: -185.69449, y: 8.887003, z: -45.68943}
     kind: 5
     control: 2
+    controlSource: 1
     flags: 20
     firstArm: 71
     armCount: 3
@@ -430,6 +461,7 @@ MonoBehaviour:
     position: {x: -325.88852, y: 20.879072, z: -90.63498}
     kind: 5
     control: 2
+    controlSource: 1
     flags: 18
     firstArm: 74
     armCount: 3
@@ -444,6 +476,7 @@ MonoBehaviour:
     position: {x: -141.15393, y: 34.72827, z: -250.14374}
     kind: 5
     control: 2
+    controlSource: 1
     flags: 4
     firstArm: 77
     armCount: 3
@@ -471,6 +504,10 @@ MonoBehaviour:
     mouth: 11.4297
     maxMouth: 3.9966578
     shortArm: 1
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 1
     node: 0
     edge: 9
@@ -488,6 +525,10 @@ MonoBehaviour:
     mouth: 11.578672
     maxMouth: 23.399904
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 2
     node: 0
     edge: 4
@@ -505,6 +546,10 @@ MonoBehaviour:
     mouth: 11.578672
     maxMouth: 33.299904
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 3
     node: 1
     edge: 1
@@ -522,6 +567,10 @@ MonoBehaviour:
     mouth: 19.511164
     maxMouth: 29.699154
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 4
     node: 1
     edge: 0
@@ -539,6 +588,10 @@ MonoBehaviour:
     mouth: 11.634221
     maxMouth: 3.9966578
     shortArm: 1
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 5
     node: 1
     edge: 13
@@ -556,6 +609,10 @@ MonoBehaviour:
     mouth: 19.511164
     maxMouth: 20.699999
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 6
     node: 2
     edge: 2
@@ -573,6 +630,10 @@ MonoBehaviour:
     mouth: 14.930357
     maxMouth: 20.080997
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 7
     node: 2
     edge: 39
@@ -590,6 +651,10 @@ MonoBehaviour:
     mouth: 14.455581
     maxMouth: 31.74657
     shortArm: 0
+    control: 2
+    controlSource: 1
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 8
     node: 2
     edge: 1
@@ -607,6 +672,10 @@ MonoBehaviour:
     mouth: 14.061277
     maxMouth: 29.699154
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 9
     node: 2
     edge: 38
@@ -624,6 +693,10 @@ MonoBehaviour:
     mouth: 15.301527
     maxMouth: 15.087635
     shortArm: 1
+    control: 2
+    controlSource: 1
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 10
     node: 3
     edge: 20
@@ -641,6 +714,10 @@ MonoBehaviour:
     mouth: 14.585527
     maxMouth: 84.57955
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 11
     node: 3
     edge: 3
@@ -658,6 +735,10 @@ MonoBehaviour:
     mouth: 12.61791
     maxMouth: 92.75558
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 12
     node: 3
     edge: 17
@@ -675,6 +756,10 @@ MonoBehaviour:
     mouth: 14.585527
     maxMouth: 51.297333
     shortArm: 0
+    control: 2
+    controlSource: 1
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 13
     node: 4
     edge: 4
@@ -692,6 +777,10 @@ MonoBehaviour:
     mouth: 11.690479
     maxMouth: 33.299904
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 14
     node: 4
     edge: 37
@@ -709,6 +798,10 @@ MonoBehaviour:
     mouth: 12.5986395
     maxMouth: 22.35306
     shortArm: 0
+    control: 2
+    controlSource: 1
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 15
     node: 4
     edge: 5
@@ -726,6 +819,10 @@ MonoBehaviour:
     mouth: 12.141609
     maxMouth: 35.09961
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 16
     node: 4
     edge: 36
@@ -743,6 +840,10 @@ MonoBehaviour:
     mouth: 12.165197
     maxMouth: 24.45515
     shortArm: 0
+    control: 2
+    controlSource: 1
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 17
     node: 5
     edge: 5
@@ -760,6 +861,10 @@ MonoBehaviour:
     mouth: 12.376387
     maxMouth: 35.09961
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 18
     node: 5
     edge: 34
@@ -777,6 +882,10 @@ MonoBehaviour:
     mouth: 12.824713
     maxMouth: 23.073576
     shortArm: 0
+    control: 2
+    controlSource: 1
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 19
     node: 5
     edge: 6
@@ -794,6 +903,10 @@ MonoBehaviour:
     mouth: 11.534691
     maxMouth: 19.254353
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 20
     node: 5
     edge: 33
@@ -811,6 +924,10 @@ MonoBehaviour:
     mouth: 11.235437
     maxMouth: 23.75812
     shortArm: 0
+    control: 2
+    controlSource: 1
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 21
     node: 6
     edge: 8
@@ -828,6 +945,10 @@ MonoBehaviour:
     mouth: 0
     maxMouth: 24.294962
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 22
     node: 7
     edge: 29
@@ -845,6 +966,10 @@ MonoBehaviour:
     mouth: 10.837027
     maxMouth: 30.762497
     shortArm: 0
+    control: 2
+    controlSource: 1
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 23
     node: 7
     edge: 10
@@ -862,6 +987,10 @@ MonoBehaviour:
     mouth: 10.374417
     maxMouth: 19.576393
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 24
     node: 7
     edge: 30
@@ -879,6 +1008,10 @@ MonoBehaviour:
     mouth: 10.699221
     maxMouth: 36.559486
     shortArm: 0
+    control: 2
+    controlSource: 1
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 25
     node: 7
     edge: 9
@@ -896,6 +1029,10 @@ MonoBehaviour:
     mouth: 10.230062
     maxMouth: 23.399904
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 26
     node: 8
     edge: 12
@@ -913,6 +1050,10 @@ MonoBehaviour:
     mouth: 0
     maxMouth: 43.074097
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 27
     node: 9
     edge: 26
@@ -930,6 +1071,10 @@ MonoBehaviour:
     mouth: 10.9044285
     maxMouth: 30.227299
     shortArm: 0
+    control: 2
+    controlSource: 1
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 28
     node: 9
     edge: 13
@@ -947,6 +1092,10 @@ MonoBehaviour:
     mouth: 10.444955
     maxMouth: 20.699999
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 29
     node: 9
     edge: 27
@@ -964,6 +1113,10 @@ MonoBehaviour:
     mouth: 10.65304
     maxMouth: 37.098072
     shortArm: 0
+    control: 2
+    controlSource: 1
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 30
     node: 9
     edge: 14
@@ -981,6 +1134,10 @@ MonoBehaviour:
     mouth: 10.1816435
     maxMouth: 71.852325
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 31
     node: 10
     edge: 16
@@ -998,6 +1155,10 @@ MonoBehaviour:
     mouth: 0
     maxMouth: -7.4827456
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 32
     node: 11
     edge: 19
@@ -1015,6 +1176,10 @@ MonoBehaviour:
     mouth: 0
     maxMouth: -3.9974532
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 33
     node: 12
     edge: 21
@@ -1032,6 +1197,10 @@ MonoBehaviour:
     mouth: 0
     maxMouth: 29.96668
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 34
     node: 13
     edge: 35
@@ -1049,6 +1218,10 @@ MonoBehaviour:
     mouth: 9.600268
     maxMouth: 45.10797
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 35
     node: 13
     edge: 25
@@ -1066,6 +1239,10 @@ MonoBehaviour:
     mouth: 9.600268
     maxMouth: 33.660152
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 36
     node: 14
     edge: 25
@@ -1083,6 +1260,10 @@ MonoBehaviour:
     mouth: 9.601096
     maxMouth: 33.660152
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 37
     node: 14
     edge: 32
@@ -1100,6 +1281,10 @@ MonoBehaviour:
     mouth: 9.601096
     maxMouth: 45.108265
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 38
     node: 15
     edge: 38
@@ -1117,6 +1302,10 @@ MonoBehaviour:
     mouth: 8.990935
     maxMouth: 15.087635
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 39
     node: 15
     edge: 26
@@ -1134,6 +1323,10 @@ MonoBehaviour:
     mouth: 8.990935
     maxMouth: 30.227299
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 40
     node: 16
     edge: 27
@@ -1151,6 +1344,10 @@ MonoBehaviour:
     mouth: 11.218694
     maxMouth: 37.098072
     shortArm: 0
+    control: 3
+    controlSource: 1
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 41
     node: 16
     edge: 36
@@ -1168,6 +1365,10 @@ MonoBehaviour:
     mouth: 11.174722
     maxMouth: 24.45515
     shortArm: 0
+    control: 3
+    controlSource: 1
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 42
     node: 16
     edge: 28
@@ -1185,6 +1386,10 @@ MonoBehaviour:
     mouth: 11.099792
     maxMouth: 33.659813
     shortArm: 0
+    control: 3
+    controlSource: 1
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 43
     node: 16
     edge: 35
@@ -1202,6 +1407,10 @@ MonoBehaviour:
     mouth: 11.218694
     maxMouth: 45.10797
     shortArm: 0
+    control: 3
+    controlSource: 1
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 44
     node: 17
     edge: 28
@@ -1219,6 +1428,10 @@ MonoBehaviour:
     mouth: 11.100218
     maxMouth: 33.659813
     shortArm: 0
+    control: 2
+    controlSource: 1
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 45
     node: 17
     edge: 33
@@ -1236,6 +1449,10 @@ MonoBehaviour:
     mouth: 10.720953
     maxMouth: 23.75812
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 46
     node: 17
     edge: 32
@@ -1253,6 +1470,10 @@ MonoBehaviour:
     mouth: 11.100218
     maxMouth: 45.108265
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 47
     node: 18
     edge: 29
@@ -1270,6 +1491,10 @@ MonoBehaviour:
     mouth: 9.431576
     maxMouth: 30.762497
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 48
     node: 18
     edge: 39
@@ -1287,6 +1512,10 @@ MonoBehaviour:
     mouth: 9.431576
     maxMouth: 31.74657
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 49
     node: 19
     edge: 30
@@ -1304,6 +1533,10 @@ MonoBehaviour:
     mouth: 11.381863
     maxMouth: 36.559486
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 50
     node: 19
     edge: 31
@@ -1321,6 +1554,10 @@ MonoBehaviour:
     mouth: 10.891526
     maxMouth: 33.659813
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 51
     node: 19
     edge: 37
@@ -1338,6 +1575,10 @@ MonoBehaviour:
     mouth: 11.381863
     maxMouth: 22.35306
     shortArm: 0
+    control: 2
+    controlSource: 1
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 52
     node: 20
     edge: 31
@@ -1355,6 +1596,10 @@ MonoBehaviour:
     mouth: 9.2653675
     maxMouth: 33.659813
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 53
     node: 20
     edge: 34
@@ -1372,6 +1617,10 @@ MonoBehaviour:
     mouth: 9.2653675
     maxMouth: 23.073576
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 54
     node: 21
     edge: 3
@@ -1389,6 +1638,10 @@ MonoBehaviour:
     mouth: 0
     maxMouth: 42.19001
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 55
     node: 21
     edge: 2
@@ -1406,6 +1659,10 @@ MonoBehaviour:
     mouth: 0
     maxMouth: 9.486448
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 56
     node: 22
     edge: 6
@@ -1423,6 +1680,10 @@ MonoBehaviour:
     mouth: 0
     maxMouth: 9.114459
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 57
     node: 22
     edge: 7
@@ -1440,6 +1701,10 @@ MonoBehaviour:
     mouth: 0
     maxMouth: 35.88461
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 58
     node: 23
     edge: 7
@@ -1457,6 +1722,10 @@ MonoBehaviour:
     mouth: 25.235786
     maxMouth: 78.743576
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 59
     node: 23
     edge: 22
@@ -1474,6 +1743,10 @@ MonoBehaviour:
     mouth: 25.5
     maxMouth: 135.70804
     shortArm: 0
+    control: 2
+    controlSource: 1
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 60
     node: 23
     edge: 8
@@ -1491,6 +1764,10 @@ MonoBehaviour:
     mouth: 2.851555
     maxMouth: 52.988804
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 61
     node: 24
     edge: 11
@@ -1508,6 +1785,10 @@ MonoBehaviour:
     mouth: 0
     maxMouth: 51.038048
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 62
     node: 24
     edge: 10
@@ -1525,6 +1806,10 @@ MonoBehaviour:
     mouth: 0
     maxMouth: 9.259377
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 63
     node: 25
     edge: 12
@@ -1542,6 +1827,10 @@ MonoBehaviour:
     mouth: 6.069906
     maxMouth: 94.720215
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 64
     node: 25
     edge: 22
@@ -1559,6 +1848,10 @@ MonoBehaviour:
     mouth: 18.510506
     maxMouth: 135.70804
     shortArm: 0
+    control: 2
+    controlSource: 1
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 65
     node: 25
     edge: 11
@@ -1576,6 +1869,10 @@ MonoBehaviour:
     mouth: 17.892767
     maxMouth: 112.417885
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 66
     node: 26
     edge: 14
@@ -1593,6 +1890,10 @@ MonoBehaviour:
     mouth: 0
     maxMouth: 32.783546
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 67
     node: 26
     edge: 15
@@ -1610,6 +1911,10 @@ MonoBehaviour:
     mouth: 0
     maxMouth: 39.208904
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 68
     node: 27
     edge: 16
@@ -1627,6 +1932,10 @@ MonoBehaviour:
     mouth: 8.523381
     maxMouth: 1.5172542
     shortArm: 1
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 69
     node: 27
     edge: 24
@@ -1644,6 +1953,10 @@ MonoBehaviour:
     mouth: 22.912659
     maxMouth: 113.861275
     shortArm: 0
+    control: 2
+    controlSource: 1
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 70
     node: 27
     edge: 15
@@ -1661,6 +1974,10 @@ MonoBehaviour:
     mouth: 22.419336
     maxMouth: 86.1309
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 71
     node: 28
     edge: 18
@@ -1678,6 +1995,10 @@ MonoBehaviour:
     mouth: 4.307668
     maxMouth: 67.49155
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 72
     node: 28
     edge: 17
@@ -1695,6 +2016,10 @@ MonoBehaviour:
     mouth: 25.148561
     maxMouth: 51.297333
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 73
     node: 28
     edge: 24
@@ -1712,6 +2037,10 @@ MonoBehaviour:
     mouth: 25.5
     maxMouth: 113.861275
     shortArm: 0
+    control: 2
+    controlSource: 1
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 74
     node: 29
     edge: 19
@@ -1729,6 +2058,10 @@ MonoBehaviour:
     mouth: 6.484054
     maxMouth: 5.002547
     shortArm: 1
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 75
     node: 29
     edge: 23
@@ -1746,6 +2079,10 @@ MonoBehaviour:
     mouth: 25.5
     maxMouth: 131.1557
     shortArm: 0
+    control: 2
+    controlSource: 1
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 76
     node: 29
     edge: 18
@@ -1763,6 +2100,10 @@ MonoBehaviour:
     mouth: 25.092274
     maxMouth: 67.49155
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 77
     node: 30
     edge: 21
@@ -1780,6 +2121,10 @@ MonoBehaviour:
     mouth: 7.9697413
     maxMouth: 65.59262
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 78
     node: 30
     edge: 20
@@ -1797,6 +2142,10 @@ MonoBehaviour:
     mouth: 12.007306
     maxMouth: 84.57955
     shortArm: 0
+    control: 0
+    controlSource: 0
+    controlOsmNode: 0
+    controlDistance: 0
   - id: 79
     node: 30
     edge: 23
@@ -1814,6 +2163,10 @@ MonoBehaviour:
     mouth: 12.921276
     maxMouth: 131.1557
     shortArm: 0
+    control: 2
+    controlSource: 1
+    controlOsmNode: 0
+    controlDistance: 0
   corners:
   - id: 0
     node: 0
@@ -6715,6 +7068,656 @@ MonoBehaviour:
     - 66.51714
     - 68.53261
     - 70.547935
+  roads:
+  - id: 0
+    cls: 0
+    length: 194.83134
+    osmWays: []
+    highway: 
+    service: 
+    hwLeft: 3.6
+    hwRight: 3.6
+    laneWidth: 0
+    parkingLeft: 0
+    parkingRight: 0
+    gutter: 0
+    lanes: 0
+    widthSource: 
+    oneway: 0
+    bridge: 0
+    tunnel: 0
+    roundabout: 0
+    layer: 0
+    surface: 
+    sidewalk: 
+    parking: 
+    speedKmh: 0
+    inKerbZone: 0
+    inDowntown: 0
+    cutStart: 0
+    cutEnd: 0
+  - id: 1
+    cls: 0
+    length: 305.98566
+    osmWays: []
+    highway: 
+    service: 
+    hwLeft: 3.6
+    hwRight: 3.6
+    laneWidth: 0
+    parkingLeft: 0
+    parkingRight: 0
+    gutter: 0
+    lanes: 0
+    widthSource: 
+    oneway: 0
+    bridge: 0
+    tunnel: 0
+    roundabout: 0
+    layer: 0
+    surface: 
+    sidewalk: 
+    parking: 
+    speedKmh: 0
+    inKerbZone: 0
+    inDowntown: 0
+    cutStart: 0
+    cutEnd: 0
+  - id: 2
+    cls: 0
+    length: 281.7143
+    osmWays: []
+    highway: 
+    service: 
+    hwLeft: 3.6
+    hwRight: 3.6
+    laneWidth: 0
+    parkingLeft: 0
+    parkingRight: 0
+    gutter: 0
+    lanes: 0
+    widthSource: 
+    oneway: 0
+    bridge: 0
+    tunnel: 0
+    roundabout: 0
+    layer: 0
+    surface: 
+    sidewalk: 
+    parking: 
+    speedKmh: 0
+    inKerbZone: 0
+    inDowntown: 0
+    cutStart: 0
+    cutEnd: 0
+  - id: 3
+    cls: 0
+    length: 208.50049
+    osmWays: []
+    highway: 
+    service: 
+    hwLeft: 3.6
+    hwRight: 3.6
+    laneWidth: 0
+    parkingLeft: 0
+    parkingRight: 0
+    gutter: 0
+    lanes: 0
+    widthSource: 
+    oneway: 0
+    bridge: 0
+    tunnel: 0
+    roundabout: 0
+    layer: 0
+    surface: 
+    sidewalk: 
+    parking: 
+    speedKmh: 0
+    inKerbZone: 0
+    inDowntown: 0
+    cutStart: 0
+    cutEnd: 0
+  - id: 4
+    cls: 0
+    length: 269.9778
+    osmWays: []
+    highway: 
+    service: 
+    hwLeft: 3.6
+    hwRight: 3.6
+    laneWidth: 0
+    parkingLeft: 0
+    parkingRight: 0
+    gutter: 0
+    lanes: 0
+    widthSource: 
+    oneway: 0
+    bridge: 0
+    tunnel: 0
+    roundabout: 0
+    layer: 0
+    surface: 
+    sidewalk: 
+    parking: 
+    speedKmh: 0
+    inKerbZone: 0
+    inDowntown: 0
+    cutStart: 0
+    cutEnd: 0
+  - id: 5
+    cls: 0
+    length: 254.54718
+    osmWays: []
+    highway: 
+    service: 
+    hwLeft: 3.6
+    hwRight: 3.6
+    laneWidth: 0
+    parkingLeft: 0
+    parkingRight: 0
+    gutter: 0
+    lanes: 0
+    widthSource: 
+    oneway: 0
+    bridge: 0
+    tunnel: 0
+    roundabout: 0
+    layer: 0
+    surface: 
+    sidewalk: 
+    parking: 
+    speedKmh: 0
+    inKerbZone: 0
+    inDowntown: 0
+    cutStart: 0
+    cutEnd: 0
+  - id: 6
+    cls: 3
+    length: 301.5734
+    osmWays: []
+    highway: 
+    service: 
+    hwLeft: 2.7
+    hwRight: 2.7
+    laneWidth: 0
+    parkingLeft: 0
+    parkingRight: 0
+    gutter: 0
+    lanes: 0
+    widthSource: 
+    oneway: 0
+    bridge: 0
+    tunnel: 0
+    roundabout: 0
+    layer: 0
+    surface: 
+    sidewalk: 
+    parking: 
+    speedKmh: 0
+    inKerbZone: 0
+    inDowntown: 0
+    cutStart: 0
+    cutEnd: 0
+  - id: 7
+    cls: 3
+    length: 291.45712
+    osmWays: []
+    highway: 
+    service: 
+    hwLeft: 2.7
+    hwRight: 2.7
+    laneWidth: 0
+    parkingLeft: 0
+    parkingRight: 0
+    gutter: 0
+    lanes: 0
+    widthSource: 
+    oneway: 0
+    bridge: 0
+    tunnel: 0
+    roundabout: 0
+    layer: 0
+    surface: 
+    sidewalk: 
+    parking: 
+    speedKmh: 0
+    inKerbZone: 0
+    inDowntown: 0
+    cutStart: 0
+    cutEnd: 0
+  - id: 8
+    cls: 3
+    length: 253.02505
+    osmWays: []
+    highway: 
+    service: 
+    hwLeft: 2.7
+    hwRight: 2.7
+    laneWidth: 0
+    parkingLeft: 0
+    parkingRight: 0
+    gutter: 0
+    lanes: 0
+    widthSource: 
+    oneway: 0
+    bridge: 0
+    tunnel: 0
+    roundabout: 0
+    layer: 0
+    surface: 
+    sidewalk: 
+    parking: 
+    speedKmh: 0
+    inKerbZone: 0
+    inDowntown: 0
+    cutStart: 0
+    cutEnd: 0
+  - id: 9
+    cls: 2
+    length: 74.80034
+    osmWays: []
+    highway: 
+    service: 
+    hwLeft: 3.1
+    hwRight: 3.1
+    laneWidth: 0
+    parkingLeft: 0
+    parkingRight: 0
+    gutter: 0
+    lanes: 0
+    widthSource: 
+    oneway: 0
+    bridge: 0
+    tunnel: 0
+    roundabout: 0
+    layer: 0
+    surface: 
+    sidewalk: 
+    parking: 
+    speedKmh: 0
+    inKerbZone: 0
+    inDowntown: 0
+    cutStart: 0
+    cutEnd: 0
+  - id: 10
+    cls: 2
+    length: 67.171776
+    osmWays: []
+    highway: 
+    service: 
+    hwLeft: 3.1
+    hwRight: 3.1
+    laneWidth: 0
+    parkingLeft: 0
+    parkingRight: 0
+    gutter: 0
+    lanes: 0
+    widthSource: 
+    oneway: 0
+    bridge: 0
+    tunnel: 0
+    roundabout: 0
+    layer: 0
+    surface: 
+    sidewalk: 
+    parking: 
+    speedKmh: 0
+    inKerbZone: 0
+    inDowntown: 0
+    cutStart: 0
+    cutEnd: 0
+  - id: 11
+    cls: 2
+    length: 82.44016
+    osmWays: []
+    highway: 
+    service: 
+    hwLeft: 3.1
+    hwRight: 3.1
+    laneWidth: 0
+    parkingLeft: 0
+    parkingRight: 0
+    gutter: 0
+    lanes: 0
+    widthSource: 
+    oneway: 0
+    bridge: 0
+    tunnel: 0
+    roundabout: 0
+    layer: 0
+    surface: 
+    sidewalk: 
+    parking: 
+    speedKmh: 0
+    inKerbZone: 0
+    inDowntown: 0
+    cutStart: 0
+    cutEnd: 0
+  - id: 12
+    cls: 2
+    length: 74.79958
+    osmWays: []
+    highway: 
+    service: 
+    hwLeft: 3.1
+    hwRight: 3.1
+    laneWidth: 0
+    parkingLeft: 0
+    parkingRight: 0
+    gutter: 0
+    lanes: 0
+    widthSource: 
+    oneway: 0
+    bridge: 0
+    tunnel: 0
+    roundabout: 0
+    layer: 0
+    surface: 
+    sidewalk: 
+    parking: 
+    speedKmh: 0
+    inKerbZone: 0
+    inDowntown: 0
+    cutStart: 0
+    cutEnd: 0
+  - id: 13
+    cls: 2
+    length: 68.36111
+    osmWays: []
+    highway: 
+    service: 
+    hwLeft: 3.1
+    hwRight: 3.1
+    laneWidth: 0
+    parkingLeft: 0
+    parkingRight: 0
+    gutter: 0
+    lanes: 0
+    widthSource: 
+    oneway: 0
+    bridge: 0
+    tunnel: 0
+    roundabout: 0
+    layer: 0
+    surface: 
+    sidewalk: 
+    parking: 
+    speedKmh: 0
+    inKerbZone: 0
+    inDowntown: 0
+    cutStart: 0
+    cutEnd: 0
+  - id: 14
+    cls: 2
+    length: 81.2433
+    osmWays: []
+    highway: 
+    service: 
+    hwLeft: 3.1
+    hwRight: 3.1
+    laneWidth: 0
+    parkingLeft: 0
+    parkingRight: 0
+    gutter: 0
+    lanes: 0
+    widthSource: 
+    oneway: 0
+    bridge: 0
+    tunnel: 0
+    roundabout: 0
+    layer: 0
+    surface: 
+    sidewalk: 
+    parking: 
+    speedKmh: 0
+    inKerbZone: 0
+    inDowntown: 0
+    cutStart: 0
+    cutEnd: 0
+  - id: 15
+    cls: 2
+    length: 74.79959
+    osmWays: []
+    highway: 
+    service: 
+    hwLeft: 3.1
+    hwRight: 3.1
+    laneWidth: 0
+    parkingLeft: 0
+    parkingRight: 0
+    gutter: 0
+    lanes: 0
+    widthSource: 
+    oneway: 0
+    bridge: 0
+    tunnel: 0
+    roundabout: 0
+    layer: 0
+    surface: 
+    sidewalk: 
+    parking: 
+    speedKmh: 0
+    inKerbZone: 0
+    inDowntown: 0
+    cutStart: 0
+    cutEnd: 0
+  - id: 16
+    cls: 2
+    length: 100.24059
+    osmWays: []
+    highway: 
+    service: 
+    hwLeft: 3.1
+    hwRight: 3.1
+    laneWidth: 0
+    parkingLeft: 0
+    parkingRight: 0
+    gutter: 0
+    lanes: 0
+    widthSource: 
+    oneway: 0
+    bridge: 0
+    tunnel: 0
+    roundabout: 0
+    layer: 0
+    surface: 
+    sidewalk: 
+    parking: 
+    speedKmh: 0
+    inKerbZone: 0
+    inDowntown: 0
+    cutStart: 0
+    cutEnd: 0
+  - id: 17
+    cls: 2
+    length: 52.795822
+    osmWays: []
+    highway: 
+    service: 
+    hwLeft: 3.1
+    hwRight: 3.1
+    laneWidth: 0
+    parkingLeft: 0
+    parkingRight: 0
+    gutter: 0
+    lanes: 0
+    widthSource: 
+    oneway: 0
+    bridge: 0
+    tunnel: 0
+    roundabout: 0
+    layer: 0
+    surface: 
+    sidewalk: 
+    parking: 
+    speedKmh: 0
+    inKerbZone: 0
+    inDowntown: 0
+    cutStart: 0
+    cutEnd: 0
+  - id: 18
+    cls: 2
+    length: 51.274612
+    osmWays: []
+    highway: 
+    service: 
+    hwLeft: 3.1
+    hwRight: 3.1
+    laneWidth: 0
+    parkingLeft: 0
+    parkingRight: 0
+    gutter: 0
+    lanes: 0
+    widthSource: 
+    oneway: 0
+    bridge: 0
+    tunnel: 0
+    roundabout: 0
+    layer: 0
+    surface: 
+    sidewalk: 
+    parking: 
+    speedKmh: 0
+    inKerbZone: 0
+    inDowntown: 0
+    cutStart: 0
+    cutEnd: 0
+  - id: 19
+    cls: 2
+    length: 100.23994
+    osmWays: []
+    highway: 
+    service: 
+    hwLeft: 3.1
+    hwRight: 3.1
+    laneWidth: 0
+    parkingLeft: 0
+    parkingRight: 0
+    gutter: 0
+    lanes: 0
+    widthSource: 
+    oneway: 0
+    bridge: 0
+    tunnel: 0
+    roundabout: 0
+    layer: 0
+    surface: 
+    sidewalk: 
+    parking: 
+    speedKmh: 0
+    inKerbZone: 0
+    inDowntown: 0
+    cutStart: 0
+    cutEnd: 0
+  - id: 20
+    cls: 2
+    length: 54.34478
+    osmWays: []
+    highway: 
+    service: 
+    hwLeft: 3.1
+    hwRight: 3.1
+    laneWidth: 0
+    parkingLeft: 0
+    parkingRight: 0
+    gutter: 0
+    lanes: 0
+    widthSource: 
+    oneway: 0
+    bridge: 0
+    tunnel: 0
+    roundabout: 0
+    layer: 0
+    surface: 
+    sidewalk: 
+    parking: 
+    speedKmh: 0
+    inKerbZone: 0
+    inDowntown: 0
+    cutStart: 0
+    cutEnd: 0
+  - id: 21
+    cls: 2
+    length: 49.673466
+    osmWays: []
+    highway: 
+    service: 
+    hwLeft: 3.1
+    hwRight: 3.1
+    laneWidth: 0
+    parkingLeft: 0
+    parkingRight: 0
+    gutter: 0
+    lanes: 0
+    widthSource: 
+    oneway: 0
+    bridge: 0
+    tunnel: 0
+    roundabout: 0
+    layer: 0
+    surface: 
+    sidewalk: 
+    parking: 
+    speedKmh: 0
+    inKerbZone: 0
+    inDowntown: 0
+    cutStart: 0
+    cutEnd: 0
+  - id: 22
+    cls: 2
+    length: 33.52808
+    osmWays: []
+    highway: 
+    service: 
+    hwLeft: 3.1
+    hwRight: 3.1
+    laneWidth: 0
+    parkingLeft: 0
+    parkingRight: 0
+    gutter: 0
+    lanes: 0
+    widthSource: 
+    oneway: 0
+    bridge: 0
+    tunnel: 0
+    roundabout: 0
+    layer: 0
+    surface: 
+    sidewalk: 
+    parking: 
+    speedKmh: 0
+    inKerbZone: 0
+    inDowntown: 0
+    cutStart: 0
+    cutEnd: 0
+  - id: 23
+    cls: 2
+    length: 70.547935
+    osmWays: []
+    highway: 
+    service: 
+    hwLeft: 3.1
+    hwRight: 3.1
+    laneWidth: 0
+    parkingLeft: 0
+    parkingRight: 0
+    gutter: 0
+    lanes: 0
+    widthSource: 
+    oneway: 0
+    bridge: 0
+    tunnel: 0
+    roundabout: 0
+    layer: 0
+    surface: 
+    sidewalk: 
+    parking: 
+    speedKmh: 0
+    inKerbZone: 0
+    inDowntown: 0
+    cutStart: 0
+    cutEnd: 0
+  features: []
   complexPairs:
   - a: 0
     b: 1
@@ -6794,6 +7797,10 @@ MonoBehaviour:
   - {x: -14.103751, y: 194.48175}
   - {x: -15.105054, y: 191.70825}
   - {x: -15.687677, y: 188.81769}
+  downtownZone: []
+  edgeCuts: []
+  mappedDriveways: []
+  steep: []
   notes:
   - 'complex pair: nodes 0 and 1 are 13.86 m apart (< 30 m); they need an override
     before R1 can shape them'

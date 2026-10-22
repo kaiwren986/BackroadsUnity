@@ -1,20 +1,29 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Backroads.Roads
 {
     /// <summary>
-    /// The baked road network (R0 of 05 §9): the cleaned graph of 05 §5.1 with arms, provisional corners and mouths, in Unity
-    /// space. Written by Backroads.Roads.Editor.RoadNetworkBaker into Assets/Backroads/Roads/Baked/Resources/ (committed,
-    /// hash-checked by EditMode Roads.BakedAssetUpToDate); never generated at run time. Ground-plane vectors are stored as
-    /// Vector2(x, z). The schema is frozen only at M3 (PLAN 1.10), so R1-R4 may still extend it.
+    /// The baked road network (R0 of 05 §9; roads-R0o for towns): the cleaned graph of 05 §5.1 with arms, provisional
+    /// corners and mouths, in Unity space. Written by Backroads.Roads.Editor.RoadNetworkBaker into
+    /// Assets/Backroads/Roads/Baked/Resources/ (committed, hash-checked by EditMode Roads.BakedAssetUpToDate and
+    /// OsmRoads.TownAssetUpToDate); never generated at run time. Two assets: BrRoadNetwork (the canon test world) and
+    /// BrRoadNetwork_(town) (a TownData town). Ground-plane vectors are stored as Vector2(x, z). The schema is frozen
+    /// only at M3 (PLAN 1.10), so R1-R4 may still extend it.
+    /// Format 2 (roads-R0o): the road table (OSM ways, tags, cross sections), per-approach controls with their source,
+    /// mapped features, the downtown zone, the play-area edge cuts, mapped driveways and steep stretches.
     /// </summary>
     public sealed class RoadNetworkAsset : ScriptableObject
     {
         public const string ResourceName = "BrRoadNetwork";
-        public const int FormatVersion = 1;
+        public const int FormatVersion = 2;
+
+        /// <summary>The Resources name of a town's network (TownData/(town)/v1).</summary>
+        public static string TownResourceName(string townId) => ResourceName + "_" + townId;
 
         [Serializable]
         public struct Node
@@ -25,6 +34,7 @@ namespace Backroads.Roads
             public Vector3 position;
             public NodeKind kind;
             public Control control;
+            public ControlSource controlSource;
             public NodeFlags flags;
             public int firstArm, armCount, firstCorner, cornerCount;
             /// <summary>Through road as positions within this node's arms (0..armCount-1), or -1.</summary>
@@ -46,6 +56,75 @@ namespace Backroads.Roads
             /// <summary>Provisional (straight-line) tangent distances and mouth, metres from the node along the arm.</summary>
             public float tangentL, tangentR, mouth, maxMouth;
             public bool shortArm;
+            /// <summary>What traffic arriving along this arm must do, where it came from, and the mapped sign (OSM node, metres from the node).</summary>
+            public Control control;
+            public ControlSource controlSource;
+            public long controlOsmNode;
+            public float controlDistance;
+        }
+
+        /// <summary>A road the edges are pieces of (sourceRoad): canon roads carry only id, class and length; town roads their OSM data.</summary>
+        [Serializable]
+        public sealed class Road
+        {
+            public int id;
+            public RoadClass cls;
+            public float length;
+            public string[] osmWays = Array.Empty<string>();
+            public string highway = "", service = "";
+            /// <summary>Cross section: centreline to pavement edge (kerb face) left and right of the direction of travel along the points.</summary>
+            public float hwLeft, hwRight, laneWidth, parkingLeft, parkingRight, gutter;
+            public int lanes;
+            /// <summary>"width", "lanes" or "class" (which rule set the width); "" for the canon.</summary>
+            public string widthSource = "";
+            /// <summary>+1 one-way along the points, -1 against them, 0 both ways.</summary>
+            public int oneway;
+            public bool bridge, tunnel, roundabout;
+            public int layer;
+            public string surface = "", sidewalk = "", parking = "";
+            public float speedKmh;
+            public bool inKerbZone, inDowntown, cutStart, cutEnd;
+        }
+
+        /// <summary>A mapped sign, signal or crossing on an edge (s metres from nodeA); node and arm are what it controls, or -1.</summary>
+        [Serializable]
+        public struct Feature
+        {
+            public RoadFeatureKind kind;
+            public long osmNode;
+            public int edge;
+            public float s;
+            public int direction, node, arm;
+            public string crossing, problem;
+        }
+
+        /// <summary>A road cut at the play-area edge: where, on which side ("N", "E", "S", "W"), and how far its next node lies beyond the cut.</summary>
+        [Serializable]
+        public struct Cut
+        {
+            public int road;
+            public string osmWay;
+            public Vector2 at;
+            public string side;
+            public float beyond;
+        }
+
+        [Serializable]
+        public struct Driveway
+        {
+            public string osmWay, service;
+            public long osmNode;
+            public Vector2 at;
+            public int road;
+            public float s;
+        }
+
+        [Serializable]
+        public struct Steep
+        {
+            public int road;
+            public Vector2 at;
+            public float length, maxGrade, realGrade;
         }
 
         [Serializable]
@@ -84,9 +163,11 @@ namespace Backroads.Roads
 
         [Header("Identity")]
         public int formatVersion = FormatVersion;
-        public int builderVersion;
-        /// <summary>SHA-256 of CanonData/v1/manifest.json the bake read.</summary>
-        public string canonManifestSha256;
+        public int builderVersion, importerVersion;
+        /// <summary>What the bake read: "CanonData/v1" or "TownData/(town)/v1", and the SHA-256 of its manifest.json.</summary>
+        public string source = "";
+        [FormerlySerializedAs("canonManifestSha256")]
+        public string sourceManifestSha256;
         /// <summary>SHA-256 of the content below (ComputeHash), written by the bake.</summary>
         public string contentHash;
         public int inputRoads, inputPoints;
@@ -96,14 +177,31 @@ namespace Backroads.Roads
         public Arm[] arms = Array.Empty<Arm>();
         public Corner[] corners = Array.Empty<Corner>();
         public Edge[] edges = Array.Empty<Edge>();
+        public Road[] roads = Array.Empty<Road>();
+        public Feature[] features = Array.Empty<Feature>();
 
         [Header("Findings")]
         public Pair[] complexPairs = Array.Empty<Pair>();
-        /// <summary>The town kerb zone outline (street hull + buffer), (x, z).</summary>
+        /// <summary>The town kerb zone outline (canon: street hull + buffer; towns: KERB_ZONE), (x, z).</summary>
         public Vector2[] townZone = Array.Empty<Vector2>();
+        /// <summary>DOWNTOWN_ZONE (towns), (x, z).</summary>
+        public Vector2[] downtownZone = Array.Empty<Vector2>();
+        public Cut[] edgeCuts = Array.Empty<Cut>();
+        public Driveway[] mappedDriveways = Array.Empty<Driveway>();
+        public Steep[] steep = Array.Empty<Steep>();
         public string[] notes = Array.Empty<string>();
 
+        /// <summary>The canon test world's network.</summary>
         public static RoadNetworkAsset Load() => Resources.Load<RoadNetworkAsset>(ResourceName);
+
+        /// <summary>A town's network (TownData/(town)/v1), or null when it was not baked.</summary>
+        public static RoadNetworkAsset LoadTown(string townId) => Resources.Load<RoadNetworkAsset>(TownResourceName(townId));
+
+        public Road RoadById(int id)
+        {
+            foreach (var r in roads) if (r.id == id) return r;
+            return null;
+        }
 
         public Arm ArmOf(in Node n, int k) => arms[n.firstArm + k];
 
@@ -114,12 +212,14 @@ namespace Backroads.Roads
             return c;
         }
 
-        /// <summary>Fills this asset from a built graph (float conversion) and stamps the content hash.</summary>
-        public void SetFrom(RoadGraph g)
+        /// <summary>Fills this asset from a built graph (float conversion) and, for a town, its import report; stamps the content hash.</summary>
+        public void SetFrom(RoadGraph g, OsmImportReport report = null)
         {
             formatVersion = FormatVersion;
             builderVersion = RoadGraphBuilder.Version;
-            canonManifestSha256 = g.canonManifestSha256 ?? "";
+            importerVersion = report != null ? OsmRoadImporter.Version : 0;
+            source = g.source ?? "";
+            sourceManifestSha256 = g.sourceManifestSha256 ?? "";
             inputRoads = g.inputRoads;
             inputPoints = g.inputPoints;
 
@@ -129,7 +229,7 @@ namespace Backroads.Roads
                 var n = g.nodes[i];
                 nodes[i] = new Node
                 {
-                    id = n.id, legacyId = n.legacyId, position = V3(n.p), kind = n.kind, control = n.control, flags = n.flags,
+                    id = n.id, legacyId = n.legacyId, position = V3(n.p), kind = n.kind, control = n.control, controlSource = n.controlSource, flags = n.flags,
                     firstArm = n.arms.Count > 0 ? n.arms[0] : 0, armCount = n.arms.Count,
                     firstCorner = n.corners.Count > 0 ? n.corners[0] : 0, cornerCount = n.corners.Count,
                     majorA = n.majorA, majorB = n.majorB,
@@ -150,8 +250,52 @@ namespace Backroads.Roads
                     id = a.id, node = a.node, edge = a.edge, sourceRoad = a.sourceRoad, atA = a.atA, cls = a.cls, halfWidth = (float)a.hw,
                     dir = V2(a.dir), angleDeg = (float)(a.angle / Geo.Deg), length = (float)a.length, grade = (float)a.grade, maxGrade = (float)a.maxGrade,
                     tangentL = (float)a.tangentL, tangentR = (float)a.tangentR, mouth = (float)a.mouth, maxMouth = (float)a.maxMouth, shortArm = a.shortArm,
+                    control = a.control, controlSource = a.controlSource, controlOsmNode = a.controlOsmNode, controlDistance = (float)a.controlDistance,
                 };
             }
+            roads = new Road[g.roads.Count];
+            for (int i = 0; i < roads.Length; i++)
+            {
+                var r = g.roads[i];
+                var xs = r.xs;
+                roads[i] = new Road
+                {
+                    id = r.id, cls = r.cls, length = (float)r.Length, osmWays = r.osmWays ?? Array.Empty<string>(), highway = r.highway ?? "", service = r.service ?? "",
+                    hwLeft = (float)(xs?.hwLeft ?? r.hw), hwRight = (float)(xs?.hwRight ?? r.hw), laneWidth = (float)(xs?.laneWidth ?? 0),
+                    parkingLeft = (float)(xs?.parkingLeft ?? 0), parkingRight = (float)(xs?.parkingRight ?? 0), gutter = (float)(xs?.gutter ?? 0),
+                    lanes = xs?.lanes ?? 0, widthSource = xs?.source ?? "", oneway = r.oneway, bridge = r.bridge, tunnel = r.tunnel, roundabout = r.roundabout,
+                    layer = r.layer, surface = r.surface ?? "", sidewalk = r.sidewalk ?? "", parking = r.parking ?? "", speedKmh = (float)r.speedKmh,
+                    inKerbZone = r.inKerbZone, inDowntown = r.inDowntown, cutStart = r.cutStart, cutEnd = r.cutEnd,
+                };
+            }
+            features = new Feature[g.features.Count];
+            for (int i = 0; i < features.Length; i++)
+            {
+                var f = g.features[i];
+                features[i] = new Feature
+                {
+                    kind = f.kind, osmNode = f.osmNode, edge = f.edge, s = (float)f.s, direction = f.direction, node = f.node, arm = f.arm,
+                    crossing = f.crossing ?? "", problem = f.problem ?? "",
+                };
+            }
+            var dz = new List<Vector2>();
+            if (g.downtown != null) foreach (var p in g.downtown) dz.Add(V2(p));
+            downtownZone = dz.ToArray();
+            var cuts = new List<Cut>();
+            var drives = new List<Driveway>();
+            var steeps = new List<Steep>();
+            if (report != null)
+            {
+                foreach (var c in report.edgeCuts)
+                    cuts.Add(new Cut { road = c.road, osmWay = c.osmWay ?? "", at = V2(c.at), side = c.side.ToString(), beyond = (float)c.junctionBeyond });
+                foreach (var d in report.driveways)
+                    drives.Add(new Driveway { osmWay = d.osmWay ?? "", service = d.service ?? "", osmNode = d.node, at = V2(d.at), road = d.road, s = (float)d.s });
+                foreach (var s in report.steep)
+                    if (s.road >= 0) steeps.Add(new Steep { road = s.road, at = V2(s.at), length = (float)s.length, maxGrade = (float)s.maxGrade, realGrade = (float)s.realGrade });
+            }
+            edgeCuts = cuts.ToArray();
+            mappedDriveways = drives.ToArray();
+            steep = steeps.ToArray();
             corners = new Corner[g.corners.Count];
             for (int i = 0; i < corners.Length; i++)
             {
@@ -195,11 +339,11 @@ namespace Backroads.Roads
             using (var ms = new MemoryStream())
             using (var w = new BinaryWriter(ms))
             {
-                w.Write(formatVersion); w.Write(builderVersion); w.Write(inputRoads); w.Write(inputPoints);
+                w.Write(formatVersion); w.Write(builderVersion); w.Write(importerVersion); w.Write(source ?? ""); w.Write(inputRoads); w.Write(inputPoints);
                 w.Write(nodes.Length);
                 foreach (var n in nodes)
                 {
-                    w.Write(n.id); w.Write(n.legacyId); W(w, n.position); w.Write((byte)n.kind); w.Write((byte)n.control); w.Write((ushort)n.flags);
+                    w.Write(n.id); w.Write(n.legacyId); W(w, n.position); w.Write((byte)n.kind); w.Write((byte)n.control); w.Write((byte)n.controlSource); w.Write((ushort)n.flags);
                     w.Write(n.firstArm); w.Write(n.armCount); w.Write(n.firstCorner); w.Write(n.cornerCount); w.Write(n.majorA); w.Write(n.majorB);
                     w.Write(n.bestPairBendDeg); w.Write(n.minArmGapDeg);
                 }
@@ -209,7 +353,34 @@ namespace Backroads.Roads
                     w.Write(a.id); w.Write(a.node); w.Write(a.edge); w.Write(a.sourceRoad); w.Write(a.atA); w.Write((byte)a.cls); w.Write(a.halfWidth);
                     W(w, a.dir); w.Write(a.angleDeg); w.Write(a.length); w.Write(a.grade); w.Write(a.maxGrade);
                     w.Write(a.tangentL); w.Write(a.tangentR); w.Write(a.mouth); w.Write(a.maxMouth); w.Write(a.shortArm);
+                    w.Write((byte)a.control); w.Write((byte)a.controlSource); w.Write(a.controlOsmNode); w.Write(a.controlDistance);
                 }
+                w.Write(roads.Length);
+                foreach (var r in roads)
+                {
+                    w.Write(r.id); w.Write((byte)r.cls); w.Write(r.length);
+                    w.Write(r.osmWays.Length);
+                    foreach (var s in r.osmWays) w.Write(s ?? "");
+                    w.Write(r.highway ?? ""); w.Write(r.service ?? "");
+                    w.Write(r.hwLeft); w.Write(r.hwRight); w.Write(r.laneWidth); w.Write(r.parkingLeft); w.Write(r.parkingRight); w.Write(r.gutter);
+                    w.Write(r.lanes); w.Write(r.widthSource ?? ""); w.Write(r.oneway); w.Write(r.bridge); w.Write(r.tunnel); w.Write(r.roundabout); w.Write(r.layer);
+                    w.Write(r.surface ?? ""); w.Write(r.sidewalk ?? ""); w.Write(r.parking ?? ""); w.Write(r.speedKmh);
+                    w.Write(r.inKerbZone); w.Write(r.inDowntown); w.Write(r.cutStart); w.Write(r.cutEnd);
+                }
+                w.Write(features.Length);
+                foreach (var f in features)
+                {
+                    w.Write((byte)f.kind); w.Write(f.osmNode); w.Write(f.edge); w.Write(f.s); w.Write(f.direction); w.Write(f.node); w.Write(f.arm);
+                    w.Write(f.crossing ?? ""); w.Write(f.problem ?? "");
+                }
+                w.Write(downtownZone.Length);
+                foreach (var p in downtownZone) W(w, p);
+                w.Write(edgeCuts.Length);
+                foreach (var c in edgeCuts) { w.Write(c.road); w.Write(c.osmWay ?? ""); W(w, c.at); w.Write(c.side ?? ""); w.Write(c.beyond); }
+                w.Write(mappedDriveways.Length);
+                foreach (var d in mappedDriveways) { w.Write(d.osmWay ?? ""); w.Write(d.service ?? ""); w.Write(d.osmNode); W(w, d.at); w.Write(d.road); w.Write(d.s); }
+                w.Write(steep.Length);
+                foreach (var s in steep) { w.Write(s.road); W(w, s.at); w.Write(s.length); w.Write(s.maxGrade); w.Write(s.realGrade); }
                 w.Write(corners.Length);
                 foreach (var c in corners)
                 {

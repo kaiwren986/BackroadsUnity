@@ -7,7 +7,7 @@ namespace Backroads.Roads
     {
         public static RoadGraphInput FromCanon(CanonAsset canon)
         {
-            var input = new RoadGraphInput { canonManifestSha256 = canon.manifestSha256 ?? "" };
+            var input = new RoadGraphInput { sourceManifestSha256 = canon.manifestSha256 ?? "", source = "CanonData/v1" };
             foreach (var r in canon.world.roads)
                 input.AddJsRoad(r.id, r.kind, r.paved, r.hw, r.startJ, r.endJ, r.x, r.y, r.z, r.d);
             if (canon.world.lots != null)

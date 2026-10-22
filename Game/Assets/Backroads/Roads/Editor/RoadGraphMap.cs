@@ -8,23 +8,38 @@ using UnityEngine;
 namespace Backroads.Roads.Editor
 {
     /// <summary>
-    /// A plan-view debug map of the baked road graph over Millbrook, drawn on the CPU (works in -nographics batchmode):
-    /// hillshaded canon heights, water, building footprints, the plain ribbons by class, the town kerb zone, nodes by kind
-    /// with their numbers (05's numbering), major arms (cyan), stop-controlled arms (red), provisional mouths (yellow) and
-    /// provisional kerb fillets (white). Seen from above with +x right and +z up (Unity space; the JS x axis is mirrored).
-    ///   menu: Backroads > Roads > Write debug maps  ->  artifacts/roads/graph-town.png, graph-overview.png
+    /// A plan-view debug map of a baked road graph, drawn on the CPU (works in -nographics batchmode): hillshaded heights,
+    /// water, building footprints, the plain ribbons by class, the town kerb zone (and a town's downtown zone), nodes by kind
+    /// with their numbers, major arms (cyan), approaches that stop (red from a mapped sign, orange by rule), provisional
+    /// mouths (yellow) and provisional kerb fillets (white). Seen from above with +x right and +z up (Unity space: for the
+    /// canon the JS x axis is mirrored; a town's local frame has x east, z north, so north is up).
+    ///   menu: Backroads > Roads > Write debug maps  ->  artifacts/roads/graph-town.png, graph-overview.png (canon) and
+    ///         artifacts/roads/(town)/graph-overview.png, graph-village.png (TownData towns)
     /// </summary>
     public static class RoadGraphMap
     {
+        /// <summary>What the map draws under the roads.</summary>
+        public sealed class Background
+        {
+            public Func<float, float, float> height;
+            /// <summary>Everything below this height is water (canon); towns give water polygons instead.</summary>
+            public float waterY = float.NegativeInfinity;
+            public readonly List<Vector2[]> water = new List<Vector2[]>();
+            public readonly List<Vector2[]> buildings = new List<Vector2[]>();
+            /// <summary>Heights over this range above the lowest ground shade from green to grey.</summary>
+            public float shadeRange = 40f, baseY;
+        }
+
         [MenuItem("Backroads/Roads/Write debug maps")]
         static void Menu()
         {
             var paths = WriteDefault(out var msg);
+            foreach (var town in TownRoadSource.Towns()) paths.AddRange(WriteTown(town, out _));
             foreach (var p in paths) Debug.Log("[BR] wrote " + p);
             if (msg.Length > 0) Debug.LogWarning("[BR] " + msg);
         }
 
-        /// <summary>Writes the town and overview maps for the committed asset; returns the paths written.</summary>
+        /// <summary>Writes the town and overview maps for the committed canon asset; returns the paths written.</summary>
         public static List<string> WriteDefault(out string message)
         {
             message = "";
@@ -34,13 +49,94 @@ namespace Backroads.Roads.Editor
             if (!Backroads.Canon.Editor.CanonImporter.EnsureImported(out message)) return paths;
             message = "";
             var canon = Backroads.Canon.Editor.CanonImporter.LoadImported();
+            var bg = CanonBackground(canon);
             Directory.CreateDirectory(RoadNetworkBaker.ArtifactsDir);
             // town: JS centre (-70, 30) -> Unity (70, 30)
-            paths.Add(Write(asset, canon, new Vector2(80f, 90f), 0.25f, 1800, 1800, Path.Combine(RoadNetworkBaker.ArtifactsDir, "graph-town.png"),
+            paths.Add(Write(asset, bg, new Vector2(80f, 90f), 0.25f, 1800, 1800, Path.Combine(RoadNetworkBaker.ArtifactsDir, "graph-town.png"),
                 "ROADS R0: JUNCTION GRAPH OVER MILLBROOK (TOWN)", 2, legendTop: true));
-            paths.Add(Write(asset, canon, new Vector2(-15f, -40f), 0.5f, 1440, 1240, Path.Combine(RoadNetworkBaker.ArtifactsDir, "graph-overview.png"),
+            paths.Add(Write(asset, bg, new Vector2(-15f, -40f), 0.5f, 1440, 1240, Path.Combine(RoadNetworkBaker.ArtifactsDir, "graph-overview.png"),
                 "ROADS R0: WHOLE NETWORK", 2, legendTop: false));
             return paths;
+        }
+
+        /// <summary>
+        /// Writes a town's maps for its committed asset: the play area (graph-overview.png) and the village, the kerb zone
+        /// plus 40 m (graph-village.png), in artifacts/roads/(town)/.
+        /// </summary>
+        public static List<string> WriteTown(string townId, out string message)
+        {
+            message = "";
+            var paths = new List<string>();
+            var asset = RoadNetworkBaker.LoadBakedTown(townId);
+            if (asset == null) { message = "no baked road asset for " + townId + ": run Backroads > Roads > Bake town road networks (R0o)"; return paths; }
+            var src = TownRoadSource.LoadTown(townId);
+            var bg = TownBackground(src, TownRoadSource.TownDir(townId));
+            var dir = RoadNetworkBaker.TownArtifactsDir(townId);
+            Directory.CreateDirectory(dir);
+            float half = (float)src.playHalf;
+            paths.Add(Write(asset, bg, Vector2.zero, 2 * half / 1900f, 1900, 1900, Path.Combine(dir, "graph-overview.png"),
+                "ROADS R0O: " + townId.ToUpperInvariant() + " PLAY AREA", 1, legendTop: true, labels: false));
+            // the village: the kerb zone's bounding box plus 40 m
+            Vector2 lo = new Vector2(float.MaxValue, float.MaxValue), hi = new Vector2(float.MinValue, float.MinValue);
+            foreach (var p in asset.townZone) { lo = Vector2.Min(lo, p); hi = Vector2.Max(hi, p); }
+            if (asset.townZone.Length == 0) { lo = new Vector2(-300, -300); hi = new Vector2(300, 300); }
+            var size = hi - lo + new Vector2(80, 80);
+            float mpp = Mathf.Max(size.x, size.y) / 2000f;
+            paths.Add(Write(asset, bg, (lo + hi) * 0.5f, mpp, 2000, 2000, Path.Combine(dir, "graph-village.png"),
+                "ROADS R0O: " + townId.ToUpperInvariant() + " VILLAGE (KERB ZONE)", 1, legendTop: true));
+            return paths;
+        }
+
+        static Background CanonBackground(CanonAsset canon)
+        {
+            var bg = new Background();
+            if (canon?.placements?.footprints != null)
+                foreach (var f in canon.placements.footprints)
+                {
+                    var tmp = new RoadGraphInput();
+                    tmp.AddJsFootprint(f.x, f.z, f.rot, f.hw, f.hd, f.hasRect, f.r);
+                    bg.buildings.Add(Array.ConvertAll(tmp.footprints[0].corners, p => new Vector2((float)p.x, (float)p.z)));
+                }
+            if (canon == null || canon.heights.data == null) return bg;
+            var H = canon.heights.data.GetData<float>();
+            bg.waterY = canon.world.waterY;
+            bg.baseY = canon.world.waterY;
+            const int VN = WorldGrid.VN;
+            bg.height = (ux, uz) =>
+            {
+                float fx = (-ux + WorldGrid.Half) / WorldGrid.Cell, fz = (uz + WorldGrid.Half) / WorldGrid.Cell;
+                fx = Mathf.Clamp(fx, 0, VN - 1.001f); fz = Mathf.Clamp(fz, 0, VN - 1.001f);
+                int i = (int)fx, j = (int)fz;
+                float tx = fx - i, tz = fz - j;
+                float h00 = H[j * VN + i], h10 = H[j * VN + i + 1], h01 = H[(j + 1) * VN + i], h11 = H[(j + 1) * VN + i + 1];
+                return Mathf.Lerp(Mathf.Lerp(h00, h10, tx), Mathf.Lerp(h01, h11, tx), tz);
+            };
+            return bg;
+        }
+
+        static Background TownBackground(OsmRoadSource src, string dir)
+        {
+            var bg = new Background { shadeRange = 110f, baseY = 2f };
+            var dem = src.dem;
+            bg.height = (x, z) => (float)dem.Sample(x, z);
+            foreach (var f in src.footprints) bg.buildings.Add(Array.ConvertAll(f, p => new Vector2((float)p.x, (float)p.z)));
+            var waterPath = Path.Combine(dir, "water.json");
+            if (File.Exists(waterPath))
+            {
+                var w = Backroads.Build.Editor.BrJson.Obj(Backroads.Build.Editor.BrJson.Parse(File.ReadAllText(waterPath)), "water.json");
+                if (w.TryGetValue("areas", out var ao) && ao != null)
+                    foreach (var a in Backroads.Build.Editor.BrJson.Arr(ao))
+                        foreach (var pp in Backroads.Build.Editor.BrJson.Arr(Backroads.Build.Editor.BrJson.Obj(a)["polys"]))
+                        {
+                            var outer = Backroads.Build.Editor.BrJson.Arr(Backroads.Build.Editor.BrJson.Obj(pp)["outer"]);
+                            bg.water.Add(outer.ConvertAll(q =>
+                            {
+                                var v = Backroads.Build.Editor.BrJson.Arr(q);
+                                return new Vector2(Convert.ToSingle(v[0]), Convert.ToSingle(v[1]));
+                            }).ToArray());
+                        }
+            }
+            return bg;
         }
 
         // ------------------------------------------------------------------ canvas
@@ -166,6 +262,7 @@ namespace Backroads.Roads.Editor
 
         static readonly Color32 Building = new Color32(58, 62, 72, 255), Water = new Color32(44, 84, 112, 255);
         static readonly Color32 Major = new Color32(0, 229, 255, 255), Stop = new Color32(255, 64, 64, 255), Plain = new Color32(240, 240, 240, 255);
+        static readonly Color32 RuleStop = new Color32(255, 160, 40, 255), Downtown = new Color32(230, 120, 230, 220), EdgeCutC = new Color32(255, 255, 255, 255);
         static readonly Color32 MouthC = new Color32(255, 235, 59, 255), Fillet = new Color32(255, 255, 255, 200), Zone = new Color32(140, 230, 140, 220);
 
         public static Color32 KindColor(NodeKind k, int degree)
@@ -177,28 +274,26 @@ namespace Backroads.Roads.Editor
                 case NodeKind.Bend: return new Color32(79, 195, 247, 255);
                 case NodeKind.DeadEnd: return new Color32(170, 170, 170, 255);
                 case NodeKind.ClassChange: return new Color32(102, 187, 106, 255);
+                case NodeKind.Join: return new Color32(120, 120, 220, 255);
                 default: return new Color32(255, 0, 255, 255);
             }
         }
 
-        public static string Write(RoadNetworkAsset a, CanonAsset canon, Vector2 centre, float mpp, int w, int h, string path, string title, int labelScale, bool legendTop = true)
+        public static string Write(RoadNetworkAsset a, Background bg, Vector2 centre, float mpp, int w, int h, string path, string title, int labelScale,
+            bool legendTop = true, bool labels = true)
         {
             var cv = new Canvas(w, h, centre, mpp);
-            Terrain(cv, canon);
-            if (canon?.placements?.footprints != null)
-                foreach (var f in canon.placements.footprints)
-                {
-                    var tmp = new RoadGraphInput();
-                    tmp.AddJsFootprint(f.x, f.z, f.rot, f.hw, f.hd, f.hasRect, f.r);
-                    var poly = new List<Vector2>();
-                    foreach (var p in tmp.footprints[0].corners) poly.Add(cv.P(new Vector2((float)p.x, (float)p.z)));
-                    cv.Fill(poly, Building);
-                }
+            Terrain(cv, bg);
+            foreach (var poly in bg.water) cv.Fill(Array.ConvertAll(poly, p => cv.P(p)), Water);
+            foreach (var poly in bg.buildings) cv.Fill(Array.ConvertAll(poly, p => cv.P(p)), Building);
 
-            // town zone
+            // town zone (and downtown)
             var zone = new List<Vector2>();
             foreach (var p in a.townZone) zone.Add(cv.P(p));
             cv.Polyline(zone, 2f, Zone, true);
+            var dz = new List<Vector2>();
+            foreach (var p in a.downtownZone) dz.Add(cv.P(p));
+            if (dz.Count > 2) cv.Polyline(dz, 2f, Downtown, true);
 
             // ribbons
             foreach (var st in PlainRibbonMesh.Strips(a))
@@ -238,9 +333,8 @@ namespace Backroads.Roads.Editor
                 {
                     var arm = a.arms[n.firstArm + k];
                     bool isMajor = k == n.majorA || k == n.majorB;
-                    bool stop = !isMajor && (n.control == Control.MinorStop || n.control == Control.AllWayStop) && n.armCount >= 2 &&
-                                (n.kind == NodeKind.Junction || n.kind == NodeKind.DirtApron);
-                    var col = isMajor ? Major : stop ? Stop : Plain;
+                    bool stop = arm.control == Control.MinorStop || arm.control == Control.AllWayStop || arm.control == Control.Yield || arm.control == Control.Signal;
+                    var col = isMajor ? Major : stop ? (arm.controlSource == ControlSource.Tag || a.source.StartsWith("CanonData", StringComparison.Ordinal) ? Stop : RuleStop) : Plain;
                     float len = Mathf.Min(arm.length, Mathf.Max(10f, arm.mouth));
                     cv.Line(cv.P(np), cv.P(np + arm.dir * len), lineW, col);
                     if (arm.mouth > 0 && arm.mouth < arm.length)
@@ -255,10 +349,13 @@ namespace Backroads.Roads.Editor
             foreach (var n in a.nodes)
             {
                 var p = cv.P(n.position);
-                float r = Mathf.Max(5f, 2.4f / mpp);
+                if (p.x < -20 || p.y < -20 || p.x > w + 20 || p.y > h + 20) continue;
+                float r = Mathf.Max(labels ? 5f : 3f, 2.4f / mpp);
                 cv.Disc(p, r + 1.5f, new Color32(10, 12, 16, 255));
                 cv.Disc(p, r, KindColor(n.kind, n.armCount));
                 if ((n.flags & NodeFlags.ComplexPair) != 0) cv.Ring(p, r + 5f, 3f, new Color32(255, 0, 220, 255));
+                if ((n.flags & NodeFlags.PlayAreaEdge) != 0) cv.Ring(p, r + 5f, 2f, EdgeCutC);
+                if (!labels || (n.armCount < 3 && n.kind != NodeKind.DirtApron)) continue;
                 string label = n.id.ToString();
                 // a node a few pixels from one already labelled (harbor 10/27, mill 11/29) gets its label below-left
                 bool crowded = labelled.Exists(q => (q - p).sqrMagnitude < 30f * 30f);
@@ -294,26 +391,16 @@ namespace Backroads.Roads.Editor
             return pts;
         }
 
-        /// <summary>Hillshade of the canon heights (light from the north-west), green-grey by height, water below waterY.</summary>
-        static void Terrain(Canvas cv, CanonAsset canon)
+        /// <summary>Hillshade of the heights (light from the north-west), green-grey by height, water below waterY.</summary>
+        static void Terrain(Canvas cv, Background bg)
         {
-            if (canon == null || canon.heights.data == null)
+            if (bg?.height == null)
             {
                 for (int i = 0; i < cv.px.Length; i++) cv.px[i] = new Color32(70, 80, 70, 255);
                 return;
             }
-            var H = canon.heights.data.GetData<float>();
-            float water = canon.world.waterY;
-            const int VN = WorldGrid.VN;
-            float Hgt(float ux, float uz)
-            {
-                float fx = (-ux + WorldGrid.Half) / WorldGrid.Cell, fz = (uz + WorldGrid.Half) / WorldGrid.Cell;
-                fx = Mathf.Clamp(fx, 0, VN - 1.001f); fz = Mathf.Clamp(fz, 0, VN - 1.001f);
-                int i = (int)fx, j = (int)fz;
-                float tx = fx - i, tz = fz - j;
-                float h00 = H[j * VN + i], h10 = H[j * VN + i + 1], h01 = H[(j + 1) * VN + i], h11 = H[(j + 1) * VN + i + 1];
-                return Mathf.Lerp(Mathf.Lerp(h00, h10, tx), Mathf.Lerp(h01, h11, tx), tz);
-            }
+            var Hgt = bg.height;
+            float water = bg.waterY;
             var light = new Vector3(-0.5f, 0.75f, 0.45f).normalized; // Unity space: from up-left (north-west in this view)
             for (int y = 0; y < cv.h; y++)
                 for (int x = 0; x < cv.w; x++)
@@ -325,11 +412,11 @@ namespace Backroads.Roads.Editor
                         cv.px[y * cv.w + x] = Water;
                         continue;
                     }
-                    const float e = 1.5f;
+                    float e = Mathf.Max(1.5f, cv.mpp);
                     float dx = Hgt(wp.x + e, wp.y) - Hgt(wp.x - e, wp.y), dz = Hgt(wp.x, wp.y + e) - Hgt(wp.x, wp.y - e);
                     var nrm = new Vector3(-dx, 2 * e, -dz).normalized;
                     float shade = Mathf.Clamp01(0.35f + 0.85f * Vector3.Dot(nrm, light));
-                    float t = Mathf.Clamp01((hc - water) / 40f);
+                    float t = Mathf.Clamp01((hc - bg.baseY) / bg.shadeRange);
                     var baseC = Color.Lerp(new Color(0.34f, 0.42f, 0.30f), new Color(0.50f, 0.50f, 0.42f), t);
                     var c = baseC * shade;
                     cv.px[y * cv.w + x] = new Color32((byte)(c.r * 255), (byte)(c.g * 255), (byte)(c.b * 255), 255);
@@ -339,18 +426,27 @@ namespace Backroads.Roads.Editor
         static void Legend(Canvas cv, RoadNetworkAsset a, string title, bool top0)
         {
             int s = 2, line = 9 * s + 6, x0 = 16;
+            bool town = !a.source.StartsWith("CanonData", StringComparison.Ordinal);
             var items = new List<(Color32 c, string text, int kind)>
             {
                 (KindColor(NodeKind.Junction, 4), "JUNCTION X (4 ARMS)", 0), (KindColor(NodeKind.Junction, 3), "JUNCTION T (3 ARMS)", 0),
                 (KindColor(NodeKind.DirtApron, 3), "DIRT ROAD MEETS PAVEMENT", 0), (KindColor(NodeKind.Bend, 2), "L-BEND", 0),
-                (KindColor(NodeKind.DeadEnd, 1), "DEAD END (YARD)", 0), (KindColor(NodeKind.ClassChange, 2), "TOWN EDGE (CLASS CHANGE)", 0),
-                (new Color32(255, 0, 220, 255), "TOO CLOSE: NEEDS DECISION U8", 3),
+                (KindColor(NodeKind.DeadEnd, 1), town ? "DEAD END" : "DEAD END (YARD)", 0), (KindColor(NodeKind.ClassChange, 2), "TOWN EDGE (CLASS CHANGE)", 0),
+                (new Color32(255, 0, 220, 255), town ? "JUNCTIONS UNDER 30 M APART (R4)" : "TOO CLOSE: NEEDS DECISION U8", 3),
                 (PlainRibbonMesh.ClassColor(RoadClass.MainStreet), "MAIN STREET (THROUGH ROAD IN TOWN)", 1),
                 (PlainRibbonMesh.ClassColor(RoadClass.Highway), "HIGHWAY", 1), (PlainRibbonMesh.ClassColor(RoadClass.Street), "STREET", 1),
                 (PlainRibbonMesh.ClassColor(RoadClass.Dirt), "DIRT ROAD", 1),
-                (Major, "MAJOR ROAD ARM (DRIVES THROUGH)", 2), (Stop, "ARM THAT STOPS", 2),
+                (Major, "MAJOR ROAD ARM (DRIVES THROUGH)", 2), (Stop, town ? "ARM THAT STOPS (MAPPED SIGN)" : "ARM THAT STOPS", 2),
                 (MouthC, "JUNCTION MOUTH (PROVISIONAL)", 2), (Fillet, "KERB CORNER (PROVISIONAL)", 2), (Zone, "TOWN KERB ZONE", 2),
             };
+            if (town)
+            {
+                items.Insert(6, (KindColor(NodeKind.Join, 2), "JOIN (TAGS CHANGE: BRIDGE, WIDTH)", 0));
+                items.Insert(7, (EdgeCutC, "ROAD ENDS AT THE PLAY-AREA EDGE", 3));
+                items.Add((RuleStop, "ARM THAT STOPS (BY RULE)", 2));
+                items.Add((Downtown, "DOWNTOWN ZONE", 2));
+                items.Add((PlainRibbonMesh.ClassColor(RoadClass.Yard), "SERVICE ROAD, ALLEY", 1));
+            }
             int boxH = (items.Count + 2) * line + 20, boxW = 46 * 6 * s;
             int top = top0 ? cv.h - 16 : boxH + 8;
             cv.Rect(x0 - 8, top - boxH, x0 + boxW, top + 8, new Color32(12, 14, 20, 200));

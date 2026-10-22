@@ -51,6 +51,8 @@ namespace Backroads.Roads
             foreach (var n in g.nodes)
             {
                 if (!n.IsJunctionLike) continue;
+                // mapped signs decide the through road where they exist (roads-R0o step 5); the report lists every override
+                if (n.controlSource == ControlSource.Tag) continue;
                 int top = 0;
                 foreach (var id in n.arms) top = Math.Max(top, RoadClasses.Rank(g.arms[id].cls));
                 if (n.HasMajor)
@@ -66,8 +68,33 @@ namespace Backroads.Roads
                     bool allSame = true;
                     foreach (var id in n.arms) if (g.arms[id].cls != g.Arm(n, 0).cls) allSame = false;
                     bool ok = (allSame && (n.control == Control.AllWayStop || n.control == Control.Signal))
-                              || n.bestPairBend > g.settings.majorMaxBend;
+                              || n.bestPairBend > g.settings.majorMaxBend
+                              || (n.flags & NodeFlags.ComplexPair) != 0;
                     if (!ok) bad.Add($"node {n.id} ({n.kind}): no major road and no reason for it");
+                }
+            }
+            return bad;
+        }
+
+        /// <summary>Every approach that must stop or yield has exactly one control, and every major arm drives through (none).</summary>
+        public static List<string> ControlProblems(RoadGraph g)
+        {
+            var bad = new List<string>();
+            foreach (var n in g.nodes)
+            {
+                if (!n.IsJunctionLike && n.kind != NodeKind.DirtApron) continue;
+                for (int k = 0; k < n.arms.Count; k++)
+                {
+                    var a = g.Arm(n, k);
+                    bool major = k == n.majorA || k == n.majorB;
+                    if (major && a.control != Control.None) bad.Add($"node {n.id}: major arm R{a.sourceRoad} has control {a.control}");
+                    if ((a.control == Control.None) != (a.controlSource == ControlSource.None))
+                        bad.Add($"node {n.id}: arm R{a.sourceRoad} control {a.control} with source {a.controlSource}");
+                    // one kind of junction: all-way stops and signals on every approach or none
+                    bool everyArm = n.control == Control.AllWayStop || n.control == Control.Signal;
+                    if (everyArm && a.control != n.control) bad.Add($"node {n.id}: {n.control} junction, arm R{a.sourceRoad} has {a.control}");
+                    if (!everyArm && (a.control == Control.AllWayStop || a.control == Control.Signal))
+                        bad.Add($"node {n.id}: {n.control} junction, arm R{a.sourceRoad} has {a.control}");
                 }
             }
             return bad;
@@ -96,22 +123,39 @@ namespace Backroads.Roads
                 arms, g.edges.Count, g.complexPairs.Count);
         }
 
-        static string ClassLetter(RoadClass c) => c == RoadClass.MainStreet ? "M" : c == RoadClass.Highway ? "H" : c == RoadClass.Street ? "S" : c == RoadClass.Dirt ? "D" : "?";
+        static string ClassLetter(RoadClass c) =>
+            c == RoadClass.MainStreet ? "M" : c == RoadClass.Highway ? "H" : c == RoadClass.Street ? "S" : c == RoadClass.Dirt ? "D" : c == RoadClass.Yard ? "Y" : "?";
 
-        /// <summary>One line per node: id, traffic.json id, JS (x, z), kind, arms (road/class@JS angle), major, control, flags.</summary>
+        /// <summary>True for the canon (JS frame, x mirrored); towns print their local frame (x east, z north).</summary>
+        static bool Js(RoadGraph g) => string.IsNullOrEmpty(g.source) || g.source.StartsWith("CanonData", StringComparison.Ordinal);
+
+        /// <summary>
+        /// One line per node: id, traffic.json id, position (JS x, z for the canon; local x, z for a town), kind, arms
+        /// (road/class @ angle, grade, control: s = stop, a = all-way stop, y = yield, g = signal; capital = mapped), major,
+        /// control, flags.
+        /// </summary>
         public static string NodeTable(RoadGraph g)
         {
             var sb = new StringBuilder();
+            bool js = Js(g);
             sb.AppendLine(Summary(g));
-            sb.AppendLine("node | legacy | JS (x, z) | kind | arms (road/class @ JS angle, grade) | major | control | kerb radii (building clearance at 7.5 m) | flags");
+            sb.AppendLine(js
+                ? "node | legacy | JS (x, z) | kind | arms (road/class @ JS angle, grade) | major | control | kerb radii (building clearance at 7.5 m) | flags"
+                : "node | legacy | local (x, z) | kind | arms (road/class @ angle, grade, control) | major | control (source) | kerb radii (building clearance at 7.5 m) | flags");
             foreach (var n in g.nodes)
             {
                 var arms = new List<string>();
                 foreach (var id in n.arms)
                 {
                     var a = g.arms[id];
-                    arms.Add(string.Format(Inv, "R{0}/{1}@{2:F0}{3}", a.sourceRoad, ClassLetter(a.cls), JsAngleDeg(a.angle),
-                        n.IsJunctionLike && Math.Abs(a.grade) > g.settings.steepGrade ? string.Format(Inv, " ({0:+0.0;-0.0}%)", a.grade * 100) : ""));
+                    string ctl = "";
+                    if (!js && a.control != Control.None)
+                    {
+                        string l = a.control == Control.MinorStop ? "s" : a.control == Control.AllWayStop ? "a" : a.control == Control.Yield ? "y" : a.control == Control.Signal ? "g" : "?";
+                        ctl = " " + (a.controlSource == ControlSource.Tag ? l.ToUpperInvariant() : l);
+                    }
+                    arms.Add(string.Format(Inv, "R{0}/{1}@{2:F0}{3}{4}", a.sourceRoad, ClassLetter(a.cls), js ? JsAngleDeg(a.angle) : a.angle / Geo.Deg,
+                        n.IsJunctionLike && Math.Abs(a.grade) > g.settings.steepGrade ? string.Format(Inv, " ({0:+0.0;-0.0}%)", a.grade * 100) : "", ctl));
                 }
                 string major = n.HasMajor
                     ? string.Format(Inv, "R{0}+R{1} (bend {2:F1})", g.Arm(n, n.majorA).sourceRoad, g.Arm(n, n.majorB).sourceRoad, n.bestPairBend / Geo.Deg)
@@ -126,10 +170,11 @@ namespace Backroads.Roads
                     if (!double.IsNaN(c.clearance) && (double.IsNaN(minClear) || c.clearance < minClear)) minClear = c.clearance;
                 }
                 string corners = radii.Count == 0 ? "-" : string.Join("/", radii) + (double.IsNaN(minClear) ? "" : string.Format(Inv, " ({0:F2} m)", minClear));
-                sb.AppendLine(string.Format(Inv, "{0} | {1} | ({2:F1}, {3:F1}) | {4}{5} | {6} | {7} | {8} | {9} | {10}",
-                    n.id, n.legacyId >= 0 ? n.legacyId.ToString(Inv) : "-", -n.p.x, n.p.z, n.kind,
+                sb.AppendLine(string.Format(Inv, "{0} | {1} | ({2:F1}, {3:F1}) | {4}{5} | {6} | {7} | {8}{9} | {10} | {11}",
+                    n.id, n.legacyId >= 0 ? n.legacyId.ToString(Inv) : "-", js ? -n.p.x : n.p.x, n.p.z, n.kind,
                     n.kind == NodeKind.Junction ? (n.Degree == 3 ? " T" : n.Degree == 4 ? " X" : " " + n.Degree) : "",
-                    string.Join(" ", arms), major, n.control, corners, n.flags == NodeFlags.None ? "" : n.flags.ToString()));
+                    string.Join(" ", arms), major, n.control, js || n.controlSource == ControlSource.None ? "" : " (" + n.controlSource.ToString().ToLowerInvariant() + ")",
+                    corners, n.flags == NodeFlags.None ? "" : n.flags.ToString()));
             }
             sb.AppendLine("notes:");
             foreach (var s in g.notes) sb.AppendLine("  " + s);

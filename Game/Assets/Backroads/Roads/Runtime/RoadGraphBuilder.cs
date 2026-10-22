@@ -21,11 +21,19 @@ namespace Backroads.Roads
     /// It also estimates the corner fillets, tangent points and mouths with the straight-line formula of §5.3 for the debug
     /// view; R1 replaces those with the polyline corner solver.
     /// Nodes are numbered like traffic.json (and 05's tables) where a legacy node is within 1 m; new nodes follow.
+    /// For a town (roads-R0o, OsmRoadImporter) the roads already meet end to end at shared OSM nodes, so step 1 finds
+    /// nothing; the zone is the town's measured kerb zone; and after step 7 the mapped signs and signals (input features)
+    /// set the controls of the approaches they face, the rules filling only what the map leaves open (roads-R0o step 5).
     /// </summary>
     public static class RoadGraphBuilder
     {
-        /// <summary>Bump when the output for the same input changes (stored in the baked asset).</summary>
-        public const int Version = 1;
+        /// <summary>Bump when the output for the same input changes (stored in the baked asset). 2: per-arm controls, features, town zones.</summary>
+        public const int Version = 2;
+
+        /// <summary>A mapped sign controls the first junction within this distance in its direction of travel.</summary>
+        public const double SignReach = 60.0;
+        /// <summary>A mapped crossing within this distance of a junction belongs to that junction's approach.</summary>
+        public const double CrossingReach = 30.0;
 
         struct Split
         {
@@ -41,15 +49,23 @@ namespace Backroads.Roads
             var g = new RoadGraph
             {
                 settings = settings,
-                canonManifestSha256 = input.canonManifestSha256 ?? "",
+                source = input.source ?? "",
+                sourceManifestSha256 = input.sourceManifestSha256 ?? "",
                 inputRoads = input.roads.Count,
                 inputPoints = input.PointCount,
+                roads = input.roads,
+                downtown = input.downtownPolygon,
             };
-            var streetPts = new List<D2>();
-            foreach (var r in input.roads)
-                if (r.cls == RoadClass.Street)
-                    foreach (var p in r.pts) streetPts.Add(p.XZ);
-            g.zone = new TownZone(streetPts, settings.zoneBuffer);
+            // a town without a kerb zone gives an empty polygon: no MainStreet at all (never the canon's street hull)
+            if (input.zonePolygon != null) g.zone = TownZone.FromPolygon(input.zonePolygon);
+            else
+            {
+                var streetPts = new List<D2>();
+                foreach (var r in input.roads)
+                    if (r.cls == RoadClass.Street)
+                        foreach (var p in r.pts) streetPts.Add(p.XZ);
+                g.zone = new TownZone(streetPts, settings.zoneBuffer);
+            }
 
             var splits = FindSplits(input, g.zone, settings);
             for (int pass = 0; ; pass++)
@@ -63,6 +79,9 @@ namespace Backroads.Roads
             }
             FindComplexPairs(g, settings);
             PickMajorsAndControls(g, settings);
+            ArmControlsFromRules(g);
+            ApplyFeatures(g, input, settings);
+            FlagPlayAreaEdges(g, input);
             SolveProvisionalCorners(g, input, settings);
             SetFlagsAndNotes(g, settings);
             return g;
@@ -442,6 +461,233 @@ namespace Backroads.Roads
                     n.majorA = bi;
                     n.majorB = bj;
                 }
+            }
+        }
+
+        // ------------------------------------------------------------------ per-approach controls, mapped features, the edge
+
+        /// <summary>Every approach takes its node's rule control: the arms off the major road stop (or yield), all arms at an all-way stop or a signal.</summary>
+        static void ArmControlsFromRules(RoadGraph g)
+        {
+            foreach (var n in g.nodes)
+            {
+                n.controlSource = n.control == Control.None ? ControlSource.None : ControlSource.Rule;
+                for (int k = 0; k < n.arms.Count; k++)
+                {
+                    var a = g.Arm(n, k);
+                    bool major = k == n.majorA || k == n.majorB;
+                    Control c = Control.None;
+                    switch (n.control)
+                    {
+                        case Control.AllWayStop: case Control.Signal: c = n.control; break;
+                        case Control.MinorStop: case Control.Yield:
+                            if (n.HasMajor) c = major ? Control.None : n.control;
+                            else if (n.kind == NodeKind.DirtApron) c = a.cls == RoadClass.Dirt ? n.control : Control.None;
+                            else c = n.control;
+                            break;
+                    }
+                    a.control = c;
+                    a.controlSource = c == Control.None ? ControlSource.None : ControlSource.Rule;
+                    a.controlOsmNode = 0;
+                    a.controlDistance = 0;
+                }
+            }
+        }
+
+        static Control ControlOf(RoadFeatureKind k) =>
+            k == RoadFeatureKind.Stop ? Control.MinorStop : k == RoadFeatureKind.AllWayStop ? Control.AllWayStop :
+            k == RoadFeatureKind.GiveWay ? Control.Yield : k == RoadFeatureKind.Signals ? Control.Signal : Control.None;
+
+        /// <summary>The arm at node through which edge e arrives (its A end when the node is e's nodeA).</summary>
+        static GraphArm ArmOfEdge(RoadGraph g, GraphNode n, int edge, bool atA)
+        {
+            foreach (var id in n.arms)
+            {
+                var a = g.arms[id];
+                if (a.edge == edge && a.atA == atA) return a;
+            }
+            return null;
+        }
+
+        static bool Controllable(GraphNode n) => n.IsJunctionLike || n.kind == NodeKind.DirtApron;
+
+        /// <summary>
+        /// roads-R0o step 5: each mapped sign or signal controls the approach it faces at the first junction within SignReach
+        /// in its direction of travel (through two-way nodes); crossings join the approach of a junction within CrossingReach.
+        /// Then every node with a mapped control takes it: all approaches stopped = all-way stop; otherwise the free pair
+        /// is the major road (the tags win over the class-first pick, reported) and 05 §6.2 fills only what is left.
+        /// </summary>
+        static void ApplyFeatures(RoadGraph g, RoadGraphInput input, RoadGraphSettings st)
+        {
+            if (input.features.Count == 0) return;
+            var inv = CultureInfo.InvariantCulture;
+            foreach (var f in input.features)
+            {
+                var gf = new GraphFeature { kind = f.kind, osmNode = f.osmNode, crossing = f.crossing ?? "", edge = -1, direction = f.direction };
+                g.features.Add(gf);
+                GraphEdge e = null;
+                foreach (var cand in g.edges)
+                    if (cand.sourceRoad == f.road && f.s >= cand.sStart - 1e-6 && f.s <= cand.sEnd + 1e-6) { e = cand; break; }
+                if (e == null) { gf.problem = "not on any edge"; continue; }
+                gf.edge = e.id;
+                gf.s = Math.Max(0, Math.Min(e.Length, f.s - e.sStart));
+
+                if (f.kind == RoadFeatureKind.Crossing)
+                {
+                    GraphNode na = g.nodes[e.nodeA], nb = g.nodes[e.nodeB];
+                    double da = gf.s, db = e.Length - gf.s;
+                    GraphNode best = null;
+                    bool bestAtA = false;
+                    if (Controllable(na) && da <= CrossingReach) { best = na; bestAtA = true; }
+                    if (Controllable(nb) && db <= CrossingReach && (best == null || db < da)) { best = nb; bestAtA = false; }
+                    if (best != null)
+                    {
+                        var arm = ArmOfEdge(g, best, e.id, bestAtA);
+                        gf.node = best.id;
+                        gf.arm = arm != null ? arm.id : -1;
+                    }
+                    continue;
+                }
+
+                // signs and signals: walk in the direction of travel to the first junction
+                (GraphNode node, GraphArm arm, double dist)? Ahead(int dir)
+                {
+                    GraphEdge ce = e;
+                    double dist = dir > 0 ? e.Length - gf.s : gf.s;
+                    int node = dir > 0 ? e.nodeB : e.nodeA;
+                    bool atA = dir < 0;
+                    for (int hop = 0; hop < 64 && dist <= SignReach; hop++)
+                    {
+                        var n = g.nodes[node];
+                        var arm = ArmOfEdge(g, n, ce.id, atA);
+                        if (arm == null) return null;
+                        if (Controllable(n)) return (n, arm, dist);
+                        if (n.Degree != 2) return null;
+                        var other = g.Arm(n, 0) == arm ? g.Arm(n, 1) : g.Arm(n, 0);
+                        ce = g.edges[other.edge];
+                        dist += ce.Length;
+                        node = g.FarNode(other);
+                        atA = node == ce.nodeA && !(ce.nodeA == ce.nodeB && other.atA);
+                    }
+                    return null;
+                }
+                (GraphNode node, GraphArm arm, double dist)? hit = null;
+                if (f.direction != 0) hit = Ahead(f.direction);
+                else
+                {
+                    var fwd = Ahead(1);
+                    var back = Ahead(-1);
+                    hit = fwd == null ? back : back == null ? fwd : fwd.Value.dist <= back.Value.dist ? fwd : back;
+                }
+                if (hit == null)
+                {
+                    gf.problem = string.Format(inv, "no junction within {0:F0} m {1}", SignReach, f.direction > 0 ? "ahead (forward)" : f.direction < 0 ? "ahead (backward)" : "either way");
+                    continue;
+                }
+                var (hn, ha, hd) = hit.Value;
+                gf.node = hn.id;
+                gf.arm = ha.id;
+                if (ha.controlSource == ControlSource.Tag)
+                    g.notes.Add(string.Format(inv, "two mapped controls on one approach: node {0} arm R{1}: osm node {2} and {3}; the nearer is kept", hn.id, ha.sourceRoad, ha.controlOsmNode, f.osmNode));
+                if (ha.controlSource == ControlSource.Tag && ha.controlDistance <= hd) continue;
+                ha.control = ControlOf(f.kind);
+                ha.controlSource = ControlSource.Tag;
+                ha.controlOsmNode = f.osmNode;
+                ha.controlDistance = hd;
+            }
+
+            foreach (var n in g.nodes)
+            {
+                int tagged = 0;
+                bool signal = false, allWay = false, stop = false;
+                foreach (var id in n.arms)
+                {
+                    var a = g.arms[id];
+                    if (a.controlSource != ControlSource.Tag) continue;
+                    tagged++;
+                    signal |= a.control == Control.Signal;
+                    allWay |= a.control == Control.AllWayStop;
+                    stop |= a.control == Control.MinorStop;
+                }
+                if (tagged == 0) continue;
+                n.controlSource = ControlSource.Tag;
+                int oldA = n.majorA, oldB = n.majorB;
+                if (signal || allWay || (tagged == n.Degree && !n.arms.Exists(id => g.arms[id].control == Control.Yield)))
+                {
+                    var c = signal ? Control.Signal : Control.AllWayStop;
+                    n.control = c;
+                    n.majorA = n.majorB = -1;
+                    foreach (var id in n.arms)
+                    {
+                        var a = g.arms[id];
+                        if (a.controlSource != ControlSource.Tag) { a.control = c; a.controlSource = ControlSource.Rule; }
+                        else if (!signal) a.control = Control.AllWayStop;
+                    }
+                    continue;
+                }
+                var free = new List<int>();
+                for (int k = 0; k < n.arms.Count; k++) if (g.Arm(n, k).controlSource != ControlSource.Tag) free.Add(k);
+                if (free.Count == 2)
+                {
+                    n.majorA = free[0];
+                    n.majorB = free[1];
+                    n.bestPairBend = Geo.Bend(g.Arm(n, free[0]).angle, g.Arm(n, free[1]).angle);
+                }
+                else if (!(free.Contains(n.majorA) && free.Contains(n.majorB)))
+                {
+                    // pick the class-first pair among the free approaches (05 §5.1 step 7), else none
+                    double best = double.MinValue;
+                    int bi = -1, bj = -1;
+                    for (int i = 0; i < free.Count; i++)
+                        for (int j = i + 1; j < free.Count; j++)
+                        {
+                            GraphArm a = g.Arm(n, free[i]), b = g.Arm(n, free[j]);
+                            int ra = RoadClasses.Rank(a.cls), rb = RoadClasses.Rank(b.cls);
+                            double bend = Geo.Bend(a.angle, b.angle);
+                            double score = 10 * Math.Min(ra, rb) + (ra == rb ? 2 : 0) - bend;
+                            if (bend <= st.majorMaxBend && score > best + 1e-12) { best = score; bi = free[i]; bj = free[j]; }
+                        }
+                    n.majorA = bi;
+                    n.majorB = bj;
+                    if (bi >= 0) n.bestPairBend = Geo.Bend(g.Arm(n, bi).angle, g.Arm(n, bj).angle);
+                }
+                // the through pair drives on; any other free approach keeps its rule control, or stops by rule (05 §6.2)
+                foreach (int k in free)
+                {
+                    var a = g.Arm(n, k);
+                    bool major = k == n.majorA || k == n.majorB;
+                    if (major) { a.control = Control.None; a.controlSource = ControlSource.None; }
+                    // a two-way stop now: a rule all-way stop or signal on a free approach becomes a plain stop; a rule stop
+                    // (a dirt approach) stays
+                    else if (a.control != Control.MinorStop || a.controlSource != ControlSource.Rule) { a.control = Control.MinorStop; a.controlSource = ControlSource.Rule; }
+                }
+                bool anyStop = false;
+                foreach (var id in n.arms) anyStop |= g.arms[id].control == Control.MinorStop;
+                n.control = anyStop || stop ? Control.MinorStop : Control.Yield;
+                bool changed = oldA >= 0 && !((oldA == n.majorA && oldB == n.majorB) || (oldA == n.majorB && oldB == n.majorA));
+                if (changed)
+                {
+                    n.flags |= NodeFlags.TagOverridesRule;
+                    g.notes.Add(string.Format(inv, "mapped signs pick a different through road at node {0} ({1}) than the class-first rule; the signs win", n.id, n.kind));
+                }
+                if (!n.HasMajor && free.Count >= 2)
+                    g.notes.Add(string.Format(inv, "node {0} ({1}): mapped signs leave {2} free approaches with no straight pair; they stop by rule", n.id, n.kind, free.Count));
+            }
+            foreach (var gf in g.features)
+                if (gf.problem.Length > 0)
+                    g.notes.Add(string.Format(inv, "mapped {0} (osm node {1}) controls nothing: {2}", gf.kind, gf.osmNode, gf.problem));
+        }
+
+        /// <summary>Dead ends where a road was cut at the play-area edge (EDGE_RULE) get the PlayAreaEdge flag.</summary>
+        static void FlagPlayAreaEdges(RoadGraph g, RoadGraphInput input)
+        {
+            var byId = new Dictionary<int, RoadGraphInput.Road>();
+            foreach (var r in input.roads) byId[r.id] = r;
+            foreach (var e in g.edges)
+            {
+                if (!byId.TryGetValue(e.sourceRoad, out var r)) continue;
+                if (r.cutStart && e.sStart <= 1e-9) g.nodes[e.nodeA].flags |= NodeFlags.PlayAreaEdge;
+                if (r.cutEnd && e.sEnd >= r.Length - 1e-9) g.nodes[e.nodeB].flags |= NodeFlags.PlayAreaEdge;
             }
         }
 

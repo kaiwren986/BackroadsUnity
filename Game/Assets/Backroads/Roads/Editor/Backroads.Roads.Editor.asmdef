@@ -5,7 +5,8 @@
         "Backroads.Core",
         "Backroads.World",
         "Backroads.Roads",
-        "Backroads.Canon.Editor"
+        "Backroads.Canon.Editor",
+        "Backroads.Build.Editor"
     ],
     "includePlatforms": [
         "Editor"

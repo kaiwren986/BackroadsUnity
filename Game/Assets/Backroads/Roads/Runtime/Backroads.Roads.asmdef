@@ -3,7 +3,8 @@
     "rootNamespace": "Backroads.Roads",
     "references": [
         "Backroads.Core",
-        "Backroads.World"
+        "Backroads.World",
+        "Unity.Mathematics"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

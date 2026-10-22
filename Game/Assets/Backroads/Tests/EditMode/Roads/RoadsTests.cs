@@ -326,7 +326,8 @@ namespace Backroads.Tests.EditMode.Roads
             var fresh = RoadNetworkBaker.BakeInMemory(out _, out _, out var msg);
             Assert.NotNull(fresh, msg);
             Assert.AreEqual(fresh.contentHash, baked.contentHash, "the committed road asset is stale: re-bake (Backroads > Roads > Bake road network (R0))");
-            Assert.AreEqual(CanonImporter.LoadImported().manifestSha256, baked.canonManifestSha256);
+            Assert.AreEqual(CanonImporter.LoadImported().manifestSha256, baked.sourceManifestSha256);
+            Assert.AreEqual("CanonData/v1", baked.source);
             Assert.AreSame(baked, RoadNetworkAsset.Load(), "Resources.Load finds the committed asset");
             UnityEngine.Object.DestroyImmediate(fresh);
         }
