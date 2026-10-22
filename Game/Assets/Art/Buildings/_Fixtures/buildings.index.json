@@ -1,0 +1,930 @@
+{
+ "format": "backroads-building-models",
+ "version": 1,
+ "generator": "art/buildings/gen (version 1)",
+ "town": "Fixtures",
+ "frame": "TownFrame local metres = Unity axes (x east, y up, z north). Place each FBX at origin, no rotation.",
+ "doors": "placeholder (art/buildings/millbrook/doors.placeholder.json) until sites-S3",
+ "lods": "Body_LOD0..2 + Panes_LOD0..2 (one LOD Group on the root, BackroadsModelPostprocessor)",
+ "buildings": [
+  {
+   "osm": "fixture/barn_gable",
+   "part": 0,
+   "model": "barn",
+   "family": "barn",
+   "business": "Farm",
+   "fbx": "BLD_fixture_barn_gable.fbx",
+   "origin": [
+    -164.5,
+    0.1,
+    38.5
+   ],
+   "storeys": 1,
+   "roof": "gable",
+   "eave": 4.64,
+   "height": 8.491,
+   "groundMin": -0.1,
+   "groundMax": -0.1,
+   "lod0Tris": 732,
+   "lod1Tris": 84,
+   "lod2Tris": 56,
+   "panes": 8,
+   "colliders": 2,
+   "detail": 0,
+   "doors": [
+    {
+     "name": "DOOR_Bay_00",
+     "kind": "Bay",
+     "spec": 0,
+     "width": 4.2,
+     "local": [
+      0.0,
+      0.0,
+      -8.5
+     ]
+    },
+    {
+     "name": "DOOR_Bay_01",
+     "kind": "Bay",
+     "spec": 1,
+     "width": 4.2,
+     "local": [
+      0.0,
+      0.0,
+      8.5
+     ]
+    }
+   ],
+   "porch": null,
+   "sha256": "66e2dbf0ec986718f13927a394078367c5060e3fe4e29b80823dd3a50f031e52",
+   "bytes": 55740
+  },
+  {
+   "osm": "fixture/barn_gambrel",
+   "part": 0,
+   "model": "barn",
+   "family": "barn",
+   "business": "Farm",
+   "fbx": "BLD_fixture_barn_gambrel.fbx",
+   "origin": [
+    -184.0,
+    0.1,
+    40.0
+   ],
+   "storeys": 1,
+   "roof": "gambrel",
+   "eave": 4.98,
+   "height": 11.118,
+   "groundMin": -0.1,
+   "groundMax": -0.1,
+   "lod0Tris": 788,
+   "lod1Tris": 116,
+   "lod2Tris": 80,
+   "panes": 8,
+   "colliders": 2,
+   "detail": 0,
+   "doors": [
+    {
+     "name": "DOOR_Bay_00",
+     "kind": "Bay",
+     "spec": 0,
+     "width": 4.2,
+     "local": [
+      0.0,
+      0.0,
+      -10.0
+     ]
+    },
+    {
+     "name": "DOOR_Bay_01",
+     "kind": "Bay",
+     "spec": 1,
+     "width": 4.2,
+     "local": [
+      0.0,
+      0.0,
+      10.0
+     ]
+    }
+   ],
+   "porch": null,
+   "sha256": "5e37a6d1c7de0d491000ac331ede7e7e1604c3d7577f38a4fe3c16a236763acf",
+   "bytes": 58332
+  },
+  {
+   "osm": "fixture/cottage",
+   "part": 0,
+   "model": "house",
+   "family": "house",
+   "business": "House",
+   "fbx": "BLD_fixture_cottage.fbx",
+   "origin": [
+    106.5,
+    0.6,
+    12.5
+   ],
+   "storeys": 1,
+   "roof": "gable",
+   "eave": 3.06,
+   "height": 5.421,
+   "groundMin": -0.6,
+   "groundMax": -0.6,
+   "lod0Tris": 1146,
+   "lod1Tris": 196,
+   "lod2Tris": 56,
+   "panes": 11,
+   "colliders": 2,
+   "detail": 0,
+   "doors": [
+    {
+     "name": "DOOR_Main_00",
+     "kind": "Main",
+     "spec": 0,
+     "width": 0.95,
+     "local": [
+      1.62,
+      0.0,
+      -3.5
+     ]
+    },
+    {
+     "name": "DOOR_Service_01",
+     "kind": "Service",
+     "spec": 1,
+     "width": 0.9,
+     "local": [
+      -0.54,
+      0.0,
+      3.5
+     ]
+    }
+   ],
+   "porch": null,
+   "sha256": "ad0eaf1c06786a6d71c6a2eeb809b15e74adb811860a6102ddca1cbc5c664f5f",
+   "bytes": 69100
+  },
+  {
+   "osm": "fixture/garage",
+   "part": 0,
+   "model": "garage",
+   "family": "barn",
+   "business": "Accessory",
+   "fbx": "BLD_fixture_garage.fbx",
+   "origin": [
+    119.5,
+    0.1,
+    17.25
+   ],
+   "storeys": 1,
+   "roof": "gable",
+   "eave": 2.74,
+   "height": 4.851,
+   "groundMin": -0.1,
+   "groundMax": -0.1,
+   "lod0Tris": 170,
+   "lod1Tris": 64,
+   "lod2Tris": 36,
+   "panes": 0,
+   "colliders": 2,
+   "detail": 0,
+   "doors": [
+    {
+     "name": "DOOR_Garage_00",
+     "kind": "Garage",
+     "spec": 0,
+     "width": 4.9,
+     "local": [
+      0.0,
+      0.0,
+      -3.25
+     ]
+    },
+    {
+     "name": "DOOR_Service_01",
+     "kind": "Service",
+     "spec": 1,
+     "width": 0.85,
+     "local": [
+      -0.7,
+      0.0,
+      3.25
+     ]
+    }
+   ],
+   "porch": null,
+   "sha256": "a390f494399ce984e95bf85d90a87883abd43bfd3006d4a9b5aacbd109e59c1f",
+   "bytes": 32492
+  },
+  {
+   "osm": "fixture/house_hip",
+   "part": 0,
+   "model": "house",
+   "family": "house",
+   "business": "House",
+   "fbx": "BLD_fixture_house_hip.fbx",
+   "origin": [
+    89.0,
+    0.77,
+    14.5
+   ],
+   "storeys": 2,
+   "roof": "hip",
+   "eave": 6.68,
+   "height": 9.278,
+   "groundMin": -0.77,
+   "groundMax": -0.77,
+   "lod0Tris": 1712,
+   "lod1Tris": 276,
+   "lod2Tris": 124,
+   "panes": 20,
+   "colliders": 3,
+   "detail": 0,
+   "doors": [
+    {
+     "name": "DOOR_Main_00",
+     "kind": "Main",
+     "spec": 0,
+     "width": 0.95,
+     "local": [
+      1.8,
+      0.0,
+      -4.5
+     ]
+    }
+   ],
+   "porch": [
+    [
+     84.1,
+     10.0
+    ],
+    [
+     93.9,
+     10.0
+    ],
+    [
+     93.9,
+     6.32
+    ],
+    [
+     84.1,
+     6.32
+    ]
+   ],
+   "sha256": "691574cc4c49e9c00d90e10d3c8bc205517575c37b033d42bd9ad600627eb695",
+   "bytes": 86460
+  },
+  {
+   "osm": "fixture/house_l",
+   "part": 0,
+   "model": "house",
+   "family": "house",
+   "business": "House",
+   "fbx": "BLD_fixture_house_l.fbx",
+   "origin": [
+    45.0789,
+    0.55,
+    16.9474
+   ],
+   "storeys": 2,
+   "roof": "gable",
+   "eave": 6.68,
+   "height": 9.514,
+   "groundMin": -0.55,
+   "groundMax": -0.55,
+   "lod0Tris": 2698,
+   "lod1Tris": 348,
+   "lod2Tris": 160,
+   "panes": 32,
+   "colliders": 6,
+   "detail": 0,
+   "doors": [
+    {
+     "name": "DOOR_Main_00",
+     "kind": "Main",
+     "spec": 0,
+     "width": 0.95,
+     "local": [
+      -1.2389,
+      0.0,
+      -6.9474
+     ]
+    }
+   ],
+   "porch": [
+    [
+     40.1,
+     10.0
+    ],
+    [
+     51.9,
+     10.0
+    ],
+    [
+     51.9,
+     6.96
+    ],
+    [
+     40.1,
+     6.96
+    ]
+   ],
+   "sha256": "7f88aa4abae57761606a149cf8552c3936546a772f42426c25f027fc58434acb",
+   "bytes": 118316
+  },
+  {
+   "osm": "fixture/house_t",
+   "part": 0,
+   "model": "house",
+   "family": "house",
+   "business": "House",
+   "fbx": "BLD_fixture_house_t.fbx",
+   "origin": [
+    68.0,
+    0.52,
+    18.0038
+   ],
+   "storeys": 2,
+   "roof": "gable",
+   "eave": 6.12,
+   "height": 9.476,
+   "groundMin": -0.52,
+   "groundMax": -0.52,
+   "lod0Tris": 2330,
+   "lod1Tris": 356,
+   "lod2Tris": 162,
+   "panes": 27,
+   "colliders": 7,
+   "detail": 0,
+   "doors": [
+    {
+     "name": "DOOR_Main_00",
+     "kind": "Main",
+     "spec": 0,
+     "width": 0.95,
+     "local": [
+      2.16,
+      0.0,
+      -6.0038
+     ]
+    }
+   ],
+   "porch": [
+    [
+     67.61,
+     12.0
+    ],
+    [
+     72.71,
+     12.0
+    ],
+    [
+     72.71,
+     8.82
+    ],
+    [
+     67.61,
+     8.82
+    ]
+   ],
+   "sha256": "9844dee241033034c9a2ea8da49f98091168078345e7dc3ffb65bd0e4aedc0d5",
+   "bytes": 113324
+  },
+  {
+   "osm": "fixture/machineshed",
+   "part": 0,
+   "model": "machineshed",
+   "family": "barn",
+   "business": "Accessory",
+   "fbx": "BLD_fixture_machineshed.fbx",
+   "origin": [
+    -138.0,
+    0.1,
+    29.0
+   ],
+   "storeys": 1,
+   "roof": "gable",
+   "eave": 4.64,
+   "height": 6.78,
+   "groundMin": -0.1,
+   "groundMax": -0.1,
+   "lod0Tris": 920,
+   "lod1Tris": 100,
+   "lod2Tris": 64,
+   "panes": 12,
+   "colliders": 2,
+   "detail": 0,
+   "doors": [
+    {
+     "name": "DOOR_Bay_00",
+     "kind": "Bay",
+     "spec": 0,
+     "width": 4.2,
+     "local": [
+      -8.0,
+      0.0,
+      -7.0
+     ]
+    },
+    {
+     "name": "DOOR_Bay_01",
+     "kind": "Bay",
+     "spec": 1,
+     "width": 4.2,
+     "local": [
+      0.0,
+      0.0,
+      -7.0
+     ]
+    },
+    {
+     "name": "DOOR_Bay_02",
+     "kind": "Bay",
+     "spec": 2,
+     "width": 4.2,
+     "local": [
+      8.0,
+      0.0,
+      -7.0
+     ]
+    },
+    {
+     "name": "DOOR_Service_03",
+     "kind": "Service",
+     "spec": 3,
+     "width": 0.9,
+     "local": [
+      0.0,
+      0.0,
+      7.0
+     ]
+    }
+   ],
+   "porch": null,
+   "sha256": "dda93a9161c0ce159dee0daa2d7c1a3d7ec40fddf600d5a5edabc7e911e901d4",
+   "bytes": 62700
+  },
+  {
+   "osm": "fixture/mill",
+   "part": 0,
+   "model": "mill",
+   "family": "mill",
+   "business": "Mill",
+   "fbx": "BLD_fixture_mill.fbx",
+   "origin": [
+    154.7143,
+    0.4,
+    21.7143
+   ],
+   "storeys": 4,
+   "roof": "gable",
+   "eave": 15.28,
+   "height": 19.899,
+   "groundMin": -0.4,
+   "groundMax": -0.4,
+   "lod0Tris": 10414,
+   "lod1Tris": 772,
+   "lod2Tris": 420,
+   "panes": 155,
+   "colliders": 6,
+   "detail": 0,
+   "doors": [
+    {
+     "name": "DOOR_Main_00",
+     "kind": "Main",
+     "spec": 0,
+     "width": 1.6,
+     "local": [
+      0.2857,
+      0.0,
+      -9.7143
+     ]
+    },
+    {
+     "name": "DOOR_Service_01",
+     "kind": "Service",
+     "spec": 1,
+     "width": 1.8,
+     "local": [
+      3.2857,
+      0.0,
+      10.2857
+     ]
+    }
+   ],
+   "porch": null,
+   "sha256": "188caef5f32e09c47a3cc1b891598670b4f4fe8bd4f0990e515a7fe78c795dbc",
+   "bytes": 310476
+  },
+  {
+   "osm": "fixture/row_office",
+   "part": 0,
+   "model": "block",
+   "family": "block",
+   "business": "Office",
+   "fbx": "BLD_fixture_row_office.fbx",
+   "origin": [
+    20.5,
+    0.15,
+    14.0
+   ],
+   "storeys": 3,
+   "roof": "flat",
+   "eave": 11.13,
+   "height": 12.13,
+   "groundMin": -0.15,
+   "groundMax": -0.15,
+   "lod0Tris": 2212,
+   "lod1Tris": 242,
+   "lod2Tris": 140,
+   "panes": 39,
+   "colliders": 1,
+   "detail": 0,
+   "doors": [
+    {
+     "name": "DOOR_Main_00",
+     "kind": "Main",
+     "spec": 0,
+     "width": 1.8,
+     "local": [
+      0.0,
+      0.0,
+      -10.0
+     ]
+    },
+    {
+     "name": "DOOR_Service_01",
+     "kind": "Service",
+     "spec": 1,
+     "width": 1.0,
+     "local": [
+      0.88,
+      0.0,
+      10.0
+     ]
+    }
+   ],
+   "porch": null,
+   "sha256": "905215d43294a6673e47cc5354c044d3a69e1c0e0bb19ae728ad68f65f203485",
+   "bytes": 96492
+  },
+  {
+   "osm": "fixture/row_restaurant",
+   "part": 0,
+   "model": "block",
+   "family": "block",
+   "business": "Restaurant",
+   "fbx": "BLD_fixture_row_restaurant.fbx",
+   "origin": [
+    11.5,
+    0.15,
+    14.0
+   ],
+   "storeys": 2,
+   "roof": "flat",
+   "eave": 7.65,
+   "height": 8.51,
+   "groundMin": -0.15,
+   "groundMax": -0.15,
+   "lod0Tris": 698,
+   "lod1Tris": 126,
+   "lod2Tris": 80,
+   "panes": 9,
+   "colliders": 1,
+   "detail": 0,
+   "doors": [
+    {
+     "name": "DOOR_Main_00",
+     "kind": "Main",
+     "spec": 0,
+     "width": 1.1,
+     "local": [
+      0.0,
+      0.0,
+      -10.0
+     ]
+    },
+    {
+     "name": "DOOR_Service_01",
+     "kind": "Service",
+     "spec": 1,
+     "width": 1.0,
+     "local": [
+      0.84,
+      0.0,
+      10.0
+     ]
+    }
+   ],
+   "porch": null,
+   "sha256": "6c087bee10171d80e209c690f31f709e6595b959578335c87b2984ce748817ab",
+   "bytes": 56044
+  },
+  {
+   "osm": "fixture/row_shop",
+   "part": 0,
+   "model": "block",
+   "family": "block",
+   "business": "Retail",
+   "fbx": "BLD_fixture_row_shop.fbx",
+   "origin": [
+    4.0,
+    0.15,
+    14.0
+   ],
+   "storeys": 2,
+   "roof": "flat",
+   "eave": 7.76,
+   "height": 8.81,
+   "groundMin": -0.15,
+   "groundMax": -0.15,
+   "lod0Tris": 1354,
+   "lod1Tris": 174,
+   "lod2Tris": 104,
+   "panes": 21,
+   "colliders": 1,
+   "detail": 0,
+   "doors": [
+    {
+     "name": "DOOR_Main_00",
+     "kind": "Main",
+     "spec": 0,
+     "width": 1.8,
+     "local": [
+      0.0,
+      0.0,
+      -10.0
+     ]
+    },
+    {
+     "name": "DOOR_Service_01",
+     "kind": "Service",
+     "spec": 1,
+     "width": 1.0,
+     "local": [
+      0.4,
+      0.0,
+      10.0
+     ]
+    }
+   ],
+   "porch": null,
+   "sha256": "0e208dfece9bda962f79ce05854a618e41ae1b3f6d68d3779a61d7e242034ce9",
+   "bytes": 73916
+  },
+  {
+   "osm": "fixture/shed",
+   "part": 0,
+   "model": "shed",
+   "family": "barn",
+   "business": "Accessory",
+   "fbx": "BLD_fixture_shed.fbx",
+   "origin": [
+    129.5,
+    0.1,
+    16.0
+   ],
+   "storeys": 1,
+   "roof": "gable",
+   "eave": 2.55,
+   "height": 3.416,
+   "groundMin": -0.1,
+   "groundMax": -0.1,
+   "lod0Tris": 94,
+   "lod1Tris": 46,
+   "lod2Tris": 34,
+   "panes": 0,
+   "colliders": 2,
+   "detail": 0,
+   "doors": [
+    {
+     "name": "DOOR_Main_00",
+     "kind": "Main",
+     "spec": 0,
+     "width": 1.0,
+     "local": [
+      0.0,
+      0.0,
+      -2.0
+     ]
+    }
+   ],
+   "porch": null,
+   "sha256": "7a40c113f9458643cb4fa11444098266b24676804335a09faef6de2eeb6e4430",
+   "bytes": 28796
+  },
+  {
+   "osm": "fixture/warehouse_flat",
+   "part": 0,
+   "model": "warehouse",
+   "family": "warehouse",
+   "business": "Warehouse",
+   "fbx": "BLD_fixture_warehouse_flat.fbx",
+   "origin": [
+    -96.0,
+    0.15,
+    37.0
+   ],
+   "storeys": 2,
+   "roof": "flat",
+   "eave": 6.32,
+   "height": 7.15,
+   "groundMin": -0.15,
+   "groundMax": -0.15,
+   "lod0Tris": 1956,
+   "lod1Tris": 184,
+   "lod2Tris": 104,
+   "panes": 24,
+   "colliders": 1,
+   "detail": 0,
+   "doors": [
+    {
+     "name": "DOOR_Main_00",
+     "kind": "Main",
+     "spec": 0,
+     "width": 1.0,
+     "local": [
+      -21.0,
+      0.0,
+      -12.0
+     ]
+    },
+    {
+     "name": "DOOR_Dock_01",
+     "kind": "Dock",
+     "spec": 1,
+     "width": 2.7,
+     "local": [
+      10.0,
+      0.0,
+      12.0
+     ]
+    },
+    {
+     "name": "DOOR_Dock_02",
+     "kind": "Dock",
+     "spec": 2,
+     "width": 2.7,
+     "local": [
+      6.0,
+      0.0,
+      12.0
+     ]
+    },
+    {
+     "name": "DOOR_Dock_03",
+     "kind": "Dock",
+     "spec": 3,
+     "width": 2.7,
+     "local": [
+      2.0,
+      0.0,
+      12.0
+     ]
+    },
+    {
+     "name": "DOOR_Dock_04",
+     "kind": "Dock",
+     "spec": 4,
+     "width": 2.7,
+     "local": [
+      -2.0,
+      0.0,
+      12.0
+     ]
+    },
+    {
+     "name": "DOOR_Dock_05",
+     "kind": "Dock",
+     "spec": 5,
+     "width": 2.7,
+     "local": [
+      -6.0,
+      0.0,
+      12.0
+     ]
+    },
+    {
+     "name": "DOOR_Dock_06",
+     "kind": "Dock",
+     "spec": 6,
+     "width": 2.7,
+     "local": [
+      -10.0,
+      0.0,
+      12.0
+     ]
+    }
+   ],
+   "porch": null,
+   "sha256": "4acffc9af42d3d34b9647a0be80b31e52e6e89c3d0e12e5563251762f3a09c8b",
+   "bytes": 90636
+  },
+  {
+   "osm": "fixture/warehouse_gable",
+   "part": 0,
+   "model": "warehouse",
+   "family": "warehouse",
+   "business": "Industrial",
+   "fbx": "BLD_fixture_warehouse_gable.fbx",
+   "origin": [
+    -51.0,
+    0.15,
+    34.0
+   ],
+   "storeys": 2,
+   "roof": "gable",
+   "eave": 6.01,
+   "height": 7.275,
+   "groundMin": -0.15,
+   "groundMax": -0.15,
+   "lod0Tris": 1490,
+   "lod1Tris": 130,
+   "lod2Tris": 88,
+   "panes": 15,
+   "colliders": 2,
+   "detail": 0,
+   "doors": [
+    {
+     "name": "DOOR_Main_00",
+     "kind": "Main",
+     "spec": 0,
+     "width": 1.0,
+     "local": [
+      -12.0,
+      0.0,
+      -9.0
+     ]
+    },
+    {
+     "name": "DOOR_Dock_01",
+     "kind": "Dock",
+     "spec": 1,
+     "width": 2.7,
+     "local": [
+      10.0,
+      0.0,
+      9.0
+     ]
+    },
+    {
+     "name": "DOOR_Dock_02",
+     "kind": "Dock",
+     "spec": 2,
+     "width": 2.7,
+     "local": [
+      6.0,
+      0.0,
+      9.0
+     ]
+    },
+    {
+     "name": "DOOR_Dock_03",
+     "kind": "Dock",
+     "spec": 3,
+     "width": 2.7,
+     "local": [
+      2.0,
+      0.0,
+      9.0
+     ]
+    },
+    {
+     "name": "DOOR_Dock_04",
+     "kind": "Dock",
+     "spec": 4,
+     "width": 2.7,
+     "local": [
+      -2.0,
+      0.0,
+      9.0
+     ]
+    },
+    {
+     "name": "DOOR_Dock_05",
+     "kind": "Dock",
+     "spec": 5,
+     "width": 2.7,
+     "local": [
+      -6.0,
+      0.0,
+      9.0
+     ]
+    },
+    {
+     "name": "DOOR_Dock_06",
+     "kind": "Dock",
+     "spec": 6,
+     "width": 2.7,
+     "local": [
+      -10.0,
+      0.0,
+      9.0
+     ]
+    }
+   ],
+   "porch": null,
+   "sha256": "6c036ad4ddef378e7221c54094dacfc2ad38f8e97e22b8b899683fb83eaadda5",
+   "bytes": 79372
+  }
+ ]
+}
