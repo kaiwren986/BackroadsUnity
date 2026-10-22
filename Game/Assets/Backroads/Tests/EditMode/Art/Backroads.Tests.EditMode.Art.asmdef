@@ -4,6 +4,7 @@
     "references": [
         "Backroads.Core",
         "Backroads.Art.Editor",
+        "Backroads.Build.Editor",
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner"
     ],
