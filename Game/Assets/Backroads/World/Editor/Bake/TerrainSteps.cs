@@ -475,7 +475,8 @@ namespace Backroads.World.Bake
     /// <summary>
     /// Building pads (stage Buildings, ADR-007 open question 1: W computes them from the DEM): every footprint in the play
     /// area becomes a flat Pad plate at the DEM's height at its centroid (buildings.json y), dirt underneath, blend 3 x
-    /// the largest step at its corners (1.5-12 m).
+    /// the largest step at its corners (1.5-12 m). Open roofs (building=roof, canopy, carport) get none: the ground, or
+    /// a site's paving (lane S's forecourt under the fuel canopy), runs under them.
     /// </summary>
     public static class PadStep
     {
@@ -484,7 +485,7 @@ namespace Backroads.World.Bake
             int n = 0;
             foreach (var b in t.buildings)
             {
-                if (!b.inPlay || b.poly == null || b.poly.Length < 3) continue;
+                if (!b.inPlay || b.poly == null || b.poly.Length < 3 || b.OpenRoof) continue;
                 double step = 0;
                 foreach (var q in b.poly) step = Math.Max(step, Math.Abs(t.dem.Bilinear(q.x, q.y) - b.y));
                 sink.Submit(new Plate

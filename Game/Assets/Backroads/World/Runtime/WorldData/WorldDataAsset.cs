@@ -47,6 +47,8 @@ namespace Backroads.World
             public Mesh greyBox;
             public Color32 colour;
             public float height;
+            /// <summary>An open roof (building=roof, canopy, carport): a roof on four posts, no pad, colliders on the posts.</summary>
+            public bool open;
         }
 
         [Serializable]
@@ -108,6 +110,11 @@ namespace Backroads.World
         [Header("Roads (lane R)")]
         /// <summary>Lane R's RoadChunkSet of this town (typed where the Roads assembly is referenced).</summary>
         public ScriptableObject roadChunks;
+
+        [Header("Sites (lane S)")]
+        /// <summary>Lane S's site chunks (paved lots, kerbs, wheel stops; a RoadChunkSet) and props (SitePropSet: the fence
+        /// colliders), typed where the Roads and Sites assemblies are referenced.</summary>
+        public ScriptableObject siteChunks, siteProps;
 
         public CanonAsset.Layer[] Layers => new[] { heights, @base, surface, wear, roadd, mud, tint };
 

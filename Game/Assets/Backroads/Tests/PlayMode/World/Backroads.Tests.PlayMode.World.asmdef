@@ -5,6 +5,7 @@
         "Backroads.Core",
         "Backroads.World",
         "Backroads.Client",
+        "Backroads.Sites",
         "Backroads.Client.Rendering",
         "Unity.RenderPipelines.Core.Runtime",
         "UnityEngine.TestRunner",

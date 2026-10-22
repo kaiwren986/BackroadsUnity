@@ -4,6 +4,7 @@ using Backroads.Client.Editor;
 using Backroads.Client.Rendering;
 using Backroads.Roads;
 using Backroads.Roads.Client.Editor;
+using Backroads.Sites.Client.Editor;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -16,8 +17,9 @@ namespace Backroads.World.Bake
     /// T3.3: writes Scenes/Millbrook.unity, the new real town's scene: a thin bootstrap (PLAN 1.2) with the camera
     /// (FreeFlyCamera), the sun, the global volume and the TownWorld root, which builds everything else at run time from
     /// the imported WorldData. Lane R's road props (RoadPropPlacer: STOP and YIELD signs, signals, street blades) are put
-    /// under the root at build time, as lane R designed them; where the Synty packs are not imported they are lane R's own
-    /// stand-ins. Imports WorldData first when needed.
+    /// under the root at build time, as lane R designed them, and so are lane S's site props (SitePropPlacer: fences, bins,
+    /// signs, pumps; T3.3 follow-ups); where the Synty packs are not imported they are the lanes' own stand-ins. Both go on
+    /// the Static physics layer (lane V's T3.6 request; nothing in them moves). Imports WorldData first when needed.
     ///   menu: Backroads > World > Build Millbrook scene (T3.3)
     ///   batchmode: -executeMethod Backroads.World.Bake.MillbrookTownSceneBuilder.Build
     /// </summary>
@@ -80,10 +82,15 @@ namespace Backroads.World.Bake
             world.sun = sun;
             world.volume = vol;
 
+            int staticLayer = TownWorld.LayerOf("Static");
             var towns = TownSource.Towns();
             var network = towns.Count == 1 ? RoadNetworkAsset.LoadTown(towns[0]) : null;
-            if (network != null) RoadPropPlacer.Place(network, worldGo.transform);
+            var roadProps = network != null ? RoadPropPlacer.Place(network, worldGo.transform) : null;
+            if (roadProps != null) TownWorld.SetLayer(roadProps, staticLayer);
             else Debug.LogWarning("[BR] no road network baked for the town: no road props");
+            var siteProps = towns.Count == 1 ? SitePropPlacer.Place(towns[0], worldGo.transform) : null;
+            if (siteProps != null) TownWorld.SetLayer(siteProps, staticLayer);
+            else Debug.LogWarning("[BR] no site props baked for the town (lane S's SitesBakeCli.Bake)");
 
             RenderSettings.skybox = look.sky;
             RenderSettings.ambientMode = AmbientMode.Trilight;

@@ -17,7 +17,8 @@
         "Unity.InputSystem",
         "Unity.Mathematics",
         "Unity.RenderPipelines.Core.Runtime",
-        "Unity.RenderPipelines.Universal.Runtime"
+        "Unity.RenderPipelines.Universal.Runtime",
+        "Backroads.Sites"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

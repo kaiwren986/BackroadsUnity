@@ -82,6 +82,8 @@ namespace Backroads.World.Bake
         public double area;
         public Dictionary<string, string> tags = new Dictionary<string, string>();
         public string Tag(string k) => tags.TryGetValue(k, out var v) ? v : null;
+        /// <summary>An open roof (building=roof, canopy or carport): no walls, no pad; the ground runs under it.</summary>
+        public bool OpenRoof => Tag("building") is "roof" or "canopy" or "carport";
     }
 
     /// <summary>A service way of sites.json (driveways, alleys, the slipway), local plan.</summary>

@@ -5,6 +5,7 @@ using Backroads.Client.Rendering;
 using Backroads.Core;
 using Backroads.Deform;
 using Backroads.Roads;
+using Backroads.Sites;
 using Backroads.World;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -20,6 +21,9 @@ namespace Backroads.Client
     /// A's models where they exist, grey boxes elsewhere, with colliders), the trees, hedgerows and reeds, the deformation
     /// and the day/night lighting, and makes the world ActiveWorld (ground queries, cameras, lane V's vehicles). The
     /// canon test world keeps its own root (MillbrookWorld).
+    /// <para>Physics layers (lane V's T3.6 request): road and site surfaces, kerbs and wheel stops on <c>Road</c>;
+    /// buildings (grey boxes, lane A's models with their UCX_ colliders), site fences and the trees on <c>Static</c>.
+    /// Lane R's and lane S's props are put on <c>Static</c> when the scene is built (MillbrookTownSceneBuilder).</para>
     /// </summary>
     [DefaultExecutionOrder(-100)]
     public sealed class TownWorld : MonoBehaviour
@@ -50,11 +54,27 @@ namespace Backroads.Client
         public Transform WaterRoot { get; private set; }
         public Transform RoadsRoot { get; private set; }
         public Transform BuildingsRoot { get; private set; }
+        /// <summary>Lane S's site chunks (lots, kerbs, wheel stops) and fence colliders (T3.3 follow-ups).</summary>
+        public Transform SitesRoot { get; private set; }
         public int Models { get; private set; }
         public int GreyBoxes { get; private set; }
 
         /// <summary>Load timings in milliseconds (reported by the perf autotest).</summary>
-        public double DataLoadMs, TerrainBuildAllMs, BuildingsMs, VegetationMs, RoadsMs, TotalLoadMs;
+        public double DataLoadMs, TerrainBuildAllMs, BuildingsMs, VegetationMs, RoadsMs, SitesMs, TotalLoadMs;
+
+        /// <summary>The project's physics layer by name (ProjectSetup.PhysicsLayers), or Default when it is missing.</summary>
+        public static int LayerOf(string name)
+        {
+            int l = LayerMask.NameToLayer(name);
+            return l < 0 ? 0 : l;
+        }
+
+        /// <summary>Puts a hierarchy on a layer.</summary>
+        public static void SetLayer(GameObject go, int layer)
+        {
+            go.layer = layer;
+            foreach (Transform c in go.transform) SetLayer(c.gameObject, layer);
+        }
         public bool FreezeClock;
         float _shadowDistanceBefore = -1;
         PlacementSet _noLamps;
@@ -96,6 +116,9 @@ namespace Backroads.Client
             sw.Restart();
             RoadsRoot = SpawnRoads();
             RoadsMs = sw.Elapsed.TotalMilliseconds;
+            sw.Restart();
+            SitesRoot = SpawnSites();
+            SitesMs = sw.Elapsed.TotalMilliseconds;
             yield return null;
 
             sw.Restart();
@@ -105,6 +128,7 @@ namespace Backroads.Client
 
             sw.Restart();
             Vegetation = new VegetationRenderer(Data.vegetation, Data.trees, Data.layout, look, transform, q.TreeNearRadius);
+            SetLayer(Vegetation.Root.gameObject, LayerOf("Static"));
             VegetationMs = sw.Elapsed.TotalMilliseconds;
             yield return null;
 
@@ -118,7 +142,7 @@ namespace Backroads.Client
             ActiveWorld.Set(world, Grid, WorldDataRuntime.Colliders, Data.vegetation, Data.parking, Data.pois);
             TotalLoadMs = total.Elapsed.TotalMilliseconds;
             Log.Info($"{Data.townName ?? world} ready in {TotalLoadMs:F0} ms: data {DataLoadMs:F0} ms, terrain {Terrain.ChunkCount} chunks {TerrainBuildAllMs:F0} ms, " +
-                     $"roads {RoadsMs:F0} ms, {Models} models + {GreyBoxes} grey boxes {BuildingsMs:F0} ms, {Vegetation.Trees} trees + {Vegetation.Rocks} rocks {VegetationMs:F0} ms; quality {q.Tier}");
+                     $"roads {RoadsMs:F0} ms, sites {SitesMs:F0} ms, {Models} models + {GreyBoxes} grey boxes {BuildingsMs:F0} ms, {Vegetation.Trees} trees + {Vegetation.Rocks} rocks {VegetationMs:F0} ms; quality {q.Tier}");
             Ready = true;
         }
 
@@ -148,17 +172,40 @@ namespace Backroads.Client
             return root;
         }
 
+        Material[] _roadMats;
+        bool _roadMatsLoaded;
+
+        /// <summary>Lane R's three road materials (Roads/Client/Resources), or null when one is missing.</summary>
+        Material[] RoadMats()
+        {
+            if (_roadMatsLoaded) return _roadMats;
+            _roadMatsLoaded = true;
+            _roadMats = new Material[RoadMaterials.Length];
+            for (int i = 0; i < _roadMats.Length; i++)
+            {
+                _roadMats[i] = Resources.Load<Material>(RoadMaterials[i]);
+                if (_roadMats[i] == null) { Log.Warn("world: road material missing: " + RoadMaterials[i]); _roadMats = null; break; }
+            }
+            return _roadMats;
+        }
+
         Transform SpawnRoads()
         {
             if (!(Data.roadChunks is RoadChunkSet set)) { Log.Warn("world: no road chunks (lane R's RoadBakeCli.BakeTowns)"); return null; }
-            var mats = new Material[RoadMaterials.Length];
-            for (int i = 0; i < mats.Length; i++)
-            {
-                mats[i] = Resources.Load<Material>(RoadMaterials[i]);
-                if (mats[i] == null) { Log.Warn("world: road material missing: " + RoadMaterials[i]); mats = null; break; }
-            }
-            var go = RoadChunkLoader.Spawn(set, transform, mats, true);
+            var go = RoadChunkLoader.Spawn(set, transform, RoadMats(), true, LayerOf("Road"));
             return go != null ? go.transform : null;
+        }
+
+        /// <summary>Lane S's site chunks on lane R's loader and materials (as SiteChunks.Spawn), on Road; the fences' box
+        /// colliders on Static.</summary>
+        Transform SpawnSites()
+        {
+            if (!(Data.siteChunks is RoadChunkSet set)) { Log.Warn("world: no site chunks (lane S's SitesBakeCli.Bake)"); return null; }
+            var root = RoadChunkLoader.Spawn(set, transform, RoadMats(), true, LayerOf("Road"));
+            if (root == null) return null;
+            root.name = SiteChunks.RootName;
+            if (Data.siteProps is SitePropSet props) SiteChunks.SpawnFenceColliders(props, root.transform, LayerOf("Static"));
+            return root.transform;
         }
 
         Transform SpawnBuildings()
@@ -171,11 +218,12 @@ namespace Backroads.Client
                 {
                     var go = Instantiate(b.model, b.origin, Quaternion.identity, root);
                     go.name = b.osm + ":" + b.part;
+                    SetLayer(go, LayerOf("Static"));
                     Models++;
                 }
                 else if (b.greyBox != null)
                 {
-                    var go = new GameObject(b.osm + ":" + b.part + " (grey box)");
+                    var go = new GameObject(b.osm + ":" + b.part + (b.open ? " (grey canopy)" : " (grey box)")) { layer = LayerOf("Static") };
                     go.transform.SetParent(root, false);
                     go.AddComponent<MeshFilter>().sharedMesh = b.greyBox;
                     var r = go.AddComponent<MeshRenderer>();
