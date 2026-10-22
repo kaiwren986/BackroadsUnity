@@ -155,9 +155,14 @@ namespace Backroads.Sites
         /// <summary>The street the extract matched it to ("way/123"), or null.</summary>
         public string street;
         public float setback = float.NaN;
+        /// <summary>Floor height (buildings.json "y": the DEM at the centroid, where lane W's pad and lane A's model stand), or NaN.</summary>
+        public double floorY = double.NaN;
         public Dictionary<string, string> tags = new Dictionary<string, string>();
 
         /// <summary>Garages, sheds and free-standing roofs get no parcel of their own.</summary>
         public bool Accessory => business == BusinessType.Accessory || business == BusinessType.Roof;
+
+        /// <summary>A roof without walls (a fuel canopy, a carport, a shelter): surfaces run under it.</summary>
+        public bool OpenRoof => tags != null && tags.TryGetValue("building", out var v) && (v == "roof" || v == "canopy" || v == "carport");
     }
 }

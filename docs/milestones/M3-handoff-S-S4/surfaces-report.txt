@@ -1,0 +1,649 @@
+sites-S4 surfaces and props report (SiteBake v1, SiteMesher, RoadChunkBaker of lane R)
+stockport-oh: 255 plans baked: 22446 m² paved, 11217 m² gravel/dirt/grass, 9380 m² verge; 124 chunks, LOD0 46207 triangles (budget 150000), LOD1 33213, collider 33543; 82973 plates; kerbs 1389 m, paint 4835 m, 16 symbols, 33 wheel stops, 14 island beds; 367 props (348 Synty, 19 ours, 65 moved, 9 dropped), 0 fence runs, 0 gates, 4 lane A stand-ins; 181 grade notes, 0 problems; 24744 ms; hash 144264139ab8
+plans c506a505345cf0d451533b5679ace36c235c1e88a01298a7d7000ba1b70ff0bd; chunks 9f8eec41ce99ca6e447be8159b1cdeb9ae60b867a1e5c2e8dbfdff745d87943c; props c0907b89b767c7154f1d2b7222c2ef70eead471d560df2e37ffc4bdfa1192324; plates e76ff5f87ee3616fdc64786db19315b3ea05703d289b568ee4398cf3b099681f
+
+Problems:
+  none
+
+Apron seams: 215 cuts, the lot meets each apron's lot edge within 0.00 mm at worst (limit 5 mm)
+
+Drive stubs added where S3's plan drew no drive to a baked cut (13):
+  parcel 0 (House): request 1: a 2.4 m Asphalt stub (the plan's nearest surface 1.9 m)
+  parcel 15 (House): request 962: no room for a stub (the plan's nearest surface 11.7 m)
+  parcel 26 (House): request 1665: a 9.8 m Asphalt stub (the plan's nearest surface 9.3 m)
+  parcel 95 (House): request 6082: no room for a stub (the plan's nearest surface 4.4 m)
+  parcel 110 (Unknown): request 7041: a 1.0 m Asphalt stub (the plan's nearest surface 0.5 m)
+  parcel 129 (Unknown): request 8257: a 4.0 m Asphalt stub (the plan's nearest surface none)
+  parcel 151 (Unknown): request 9665: no room for a stub (the plan's nearest surface 2.1 m)
+  parcel 239 (House): request 15297: a 1.3 m Asphalt stub (the plan's nearest surface 0.8 m)
+  parcel 249 (House): request 15937: no room for a stub (the plan's nearest surface 2.8 m)
+  parcel 258 (House): request 16513: no room for a stub (the plan's nearest surface 2.6 m)
+  parcel 266 (House): request 17025: no room for a stub (the plan's nearest surface 0.4 m)
+  parcel 282 (House): request 18049: no room for a stub (the plan's nearest surface none)
+  parcel 287 (House): request 18369: no room for a stub (the plan's nearest surface none)
+
+Aprons no surface of their plan reaches (9):
+  parcel 15 (House, Rules): request 962 Baked: nearest surface 11.7 m; surfaces Drive/Asphalt, Drive/Asphalt, Walk/Concrete; notes 
+  parcel 95 (House, Rules): request 6082 Baked: nearest surface 4.4 m; surfaces Drive/Gravel, Drive/Gravel, Walk/Concrete, Drive/Gravel, Drive/Gravel; notes 
+  parcel 151 (Unknown, Mapped): request 9665 Baked: nearest surface 2.1 m; surfaces Lot/Gravel; notes a mapped lot or yard of its own
+  parcel 239 (House, Rules): request 15297 Baked: nearest surface 0.8 m; surfaces Drive/Asphalt, Drive/Asphalt; notes 
+  parcel 249 (House, Rules): request 15937 Baked: nearest surface 2.8 m; surfaces Drive/Gravel; notes 
+  parcel 258 (House, Rules): request 16513 Baked: nearest surface 2.6 m; surfaces Drive/Asphalt; notes 
+  parcel 266 (House, Rules): request 17025 Baked: nearest surface 0.4 m; surfaces Drive/Gravel, Drive/Gravel, Walk/Concrete; notes 
+  parcel 282 (House, Rules): request 18049 Baked: nearest surface none; surfaces ; notes 
+  parcel 287 (House, Rules): request 18369 Baked: nearest surface none; surfaces ; notes 
+
+Grades and cut/fill outside design §9's limits (listed, card S4):
+  Apron grade: 4 plans, worst 0.222 (limit 0.050)
+  Drive grade: 88 plans, worst 0.672 (limit 0.120)
+  Forecourt grade: 1 plans, worst 0.109 (limit 0.020)
+  Lot grade: 11 plans, worst 3.848 (limit 0.050)
+  Walk grade: 51 plans, worst 0.456 (limit 0.120)
+  Yard grade: 2 plans, worst 0.311 (limit 0.080)
+  accessible stall grade: 9 plans, worst 0.144 (limit 0.020)
+  cut: 10 plans, worst 11.089 (limit 1.500)
+  fill: 5 plans, worst 10.785 (limit 1.500)
+    parcel    1: Drive grade 0.135 (limit 0.120) at (-258.8, 407.3)
+    parcel    4: Lot grade 0.090 (limit 0.050) at (36.8, 326.3)
+    parcel    6: Drive grade 0.206 (limit 0.120) at (587.3, 426.8)
+    parcel    7: fill 1.646 (limit 1.500) at (615.8, 444.8)
+    parcel   11: cut 1.514 (limit 1.500) at (267.8, -60.8)
+    parcel   12: Drive grade 0.165 (limit 0.120) at (210.8, -33.8)
+    parcel   14: Walk grade 0.207 (limit 0.120) at (287.3, 15.8)
+    parcel   16: Walk grade 0.187 (limit 0.120) at (281.3, 78.8)
+    parcel   17: Walk grade 0.135 (limit 0.120) at (284.3, 116.3)
+    parcel   25: accessible stall grade 0.040 (limit 0.020) at (299.4, 210.3)
+    parcel   28: Drive grade 0.227 (limit 0.120) at (306.8, 237.8)
+    parcel   30: Drive grade 0.212 (limit 0.120) at (353.3, 266.3)
+    parcel   30: Apron grade 0.222 (limit 0.050) at (347.3, 249.8)
+    parcel   30: Walk grade 0.133 (limit 0.120) at (357.8, 276.8)
+    parcel   31: Drive grade 0.206 (limit 0.120) at (332.3, 272.3)
+    parcel   33: Drive grade 0.185 (limit 0.120) at (-326.3, 497.3)
+    parcel   34: Lot grade 0.078 (limit 0.050) at (-242.3, 479.3)
+    parcel   37: Lot grade 0.139 (limit 0.050) at (-225.8, 561.8)
+    parcel   37: Drive grade 0.170 (limit 0.120) at (-228.8, 557.3)
+    parcel   37: accessible stall grade 0.063 (limit 0.020) at (-296.0, 564.5)
+    parcel   37: cut 2.341 (limit 1.500) at (-228.8, 564.8)
+    parcel   37: fill 1.508 (limit 1.500) at (-273.8, 561.8)
+    parcel   40: Lot grade 3.848 (limit 0.050) at (-331.6, 711.3)
+    parcel   40: Drive grade 0.247 (limit 0.120) at (-311.3, 711.8)
+    parcel   40: accessible stall grade 0.120 (limit 0.020) at (-329.2, 684.0)
+    parcel   40: accessible stall grade 0.120 (limit 0.020) at (-330.0, 687.3)
+    parcel   40: cut 11.089 (limit 1.500) at (-351.8, 767.0)
+    parcel   40: fill 10.785 (limit 1.500) at (-311.3, 630.3)
+    parcel   41: Drive grade 0.141 (limit 0.120) at (-260.3, 705.8)
+    parcel   42: Drive grade 0.138 (limit 0.120) at (-213.8, 693.8)
+    parcel   44: Drive grade 0.215 (limit 0.120) at (-21.8, 810.8)
+    parcel   46: Drive grade 0.225 (limit 0.120) at (-122.3, 788.3)
+    parcel   49: Walk grade 0.236 (limit 0.120) at (-164.3, 720.8)
+    parcel   50: Drive grade 0.152 (limit 0.120) at (-159.8, 696.8)
+    parcel   51: Drive grade 0.195 (limit 0.120) at (-162.8, 660.8)
+    parcel   51: Walk grade 0.164 (limit 0.120) at (-167.3, 665.3)
+    parcel   52: Walk grade 0.222 (limit 0.120) at (-168.8, 638.3)
+    parcel   53: Drive grade 0.132 (limit 0.120) at (-144.8, 618.8)
+    parcel   55: Drive grade 0.162 (limit 0.120) at (-189.8, 629.3)
+    parcel   55: Walk grade 0.295 (limit 0.120) at (-182.3, 632.3)
+    parcel   56: Walk grade 0.233 (limit 0.120) at (-180.8, 657.8)
+    parcel   58: Drive grade 0.240 (limit 0.120) at (-195.8, 599.3)
+    parcel   58: Walk grade 0.201 (limit 0.120) at (-188.3, 611.3)
+    parcel   61: Drive grade 0.125 (limit 0.120) at (-78.8, 578.3)
+    parcel   63: Walk grade 0.156 (limit 0.120) at (-36.8, 561.8)
+    parcel   64: Drive grade 0.127 (limit 0.120) at (9.8, 567.8)
+    parcel   70: Walk grade 0.132 (limit 0.120) at (227.3, 702.8)
+    parcel   71: Walk grade 0.314 (limit 0.120) at (239.3, 758.3)
+    parcel   76: Drive grade 0.145 (limit 0.120) at (93.8, 593.3)
+    parcel   77: Drive grade 0.138 (limit 0.120) at (140.3, 620.3)
+    parcel   78: Drive grade 0.166 (limit 0.120) at (197.3, 623.3)
+    parcel   78: Walk grade 0.187 (limit 0.120) at (188.3, 620.3)
+    parcel   79: Lot grade 0.075 (limit 0.050) at (354.8, 665.3)
+    parcel   79: accessible stall grade 0.026 (limit 0.020) at (386.1, 670.4)
+    parcel   85: Walk grade 0.150 (limit 0.120) at (461.3, 552.8)
+    parcel   86: Drive grade 0.180 (limit 0.120) at (479.3, 551.3)
+    parcel   87: Walk grade 0.336 (limit 0.120) at (489.8, 551.3)
+    parcel   88: Drive grade 0.184 (limit 0.120) at (519.8, 558.8)
+    parcel   88: Walk grade 0.157 (limit 0.120) at (510.8, 551.3)
+    parcel   90: Drive grade 0.211 (limit 0.120) at (573.8, 548.3)
+    parcel   92: Drive grade 0.129 (limit 0.120) at (614.3, 545.3)
+    parcel   92: Walk grade 0.188 (limit 0.120) at (627.8, 543.8)
+    parcel   95: Drive grade 0.130 (limit 0.120) at (87.8, 110.3)
+    parcel   95: Walk grade 0.163 (limit 0.120) at (83.3, 108.8)
+    parcel   96: Walk grade 0.159 (limit 0.120) at (90.8, 188.3)
+    parcel   97: Walk grade 0.184 (limit 0.120) at (134.3, 159.8)
+    parcel  100: Lot grade 0.099 (limit 0.050) at (257.6, 311.6)
+    parcel  101: Lot grade 0.118 (limit 0.050) at (201.8, 275.3)
+    parcel  103: Drive grade 0.449 (limit 0.120) at (456.8, 281.3)
+    parcel  103: Walk grade 0.191 (limit 0.120) at (447.8, 291.8)
+    parcel  104: Walk grade 0.132 (limit 0.120) at (242.3, 321.8)
+    parcel  110: Drive grade 0.245 (limit 0.120) at (72.6, -477.6)
+    parcel  110: fill 4.845 (limit 1.500) at (-629.4, -514.7)
+    parcel  143: Drive grade 0.141 (limit 0.120) at (925.9, 300.4)
+    parcel  143: Forecourt grade 0.109 (limit 0.020) at (939.8, 348.8)
+    parcel  143: fill 1.627 (limit 1.500) at (897.8, 380.3)
+    parcel  144: Lot grade 0.242 (limit 0.050) at (977.6, 246.4)
+    parcel  144: Drive grade 0.138 (limit 0.120) at (983.3, 267.8)
+    parcel  144: accessible stall grade 0.035 (limit 0.020) at (1006.8, 254.4)
+    parcel  153: Drive grade 0.149 (limit 0.120) at (794.3, 894.8)
+    parcel  156: Drive grade 0.177 (limit 0.120) at (-254.3, 846.8)
+    parcel  158: Yard grade 0.229 (limit 0.080) at (-215.2, 832.8)
+    parcel  160: Drive grade 0.138 (limit 0.120) at (-213.8, 708.8)
+    parcel  161: Drive grade 0.148 (limit 0.120) at (-179.3, 734.3)
+    parcel  161: Walk grade 0.243 (limit 0.120) at (-177.8, 723.8)
+    parcel  163: Drive grade 0.428 (limit 0.120) at (-177.8, 806.3)
+    parcel  164: Drive grade 0.152 (limit 0.120) at (-186.8, 767.3)
+    parcel  164: Walk grade 0.181 (limit 0.120) at (-176.3, 755.3)
+    parcel  165: Yard grade 0.311 (limit 0.080) at (-240.5, 711.3)
+    parcel  165: cut 1.715 (limit 1.500) at (-240.5, 721.4)
+    parcel  167: Drive grade 0.161 (limit 0.120) at (-141.8, 435.8)
+    parcel  168: Drive grade 0.234 (limit 0.120) at (-117.8, 443.3)
+    parcel  170: Drive grade 0.353 (limit 0.120) at (-146.3, 482.3)
+    parcel  170: Apron grade 0.056 (limit 0.050) at (-128.3, 476.3)
+    parcel  171: Drive grade 0.246 (limit 0.120) at (-105.8, 476.3)
+    parcel  172: Drive grade 0.207 (limit 0.120) at (-158.3, 504.8)
+    parcel  173: Drive grade 0.137 (limit 0.120) at (-162.8, 552.8)
+    parcel  174: Drive grade 0.519 (limit 0.120) at (-137.3, 501.8)
+    parcel  175: Drive grade 0.286 (limit 0.120) at (-99.8, 500.3)
+    parcel  175: Walk grade 0.289 (limit 0.120) at (-108.8, 497.3)
+    parcel  179: Walk grade 0.171 (limit 0.120) at (-78.8, 471.8)
+    parcel  181: Walk grade 0.228 (limit 0.120) at (-36.0, 540.0)
+    parcel  182: Walk grade 0.188 (limit 0.120) at (-66.8, 549.8)
+    parcel  183: Walk grade 0.187 (limit 0.120) at (-77.3, 530.3)
+    parcel  185: Drive grade 0.159 (limit 0.120) at (2.3, 464.3)
+    parcel  187: Drive grade 0.242 (limit 0.120) at (9.8, 516.8)
+    parcel  187: Walk grade 0.158 (limit 0.120) at (11.3, 506.3)
+    parcel  188: Lot grade 0.080 (limit 0.050) at (60.8, 468.8)
+    parcel  188: Walk grade 0.152 (limit 0.120) at (41.3, 452.3)
+    parcel  191: Drive grade 0.182 (limit 0.120) at (82.5, 398.6)
+    parcel  191: Walk grade 0.150 (limit 0.120) at (93.1, 405.9)
+    parcel  191: cut 2.164 (limit 1.500) at (86.3, 405.8)
+    parcel  192: Drive grade 0.192 (limit 0.120) at (114.8, 383.3)
+    parcel  192: Walk grade 0.290 (limit 0.120) at (126.8, 393.8)
+    parcel  192: cut 1.945 (limit 1.500) at (120.8, 386.3)
+    parcel  194: Walk grade 0.229 (limit 0.120) at (77.3, 465.8)
+    parcel  195: Drive grade 0.265 (limit 0.120) at (122.3, 456.8)
+    parcel  195: Walk grade 0.136 (limit 0.120) at (126.8, 467.3)
+    parcel  196: Drive grade 0.140 (limit 0.120) at (92.3, 426.8)
+    parcel  196: Walk grade 0.212 (limit 0.120) at (86.3, 422.3)
+    parcel  197: Drive grade 0.287 (limit 0.120) at (126.8, 501.8)
+    parcel  199: Drive grade 0.279 (limit 0.120) at (129.8, 582.8)
+    parcel  201: Walk grade 0.198 (limit 0.120) at (168.8, 474.8)
+    parcel  202: Drive grade 0.191 (limit 0.120) at (158.3, 503.3)
+    parcel  203: Drive grade 0.141 (limit 0.120) at (150.8, 576.8)
+    parcel  204: Drive grade 0.241 (limit 0.120) at (176.3, 578.3)
+    parcel  204: Walk grade 0.249 (limit 0.120) at (177.8, 566.3)
+    parcel  204: cut 1.587 (limit 1.500) at (176.3, 573.8)
+    parcel  206: Drive grade 0.196 (limit 0.120) at (195.8, 387.8)
+    parcel  207: Drive grade 0.129 (limit 0.120) at (197.3, 366.8)
+    parcel  211: Lot grade 0.141 (limit 0.050) at (216.8, 489.8)
+    parcel  211: accessible stall grade 0.090 (limit 0.020) at (205.9, 503.0)
+    parcel  212: Drive grade 0.150 (limit 0.120) at (206.3, 536.3)
+    parcel  212: Walk grade 0.204 (limit 0.120) at (216.0, 538.6)
+    parcel  213: Drive grade 0.126 (limit 0.120) at (194.3, 587.3)
+    parcel  215: Walk grade 0.191 (limit 0.120) at (213.8, 554.3)
+    parcel  216: Drive grade 0.178 (limit 0.120) at (213.8, 386.3)
+    parcel  219: Apron grade 0.111 (limit 0.050) at (261.8, 378.8)
+    parcel  220: Drive grade 0.162 (limit 0.120) at (246.8, 422.3)
+    parcel  224: Apron grade 0.060 (limit 0.050) at (260.3, 426.8)
+    parcel  225: Drive grade 0.145 (limit 0.120) at (240.8, 536.3)
+    parcel  227: accessible stall grade 0.026 (limit 0.020) at (261.8, 647.2)
+    parcel  236: Drive grade 0.186 (limit 0.120) at (287.3, 503.3)
+    parcel  242: Drive grade 0.248 (limit 0.120) at (368.3, 350.3)
+    parcel  244: Walk grade 0.178 (limit 0.120) at (344.3, 317.3)
+    parcel  245: Lot grade 0.275 (limit 0.050) at (329.3, 425.3)
+    parcel  245: Drive grade 0.129 (limit 0.120) at (308.3, 432.8)
+    parcel  245: accessible stall grade 0.144 (limit 0.020) at (327.1, 425.1)
+    parcel  245: cut 1.596 (limit 1.500) at (329.3, 423.8)
+    parcel  247: Drive grade 0.155 (limit 0.120) at (323.3, 534.8)
+    parcel  252: Drive grade 0.160 (limit 0.120) at (363.8, 464.3)
+    parcel  252: Walk grade 0.240 (limit 0.120) at (354.8, 468.8)
+    parcel  254: Drive grade 0.162 (limit 0.120) at (404.3, 452.3)
+    parcel  258: Drive grade 0.194 (limit 0.120) at (407.3, 506.3)
+    parcel  262: Drive grade 0.181 (limit 0.120) at (396.8, 336.8)
+    parcel  264: Walk grade 0.183 (limit 0.120) at (423.8, 392.3)
+    parcel  268: Drive grade 0.470 (limit 0.120) at (446.3, 416.3)
+    parcel  268: Walk grade 0.456 (limit 0.120) at (445.1, 415.1)
+    parcel  269: Drive grade 0.152 (limit 0.120) at (432.8, 446.3)
+    parcel  271: Drive grade 0.139 (limit 0.120) at (426.8, 498.8)
+    parcel  273: Drive grade 0.180 (limit 0.120) at (478.4, 479.7)
+    parcel  274: Drive grade 0.152 (limit 0.120) at (444.8, 483.8)
+    parcel  275: Drive grade 0.151 (limit 0.120) at (434.3, 528.8)
+    parcel  275: Walk grade 0.144 (limit 0.120) at (450.1, 535.5)
+    parcel  279: Drive grade 0.322 (limit 0.120) at (456.8, 357.8)
+    parcel  281: Drive grade 0.246 (limit 0.120) at (485.3, 414.8)
+    parcel  283: Drive grade 0.162 (limit 0.120) at (494.3, 464.3)
+    parcel  285: Drive grade 0.672 (limit 0.120) at (497.3, 354.8)
+    parcel  285: Walk grade 0.349 (limit 0.120) at (515.3, 365.3)
+    parcel  285: cut 2.289 (limit 1.500) at (500.3, 357.8)
+    parcel  286: Drive grade 0.216 (limit 0.120) at (543.8, 414.8)
+    parcel  286: Walk grade 0.237 (limit 0.120) at (540.8, 413.3)
+    parcel  288: Drive grade 0.358 (limit 0.120) at (564.8, 453.8)
+    parcel  288: Walk grade 0.439 (limit 0.120) at (558.8, 440.3)
+    parcel  291: Drive grade 0.137 (limit 0.120) at (563.3, 476.3)
+    parcel  292: Drive grade 0.368 (limit 0.120) at (572.3, 482.3)
+    parcel  292: cut 1.957 (limit 1.500) at (575.3, 482.3)
+    parcel  295: Walk grade 0.142 (limit 0.120) at (578.3, 533.3)
+    parcel  296: Drive grade 0.247 (limit 0.120) at (608.3, 527.3)
+    parcel  296: Walk grade 0.150 (limit 0.120) at (597.8, 533.3)
+    parcel  297: Drive grade 0.203 (limit 0.120) at (599.3, 489.8)
+
+The steepest grades and the anchors within 4 m of them (kind a-b, y, difference to the base, fade length):
+  parcel   40: Lot grade 3.848 (limit 0.050) at (-331.6, 711.3)
+      H 42.66, base 42.66, ground 45.91; gradient of H (-3.723, -0.975), base (-3.723, -0.975), without ramps (-0.119, 0.017), smoothed ground (-0.507, 0.068); ramps near 1 of 1
+      Apron (-289.1, 723.1)-(-289.3, 723.3) y 34.41..34.44 d 0.00..0.00 L 2.0
+      Apron (-288.9, 722.9)-(-289.1, 723.1) y 34.38..34.41 d 0.00..0.00 L 2.0
+      Apron (-288.8, 722.7)-(-288.9, 722.9) y 34.35..34.38 d 0.00..0.00 L 2.0
+      Apron (-288.6, 722.6)-(-288.8, 722.7) y 34.33..34.35 d 0.00..0.00 L 2.0
+  parcel  285: Drive grade 0.672 (limit 0.120) at (497.3, 354.8)
+      H 10.85, base 10.84, ground 12.46; gradient of H (-0.516, -0.431), base (-0.516, -0.431), without ramps (-0.062, 0.163), smoothed ground (-0.062, 0.163); ramps near 1 of 1
+      Apron (508.2, 346.3)-(508.4, 346.5) y 9.17..9.17 d 0.00..0.00 L 2.0
+      Apron (508.4, 346.5)-(508.6, 346.6) y 9.17..9.17 d 0.00..0.00 L 2.0
+      Apron (508.6, 346.6)-(508.7, 346.8) y 9.17..9.17 d 0.00..0.00 L 2.0
+      Apron (508.7, 346.8)-(508.9, 347.0) y 9.17..9.17 d 0.00..0.00 L 2.0
+  parcel  174: Drive grade 0.519 (limit 0.120) at (-137.3, 501.8)
+      H 22.47, base 22.47, ground 22.74; gradient of H (0.024, 0.518), base (0.023, 0.517), without ramps (0.014, 0.152), smoothed ground (0.014, 0.152); ramps near 1 of 1
+      Door (-135.8, 506.2)-(-135.8, 506.2) y 23.22..23.22 d 0.03..0.03 L 2.0
+      Apron (-137.6, 496.6)-(-137.3, 496.5) y 21.43..21.44 d 0.00..0.00 L 2.0
+      Apron (-137.3, 496.5)-(-137.1, 496.5) y 21.44..21.45 d 0.00..0.00 L 2.0
+      Apron (-137.8, 496.6)-(-137.6, 496.6) y 21.43..21.43 d 0.00..0.00 L 2.0
+      Apron (-137.1, 496.5)-(-136.9, 496.5) y 21.45..21.45 d 0.00..0.00 L 2.0
+      Apron (-136.9, 496.5)-(-136.6, 496.5) y 21.45..21.46 d 0.00..0.00 L 2.0
+      Door (-135.8, 506.2)-(-135.8, 506.2) y 23.22..23.22 d 0.03..0.03 L 2.0
+      Apron (-137.6, 496.6)-(-137.3, 496.5) y 21.43..21.44 d 0.00..0.00 L 2.0
+      Apron (-137.3, 496.5)-(-137.1, 496.5) y 21.44..21.45 d 0.00..0.00 L 2.0
+      Apron (-137.8, 496.6)-(-137.6, 496.6) y 21.43..21.43 d 0.00..0.00 L 2.0
+  parcel  268: Drive grade 0.470 (limit 0.120) at (446.3, 416.3)
+      H 17.47, base 17.43, ground 17.43; gradient of H (-0.009, 0.470), base (0.004, 0.446), without ramps (-0.009, 0.104), smoothed ground (-0.009, 0.104); ramps near 1 of 1
+      Door (445.7, 417.0)-(445.7, 417.0) y 17.80..17.80 d 0.06..0.06 L 2.0
+      Apron (446.1, 413.4)-(446.3, 413.4) y 16.14..16.13 d 0.00..0.00 L 2.0
+      Apron (445.9, 413.4)-(446.1, 413.4) y 16.15..16.14 d 0.00..0.00 L 2.0
+      Apron (446.3, 413.4)-(446.6, 413.3) y 16.13..16.13 d 0.00..0.00 L 2.0
+      Apron (445.6, 413.4)-(445.9, 413.4) y 16.15..16.15 d 0.00..0.00 L 2.0
+      Apron (446.6, 413.3)-(446.8, 413.3) y 16.13..16.12 d 0.00..0.00 L 2.0
+      Door (445.7, 417.0)-(445.7, 417.0) y 17.80..17.80 d 0.06..0.06 L 2.0
+      Apron (446.1, 413.4)-(446.3, 413.4) y 16.14..16.13 d 0.00..0.00 L 2.0
+      Apron (445.9, 413.4)-(446.1, 413.4) y 16.15..16.14 d 0.00..0.00 L 2.0
+      Apron (446.3, 413.4)-(446.6, 413.3) y 16.13..16.13 d 0.00..0.00 L 2.0
+  parcel  268: Walk grade 0.456 (limit 0.120) at (445.1, 415.1)
+      H 16.91, base 16.89, ground 17.29; gradient of H (-0.010, 0.456), base (-0.013, 0.441), without ramps (-0.015, 0.127), smoothed ground (-0.015, 0.127); ramps near 1 of 1
+      Apron (445.1, 413.4)-(445.4, 413.4) y 16.17..16.16 d 0.00..0.00 L 2.0
+      Apron (445.4, 413.4)-(445.6, 413.4) y 16.16..16.15 d 0.00..0.00 L 2.0
+      Apron (445.6, 413.4)-(445.9, 413.4) y 16.15..16.15 d 0.00..0.00 L 2.0
+      Apron (445.9, 413.4)-(446.1, 413.4) y 16.15..16.14 d 0.00..0.00 L 2.0
+      Apron (446.1, 413.4)-(446.3, 413.4) y 16.14..16.13 d 0.00..0.00 L 2.0
+      Door (445.7, 417.0)-(445.7, 417.0) y 17.80..17.80 d 0.06..0.06 L 2.0
+      Apron (445.1, 413.4)-(445.4, 413.4) y 16.17..16.16 d 0.00..0.00 L 2.0
+      Apron (445.4, 413.4)-(445.6, 413.4) y 16.16..16.15 d 0.00..0.00 L 2.0
+      Apron (445.6, 413.4)-(445.9, 413.4) y 16.15..16.15 d 0.00..0.00 L 2.0
+      Apron (445.9, 413.4)-(446.1, 413.4) y 16.15..16.14 d 0.00..0.00 L 2.0
+  parcel  103: Drive grade 0.449 (limit 0.120) at (456.8, 281.3)
+      H 10.86, base 10.81, ground 9.96; gradient of H (-0.397, 0.211), base (-0.397, 0.209), without ramps (-0.198, 0.130), smoothed ground (-0.198, 0.130); ramps near 1 of 1
+      Apron (478.2, 325.3)-(478.0, 325.4) y 10.19..10.20 d 0.00..0.00 L 2.0
+      Apron (478.0, 325.4)-(477.7, 325.5) y 10.20..10.21 d 0.00..0.00 L 2.0
+      Apron (477.7, 325.5)-(477.5, 325.6) y 10.21..10.22 d 0.00..0.00 L 2.0
+      Apron (477.5, 325.6)-(477.3, 325.8) y 10.22..10.24 d 0.00..0.00 L 2.0
+  parcel  288: Walk grade 0.439 (limit 0.120) at (558.8, 440.3)
+      H 10.75, base 10.75, ground 10.57; gradient of H (-0.406, 0.169), base (-0.406, 0.169), without ramps (-0.406, 0.169), smoothed ground (-0.406, 0.169); ramps near 0 of 1
+      Apron (577.4, 443.4)-(577.5, 443.6) y 9.50..9.50 d 0.00..0.00 L 2.0
+      Apron (577.5, 443.6)-(577.6, 443.8) y 9.50..9.50 d 0.00..0.00 L 2.0
+      Apron (577.6, 443.8)-(577.7, 444.0) y 9.50..9.50 d 0.00..0.00 L 2.0
+      Apron (577.7, 444.0)-(577.8, 444.2) y 9.50..9.50 d 0.00..0.00 L 2.0
+  parcel  163: Drive grade 0.428 (limit 0.120) at (-177.8, 806.3)
+      H 24.07, base 24.05, ground 24.36; gradient of H (-0.426, 0.036), base (-0.431, 0.036), without ramps (-0.097, 0.010), smoothed ground (-0.097, 0.010); ramps near 1 of 1
+      Apron (-172.0, 805.6)-(-172.0, 805.8) y 23.17..23.17 d 0.00..0.00 L 2.0
+      Apron (-172.0, 805.8)-(-172.0, 806.0) y 23.17..23.17 d 0.00..0.00 L 2.0
+      Apron (-172.1, 805.3)-(-172.0, 805.6) y 23.17..23.17 d 0.00..0.00 L 2.0
+      Apron (-172.0, 806.0)-(-172.0, 806.3) y 23.17..23.17 d 0.00..0.00 L 2.0
+      Apron (-172.1, 805.1)-(-172.1, 805.3) y 23.18..23.17 d 0.00..0.00 L 2.0
+      Apron (-172.0, 806.3)-(-172.0, 806.5) y 23.17..23.17 d 0.00..0.00 L 2.0
+      Apron (-172.0, 805.6)-(-172.0, 805.8) y 23.17..23.17 d 0.00..0.00 L 2.0
+      Apron (-172.0, 805.8)-(-172.0, 806.0) y 23.17..23.17 d 0.00..0.00 L 2.0
+      Apron (-172.1, 805.3)-(-172.0, 805.6) y 23.17..23.17 d 0.00..0.00 L 2.0
+      Apron (-172.0, 806.0)-(-172.0, 806.3) y 23.17..23.17 d 0.00..0.00 L 2.0
+  parcel  175: Drive grade 0.286 (limit 0.120) at (-99.8, 500.3)
+      H 23.09, base 22.96, ground 23.40; gradient of H (0.262, 0.113), base (0.277, 0.080), without ramps (0.006, 0.075), smoothed ground (0.006, 0.075); ramps near 1 of 1
+      Door (-102.9, 503.6)-(-102.9, 503.6) y 23.56..23.56 d 0.49..0.49 L 9.7
+      Apron (-101.3, 495.6)-(-101.0, 495.6) y 22.32..22.33 d 0.00..0.00 L 2.0
+      Apron (-101.5, 495.6)-(-101.3, 495.6) y 22.32..22.32 d 0.00..0.00 L 2.0
+      Apron (-101.8, 495.7)-(-101.5, 495.6) y 22.31..22.32 d 0.00..0.00 L 2.0
+      Apron (-102.0, 495.7)-(-101.8, 495.7) y 22.30..22.31 d 0.00..0.00 L 2.0
+      Apron (-102.2, 495.7)-(-102.0, 495.7) y 22.30..22.30 d 0.00..0.00 L 2.0
+      Door (-102.9, 503.6)-(-102.9, 503.6) y 23.56..23.56 d 0.49..0.49 L 9.7
+      Apron (-101.3, 495.6)-(-101.0, 495.6) y 22.32..22.33 d 0.00..0.00 L 2.0
+      Apron (-101.5, 495.6)-(-101.3, 495.6) y 22.32..22.32 d 0.00..0.00 L 2.0
+      Apron (-101.8, 495.7)-(-101.5, 495.6) y 22.31..22.32 d 0.00..0.00 L 2.0
+  parcel   56: Walk grade 0.233 (limit 0.120) at (-180.8, 657.8)
+      H 24.12, base 24.15, ground 24.20; gradient of H (-0.232, -0.026), base (-0.084, -0.025), without ramps (-0.084, -0.025), smoothed ground (-0.084, -0.025); ramps near 0 of 1
+      Door (-181.8, 657.6)-(-181.8, 657.6) y 24.36..24.36 d 0.13..0.13 L 2.7
+      Walk (-179.6, 657.3)-(-179.5, 657.7) y 23.83..23.84 d -0.22..-0.20 L 7.3
+      Walk (-179.5, 657.7)-(-179.5, 658.0) y 23.84..23.85 d -0.20..-0.18 L 6.7
+      Walk (-179.6, 657.0)-(-179.6, 657.3) y 23.82..23.83 d -0.24..-0.22 L 7.8
+      Walk (-179.6, 656.8)-(-179.6, 657.0) y 23.81..23.82 d -0.24..-0.24 L 8.0
+      Door (-181.8, 657.6)-(-181.8, 657.6) y 24.36..24.36 d 0.13..0.13 L 2.7
+      Apron (-179.1, 665.7)-(-179.1, 665.9) y 23.95..23.96 d 0.00..0.00 L 2.0
+      Apron (-179.1, 665.9)-(-179.0, 666.2) y 23.96..23.97 d 0.00..0.00 L 2.0
+      Apron (-179.0, 666.2)-(-179.0, 666.4) y 23.97..23.98 d 0.00..0.00 L 2.0
+  parcel  201: Walk grade 0.198 (limit 0.120) at (168.8, 474.8)
+      H 22.07, base 22.51, ground 22.53; gradient of H (-0.041, -0.194), base (-0.040, -0.047), without ramps (-0.040, -0.047), smoothed ground (-0.040, -0.047); ramps near 0 of 1
+      Walk (168.9, 475.4)-(168.5, 475.5) y 21.90..21.91 d -0.56..-0.56 L 18.5
+      Walk (168.5, 475.5)-(168.1, 475.5) y 21.91..21.92 d -0.56..-0.57 L 18.8
+      Walk (168.1, 475.5)-(167.7, 475.5) y 21.92..21.93 d -0.57..-0.58 L 19.0
+      Door (168.1, 469.8)-(168.1, 469.8) y 22.51..22.51 d -0.07..-0.07 L 2.0
+      Door (168.1, 469.8)-(168.1, 469.8) y 22.51..22.51 d -0.07..-0.07 L 2.0
+      Apron (160.3, 476.6)-(160.1, 476.6) y 21.93..21.93 d 0.00..0.00 L 2.0
+      Apron (160.1, 476.6)-(159.8, 476.6) y 21.93..21.94 d 0.00..0.00 L 2.0
+      Apron (159.8, 476.6)-(159.6, 476.6) y 21.94..21.94 d 0.00..0.00 L 2.0
+  parcel  262: Drive grade 0.181 (limit 0.120) at (396.8, 336.8)
+      H 15.24, base 15.24, ground 14.97; gradient of H (0.015, 0.180), base (0.015, 0.181), without ramps (-0.028, 0.145), smoothed ground (-0.028, 0.145); ramps near 1 of 1
+      Apron (387.2, 342.4)-(387.1, 342.1) y 15.94..15.93 d 0.00..0.00 L 2.0
+      Apron (387.3, 342.6)-(387.2, 342.4) y 15.94..15.94 d 0.00..0.00 L 2.0
+      Apron (387.4, 342.8)-(387.3, 342.6) y 15.94..15.94 d 0.00..0.00 L 2.0
+      Apron (387.5, 343.0)-(387.4, 342.8) y 15.94..15.94 d 0.00..0.00 L 2.0
+  parcel  187: Walk grade 0.158 (limit 0.120) at (11.3, 506.3)
+      H 24.36, base 24.32, ground 24.27; gradient of H (-0.153, 0.039), base (-0.049, 0.030), without ramps (-0.049, 0.030), smoothed ground (-0.049, 0.030); ramps near 0 of 1
+      Door (10.7, 506.3)-(10.7, 506.3) y 24.46..24.46 d 0.10..0.10 L 2.1
+      Door (10.7, 506.3)-(10.7, 506.3) y 24.46..24.46 d 0.10..0.10 L 2.1
+      Door (7.5, 511.5)-(7.5, 511.5) y 24.46..24.46 d -0.45..-0.45 L 9.0
+      Apron (17.9, 511.6)-(17.9, 511.9) y 23.98..23.98 d 0.00..0.00 L 2.0
+      Apron (17.9, 511.9)-(17.9, 512.1) y 23.98..23.98 d 0.00..0.00 L 2.0
+  parcel  295: Walk grade 0.142 (limit 0.120) at (578.3, 533.3)
+      H 15.04, base 14.88, ground 14.85; gradient of H (-0.053, 0.132), base (-0.050, 0.037), without ramps (-0.050, 0.037), smoothed ground (-0.050, 0.037); ramps near 0 of 0
+      Walk (578.7, 534.6)-(578.3, 534.6) y 15.20..15.23 d 0.28..0.29 L 9.5
+      Walk (578.3, 534.6)-(577.9, 534.6) y 15.23..15.26 d 0.29..0.30 L 9.7
+      Walk (579.1, 534.5)-(578.7, 534.6) y 15.17..15.20 d 0.28..0.28 L 9.2
+      Door (578.3, 531.7)-(578.3, 531.7) y 14.86..14.86 d 0.02..0.02 L 2.0
+      Door (578.3, 531.7)-(578.3, 531.7) y 14.86..14.86 d 0.02..0.02 L 2.0
+  parcel   70: Walk grade 0.132 (limit 0.120) at (227.3, 702.8)
+      H 20.51, base 20.28, ground 20.28; gradient of H (-0.122, 0.048), base (-0.066, 0.025), without ramps (-0.066, 0.025), smoothed ground (-0.066, 0.025); ramps near 0 of 1
+      Door (226.5, 703.1)-(226.5, 703.1) y 20.63..20.63 d 0.29..0.29 L 5.8
+      Door (226.5, 703.1)-(226.5, 703.1) y 20.63..20.63 d 0.29..0.29 L 5.8
+      Door (223.6, 712.7)-(223.6, 712.7) y 20.63..20.63 d 0.27..0.27 L 5.3
+      Apron (236.9, 712.5)-(236.9, 712.7) y 19.50..19.51 d 0.00..0.00 L 2.0
+      Apron (236.9, 712.7)-(236.9, 713.0) y 19.51..19.51 d 0.00..0.00 L 2.0
+  parcel  224: Apron grade 0.060 (limit 0.050) at (260.3, 426.8)
+      H 20.49, base 20.39, ground 20.25; gradient of H (0.053, 0.027), base (0.027, 0.010), without ramps (0.027, 0.010), smoothed ground (0.049, 0.011); ramps near 0 of 0
+      Door (261.4, 427.5)-(261.4, 427.5) y 20.55..20.55 d 0.13..0.13 L 2.6
+      Door (261.4, 427.5)-(261.4, 427.5) y 20.55..20.55 d 0.13..0.13 L 2.6
+
+Plans graded: parcel, plane grade (and its limit), clamped, anchors (aprons/doors/walk)
+     0: plane none (drives and walks follow the ground), free, anchors 20/0/14
+     1: plane none (drives and walks follow the ground), free, anchors 10/1/0
+     2: plane none (drives and walks follow the ground), free, anchors 13/1/0
+     3: plane none (drives and walks follow the ground), free, anchors 15/2/3
+     4: plane 1.8 % (ground 1.8 %, limit 2 %), free, anchors 31/1/0
+     5: plane none (drives and walks follow the ground), free, anchors 0/0/0
+     6: plane none (drives and walks follow the ground), free, anchors 15/1/0
+     7: plane 5.0 % (ground 33.1 %, limit 5 %), clamped, anchors 0/0/0
+     8: plane none (drives and walks follow the ground), free, anchors 0/0/0
+     9: plane none (drives and walks follow the ground), free, anchors 15/2/4
+    10: plane none (drives and walks follow the ground), free, anchors 0/0/0
+    11: plane none (drives and walks follow the ground), free, anchors 12/0/0
+    12: plane none (drives and walks follow the ground), free, anchors 0/0/0
+    13: plane none (drives and walks follow the ground), free, anchors 0/0/0
+    14: plane none (drives and walks follow the ground), free, anchors 15/2/3
+    15: plane none (drives and walks follow the ground), free, anchors 30/1/0
+    16: plane none (drives and walks follow the ground), free, anchors 15/1/4
+    17: plane none (drives and walks follow the ground), free, anchors 15/2/3
+    18: plane none (drives and walks follow the ground), free, anchors 0/0/0
+    19: plane none (drives and walks follow the ground), free, anchors 15/1/3
+    20: plane none (drives and walks follow the ground), free, anchors 15/1/3
+    21: plane none (drives and walks follow the ground), free, anchors 0/0/0
+    22: plane none (drives and walks follow the ground), free, anchors 0/0/0
+    23: plane none (drives and walks follow the ground), free, anchors 15/0/0
+    24: plane none (drives and walks follow the ground), free, anchors 0/1/0
+    25: plane 2.0 % (ground 2.8 %, limit 2 %), clamped, anchors 21/1/22
+    26: plane 5.0 % (ground 5.9 %, limit 5 %), clamped, anchors 15/2/4
+    27: plane none (drives and walks follow the ground), free, anchors 0/1/0
+    28: plane none (drives and walks follow the ground), free, anchors 15/1/0
+    29: plane none (drives and walks follow the ground), free, anchors 15/2/5
+    30: plane 5.0 % (ground 8.8 %, limit 5 %), clamped, anchors 15/2/27
+    31: plane none (drives and walks follow the ground), free, anchors 15/1/0
+    32: plane none (drives and walks follow the ground), free, anchors 16/1/0
+    33: plane none (drives and walks follow the ground), free, anchors 0/0/0
+    34: plane 1.1 % (ground 1.1 %, limit 2 %), free, anchors 30/1/62
+    35: plane none (drives and walks follow the ground), free, anchors 15/1/8
+    36: plane none (drives and walks follow the ground), free, anchors 15/1/0
+    37: plane 6.3 % (ground 6.3 %, limit 2 %), relaxed to 6.3 % (hillside), anchors 29/1/0
+    38: plane none (drives and walks follow the ground), free, anchors 15/1/0
+    39: plane none (drives and walks follow the ground), free, anchors 15/1/3
+    40: plane 12.0 % (ground 49.6 %, limit 2 %), relaxed to 12.0 % (hillside), anchors 24/1/0
+    41: plane none (drives and walks follow the ground), free, anchors 13/0/0
+    42: plane none (drives and walks follow the ground), free, anchors 12/1/0
+    43: plane none (drives and walks follow the ground), free, anchors 12/0/0
+    44: plane none (drives and walks follow the ground), free, anchors 12/0/7
+    45: plane none (drives and walks follow the ground), free, anchors 12/1/0
+    46: plane none (drives and walks follow the ground), free, anchors 14/0/0
+    47: plane none (drives and walks follow the ground), free, anchors 15/2/3
+    48: plane none (drives and walks follow the ground), free, anchors 15/1/0
+    49: plane none (drives and walks follow the ground), free, anchors 15/1/0
+    50: plane none (drives and walks follow the ground), free, anchors 15/1/0
+    51: plane none (drives and walks follow the ground), free, anchors 15/1/3
+    52: plane none (drives and walks follow the ground), free, anchors 15/1/4
+    53: plane none (drives and walks follow the ground), free, anchors 0/0/0
+    54: plane none (drives and walks follow the ground), free, anchors 0/0/0
+    55: plane none (drives and walks follow the ground), free, anchors 15/1/0
+    56: plane none (drives and walks follow the ground), free, anchors 15/1/4
+    57: plane none (drives and walks follow the ground), free, anchors 0/0/0
+    58: plane none (drives and walks follow the ground), free, anchors 15/1/3
+    59: plane none (drives and walks follow the ground), free, anchors 0/0/0
+    60: plane none (drives and walks follow the ground), free, anchors 15/2/5
+    61: plane none (drives and walks follow the ground), free, anchors 15/1/4
+    62: plane none (drives and walks follow the ground), free, anchors 0/0/0
+    63: plane none (drives and walks follow the ground), free, anchors 15/2/3
+    64: plane none (drives and walks follow the ground), free, anchors 15/2/3
+    65: plane none (drives and walks follow the ground), free, anchors 15/2/3
+    66: plane none (drives and walks follow the ground), free, anchors 15/2/3
+    67: plane none (drives and walks follow the ground), free, anchors 15/1/3
+    68: plane none (drives and walks follow the ground), free, anchors 15/2/5
+    69: plane none (drives and walks follow the ground), free, anchors 15/1/0
+    70: plane none (drives and walks follow the ground), free, anchors 15/2/3
+    71: plane 2.1 % (ground 2.1 %, limit 5 %), free, anchors 15/1/3
+    72: plane none (drives and walks follow the ground), free, anchors 15/2/0
+    73: plane none (drives and walks follow the ground), free, anchors 0/0/0
+    74: plane none (drives and walks follow the ground), free, anchors 0/0/0
+    75: plane none (drives and walks follow the ground), free, anchors 15/1/0
+    76: plane none (drives and walks follow the ground), free, anchors 13/1/0
+    77: plane none (drives and walks follow the ground), free, anchors 15/1/5
+    78: plane none (drives and walks follow the ground), free, anchors 15/2/3
+    79: plane 2.0 % (ground 2.6 %, limit 2 %), clamped, anchors 29/1/3
+    80: plane none (drives and walks follow the ground), free, anchors 0/1/0
+    81: plane none (drives and walks follow the ground), free, anchors 15/1/0
+    82: plane none (drives and walks follow the ground), free, anchors 15/2/4
+    83: plane none (drives and walks follow the ground), free, anchors 15/1/1
+    84: plane none (drives and walks follow the ground), free, anchors 15/1/3
+    85: plane none (drives and walks follow the ground), free, anchors 15/2/3
+    86: plane none (drives and walks follow the ground), free, anchors 15/0/0
+    87: plane none (drives and walks follow the ground), free, anchors 15/1/3
+    88: plane none (drives and walks follow the ground), free, anchors 15/2/3
+    89: plane none (drives and walks follow the ground), free, anchors 15/1/0
+    90: plane none (drives and walks follow the ground), free, anchors 15/0/0
+    91: plane none (drives and walks follow the ground), free, anchors 0/0/0
+    92: plane none (drives and walks follow the ground), free, anchors 33/1/5
+    93: plane none (drives and walks follow the ground), free, anchors 0/1/0
+    94: plane none (drives and walks follow the ground), free, anchors 15/1/3
+    95: plane none (drives and walks follow the ground), free, anchors 23/2/4
+    96: plane none (drives and walks follow the ground), free, anchors 15/1/3
+    97: plane none (drives and walks follow the ground), free, anchors 15/1/3
+    98: plane none (drives and walks follow the ground), free, anchors 15/2/4
+    99: plane none (drives and walks follow the ground), free, anchors 17/1/0
+   100: plane 2.0 % (ground 5.2 %, limit 2 %), clamped, anchors 21/1/0
+   101: plane 0.9 % (ground 0.9 %, limit 2 %), free, anchors 30/1/0
+   102: plane none (drives and walks follow the ground), free, anchors 17/0/0
+   103: plane none (drives and walks follow the ground), free, anchors 15/0/4
+   104: plane none (drives and walks follow the ground), free, anchors 15/1/0
+   105: plane none (drives and walks follow the ground), free, anchors 15/2/4
+   106: plane none (drives and walks follow the ground), free, anchors 15/0/0
+   107: plane none (drives and walks follow the ground), free, anchors 15/1/3
+   108: plane none (drives and walks follow the ground), free, anchors 0/1/0
+   109: plane none (drives and walks follow the ground), free, anchors 0/0/0
+   110: plane none (drives and walks follow the ground), free, anchors 35/0/0
+   129: plane none (drives and walks follow the ground), free, anchors 15/0/0
+   136: plane 1.8 % (ground 1.8 %, limit 5 %), free, anchors 30/0/9
+   143: plane 2.0 % (ground 4.7 %, limit 2 %), clamped, anchors 136/1/12
+   144: plane 2.8 % (ground 2.8 %, limit 2 %), relaxed to 2.8 % (hillside), anchors 46/1/0
+   145: plane 2.0 % (ground 2.0 %, limit 2 %), free, anchors 30/1/0
+   146: plane none (drives and walks follow the ground), free, anchors 0/0/0
+   151: plane 2.0 % (ground 3.3 %, limit 2 %), relaxed to 2.0 % (hillside), anchors 15/0/0
+   152: plane none (drives and walks follow the ground), free, anchors 12/0/7
+   153: plane none (drives and walks follow the ground), free, anchors 0/0/0
+   156: plane none (drives and walks follow the ground), free, anchors 12/1/0
+   158: plane 9.4 % (ground 10.8 %, limit 8 %), relaxed to 9.4 % (hillside), anchors 30/0/271
+   160: plane none (drives and walks follow the ground), free, anchors 13/0/0
+   161: plane none (drives and walks follow the ground), free, anchors 15/1/4
+   162: plane none (drives and walks follow the ground), free, anchors 0/0/0
+   163: plane none (drives and walks follow the ground), free, anchors 15/0/4
+   164: plane none (drives and walks follow the ground), free, anchors 15/2/3
+   165: plane 2.5 % (ground 2.5 %, limit 8 %), free, anchors 30/0/265
+   166: plane none (drives and walks follow the ground), free, anchors 15/1/4
+   167: plane none (drives and walks follow the ground), free, anchors 15/2/3
+   168: plane none (drives and walks follow the ground), free, anchors 15/2/4
+   169: plane none (drives and walks follow the ground), free, anchors 15/1/3
+   170: plane 3.8 % (ground 3.8 %, limit 5 %), free, anchors 15/1/3
+   171: plane none (drives and walks follow the ground), free, anchors 15/2/3
+   172: plane none (drives and walks follow the ground), free, anchors 15/1/4
+   173: plane none (drives and walks follow the ground), free, anchors 15/1/4
+   174: plane none (drives and walks follow the ground), free, anchors 15/1/0
+   175: plane none (drives and walks follow the ground), free, anchors 15/2/4
+   176: plane none (drives and walks follow the ground), free, anchors 15/2/3
+   177: plane none (drives and walks follow the ground), free, anchors 15/2/3
+   178: plane none (drives and walks follow the ground), free, anchors 0/1/4
+   179: plane none (drives and walks follow the ground), free, anchors 15/0/3
+   180: plane none (drives and walks follow the ground), free, anchors 15/1/0
+   181: plane none (drives and walks follow the ground), free, anchors 15/1/3
+   182: plane none (drives and walks follow the ground), free, anchors 0/0/4
+   183: plane none (drives and walks follow the ground), free, anchors 15/1/3
+   184: plane none (drives and walks follow the ground), free, anchors 15/1/0
+   185: plane none (drives and walks follow the ground), free, anchors 15/1/0
+   186: plane none (drives and walks follow the ground), free, anchors 15/2/3
+   187: plane none (drives and walks follow the ground), free, anchors 15/2/4
+   188: plane 1.0 % (ground 1.0 %, limit 2 %), free, anchors 30/1/4
+   189: plane none (drives and walks follow the ground), free, anchors 0/1/3
+   190: plane none (drives and walks follow the ground), free, anchors 15/2/3
+   191: plane none (drives and walks follow the ground), free, anchors 15/0/3
+   192: plane none (drives and walks follow the ground), free, anchors 15/1/3
+   194: plane none (drives and walks follow the ground), free, anchors 15/2/4
+   195: plane none (drives and walks follow the ground), free, anchors 15/2/0
+   196: plane none (drives and walks follow the ground), free, anchors 15/2/2
+   197: plane none (drives and walks follow the ground), free, anchors 15/1/0
+   198: plane none (drives and walks follow the ground), free, anchors 15/2/4
+   199: plane none (drives and walks follow the ground), free, anchors 15/1/0
+   200: plane none (drives and walks follow the ground), free, anchors 19/0/0
+   201: plane none (drives and walks follow the ground), free, anchors 15/2/3
+   202: plane none (drives and walks follow the ground), free, anchors 15/1/0
+   203: plane none (drives and walks follow the ground), free, anchors 15/1/3
+   204: plane none (drives and walks follow the ground), free, anchors 15/0/3
+   205: plane none (drives and walks follow the ground), free, anchors 15/1/0
+   206: plane none (drives and walks follow the ground), free, anchors 17/1/0
+   207: plane none (drives and walks follow the ground), free, anchors 15/1/0
+   208: plane none (drives and walks follow the ground), free, anchors 16/1/0
+   209: plane none (drives and walks follow the ground), free, anchors 15/1/0
+   210: plane none (drives and walks follow the ground), free, anchors 15/2/3
+   211: plane 2.0 % (ground 3.0 %, limit 2 %), clamped, anchors 24/1/64
+   212: plane none (drives and walks follow the ground), free, anchors 15/0/4
+   213: plane none (drives and walks follow the ground), free, anchors 15/2/3
+   214: plane none (drives and walks follow the ground), free, anchors 15/2/3
+   215: plane none (drives and walks follow the ground), free, anchors 15/1/3
+   216: plane none (drives and walks follow the ground), free, anchors 15/1/0
+   217: plane none (drives and walks follow the ground), free, anchors 0/0/0
+   218: plane 2.0 % (ground 2.5 %, limit 2 %), clamped, anchors 30/1/4
+   219: plane 5.0 % (ground 5.0 %, limit 5 %), clamped, anchors 25/1/0
+   220: plane none (drives and walks follow the ground), free, anchors 15/1/0
+   221: plane none (drives and walks follow the ground), free, anchors 15/2/4
+   222: plane none (drives and walks follow the ground), free, anchors 15/1/0
+   223: plane none (drives and walks follow the ground), free, anchors 15/2/3
+   224: plane 2.8 % (ground 2.8 %, limit 5 %), free, anchors 0/1/0
+   225: plane none (drives and walks follow the ground), free, anchors 15/1/0
+   226: plane none (drives and walks follow the ground), free, anchors 15/2/3
+   227: plane 2.0 % (ground 3.8 %, limit 2 %), clamped, anchors 30/1/3
+   228: plane none (drives and walks follow the ground), free, anchors 15/2/3
+   229: plane none (drives and walks follow the ground), free, anchors 15/2/3
+   230: plane none (drives and walks follow the ground), free, anchors 15/1/0
+   231: plane none (drives and walks follow the ground), free, anchors 15/0/0
+   232: plane none (drives and walks follow the ground), free, anchors 15/2/3
+   233: plane none (drives and walks follow the ground), free, anchors 15/1/3
+   235: plane none (drives and walks follow the ground), free, anchors 15/1/3
+   236: plane none (drives and walks follow the ground), free, anchors 15/1/0
+   237: plane none (drives and walks follow the ground), free, anchors 17/1/0
+   238: plane none (drives and walks follow the ground), free, anchors 15/2/6
+   239: plane none (drives and walks follow the ground), free, anchors 19/0/0
+   240: plane none (drives and walks follow the ground), free, anchors 15/1/4
+   241: plane none (drives and walks follow the ground), free, anchors 0/0/0
+   242: plane none (drives and walks follow the ground), free, anchors 15/0/0
+   243: plane none (drives and walks follow the ground), free, anchors 15/1/4
+   244: plane none (drives and walks follow the ground), free, anchors 15/2/4
+   245: plane 2.0 % (ground 3.8 %, limit 2 %), clamped, anchors 21/0/204
+   246: plane none (drives and walks follow the ground), free, anchors 15/1/0
+   247: plane none (drives and walks follow the ground), free, anchors 15/1/0
+   249: plane none (drives and walks follow the ground), free, anchors 15/0/0
+   250: plane none (drives and walks follow the ground), free, anchors 15/1/0
+   251: plane none (drives and walks follow the ground), free, anchors 0/0/0
+   252: plane none (drives and walks follow the ground), free, anchors 15/2/3
+   253: plane none (drives and walks follow the ground), free, anchors 19/1/0
+   254: plane none (drives and walks follow the ground), free, anchors 15/1/0
+   255: plane none (drives and walks follow the ground), free, anchors 15/1/0
+   256: plane none (drives and walks follow the ground), free, anchors 0/0/0
+   257: plane none (drives and walks follow the ground), free, anchors 15/1/0
+   258: plane none (drives and walks follow the ground), free, anchors 15/1/0
+   259: plane none (drives and walks follow the ground), free, anchors 15/2/4
+   260: plane none (drives and walks follow the ground), free, anchors 15/1/3
+   262: plane none (drives and walks follow the ground), free, anchors 15/1/3
+   264: plane none (drives and walks follow the ground), free, anchors 0/1/3
+   265: plane none (drives and walks follow the ground), free, anchors 15/0/0
+   266: plane none (drives and walks follow the ground), free, anchors 16/1/0
+   267: plane none (drives and walks follow the ground), free, anchors 0/0/0
+   268: plane none (drives and walks follow the ground), free, anchors 15/1/0
+   269: plane none (drives and walks follow the ground), free, anchors 15/2/3
+   270: plane none (drives and walks follow the ground), free, anchors 0/0/0
+   271: plane none (drives and walks follow the ground), free, anchors 19/1/0
+   272: plane none (drives and walks follow the ground), free, anchors 0/0/0
+   273: plane none (drives and walks follow the ground), free, anchors 15/0/0
+   274: plane none (drives and walks follow the ground), free, anchors 15/1/0
+   275: plane none (drives and walks follow the ground), free, anchors 15/2/4
+   276: plane none (drives and walks follow the ground), free, anchors 0/0/0
+   277: plane none (drives and walks follow the ground), free, anchors 0/0/0
+   278: plane none (drives and walks follow the ground), free, anchors 0/0/0
+   279: plane none (drives and walks follow the ground), free, anchors 15/0/3
+   280: plane none (drives and walks follow the ground), free, anchors 0/0/0
+   281: plane none (drives and walks follow the ground), free, anchors 15/0/0
+   282: plane none (drives and walks follow the ground), free, anchors 15/0/0
+   283: plane none (drives and walks follow the ground), free, anchors 30/1/3
+   284: plane 4.3 % (ground 4.3 %, limit 5 %), free, anchors 0/0/0
+   285: plane none (drives and walks follow the ground), free, anchors 15/0/3
+   286: plane none (drives and walks follow the ground), free, anchors 15/0/3
+   287: plane none (drives and walks follow the ground), free, anchors 15/0/0
+   288: plane none (drives and walks follow the ground), free, anchors 15/0/3
+   289: plane none (drives and walks follow the ground), free, anchors 0/0/0
+   290: plane none (drives and walks follow the ground), free, anchors 0/0/0
+   291: plane none (drives and walks follow the ground), free, anchors 15/0/0
+   292: plane none (drives and walks follow the ground), free, anchors 15/0/0
+   293: plane none (drives and walks follow the ground), free, anchors 20/0/0
+   294: plane none (drives and walks follow the ground), free, anchors 15/2/3
+   295: plane none (drives and walks follow the ground), free, anchors 0/1/3
+   296: plane none (drives and walks follow the ground), free, anchors 15/1/3
+   297: plane none (drives and walks follow the ground), free, anchors 15/0/3
+
+Props by key: placed (moved, dropped), Synty prefabs or ours
+  bench                15 (0 moved, 0 dropped)  SM_Prop_ParkBench_01
+  bollard               2 (0 moved, 0 dropped)  SM_Prop_Bollard_01
+  dumpster             24 (6 moved, 0 dropped)  SM_Prop_Dumpster_01
+  fuel.air              1 (0 moved, 0 dropped)  SM_Prop_Air_Gun_01
+  fuel.cans             1 (0 moved, 0 dropped)  SM_Prop_Fuel_Can_01
+  lamp                 38 (18 moved, 0 dropped)  SM_Prop_LightPole_Base_01 + SM_Prop_LightPole_Lights_01
+  mailbox              13 (0 moved, 0 dropped)  SM_Prop_Mailbox_01
+  pallets               6 (0 moved, 0 dropped)  SM_Prop_Pallet_01
+  sign.accessible       2 (1 moved, 0 dropped)  ours
+  sign.parking         17 (9 moved, 0 dropped)  SM_Prop_Sign_Parking_01
+  sign.vanAccessible   17 (10 moved, 0 dropped)  ours
+  trash.bin           184 (21 moved, 9 dropped)  SM_Prop_Trashbin_01
+  trash.island          1 (0 moved, 0 dropped)  SM_Prop_Rubbish_Bin_01
+  washing.line         45 (0 moved, 0 dropped)  SM_Prop_Washingline_01
+  water.barrel          1 (0 moved, 0 dropped)  SM_Prop_Water_Barrel_01
+    parcel 50: trash.bin at (-153.2, 698.0) dropped: no clear spot within 2 m
+    parcel 163: trash.bin at (-184.8, 803.1) dropped: no clear spot within 2 m
+    parcel 174: trash.bin at (-138.3, 508.2) dropped: no clear spot within 2 m
+    parcel 184: trash.bin at (-47.1, 504.2) dropped: no clear spot within 2 m
+    parcel 185: trash.bin at (-0.7, 468.8) dropped: no clear spot within 2 m
+    parcel 197: trash.bin at (124.0, 504.6) dropped: no clear spot within 2 m
+    parcel 202: trash.bin at (154.9, 499.2) dropped: no clear spot within 2 m
+    parcel 273: trash.bin at (476.1, 486.7) dropped: no clear spot within 2 m
+    parcel 287: trash.bin at (525.6, 455.1) dropped: no clear spot within 2 m
+
+Notes:

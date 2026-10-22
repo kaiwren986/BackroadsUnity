@@ -4,7 +4,7 @@
   "source": "Rules",
   "template": "",
   "downtown": false,
-  "surfaces": {"Forecourt:Concrete": 488, "Lot:Asphalt": 330, "Walk:Concrete": 18},
+  "surfaces": {"Forecourt:Concrete": 668, "Lot:Asphalt": 330, "Walk:Concrete": 18},
   "lots": 1,
   "stalls": 7,
   "accessible": 1,
@@ -15,5 +15,5 @@
   "fences": 0,
   "gates": 0,
   "notes": [],
-  "hash": "d3ff3b59364b738ef19438315f6b77f8e6aeb7eb1e477b4182c2d2197d355719"
+  "hash": "a150cc825245e41510102bc07caf6e015095437f034dd7af4e2ae720f6783487"
 }

@@ -256,7 +256,7 @@ namespace Backroads.Sites.Editor
         static Paths64 ParcelBuildings(PlanContext ctx, Parcel p)
         {
             var r = new Paths64();
-            foreach (var i in p.buildings) r.AddRange(Clip.Region(ctx.data.buildings[i].poly));
+            foreach (var i in p.buildings) if (!ctx.data.buildings[i].OpenRoof) r.AddRange(Clip.Region(ctx.data.buildings[i].poly));
             return Clip.Union(r);
         }
 

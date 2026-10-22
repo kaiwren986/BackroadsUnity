@@ -67,6 +67,19 @@ namespace Backroads.Tests.EditMode.Sites
                 kerb = kerb.ToArray(), back = back.ToArray(), s = s.ToArray() };
         }
 
+        /// <summary>The fixtures' ground (sites-S4): level with the walk's back edge (0.17 m) at the street, rising 5 % away from it.</summary>
+        public static double GroundY(double2 p) => 0.17 + 0.05 * Math.Max(0, p.y);
+
+        /// <summary>That ground as a 1 m grid 600 m square round the street.</summary>
+        public static SiteGround Ground()
+        {
+            const int n = 601;
+            var v = new float[n * n];
+            for (int j = 0; j < n; j++)
+                for (int i = 0; i < n; i++) v[j * n + i] = (float)GroundY(new double2(i - 300, j - 300));
+            return new SiteGround(new Backroads.Roads.GridHeightField(v, n, n, -300, -300, 1));
+        }
+
         static double2[] Rect(double x0, double z0, double x1, double z1) =>
             new[] { new double2(x0, z0), new double2(x1, z0), new double2(x1, z1), new double2(x0, z1) };
 
@@ -92,6 +105,7 @@ namespace Backroads.Tests.EditMode.Sites
                 };
                 sb.centroid = Poly2.Centroid(sb.poly);
                 sb.area = Poly2.Area(sb.poly);
+                sb.floorY = GroundY(sb.centroid);
                 data.buildings.Add(sb);
             }
             var blocks = new BlockBuilder.Result { ruralDepth = 120 };

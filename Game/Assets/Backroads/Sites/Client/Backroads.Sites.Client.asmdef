@@ -1,0 +1,21 @@
+{
+    "name": "Backroads.Sites.Client",
+    "rootNamespace": "Backroads.Sites.Client",
+    "references": [
+        "Backroads.Core",
+        "Backroads.Roads",
+        "Backroads.Roads.Client",
+        "Backroads.Sites"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "!UNITY_SERVER"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

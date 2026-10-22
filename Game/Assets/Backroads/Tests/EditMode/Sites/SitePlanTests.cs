@@ -87,7 +87,7 @@ namespace Backroads.Tests.EditMode.Sites
                     if (off > 0.05) bad.Add($"parcel {plan.parcel}: {srf.use} {off:F2} m² off the parcel");
                     foreach (var b in s.ctx.data.buildings)
                     {
-                        if (!b.inPlay) continue;
+                        if (!b.inPlay || b.OpenRoof) continue;   // surfaces run under canopies and carports
                         double on = Clip.Area(Clip.Intersect(r, Clip.Region(b.poly)));
                         if (on > 0.05) bad.Add($"parcel {plan.parcel}: {srf.use} covers {on:F2} m² of {b.osm}");
                     }
