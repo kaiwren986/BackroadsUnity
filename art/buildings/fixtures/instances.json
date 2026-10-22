@@ -4,6 +4,7 @@
  "town": "Fixtures",
  "seed": "blake2b-64(TOWN_ID|osm|part) per named draw",
  "doors": "placeholder",
+ "fallbackDoors": 0,
  "counts": {
   "barn": 2,
   "house": 4,

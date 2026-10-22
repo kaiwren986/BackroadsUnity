@@ -219,13 +219,16 @@ namespace Backroads.Tests.EditMode.Art
             var profile = RepoPaths.InRepo("Game/Assets/Content/sites/buildingProfile.json");
             var townDir = TownV1();
             var only = string.Join(",", sample.Select(e => (string)e["osm"]));
+            var townIndex = ReadJson(Path.Combine(RepoPaths.Game, BuildingSets[0], "buildings.index.json"));
+            // the same door source as the committed models (the site plan's file, or lane A's placeholders)
+            var doorsArg = (string)townIndex["doors"] == "sites-S3" ? $" --doors \"{DoorsFileOf(townIndex)}\"" : "";
             var problems = new List<string>();
             int compared = 0;
             try
             {
                 for (int run = 1; run <= 2; run++)
                 {
-                    RunBlender(blender, $"-b --factory-startup --python \"{script}\" -- --town \"{townDir}\" --profile \"{profile}\" --out-dir \"{Path.Combine(tmp, "town" + run)}\" --only {only}", "town run " + run);
+                    RunBlender(blender, $"-b --factory-startup --python \"{script}\" -- --town \"{townDir}\" --profile \"{profile}\" --out-dir \"{Path.Combine(tmp, "town" + run)}\" --only {only}{doorsArg}", "town run " + run);
                     RunBlender(blender, $"-b --factory-startup --python \"{script}\" -- --town fixtures --profile \"{profile}\" --out-dir \"{Path.Combine(tmp, "fixtures" + run)}\"", "fixtures run " + run);
                 }
                 foreach (var (set, sub, entries) in new[] { (BuildingSets[0], "town", sample), (BuildingSets[1], "fixtures", IndexOf(BuildingSets[1])) })
@@ -268,11 +271,15 @@ namespace Backroads.Tests.EditMode.Art
             var indexPath = Path.Combine(RepoPaths.Game, set, "buildings.index.json");
             var index = ReadJson(indexPath);
             var src = (string)index["doors"];
-            string specPath = src.StartsWith("placeholder", StringComparison.Ordinal)
-                ? RepoPaths.InRepo("art/buildings/millbrook/doors.placeholder.json")
-                : RepoPaths.InRepo(src);
+            bool site = src == "sites-S3";
+            // the site plan's door file, once lane S has written it, must be what the models were built from
+            var s3 = SiteDoorsPath();
+            if (File.Exists(s3))
+                Assert.IsTrue(site, $"{RepoPaths.Relative(s3)} exists but the buildings were made with {src} doors: regenerate (art\\buildings\\gen\\run.ps1)");
+            string specPath = DoorsFileOf(index);
             Assert.IsTrue(File.Exists(specPath), "door specs missing: " + specPath);
             var specs = BrJson.Arr(ReadJson(specPath)["doors"]).Select(o => BrJson.Obj(o)).ToList();
+            int fallback = index.TryGetValue("fallbackDoors", out var fb) ? (int)Num(fb) : 0;
             var polys = new Dictionary<string, List<Vector2d>>(StringComparer.Ordinal);
             foreach (var o in BrJson.Arr(ReadJson(Path.Combine(TownV1(), "buildings.json"))["buildings"]))
             {
@@ -340,10 +347,23 @@ namespace Backroads.Tests.EditMode.Art
                 if (Blocks(mesh.v, mesh.t, q)) problems.Add($"{key} {name}: the LOD0 wall is closed across the doorway");
                 checkedDoors++;
             }
-            TestContext.WriteLine($"{checkedDoors} door specs checked from {RepoPaths.Relative(specPath)} ({(src.StartsWith("placeholder", StringComparison.Ordinal) ? "lane A placeholders until sites-S3" : "sites-S3")}); " +
-                                  $"{skipped} on grey-box buildings skipped; worst distance {worst:F4} m");
+            TestContext.WriteLine($"{checkedDoors} door specs checked from {RepoPaths.Relative(specPath)} ({(site ? "sites-S3" : "lane A placeholders until sites-S3")}); " +
+                                  $"{skipped} on grey-box buildings skipped; worst distance {worst:F4} m; {fallback} lane A rule doors on buildings the site plan gives none");
             Assert.Greater(checkedDoors, 0, "no door specs checked");
             Assert.IsEmpty(problems, string.Join("\n", problems.Take(60)));
+        }
+
+        /// <summary>sites-S3's door file of the town (tools/world/sites/(town)/doors.json), whether or not it exists.</summary>
+        static string SiteDoorsPath() =>
+            RepoPaths.InRepo("tools/world/sites/" + Path.GetFileName(Path.GetDirectoryName(TownV1())) + "/doors.json");
+
+        /// <summary>The door file an index names (doorsFile, "&lt;town&gt;" standing for the town folder).</summary>
+        static string DoorsFileOf(Dictionary<string, object> index)
+        {
+            var town = Path.GetFileName(Path.GetDirectoryName(TownV1()));
+            var f = index.TryGetValue("doorsFile", out var v) ? v as string : null;
+            Assert.IsFalse(string.IsNullOrEmpty(f), "the index names no door file");
+            return RepoPaths.InRepo(f.Replace("<town>", town));
         }
 
         /// <summary>True when a triangle passes within 1 cm of q and covers it.</summary>

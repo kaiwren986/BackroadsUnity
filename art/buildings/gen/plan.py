@@ -265,7 +265,10 @@ class Planner:
         if doors_path:
             d = json.load(open(doors_path, encoding='utf-8'))
             self.doors_in = d['doors'] if isinstance(d, dict) else d
-            self.doors_src = os.path.relpath(os.path.abspath(doors_path), os.getcwd()).replace('\\', '/')
+            # repo-relative, with the town folder written as <town> (no real name in shipped files; the test resolves it)
+            src = os.path.relpath(os.path.abspath(doors_path), os.getcwd()).replace('\\', '/')
+            self.doors_src = src.replace('/%s/' % town.id, '/<town>/')
+        self.fallback_doors = 0
         self.by_osm = {}
         for b in town.buildings:
             self.by_osm[(b['osm'], b.get('part', 0))] = b
@@ -447,7 +450,7 @@ class Planner:
                         best = (d, p)
             if best is not None and best[0] > 1e-3:
                 target = G.norm(G.sub(best[1], c))
-            e = edge_facing(target, 2.8)
+            e = edge_facing(target, 3.3)            # a 2.6 m door needs 3.3 m of wall
             if e is not None:
                 L = lens[e]
                 if L >= 6.6 and D.chance('garage.double', 0.5):
@@ -461,6 +464,10 @@ class Planner:
             e = edge_facing(sdir, 1.6)
             if e is not None:
                 add('Main', e, lens[e] / 2, 1.0 if lens[e] < 3.5 else 1.5)
+        if not out:
+            # every building gets at least one door: a plain one on the wall facing the street (or the longest wall)
+            e = edge_facing(sdir, 1.7)
+            add('Main', e, lens[e] / 2 if e is not None else 0, 0.9)
         return out
 
     def resolve_doors(self, specs, poly_o, poly_s):
@@ -479,6 +486,8 @@ class Planner:
             out.append({'spec': k, 'kind': kind, 'width': float(s['width']), 'edge': best[1], 'u': round(best[2], 4),
                         'offWall': round(best[0], 4), 'plan': [round(p[0], 4), round(p[1], 4)],
                         'sillY': s.get('sillY')})
+            if s.get('fallback'):
+                out[-1]['fallback'] = True
         return out
 
     # ---- one building
@@ -504,6 +513,15 @@ class Planner:
         if self.doors_in is not None:
             specs = [s for s in self.doors_in if s['building'] == b['osm'] and int(s.get('part', 0)) == b.get('part', 0)]
             why['doors'] = 'sites-S3 (%s)' % self.doors_src
+            if not specs:
+                # S3 gives no door (accessory buildings get an apron only; buildings outside the play area get no plan):
+                # lane A's own rule doors, marked, so no garage stands without one. They are not DoorSpecs of the site.
+                specs = self.placeholder_doors(b, fam, model, poly_o, sdir, D)
+                specs.sort(key=lambda s: (s['wallEdge'], s['offset'], s['kind']))
+                for s in specs:
+                    s['fallback'] = True
+                self.fallback_doors += len(specs)
+                why['doors'] = 'lane A rule doors: sites-S3 has none for this building'
         else:
             specs = self.placeholder_doors(b, fam, model, poly_o, sdir, D)
             # the file order (sorted like doors.placeholder.json), so a marker's index is the spec's index for its building
@@ -768,6 +786,7 @@ def main(argv):
         counts[r['model']] = counts.get(r['model'], 0) + 1
     inst = {'format': 'backroads-building-instances', 'version': PLAN_VERSION, 'town': town.manifest.get('townName', 'Millbrook'),
             'seed': 'blake2b-64(TOWN_ID|osm|part) per named draw', 'doors': planner.doors_src or 'placeholder',
+            'fallbackDoors': planner.fallback_doors,
             'counts': counts, 'buildings': recs}
     with open(os.path.join(out, 'instances.json'), 'w', encoding='utf-8', newline='\n') as f:
         json.dump(inst, f, indent=1, sort_keys=False)
@@ -781,7 +800,8 @@ def main(argv):
         with open(os.path.join(out, 'doors.placeholder.json'), 'w', encoding='utf-8', newline='\n') as f:
             json.dump(doc, f, indent=1)
             f.write('\n')
-    print('plan: %d instances %s, %d door specs (%s)' % (len(recs), json.dumps(counts, sort_keys=True), len(specs), planner.doors_src or 'placeholder'))
+    print('plan: %d instances %s, %d doors (%s; %d lane A rule doors where it has none)' % (
+        len(recs), json.dumps(counts, sort_keys=True), len(specs), planner.doors_src or 'placeholder', planner.fallback_doors))
 
 
 if __name__ == '__main__':

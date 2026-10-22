@@ -4,7 +4,9 @@
  "generator": "art/buildings/gen (version 1)",
  "town": "Fixtures",
  "frame": "TownFrame local metres = Unity axes (x east, y up, z north). Place each FBX at origin, no rotation.",
- "doors": "placeholder (art/buildings/millbrook/doors.placeholder.json) until sites-S3",
+ "doors": "placeholder",
+ "doorsFile": "art/buildings/fixtures/doors.placeholder.json",
+ "fallbackDoors": 0,
  "lods": "Body_LOD0..2 + Panes_LOD0..2 (one LOD Group on the root, BackroadsModelPostprocessor)",
  "buildings": [
   {
