@@ -1,0 +1,22 @@
+{
+  "format.name": "backroads-sites-manifest",
+  "format.version": "1",
+  "generator.bake": "1",
+  "generator.chunkFormat": "1",
+  "generator.parcels": "1",
+  "generator.parking": "1",
+  "generator.plans": "1",
+  "hash": "144264139ab87e5e8278846175ba98f9e6796307851861503c62a21668d51b8a",
+  "inputs.kerbFrontage": "f7700ce35c52fd4abde9f1413202eea1b7139057a3d3d6d8ecb001b08a16eea0",
+  "inputs.propTable": "f09b1d10c77667ce3ebbef6aa6f278cddf0394e814657a86ac628980bed5096d",
+  "inputs.siteProfile": "5410ecc6918cdc1c04d6dbe0a99d981f70364417dfd8bc396281c3398d3a6dab",
+  "inputs.siteTemplates": "f83f16e99c7c95520b35641d41d02d5ed4bc9cccff99a8b967a694e717fdcd5a",
+  "inputs.townData": "7c334898ed465e2521d358625defa35b24e671a98d4ae07d5558a563a9db80a4",
+  "outputs.chunks": "9f8eec41ce99ca6e447be8159b1cdeb9ae60b867a1e5c2e8dbfdff745d87943c",
+  "outputs.doors.json": "0c557ba04d6e27c1f827f3d2ba73e0996275b9eea36cb21c7f4787b317e12ea8",
+  "outputs.driveways.json": "7b518fa88ea4f40b2d58f05ceea4ce502d88981245b26a05bea5d5b0286813be",
+  "outputs.parcels": "d65873a9394b2b8c0f959dcf799e83c5c99dcf13c8f71621e68d0985aa7ebdef",
+  "outputs.plans": "c506a505345cf0d451533b5679ace36c235c1e88a01298a7d7000ba1b70ff0bd",
+  "outputs.plates": "e76ff5f87ee3616fdc64786db19315b3ea05703d289b568ee4398cf3b099681f",
+  "outputs.props": "c0907b89b767c7154f1d2b7222c2ef70eead471d560df2e37ffc4bdfa1192324"
+}

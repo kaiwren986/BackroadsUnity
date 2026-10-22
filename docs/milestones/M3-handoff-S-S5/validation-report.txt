@@ -1,0 +1,16 @@
+Sites.Validation (design §13, card sites-S5) on stockport-oh: pass
+stockport-oh: 255 plans baked: 22446 m² paved, 11217 m² gravel/dirt/grass, 9380 m² verge; 124 chunks, LOD0 46207 triangles (budget 150000), LOD1 33213, collider 33543; 82973 plates; kerbs 1389 m, paint 4835 m, 16 symbols, 33 wheel stops, 14 island beds; 367 props (348 Synty, 19 ours, 65 moved, 9 dropped), 0 fence runs, 0 gates, 4 lane A stand-ins; 181 grade notes, 0 problems; 31310 ms; hash 144264139ab8
+ok   plans complete: 249 buildings, 255 plans (Mapped 17, Rules 238)
+ok   no overlaps: 568 surfaces on their own parcels and blocks, off the buildings
+ok   stalls inside their lots and reachable: 209 stalls in 17 lots, each on a lane reachable from an entrance
+ok   ADA counts: 19 accessible stalls where 19 are required (2010 ADA 208.2)
+ok   entrances are baked cuts: 15 lot entrances from the street, each a baked, moved or merged cut
+ok   aprons meet their lots: 215 aprons within 0.00 mm
+note grades and cut/fill outside design §9's limits (listed in surfaces-report.txt): Apron grade 4, Drive grade 88, Forecourt grade 1, Lot grade 11, Walk grade 51, Yard grade 2, accessible stall grade 9, cut 10, fill 5
+note aprons no surface of their plan reaches: 9 (listed); drive stubs added: 5
+ok   terrain under the surfaces: 6469 points 0.25 m inside the paving, 1 over (worst 39 mm over surface - 3 cm at parcel 7 Apron (615.8, 444.8))
+     parcel 7 Apron Concrete at (615.75, 444.75): 39 mm over; ground from none, site:p0007:s00:00007, site:p0007:s00:00009, site:p0007:s00:00006
+ok   props clear: 367 props inside their parcels, clear of stalls, aisles, buildings and doors (9 dropped, listed)
+ok   template plans credit their OSM sources: 0 template plans, each with its OSM ids
+ok   bake deterministic and current: hash 144264139ab8, two bakes agree, the committed bake and manifest current
+ok   fixture template plans credit their OSM sources: 2

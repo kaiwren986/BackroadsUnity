@@ -1,0 +1,29 @@
+{
+  "id": "m3.shots.sites",
+  "kind": "shots-sites",
+  "seconds": 0,
+  "screenshot": false,
+  "childTimeoutSeconds": 600,
+  "width": 1600,
+  "height": 900,
+  "settleFrames": 6,
+  "loadTimeoutSeconds": 240,
+  "hours": [12, 20],
+  "chunks": "BrSiteChunks_stockport-oh",
+  "minShots": 24,
+  "views": [
+    {"id": "house", "name": "a house with its drive, parcel 92 (House, Mapped)", "pos": [649.36, 41.17, 516.12], "target": [636.48, 10.71, 562.73], "fov": 55},
+    {"id": "house-gravel", "name": "a house on a gravel drive, parcel 103 (House, Rules)", "pos": [459.53, 42.51, 352.14], "target": [456.55, 11.06, 302.31], "fov": 55},
+    {"id": "downtown-front", "name": "downtown from the street, parcel 100 (Retail, Rules)", "pos": [282.46, 48.34, 345.18], "target": [279.45, 18.87, 298.50], "fov": 55},
+    {"id": "downtown-rear", "name": "downtown from the rear, parcel 245 (Civic, Rules)", "pos": [353.76, 47.26, 425.35], "target": [315.29, 20.12, 444.76], "fov": 55},
+    {"id": "retail", "name": "a retail lot, parcel 40 (Retail, Rules)", "pos": [-258.47, 90.10, 746.41], "target": [-320.11, 40.60, 697.67], "fov": 55},
+    {"id": "fuel", "name": "the fuel station, parcel 143 (Fuel, Rules)", "pos": [986.60, 60.00, 374.37], "target": [921.21, 12.13, 335.63], "fov": 55},
+    {"id": "retail-2", "name": "another retail lot, parcel 188 (Retail, Rules)", "pos": [85.34, 52.13, 470.35], "target": [44.94, 24.61, 453.74], "fov": 55},
+    {"id": "school", "name": "the school, parcel 4 (School, Rules)", "pos": [62.27, 54.38, 348.68], "target": [18.34, 25.24, 334.18], "fov": 55},
+    {"id": "mapped-lot", "name": "a mapped lot, parcel 151 (Unknown, Mapped)", "pos": [684.87, 46.23, 281.98], "target": [704.91, 4.85, 219.42], "fov": 55},
+    {"id": "yard", "name": "a mapped yard, parcel 158 (Unknown, Mapped)", "pos": [-163.28, 81.95, 787.65], "target": [-241.81, 32.45, 784.78], "fov": 55},
+    {"id": "retail-3", "name": "a third retail site, parcel 144 (Retail, Rules)", "pos": [938.73, 56.40, 239.52], "target": [992.49, 17.18, 270.95], "fov": 55},
+    {"id": "house-2", "name": "another house, parcel 71 (House, Rules)", "pos": [260.44, 54.76, 790.97], "target": [209.83, 20.80, 772.39], "fov": 55}
+  ],
+  "notes": "sites-S5 (card step 4): 12 fixed cameras over the town's sites at noon and at dusk, 1600x900, chosen and framed by SitesBakeCli.Bake from the plans; the town has no fast food, supermarket, warehouse or works, farm, quarry or mill, harbour or marina: other sites of the town stand in."
+}
