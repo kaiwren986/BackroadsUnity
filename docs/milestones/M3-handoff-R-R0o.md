@@ -92,4 +92,9 @@ node tools/world/roads/make-fixture.mjs --name west --cx -250 --cz 600 --check
 
 ## Merge
 
-`$env:BR_OWNERS_BASE = 'main'; $env:BR_OWNERS_LANE = 'R'; tools\ci\gate.ps1 -Tier merge` (lane R paths only).
+`$env:BR_OWNERS_BASE = 'main'; $env:BR_OWNERS_LANE = 'R'; tools\ci\gate.ps1 -Tier merge` (lane R paths only):
+**pass, 8 of 8 steps** (2026-10-21 on the desktop, run `artifacts\20261021-1923\gate-merge`): oracle.hash; vendor.check
+(584 files, 0 differences); native.ctest; unity.editmode 158 passed, 1 skipped, 0 failed; unity.playmode 9 of 9;
+build.servercompile; build.dev (225 MiB); autotest.smoke. The vendor check first failed on this desktop because the
+engine-sim reference clone had no submodules; with the user's approval they were fetched
+(`git submodule update --init --recursive` in `D:\Backroads-ref\engine-sim`), see "REQUEST FOR I" above.
