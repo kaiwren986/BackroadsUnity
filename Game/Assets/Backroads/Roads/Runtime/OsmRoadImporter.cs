@@ -34,6 +34,8 @@ namespace Backroads.Roads
         /// <summary>Half the play area (PLAY_AREA, 1,024 m for a 2 km town).</summary>
         public double playHalf = 1024;
         public string source = "", manifestSha256 = "";
+        /// <summary>roads-R4: what each bridge way crosses (roads.json bridgeSpans: "river", "stream", ...), by OSM way.</summary>
+        public readonly Dictionary<string, string> bridgeOver = new Dictionary<string, string>(StringComparer.Ordinal);
     }
 
     /// <summary>The numbers of roads-R0o (card steps 2, 3 and 7), research 05 and the browser game's makeRoad.</summary>
@@ -68,6 +70,10 @@ namespace Backroads.Roads
         public double fitMargin = 0.3, fitEnds = 0.0, floorThrough = 3.3, floorStreet = 2.75, floorDirt = 1.8, floorYard = 1.5;
         /// <summary>Speeds by class (km/h) where maxspeed is not tagged: 55 mph highways, 25 mph in town, 10 mph yards.</summary>
         public double speedHighway = 88.5, speedTown = 40.2, speedDirt = 40.2, speedYard = 16.1;
+        /// <summary>roads-R4 step 6: two junctions joined by a way segment shorter than this become one junction (05 §5.1 step 5).</summary>
+        public double mergeJunctions = 8.0;
+        /// <summary>roads-R4: leg points within the ring radius plus this of a roundabout's centre are dropped; the leg runs straight to the centre.</summary>
+        public double roundaboutClear = 8.0;
     }
 
     /// <summary>A road cut at the play-area edge (EDGE_RULE), for the report and lane W.</summary>
@@ -136,6 +142,10 @@ namespace Backroads.Roads
         /// <summary>Road sides narrowed to clear a building, and sides that cannot clear one even at one lane.</summary>
         public readonly List<string> fitted = new List<string>();
         public readonly List<string> cannotClear = new List<string>();
+        /// <summary>roads-R4: junctions merged because a way joined them over less than mergeJunctions (one line each).</summary>
+        public readonly List<string> mergedJunctions = new List<string>();
+        /// <summary>roads-R4: the mapped roundabouts found (collapsed rings, mini nodes) and the open rings left as roads, one line each.</summary>
+        public readonly List<string> roundabouts = new List<string>();
     }
 
     /// <summary>
@@ -157,7 +167,7 @@ namespace Backroads.Roads
     /// </summary>
     public static class OsmRoadImporter
     {
-        public const int Version = 1;
+        public const int Version = 2;
         static readonly CultureInfo Inv = CultureInfo.InvariantCulture;
 
         // ------------------------------------------------------------------ data
@@ -232,6 +242,9 @@ namespace Backroads.Roads
             }
             report.waysUsed = kept.Count;
 
+            var roundabouts = new List<RoadGraphInput.Roundabout>();
+            src = CollapseRoundabouts(src, kept, st, report, roundabouts);
+            src = MergeCloseJunctions(src, kept, siteWays, st, report);
             var segs = Split(kept, src, report);
             var chains = ChainUp(segs, src, report);
             chains = SplitCorners(chains, st, report);
@@ -251,6 +264,8 @@ namespace Backroads.Roads
             };
             for (int i = 0; i < clipped.Count; i++) clipped[i].id = i;
             foreach (var c in clipped) input.roads.Add(ToRoad(c, st, report));
+            input.roundabouts.AddRange(roundabouts);
+            MiniRoundabouts(kept, src, input, report);
             report.roads = input.roads.Count;
             for (int i = 0; i < report.edgeCuts.Count; i++)
             {
@@ -356,6 +371,283 @@ namespace Backroads.Roads
         }
 
         // ------------------------------------------------------------------ 2 split, chain, corners
+
+        /// <summary>
+        /// roads-R4 step 1: each closed ring of junction=roundabout (or circular) ways becomes one node at the ring's
+        /// centroid. The ring's ways leave the import (reported); every way that touched the ring is a leg and runs
+        /// straight to the centre from its last point outside the ring radius + roundaboutClear. A ring that does not close
+        /// (cut by the extract, mapped in part) stays as ordinary roads and is reported. No roundabout is ever invented.
+        /// </summary>
+        static OsmRoadSource CollapseRoundabouts(OsmRoadSource src, List<(OsmRoadSource.Way way, RoadClass cls)> kept, OsmImportSettings st, OsmImportReport report,
+            List<RoadGraphInput.Roundabout> found)
+        {
+            var ringWays = new List<int>();
+            for (int i = 0; i < kept.Count; i++)
+            {
+                string j = Tag(kept[i].way.tags, "junction");
+                if (j == "roundabout" || j == "circular") ringWays.Add(i);
+            }
+            if (ringWays.Count == 0) return src;
+            // rings: ring ways that share a node
+            var parent = new int[ringWays.Count];
+            for (int i = 0; i < parent.Length; i++) parent[i] = i;
+            int Find(int x) { while (parent[x] != x) x = parent[x] = parent[parent[x]]; return x; }
+            var firstWayAt = new Dictionary<long, int>();
+            for (int i = 0; i < ringWays.Count; i++)
+                foreach (var id in kept[ringWays[i]].way.nodes)
+                {
+                    if (firstWayAt.TryGetValue(id, out int o)) { int a = Find(i), b = Find(o); if (a != b) parent[Math.Max(a, b)] = Math.Min(a, b); }
+                    else firstWayAt[id] = i;
+                }
+            var groups = new SortedDictionary<int, List<int>>();
+            for (int i = 0; i < ringWays.Count; i++)
+            {
+                int r = Find(i);
+                if (!groups.TryGetValue(r, out var l)) groups[r] = l = new List<int>();
+                l.Add(ringWays[i]);
+            }
+
+            var alias = new Dictionary<long, long>();          // ring node -> centre node
+            var centres = new Dictionary<long, (D2 c, double clear)>();
+            var drop = new HashSet<int>();
+            var merged = new OsmRoadSource
+            {
+                dem = src.dem, kerbZone = src.kerbZone, downtownZone = src.downtownZone, playHalf = src.playHalf, source = src.source, manifestSha256 = src.manifestSha256,
+            };
+            foreach (var kv in src.nodes) merged.nodes[kv.Key] = kv.Value;
+            foreach (var kv in src.bridgeOver) merged.bridgeOver[kv.Key] = kv.Value;
+            foreach (var g in groups.Values)
+            {
+                string osm = string.Join(" ", g.ConvertAll(k => kept[k].way.osm));
+                // closed: every ring node has exactly two ring neighbours
+                var adj = new Dictionary<long, List<long>>();
+                foreach (int k in g)
+                {
+                    var l = Dedupe(kept[k].way.nodes);
+                    for (int i = 0; i + 1 < l.Count; i++)
+                    {
+                        if (!adj.TryGetValue(l[i], out var x)) adj[l[i]] = x = new List<long>();
+                        if (!adj.TryGetValue(l[i + 1], out var y)) adj[l[i + 1]] = y = new List<long>();
+                        x.Add(l[i + 1]); y.Add(l[i]);
+                    }
+                }
+                bool closed = adj.Count >= 3;
+                foreach (var kv in adj) if (kv.Value.Count != 2) closed = false;
+                if (!closed)
+                {
+                    report.roundabouts.Add($"{osm}: a junction=roundabout ring that does not close (cut by the extract or mapped in part): kept as roads");
+                    continue;
+                }
+                // walk the ring from its smallest node
+                long start = long.MaxValue;
+                foreach (var id in adj.Keys) start = Math.Min(start, id);
+                var ring = new List<long> { start };
+                long prev = start, cur = adj[start][0];
+                while (cur != start && ring.Count <= adj.Count) { ring.Add(cur); var nb = adj[cur]; long next = nb[0] == prev ? nb[1] : nb[0]; prev = cur; cur = next; }
+                if (ring.Count != adj.Count)
+                {
+                    report.roundabouts.Add($"{osm}: the junction=roundabout ways form more than one ring: kept as roads");
+                    continue;
+                }
+                var pts = ring.ConvertAll(id => new D2(src.nodes[id].x, src.nodes[id].z));
+                double area = Geom2.SignedArea(pts), cx = 0, cz = 0, per = 0;
+                for (int i = 0; i < pts.Count; i++)
+                {
+                    D2 a = pts[i], b = pts[(i + 1) % pts.Count];
+                    double cr = a.x * b.z - b.x * a.z;
+                    cx += (a.x + b.x) * cr; cz += (a.z + b.z) * cr;
+                    per += D2.Distance(a, b);
+                }
+                if (Math.Abs(area) < 1.0) { report.roundabouts.Add($"{osm}: a ring with no area: kept as roads"); continue; }
+                var c = new D2(cx / (6 * area), cz / (6 * area));
+                double R = per / (2 * Math.PI), dev = 0;
+                foreach (var p in pts) dev = Math.Max(dev, Math.Abs(D2.Distance(p, c) - R));
+                long cid = -(1 + found.Count);
+                merged.nodes[cid] = new OsmRoadSource.Node { id = cid, x = c.x, z = c.z, tags = new Dictionary<string, string>(StringComparer.Ordinal) };
+                foreach (var id in ring) alias[id] = cid;
+                centres[cid] = (c, R + st.roundaboutClear);
+                foreach (int k in g) drop.Add(k);
+                found.Add(new RoadGraphInput.Roundabout { osm = osm, center = c, ringRadius = R, roundness = R > 0 ? dev / R : 0 });
+            }
+            if (alias.Count == 0) return src;
+
+            // the legs: every other way through a ring node runs to the centre instead
+            var legs = new Dictionary<long, int>();
+            OsmRoadSource.Way Rewrite(OsmRoadSource.Way w)
+            {
+                bool hit = false;
+                foreach (var id in w.nodes) if (alias.ContainsKey(id)) { hit = true; break; }
+                if (!hit) return w;
+                var l = Dedupe(w.nodes);
+                var res = new List<long>();
+                for (int i = 0; i < l.Count; i++)
+                {
+                    if (!alias.TryGetValue(l[i], out long cid)) { res.Add(l[i]); continue; }
+                    var (c, clear) = centres[cid];
+                    bool Inside(long id) => !alias.ContainsKey(id) && id >= 0 && D2.Distance(new D2(src.nodes[id].x, src.nodes[id].z), c) < clear;
+                    // arriving: drop the points inside the clear radius (keeping one), then the centre
+                    if (res.Count > 0 && res[res.Count - 1] != cid)
+                    {
+                        while (res.Count > 1 && Inside(res[res.Count - 1]) && res[res.Count - 2] >= 0) res.RemoveAt(res.Count - 1);
+                        legs.TryGetValue(cid, out int n0); legs[cid] = n0 + 1;
+                    }
+                    if (res.Count == 0 || res[res.Count - 1] != cid) res.Add(cid);
+                    // leaving: skip the points inside (keeping one before the next ring node or the end)
+                    int j = i + 1;
+                    while (j < l.Count - 1 && Inside(l[j]) && !alias.ContainsKey(l[j + 1])) j++;
+                    if (j < l.Count && !alias.ContainsKey(l[j])) { legs.TryGetValue(cid, out int n1); legs[cid] = n1 + 1; }
+                    i = j - 1;
+                }
+                return new OsmRoadSource.Way { osm = w.osm, id = w.id, nodes = res.ToArray(), tags = w.tags };
+            }
+            var map = new Dictionary<OsmRoadSource.Way, OsmRoadSource.Way>();
+            foreach (var w in src.ways) { var r = Rewrite(w); map[w] = r; merged.ways.Add(r); }
+            for (int i = kept.Count - 1; i >= 0; i--)
+            {
+                if (drop.Contains(i))
+                {
+                    Skip(report, kept[i].way, "a roundabout ring (collapsed into one node at its centre)");
+                    kept.RemoveAt(i); report.waysUsed--;
+                    continue;
+                }
+                var r = map[kept[i].way];
+                if (r.nodes.Length < 2) { Skip(report, kept[i].way, "inside a roundabout ring"); kept.RemoveAt(i); report.waysUsed--; continue; }
+                kept[i] = (r, kept[i].cls);
+            }
+            merged.footprints.AddRange(src.footprints);
+            merged.parkingLots.AddRange(src.parkingLots);
+            for (int k = 0; k < found.Count; k++)
+            {
+                long cid = -(1 + k);
+                if (!centres.ContainsKey(cid)) continue;
+                legs.TryGetValue(cid, out int n);
+                found[k].legs = n;
+                report.roundabouts.Add(string.Format(Inv, "{0}: a ring of radius {1:F1} m (off round by {2:F0} %) collapsed into one node at ({3:F1}, {4:F1}) with {5} legs",
+                    found[k].osm, found[k].ringRadius, 100 * found[k].roundness, found[k].center.x, found[k].center.z, n));
+            }
+            return merged;
+        }
+
+        /// <summary>roads-R4 step 1: highway=mini_roundabout nodes on the kept ways (the graph builder makes their junction a mini-roundabout).</summary>
+        static void MiniRoundabouts(List<(OsmRoadSource.Way way, RoadClass cls)> kept, OsmRoadSource src, RoadGraphInput input, OsmImportReport report)
+        {
+            var seen = new HashSet<long>();
+            foreach (var (w, _) in kept)
+                foreach (var id in w.nodes)
+                {
+                    if (!seen.Add(id) || !src.nodes.TryGetValue(id, out var n) || Tag(n.tags, "highway") != "mini_roundabout") continue;
+                    if (Math.Abs(n.x) > src.playHalf || Math.Abs(n.z) > src.playHalf) continue;
+                    double dia = 0;
+                    var t = Tag(n.tags, "diameter").Replace("m", "").Trim();
+                    if (t.Length > 0) double.TryParse(t, NumberStyles.Float, Inv, out dia);
+                    input.roundabouts.Add(new RoadGraphInput.Roundabout { osm = "node/" + id.ToString(Inv), center = new D2(n.x, n.z), mini = true, diameter = dia });
+                    report.roundabouts.Add(string.Format(Inv, "node/{0}: a mapped mini-roundabout at ({1:F1}, {2:F1}){3}", id, n.x, n.z, dia > 0 ? string.Format(Inv, ", diameter {0:F1} m", dia) : ""));
+                }
+        }
+
+        /// <summary>
+        /// roads-R4 step 6: two junctions (nodes where three or more road ends meet) joined directly by a way segment shorter
+        /// than mergeJunctions become one junction at their mean position, so the pair gets one surface, one set of corners
+        /// and one control (R1 cannot fit two surfaces in 4-5 m). Every way and site way is rewritten onto the merged node;
+        /// a way left with one node is dropped (reported). Returns a new source; the given one is not changed.
+        /// </summary>
+        static OsmRoadSource MergeCloseJunctions(OsmRoadSource src, List<(OsmRoadSource.Way way, RoadClass cls)> kept, List<OsmRoadSource.Way> siteWays, OsmImportSettings st, OsmImportReport report)
+        {
+            var arms = new Dictionary<long, int>();
+            foreach (var (w, _) in kept)
+            {
+                var l = Dedupe(w.nodes);
+                for (int i = 0; i < l.Count; i++)
+                {
+                    arms.TryGetValue(l[i], out int a);
+                    arms[l[i]] = a + (i == 0 || i == l.Count - 1 ? 1 : 2);
+                }
+            }
+            var parent = new Dictionary<long, long>();
+            long Find(long x) { while (parent.TryGetValue(x, out long p) && p != x) x = p; return x; }
+            var pairs = new List<(long a, long b, double d, string way)>();
+            foreach (var (w, _) in kept)
+            {
+                var l = Dedupe(w.nodes);
+                for (int i = 0; i + 1 < l.Count; i++)
+                {
+                    long a = l[i], b = l[i + 1];
+                    if (a == b || arms[a] < 3 || arms[b] < 3) continue;
+                    var na = src.nodes[a];
+                    var nb = src.nodes[b];
+                    double d = Math.Sqrt((na.x - nb.x) * (na.x - nb.x) + (na.z - nb.z) * (na.z - nb.z));
+                    if (d >= st.mergeJunctions) continue;
+                    pairs.Add((Math.Min(a, b), Math.Max(a, b), d, w.osm));
+                }
+            }
+            if (pairs.Count == 0) return src;
+            pairs.Sort((x, y) => x.a != y.a ? x.a.CompareTo(y.a) : x.b.CompareTo(y.b));
+            foreach (var (a, b, _, _) in pairs)
+            {
+                if (!parent.ContainsKey(a)) parent[a] = a;
+                if (!parent.ContainsKey(b)) parent[b] = b;
+                long ra = Find(a), rb = Find(b);
+                if (ra != rb) parent[Math.Max(ra, rb)] = Math.Min(ra, rb);
+            }
+            // each group sits at its members' mean position under its smallest id
+            var members = new SortedDictionary<long, List<long>>();
+            foreach (var id in parent.Keys)
+            {
+                long r = Find(id);
+                if (!members.TryGetValue(r, out var l)) members[r] = l = new List<long>();
+                l.Add(id);
+            }
+            var alias = new Dictionary<long, long>();
+            var merged = new OsmRoadSource
+            {
+                dem = src.dem, kerbZone = src.kerbZone, downtownZone = src.downtownZone, playHalf = src.playHalf, source = src.source, manifestSha256 = src.manifestSha256,
+            };
+            foreach (var kv in src.nodes) merged.nodes[kv.Key] = kv.Value;
+            foreach (var kv in src.bridgeOver) merged.bridgeOver[kv.Key] = kv.Value;
+            foreach (var kv in members)
+            {
+                kv.Value.Sort();
+                double x = 0, z = 0;
+                foreach (var id in kv.Value) { x += src.nodes[id].x; z += src.nodes[id].z; alias[id] = kv.Key; }
+                var rep = src.nodes[kv.Key];
+                merged.nodes[kv.Key] = new OsmRoadSource.Node { id = rep.id, x = x / kv.Value.Count, z = z / kv.Value.Count, tags = rep.tags };
+                var pair = pairs.Find(p => Find(p.a) == kv.Key);
+                report.mergedJunctions.Add(string.Format(Inv, "osm nodes {0} ({1:F1} m apart on {2}) became one junction at ({3:F1}, {4:F1})",
+                    string.Join(" and ", kv.Value), pair.d, pair.way, x / kv.Value.Count, z / kv.Value.Count));
+            }
+            OsmRoadSource.Way Rewrite(OsmRoadSource.Way w)
+            {
+                bool hit = false;
+                foreach (var id in w.nodes) if (alias.ContainsKey(id)) { hit = true; break; }
+                if (!hit) return w;
+                var l = new List<long>();
+                foreach (var id in w.nodes)
+                {
+                    long r = alias.TryGetValue(id, out long a) ? a : id;
+                    if (l.Count == 0 || l[l.Count - 1] != r) l.Add(r);
+                }
+                return new OsmRoadSource.Way { osm = w.osm, id = w.id, nodes = l.ToArray(), tags = w.tags };
+            }
+            var map = new Dictionary<OsmRoadSource.Way, OsmRoadSource.Way>();
+            foreach (var w in src.ways) { var r = Rewrite(w); map[w] = r; merged.ways.Add(r); }
+            for (int i = kept.Count - 1; i >= 0; i--)
+            {
+                var r = map[kept[i].way];
+                if (r.nodes.Length < 2) { Skip(report, kept[i].way, "collapsed into a merged junction"); kept.RemoveAt(i); report.waysUsed--; continue; }
+                kept[i] = (r, kept[i].cls);
+            }
+            for (int i = 0; i < siteWays.Count; i++) siteWays[i] = map[siteWays[i]];
+            merged.footprints.AddRange(src.footprints);
+            merged.parkingLots.AddRange(src.parkingLots);
+            return merged;
+        }
+
+        static List<long> Dedupe(long[] nodes)
+        {
+            var l = new List<long>(nodes.Length);
+            foreach (var id in nodes) if (l.Count == 0 || l[l.Count - 1] != id) l.Add(id);
+            return l;
+        }
 
         static List<Seg> Split(List<(OsmRoadSource.Way way, RoadClass cls)> kept, OsmRoadSource src, OsmImportReport report)
         {

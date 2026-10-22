@@ -166,9 +166,10 @@ namespace Backroads.Tests.EditMode.Roads
                 if (!c.kerbed) { Assert.AreEqual(RampKind.None, c.ramp); continue; }
                 kerbed++;
                 Assert.AreNotEqual(RampKind.None, c.ramp, $"corner {c.id} at node {c.node}: a kerbed corner without a ramp");
-                Assert.GreaterOrEqual(c.dep1 - c.dep0, st.landing - 1e-9, $"corner {c.id}: the lowered stretch holds a 1.2 m landing");
+                // an alley mouth is a dropped kerb across the corner (a driveway, not a curb ramp): no landing (roads-R4)
+                if (c.ramp != RampKind.AlleyMouth) Assert.GreaterOrEqual(c.dep1 - c.dep0, st.landing - 1e-9, $"corner {c.id}: the lowered stretch holds a 1.2 m landing");
                 // the kerb is down at the lowered stretch on every kerbed face it touches
-                double probe = c.ramp == RampKind.Depressed ? 0.5 * (c.dep0 + c.dep1) : c.open0;
+                double probe = c.ramp == RampKind.Depressed || c.ramp == RampKind.AlleyMouth ? 0.5 * (c.dep0 + c.dep1) : c.open0;
                 var loop = kn.loops[c.loop];
                 bool found = false;
                 foreach (var f in kn.faces.Where(f => f.loop == c.loop && f.kerbed && f.corners.Contains(c.id)))
@@ -521,7 +522,12 @@ namespace Backroads.Tests.EditMode.Roads
             // the ground beside a building is its pad's (lane A and W, applied after the road plates)
             var footprints = b.k.roads.input.footprints.Where(x => x.corners != null && x.corners.Length >= 3).Select(x => x.corners).ToList();
             bool NearBuilding(D2 p) => footprints.Any(c => c.Any(q => Math.Abs(q.x - p.x) < 40 && Math.Abs(q.z - p.z) < 40) && (TownZone.InPolygon(c, p) || Geom2.DistanceToBoundary(c, p) < 1.0));
-            int byBuilding = 0;
+            int byBuilding = 0, alleyConflicts = 0;
+            var conflictAt = new List<string>();
+            // roads-R4: an alley mouth's 3 m kerb return is dropped on one side only, so the verge in the block corner behind
+            // it lies between a lowered and a full-height walk edge; those points are counted apart
+            var alleyNodes = g.nodes.Where(n => n.Degree >= 3 && n.arms.Any(id => RoadGraphBuilder.IsAlley(g, g.arms[id]))).Select(n => n.p.XZ).ToList();
+            bool NearAlleyMouth(D2 p) => alleyNodes.Any(q => D2.Distance(p, q) < 15);
             foreach (var f in b.kn.faces.Where(f => !f.bridge))
             {
                 var road = g.RoadOf(g.edges[f.edge].sourceRoad);
@@ -538,11 +544,13 @@ namespace Backroads.Tests.EditMode.Roads
                     bool verge = win.id.StartsWith("verge:", StringComparison.Ordinal);
                     double edgeY = EdgeY(verge ? backEdges : openEdges, p, out bool conflict);
                     outside++;
-                    if (Math.Abs(y - edgeY) > 0.1) { if (conflict) conflicts++; else fails.Add($"1 m outside face {f.id} at {p}: ground {y:F3} vs the nearest edge {edgeY:F3} ({win.id})"); }
+                    if (Math.Abs(y - edgeY) > 0.1) { if (conflict && NearAlleyMouth(p)) alleyConflicts++; else if (conflict) { conflicts++; conflictAt.Add($"face {f.id} e{f.edge} {(f.kerbed ? "kerbed" : "open")} at {p}: ground {y:F3}, edge {edgeY:F3} ({win.id})"); } else fails.Add($"1 m outside face {f.id} at {p}: ground {y:F3} vs the nearest edge {edgeY:F3} ({win.id})"); }
                 }
             }
-            TestContext.WriteLine($"{inside} points under the pavement, {outside} 1 m outside ({skipped} landed on another road's paving; {conflicts} between two edges at different heights; {byBuilding} within 1 m of a building), {fallbacks.Count} fallback nodes excused");
+            TestContext.WriteLine($"{inside} points under the pavement, {outside} 1 m outside ({skipped} landed on another road's paving; {conflicts} between two edges at different heights, {alleyConflicts} more at alley mouths; {byBuilding} within 1 m of a building), {fallbacks.Count} fallback nodes excused");
+            foreach (var l in conflictAt.Take(40)) TestContext.WriteLine("  between: " + l);
             Assert.Less(conflicts, outside / 200, "points between two paved edges at different heights stay rare");
+            Assert.Less(alleyConflicts, outside / 20, "and at alley mouths too");
             foreach (var l in fails.Take(30)) TestContext.WriteLine("  " + l);
             Assert.IsEmpty(fails, $"{fails.Count} failures, first: {fails.FirstOrDefault()}");
             Assert.Greater(inside, 100);

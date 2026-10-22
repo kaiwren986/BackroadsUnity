@@ -27,6 +27,8 @@ namespace Backroads.Roads.Editor
             /// <summary>roads-R3: the named streets and the road props (filled by RoadNetworkBaker.BakeTownWithKerbs).</summary>
             public List<StreetInfo> streets;
             public List<RoadNetworkAsset.Prop> props;
+            /// <summary>roads-R4: the bridge decks (filled by RoadNetworkBaker.BakeTownWithKerbs).</summary>
+            public List<BridgeDeck> bridges;
             /// <summary>roads-R3: the road meshes before chunking (filled by RoadNetworkBaker.BakeMeshes).</summary>
             public RoadMeshes meshes;
             public string town => roads.town;
@@ -95,8 +97,9 @@ namespace Backroads.Roads.Editor
             var k = b.kerbs;
             int kerbed = k.faces.Count(f => f.kerbed), walks = k.faces.Count(f => f.walk);
             int kc = k.corners.Count(c => c.kerbed), ramps = k.corners.Count(c => c.kerbed && c.ramp != RampKind.None);
-            return string.Format(CultureInfo.InvariantCulture, "{0} block loops ({1} holes, {2} slivers dropped), {3} faces ({4} kerbed, {5} with a walk, {6} unkerbed), {7} kerb returns ({8} kerbed, {9} with ramps), {10} sides unfaced, {11} faces closer to a building than the walk needs",
-                k.loops.Count, k.loops.Count(l => l.hole), k.slivers, k.faces.Count, kerbed, walks, k.faces.Count - kerbed, k.corners.Count, kc, ramps, k.unfaced.Count, k.clearance.Count);
+            return string.Format(CultureInfo.InvariantCulture, "{0} block loops ({1} holes, {2} slivers dropped), {3} faces ({4} kerbed, {5} with a walk, {6} unkerbed), {7} kerb returns ({8} kerbed, {9} with ramps), {10} sides unfaced, {11} faces closer to a building than the walk needs; {12} alley mouths, {13} kerb tapers to flush",
+                k.loops.Count, k.loops.Count(l => l.hole), k.slivers, k.faces.Count, kerbed, walks, k.faces.Count - kerbed, k.corners.Count, kc, ramps, k.unfaced.Count, k.clearance.Count,
+                k.corners.Count(c => c.ramp == RampKind.AlleyMouth), k.tapers);
         }
 
         /// <summary>artifacts/roads/(town)/kerbs-report.txt.</summary>

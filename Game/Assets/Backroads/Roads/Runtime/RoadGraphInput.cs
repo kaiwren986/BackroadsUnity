@@ -85,6 +85,25 @@ namespace Backroads.Roads
             public string crossing = "";
         }
 
+        /// <summary>
+        /// A mapped roundabout (roads-R4 step 1): a closed ring of junction=roundabout ways, collapsed by the importer into
+        /// one node at the ring's centroid that every leg runs to, or a highway=mini_roundabout node.
+        /// </summary>
+        public sealed class Roundabout
+        {
+            /// <summary>"way/1 way/2" (the ring's ways) or "node/123" (a mini-roundabout node).</summary>
+            public string osm = "";
+            public D2 center;
+            /// <summary>The mapped ring's mean radius (perimeter / 2 pi): the circulatory roadway's centreline; 0 for a mini node.</summary>
+            public double ringRadius;
+            /// <summary>A highway=mini_roundabout node (its mapped diameter tag in metres, or 0).</summary>
+            public bool mini;
+            public double diameter;
+            /// <summary>The ring's largest departure from a circle, as a fraction of its radius (an oval reports it).</summary>
+            public double roundness;
+            public int legs;
+        }
+
         public struct Lot
         {
             public D2 p;
@@ -108,6 +127,8 @@ namespace Backroads.Roads
         public readonly List<LegacyNode> legacyNodes = new List<LegacyNode>();
         public readonly List<Footprint> footprints = new List<Footprint>();
         public readonly List<Feature> features = new List<Feature>();
+        /// <summary>roads-R4: the mapped roundabouts (closed rings collapsed to a centre node, mini-roundabout nodes).</summary>
+        public readonly List<Roundabout> roundabouts = new List<Roundabout>();
 
         /// <summary>
         /// The town kerb zone as a polygon (TownData manifest zones.kerbZone, CCW). When set it replaces 05 §5.1's street hull

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using Backroads.Core.WorldBake;
 using Clipper2Lib;
 
@@ -19,7 +20,7 @@ namespace Backroads.Roads.Editor
     /// </summary>
     public static class KerbBuilder
     {
-        public const int Version = 1;
+        public const int Version = 2;
         static readonly CultureInfo Inv = CultureInfo.InvariantCulture;
 
         /// <summary>A piece of the footprint outline: a ribbon edge segment, a junction outline segment or a ribbon end.</summary>
@@ -130,6 +131,7 @@ namespace Backroads.Roads.Editor
             var buildings = new BuildingIndex(input, 16.0);
             foreach (var f in kn.faces) Widths(g, f, buildings, st, kn);
             Corners(g, surf, kn, st);
+            Tapers(kn);
             foreach (var f in kn.faces) Heights(kn, f, st);
             Forbidden(g, surf, kn, st, frames);
             Unfaced(g, kn);
@@ -684,6 +686,35 @@ namespace Backroads.Roads.Editor
         static void Ramp(RoadGraph g, KerbCorner kc, KerbLoop loop, KerbNetwork kn, NodeSurface ns, CornerSurface c, KerbSettings st)
         {
             double arc = kc.ArcLength, tm = 0.5 * (kc.t0 + kc.t1);
+            // an alley mouth (roads-R4): the kerb drops along the whole return, flaring back over a metre each side
+            if (ns.arms[c.armI].alley || ns.arms[c.armJ].alley)
+            {
+                kc.ramp = RampKind.AlleyMouth;
+                kc.dep0 = kc.t0;
+                kc.dep1 = kc.t1;
+                return;
+            }
+            // a roundabout (roads-R4): the crossings are on the legs, one car length behind the yield lines; a perpendicular
+            // ramp opens at each crosswalk that lands on this kerb (else at the curve's end)
+            if (ns.mode == SurfaceMode.Roundabout && ns.roundabout != null)
+            {
+                double OpenAt(int armPos, int side, double fallback)
+                {
+                    var X = ns.arms[armPos];
+                    var L = ns.roundabout.legs[armPos];
+                    if (L.sCwInner < 0) return fallback;
+                    double sq = 0.5 * (L.sCwInner + L.sCwOuter);
+                    var p = X.frame.P(sq, side > 0 ? L.EdgeL(sq) : -L.EdgeR(sq));
+                    return LoopPosition(loop, p, kc.t0 - 20, kc.t1 + 20, out double tp, out double d) && d < 1.0 ? tp : fallback;
+                }
+                double oJ = OpenAt(c.armJ, -1, kc.t0 + 1.0), oI = OpenAt(c.armI, 1, kc.t1 - 1.0);
+                kc.ramp = RampKind.Perpendicular;
+                kc.open0 = Math.Min(oJ, oI);
+                kc.open1 = Math.Max(oJ, oI);
+                kc.dep0 = kc.open0 - 0.5 * st.perpRampWidth;
+                kc.dep1 = kc.open1 + 0.5 * st.perpRampWidth;
+                return;
+            }
             // a perpendicular ramp only where the walk is deep enough on the whole arc
             double minDepth = double.MaxValue;
             foreach (int fid in new[] { FaceAt(kn, loop, kc.t0 + 1e-6), FaceAt(kn, loop, kc.t1 - 1e-6) })
@@ -758,16 +789,64 @@ namespace Backroads.Roads.Editor
         // ------------------------------------------------------------------ heights
 
         /// <summary>The face height of the kerb above the gutter at loop arc length t: barrier, lowered at depressed corners and ramp openings.</summary>
+        /// <summary>True where a pedestrian crossing lands (a depressed corner's lowered stretch, a perpendicular ramp opening): the detectable-warning strip goes there, not across an alley mouth.</summary>
+        public static bool WarningAt(KerbNetwork kn, KerbFace f, double t, KerbSettings st)
+        {
+            if (!f.walk) return false;
+            double L = kn.loops[f.loop].Length;
+            foreach (var cid in f.corners)
+            {
+                var c = kn.corners[cid];
+                if (c.ramp == RampKind.Depressed && InRange(t, c.dep0, c.dep1, L)) return true;
+                if (c.ramp == RampKind.Perpendicular)
+                {
+                    double half = 0.5 * st.perpRampWidth;
+                    if (InRange(t, c.open0 - half, c.open0 + half, L) || InRange(t, c.open1 - half, c.open1 + half, L)) return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// roads-R4 step 4: a kerbed face whose neighbour on the loop is unkerbed (the town edge, or a street corner onto a
+        /// rural road) ends in a taper to flush, so the kerb never stops as a 150 mm step and the walk ramps down to the shoulder.
+        /// </summary>
+        static void Tapers(KerbNetwork kn)
+        {
+            foreach (var loop in kn.loops)
+            {
+                var fs = kn.faces.Where(f => f.loop == loop.id).OrderBy(f => f.t0).ToList();
+                if (fs.Count < 2) continue;
+                for (int i = 0; i < fs.Count; i++)
+                {
+                    KerbFace f = fs[i], next = fs[(i + 1) % fs.Count];
+                    double gap = next.t0 - f.t1;
+                    if (i == fs.Count - 1) gap += loop.Length;
+                    if (Math.Abs(gap) > 1e-3) continue;
+                    if (f.kerbed && !next.kerbed) { f.taperEnd = true; kn.tapers++; }
+                    if (!f.kerbed && next.kerbed) { next.taperStart = true; kn.tapers++; }
+                }
+            }
+        }
+
         public static double KerbHeight(KerbNetwork kn, KerbFace f, double t, KerbSettings st)
         {
             if (!f.kerbed) return 0;
             double h = st.barrier;
             var loop = kn.loops[f.loop];
+            if (f.taperStart || f.taperEnd)
+            {
+                double ls = t - f.t0;
+                if (ls < -1e-9) ls += loop.Length;
+                if (f.taperStart) h = Math.Min(h, st.barrier * Math.Max(0, Math.Min(1, ls / st.taper)));
+                if (f.taperEnd) h = Math.Min(h, st.barrier * Math.Max(0, Math.Min(1, (f.t1 - f.t0 - ls) / st.taper)));
+            }
             foreach (var cid in f.corners)
             {
                 var c = kn.corners[cid];
                 if (c.ramp == RampKind.None) continue;
                 if (c.ramp == RampKind.Depressed) h = Math.Min(h, Lowered(t, c.dep0, c.dep1, st.rampRun, loop.Length, st));
+                else if (c.ramp == RampKind.AlleyMouth) h = Math.Min(h, Lowered(t, c.dep0, c.dep1, st.alleyFlare, loop.Length, st));
                 else
                 {
                     double half = 0.5 * st.perpRampWidth, flare = (st.barrier - st.dropped) / 0.10;

@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Backroads.Canon.Editor;
@@ -133,9 +134,10 @@ namespace Backroads.Roads.Editor
             var names = StreetNameList.Load();
             kerbs.streets = StreetNamer.Assign(b.graph, names.names, names.approved);
             kerbs.props = RoadPropBuilder.Build(b.graph, b.surfaces, kerbs.kerbs, kerbs.streets, kerbs.settings);
+            kerbs.bridges = BridgeBuilder.Build(b.graph, b.source?.dem, null, b.source?.bridgeOver);
             var a = ScriptableObject.CreateInstance<RoadNetworkAsset>();
             a.name = RoadNetworkAsset.TownResourceName(townId);
-            a.SetFrom(b.graph, b.import, b.surfaces, kerbs.streets, kerbs.props, RoadPropBuilder.Version);
+            a.SetFrom(b.graph, b.import, b.surfaces, kerbs.streets, kerbs.props, RoadPropBuilder.Version, kerbs.bridges);
             frontage = KerbBaker.ToAsset(kerbs, a.contentHash);
             return a;
         }
@@ -143,7 +145,7 @@ namespace Backroads.Roads.Editor
         /// <summary>roads-R3: the chunked road meshes of a kerb bake (not saved), linked to the network and frontage it was built from.</summary>
         public static RoadChunkSet BakeMeshes(KerbBaker.Bake k, string roadHash, string frontageHash, out byte[] packed)
         {
-            k.meshes = RoadMeshBuilder.Build(k.roads.graph, k.roads.surfaces, k.kerbs, k.streets, k.settings);
+            k.meshes = RoadMeshBuilder.Build(k.roads.graph, k.roads.surfaces, k.kerbs, k.streets, k.settings, k.bridges, k.roads.source?.dem);
             double half = k.roads.source?.playHalf ?? 1024;
             return RoadChunkBaker.Build(k.meshes, half, k.roads.graph.source, roadHash, frontageHash, out _, out packed);
         }
@@ -193,8 +195,22 @@ namespace Backroads.Roads.Editor
             var chunkSet = BakeMeshes(kerbs, asset.contentHash, frontageHash, out var packed);
             int tris = chunkSet.lod0Triangles, nChunks = chunkSet.chunks.Length;
             var chunkPath = RoadChunkBaker.Save(townId, chunkSet, packed);
-            message = $"roads R0o + R1 + R2 + R3 baked {townId} in {sw.Elapsed.TotalMilliseconds:F0} ms: {RoadGraphReport.Summary(graph)}; {SurfaceChecks.Summary(bake.checks)}; {KerbBaker.Summary(kerbs)}; {nChunks} road chunks, {tris} triangles; content {asset.contentHash.Substring(0, 12)} -> {path}, {kerbPath}, {chunkPath}; reports {reportPath}, {surfPath}";
+            var r4Plates = RoadPlateBuilder.Build(graph, bake.surfaces, kerbs.kerbs, bake.source?.dem, kerbs.settings);
+            var r4Path = RoadR4Report.Write(kerbs, r4Plates);
+            message = $"roads R0o + R1 + R2 + R3 baked {townId} in {sw.Elapsed.TotalMilliseconds:F0} ms: {RoadGraphReport.Summary(graph)}; {SurfaceChecks.Summary(bake.checks)}; {KerbBaker.Summary(kerbs)}; {nChunks} road chunks, {tris} triangles; content {asset.contentHash.Substring(0, 12)} -> {path}, {kerbPath}, {chunkPath}; reports {reportPath}, {surfPath}, {r4Path}";
             return true;
+        }
+
+        /// <summary>A junction's approaches as "R12 stop, R13 -, ...", for the close-pair lines.</summary>
+        static string ArmControls(RoadGraph g, GraphNode n)
+        {
+            var parts = new List<string>();
+            foreach (var id in n.arms)
+            {
+                var a = g.arms[id];
+                parts.Add($"R{a.sourceRoad} {(a.control == Control.None ? "-" : a.control.ToString())}");
+            }
+            return string.Join(", ", parts);
         }
 
         /// <summary>
@@ -232,9 +248,11 @@ namespace Backroads.Roads.Editor
             foreach (var f in g.features.Where(f => f.problem.Length > 0)) sb.AppendLine($"  osm node {f.osmNode} {f.kind}: {f.problem}");
             sb.AppendLine($"signs overriding the class-first through road: {g.nodes.Count(n => (n.flags & NodeFlags.TagOverridesRule) != 0)}");
             sb.AppendLine();
-            sb.AppendLine("== Complex pairs (junctions < 30 m apart; R4 resolves them one by one)");
+            sb.AppendLine($"== Close junction pairs (roads-R4): {r.mergedJunctions.Count} merged at import (joined by a way under {new OsmImportSettings().mergeJunctions:F0} m), {g.complexPairs.Count} kept as two junctions (< 30 m)");
+            foreach (var x in r.mergedJunctions) sb.AppendLine("  merged: " + x);
             foreach (var p in g.complexPairs.OrderBy(p => p.distance))
-                sb.AppendLine(string.Format(inv, "  nodes {0} and {1}: {2:F1} m  at ({3:F0}, {4:F0})", p.a, p.b, p.distance, g.nodes[p.a].p.x, g.nodes[p.a].p.z));
+                sb.AppendLine(string.Format(inv, "  kept: nodes {0} and {1}: {2:F1} m at ({3:F0}, {4:F0}); controls {5} / {6}", p.a, p.b, p.distance, g.nodes[p.a].p.x, g.nodes[p.a].p.z,
+                    ArmControls(g, g.nodes[p.a]), ArmControls(g, g.nodes[p.b])));
             sb.AppendLine();
             sb.AppendLine("== Steepest approaches (first 20 m, junctions)");
             foreach (var x in g.arms.Where(a => g.nodes[a.node].IsJunctionLike).OrderByDescending(a => Math.Abs(a.grade)).Take(15))
@@ -380,6 +398,8 @@ namespace Backroads.Roads.Editor
                     var a = RoadNetworkBaker.BakeTownWithKerbs(town, out _, out var k, out var f);
                     var c = RoadNetworkBaker.BakeMeshes(k, a.contentHash, f.contentHash, out var packed);
                     Debug.Log($"[BR] {town}: R3 in {sw.Elapsed.TotalMilliseconds:F0} ms: {k.streets.Count} streets, {k.props.Count} props; {c.chunks.Length} chunks, LOD0 {c.lod0Triangles} / LOD1 {c.lod1Triangles} / collider {c.colliderTriangles} triangles, {packed.Length / 1024} KiB packed; report {RoadMeshReport.Write(k, c, a)}");
+                    var plates = RoadPlateBuilder.Build(k.roads.graph, k.roads.surfaces, k.kerbs, k.roads.source?.dem, k.settings);
+                    Debug.Log($"[BR] {town}: R4 {RoadR4Report.Summary(RoadR4Report.Run(k, plates))}; report {RoadR4Report.Write(k, plates)}");
                     UnityEngine.Object.DestroyImmediate(a); UnityEngine.Object.DestroyImmediate(f); UnityEngine.Object.DestroyImmediate(c);
                 }
             }

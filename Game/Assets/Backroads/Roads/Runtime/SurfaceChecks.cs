@@ -33,7 +33,7 @@ namespace Backroads.Roads
             foreach (var c in ns.corners) if (c.kind == CornerKind.Nose) { why.Add("a nose corner"); break; }
             foreach (var c in ns.corners)
                 if (c.kind == CornerKind.Fillet && c.reason == CornerReason.BuildingClearance && c.radius < 4.5 - 1e-9) { why.Add("a corner a building forces under 4.5 m"); break; }
-            if ((n.flags & NodeFlags.ComplexPair) != 0) why.Add("a complex pair (R4)");
+            if ((n.flags & NodeFlags.ComplexPair) != 0) why.Add("a complex pair");
             if ((n.flags & NodeFlags.ShortArm) != 0) why.Add("a short arm");
             if ((n.flags & NodeFlags.AcuteArms) != 0) why.Add("acute arms");
             if (!double.IsNaN(n.bestPairBend) && n.bestPairBend > 0.6) why.Add("roads bending over 35 degrees through it");
@@ -64,7 +64,8 @@ namespace Backroads.Roads
                 // the card's area rule is for junctions; a two-arm node's square outer corner is area no vehicle sweeps.
                 // Irregular junctions (a nose corner, a complex pair for R4, a short or acute arm) are held to a looser
                 // bound that still catches a broken outline: the sweep and the kerbs legitimately differ there.
-                if (ns.corridorArea > 0 && n.Degree >= 3)
+                // (a roundabout's inscribed circle is area no corridor sweeps: roads-R4 checks its plan in RoundaboutBuilder)
+                if (ns.corridorArea > 0 && n.Degree >= 3 && ns.mode != SurfaceMode.Roundabout)
                 {
                     double ratio = ns.area / ns.corridorArea;
                     string irregular = Irregular(n, ns);

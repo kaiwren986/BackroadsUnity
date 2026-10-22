@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: BrRoadChunks_stockport-oh
   m_EditorClassIdentifier: Backroads.Roads::Backroads.Roads.RoadChunkSet
   formatVersion: 1
-  meshVersion: 1
+  meshVersion: 2
   source: TownData/stockport-oh/v1
-  roadContentHash: cd3a33e9df46f7e21303e8fd19dffbe9b0ff3cc28d724d756436c89ab5ad64bd
-  frontageContentHash: 33185dff6cfa06104126b446c7ecc97d85c0143d2d7308a4e05d994d5e4549c3
-  contentHash: 9c85410d75e7deaac85dd7347d242d872f11fce79625770eeb25ad117c14bcaa
+  roadContentHash: 17799d4eebc6d8095a6c35a3d51b106ce66ef8861a23cd6a0ba2ab0d0ce6c26a
+  frontageContentHash: f7700ce35c52fd4abde9f1413202eea1b7139057a3d3d6d8ecb001b08a16eea0
+  contentHash: eff860536796985bb01fb9e496d326ebec78c7ff78db315e8015088137749ed6
   chunkSize: 64
   originX: -1024
   originZ: -1024
@@ -820,8 +820,8 @@ MonoBehaviour:
     iz: 17
     centre: {x: 96, y: 0, z: 96}
     bounds:
-      m_Center: {x: 108.58677, y: 18.508347, z: 118.65192}
-      m_Extent: {x: 8.505623, y: 0.5737601, z: 21.220425}
+      m_Center: {x: 108.58677, y: 18.494781, z: 118.65192}
+      m_Extent: {x: 8.505623, y: 0.5873248, z: 21.220425}
     vertices: 518
     lod0Triangles: 387
     lod1Triangles: 319
@@ -906,12 +906,12 @@ MonoBehaviour:
     bounds:
       m_Center: {x: 289.4848, y: 17.321352, z: 221.39146}
       m_Extent: {x: 37.57549, y: 1.3073792, z: 38.01213}
-    vertices: 1924
-    lod0Triangles: 1229
+    vertices: 1920
+    lod0Triangles: 1225
     lod1Triangles: 901
     colliderTriangles: 853
     offset: 1470940
-    length: 122852
+    length: 122652
   - ix: 21
     iz: 19
     centre: {x: 352, y: 0, z: 224}
@@ -922,7 +922,7 @@ MonoBehaviour:
     lod0Triangles: 824
     lod1Triangles: 628
     colliderTriangles: 628
-    offset: 1593792
+    offset: 1593592
     length: 70412
   - ix: 30
     iz: 19
@@ -934,7 +934,7 @@ MonoBehaviour:
     lod0Triangles: 469
     lod1Triangles: 387
     colliderTriangles: 343
-    offset: 1664204
+    offset: 1664004
     length: 31536
   - ix: 31
     iz: 19
@@ -946,7 +946,7 @@ MonoBehaviour:
     lod0Triangles: 149
     lod1Triangles: 127
     colliderTriangles: 117
-    offset: 1695740
+    offset: 1695540
     length: 11184
   - ix: 17
     iz: 20
@@ -958,7 +958,7 @@ MonoBehaviour:
     lod0Triangles: 217
     lod1Triangles: 217
     colliderTriangles: 217
-    offset: 1706924
+    offset: 1706724
     length: 19580
   - ix: 18
     iz: 20
@@ -970,7 +970,7 @@ MonoBehaviour:
     lod0Triangles: 692
     lod1Triangles: 552
     colliderTriangles: 552
-    offset: 1726504
+    offset: 1726304
     length: 67828
   - ix: 19
     iz: 20
@@ -982,7 +982,7 @@ MonoBehaviour:
     lod0Triangles: 622
     lod1Triangles: 518
     colliderTriangles: 518
-    offset: 1794332
+    offset: 1794132
     length: 59820
   - ix: 20
     iz: 20
@@ -994,44 +994,44 @@ MonoBehaviour:
     lod0Triangles: 172
     lod1Triangles: 102
     colliderTriangles: 102
-    offset: 1854152
+    offset: 1853952
     length: 20488
   - ix: 21
     iz: 20
     centre: {x: 352, y: 0, z: 288}
     bounds:
-      m_Center: {x: 356.05396, y: 16.189028, z: 282.02283}
-      m_Extent: {x: 42.41656, y: 1.5044763, z: 52.17608}
-    vertices: 3261
-    lod0Triangles: 2157
-    lod1Triangles: 1561
-    colliderTriangles: 1457
-    offset: 1874640
-    length: 208188
+      m_Center: {x: 354.59055, y: 16.240416, z: 282.02283}
+      m_Extent: {x: 40.95315, y: 1.4661726, z: 52.17608}
+    vertices: 3147
+    lod0Triangles: 2121
+    lod1Triangles: 1559
+    colliderTriangles: 1455
+    offset: 1874440
+    length: 202344
   - ix: 22
     iz: 20
     centre: {x: 416, y: 0, z: 288}
     bounds:
-      m_Center: {x: 394.34106, y: 15.130606, z: 289.2954}
-      m_Extent: {x: 21.862726, y: 0.6986683, z: 16.83922}
-    vertices: 873
-    lod0Triangles: 641
-    lod1Triangles: 507
-    colliderTriangles: 507
-    offset: 2082828
-    length: 58872
+      m_Center: {x: 393.15054, y: 15.112666, z: 289.2954}
+      m_Extent: {x: 23.053259, y: 0.7278153, z: 16.83922}
+    vertices: 1034
+    lod0Triangles: 697
+    lod1Triangles: 569
+    colliderTriangles: 569
+    offset: 2076784
+    length: 69292
   - ix: 27
     iz: 20
     centre: {x: 736, y: 0, z: 288}
     bounds:
-      m_Center: {x: 755.5204, y: 13.757542, z: 312.93826}
-      m_Extent: {x: 16.493793, y: 0.22589135, z: 8.924534}
-    vertices: 134
-    lod0Triangles: 108
-    lod1Triangles: 100
-    colliderTriangles: 68
-    offset: 2141700
-    length: 8644
+      m_Center: {x: 665.74854, y: 12.066637, z: 346.214}
+      m_Extent: {x: 108.17038, y: 2.7091966, z: 44.075016}
+    vertices: 686
+    lod0Triangles: 384
+    lod1Triangles: 376
+    colliderTriangles: 272
+    offset: 2146076
+    length: 43588
   - ix: 28
     iz: 20
     centre: {x: 800, y: 0, z: 288}
@@ -1042,7 +1042,7 @@ MonoBehaviour:
     lod0Triangles: 184
     lod1Triangles: 162
     colliderTriangles: 162
-    offset: 2150344
+    offset: 2189664
     length: 12496
   - ix: 29
     iz: 20
@@ -1054,20 +1054,20 @@ MonoBehaviour:
     lod0Triangles: 628
     lod1Triangles: 276
     colliderTriangles: 136
-    offset: 2162840
+    offset: 2202160
     length: 41828
   - ix: 30
     iz: 20
     centre: {x: 928, y: 0, z: 288}
     bounds:
-      m_Center: {x: 928.63306, y: 14.036506, z: 293.1733}
-      m_Extent: {x: 32.998844, y: 0.9989272, z: 45.63045}
-    vertices: 478
-    lod0Triangles: 532
-    lod1Triangles: 500
-    colliderTriangles: 438
-    offset: 2204668
-    length: 36092
+      m_Center: {x: 928.63306, y: 13.995414, z: 293.1733}
+      m_Extent: {x: 32.998844, y: 1.040019, z: 45.63045}
+    vertices: 530
+    lod0Triangles: 572
+    lod1Triangles: 540
+    colliderTriangles: 466
+    offset: 2243988
+    length: 39484
   - ix: 31
     iz: 20
     centre: {x: 992, y: 0, z: 288}
@@ -1078,7 +1078,7 @@ MonoBehaviour:
     lod0Triangles: 16
     lod1Triangles: 0
     colliderTriangles: 0
-    offset: 2240760
+    offset: 2283472
     length: 924
   - ix: 11
     iz: 21
@@ -1090,7 +1090,7 @@ MonoBehaviour:
     lod0Triangles: 104
     lod1Triangles: 104
     colliderTriangles: 104
-    offset: 2241684
+    offset: 2284396
     length: 7236
   - ix: 16
     iz: 21
@@ -1102,7 +1102,7 @@ MonoBehaviour:
     lod0Triangles: 781
     lod1Triangles: 649
     colliderTriangles: 649
-    offset: 2248920
+    offset: 2291632
     length: 77732
   - ix: 17
     iz: 21
@@ -1114,7 +1114,7 @@ MonoBehaviour:
     lod0Triangles: 757
     lod1Triangles: 607
     colliderTriangles: 607
-    offset: 2326652
+    offset: 2369364
     length: 72440
   - ix: 18
     iz: 21
@@ -1122,120 +1122,120 @@ MonoBehaviour:
     bounds:
       m_Center: {x: 162.87189, y: 20.630419, z: 358.22754}
       m_Extent: {x: 42.611916, y: 0.9257552, z: 33.06455}
-    vertices: 2153
-    lod0Triangles: 1416
+    vertices: 2151
+    lod0Triangles: 1414
     lod1Triangles: 1130
     colliderTriangles: 1112
-    offset: 2399092
-    length: 142072
+    offset: 2441804
+    length: 141972
   - ix: 19
     iz: 21
     centre: {x: 224, y: 0, z: 352}
     bounds:
-      m_Center: {x: 224.99205, y: 19.454672, z: 354.48044}
-      m_Extent: {x: 41.08135, y: 0.57406783, z: 32.34545}
-    vertices: 1996
-    lod0Triangles: 1380
-    lod1Triangles: 1144
-    colliderTriangles: 1126
-    offset: 2541164
-    length: 134516
+      m_Center: {x: 227.89455, y: 19.370255, z: 354.48044}
+      m_Extent: {x: 43.98384, y: 0.6584856, z: 32.34545}
+    vertices: 2009
+    lod0Triangles: 1402
+    lod1Triangles: 1168
+    colliderTriangles: 1150
+    offset: 2583776
+    length: 135832
   - ix: 20
     iz: 21
     centre: {x: 288, y: 0, z: 352}
     bounds:
-      m_Center: {x: 282.35764, y: 18.532, z: 331.5094}
-      m_Extent: {x: 37.442314, y: 1.0244963, z: 14.925535}
-    vertices: 1244
-    lod0Triangles: 886
-    lod1Triangles: 726
-    colliderTriangles: 726
-    offset: 2675680
-    length: 84412
+      m_Center: {x: 284.15976, y: 18.55541, z: 329.5914}
+      m_Extent: {x: 39.244434, y: 1.0010856, z: 13.007526}
+    vertices: 1142
+    lod0Triangles: 794
+    lod1Triangles: 662
+    colliderTriangles: 662
+    offset: 2719608
+    length: 77500
   - ix: 21
     iz: 21
     centre: {x: 352, y: 0, z: 352}
     bounds:
-      m_Center: {x: 350.8361, y: 16.793024, z: 349.81387}
-      m_Extent: {x: 41.2248, y: 1.1278359, z: 38.48043}
-    vertices: 1337
-    lod0Triangles: 832
-    lod1Triangles: 586
-    colliderTriangles: 514
-    offset: 2760092
-    length: 82936
+      m_Center: {x: 355.0294, y: 16.700417, z: 349.81387}
+      m_Extent: {x: 37.031517, y: 1.0421708, z: 38.48043}
+    vertices: 1338
+    lod0Triangles: 833
+    lod1Triangles: 553
+    colliderTriangles: 481
+    offset: 2797108
+    length: 81588
   - ix: 22
     iz: 21
     centre: {x: 416, y: 0, z: 352}
     bounds:
-      m_Center: {x: 418.77313, y: 13.860385, z: 360.44714}
-      m_Extent: {x: 40.057358, y: 2.4953704, z: 27.296177}
-    vertices: 2920
-    lod0Triangles: 2030
-    lod1Triangles: 1534
-    colliderTriangles: 1516
-    offset: 2843028
-    length: 192452
+      m_Center: {x: 420.09387, y: 13.837079, z: 360.44714}
+      m_Extent: {x: 41.378098, y: 2.518678, z: 27.296177}
+    vertices: 3125
+    lod0Triangles: 2164
+    lod1Triangles: 1666
+    colliderTriangles: 1648
+    offset: 2878696
+    length: 206704
   - ix: 23
     iz: 21
     centre: {x: 480, y: 0, z: 352}
     bounds:
-      m_Center: {x: 483.6792, y: 10.972804, z: 336.5583}
-      m_Extent: {x: 37.998413, y: 1.8644537, z: 20.2431}
-    vertices: 2064
-    lod0Triangles: 1455
-    lod1Triangles: 1225
-    colliderTriangles: 1225
-    offset: 3035480
-    length: 141216
+      m_Center: {x: 481.00906, y: 11.144757, z: 337.8674}
+      m_Extent: {x: 40.66856, y: 2.036407, z: 21.5522}
+    vertices: 2143
+    lod0Triangles: 1493
+    lod1Triangles: 1287
+    colliderTriangles: 1287
+    offset: 3085400
+    length: 147272
   - ix: 24
     iz: 21
     centre: {x: 544, y: 0, z: 352}
     bounds:
-      m_Center: {x: 536.6675, y: 10.404439, z: 358.1105}
-      m_Extent: {x: 30.99954, y: 1.2960889, z: 32.30082}
-    vertices: 1295
-    lod0Triangles: 784
-    lod1Triangles: 546
-    colliderTriangles: 528
-    offset: 3176696
-    length: 81424
+      m_Center: {x: 549.8965, y: 9.497277, z: 358.51935}
+      m_Extent: {x: 44.228558, y: 2.9805796, z: 32.709675}
+    vertices: 2063
+    lod0Triangles: 1168
+    lod1Triangles: 930
+    colliderTriangles: 804
+    offset: 3232672
+    length: 129760
   - ix: 25
     iz: 21
     centre: {x: 608, y: 0, z: 352}
     bounds:
-      m_Center: {x: 603.4411, y: 11.862167, z: 368.8467}
-      m_Extent: {x: 42.218323, y: 0.5589325, z: 18.973528}
-    vertices: 388
-    lod0Triangles: 410
-    lod1Triangles: 346
-    colliderTriangles: 298
-    offset: 3258120
-    length: 27764
+      m_Center: {x: 609.15454, y: 8.325625, z: 366.58942}
+      m_Extent: {x: 47.93177, y: 5.0125985, z: 21.230816}
+    vertices: 1844
+    lod0Triangles: 1138
+    lod1Triangles: 1074
+    colliderTriangles: 778
+    offset: 3362432
+    length: 117844
   - ix: 26
     iz: 21
     centre: {x: 672, y: 0, z: 352}
     bounds:
-      m_Center: {x: 690.1846, y: 12.922238, z: 336.65137}
-      m_Extent: {x: 81.778435, y: 0.9961948, z: 32.496635}
-    vertices: 888
-    lod0Triangles: 764
-    lod1Triangles: 278
-    colliderTriangles: 136
-    offset: 3285884
-    length: 48288
+      m_Center: {x: 690.1846, y: 8.698419, z: 336.65137}
+      m_Extent: {x: 81.778435, y: 5.4281716, z: 32.496635}
+    vertices: 2144
+    lod0Triangles: 1392
+    lod1Triangles: 906
+    colliderTriangles: 544
+    offset: 3480276
+    length: 125776
   - ix: 27
     iz: 21
     centre: {x: 736, y: 0, z: 352}
     bounds:
-      m_Center: {x: 724.2842, y: 13.370559, z: 324.2752}
-      m_Extent: {x: 17.198797, y: 0.23309171, z: 9.1804085}
-    vertices: 54
-    lod0Triangles: 68
-    lod1Triangles: 68
-    colliderTriangles: 68
-    offset: 3334172
-    length: 4692
+      m_Center: {x: 729.9977, y: 8.909562, z: 322.0179}
+      m_Extent: {x: 22.912241, y: 5.6112123, z: 11.437697}
+    vertices: 682
+    lod0Triangles: 382
+    lod1Triangles: 382
+    colliderTriangles: 272
+    offset: 3606052
+    length: 43436
   - ix: 30
     iz: 21
     centre: {x: 928, y: 0, z: 352}
@@ -1246,7 +1246,7 @@ MonoBehaviour:
     lod0Triangles: 220
     lod1Triangles: 176
     colliderTriangles: 140
-    offset: 3338864
+    offset: 3649488
     length: 15852
   - ix: 0
     iz: 22
@@ -1258,7 +1258,7 @@ MonoBehaviour:
     lod0Triangles: 72
     lod1Triangles: 72
     colliderTriangles: 72
-    offset: 3354716
+    offset: 3665340
     length: 4956
   - ix: 5
     iz: 22
@@ -1270,7 +1270,7 @@ MonoBehaviour:
     lod0Triangles: 68
     lod1Triangles: 68
     colliderTriangles: 68
-    offset: 3359672
+    offset: 3670296
     length: 4692
   - ix: 6
     iz: 22
@@ -1282,7 +1282,7 @@ MonoBehaviour:
     lod0Triangles: 1260
     lod1Triangles: 136
     colliderTriangles: 136
-    offset: 3364364
+    offset: 3674988
     length: 65724
   - ix: 7
     iz: 22
@@ -1294,7 +1294,7 @@ MonoBehaviour:
     lod0Triangles: 948
     lod1Triangles: 544
     colliderTriangles: 140
-    offset: 3430088
+    offset: 3740712
     length: 70476
   - ix: 8
     iz: 22
@@ -1306,7 +1306,7 @@ MonoBehaviour:
     lod0Triangles: 136
     lod1Triangles: 136
     colliderTriangles: 136
-    offset: 3500564
+    offset: 3811188
     length: 9348
   - ix: 9
     iz: 22
@@ -1318,7 +1318,7 @@ MonoBehaviour:
     lod0Triangles: 136
     lod1Triangles: 136
     colliderTriangles: 136
-    offset: 3509912
+    offset: 3820536
     length: 9348
   - ix: 10
     iz: 22
@@ -1330,31 +1330,31 @@ MonoBehaviour:
     lod0Triangles: 249
     lod1Triangles: 233
     colliderTriangles: 181
-    offset: 3519260
+    offset: 3829884
     length: 19932
   - ix: 11
     iz: 22
     centre: {x: -288, y: 0, z: 416}
     bounds:
-      m_Center: {x: -283.745, y: 18.887201, z: 432.27713}
-      m_Extent: {x: 32.67859, y: 0.9052807, z: 21.429535}
-    vertices: 1048
-    lod0Triangles: 679
-    lod1Triangles: 481
-    colliderTriangles: 441
-    offset: 3539192
-    length: 65816
+      m_Center: {x: -283.745, y: 18.832453, z: 432.27713}
+      m_Extent: {x: 32.67859, y: 0.96003073, z: 21.429535}
+    vertices: 1100
+    lod0Triangles: 719
+    lod1Triangles: 521
+    colliderTriangles: 469
+    offset: 3849816
+    length: 69208
   - ix: 12
     iz: 22
     centre: {x: -224, y: 0, z: 416}
     bounds:
-      m_Center: {x: -221.03432, y: 18.245466, z: 415.56262}
-      m_Extent: {x: 41.842007, y: 0.72140884, z: 40.545513}
+      m_Center: {x: -221.03432, y: 18.240725, z: 415.56262}
+      m_Extent: {x: 41.842007, y: 0.7166682, z: 40.545513}
     vertices: 2076
     lod0Triangles: 1590
     lod1Triangles: 1334
     colliderTriangles: 1266
-    offset: 3605008
+    offset: 3919024
     length: 141588
   - ix: 13
     iz: 22
@@ -1366,7 +1366,7 @@ MonoBehaviour:
     lod0Triangles: 925
     lod1Triangles: 641
     colliderTriangles: 561
-    offset: 3746596
+    offset: 4060612
     length: 95556
   - ix: 14
     iz: 22
@@ -1374,144 +1374,144 @@ MonoBehaviour:
     bounds:
       m_Center: {x: -90.60093, y: 22.808155, z: 438.27826}
       m_Extent: {x: 42.21864, y: 2.1911993, z: 23.66005}
-    vertices: 1782
-    lod0Triangles: 1149
+    vertices: 1780
+    lod0Triangles: 1147
     lod1Triangles: 907
     colliderTriangles: 889
-    offset: 3842152
-    length: 116736
+    offset: 4156168
+    length: 116636
   - ix: 15
     iz: 22
     centre: {x: -32, y: 0, z: 416}
     bounds:
       m_Center: {x: -34.01971, y: 24.609888, z: 436.81}
       m_Extent: {x: 40.72183, y: 0.7326481, z: 23.8087}
-    vertices: 1976
-    lod0Triangles: 1347
+    vertices: 1974
+    lod0Triangles: 1345
     lod1Triangles: 1057
     colliderTriangles: 977
-    offset: 3958888
-    length: 128704
+    offset: 4272804
+    length: 128604
   - ix: 16
     iz: 22
     centre: {x: 32, y: 0, z: 416}
     bounds:
       m_Center: {x: 25.981739, y: 24.855536, z: 420.58487}
       m_Extent: {x: 41.151062, y: 0.4866299, z: 42.098106}
-    vertices: 3017
-    lod0Triangles: 2004
-    lod1Triangles: 1586
+    vertices: 3055
+    lod0Triangles: 2020
+    lod1Triangles: 1604
     colliderTriangles: 1552
-    offset: 4087592
-    length: 198640
+    offset: 4401408
+    length: 200516
   - ix: 17
     iz: 22
     centre: {x: 96, y: 0, z: 416}
     bounds:
       m_Center: {x: 99.68409, y: 23.69939, z: 435.1432}
       m_Extent: {x: 37.183407, y: 1.1295038, z: 26.672733}
-    vertices: 1789
-    lod0Triangles: 1253
+    vertices: 1787
+    lod0Triangles: 1251
     lod1Triangles: 1011
     colliderTriangles: 947
-    offset: 4286232
-    length: 118352
+    offset: 4601924
+    length: 118252
   - ix: 18
     iz: 22
     centre: {x: 160, y: 0, z: 416}
     bounds:
       m_Center: {x: 158.0764, y: 21.89176, z: 415.67435}
       m_Extent: {x: 34.19924, y: 1.4447769, z: 44.323303}
-    vertices: 3674
-    lod0Triangles: 2610
+    vertices: 3668
+    lod0Triangles: 2604
     lod1Triangles: 2138
     colliderTriangles: 2074
-    offset: 4404584
-    length: 246700
+    offset: 4720176
+    length: 246400
   - ix: 19
     iz: 22
     centre: {x: 224, y: 0, z: 416}
     bounds:
-      m_Center: {x: 223.02454, y: 20.186356, z: 399.3042}
-      m_Extent: {x: 43.333366, y: 0.85523283, z: 28.464973}
-    vertices: 2541
-    lod0Triangles: 1484
-    lod1Triangles: 948
-    colliderTriangles: 922
-    offset: 4651284
-    length: 156108
+      m_Center: {x: 228.15276, y: 20.186356, z: 397.20502}
+      m_Extent: {x: 48.461597, y: 0.85523283, z: 26.365791}
+    vertices: 2715
+    lod0Triangles: 1566
+    lod1Triangles: 996
+    colliderTriangles: 906
+    offset: 4966576
+    length: 164304
   - ix: 20
     iz: 22
     centre: {x: 288, y: 0, z: 416}
     bounds:
-      m_Center: {x: 279.4511, y: 19.499912, z: 424.1429}
-      m_Extent: {x: 48.4188, y: 1.1139116, z: 25.762218}
-    vertices: 1776
-    lod0Triangles: 1207
-    lod1Triangles: 919
-    colliderTriangles: 823
-    offset: 4807392
-    length: 113844
+      m_Center: {x: 285.63058, y: 19.470554, z: 428.06525}
+      m_Extent: {x: 43.06368, y: 1.1465756, z: 29.560951}
+    vertices: 2741
+    lod0Triangles: 1888
+    lod1Triangles: 1440
+    colliderTriangles: 1388
+    offset: 5130880
+    length: 179404
   - ix: 21
     iz: 22
     centre: {x: 352, y: 0, z: 416}
     bounds:
-      m_Center: {x: 348.53122, y: 17.941854, z: 415.14444}
-      m_Extent: {x: 46.219585, y: 2.0729413, z: 40.476555}
-    vertices: 3692
-    lod0Triangles: 2566
-    lod1Triangles: 1958
-    colliderTriangles: 1892
-    offset: 4921236
-    length: 242380
+      m_Center: {x: 348.34552, y: 17.877573, z: 412.876}
+      m_Extent: {x: 46.40529, y: 2.0086591, z: 38.208103}
+    vertices: 3814
+    lod0Triangles: 2587
+    lod1Triangles: 1987
+    colliderTriangles: 1921
+    offset: 5310284
+    length: 249956
   - ix: 22
     iz: 22
     centre: {x: 416, y: 0, z: 416}
     bounds:
-      m_Center: {x: 413.78104, y: 17.007746, z: 411.01813}
-      m_Extent: {x: 38.528606, y: 1.1980141, z: 35.207973}
-    vertices: 3525
-    lod0Triangles: 2315
-    lod1Triangles: 1647
-    colliderTriangles: 1585
-    offset: 5163616
-    length: 224988
+      m_Center: {x: 413.81647, y: 17.09484, z: 413.2736}
+      m_Extent: {x: 38.564053, y: 1.2851068, z: 37.46342}
+    vertices: 4368
+    lod0Triangles: 2924
+    lod1Triangles: 2222
+    colliderTriangles: 2154
+    offset: 5560240
+    length: 285000
   - ix: 23
     iz: 22
     centre: {x: 480, y: 0, z: 416}
     bounds:
-      m_Center: {x: 486.46573, y: 14.264393, z: 425.23312}
-      m_Extent: {x: 36.042442, y: 1.8711963, z: 37.393208}
-    vertices: 3215
-    lod0Triangles: 2058
-    lod1Triangles: 1404
-    colliderTriangles: 1388
-    offset: 5388604
-    length: 203872
+      m_Center: {x: 486.4514, y: 14.264393, z: 427.0273}
+      m_Extent: {x: 36.056805, y: 1.8711963, z: 37.484047}
+    vertices: 3714
+    lod0Triangles: 2271
+    lod1Triangles: 1597
+    colliderTriangles: 1557
+    offset: 5845240
+    length: 234480
   - ix: 24
     iz: 22
     centre: {x: 544, y: 0, z: 416}
     bounds:
-      m_Center: {x: 539.82135, y: 12.317399, z: 408.56714}
-      m_Extent: {x: 40.130543, y: 2.8778229, z: 36.39006}
-    vertices: 3834
-    lod0Triangles: 2737
-    lod1Triangles: 2111
-    colliderTriangles: 2081
-    offset: 5592476
-    length: 255264
+      m_Center: {x: 544.9022, y: 12.519784, z: 418.0255}
+      m_Extent: {x: 39.74679, y: 3.0842466, z: 45.84841}
+    vertices: 4353
+    lod0Triangles: 3062
+    lod1Triangles: 2388
+    colliderTriangles: 2358
+    offset: 6079720
+    length: 289752
   - ix: 25
     iz: 22
     centre: {x: 608, y: 0, z: 416}
     bounds:
-      m_Center: {x: 586.8545, y: 9.712856, z: 434.60114}
-      m_Extent: {x: 16.887602, y: 0.30812317, z: 24.447681}
-    vertices: 477
-    lod0Triangles: 317
-    lod1Triangles: 251
-    colliderTriangles: 251
-    offset: 5847740
-    length: 31584
+      m_Center: {x: 586.0114, y: 9.712856, z: 434.60114}
+      m_Extent: {x: 17.730713, y: 0.30812317, z: 24.447681}
+    vertices: 418
+    lod0Triangles: 300
+    lod1Triangles: 234
+    colliderTriangles: 234
+    offset: 6369472
+    length: 27872
   - ix: 30
     iz: 22
     centre: {x: 928, y: 0, z: 416}
@@ -1522,7 +1522,7 @@ MonoBehaviour:
     lod0Triangles: 670
     lod1Triangles: 254
     colliderTriangles: 136
-    offset: 5879324
+    offset: 6397344
     length: 42740
   - ix: 1
     iz: 23
@@ -1534,7 +1534,7 @@ MonoBehaviour:
     lod0Triangles: 140
     lod1Triangles: 140
     colliderTriangles: 140
-    offset: 5922064
+    offset: 6440084
     length: 9612
   - ix: 2
     iz: 23
@@ -1546,7 +1546,7 @@ MonoBehaviour:
     lod0Triangles: 72
     lod1Triangles: 64
     colliderTriangles: 64
-    offset: 5931676
+    offset: 6449696
     length: 5004
   - ix: 3
     iz: 23
@@ -1558,7 +1558,7 @@ MonoBehaviour:
     lod0Triangles: 280
     lod1Triangles: 256
     colliderTriangles: 136
-    offset: 5936680
+    offset: 6454700
     length: 23252
   - ix: 4
     iz: 23
@@ -1570,7 +1570,7 @@ MonoBehaviour:
     lod0Triangles: 136
     lod1Triangles: 136
     colliderTriangles: 136
-    offset: 5959932
+    offset: 6477952
     length: 9348
   - ix: 5
     iz: 23
@@ -1582,32 +1582,32 @@ MonoBehaviour:
     lod0Triangles: 68
     lod1Triangles: 68
     colliderTriangles: 68
-    offset: 5969280
+    offset: 6487300
     length: 4692
   - ix: 11
     iz: 23
     centre: {x: -288, y: 0, z: 480}
     bounds:
-      m_Center: {x: -270.2569, y: 19.5458, z: 456.3221}
-      m_Extent: {x: 28.344307, y: 0.1753991, z: 14.174813}
+      m_Center: {x: -270.2569, y: 19.515696, z: 456.3221}
+      m_Extent: {x: 28.344307, y: 0.14529598, z: 14.174813}
     vertices: 477
     lod0Triangles: 387
     lod1Triangles: 355
     colliderTriangles: 355
-    offset: 5973972
+    offset: 6491992
     length: 34692
   - ix: 12
     iz: 23
     centre: {x: -224, y: 0, z: 480}
     bounds:
-      m_Center: {x: -228.65245, y: 19.723696, z: 484.57077}
-      m_Extent: {x: 39.8819, y: 0.98830616, z: 37.367867}
-    vertices: 3072
-    lod0Triangles: 2010
-    lod1Triangles: 1606
-    colliderTriangles: 1562
-    offset: 6008664
-    length: 202116
+      m_Center: {x: -228.65245, y: 19.679811, z: 484.57077}
+      m_Extent: {x: 39.8819, y: 1.0321901, z: 37.367867}
+    vertices: 3119
+    lod0Triangles: 2044
+    lod1Triangles: 1642
+    colliderTriangles: 1586
+    offset: 6526684
+    length: 205144
   - ix: 13
     iz: 23
     centre: {x: -160, y: 0, z: 480}
@@ -1618,7 +1618,7 @@ MonoBehaviour:
     lod0Triangles: 1401
     lod1Triangles: 1131
     colliderTriangles: 1099
-    offset: 6210780
+    offset: 6731828
     length: 136544
   - ix: 14
     iz: 23
@@ -1626,36 +1626,36 @@ MonoBehaviour:
     bounds:
       m_Center: {x: -89.90162, y: 22.57364, z: 480.7772}
       m_Extent: {x: 44.52648, y: 1.0063488, z: 47.808277}
-    vertices: 2600
-    lod0Triangles: 1702
+    vertices: 2598
+    lod0Triangles: 1700
     lod1Triangles: 1358
     colliderTriangles: 1322
-    offset: 6347324
-    length: 171028
+    offset: 6868372
+    length: 170928
   - ix: 15
     iz: 23
     centre: {x: -32, y: 0, z: 480}
     bounds:
       m_Center: {x: -31.132893, y: 23.90442, z: 479.8524}
       m_Extent: {x: 41.24631, y: 1.0506455, z: 47.839203}
-    vertices: 2638
-    lod0Triangles: 1813
+    vertices: 2634
+    lod0Triangles: 1809
     lod1Triangles: 1483
     colliderTriangles: 1447
-    offset: 6518352
-    length: 176384
+    offset: 7039300
+    length: 176184
   - ix: 16
     iz: 23
     centre: {x: 32, y: 0, z: 480}
     bounds:
       m_Center: {x: 24.520742, y: 24.077261, z: 486.04565}
       m_Extent: {x: 40.872257, y: 0.72435856, z: 39.125748}
-    vertices: 3167
-    lod0Triangles: 1846
+    vertices: 3161
+    lod0Triangles: 1840
     lod1Triangles: 1382
     colliderTriangles: 1346
-    offset: 6694736
-    length: 201388
+    offset: 7215484
+    length: 201088
   - ix: 17
     iz: 23
     centre: {x: 96, y: 0, z: 480}
@@ -1666,7 +1666,7 @@ MonoBehaviour:
     lod0Triangles: 1414
     lod1Triangles: 1164
     colliderTriangles: 1128
-    offset: 6896124
+    offset: 7416572
     length: 141776
   - ix: 18
     iz: 23
@@ -1674,96 +1674,96 @@ MonoBehaviour:
     bounds:
       m_Center: {x: 159.38567, y: 22.232447, z: 482.01825}
       m_Extent: {x: 35.500427, y: 1.13807, z: 45.12045}
-    vertices: 3926
-    lod0Triangles: 2624
-    lod1Triangles: 2104
-    colliderTriangles: 2032
-    offset: 7037900
-    length: 259012
+    vertices: 3895
+    lod0Triangles: 2603
+    lod1Triangles: 2099
+    colliderTriangles: 2027
+    offset: 7558348
+    length: 257348
   - ix: 19
     iz: 23
     centre: {x: 224, y: 0, z: 480}
     bounds:
-      m_Center: {x: 228.19263, y: 20.735874, z: 480.84958}
-      m_Extent: {x: 39.876736, y: 0.7267467, z: 14.499212}
-    vertices: 2243
-    lod0Triangles: 1549
-    lod1Triangles: 1279
-    colliderTriangles: 1279
-    offset: 7296912
-    length: 151864
+      m_Center: {x: 225.10384, y: 20.727467, z: 481.14383}
+      m_Extent: {x: 36.787937, y: 0.7351543, z: 8.430461}
+    vertices: 2490
+    lod0Triangles: 1675
+    lod1Triangles: 1405
+    colliderTriangles: 1405
+    offset: 7815696
+    length: 168336
   - ix: 20
     iz: 23
     centre: {x: 288, y: 0, z: 480}
     bounds:
-      m_Center: {x: 293.9523, y: 19.655869, z: 481.8923}
-      m_Extent: {x: 39.194736, y: 0.9579566, z: 42.58874}
-    vertices: 3024
-    lod0Triangles: 1947
-    lod1Triangles: 1527
-    colliderTriangles: 1491
-    offset: 7448776
-    length: 197556
+      m_Center: {x: 293.9523, y: 19.65752, z: 481.8923}
+      m_Extent: {x: 39.194736, y: 0.9596089, z: 42.58874}
+    vertices: 3023
+    lod0Triangles: 1918
+    lod1Triangles: 1508
+    colliderTriangles: 1472
+    offset: 7984032
+    length: 197080
   - ix: 21
     iz: 23
     centre: {x: 352, y: 0, z: 480}
     bounds:
-      m_Center: {x: 355.2691, y: 19.610106, z: 483.39667}
-      m_Extent: {x: 43.5831, y: 0.5557246, z: 40.304882}
-    vertices: 2655
-    lod0Triangles: 1703
-    lod1Triangles: 1389
-    colliderTriangles: 1353
-    offset: 7646332
-    length: 175392
+      m_Center: {x: 355.2691, y: 19.59406, z: 483.39667}
+      m_Extent: {x: 43.5831, y: 0.539679, z: 40.304882}
+    vertices: 2573
+    lod0Triangles: 1686
+    lod1Triangles: 1382
+    colliderTriangles: 1346
+    offset: 8181112
+    length: 170668
   - ix: 22
     iz: 23
     centre: {x: 416, y: 0, z: 480}
     bounds:
-      m_Center: {x: 415.9751, y: 18.663406, z: 477.92526}
-      m_Extent: {x: 45.356216, y: 0.9255139, z: 37.48843}
-    vertices: 3041
-    lod0Triangles: 2009
-    lod1Triangles: 1613
-    colliderTriangles: 1577
-    offset: 7821724
-    length: 200980
+      m_Center: {x: 415.95444, y: 18.547598, z: 478.14597}
+      m_Extent: {x: 45.33555, y: 1.0413214, z: 37.26774}
+    vertices: 3235
+    lod0Triangles: 2106
+    lod1Triangles: 1670
+    colliderTriangles: 1634
+    offset: 8351780
+    length: 212372
   - ix: 23
     iz: 23
     centre: {x: 480, y: 0, z: 480}
     bounds:
-      m_Center: {x: 471.9527, y: 16.68458, z: 473.3434}
-      m_Extent: {x: 40.11216, y: 2.3148894, z: 35.317093}
-    vertices: 2610
-    lod0Triangles: 1485
-    lod1Triangles: 1099
-    colliderTriangles: 1081
-    offset: 8022704
-    length: 165432
+      m_Center: {x: 472.17087, y: 17.029, z: 475.84467}
+      m_Extent: {x: 40.330357, y: 1.9704709, z: 32.553753}
+    vertices: 2521
+    lod0Triangles: 1423
+    lod1Triangles: 1117
+    colliderTriangles: 1099
+    offset: 8564152
+    length: 162008
   - ix: 24
     iz: 23
     centre: {x: 544, y: 0, z: 480}
     bounds:
-      m_Center: {x: 545.0116, y: 12.956898, z: 475.79407}
-      m_Extent: {x: 42.32519, y: 3.7670124, z: 40.987816}
-    vertices: 2407
-    lod0Triangles: 1878
-    lod1Triangles: 1576
-    colliderTriangles: 1558
-    offset: 8188136
-    length: 166712
+      m_Center: {x: 545.0116, y: 12.95723, z: 480.68375}
+      m_Extent: {x: 42.32519, y: 3.7673438, z: 36.13775}
+    vertices: 2128
+    lod0Triangles: 1695
+    lod1Triangles: 1453
+    colliderTriangles: 1435
+    offset: 8726160
+    length: 149192
   - ix: 25
     iz: 23
     centre: {x: 608, y: 0, z: 480}
     bounds:
       m_Center: {x: 601.62506, y: 10.060857, z: 479.5935}
       m_Extent: {x: 34.95476, y: 0.8696573, z: 44.899197}
-    vertices: 1687
-    lod0Triangles: 1213
-    lod1Triangles: 1037
-    colliderTriangles: 1019
-    offset: 8354848
-    length: 115724
+    vertices: 1688
+    lod0Triangles: 1212
+    lod1Triangles: 1040
+    colliderTriangles: 1022
+    offset: 8875352
+    length: 115924
   - ix: 31
     iz: 23
     centre: {x: 992, y: 0, z: 480}
@@ -1774,7 +1774,7 @@ MonoBehaviour:
     lod0Triangles: 84
     lod1Triangles: 68
     colliderTriangles: 68
-    offset: 8470572
+    offset: 8991276
     length: 5844
   - ix: 0
     iz: 24
@@ -1786,7 +1786,7 @@ MonoBehaviour:
     lod0Triangles: 76
     lod1Triangles: 72
     colliderTriangles: 72
-    offset: 8476416
+    offset: 8997120
     length: 5244
   - ix: 1
     iz: 24
@@ -1798,7 +1798,7 @@ MonoBehaviour:
     lod0Triangles: 430
     lod1Triangles: 218
     colliderTriangles: 124
-    offset: 8481660
+    offset: 9002364
     length: 29436
   - ix: 2
     iz: 24
@@ -1810,7 +1810,7 @@ MonoBehaviour:
     lod0Triangles: 341
     lod1Triangles: 335
     colliderTriangles: 323
-    offset: 8511096
+    offset: 9031800
     length: 21288
   - ix: 12
     iz: 24
@@ -1818,48 +1818,48 @@ MonoBehaviour:
     bounds:
       m_Center: {x: -213.37546, y: 20.340279, z: 524.6497}
       m_Extent: {x: 21.50079, y: 0.4929857, z: 9.2714}
-    vertices: 941
-    lod0Triangles: 544
+    vertices: 939
+    lod0Triangles: 542
     lod1Triangles: 418
     colliderTriangles: 408
-    offset: 8532384
-    length: 60232
+    offset: 9053088
+    length: 60132
   - ix: 13
     iz: 24
     centre: {x: -160, y: 0, z: 544}
     bounds:
       m_Center: {x: -160.52306, y: 21.378656, z: 546.836}
       m_Extent: {x: 36.975655, y: 0.93509305, z: 44.619003}
-    vertices: 2313
-    lod0Triangles: 1666
+    vertices: 2311
+    lod0Triangles: 1664
     lod1Triangles: 1390
     colliderTriangles: 1358
-    offset: 8592616
-    length: 157092
+    offset: 9113220
+    length: 156992
   - ix: 14
     iz: 24
     centre: {x: -96, y: 0, z: 544}
     bounds:
       m_Center: {x: -97.27801, y: 22.810637, z: 533.26697}
       m_Extent: {x: 46.356792, y: 0.83961505, z: 31.950356}
-    vertices: 2141
-    lod0Triangles: 1448
+    vertices: 2137
+    lod0Triangles: 1444
     lod1Triangles: 1180
     colliderTriangles: 1162
-    offset: 8749708
-    length: 142924
+    offset: 9270212
+    length: 142724
   - ix: 15
     iz: 24
     centre: {x: -32, y: 0, z: 544}
     bounds:
       m_Center: {x: -29.271492, y: 23.558222, z: 531.4425}
       m_Extent: {x: 42.410007, y: 0.49429518, z: 30.42337}
-    vertices: 1867
-    lod0Triangles: 1384
+    vertices: 1865
+    lod0Triangles: 1382
     lod1Triangles: 1160
     colliderTriangles: 1142
-    offset: 8892632
-    length: 127892
+    offset: 9412936
+    length: 127792
   - ix: 16
     iz: 24
     centre: {x: 32, y: 0, z: 544}
@@ -1870,7 +1870,7 @@ MonoBehaviour:
     lod0Triangles: 1319
     lod1Triangles: 1055
     colliderTriangles: 1037
-    offset: 9020524
+    offset: 9540728
     length: 131140
   - ix: 17
     iz: 24
@@ -1878,96 +1878,96 @@ MonoBehaviour:
     bounds:
       m_Center: {x: 93.07678, y: 23.281248, z: 544.02026}
       m_Extent: {x: 38.975677, y: 1.0470918, z: 46.05095}
-    vertices: 3212
-    lod0Triangles: 2137
-    lod1Triangles: 1727
-    colliderTriangles: 1691
-    offset: 9151664
-    length: 213112
+    vertices: 3254
+    lod0Triangles: 2169
+    lod1Triangles: 1765
+    colliderTriangles: 1719
+    offset: 9671868
+    length: 216004
   - ix: 18
     iz: 24
     centre: {x: 160, y: 0, z: 544}
     bounds:
       m_Center: {x: 156.73302, y: 21.648373, z: 542.4487}
       m_Extent: {x: 41.17902, y: 1.2034315, z: 46.536358}
-    vertices: 3914
-    lod0Triangles: 2615
-    lod1Triangles: 2127
-    colliderTriangles: 2055
-    offset: 9364776
-    length: 259420
+    vertices: 3910
+    lod0Triangles: 2607
+    lod1Triangles: 2125
+    colliderTriangles: 2053
+    offset: 9887872
+    length: 259184
   - ix: 19
     iz: 24
     centre: {x: 224, y: 0, z: 544}
     bounds:
-      m_Center: {x: 223.6641, y: 20.117306, z: 553.4509}
-      m_Extent: {x: 33.1803, y: 1.2825398, z: 20.322107}
-    vertices: 2107
-    lod0Triangles: 1231
-    lod1Triangles: 925
-    colliderTriangles: 925
-    offset: 9624196
-    length: 135104
+      m_Center: {x: 223.6695, y: 20.104061, z: 555.5772}
+      m_Extent: {x: 33.1857, y: 1.2957852, z: 18.19583}
+    vertices: 2189
+    lod0Triangles: 1305
+    lod1Triangles: 1015
+    colliderTriangles: 1015
+    offset: 10147056
+    length: 141808
   - ix: 20
     iz: 24
     centre: {x: 288, y: 0, z: 544}
     bounds:
-      m_Center: {x: 290.28647, y: 18.663996, z: 548.7005}
-      m_Extent: {x: 43.48505, y: 0.78746504, z: 42.801334}
-    vertices: 3197
-    lod0Triangles: 2243
-    lod1Triangles: 1857
-    colliderTriangles: 1821
-    offset: 9759300
-    length: 215848
+      m_Center: {x: 293.2461, y: 18.581308, z: 548.7005}
+      m_Extent: {x: 40.525433, y: 0.7047779, z: 42.801334}
+    vertices: 3267
+    lod0Triangles: 2290
+    lod1Triangles: 1914
+    colliderTriangles: 1878
+    offset: 10288864
+    length: 221100
   - ix: 21
     iz: 24
     centre: {x: 352, y: 0, z: 544}
     bounds:
       m_Center: {x: 350.22086, y: 19.03312, z: 545.82153}
       m_Extent: {x: 45.25654, y: 0.66290706, z: 43.44372}
-    vertices: 2743
-    lod0Triangles: 1776
+    vertices: 2739
+    lod0Triangles: 1772
     lod1Triangles: 1422
     colliderTriangles: 1386
-    offset: 9975148
-    length: 180392
+    offset: 10509964
+    length: 180192
   - ix: 22
     iz: 24
     centre: {x: 416, y: 0, z: 544}
     bounds:
-      m_Center: {x: 411.89352, y: 18.857733, z: 527.1425}
-      m_Extent: {x: 37.917656, y: 0.48837593, z: 24.769207}
-    vertices: 2168
-    lod0Triangles: 1573
-    lod1Triangles: 1287
-    colliderTriangles: 1287
-    offset: 10155540
-    length: 147448
+      m_Center: {x: 411.89352, y: 18.857733, z: 530.2337}
+      m_Extent: {x: 37.917656, y: 0.48837593, z: 21.67797}
+    vertices: 2235
+    lod0Triangles: 1602
+    lod1Triangles: 1318
+    colliderTriangles: 1300
+    offset: 10690156
+    length: 151212
   - ix: 23
     iz: 24
     centre: {x: 480, y: 0, z: 544}
     bounds:
-      m_Center: {x: 475.08878, y: 17.845804, z: 532.9908}
-      m_Extent: {x: 40.815186, y: 1.5003031, z: 18.609404}
-    vertices: 1270
-    lod0Triangles: 804
+      m_Center: {x: 475.08878, y: 17.813383, z: 532.9914}
+      m_Extent: {x: 40.815186, y: 1.532724, z: 18.6088}
+    vertices: 1266
+    lod0Triangles: 802
     lod1Triangles: 594
     colliderTriangles: 594
-    offset: 10302988
-    length: 81632
+    offset: 10841368
+    length: 81444
   - ix: 24
     iz: 24
     centre: {x: 544, y: 0, z: 544}
     bounds:
       m_Center: {x: 549.04004, y: 15.855176, z: 530.2601}
       m_Extent: {x: 42.946938, y: 1.876035, z: 19.667458}
-    vertices: 1910
-    lod0Triangles: 1325
+    vertices: 1900
+    lod0Triangles: 1317
     lod1Triangles: 1133
     colliderTriangles: 1115
-    offset: 10384620
-    length: 130300
+    offset: 10922812
+    length: 129812
   - ix: 25
     iz: 24
     centre: {x: 608, y: 0, z: 544}
@@ -1978,7 +1978,7 @@ MonoBehaviour:
     lod0Triangles: 1000
     lod1Triangles: 770
     colliderTriangles: 770
-    offset: 10514920
+    offset: 11052624
     length: 103680
   - ix: 0
     iz: 25
@@ -1990,7 +1990,7 @@ MonoBehaviour:
     lod0Triangles: 4
     lod1Triangles: 0
     colliderTriangles: 0
-    offset: 10618600
+    offset: 11156304
     length: 324
   - ix: 13
     iz: 25
@@ -2002,7 +2002,7 @@ MonoBehaviour:
     lod0Triangles: 835
     lod1Triangles: 619
     colliderTriangles: 509
-    offset: 10618924
+    offset: 11156628
     length: 75996
   - ix: 17
     iz: 25
@@ -2010,72 +2010,72 @@ MonoBehaviour:
     bounds:
       m_Center: {x: 105.66993, y: 22.628317, z: 609.4547}
       m_Extent: {x: 32.406113, y: 0.97331285, z: 46.975216}
-    vertices: 1540
-    lod0Triangles: 1058
-    lod1Triangles: 840
-    colliderTriangles: 840
-    offset: 10694920
-    length: 102512
+    vertices: 1564
+    lod0Triangles: 1086
+    lod1Triangles: 868
+    colliderTriangles: 868
+    offset: 11232624
+    length: 104528
   - ix: 18
     iz: 25
     centre: {x: 160, y: 0, z: 608}
     bounds:
       m_Center: {x: 158.9479, y: 21.144234, z: 590.6226}
       m_Extent: {x: 42.43771, y: 1.5324888, z: 29.602102}
-    vertices: 2365
-    lod0Triangles: 1796
+    vertices: 2363
+    lod0Triangles: 1794
     lod1Triangles: 1544
     colliderTriangles: 1508
-    offset: 10797432
-    length: 163892
+    offset: 11337152
+    length: 163792
   - ix: 19
     iz: 25
     centre: {x: 224, y: 0, z: 608}
     bounds:
-      m_Center: {x: 225.84355, y: 19.51997, z: 613.74646}
-      m_Extent: {x: 36.52435, y: 1.4311672, z: 39.97342}
-    vertices: 2382
-    lod0Triangles: 1391
-    lod1Triangles: 1043
-    colliderTriangles: 1043
-    offset: 10961324
-    length: 152556
+      m_Center: {x: 225.84355, y: 19.498951, z: 613.74646}
+      m_Extent: {x: 36.52435, y: 1.4521871, z: 39.97342}
+    vertices: 2337
+    lod0Triangles: 1397
+    lod1Triangles: 1053
+    colliderTriangles: 1035
+    offset: 11500944
+    length: 149556
   - ix: 20
     iz: 25
     centre: {x: 288, y: 0, z: 608}
     bounds:
-      m_Center: {x: 290.27036, y: 18.036072, z: 593.447}
-      m_Extent: {x: 40.84404, y: 0.5422971, z: 23.573105}
-    vertices: 1861
-    lod0Triangles: 1321
-    lod1Triangles: 1111
-    colliderTriangles: 1093
-    offset: 11113880
-    length: 126728
+      m_Center: {x: 290.68546, y: 18.060747, z: 593.4181}
+      m_Extent: {x: 40.42895, y: 0.5669726, z: 23.544205}
+    vertices: 2002
+    lod0Triangles: 1363
+    lod1Triangles: 1161
+    colliderTriangles: 1143
+    offset: 11650500
+    length: 135824
   - ix: 21
     iz: 25
     centre: {x: 352, y: 0, z: 608}
     bounds:
       m_Center: {x: 327.5547, y: 18.197435, z: 612.3876}
       m_Extent: {x: 24.96671, y: 1.4383253, z: 40.600956}
-    vertices: 1902
-    lod0Triangles: 1271
+    vertices: 1900
+    lod0Triangles: 1269
     lod1Triangles: 1005
     colliderTriangles: 987
-    offset: 11240608
-    length: 125376
+    offset: 11786324
+    length: 125276
   - ix: 13
     iz: 26
     centre: {x: -160, y: 0, z: 672}
     bounds:
-      m_Center: {x: -176.03749, y: 23.77319, z: 666.91125}
-      m_Extent: {x: 11.092842, y: 1.0290514, z: 42.599335}
-    vertices: 1447
-    lod0Triangles: 1004
-    lod1Triangles: 814
-    colliderTriangles: 814
-    offset: 11365984
-    length: 97352
+      m_Center: {x: -181.28232, y: 24.05286, z: 666.91125}
+      m_Extent: {x: 16.33767, y: 1.3087219, z: 42.599335}
+    vertices: 1496
+    lod0Triangles: 1040
+    lod1Triangles: 850
+    colliderTriangles: 838
+    offset: 11911600
+    length: 100480
   - ix: 17
     iz: 26
     centre: {x: 96, y: 0, z: 672}
@@ -2086,7 +2086,7 @@ MonoBehaviour:
     lod0Triangles: 605
     lod1Triangles: 503
     colliderTriangles: 503
-    offset: 11463336
+    offset: 12012080
     length: 57704
   - ix: 19
     iz: 26
@@ -2098,7 +2098,7 @@ MonoBehaviour:
     lod0Triangles: 1072
     lod1Triangles: 896
     colliderTriangles: 878
-    offset: 11521040
+    offset: 12069784
     length: 105508
   - ix: 20
     iz: 26
@@ -2110,7 +2110,7 @@ MonoBehaviour:
     lod0Triangles: 761
     lod1Triangles: 609
     colliderTriangles: 609
-    offset: 11626548
+    offset: 12175292
     length: 72900
   - ix: 21
     iz: 26
@@ -2122,7 +2122,7 @@ MonoBehaviour:
     lod0Triangles: 1079
     lod1Triangles: 823
     colliderTriangles: 805
-    offset: 11699448
+    offset: 12248192
     length: 113860
   - ix: 13
     iz: 27
@@ -2134,7 +2134,7 @@ MonoBehaviour:
     lod0Triangles: 877
     lod1Triangles: 639
     colliderTriangles: 551
-    offset: 11813308
+    offset: 12362052
     length: 82208
   - ix: 17
     iz: 27
@@ -2146,7 +2146,7 @@ MonoBehaviour:
     lod0Triangles: 745
     lod1Triangles: 593
     colliderTriangles: 593
-    offset: 11895516
+    offset: 12444260
     length: 71844
   - ix: 19
     iz: 27
@@ -2154,12 +2154,12 @@ MonoBehaviour:
     bounds:
       m_Center: {x: 248.48055, y: 19.914085, z: 736.7607}
       m_Extent: {x: 11.83305, y: 0.5032336, z: 43.918686}
-    vertices: 1305
-    lod0Triangles: 945
+    vertices: 1303
+    lod0Triangles: 943
     lod1Triangles: 779
     colliderTriangles: 779
-    offset: 11967360
-    length: 89016
+    offset: 12516104
+    length: 88916
   - ix: 20
     iz: 27
     centre: {x: 288, y: 0, z: 736}
@@ -2170,7 +2170,7 @@ MonoBehaviour:
     lod0Triangles: 821
     lod1Triangles: 673
     colliderTriangles: 655
-    offset: 12056376
+    offset: 12605020
     length: 81596
   - ix: 21
     iz: 27
@@ -2178,24 +2178,24 @@ MonoBehaviour:
     bounds:
       m_Center: {x: 333.0028, y: 18.218828, z: 730.47156}
       m_Extent: {x: 22.557615, y: 1.2263501, z: 41.654095}
-    vertices: 1801
-    lod0Triangles: 1223
+    vertices: 1799
+    lod0Triangles: 1221
     lod1Triangles: 985
     colliderTriangles: 967
-    offset: 12137972
-    length: 119744
+    offset: 12686616
+    length: 119644
   - ix: 13
     iz: 28
     centre: {x: -160, y: 0, z: 800}
     bounds:
-      m_Center: {x: -166.16583, y: 23.347277, z: 799.6545}
-      m_Extent: {x: 12.391871, y: 0.5390611, z: 41.139156}
-    vertices: 1762
-    lod0Triangles: 1278
-    lod1Triangles: 1062
-    colliderTriangles: 1058
-    offset: 12257716
-    length: 120404
+      m_Center: {x: -163.85266, y: 23.998455, z: 799.6545}
+      m_Extent: {x: 18.866976, y: 1.6250163, z: 41.139156}
+    vertices: 1848
+    lod0Triangles: 1334
+    lod1Triangles: 1118
+    colliderTriangles: 1090
+    offset: 12806260
+    length: 125604
   - ix: 17
     iz: 28
     centre: {x: 96, y: 0, z: 800}
@@ -2206,7 +2206,7 @@ MonoBehaviour:
     lod0Triangles: 6
     lod1Triangles: 6
     colliderTriangles: 6
-    offset: 12378120
+    offset: 12931864
     length: 852
   - ix: 19
     iz: 28
@@ -2218,19 +2218,19 @@ MonoBehaviour:
     lod0Triangles: 332
     lod1Triangles: 278
     colliderTriangles: 278
-    offset: 12378972
+    offset: 12932716
     length: 30544
   - ix: 13
     iz: 29
     centre: {x: -160, y: 0, z: 864}
     bounds:
-      m_Center: {x: -156.20091, y: 22.298285, z: 867.20526}
-      m_Extent: {x: 20.32251, y: 0.99705684, z: 41.334545}
+      m_Center: {x: -156.20091, y: 22.292046, z: 867.20526}
+      m_Extent: {x: 20.32251, y: 0.99081826, z: 41.334545}
     vertices: 655
     lod0Triangles: 435
     lod1Triangles: 337
     colliderTriangles: 319
-    offset: 12409516
+    offset: 12963260
     length: 42632
   - ix: 13
     iz: 30
@@ -2242,7 +2242,7 @@ MonoBehaviour:
     lod0Triangles: 480
     lod1Triangles: 192
     colliderTriangles: 68
-    offset: 12452148
+    offset: 13005892
     length: 32108
   - ix: 14
     iz: 30
@@ -2254,7 +2254,7 @@ MonoBehaviour:
     lod0Triangles: 80
     lod1Triangles: 68
     colliderTriangles: 68
-    offset: 12484256
+    offset: 13038000
     length: 5556
   - ix: 29
     iz: 30
@@ -2266,7 +2266,7 @@ MonoBehaviour:
     lod0Triangles: 136
     lod1Triangles: 136
     colliderTriangles: 136
-    offset: 12489812
+    offset: 13043556
     length: 9348
   - ix: 14
     iz: 31
@@ -2278,7 +2278,7 @@ MonoBehaviour:
     lod0Triangles: 16
     lod1Triangles: 12
     colliderTriangles: 12
-    offset: 12499160
+    offset: 13052904
     length: 1284
   - ix: 30
     iz: 31
@@ -2290,15 +2290,15 @@ MonoBehaviour:
     lod0Triangles: 68
     lod1Triangles: 68
     colliderTriangles: 68
-    offset: 12500444
+    offset: 13054188
     length: 4692
-  lod0Triangles: 135682
-  lod1Triangles: 102876
-  colliderTriangles: 96954
-  centreLineM: 4522.4424
+  lod0Triangles: 140369
+  lod1Triangles: 107591
+  colliderTriangles: 100725
+  centreLineM: 4517.4453
   noPassingM: 3424.4678
   edgeLineM: 6974.694
-  warningM: 1124.605
-  stopLines: 78
-  crosswalks: 37
+  warningM: 868.16864
+  stopLines: 92
+  crosswalks: 40
   yieldLines: 0
