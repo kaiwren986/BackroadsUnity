@@ -4,7 +4,12 @@
     "references": [
         "Backroads.Core",
         "Backroads.Sites",
+        "Backroads.Sites.Editor",
+        "Backroads.Roads",
+        "Backroads.Roads.Editor",
+        "Backroads.Canon.Editor",
         "Backroads.Build.Editor",
+        "Clipper2Lib",
         "Unity.Mathematics",
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner"
