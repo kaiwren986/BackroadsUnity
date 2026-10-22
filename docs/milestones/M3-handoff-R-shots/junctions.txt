@@ -1,0 +1,9 @@
+m3.shots.junctions: 8 places from road network 17799d4eebc6d8095a6c35a3d51b106ce66ef8861a23cd6a0ba2ab0d0ce6c26a (TownData/stockport-oh/v1)
+main-street: node 23, the main street from a side street that stops at it; camera (366.2, 21.5, 388.1) looking at (335.9, 19.2, 409.2); 4 arms, 4 crosswalks, side street R15 stops
+residential-x: node 92, four local streets meeting; camera (-31.8, 28.7, 466.5) looking at (-31.7, 24.3, 488.6); 4 kerbed street arms, the shortest 53 m, from a stopping approach
+alley-mouth: node 20, an alley's dropped-kerb mouth on a kerbed street, from across the street; camera (466.0, 23.0, 480.0) looking at (465.1, 18.5, 463.0); alley R12 meets street R99
+gravel-apron: node 31, a gravel road stopping at a paved one; camera (-197.3, 29.4, 697.5) looking at (-171.6, 25.4, 693.3); unpaved R150 (Yard), 90 m, grade +2.8 %
+bridge: node 121, the river bridge from the road before its west end, looking along the deck; camera (537.3, 16.4, 392.1) looking at (616.3, 13.1, 363.5); deck of 226 m over the river (3 edges, 4 piers)
+town-edge: node 34, the town's kerbs ending at a country road (the kerb taper); camera (-156.9, 26.1, 863.9) looking at (-160.6, 24.0, 844.2); R26 (Highway) becomes kerbed R25 (MainStreet)
+complex-pair: node 21, two junctions close together kept as two; camera (462.4, 25.5, 433.8) looking at (456.1, 16.7, 404.1); nodes 21 and 85, 11.9 m apart
+rural-t: node 89, a T on the country highway, from its stopping side road; camera (-891.4, 40.7, 505.1) looking at (-883.5, 35.7, 528.8); highway R91/R90, side road R95 stops
