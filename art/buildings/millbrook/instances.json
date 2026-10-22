@@ -4,7 +4,7 @@
  "town": "Millbrook",
  "seed": "blake2b-64(TOWN_ID|osm|part) per named draw",
  "doors": "tools/world/sites/<town>/doors.json",
- "fallbackDoors": 16,
+ "fallbackDoors": 21,
  "counts": {
   "house": 223,
   "machineshed": 2,
@@ -11312,7 +11312,23 @@
    "streetDist": 89.6,
    "setback": 77.86,
    "party": [],
-   "doors": [],
+   "doors": [
+    {
+     "spec": 0,
+     "kind": "Garage",
+     "width": 4.9,
+     "edge": 1,
+     "u": 5.62,
+     "offWall": 0.0,
+     "plan": [
+      -259.1729,
+      740.954
+     ],
+     "sillY": null,
+     "fallback": true,
+     "ground": -0.176
+    }
+   ],
    "colours": {
     "wall": "barn_red",
     "trim": "trim_white",
@@ -11393,6 +11409,21 @@
    "doors": [
     {
      "spec": 0,
+     "kind": "Garage",
+     "width": 4.9,
+     "edge": 1,
+     "u": 5.616,
+     "offWall": 0.0,
+     "plan": [
+      -253.7379,
+      748.7085
+     ],
+     "sillY": null,
+     "fallback": true,
+     "ground": -0.122
+    },
+    {
+     "spec": 1,
      "kind": "Service",
      "width": 0.85,
      "edge": 3,
@@ -11487,6 +11518,21 @@
    "doors": [
     {
      "spec": 0,
+     "kind": "Garage",
+     "width": 4.9,
+     "edge": 1,
+     "u": 5.615,
+     "offWall": 0.0,
+     "plan": [
+      -243.7299,
+      772.6605
+     ],
+     "sillY": null,
+     "fallback": true,
+     "ground": -0.141
+    },
+    {
+     "spec": 1,
      "kind": "Service",
      "width": 0.85,
      "edge": 3,
@@ -11582,18 +11628,33 @@
    "doors": [
     {
      "spec": 0,
-     "kind": "Service",
-     "width": 0.85,
+     "kind": "Garage",
+     "width": 2.6,
      "edge": 1,
-     "u": 6.744,
+     "u": 5.62,
      "offWall": 0.0,
      "plan": [
-      -225.1373,
-      812.1076
+      -226.2599,
+      812.052
      ],
      "sillY": null,
      "fallback": true,
-     "ground": -0.134
+     "ground": -0.089
+    },
+    {
+     "spec": 1,
+     "kind": "Service",
+     "width": 0.85,
+     "edge": 3,
+     "u": 6.744,
+     "offWall": 0.0,
+     "plan": [
+      -227.5428,
+      815.206
+     ],
+     "sillY": null,
+     "fallback": true,
+     "ground": -0.019
     }
    ],
    "colours": {
@@ -11973,7 +12034,23 @@
    "streetDist": 55.55,
    "setback": 43.81,
    "party": [],
-   "doors": [],
+   "doors": [
+    {
+     "spec": 0,
+     "kind": "Garage",
+     "width": 4.9,
+     "edge": 1,
+     "u": 5.615,
+     "offWall": 0.0,
+     "plan": [
+      -219.4025,
+      829.0395
+     ],
+     "sillY": null,
+     "fallback": true,
+     "ground": -0.107
+    }
+   ],
    "colours": {
     "wall": "siding_grey",
     "trim": "trim_cream",

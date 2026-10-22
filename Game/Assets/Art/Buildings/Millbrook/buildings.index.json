@@ -6,7 +6,7 @@
  "frame": "TownFrame local metres = Unity axes (x east, y up, z north). Place each FBX at origin, no rotation.",
  "doors": "sites-S3",
  "doorsFile": "tools/world/sites/<town>/doors.json",
- "fallbackDoors": 16,
+ "fallbackDoors": 21,
  "lods": "Body_LOD0..2 + Panes_LOD0..2 (one LOD Group on the root, BackroadsModelPostprocessor)",
  "buildings": [
   {
@@ -5994,16 +5994,28 @@
    "height": 3.994,
    "groundMin": -0.267,
    "groundMax": 0.066,
-   "lod0Tris": 244,
-   "lod1Tris": 110,
-   "lod2Tris": 60,
+   "lod0Tris": 302,
+   "lod1Tris": 112,
+   "lod2Tris": 62,
    "panes": 2,
    "colliders": 2,
    "detail": 0,
-   "doors": [],
+   "doors": [
+    {
+     "name": "DOOR_Garage_A00",
+     "kind": "Garage",
+     "spec": 0,
+     "width": 4.9,
+     "local": [
+      0.0801,
+      0.0,
+      -1.6047
+     ]
+    }
+   ],
    "porch": null,
-   "sha256": "1f1891ebe5f568f0ccb990720ed98623989d3949eefdb844010bfe192f91445c",
-   "bytes": 46812
+   "sha256": "de5ba5c23e06f927cf33d5a16a9df7d7ef41925dbb0f9f551acbf6c34b2bc202",
+   "bytes": 50588
   },
   {
    "osm": "way/1272028972",
@@ -6023,17 +6035,28 @@
    "height": 3.589,
    "groundMin": -0.276,
    "groundMax": 0.077,
-   "lod0Tris": 276,
-   "lod1Tris": 98,
+   "lod0Tris": 270,
+   "lod1Tris": 96,
    "lod2Tris": 54,
-   "panes": 2,
+   "panes": 1,
    "colliders": 2,
    "detail": 0,
    "doors": [
     {
-     "name": "DOOR_Service_A00",
-     "kind": "Service",
+     "name": "DOOR_Garage_A00",
+     "kind": "Garage",
      "spec": 0,
+     "width": 4.9,
+     "local": [
+      0.0801,
+      0.0,
+      -1.6045
+     ]
+    },
+    {
+     "name": "DOOR_Service_A01",
+     "kind": "Service",
+     "spec": 1,
      "width": 0.85,
      "local": [
       -1.2018,
@@ -6043,8 +6066,8 @@
     }
    ],
    "porch": null,
-   "sha256": "b5bd4fc2e1efea11c894452828f8da36e673a10ae8184c61e7b6db687e070a2d",
-   "bytes": 48444
+   "sha256": "35e538feb2ad3a118ebee4a1679d0ffab38575dd208510d67d69597f5c06cae6",
+   "bytes": 48796
   },
   {
    "osm": "way/1272028973",
@@ -6064,17 +6087,28 @@
    "height": 3.858,
    "groundMin": -0.348,
    "groundMax": 0.148,
-   "lod0Tris": 353,
-   "lod1Tris": 109,
+   "lod0Tris": 347,
+   "lod1Tris": 107,
    "lod2Tris": 61,
-   "panes": 3,
+   "panes": 2,
    "colliders": 2,
    "detail": 0,
    "doors": [
     {
-     "name": "DOOR_Service_A00",
-     "kind": "Service",
+     "name": "DOOR_Garage_A00",
+     "kind": "Garage",
      "spec": 0,
+     "width": 4.9,
+     "local": [
+      0.0799,
+      0.0,
+      -1.6045
+     ]
+    },
+    {
+     "name": "DOOR_Service_A01",
+     "kind": "Service",
+     "spec": 1,
      "width": 0.85,
      "local": [
       -1.202,
@@ -6084,8 +6118,8 @@
     }
    ],
    "porch": null,
-   "sha256": "80debe8305879f305f41b6dc585d9641537f90a8f1274e5872ed3cd7c84520fb",
-   "bytes": 51916
+   "sha256": "93a65f048a524fbf1e6d0e274c6b06998a146d9212d449952069be48273678ba",
+   "bytes": 52844
   },
   {
    "osm": "way/1272028974",
@@ -6105,28 +6139,39 @@
    "height": 3.844,
    "groundMin": -0.301,
    "groundMax": 0.102,
-   "lod0Tris": 230,
-   "lod1Tris": 108,
-   "lod2Tris": 60,
+   "lod0Tris": 290,
+   "lod1Tris": 110,
+   "lod2Tris": 62,
    "panes": 1,
    "colliders": 2,
    "detail": 0,
    "doors": [
     {
-     "name": "DOOR_Service_A00",
-     "kind": "Service",
+     "name": "DOOR_Garage_A00",
+     "kind": "Garage",
      "spec": 0,
+     "width": 2.6,
+     "local": [
+      0.0801,
+      0.0,
+      -1.6047
+     ]
+    },
+    {
+     "name": "DOOR_Service_A01",
+     "kind": "Service",
+     "spec": 1,
      "width": 0.85,
      "local": [
-      1.2027,
+      -1.2028,
       0.0,
-      -1.5491
+      1.5493
      ]
     }
    ],
    "porch": null,
-   "sha256": "78943a45ee36fb7f4b2a2a8b9d3edb66e70d536aa3dfe809e988984f730bc5c3",
-   "bytes": 47228
+   "sha256": "90076396dc248f7438908316dec378eaa79d5b892f6e44b897f871b249352985",
+   "bytes": 50668
   },
   {
    "osm": "way/1272028975",
@@ -6280,16 +6325,28 @@
    "height": 3.664,
    "groundMin": -0.4,
    "groundMax": 0.443,
-   "lod0Tris": 248,
-   "lod1Tris": 112,
-   "lod2Tris": 60,
+   "lod0Tris": 304,
+   "lod1Tris": 114,
+   "lod2Tris": 62,
    "panes": 2,
    "colliders": 2,
    "detail": 0,
-   "doors": [],
+   "doors": [
+    {
+     "name": "DOOR_Garage_A00",
+     "kind": "Garage",
+     "spec": 0,
+     "width": 4.9,
+     "local": [
+      -0.0242,
+      0.0,
+      -1.6064
+     ]
+    }
+   ],
    "porch": null,
-   "sha256": "3642f5d3b0594c001fe613e506d4caa4095ac4679d0b5fd4eb7a790737e59641",
-   "bytes": 47116
+   "sha256": "07cddc0f0eee141f8066822acec86e772f898388f18d8978058b8799679310c7",
+   "bytes": 50908
   },
   {
    "osm": "way/1272028979",

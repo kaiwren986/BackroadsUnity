@@ -450,7 +450,7 @@ class Planner:
                         best = (d, p)
             if best is not None and best[0] > 1e-3:
                 target = G.norm(G.sub(best[1], c))
-            e = edge_facing(target, 2.8)
+            e = edge_facing(target, 3.3)            # a 2.6 m door needs 3.3 m of wall
             if e is not None:
                 L = lens[e]
                 if L >= 6.6 and D.chance('garage.double', 0.5):
@@ -464,6 +464,10 @@ class Planner:
             e = edge_facing(sdir, 1.6)
             if e is not None:
                 add('Main', e, lens[e] / 2, 1.0 if lens[e] < 3.5 else 1.5)
+        if not out:
+            # every building gets at least one door: a plain one on the wall facing the street (or the longest wall)
+            e = edge_facing(sdir, 1.7)
+            add('Main', e, lens[e] / 2 if e is not None else 0, 0.9)
         return out
 
     def resolve_doors(self, specs, poly_o, poly_s):
