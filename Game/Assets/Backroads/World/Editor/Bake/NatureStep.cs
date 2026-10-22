@@ -194,7 +194,7 @@ namespace Backroads.World.Bake
     /// <summary>
     /// T3.3 step 4 (W7, provisional: the game places are lane G's in M9): the places on real features, in CanonData v1's
     /// world.json "pois" form (id, name, kind, x, z, r, fall, y), with the canon's fictional names: the garage (the car
-    /// repair shop; four parking bays in front of it, between its front and the street, facing it), the mill (the large
+    /// repair shop; five parking bays in front of it, between its front and the street, facing it), the mill (the large
     /// building by the dam that lane A builds as the mill), the fuel station (the fuel canopy), the river landing (the
     /// slipway's end at the water), the farm (the largest field), the town (the commercial core), and the scout's added
     /// quarry, depot and marsh. Positions are rounded to the millimetre, yaws to the microradian.
@@ -392,9 +392,11 @@ namespace Backroads.World.Bake
                     var row = garage.centroid + d * (front + 4.0);
                     var side = new double2(-d.y, d.x);
                     double yawU = Math.Atan2(-d.x, -d.y);   // a car facing the building: forward = -d, Unity yaw from +z toward +x
-                    for (int q = 0; q < 4; q++)
+                    // five bays like the canon's placements.json parking (5.6 m apart): bays 0-3 for the M2 vehicles in
+                    // VEHICLE_ORDER, bay 4 the dozer's (empty until M7)
+                    for (int q = 0; q < 5; q++)
                     {
-                        var p = row + side * ((q - 1.5) * 2.8);
+                        var p = row + side * ((q - 2) * 5.6);
                         r.bays.Add(new PlacesResult.Bay
                         {
                             x = Math.Round(p.x, 3), z = Math.Round(p.y, 3), yawJs = Math.Round(-yawU, 6), y = Math.Round(g.Sample(g.heights, p.x, p.y), 3),

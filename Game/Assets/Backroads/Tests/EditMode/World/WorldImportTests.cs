@@ -24,6 +24,16 @@ namespace Backroads.Tests.EditMode.World
             return CanonJson.Obj(CanonJson.Parse(File.ReadAllText(p)), rel);
         }
 
+        static bool InsidePoly(UnityEngine.Vector2[] poly, UnityEngine.Vector2 p)
+        {
+            if (poly == null || poly.Length < 3) return false;
+            bool inside = false;
+            for (int i = 0, j = poly.Length - 1; i < poly.Length; j = i++)
+                if ((poly[i].y > p.y) != (poly[j].y > p.y) && p.x < (poly[j].x - poly[i].x) * (p.y - poly[i].y) / (poly[j].y - poly[i].y) + poly[i].x)
+                    inside = !inside;
+            return inside;
+        }
+
         [Test]
         public void ImportMatchesData()
         {
@@ -71,6 +81,15 @@ namespace Backroads.Tests.EditMode.World
             foreach (var id in new[] { "street", "overview", "dam", "bridge", "landing", "fuel", "quarry", "marsh", "garage", "farm", "depot", "river" })
                 Assert.IsTrue(ids.Contains(id), "camera view " + id);
             Assert.IsTrue(a.TryGetPoi("garage", out _), "garage poi");
+            // the garage bays as the canon gives them (ActiveWorld.GarageBays): five, 5.6 m apart, none inside a building
+            Assert.AreEqual(5, a.parking.Length, "garage bays: the four M2 vehicles and the dozer's, as the canon's");
+            for (int i = 0; i < a.parking.Length; i++)
+            {
+                var p = new UnityEngine.Vector2(-a.parking[i].x, a.parking[i].z);
+                if (i > 0) Assert.AreEqual(5.6f, UnityEngine.Vector2.Distance(p, new UnityEngine.Vector2(-a.parking[i - 1].x, a.parking[i - 1].z)), 0.01f, "bay spacing");
+                foreach (var b in a.buildings)
+                    Assert.IsFalse(InsidePoly(b.footprint, p), $"bay {i} inside building {b.osm}");
+            }
             Assert.NotNull(a.map, "map");
             Assert.AreEqual(2048, a.map.width, "map size");
             Assert.NotNull(a.roadChunks, "lane R's road chunks");

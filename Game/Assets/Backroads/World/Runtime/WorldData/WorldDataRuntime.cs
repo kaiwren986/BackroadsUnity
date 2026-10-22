@@ -85,22 +85,47 @@ namespace Backroads.World
     }
 
     /// <summary>
-    /// T3.3: the world the game is in now (the canon test world or a baked world), for the code that only needs "the
-    /// ground": ground queries, cameras, vehicles (lane V: VehicleSimSystem and VehicleSpawner can bind here instead of
-    /// CanonRuntime). The scene's world root sets it when it has loaded and clears it on destroy. When nothing is set,
-    /// TryGrid falls back to the canon if it is loaded.
+    /// T3.3: the world the game is in now, the one place that code needing "the world" binds to (ground queries, cameras,
+    /// lane V's VehicleSpawner and VehicleSimSystem from T3.6), the same in both worlds.
+    /// <para>Who sets it: the scene's world root, once everything is built: <c>MillbrookWorld</c> (CanonTestWorld.unity,
+    /// Name "canon", from CanonRuntime and the canon asset) and <c>TownWorld</c> (Millbrook.unity, Name "millbrook", from
+    /// WorldDataRuntime and the imported WorldData). Any other scene with its own grid (a test track) may call Set too.</para>
+    /// <para>Lifecycle: empty at start (statics reset on SubsystemRegistration); <c>Set</c> when the root is ready, then
+    /// <c>Changed</c>; <c>Clear(grid)</c> when that world's grid is unloaded (CanonRuntime.Unload, WorldDataRuntime.Unload:
+    /// the root's OnDestroy, a scene change, quitting), then <c>Changed</c>. Clear ignores a grid that is not the active
+    /// one, so unloading the canon after the town is set leaves the town active. A consumer waits for <c>IsSet</c> (or
+    /// <c>Changed</c>) and drops its references on the Changed that clears or replaces the world. The arrays and grids
+    /// belong to the world root; consumers never dispose them.</para>
+    /// <para>Frames: exactly as CanonRuntime's: Grid is queried through WorldGridQueries like CanonRuntime.Grid; Colliders,
+    /// Vegetation, GarageBays and Pois are in JS space (x_js = -x_unity), in the canon's placements.json, vegetation.json
+    /// and world.json forms.</para>
+    /// <para>When nothing is set, TryGrid falls back to the canon if it is loaded (the M2 code paths keep working).</para>
     /// </summary>
     public static class ActiveWorld
     {
+        /// <summary>"canon" (the canon test world) or the WorldData world id ("millbrook"); null when nothing is set.</summary>
         public static string Name { get; private set; }
+        /// <summary>The world's grid (heights, surfaces, mud, deformation layers), on its WorldGridLayout.</summary>
         public static WorldGrid Grid { get; private set; }
+        /// <summary>The static collider grid: a box per building, a circle per tree trunk (JS space, PlacementSet form).</summary>
         public static ColliderGrid Colliders { get; private set; }
+        /// <summary>The trees, bushes, reeds and rocks (JS space; a collider's <c>tree</c> indexes <c>Vegetation.trees</c>).</summary>
         public static VegetationSet Vegetation { get; private set; }
-        /// <summary>The garage's parking bays (JS space, PlacementSet form) and the world's places (JS space, WorldInfo form).</summary>
-        public static PlacementSet.Parking[] Parking { get; private set; } = Array.Empty<PlacementSet.Parking>();
+        /// <summary>
+        /// The garage's spawn bays in VEHICLE_ORDER (<c>ClassicVehicleDefs.Order</c>): bay i is vehicle i's, 0-3 the four M2
+        /// vehicles and 4 the dozer's (empty until M7). Five in both worlds: the canon's placements.json parking, and the
+        /// new Millbrook's places.json parking (5.6 m apart in front of the garage, facing it). JS space, PlacementSet
+        /// form (x, z, yaw with yaw_js = -yaw_unity), so <c>SpawnAtJs(def, bay.x, bay.z, bay.yaw)</c> takes them as they are.
+        /// </summary>
+        public static PlacementSet.Parking[] GarageBays { get; private set; } = Array.Empty<PlacementSet.Parking>();
+        /// <summary>
+        /// The world's places (world.json pois form, JS space). The new Millbrook has garage, mill, fuel, landing, farm, town,
+        /// quarry, depot and bog; the canon has town, depot, farm, quarry, mill, harbor and fuel (no "garage": its garage is
+        /// where its bays are).
+        /// </summary>
         public static WorldInfo.Poi[] Pois { get; private set; } = Array.Empty<WorldInfo.Poi>();
 
-        /// <summary>Raised after Set and Clear.</summary>
+        /// <summary>Raised after Set and after a Clear that cleared.</summary>
         public static event Action Changed;
 
         public static bool IsSet => Grid != null && Grid.IsCreated;
@@ -109,26 +134,35 @@ namespace Backroads.World
         static void ResetStatics()
         {
             Name = null; Grid = null; Colliders = null; Vegetation = null;
-            Parking = Array.Empty<PlacementSet.Parking>(); Pois = Array.Empty<WorldInfo.Poi>();
+            GarageBays = Array.Empty<PlacementSet.Parking>(); Pois = Array.Empty<WorldInfo.Poi>();
             Changed = null;
         }
 
         public static void Set(string name, WorldGrid grid, ColliderGrid colliders, VegetationSet vegetation,
-                               PlacementSet.Parking[] parking, WorldInfo.Poi[] pois)
+                               PlacementSet.Parking[] garageBays, WorldInfo.Poi[] pois)
         {
+            if (grid == null) throw new ArgumentNullException(nameof(grid));
             Name = name; Grid = grid; Colliders = colliders; Vegetation = vegetation;
-            Parking = parking ?? Array.Empty<PlacementSet.Parking>();
+            GarageBays = garageBays ?? Array.Empty<PlacementSet.Parking>();
             Pois = pois ?? Array.Empty<WorldInfo.Poi>();
             Changed?.Invoke();
         }
 
-        /// <summary>Clears the active world if it is this grid.</summary>
+        /// <summary>Clears the active world if it is this grid (else does nothing).</summary>
         public static void Clear(WorldGrid grid)
         {
             if (grid == null || !ReferenceEquals(Grid, grid)) return;
             Name = null; Grid = null; Colliders = null; Vegetation = null;
-            Parking = Array.Empty<PlacementSet.Parking>(); Pois = Array.Empty<WorldInfo.Poi>();
+            GarageBays = Array.Empty<PlacementSet.Parking>(); Pois = Array.Empty<WorldInfo.Poi>();
             Changed?.Invoke();
+        }
+
+        /// <summary>The place with this id (for example "fuel"), if the world has it.</summary>
+        public static bool TryGetPoi(string id, out WorldInfo.Poi poi)
+        {
+            foreach (var p in Pois) if (p.id == id) { poi = p; return true; }
+            poi = default;
+            return false;
         }
 
         /// <summary>The ground to query: the active world, else the canon when it is loaded.</summary>
