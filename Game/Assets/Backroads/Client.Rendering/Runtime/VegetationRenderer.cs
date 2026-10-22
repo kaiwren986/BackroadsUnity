@@ -24,18 +24,25 @@ namespace Backroads.Client.Rendering
         public readonly List<Material> Created = new List<Material>();
         Mesh _rockMesh;
 
-        // T2.5 re-snap (props.js onTerrainChanged): trees by 16 m cell, their transforms and current ground height
-        const int SnapCells = 64;
+        // T2.5 re-snap (props.js onTerrainChanged): trees by 16 m cell over the world's grid (T3.1: the cells and the
+        // half size come from the canon's WorldGridLayout), their transforms and current ground height
+        const float SnapCell = 16f;
+        readonly int SnapCells;
+        readonly float _half;
         readonly VegetationSet _veg;
         readonly Transform[] _treeTf;
         readonly float[] _treeY;
-        readonly List<int>[] _treeCells = new List<int>[SnapCells * SnapCells];
+        readonly List<int>[] _treeCells;
         int[] _treeCollider;
         /// <summary>Trees moved by Resnap since start.</summary>
         public int Resnapped { get; private set; }
 
         public VegetationRenderer(CanonAsset canon, MillbrookLook look, Transform parent, float nearRadius)
         {
+            var layout = WorldGrid.LayoutOf(canon);
+            SnapCells = layout.ColliderCellsPerSide;
+            _half = layout.Half;
+            _treeCells = new List<int>[SnapCells * SnapCells];
             Root = new GameObject("Vegetation").transform;
             Root.SetParent(parent, false);
             var veg = canon.vegetation;
@@ -74,7 +81,7 @@ namespace Backroads.Client.Rendering
                 var tr = go.transform;
                 _treeTf[i] = tr;
                 _treeY[i] = t.y;
-                int cell = Mathf.Clamp(Mathf.FloorToInt((t.x + 512f) / 16f), 0, SnapCells - 1) + Mathf.Clamp(Mathf.FloorToInt((t.z + 512f) / 16f), 0, SnapCells - 1) * SnapCells;
+                int cell = SnapIndex(t.x) + SnapIndex(t.z) * SnapCells;
                 (_treeCells[cell] ??= new List<int>()).Add(i);
                 tr.SetParent(speciesRoots[t.sp], false);
                 tr.SetLocalPositionAndRotation(pose.position, pose.rotation);
@@ -111,15 +118,19 @@ namespace Backroads.Client.Rendering
             }
         }
 
+        /// <summary>The 16 m snap cell of a JS x (or z), clamped to the grid.</summary>
+        int SnapIndex(float v) => Mathf.Clamp(Mathf.FloorToInt((v + _half) / SnapCell), 0, SnapCells - 1);
+
         /// <summary>
         /// props.js onTerrainChanged: trees inside the changed vertex rectangle (+1 m) follow the ground (mesh 0.2 m
         /// below it) and their ColliderGrid circle's y range moves with them. Returns the number of trees moved.
         /// </summary>
         public int Resnap(int i0, int j0, int i1, int j1, WorldGridView grid, ColliderGrid colliders)
         {
-            float x0 = i0 * 0.5f - 512f - 1f, x1 = i1 * 0.5f - 512f + 1f, z0 = j0 * 0.5f - 512f - 1f, z1 = j1 * 0.5f - 512f + 1f;
-            int c0 = Mathf.Clamp(Mathf.FloorToInt((x0 + 512f) / 16f), 0, SnapCells - 1), c1 = Mathf.Clamp(Mathf.FloorToInt((x1 + 512f) / 16f), 0, SnapCells - 1);
-            int r0 = Mathf.Clamp(Mathf.FloorToInt((z0 + 512f) / 16f), 0, SnapCells - 1), r1 = Mathf.Clamp(Mathf.FloorToInt((z1 + 512f) / 16f), 0, SnapCells - 1);
+            float cell = grid.Layout.Cell, half = grid.Layout.Half;
+            float x0 = i0 * cell - half - 1f, x1 = i1 * cell - half + 1f, z0 = j0 * cell - half - 1f, z1 = j1 * cell - half + 1f;
+            int c0 = SnapIndex(x0), c1 = SnapIndex(x1);
+            int r0 = SnapIndex(z0), r1 = SnapIndex(z1);
             int moved = 0;
             for (int r = r0; r <= r1; r++)
                 for (int c = c0; c <= c1; c++)

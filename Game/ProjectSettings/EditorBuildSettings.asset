@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Backroads/Scenes/Millbrook.unity
+    path: Assets/Backroads/Scenes/CanonTestWorld.unity
     guid: fca7fbc00a01f32419f6dd81bc8d376b
   - enabled: 1
     path: Assets/Backroads/Scenes/EngineBench.unity

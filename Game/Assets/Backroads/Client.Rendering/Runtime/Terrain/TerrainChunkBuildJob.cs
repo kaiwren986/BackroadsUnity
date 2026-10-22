@@ -53,13 +53,13 @@ namespace Backroads.Client.Rendering
     /// <summary>
     /// T1.3: builds terrain chunks (03 section 4.3, terrain.js build/writeVertex/colorAt) into Mesh.MeshData in parallel,
     /// one chunk per index. JS layout inside; written in Unity space: x negated, normal x negated, winding swapped.
-    /// Grid positions are BrCoords.Pos(i*0.5 - 512, H[k], j*0.5 - 512) bit for bit; skirts sit 1.2 + 0.7*step lower.
+    /// Grid positions are BrCoords.Pos(i*Cell - Half, H[k], j*Cell - Half) bit for bit (i*0.5 - 512 on the canon test
+    /// world); skirts sit 1.2 + 0.7*step lower. The grid's size comes from Grid.Layout (T3.1).
     /// </summary>
     [BurstCompile]
     public struct TerrainChunkBuildJob : IJobParallelFor
     {
-        public const int CellsPerChunk = 128;   // 64 m
-        public const int ChunksPerSide = 16;
+        public const int CellsPerChunk = WorldGridLayout.ChunkCells;   // 64 m
 
         public WorldGridView Grid;
         [ReadOnly] public NativeArray<int2> Chunks;     // (cx, cz) in JS grid order
@@ -186,14 +186,13 @@ namespace Backroads.Client.Rendering
 
     /// <summary>
     /// terrain.js writeVertex/colorAt/surfColor/writeKind for one vertex (shared by the chunk build and the partial
-    /// region update, so a partial update writes exactly what a rebuild would).
+    /// region update, so a partial update writes exactly what a rebuild would). The grid's size comes from Grid.Layout.
     /// </summary>
     public struct TerrainVertexWriter
     {
         public WorldGridView Grid;
         public TerrainPalette Pal;
 
-        const int N = WorldGrid.N, VN = WorldGrid.VN, TintN = WorldGrid.TintN;
         const byte GRASS = 0, DIRT = 1, SAND = 2, ROCK = 3, ROAD = 4, GRAVEL = 5, CONCRETE = 6, TRACK = 7, MUD = 8;
 
         static float Smooth(float a, float b, float x)
@@ -206,17 +205,19 @@ namespace Backroads.Client.Rendering
         {
             var H = Grid.H;
             var S = Grid.Surface;
+            int N = Grid.Layout.N, VN = Grid.Layout.VN;
+            float cell = Grid.Layout.Cell, half = Grid.Layout.Half;
             int k = j * VN + i;
             float h = H[k];
-            float x = i * 0.5f - 512f, z = j * 0.5f - 512f;
+            float x = i * cell - half, z = j * cell - half;
             // BrCoords.Pos(x, y, z) = (-x, y, z); skirts in double like JS (h - skirt stored as float32)
             float y = skirt == 0.0 ? h : (float)(h - skirt);
             float hl = H[i > 0 ? k - 1 : k], hr = H[i < N ? k + 1 : k];
             float hu = H[j > 0 ? k - VN : k], hd = H[j < N ? k + VN : k];
-            float nx = hl - hr, nz = hu - hd, ny = 2f * WorldGrid.Cell;
+            float nx = hl - hr, nz = hu - hd, ny = 2f * cell;
             float len = math.sqrt(nx * nx + ny * ny + nz * nz);
             pn[v] = new TerrainVertexPN { position = new float3(-x, y, z), normal = new float3(-nx / len, ny / len, nz / len) };
-            float slope = math.sqrt(nx * nx + nz * nz) / (2f * WorldGrid.Cell);
+            float slope = math.sqrt(nx * nx + nz * nz) / (2f * cell);
 
             byte s = S[k];
             int st = math.max(1, math.min(step, 4));
@@ -302,8 +303,10 @@ namespace Backroads.Client.Rendering
 
         float3 ColorAt(int i, int j, int k, float h, float slope, byte s)
         {
-            // tint grid (8 m)
-            float tu = i / 16f, tv = j / 16f;
+            // tint grid (8 m: TintStep = 16 grid vertices per tint cell)
+            int TintN = Grid.Layout.TintN;
+            float tstep = Grid.Layout.TintStep;
+            float tu = i / tstep, tv = j / tstep;
             int ti = math.min(TintN - 2, (int)tu), tj = math.min(TintN - 2, (int)tv);
             float fu = tu - ti, fv = tv - tj;
             var T = Grid.Tint;

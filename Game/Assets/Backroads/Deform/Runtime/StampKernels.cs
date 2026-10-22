@@ -8,9 +8,13 @@ namespace Backroads.Deform
     /// Raw views of the WorldGrid layers the kernels read and write (PLAN 2.6). Delta is DeltaUm (int32 micrometres
     /// relative to H0, the authoritative state); H is the derived float32 height (H0 + Delta * 1e-6) that wheels and the
     /// terrain read; H0Um and BaseUm are the canon heights H0 and BASE rounded once to micrometres (DeformGrid).
+    /// N, VN, CellShift and OriginQ20 are the grid's size (WorldGridLayout, T3.1).
     /// </summary>
     public unsafe struct DeformLayers
     {
+        /// <summary>Cells and vertices per side; Q20 units per cell are 2^CellShift; OriginQ20 = the grid's half size in Q20.</summary>
+        public int N, VN, CellShift;
+        public long OriginQ20;
         [NativeDisableUnsafePtrRestriction] public int* Delta;
         [NativeDisableUnsafePtrRestriction] public float* H;
         [NativeDisableUnsafePtrRestriction] public byte* Wear;
@@ -55,7 +59,8 @@ namespace Backroads.Deform
     /// <summary>
     /// T2.5 integer kernels (06 section 5.6, PLAN 2.6 [T2]): world.js rut / brush / relax rewritten in fixed point on
     /// DeltaUm, so every machine that applies the same stamps gets the same integers (no dependence on float modes).
-    /// Units: horizontal Q20 metres from the grid origin (JS x = -512 m is 0; one 0.5 m cell is 2^19), heights in
+    /// Units: horizontal Q20 metres from the grid origin (JS x = -Half is 0, -512 m on the canon test world; one 0.5 m
+    /// cell is 2^19; the size comes from DeformLayers, T3.1), heights in
     /// micrometres, falloffs and weights in Q20 / Q16. Rounding: every height increment is rounded half away from zero
     /// once per vertex and call; the berm spoil of a call is split over the ring by largest remainder (ties by ring
     /// order), so no micrometre is created or lost. The derived H is rewritten for each changed vertex with the same
@@ -63,9 +68,6 @@ namespace Backroads.Deform
     /// </summary>
     public static unsafe class StampKernels
     {
-        public const int N = 2048, VN = 2049;
-        public const int CellShift = 19;                  // 0.5 m = 2^19 Q20 units
-        public const long OriginQ20 = 512L << 20;         // JS x = -512 m
         public const byte GRASS = 0, DIRT = 1, ROAD = 4, CONCRETE = 6, TRACK = 7;
 
         /// <summary>world.js SOFTNESS (float32 values) in Q16, rounded: 0.5, 1, 0.85, 0, 0, 0.16, 0, 0.3, 1.</summary>
@@ -163,7 +165,8 @@ namespace Backroads.Deform
         {
             var res = new StampResult();
             if (radius <= 0) return res;
-            long gx = x + OriginQ20, gz = z + OriginQ20;
+            int N = L.N, VN = L.VN, CellShift = L.CellShift;
+            long gx = x + L.OriginQ20, gz = z + L.OriginQ20;
             const long Ring = 11L << 20;                          // 0.55 m = 11/20 m: compared as 20 * d
             long outer20 = 20 * radius + Ring;                    // 20 * (radius + 0.55 m)
             long outer = (outer20 + 19) / 20;                     // >= radius + 0.55 m, for the box
@@ -273,7 +276,8 @@ namespace Backroads.Deform
         {
             var res = new StampResult();
             if (radius <= 0 || radius > (2L << 20)) return res;
-            long gx = x + OriginQ20, gz = z + OriginQ20;
+            int N = L.N, VN = L.VN, CellShift = L.CellShift;
+            long gx = x + L.OriginQ20, gz = z + L.OriginQ20;
             int i0 = (int)Math.Max(1, FloorDiv(gx - radius, 1L << CellShift)), i1 = (int)Math.Min(N - 1, CeilDiv(gx + radius, 1L << CellShift));
             int j0 = (int)Math.Max(1, FloorDiv(gz - radius, 1L << CellShift)), j1 = (int)Math.Min(N - 1, CeilDiv(gz + radius, 1L << CellShift));
             if (i0 > i1 || j0 > j1) return res;
@@ -321,8 +325,9 @@ namespace Backroads.Deform
         public static StampResult Relax(in DeformLayers L, long x, long z, long radius, int iters, long maxDiffUm)
         {
             var res = new StampResult();
-            long gx = x + OriginQ20, gz = z + OriginQ20;
-            const long HalfCell = 1L << (CellShift - 1);
+            int N = L.N, VN = L.VN, CellShift = L.CellShift;
+            long gx = x + L.OriginQ20, gz = z + L.OriginQ20;
+            long HalfCell = 1L << (CellShift - 1);
             int gi = (int)FloorDiv(gx + HalfCell, 1L << CellShift), gj = (int)FloorDiv(gz + HalfCell, 1L << CellShift); // Math.round
             int rc = (int)CeilDiv(Math.Max(0, radius), 1L << CellShift);
             int i0 = Math.Max(1, gi - rc), i1 = Math.Min(N - 1, gi + rc);
