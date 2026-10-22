@@ -102,12 +102,17 @@ namespace Backroads.Roads.Editor
             return RoadGraphBuilder.Build(input);
         }
 
-        public static RoadNetworkAsset BakeTownInMemory(string townId, out RoadGraph graph, out RoadGraphInput input, out OsmImportReport report)
+        public static RoadNetworkAsset BakeTownInMemory(string townId, out RoadGraph graph, out RoadGraphInput input, out OsmImportReport report) =>
+            BakeTownInMemory(townId, out graph, out input, out report, out _);
+
+        /// <summary>R0o (the graph) and R1 (the junction surfaces, with the town's roads-overrides) into a fresh asset.</summary>
+        public static RoadNetworkAsset BakeTownInMemory(string townId, out RoadGraph graph, out RoadGraphInput input, out OsmImportReport report, out RoadSurfaces surfaces)
         {
             graph = BuildTown(townId, out input, out report);
+            surfaces = SurfaceBuilder.Build(graph, input, RoadOverrides.Load(townId));
             var a = ScriptableObject.CreateInstance<RoadNetworkAsset>();
             a.name = RoadNetworkAsset.TownResourceName(townId);
-            a.SetFrom(graph, report);
+            a.SetFrom(graph, report, surfaces);
             return a;
         }
 
@@ -126,7 +131,7 @@ namespace Backroads.Roads.Editor
         public static bool BakeTown(string townId, out string message)
         {
             var sw = System.Diagnostics.Stopwatch.StartNew();
-            var fresh = BakeTownInMemory(townId, out var graph, out var input, out var report);
+            var fresh = BakeTownInMemory(townId, out var graph, out var input, out var report, out var surfaces);
             EnsureFolder(BakedDir);
             string path = TownAssetPath(townId);
             var asset = LoadBakedTown(townId);
@@ -144,7 +149,10 @@ namespace Backroads.Roads.Editor
             }
             AssetDatabase.SaveAssets();
             var reportPath = WriteTownReport(townId, graph, input, report, asset);
-            message = $"roads R0o baked {townId} in {sw.Elapsed.TotalMilliseconds:F0} ms: {RoadGraphReport.Summary(graph)}; content {asset.contentHash.Substring(0, 12)} -> {path}; report {reportPath}";
+            var bake = new SurfaceBaker.Bake { town = townId, graph = graph, input = input, import = report, surfaces = surfaces, checks = SurfaceChecks.Run(graph, input, surfaces) };
+            var surfPath = SurfaceBaker.WriteReport(bake);
+            RoadGraphMap.WriteJunctions(bake);
+            message = $"roads R0o + R1 baked {townId} in {sw.Elapsed.TotalMilliseconds:F0} ms: {RoadGraphReport.Summary(graph)}; {SurfaceChecks.Summary(bake.checks)}; content {asset.contentHash.Substring(0, 12)} -> {path}; reports {reportPath}, {surfPath}";
             return true;
         }
 
@@ -199,6 +207,9 @@ namespace Backroads.Roads.Editor
                 .Select(x => string.Format(inv, "{0} {1} ({2:F2} km)", x.Key, x.Count(), x.Sum(q => q.Length) / 1000))));
             sb.AppendLine("cross sections: " + string.Join(", ", input.roads.GroupBy(x => (x.cls, x.xs.source, w: Math.Round(x.xs.Width, 2))).OrderBy(x => x.Key.cls).ThenBy(x => x.Key.w)
                 .Select(x => string.Format(inv, "{0} {1:F2} m from {2} x{3}", x.Key.cls, x.Key.w, x.Key.source, x.Count()))));
+            sb.AppendLine($"road sides narrowed to clear a building: {r.fitted.Count}; still inside one lane of a building: {r.cannotClear.Count}");
+            foreach (var x in r.fitted) sb.AppendLine("  " + x);
+            foreach (var x in r.cannotClear) sb.AppendLine("  CANNOT CLEAR: " + x);
             sb.AppendLine(string.Format(inv, "heights: {0} samples; warped onto junctions {1}; moved by the final grade clamp {2}; largest change from the smoothed DEM outside warps and decks {3:F3} m; segments over the limit and steeper than the real road {4}",
                 r.samples, r.warpedSamples, r.clampedSamples, r.maxDevFromSmoothed, r.gradeConflicts));
             sb.AppendLine(string.Format(inv, "centreline vs bare-earth DEM (outside decks): mean {0:F3} m, p95 {1:F3} m, max {2:F3} m", r.demMeanAbs, r.demP95Abs, r.demMaxAbs));
@@ -263,6 +274,29 @@ namespace Backroads.Roads.Editor
                 {
                     bool ok = RoadNetworkBaker.Bake(out var msg);
                     if (ok) Debug.Log("[BR] " + msg); else { Debug.LogError("[BR] " + msg); code = 2; }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+                code = 2;
+            }
+            if (Application.isBatchMode) EditorApplication.Exit(code);
+        }
+
+        /// <summary>roads-R1: bakes every town's junction surfaces in memory and writes the report and the junction maps.</summary>
+        public static void Surfaces()
+        {
+            int code = 0;
+            try
+            {
+                foreach (var town in TownRoadSource.Towns())
+                {
+                    var sw = System.Diagnostics.Stopwatch.StartNew();
+                    var b = SurfaceBaker.BuildTown(town);
+                    double ms = sw.Elapsed.TotalMilliseconds;
+                    Debug.Log($"[BR] {town}: R1 in {ms:F0} ms: {SurfaceChecks.Summary(b.checks)}; report {SurfaceBaker.WriteReport(b)}");
+                    foreach (var p in RoadGraphMap.WriteJunctions(b)) Debug.Log("[BR] wrote " + p);
                 }
             }
             catch (Exception e)

@@ -219,12 +219,14 @@ namespace Backroads.Roads
             public bool onSplit;
             public int order, legacy = -1;
             public double legacyDist = double.MaxValue;
+            public long osm;
         }
 
         static void BuildNodes(RoadGraph g, RoadGraphInput input, RoadGraphSettings st)
         {
             var lengthOf = new Dictionary<int, double>();
-            foreach (var r in input.roads) lengthOf[r.id] = r.Length;
+            var roadOf = new Dictionary<int, RoadGraphInput.Road>();
+            foreach (var r in input.roads) { lengthOf[r.id] = r.Length; roadOf[r.id] = r; }
             var tmp = new List<TmpNode>();
             var endA = new int[g.edges.Count];
             var endB = new int[g.edges.Count];
@@ -250,6 +252,11 @@ namespace Backroads.Roads
                     {
                         tmp[best].p = p;
                         tmp[best].onSplit = true;
+                    }
+                    if (!interior && tmp[best].osm == 0)
+                    {
+                        var rd = roadOf[e.sourceRoad];
+                        tmp[best].osm = end == 0 ? rd.osmStart : rd.osmEnd;
                     }
                     if (end == 0) endA[e.id] = best; else endB[e.id] = best;
                 }
@@ -277,7 +284,7 @@ namespace Backroads.Roads
             for (int i = 0; i < order.Count; i++)
             {
                 newId[order[i].order] = i;
-                g.nodes.Add(new GraphNode { id = i, legacyId = order[i].legacy, p = order[i].p });
+                g.nodes.Add(new GraphNode { id = i, legacyId = order[i].legacy, p = order[i].p, osmNode = order[i].osm });
             }
             foreach (var e in g.edges)
             {

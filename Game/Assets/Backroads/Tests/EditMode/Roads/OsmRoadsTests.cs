@@ -328,7 +328,7 @@ namespace Backroads.Tests.EditMode.Roads
                 Assert.AreEqual(baked.contentHash, baked.ComputeHash(), "the committed asset's content does not match its stored hash");
                 var fresh = RoadNetworkBaker.BakeTownInMemory(town, out _, out _, out _);
                 Assert.AreEqual(fresh.contentHash, baked.contentHash, $"the committed {town} road asset is stale: re-bake (Backroads > Roads > Bake town road networks (R0o))");
-                Assert.AreEqual(2, baked.formatVersion);
+                Assert.AreEqual(RoadNetworkAsset.FormatVersion, baked.formatVersion);
                 Assert.AreEqual("TownData/" + town + "/v1", baked.source);
                 Assert.AreSame(baked, RoadNetworkAsset.LoadTown(town), "Resources.Load finds the committed asset");
                 UnityEngine.Object.DestroyImmediate(fresh);

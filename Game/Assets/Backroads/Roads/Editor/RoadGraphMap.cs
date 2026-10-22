@@ -87,6 +87,127 @@ namespace Backroads.Roads.Editor
             return paths;
         }
 
+        // ------------------------------------------------------------------ R1: junction surfaces
+
+        static readonly Color32 Asphalt = new Color32(70, 72, 78, 255), JunctionC = new Color32(96, 98, 106, 255), KerbC = new Color32(235, 235, 235, 255);
+        static readonly Color32 StopLineC = new Color32(255, 255, 255, 255), CrosswalkC = new Color32(255, 255, 255, 200), MouthLineC = new Color32(255, 214, 0, 255);
+        static readonly Color32 InletC = new Color32(40, 160, 255, 255), FallbackC = new Color32(255, 0, 220, 255), Gravel = new Color32(150, 120, 90, 255);
+
+        /// <summary>
+        /// The junction surfaces of a fresh R1 bake: graph-junctions.png (the village) and graph-junctions-downtown.png
+        /// (the downtown zone close up), in artifacts/roads/(town)/.
+        /// </summary>
+        public static System.Collections.Generic.List<string> WriteJunctions(SurfaceBaker.Bake b)
+        {
+            var paths = new System.Collections.Generic.List<string>();
+            var src = TownRoadSource.LoadTown(b.town);
+            var bg = TownBackground(src, TownRoadSource.TownDir(b.town));
+            var dir = RoadNetworkBaker.TownArtifactsDir(b.town);
+            Directory.CreateDirectory(dir);
+            Vector2 lo = new Vector2(float.MaxValue, float.MaxValue), hi = new Vector2(float.MinValue, float.MinValue);
+            if (src.kerbZone != null) foreach (var p in src.kerbZone) { lo = Vector2.Min(lo, new Vector2((float)p.x, (float)p.z)); hi = Vector2.Max(hi, new Vector2((float)p.x, (float)p.z)); }
+            else { lo = new Vector2(-300, -300); hi = new Vector2(300, 300); }
+            var size = hi - lo + new Vector2(60, 60);
+            paths.Add(WriteSurfaces(b, bg, (lo + hi) * 0.5f, Mathf.Max(size.x, size.y) / 2000f, 2000, 2000, Path.Combine(dir, "graph-junctions.png"),
+                "ROADS R1: JUNCTION SURFACES, " + b.town.ToUpperInvariant()));
+            if (src.downtownZone != null)
+            {
+                lo = new Vector2(float.MaxValue, float.MaxValue); hi = new Vector2(float.MinValue, float.MinValue);
+                foreach (var p in src.downtownZone) { lo = Vector2.Min(lo, new Vector2((float)p.x, (float)p.z)); hi = Vector2.Max(hi, new Vector2((float)p.x, (float)p.z)); }
+                size = hi - lo + new Vector2(20, 20);
+                paths.Add(WriteSurfaces(b, bg, (lo + hi) * 0.5f, Mathf.Max(size.x, size.y) / 2000f, 2000, 2000, Path.Combine(dir, "graph-junctions-downtown.png"),
+                    "ROADS R1: DOWNTOWN JUNCTIONS, " + b.town.ToUpperInvariant()));
+            }
+            return paths;
+        }
+
+        static string WriteSurfaces(SurfaceBaker.Bake b, Background bg, Vector2 centre, float mpp, int w, int h, string path, string title)
+        {
+            var cv = new Canvas(w, h, centre, mpp);
+            Terrain(cv, bg);
+            foreach (var poly in bg.water) cv.Fill(Array.ConvertAll(poly, p => cv.P(p)), Water);
+            foreach (var poly in bg.buildings) cv.Fill(Array.ConvertAll(poly, p => cv.P(p)), Building);
+            Vector2 V(D2 p) => cv.P(new Vector2((float)p.x, (float)p.z));
+            Vector2 V3(D3 p) => cv.P(new Vector2((float)p.x, (float)p.z));
+            var g = b.graph;
+            var s = b.surfaces;
+            // ribbons
+            foreach (var r in s.ribbons)
+            {
+                var col = g.edges[r.edge].cls == RoadClass.Dirt ? Gravel : Asphalt;
+                int P = r.profile.Length;
+                for (int q = 0; q + 1 < r.stations.Count; q++)
+                    cv.Fill(new[] { V3(r.stations[q][0]), V3(r.stations[q + 1][0]), V3(r.stations[q + 1][P - 1]), V3(r.stations[q][P - 1]) }, col);
+            }
+            // junctions
+            foreach (var ns in s.nodes)
+            {
+                if (ns.mode == SurfaceMode.Fallback || ns.polygon.Count < 3) continue;
+                var poly = ns.polygon.ConvertAll(V);
+                cv.Fill(poly, JunctionC);
+            }
+            float lw = Mathf.Max(1.5f, 0.25f / mpp);
+            foreach (var ns in s.nodes)
+            {
+                var n = g.nodes[ns.node];
+                if (ns.mode == SurfaceMode.Fallback)
+                {
+                    cv.Ring(cv.P(new Vector2((float)n.p.x, (float)n.p.z)), Mathf.Max(8f, 4f / mpp), 3f, FallbackC);
+                    continue;
+                }
+                foreach (var c in ns.corners)
+                    if (c.arc.Count > 1) cv.Polyline(c.arc.ConvertAll(V), lw, KerbC);
+                foreach (var a in ns.arms)
+                {
+                    if (a.mouth != null) cv.Polyline(Array.ConvertAll(a.mouth, V3), Mathf.Max(1f, 0.15f / mpp), MouthLineC);
+                    if (a.crosswalk)
+                        for (double u = -a.hwR + 0.3; u < a.hwL - 0.3; u += 1.2)
+                        {
+                            var p0 = a.frame.P(a.sCwInner, u);
+                            var p1 = a.frame.P(a.sCwOuter, u);
+                            cv.Line(V(p0), V(p1), Mathf.Max(1.5f, 0.6f / mpp), CrosswalkC);
+                        }
+                    if (a.sStop >= 0)
+                        cv.Line(V(a.frame.P(a.sStop, 0)), V(a.frame.P(a.sStop, -a.hwR + 0.3)), Mathf.Max(2f, 0.45f / mpp), StopLineC);
+                }
+            }
+            // ribbon edges (kerb lines)
+            foreach (var r in s.ribbons)
+            {
+                int P = r.profile.Length;
+                for (int q = 0; q + 1 < r.stations.Count; q++)
+                {
+                    cv.Line(V3(r.stations[q][0]), V3(r.stations[q + 1][0]), lw * 0.7f, KerbC);
+                    cv.Line(V3(r.stations[q][P - 1]), V3(r.stations[q + 1][P - 1]), lw * 0.7f, KerbC);
+                }
+            }
+            foreach (var i in s.inlets) cv.Disc(V3(i.p), Mathf.Max(2.5f, 0.6f / mpp), InletC);
+
+            int sc = 2, line = 9 * sc + 6, x0 = 16, top = cv.h - 16;
+            var items = new (Color32 c, string t)[]
+            {
+                (JunctionC, "JUNCTION SURFACE"), (Asphalt, "ROAD RIBBON"), (KerbC, "KERB LINE AND RETURN"), (MouthLineC, "MOUTH (SHARED SEAM)"),
+                (StopLineC, "STOP LINE"), (CrosswalkC, "CROSSWALK BAND"), (InletC, "CURB INLET"), (FallbackC, "NO SURFACE (FALLBACK)"),
+            };
+            cv.Rect(x0 - 8, top - (items.Length + 2) * line - 12, x0 + 44 * 6 * sc, top + 8, new Color32(12, 14, 20, 200));
+            cv.Text(x0, top, title, sc, new Color32(255, 255, 255, 255));
+            int yy = top - line - 6;
+            cv.Text(x0, yy, SurfaceChecks.Summary(b.checks).Split(';')[0].ToUpperInvariant(), sc, new Color32(200, 200, 200, 255));
+            yy -= line + 4;
+            foreach (var (c, t) in items)
+            {
+                cv.Rect(x0, yy - 13, x0 + 16, yy - 2, c);
+                cv.Text(x0 + 26, yy, t, sc, new Color32(235, 235, 235, 255));
+                yy -= line;
+            }
+            var tex = new Texture2D(w, h, TextureFormat.RGBA32, false);
+            tex.SetPixels32(cv.px);
+            tex.Apply(false);
+            File.WriteAllBytes(path, tex.EncodeToPNG());
+            UnityEngine.Object.DestroyImmediate(tex);
+            return path;
+        }
+
         static Background CanonBackground(CanonAsset canon)
         {
             var bg = new Background();

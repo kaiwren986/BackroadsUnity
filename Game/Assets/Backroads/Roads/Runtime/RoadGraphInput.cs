@@ -66,6 +66,10 @@ namespace Backroads.Roads
             public bool inKerbZone, inDowntown;
             /// <summary>The road was cut at the play-area edge at its first or last point (EDGE_RULE).</summary>
             public bool cutStart, cutEnd;
+            /// <summary>The OSM node at the road's first and last point, or 0 (a zone split or an edge cut).</summary>
+            public long osmStart, osmEnd;
+            /// <summary>A mapped building stands within one lane of the centreline: no width clears it (a map conflict, reported).</summary>
+            public bool buildingConflict;
         }
 
         /// <summary>A mapped sign, signal or crossing on a road, at arc length s (roads-R0o step 5).</summary>
