@@ -36,8 +36,9 @@ def _deterministic_exporter():
     m.fbx_header_elements = header
 
 
-def export_fbx(path, objs):
-    """07 section 3.2 flags, unchanged (the canary exists to prove them)."""
+def export_fbx(path, objs, tangents=True):
+    """07 section 3.2 flags, unchanged (the canary exists to prove them). tangents=False leaves out tangents and
+    binormals (buildings: no normal maps, and Blender's threaded tangents are not bit-stable on degenerate UVs)."""
     _deterministic_exporter()
     bpy.ops.object.select_all(action='DESELECT')
     for ob in objs:
@@ -47,7 +48,7 @@ def export_fbx(path, objs):
         apply_unit_scale=True, apply_scale_options='FBX_SCALE_ALL',   # 1 Blender m = 1 Unity unit, scale 1
         axis_forward='-Z', axis_up='Y', bake_space_transform=True,   # "Apply Transform": no -90 deg root rotation
         use_mesh_modifiers=True, mesh_smooth_type='OFF',             # write normals only; Unity imports them
-        use_triangles=True, use_tspace=True,                         # same triangulation and tangents as the bake
+        use_triangles=True, use_tspace=tangents,                     # same triangulation and tangents as the bake
         colors_type='LINEAR',                                        # masks in FLOAT_COLOR attributes stay numeric
         use_custom_props=True, add_leaf_bones=False, bake_anim=False,
         path_mode='STRIP', embed_textures=False)                     # textures are written separately as PNG

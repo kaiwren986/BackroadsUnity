@@ -1,0 +1,32 @@
+{
+    "name": "Backroads.Tests.EditMode.Sites",
+    "rootNamespace": "Backroads.Tests.EditMode.Sites",
+    "references": [
+        "Backroads.Core",
+        "Backroads.Sites",
+        "Backroads.Sites.Editor",
+        "Backroads.Roads",
+        "Backroads.Roads.Editor",
+        "Backroads.Canon.Editor",
+        "Backroads.Build.Editor",
+        "Clipper2Lib",
+        "Unity.Mathematics",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,1824 @@
+{
+ "format": "backroads-building-instances",
+ "version": 1,
+ "town": "Fixtures",
+ "seed": "blake2b-64(TOWN_ID|osm|part) per named draw",
+ "doors": "placeholder",
+ "counts": {
+  "barn": 2,
+  "house": 4,
+  "garage": 1,
+  "machineshed": 1,
+  "mill": 1,
+  "block": 3,
+  "shed": 1,
+  "warehouse": 2
+ },
+ "buildings": [
+  {
+   "osm": "fixture/barn_gable",
+   "part": 0,
+   "family": "barn",
+   "model": "barn",
+   "business": "Farm",
+   "type": "farm",
+   "form": null,
+   "seed": "8698c7b8081c6f80",
+   "inPlay": true,
+   "file": "BLD_fixture_barn_gable",
+   "origin": [
+    -164.5,
+    0.1,
+    38.5
+   ],
+   "ground": {
+    "min": -0.1,
+    "max": -0.1,
+    "mean": -0.1,
+    "centreY": 0.0
+   },
+   "poly": [
+    [
+     -5.5,
+     -8.5
+    ],
+    [
+     5.5,
+     -8.5
+    ],
+    [
+     5.5,
+     8.5
+    ],
+    [
+     -5.5,
+     8.5
+    ]
+   ],
+   "storeys": 1,
+   "roof": "gable",
+   "params": {
+    "groundH": 4.64,
+    "storeyH": 4.64,
+    "plinth": 0.1,
+    "pitch": 35,
+    "overhang": 0.45,
+    "rake": 0.35
+   },
+   "streetEdge": 0,
+   "streetDist": 38.5,
+   "setback": 30,
+   "party": [],
+   "doors": [
+    {
+     "spec": 0,
+     "kind": "Bay",
+     "width": 4.2,
+     "edge": 0,
+     "u": 5.5,
+     "offWall": 0.0,
+     "plan": [
+      -164.5,
+      30.0
+     ],
+     "sillY": null,
+     "ground": -0.1
+    },
+    {
+     "spec": 1,
+     "kind": "Bay",
+     "width": 4.2,
+     "edge": 2,
+     "u": 5.5,
+     "offWall": 0.0,
+     "plan": [
+      -164.5,
+      47.0
+     ],
+     "sillY": null,
+     "ground": -0.1
+    }
+   ],
+   "colours": {
+    "wall": "barn_red",
+    "trim": "barn_white",
+    "roof": "metal_galv",
+    "found": "concrete",
+    "door": "door_white"
+   },
+   "features": {
+    "window": {
+     "w": 0.7,
+     "h": 0.7,
+     "sill": 1.3,
+     "bay": 4.0
+    },
+    "hayDoor": true
+   },
+   "why": {
+    "doors": "placeholder (lane A, site-layouts 7a rules) until sites-S3",
+    "storeys": "[doc] one storey with a loft",
+    "roof": "OSM roof:shape=gabled",
+    "heights": "[doc] 08b section 5 (North American construction; lidar check open, design 14 #5)"
+   }
+  },
+  {
+   "osm": "fixture/barn_gambrel",
+   "part": 0,
+   "family": "barn",
+   "model": "barn",
+   "business": "Farm",
+   "type": "farm",
+   "form": null,
+   "seed": "ab602225cff65694",
+   "inPlay": true,
+   "file": "BLD_fixture_barn_gambrel",
+   "origin": [
+    -184.0,
+    0.1,
+    40.0
+   ],
+   "ground": {
+    "min": -0.1,
+    "max": -0.1,
+    "mean": -0.1,
+    "centreY": 0.0
+   },
+   "poly": [
+    [
+     -6.0,
+     -10.0
+    ],
+    [
+     6.0,
+     -10.0
+    ],
+    [
+     6.0,
+     10.0
+    ],
+    [
+     -6.0,
+     10.0
+    ]
+   ],
+   "storeys": 1,
+   "roof": "gambrel",
+   "params": {
+    "groundH": 4.98,
+    "storeyH": 4.98,
+    "plinth": 0.1,
+    "pitch": 37,
+    "overhang": 0.45,
+    "rake": 0.35
+   },
+   "streetEdge": 0,
+   "streetDist": 40.0,
+   "setback": 30,
+   "party": [],
+   "doors": [
+    {
+     "spec": 0,
+     "kind": "Bay",
+     "width": 4.2,
+     "edge": 0,
+     "u": 6.0,
+     "offWall": 0.0,
+     "plan": [
+      -184.0,
+      30.0
+     ],
+     "sillY": null,
+     "ground": -0.1
+    },
+    {
+     "spec": 1,
+     "kind": "Bay",
+     "width": 4.2,
+     "edge": 2,
+     "u": 6.0,
+     "offWall": 0.0,
+     "plan": [
+      -184.0,
+      50.0
+     ],
+     "sillY": null,
+     "ground": -0.1
+    }
+   ],
+   "colours": {
+    "wall": "barn_red",
+    "trim": "barn_white",
+    "roof": "metal_green",
+    "found": "concrete",
+    "door": "door_wood"
+   },
+   "features": {
+    "window": {
+     "w": 0.7,
+     "h": 0.7,
+     "sill": 1.3,
+     "bay": 4.0
+    },
+    "hayDoor": true
+   },
+   "why": {
+    "doors": "placeholder (lane A, site-layouts 7a rules) until sites-S3",
+    "storeys": "[doc] one storey with a loft",
+    "roof": "OSM roof:shape=gambrel",
+    "heights": "[doc] 08b section 5 (North American construction; lidar check open, design 14 #5)"
+   }
+  },
+  {
+   "osm": "fixture/cottage",
+   "part": 0,
+   "family": "house",
+   "model": "house",
+   "business": "House",
+   "type": "house",
+   "form": null,
+   "seed": "a853ce579c9e3fa6",
+   "inPlay": true,
+   "file": "BLD_fixture_cottage",
+   "origin": [
+    106.5,
+    0.6,
+    12.5
+   ],
+   "ground": {
+    "min": -0.6,
+    "max": -0.6,
+    "mean": -0.6,
+    "centreY": 0.0
+   },
+   "poly": [
+    [
+     -4.5,
+     -3.5
+    ],
+    [
+     4.5,
+     -3.5
+    ],
+    [
+     4.5,
+     3.5
+    ],
+    [
+     -4.5,
+     3.5
+    ]
+   ],
+   "storeys": 1,
+   "roof": "gable",
+   "params": {
+    "storeyH": 3.06,
+    "plinth": 0.6,
+    "pitch": 34,
+    "overhang": 0.49,
+    "rake": 0.28,
+    "groundH": 3.06
+   },
+   "streetEdge": 0,
+   "streetDist": 12.5,
+   "setback": 9,
+   "party": [],
+   "doors": [
+    {
+     "spec": 0,
+     "kind": "Main",
+     "width": 0.95,
+     "edge": 0,
+     "u": 6.12,
+     "offWall": 0.0,
+     "plan": [
+      108.12,
+      9.0
+     ],
+     "sillY": null,
+     "ground": -0.6
+    },
+    {
+     "spec": 1,
+     "kind": "Service",
+     "width": 0.9,
+     "edge": 2,
+     "u": 5.04,
+     "offWall": 0.0,
+     "plan": [
+      105.96,
+      16.0
+     ],
+     "sillY": null,
+     "ground": -0.6
+    }
+   ],
+   "colours": {
+    "wall": "siding_white",
+    "trim": "trim_white",
+    "roof": "shingle_brown",
+    "found": "concrete",
+    "door": "door_green",
+    "shutter": null
+   },
+   "features": {
+    "window": {
+     "w": 0.81,
+     "h": 1.49,
+     "sill": 0.78,
+     "bay": 2.59
+    },
+    "chimney": false
+   },
+   "why": {
+    "doors": "placeholder (lane A, site-layouts 7a rules) until sites-S3",
+    "storeys": "OSM building:levels",
+    "roof": "OSM roof:shape=gabled",
+    "heights": "[doc] 08b section 5 (North American construction; lidar check open, design 14 #5)"
+   }
+  },
+  {
+   "osm": "fixture/garage",
+   "part": 0,
+   "family": "barn",
+   "model": "garage",
+   "business": "Accessory",
+   "type": "accessory",
+   "form": null,
+   "seed": "0b7de77d0c50afac",
+   "inPlay": true,
+   "file": "BLD_fixture_garage",
+   "origin": [
+    119.5,
+    0.1,
+    17.25
+   ],
+   "ground": {
+    "min": -0.1,
+    "max": -0.1,
+    "mean": -0.1,
+    "centreY": 0.0
+   },
+   "poly": [
+    [
+     -3.5,
+     -3.25
+    ],
+    [
+     3.5,
+     -3.25
+    ],
+    [
+     3.5,
+     3.25
+    ],
+    [
+     -3.5,
+     3.25
+    ]
+   ],
+   "storeys": 1,
+   "roof": "gable",
+   "params": {
+    "groundH": 2.74,
+    "storeyH": 2.74,
+    "plinth": 0.1,
+    "pitch": 33,
+    "overhang": 0.35,
+    "rake": 0.25
+   },
+   "streetEdge": 0,
+   "streetDist": 17.25,
+   "setback": 14,
+   "party": [],
+   "doors": [
+    {
+     "spec": 0,
+     "kind": "Garage",
+     "width": 4.9,
+     "edge": 0,
+     "u": 3.5,
+     "offWall": 0.0,
+     "plan": [
+      119.5,
+      14.0
+     ],
+     "sillY": null,
+     "ground": -0.1
+    },
+    {
+     "spec": 1,
+     "kind": "Service",
+     "width": 0.85,
+     "edge": 2,
+     "u": 4.2,
+     "offWall": 0.0,
+     "plan": [
+      118.8,
+      20.5
+     ],
+     "sillY": null,
+     "ground": -0.1
+    }
+   ],
+   "colours": {
+    "wall": "siding_white",
+    "trim": "trim_white",
+    "roof": "shingle_brown",
+    "found": "concrete",
+    "door": "door_white"
+   },
+   "features": {
+    "window": {
+     "w": 0.7,
+     "h": 0.7,
+     "sill": 1.3,
+     "bay": 4.0
+    },
+    "hayDoor": false
+   },
+   "why": {
+    "doors": "placeholder (lane A, site-layouts 7a rules) until sites-S3",
+    "storeys": "[doc] one storey with a loft",
+    "roof": "[doc] 08b 5: barn gambrel or gabled; sheds gabled or lean-to",
+    "heights": "[doc] 08b section 5 (North American construction; lidar check open, design 14 #5)",
+    "colours": "matches house fixture/cottage"
+   }
+  },
+  {
+   "osm": "fixture/house_hip",
+   "part": 0,
+   "family": "house",
+   "model": "house",
+   "business": "House",
+   "type": "house",
+   "form": null,
+   "seed": "4d0c75d83b4a4ec6",
+   "inPlay": true,
+   "file": "BLD_fixture_house_hip",
+   "origin": [
+    89.0,
+    0.77,
+    14.5
+   ],
+   "ground": {
+    "min": -0.77,
+    "max": -0.77,
+    "mean": -0.77,
+    "centreY": 0.0
+   },
+   "poly": [
+    [
+     -5.0,
+     -4.5
+    ],
+    [
+     5.0,
+     -4.5
+    ],
+    [
+     5.0,
+     4.5
+    ],
+    [
+     -5.0,
+     4.5
+    ]
+   ],
+   "storeys": 2,
+   "roof": "hip",
+   "params": {
+    "storeyH": 3.34,
+    "plinth": 0.77,
+    "pitch": 30,
+    "overhang": 0.47,
+    "rake": 0.26,
+    "groundH": 3.34
+   },
+   "streetEdge": 0,
+   "streetDist": 14.5,
+   "setback": 10,
+   "party": [],
+   "doors": [
+    {
+     "spec": 0,
+     "kind": "Main",
+     "width": 0.95,
+     "edge": 0,
+     "u": 6.8,
+     "offWall": 0.0,
+     "plan": [
+      90.8,
+      10.0
+     ],
+     "sillY": null,
+     "ground": -0.77
+    }
+   ],
+   "colours": {
+    "wall": "siding_red",
+    "trim": "trim_white",
+    "roof": "shingle_charcoal",
+    "found": "brick_red",
+    "door": "door_wood",
+    "shutter": null
+   },
+   "features": {
+    "window": {
+     "w": 0.8,
+     "h": 1.56,
+     "sill": 0.8,
+     "bay": 3.17
+    },
+    "chimney": true,
+    "porch": {
+     "depth": 2.31,
+     "full": true
+    }
+   },
+   "why": {
+    "doors": "placeholder (lane A, site-layouts 7a rules) until sites-S3",
+    "storeys": "OSM building:levels",
+    "roof": "OSM roof:shape=hipped",
+    "heights": "[doc] 08b section 5 (North American construction; lidar check open, design 14 #5)"
+   }
+  },
+  {
+   "osm": "fixture/house_l",
+   "part": 0,
+   "family": "house",
+   "model": "house",
+   "business": "House",
+   "type": "house",
+   "form": null,
+   "seed": "85c2c9f2e86023cb",
+   "inPlay": true,
+   "file": "BLD_fixture_house_l",
+   "origin": [
+    45.0789,
+    0.55,
+    16.9474
+   ],
+   "ground": {
+    "min": -0.55,
+    "max": -0.55,
+    "mean": -0.55,
+    "centreY": 0.0
+   },
+   "poly": [
+    [
+     -5.0789,
+     -6.9474
+    ],
+    [
+     6.9211,
+     -6.9474
+    ],
+    [
+     6.9211,
+     1.0526
+    ],
+    [
+     1.9211,
+     1.0526
+    ],
+    [
+     1.9211,
+     9.0526
+    ],
+    [
+     -5.0789,
+     9.0526
+    ]
+   ],
+   "storeys": 2,
+   "roof": "gable",
+   "params": {
+    "storeyH": 3.34,
+    "plinth": 0.55,
+    "pitch": 39,
+    "overhang": 0.39,
+    "rake": 0.21,
+    "groundH": 3.34
+   },
+   "streetEdge": 0,
+   "streetDist": 16.95,
+   "setback": 10,
+   "party": [],
+   "doors": [
+    {
+     "spec": 0,
+     "kind": "Main",
+     "width": 0.95,
+     "edge": 0,
+     "u": 3.84,
+     "offWall": 0.0,
+     "plan": [
+      43.84,
+      10.0
+     ],
+     "sillY": null,
+     "ground": -0.55
+    }
+   ],
+   "colours": {
+    "wall": "siding_tan",
+    "trim": "trim_white",
+    "roof": "shingle_charcoal",
+    "found": "stone_grey",
+    "door": "door_green",
+    "shutter": null
+   },
+   "features": {
+    "window": {
+     "w": 0.8,
+     "h": 1.63,
+     "sill": 0.75,
+     "bay": 2.83
+    },
+    "chimney": false,
+    "porch": {
+     "depth": 2.23,
+     "full": true
+    }
+   },
+   "why": {
+    "doors": "placeholder (lane A, site-layouts 7a rules) until sites-S3",
+    "storeys": "OSM building:levels",
+    "roof": "OSM roof:shape=gabled",
+    "heights": "[doc] 08b section 5 (North American construction; lidar check open, design 14 #5)"
+   }
+  },
+  {
+   "osm": "fixture/house_t",
+   "part": 0,
+   "family": "house",
+   "model": "house",
+   "business": "House",
+   "type": "house",
+   "form": null,
+   "seed": "17cc1fb64b1eb460",
+   "inPlay": true,
+   "file": "BLD_fixture_house_t",
+   "origin": [
+    68.0,
+    0.52,
+    18.0038
+   ],
+   "ground": {
+    "min": -0.52,
+    "max": -0.52,
+    "mean": -0.52,
+    "centreY": 0.0
+   },
+   "poly": [
+    [
+     -6.0,
+     -6.0038
+    ],
+    [
+     6.0,
+     -6.0038
+    ],
+    [
+     6.0,
+     1.9962
+    ],
+    [
+     2.5,
+     1.9962
+    ],
+    [
+     2.5,
+     8.9962
+    ],
+    [
+     -2.5,
+     8.9962
+    ],
+    [
+     -2.5,
+     1.9962
+    ],
+    [
+     -6.0,
+     1.9962
+    ]
+   ],
+   "storeys": 2,
+   "roof": "gable",
+   "params": {
+    "storeyH": 3.06,
+    "plinth": 0.52,
+    "pitch": 40,
+    "overhang": 0.4,
+    "rake": 0.21,
+    "groundH": 3.06
+   },
+   "streetEdge": 0,
+   "streetDist": 18.0,
+   "setback": 12,
+   "party": [],
+   "doors": [
+    {
+     "spec": 0,
+     "kind": "Main",
+     "width": 0.95,
+     "edge": 0,
+     "u": 8.16,
+     "offWall": 0.0,
+     "plan": [
+      70.16,
+      12.0
+     ],
+     "sillY": null,
+     "ground": -0.52
+    }
+   ],
+   "colours": {
+    "wall": "siding_yellow",
+    "trim": "trim_brown",
+    "roof": "shingle_grey",
+    "found": "stone_tan",
+    "door": "door_wood",
+    "shutter": null
+   },
+   "features": {
+    "window": {
+     "w": 0.86,
+     "h": 1.59,
+     "sill": 0.78,
+     "bay": 2.99
+    },
+    "chimney": true,
+    "porch": {
+     "depth": 2.37,
+     "full": false
+    }
+   },
+   "why": {
+    "doors": "placeholder (lane A, site-layouts 7a rules) until sites-S3",
+    "storeys": "OSM building:levels",
+    "roof": "OSM roof:shape=gabled",
+    "heights": "[doc] 08b section 5 (North American construction; lidar check open, design 14 #5)"
+   }
+  },
+  {
+   "osm": "fixture/machineshed",
+   "part": 0,
+   "family": "barn",
+   "model": "machineshed",
+   "business": "Accessory",
+   "type": "accessory",
+   "form": null,
+   "seed": "8c8a61fa267443f9",
+   "inPlay": true,
+   "file": "BLD_fixture_machineshed",
+   "origin": [
+    -138.0,
+    0.1,
+    29.0
+   ],
+   "ground": {
+    "min": -0.1,
+    "max": -0.1,
+    "mean": -0.1,
+    "centreY": 0.0
+   },
+   "poly": [
+    [
+     -12.0,
+     -7.0
+    ],
+    [
+     12.0,
+     -7.0
+    ],
+    [
+     12.0,
+     7.0
+    ],
+    [
+     -12.0,
+     7.0
+    ]
+   ],
+   "storeys": 1,
+   "roof": "gable",
+   "params": {
+    "groundH": 4.64,
+    "storeyH": 4.64,
+    "plinth": 0.1,
+    "pitch": 17,
+    "overhang": 0.35,
+    "rake": 0.25
+   },
+   "streetEdge": 0,
+   "streetDist": 29.0,
+   "setback": 22,
+   "party": [],
+   "doors": [
+    {
+     "spec": 0,
+     "kind": "Bay",
+     "width": 4.2,
+     "edge": 0,
+     "u": 4.0,
+     "offWall": 0.0,
+     "plan": [
+      -146.0,
+      22.0
+     ],
+     "sillY": null,
+     "ground": -0.1
+    },
+    {
+     "spec": 1,
+     "kind": "Bay",
+     "width": 4.2,
+     "edge": 0,
+     "u": 12.0,
+     "offWall": 0.0,
+     "plan": [
+      -138.0,
+      22.0
+     ],
+     "sillY": null,
+     "ground": -0.1
+    },
+    {
+     "spec": 2,
+     "kind": "Bay",
+     "width": 4.2,
+     "edge": 0,
+     "u": 20.0,
+     "offWall": 0.0,
+     "plan": [
+      -130.0,
+      22.0
+     ],
+     "sillY": null,
+     "ground": -0.1
+    },
+    {
+     "spec": 3,
+     "kind": "Service",
+     "width": 0.9,
+     "edge": 2,
+     "u": 12.0,
+     "offWall": 0.0,
+     "plan": [
+      -138.0,
+      36.0
+     ],
+     "sillY": null,
+     "ground": -0.1
+    }
+   ],
+   "colours": {
+    "wall": "panel_tan",
+    "trim": "trim_brown",
+    "roof": "metal_galv",
+    "found": "concrete",
+    "door": "door_wood"
+   },
+   "features": {
+    "window": {
+     "w": 0.7,
+     "h": 0.7,
+     "sill": 1.3,
+     "bay": 4.0
+    },
+    "hayDoor": false
+   },
+   "why": {
+    "doors": "placeholder (lane A, site-layouts 7a rules) until sites-S3",
+    "storeys": "[doc] one storey with a loft",
+    "roof": "[doc] 08b 5: barn gambrel or gabled; sheds gabled or lean-to",
+    "heights": "[doc] 08b section 5 (North American construction; lidar check open, design 14 #5)"
+   }
+  },
+  {
+   "osm": "fixture/mill",
+   "part": 0,
+   "family": "mill",
+   "model": "mill",
+   "business": "Mill",
+   "type": "mill",
+   "form": null,
+   "seed": "434288a8c7c8a11c",
+   "inPlay": true,
+   "file": "BLD_fixture_mill",
+   "origin": [
+    154.7143,
+    0.4,
+    21.7143
+   ],
+   "ground": {
+    "min": -0.4,
+    "max": -0.4,
+    "mean": -0.4,
+    "centreY": 0.0
+   },
+   "poly": [
+    [
+     -14.7143,
+     -9.7143
+    ],
+    [
+     15.2857,
+     -9.7143
+    ],
+    [
+     15.2857,
+     6.2857
+    ],
+    [
+     3.2857,
+     6.2857
+    ],
+    [
+     3.2857,
+     14.2857
+    ],
+    [
+     -6.7143,
+     14.2857
+    ],
+    [
+     -6.7143,
+     6.2857
+    ],
+    [
+     -14.7143,
+     6.2857
+    ]
+   ],
+   "storeys": 4,
+   "roof": "gable",
+   "params": {
+    "groundH": 3.82,
+    "storeyH": 3.82,
+    "plinth": 0.4,
+    "pitch": 30,
+    "overhang": 0.45,
+    "rake": 0.3
+   },
+   "streetEdge": 0,
+   "streetDist": 21.71,
+   "setback": 12,
+   "party": [],
+   "doors": [
+    {
+     "spec": 0,
+     "kind": "Main",
+     "width": 1.6,
+     "edge": 0,
+     "u": 15.0,
+     "offWall": 0.0,
+     "plan": [
+      155.0,
+      12.0
+     ],
+     "sillY": null,
+     "ground": -0.4
+    },
+    {
+     "spec": 1,
+     "kind": "Service",
+     "width": 1.8,
+     "edge": 3,
+     "u": 4.0,
+     "offWall": 0.0,
+     "plan": [
+      158.0,
+      32.0
+     ],
+     "sillY": null,
+     "ground": -0.4
+    }
+   ],
+   "colours": {
+    "wall": "brick_red",
+    "trim": "stone_tan",
+    "roof": "shingle_charcoal",
+    "found": "stone_grey",
+    "door": "door_wood"
+   },
+   "features": {
+    "window": {
+     "w": 1.0,
+     "h": 1.86,
+     "sill": 0.9,
+     "bay": 2.54
+    },
+    "cupola": true
+   },
+   "why": {
+    "doors": "placeholder (lane A, site-layouts 7a rules) until sites-S3",
+    "storeys": "[doc] 08b: multi-storey mill (no measured sample)",
+    "roof": "[doc] gabled mill",
+    "heights": "[doc] 08b section 5 (North American construction; lidar check open, design 14 #5)"
+   }
+  },
+  {
+   "osm": "fixture/row_office",
+   "part": 0,
+   "family": "block",
+   "model": "block",
+   "business": "Office",
+   "type": "office",
+   "form": "streetfront",
+   "seed": "a09e79071b5d5201",
+   "inPlay": true,
+   "file": "BLD_fixture_row_office",
+   "origin": [
+    20.5,
+    0.15,
+    14.0
+   ],
+   "ground": {
+    "min": -0.15,
+    "max": -0.15,
+    "mean": -0.15,
+    "centreY": 0.0
+   },
+   "poly": [
+    [
+     -5.5,
+     -10.0
+    ],
+    [
+     5.5,
+     -10.0
+    ],
+    [
+     5.5,
+     10.0
+    ],
+    [
+     -5.5,
+     10.0
+    ]
+   ],
+   "storeys": 3,
+   "roof": "flat",
+   "params": {
+    "groundH": 4.29,
+    "storeyH": 3.42,
+    "plinth": 0.15,
+    "parapet": 1.0,
+    "pitch": 0
+   },
+   "streetEdge": 0,
+   "streetDist": 14.0,
+   "setback": 2,
+   "party": [
+    {
+     "edge": 3,
+     "u0": 0.0,
+     "u1": 20.0,
+     "with": "fixture/row_restaurant"
+    }
+   ],
+   "doors": [
+    {
+     "spec": 0,
+     "kind": "Main",
+     "width": 1.8,
+     "edge": 0,
+     "u": 5.5,
+     "offWall": 0.0,
+     "plan": [
+      20.5,
+      4.0
+     ],
+     "sillY": null,
+     "ground": -0.15
+    },
+    {
+     "spec": 1,
+     "kind": "Service",
+     "width": 1.0,
+     "edge": 2,
+     "u": 4.62,
+     "offWall": 0.0,
+     "plan": [
+      21.38,
+      24.0
+     ],
+     "sillY": null,
+     "ground": -0.15
+    }
+   ],
+   "colours": {
+    "wall": "brick_buff",
+    "trim": "trim_white",
+    "front": "trim_white",
+    "sign": "sign_cream",
+    "awning": "awning_tan",
+    "roof": "roof_gravel",
+    "found": "stone_grey",
+    "door": "door_green"
+   },
+   "features": {
+    "window": {
+     "w": 1.05,
+     "h": 1.94,
+     "sill": 0.8,
+     "bay": 2.44
+    }
+   },
+   "why": {
+    "doors": "placeholder (lane A, site-layouts 7a rules) until sites-S3",
+    "storeys": "OSM building:levels",
+    "roof": "[doc] 08b 5: flat or low slope behind a parapet",
+    "heights": "[doc] 08b section 5 (North American construction; lidar check open, design 14 #5)"
+   }
+  },
+  {
+   "osm": "fixture/row_restaurant",
+   "part": 0,
+   "family": "block",
+   "model": "block",
+   "business": "Restaurant",
+   "type": "restaurant",
+   "form": "streetfront",
+   "seed": "2b7921c7b56eaebb",
+   "inPlay": true,
+   "file": "BLD_fixture_row_restaurant",
+   "origin": [
+    11.5,
+    0.15,
+    14.0
+   ],
+   "ground": {
+    "min": -0.15,
+    "max": -0.15,
+    "mean": -0.15,
+    "centreY": 0.0
+   },
+   "poly": [
+    [
+     -3.5,
+     -10.0
+    ],
+    [
+     3.5,
+     -10.0
+    ],
+    [
+     3.5,
+     10.0
+    ],
+    [
+     -3.5,
+     10.0
+    ]
+   ],
+   "storeys": 2,
+   "roof": "flat",
+   "params": {
+    "groundH": 4.29,
+    "storeyH": 3.36,
+    "plinth": 0.15,
+    "parapet": 0.86,
+    "pitch": 0
+   },
+   "streetEdge": 0,
+   "streetDist": 14.0,
+   "setback": 2,
+   "party": [
+    {
+     "edge": 3,
+     "u0": 0.0,
+     "u1": 20.0,
+     "with": "fixture/row_shop"
+    },
+    {
+     "edge": 1,
+     "u0": 0.0,
+     "u1": 20.0,
+     "with": "fixture/row_office"
+    }
+   ],
+   "doors": [
+    {
+     "spec": 0,
+     "kind": "Main",
+     "width": 1.1,
+     "edge": 0,
+     "u": 3.5,
+     "offWall": 0.0,
+     "plan": [
+      11.5,
+      4.0
+     ],
+     "sillY": null,
+     "ground": -0.15
+    },
+    {
+     "spec": 1,
+     "kind": "Service",
+     "width": 1.0,
+     "edge": 2,
+     "u": 2.66,
+     "offWall": 0.0,
+     "plan": [
+      12.34,
+      24.0
+     ],
+     "sillY": null,
+     "ground": -0.15
+    }
+   ],
+   "colours": {
+    "wall": "brick_buff",
+    "trim": "stone_tan",
+    "front": "trim_navy",
+    "sign": "sign_cream",
+    "awning": "awning_tan",
+    "roof": "roof_gravel",
+    "found": "stone_grey",
+    "door": "door_black"
+   },
+   "features": {
+    "window": {
+     "w": 0.95,
+     "h": 1.94,
+     "sill": 0.8,
+     "bay": 2.54
+    }
+   },
+   "why": {
+    "doors": "placeholder (lane A, site-layouts 7a rules) until sites-S3",
+    "storeys": "OSM building:levels",
+    "roof": "[doc] 08b 5: flat or low slope behind a parapet",
+    "heights": "[doc] 08b section 5 (North American construction; lidar check open, design 14 #5)"
+   }
+  },
+  {
+   "osm": "fixture/row_shop",
+   "part": 0,
+   "family": "block",
+   "model": "block",
+   "business": "Retail",
+   "type": "shop",
+   "form": "streetfront",
+   "seed": "62defc6659b99c95",
+   "inPlay": true,
+   "file": "BLD_fixture_row_shop",
+   "origin": [
+    4.0,
+    0.15,
+    14.0
+   ],
+   "ground": {
+    "min": -0.15,
+    "max": -0.15,
+    "mean": -0.15,
+    "centreY": 0.0
+   },
+   "poly": [
+    [
+     -4.0,
+     -10.0
+    ],
+    [
+     4.0,
+     -10.0
+    ],
+    [
+     4.0,
+     10.0
+    ],
+    [
+     -4.0,
+     10.0
+    ]
+   ],
+   "storeys": 2,
+   "roof": "flat",
+   "params": {
+    "groundH": 4.39,
+    "storeyH": 3.37,
+    "plinth": 0.15,
+    "parapet": 1.05,
+    "pitch": 0
+   },
+   "streetEdge": 0,
+   "streetDist": 14.0,
+   "setback": 2,
+   "party": [
+    {
+     "edge": 1,
+     "u0": 0.0,
+     "u1": 20.0,
+     "with": "fixture/row_restaurant"
+    }
+   ],
+   "doors": [
+    {
+     "spec": 0,
+     "kind": "Main",
+     "width": 1.8,
+     "edge": 0,
+     "u": 4.0,
+     "offWall": 0.0,
+     "plan": [
+      4.0,
+      4.0
+     ],
+     "sillY": null,
+     "ground": -0.15
+    },
+    {
+     "spec": 1,
+     "kind": "Service",
+     "width": 1.0,
+     "edge": 2,
+     "u": 3.6,
+     "offWall": 0.0,
+     "plan": [
+      4.4,
+      24.0
+     ],
+     "sillY": null,
+     "ground": -0.15
+    }
+   ],
+   "colours": {
+    "wall": "brick_red",
+    "trim": "stone_grey",
+    "front": "trim_navy",
+    "sign": "sign_cream",
+    "awning": "awning_navy",
+    "roof": "roof_tar",
+    "found": "stone_grey",
+    "door": "door_black"
+   },
+   "features": {
+    "window": {
+     "w": 1.03,
+     "h": 2.08,
+     "sill": 0.8,
+     "bay": 2.36
+    }
+   },
+   "why": {
+    "doors": "placeholder (lane A, site-layouts 7a rules) until sites-S3",
+    "storeys": "OSM building:levels",
+    "roof": "[doc] 08b 5: flat or low slope behind a parapet",
+    "heights": "[doc] 08b section 5 (North American construction; lidar check open, design 14 #5)"
+   }
+  },
+  {
+   "osm": "fixture/shed",
+   "part": 0,
+   "family": "barn",
+   "model": "shed",
+   "business": "Accessory",
+   "type": "accessory",
+   "form": null,
+   "seed": "781dda5ea6eb044a",
+   "inPlay": true,
+   "file": "BLD_fixture_shed",
+   "origin": [
+    129.5,
+    0.1,
+    16.0
+   ],
+   "ground": {
+    "min": -0.1,
+    "max": -0.1,
+    "mean": -0.1,
+    "centreY": 0.0
+   },
+   "poly": [
+    [
+     -1.5,
+     -2.0
+    ],
+    [
+     1.5,
+     -2.0
+    ],
+    [
+     1.5,
+     2.0
+    ],
+    [
+     -1.5,
+     2.0
+    ]
+   ],
+   "storeys": 1,
+   "roof": "gable",
+   "params": {
+    "groundH": 2.55,
+    "storeyH": 2.55,
+    "plinth": 0.1,
+    "pitch": 30,
+    "overhang": 0.25,
+    "rake": 0.2
+   },
+   "streetEdge": 0,
+   "streetDist": 16.0,
+   "setback": 14,
+   "party": [],
+   "doors": [
+    {
+     "spec": 0,
+     "kind": "Main",
+     "width": 1.0,
+     "edge": 0,
+     "u": 1.5,
+     "offWall": 0.0,
+     "plan": [
+      129.5,
+      14.0
+     ],
+     "sillY": null,
+     "ground": -0.1
+    }
+   ],
+   "colours": {
+    "wall": "siding_white",
+    "trim": "trim_white",
+    "roof": "shingle_brown",
+    "found": "concrete",
+    "door": "door_white"
+   },
+   "features": {
+    "window": {
+     "w": 0.7,
+     "h": 0.7,
+     "sill": 1.3,
+     "bay": 4.0
+    },
+    "hayDoor": false
+   },
+   "why": {
+    "doors": "placeholder (lane A, site-layouts 7a rules) until sites-S3",
+    "storeys": "[doc] one storey with a loft",
+    "roof": "[doc] 08b 5: barn gambrel or gabled; sheds gabled or lean-to",
+    "heights": "[doc] 08b section 5 (North American construction; lidar check open, design 14 #5)",
+    "colours": "matches house fixture/cottage"
+   }
+  },
+  {
+   "osm": "fixture/warehouse_flat",
+   "part": 0,
+   "family": "warehouse",
+   "model": "warehouse",
+   "business": "Warehouse",
+   "type": "warehouse",
+   "form": null,
+   "seed": "4cdbf08398afe662",
+   "inPlay": true,
+   "file": "BLD_fixture_warehouse_flat",
+   "origin": [
+    -96.0,
+    0.15,
+    37.0
+   ],
+   "ground": {
+    "min": -0.15,
+    "max": -0.15,
+    "mean": -0.15,
+    "centreY": 0.0
+   },
+   "poly": [
+    [
+     -24.0,
+     -12.0
+    ],
+    [
+     24.0,
+     -12.0
+    ],
+    [
+     24.0,
+     12.0
+    ],
+    [
+     -24.0,
+     12.0
+    ]
+   ],
+   "storeys": 2,
+   "roof": "flat",
+   "params": {
+    "groundH": 3.16,
+    "storeyH": 3.16,
+    "plinth": 0.15,
+    "parapet": 0.83,
+    "pitch": 6,
+    "overhang": 0.3,
+    "rake": 0.2
+   },
+   "streetEdge": 0,
+   "streetDist": 37.0,
+   "setback": 25,
+   "party": [],
+   "doors": [
+    {
+     "spec": 0,
+     "kind": "Main",
+     "width": 1.0,
+     "edge": 0,
+     "u": 3.0,
+     "offWall": 0.0,
+     "plan": [
+      -117.0,
+      25.0
+     ],
+     "sillY": null,
+     "ground": -0.15
+    },
+    {
+     "spec": 1,
+     "kind": "Dock",
+     "width": 2.7,
+     "edge": 2,
+     "u": 14.0,
+     "offWall": 0.0,
+     "plan": [
+      -86.0,
+      49.0
+     ],
+     "sillY": null,
+     "ground": -0.15
+    },
+    {
+     "spec": 2,
+     "kind": "Dock",
+     "width": 2.7,
+     "edge": 2,
+     "u": 18.0,
+     "offWall": 0.0,
+     "plan": [
+      -90.0,
+      49.0
+     ],
+     "sillY": null,
+     "ground": -0.15
+    },
+    {
+     "spec": 3,
+     "kind": "Dock",
+     "width": 2.7,
+     "edge": 2,
+     "u": 22.0,
+     "offWall": 0.0,
+     "plan": [
+      -94.0,
+      49.0
+     ],
+     "sillY": null,
+     "ground": -0.15
+    },
+    {
+     "spec": 4,
+     "kind": "Dock",
+     "width": 2.7,
+     "edge": 2,
+     "u": 26.0,
+     "offWall": 0.0,
+     "plan": [
+      -98.0,
+      49.0
+     ],
+     "sillY": null,
+     "ground": -0.15
+    },
+    {
+     "spec": 5,
+     "kind": "Dock",
+     "width": 2.7,
+     "edge": 2,
+     "u": 30.0,
+     "offWall": 0.0,
+     "plan": [
+      -102.0,
+      49.0
+     ],
+     "sillY": null,
+     "ground": -0.15
+    },
+    {
+     "spec": 6,
+     "kind": "Dock",
+     "width": 2.7,
+     "edge": 2,
+     "u": 34.0,
+     "offWall": 0.0,
+     "plan": [
+      -106.0,
+      49.0
+     ],
+     "sillY": null,
+     "ground": -0.15
+    }
+   ],
+   "colours": {
+    "wall": "panel_white",
+    "trim": "trim_green",
+    "roof": "roof_gravel",
+    "found": "concrete",
+    "door": "door_grey"
+   },
+   "features": {
+    "window": {
+     "w": 1.2,
+     "h": 0.9,
+     "sill": 1.56,
+     "bay": 4.0
+    }
+   },
+   "why": {
+    "doors": "placeholder (lane A, site-layouts 7a rules) until sites-S3",
+    "storeys": "type:warehouse na hist (n 29), capped at 2",
+    "roof": "OSM roof:shape=flat",
+    "heights": "[doc] 08b section 5 (North American construction; lidar check open, design 14 #5)"
+   }
+  },
+  {
+   "osm": "fixture/warehouse_gable",
+   "part": 0,
+   "family": "warehouse",
+   "model": "warehouse",
+   "business": "Industrial",
+   "type": "industrial",
+   "form": null,
+   "seed": "ae42a43e11c067f1",
+   "inPlay": true,
+   "file": "BLD_fixture_warehouse_gable",
+   "origin": [
+    -51.0,
+    0.15,
+    34.0
+   ],
+   "ground": {
+    "min": -0.15,
+    "max": -0.15,
+    "mean": -0.15,
+    "centreY": 0.0
+   },
+   "poly": [
+    [
+     -15.0,
+     -9.0
+    ],
+    [
+     15.0,
+     -9.0
+    ],
+    [
+     15.0,
+     9.0
+    ],
+    [
+     -15.0,
+     9.0
+    ]
+   ],
+   "storeys": 2,
+   "roof": "gable",
+   "params": {
+    "groundH": 3.005,
+    "storeyH": 3.005,
+    "plinth": 0.15,
+    "parapet": 0.87,
+    "pitch": 8,
+    "overhang": 0.3,
+    "rake": 0.2
+   },
+   "streetEdge": 0,
+   "streetDist": 34.0,
+   "setback": 25,
+   "party": [],
+   "doors": [
+    {
+     "spec": 0,
+     "kind": "Main",
+     "width": 1.0,
+     "edge": 0,
+     "u": 3.0,
+     "offWall": 0.0,
+     "plan": [
+      -63.0,
+      25.0
+     ],
+     "sillY": null,
+     "ground": -0.15
+    },
+    {
+     "spec": 1,
+     "kind": "Dock",
+     "width": 2.7,
+     "edge": 2,
+     "u": 5.0,
+     "offWall": 0.0,
+     "plan": [
+      -41.0,
+      43.0
+     ],
+     "sillY": null,
+     "ground": -0.15
+    },
+    {
+     "spec": 2,
+     "kind": "Dock",
+     "width": 2.7,
+     "edge": 2,
+     "u": 9.0,
+     "offWall": 0.0,
+     "plan": [
+      -45.0,
+      43.0
+     ],
+     "sillY": null,
+     "ground": -0.15
+    },
+    {
+     "spec": 3,
+     "kind": "Dock",
+     "width": 2.7,
+     "edge": 2,
+     "u": 13.0,
+     "offWall": 0.0,
+     "plan": [
+      -49.0,
+      43.0
+     ],
+     "sillY": null,
+     "ground": -0.15
+    },
+    {
+     "spec": 4,
+     "kind": "Dock",
+     "width": 2.7,
+     "edge": 2,
+     "u": 17.0,
+     "offWall": 0.0,
+     "plan": [
+      -53.0,
+      43.0
+     ],
+     "sillY": null,
+     "ground": -0.15
+    },
+    {
+     "spec": 5,
+     "kind": "Dock",
+     "width": 2.7,
+     "edge": 2,
+     "u": 21.0,
+     "offWall": 0.0,
+     "plan": [
+      -57.0,
+      43.0
+     ],
+     "sillY": null,
+     "ground": -0.15
+    },
+    {
+     "spec": 6,
+     "kind": "Dock",
+     "width": 2.7,
+     "edge": 2,
+     "u": 25.0,
+     "offWall": 0.0,
+     "plan": [
+      -61.0,
+      43.0
+     ],
+     "sillY": null,
+     "ground": -0.15
+    }
+   ],
+   "colours": {
+    "wall": "block_grey",
+    "trim": "concrete",
+    "roof": "metal_galv",
+    "found": "concrete",
+    "door": "door_steel"
+   },
+   "features": {
+    "window": {
+     "w": 1.2,
+     "h": 0.9,
+     "sill": 1.4049999999999998,
+     "bay": 4.0
+    }
+   },
+   "why": {
+    "doors": "placeholder (lane A, site-layouts 7a rules) until sites-S3",
+    "storeys": "type:warehouse na hist (n 29), capped at 2",
+    "roof": "OSM roof:shape=gabled",
+    "heights": "[doc] 08b section 5 (North American construction; lidar check open, design 14 #5)"
+   }
+  }
+ ]
+}
