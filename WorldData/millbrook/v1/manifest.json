@@ -1,5 +1,5 @@
 {
-  "bake": {"commit": "c7070f49aef47dd5830a9caa40bc765c5ebfde3e", "dirty": false, "plates": {"byStage": [88024, 0, 266], "count": 88290, "extra": 0, "pads": 266, "roads": 88024, "sha256": "695131da04f947689593203ae7cc8190a4ceb203b13dc20d0b0f0c4729f13e91", "sources": {}}, "seed": 20261022, "versions": {"bridgeBuilder": 1, "plateSink": 1, "roadPlateBuilder": 2, "worldBake": 1}},
+  "bake": {"commit": "16ddb17bf5455d5eaf9a2fdcd33c41cf5f94e734", "dirty": false, "plates": {"byStage": [88024, 0, 266], "count": 88290, "extra": 0, "pads": 266, "roads": 88024, "sha256": "695131da04f947689593203ae7cc8190a4ceb203b13dc20d0b0f0c4729f13e91", "sources": {}}, "seed": 20261022, "versions": {"bridgeBuilder": 1, "plateSink": 1, "roadPlateBuilder": 2, "worldBake": 1}},
   "files": {
     "structures.json": {"bytes": 4923, "sha256": "eb42b3b043e7018c96b25f5decc0ac4290869602d585e6053fb6ec53e6f3b295"},
     "terrain/base.f32": {"bytes": 67141636, "sha256": "9e9616d87198445ee6f7fb6a6183d858911cb11a414bcd56361cf8ac0535386e"},
@@ -15,7 +15,7 @@
   "frame": {"Y0": 190.796, "northern": true, "originEasting": 431570, "originNorthing": 4377540, "zone": 17},
   "grid": {"N": 4096, "VN": 4097, "cell": 0.5, "half": 1024, "layout": "k = j*VN + i; x = i*cell - half; z = j*cell - half (JS space: x = -east); tint: ((j*tintN + i)*2 + {0: tb, 1: td}), x = i*tintCell - half", "size": 2048, "tintCell": 8, "tintN": 257},
   "layers": "CanonData v1 formats: heights and base float32, surface (Grass 0, Dirt 1, Sand 2, Rock 3, Road 4, Gravel 5, Concrete 6, Track 7, Mud 8), wear, roadd (x 0.5 m) and mud (/ 255) u8, tint float32 pairs; y = elevation - Y0",
-  "town": {"id": "stockport-oh", "manifestSha256": "7c334898ed465e2521d358625defa35b24e671a98d4ae07d5558a563a9db80a4", "version": 1},
+  "town": {"manifestSha256": "7c334898ed465e2521d358625defa35b24e671a98d4ae07d5558a563a9db80a4", "name": "Millbrook", "version": 1},
   "version": 1,
   "world": "millbrook"
 }
