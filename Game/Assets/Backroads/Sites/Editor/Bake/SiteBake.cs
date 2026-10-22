@@ -79,6 +79,8 @@ namespace Backroads.Sites.Editor
         public static string ChunksDataPath(string town) => BakedDir + "/" + SiteChunks.TownResourceName(town) + ".sitebake.bytes";
         public static string PropsAssetPath(string town) => BakedDir + "/" + SitePropSet.TownResourceName(town) + ".asset";
         public static string DrivewaysPath(string town) => Path.Combine(RepoPaths.Root, "tools", "world", "sites", town, "driveways.json");
+        /// <summary>The autotest m3.shots.sites (lane S's file in StreamingAssets/Autotest): its views come from the bake.</summary>
+        public static string ShotsPath() => Path.Combine(RepoPaths.Game, "Assets", "StreamingAssets", "Autotest", "m3.shots.sites.json");
 
         public static SiteBakeResult Build(string town, SitePlanSet plans = null, SiteGround ground = null, SiteMeshSettings st = null)
         {
@@ -263,8 +265,84 @@ namespace Backroads.Sites.Editor
             return Sha(sb.ToString());
         }
 
-        // ------------------------------------------------------------------------------------------ outputs
+        // ------------------------------------------------------------------------------------------ manifest (design §10)
 
+        public static string ManifestPath(string town) => Path.Combine(RepoPaths.Game, BakedDir.Replace("/Resources", ""), "manifest_" + town + ".json");
+
+        static string Sha(byte[] b)
+        {
+            using (var sha = SHA256.Create()) return BitConverter.ToString(sha.ComputeHash(b)).Replace("-", "").ToLowerInvariant();
+        }
+
+        /// <summary>
+        /// The bake's manifest (design §10, card S5 step 3): format and generator versions, the hashes of the inputs (the
+        /// TownData manifest, lane R's frontage, the profile, the templates, the prop table) and of every output (parcels,
+        /// plans, chunks, props, plates, door and driveway files), flattened as "section.key".
+        /// </summary>
+        public static SortedDictionary<string, string> Manifest(SiteBakeResult r)
+        {
+            var ctx = r.plans.ctx;
+            var m = new SortedDictionary<string, string>(StringComparer.Ordinal)
+            {
+                ["format.name"] = "backroads-sites-manifest",
+                ["format.version"] = "1",
+                ["generator.parcels"] = ParcelBuilder.Version.ToString(CultureInfo.InvariantCulture),
+                ["generator.plans"] = SitePlanner.Version.ToString(CultureInfo.InvariantCulture),
+                ["generator.parking"] = ParkingPacker.Version.ToString(CultureInfo.InvariantCulture),
+                ["generator.bake"] = Version.ToString(CultureInfo.InvariantCulture),
+                ["generator.chunkFormat"] = RoadChunkSet.FormatVersion.ToString(CultureInfo.InvariantCulture),
+                ["inputs.townData"] = ctx.data.manifestSha256 ?? "",
+                ["inputs.kerbFrontage"] = KerbFrontageAsset.LoadTown(r.town)?.contentHash ?? "",
+                ["inputs.siteProfile"] = ctx.profile?.sha256 ?? "",
+                ["inputs.siteTemplates"] = ctx.templates?.sha256 ?? "",
+                ["inputs.propTable"] = Sha(string.Join("\n", SitePropTable.Keys.Select(kv => kv.Key + "=" + string.Join("|", kv.Value.Select(v => string.Join("+", v)))))),
+                ["outputs.parcels"] = ctx.parcels.hash ?? "",
+                ["outputs.plans"] = r.plans.hash ?? "",
+                ["outputs.chunks"] = r.chunks?.contentHash ?? "",
+                ["outputs.props"] = r.props?.contentHash ?? "",
+                ["outputs.plates"] = r.platesHash ?? "",
+                ["outputs.doors.json"] = Sha(Encoding.UTF8.GetBytes(SitePlans.DoorsJson(r.plans))),
+                ["outputs.driveways.json"] = Sha(Encoding.UTF8.GetBytes(DrivewaysJson(r.plans))),
+                ["hash"] = r.hash ?? "",
+            };
+            return m;
+        }
+
+        public static string ManifestJson(SortedDictionary<string, string> m)
+        {
+            var sb = new StringBuilder("{\n");
+            int i = 0;
+            foreach (var kv in m)
+                sb.Append("  \"").Append(kv.Key).Append("\": \"").Append(kv.Value).Append('"').Append(++i < m.Count ? ",\n" : "\n");
+            sb.Append("}\n");
+            return sb.ToString();
+        }
+
+        /// <summary>The committed manifest of a town, or null.</summary>
+        public static SortedDictionary<string, string> ReadManifest(string town)
+        {
+            var path = ManifestPath(town);
+            if (!File.Exists(path)) return null;
+            var o = BrJson.Obj(BrJson.Parse(File.ReadAllText(path, Encoding.UTF8)));
+            var m = new SortedDictionary<string, string>(StringComparer.Ordinal);
+            foreach (var kv in o) m[kv.Key] = kv.Value as string ?? "";
+            return m;
+        }
+
+        /// <summary>Keys whose committed value differs from a fresh bake's ("outputs.chunks: committed abc, fresh def").</summary>
+        public static List<string> ManifestDifferences(SortedDictionary<string, string> committed, SortedDictionary<string, string> fresh)
+        {
+            var o = new List<string>();
+            foreach (var kv in fresh)
+            {
+                committed.TryGetValue(kv.Key, out var c);
+                if (c != kv.Value) o.Add($"{kv.Key}: committed {(string.IsNullOrEmpty(c) ? "(none)" : c.Length > 12 ? c.Substring(0, 12) : c)}, fresh {(kv.Value.Length > 12 ? kv.Value.Substring(0, 12) : kv.Value)}");
+            }
+            foreach (var k in committed.Keys) if (!fresh.ContainsKey(k)) o.Add($"{k}: in the committed manifest only");
+            return o;
+        }
+
+        // ------------------------------------------------------------------------------------------ outputs
         /// <summary>Saves the chunk data, the chunk set and the prop set in place (GUIDs kept across re-bakes) and the driveway file.</summary>
         public static void Save(SiteBakeResult r)
         {
@@ -285,6 +363,10 @@ namespace Backroads.Sites.Editor
             var dw = DrivewaysPath(town);
             Directory.CreateDirectory(Path.GetDirectoryName(dw));
             File.WriteAllText(dw, DrivewaysJson(r.plans), new UTF8Encoding(false));
+            File.WriteAllText(ManifestPath(town), ManifestJson(Manifest(r)), new UTF8Encoding(false));
+            var shots = ShotsPath();
+            File.WriteAllText(shots, SiteShots.Json(r), new UTF8Encoding(false));
+            AssetDatabase.ImportAsset(BakedDir.Replace("/Resources", "") + "/manifest_" + town + ".json");
         }
 
         static void SaveAsset<T>(T fresh, string path, string name) where T : ScriptableObject
@@ -502,6 +584,14 @@ namespace Backroads.Sites.Editor
                         { Debug.LogError($"[BR] sites: {town}: the committed site bake is stale (chunks {chunks.contentHash} vs {a.chunks.contentHash}, props {props.contentHash} vs {a.props.contentHash})"); code = 1; }
                         else if (!File.Exists(SiteBake.DrivewaysPath(town)) || File.ReadAllText(SiteBake.DrivewaysPath(town)) != SiteBake.DrivewaysJson(a.plans))
                         { Debug.LogError($"[BR] sites: {town}: driveways.json is stale"); code = 1; }
+                        else
+                        {
+                            var m = SiteBake.ReadManifest(town);
+                            var diff = m == null ? new List<string> { "no committed manifest" } : SiteBake.ManifestDifferences(m, SiteBake.Manifest(a));
+                            foreach (var d in diff) Debug.LogError($"[BR] sites: {town}: manifest stale: {d}");
+                            if (diff.Count > 0) code = 1;
+                            else Debug.Log($"[BR] sites: {town}: the committed bake and manifest are current ({a.hash.Substring(0, 12)})");
+                        }
                     }
                     else
                     {
