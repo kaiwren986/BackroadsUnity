@@ -1,0 +1,21 @@
+{
+  "bake": {"commit": "c7070f49aef47dd5830a9caa40bc765c5ebfde3e", "dirty": false, "plates": {"byStage": [88024, 0, 266], "count": 88290, "extra": 0, "pads": 266, "roads": 88024, "sha256": "695131da04f947689593203ae7cc8190a4ceb203b13dc20d0b0f0c4729f13e91", "sources": {}}, "seed": 20261022, "versions": {"bridgeBuilder": 1, "plateSink": 1, "roadPlateBuilder": 2, "worldBake": 1}},
+  "files": {
+    "structures.json": {"bytes": 4923, "sha256": "eb42b3b043e7018c96b25f5decc0ac4290869602d585e6053fb6ec53e6f3b295"},
+    "terrain/base.f32": {"bytes": 67141636, "sha256": "9e9616d87198445ee6f7fb6a6183d858911cb11a414bcd56361cf8ac0535386e"},
+    "terrain/heights.f32": {"bytes": 67141636, "sha256": "7f7051d79c0265f19f451bbc6ecac6afc3493a1f698ded57fd5d0e0e60b293a9"},
+    "terrain/mud.u8": {"bytes": 16785409, "sha256": "581330f7a379dbd9485bd3a499e87b3b6160fe886168d6fe346cc45b566940c7"},
+    "terrain/roadd.u8": {"bytes": 16785409, "sha256": "1bc1d2573295bdaa234012d82b6a262d67bd60407f8e3e353ba69968304f2c00"},
+    "terrain/surface.u8": {"bytes": 16785409, "sha256": "4a07a904fa72f2ef113ddbc0f77528d6270aea3487e1f633d20ba830ebcb0226"},
+    "terrain/tint.f32": {"bytes": 528392, "sha256": "3baccab615a17af2940175a498b3c9deea76178c87aa654098fc56b86840bb79"},
+    "terrain/wear.u8": {"bytes": 16785409, "sha256": "13c221e09654eea2a6e65561e1f264c3ed1b96c22efff0b79ca4b58b76c1a51a"},
+    "water.json": {"bytes": 3286, "sha256": "7645bdff7fc5d77cbe7fd9635c91aaafacba245a12e20ea09a37d6cd2e4f2043"}
+  },
+  "format": "backroads-world",
+  "frame": {"Y0": 190.796, "northern": true, "originEasting": 431570, "originNorthing": 4377540, "zone": 17},
+  "grid": {"N": 4096, "VN": 4097, "cell": 0.5, "half": 1024, "layout": "k = j*VN + i; x = i*cell - half; z = j*cell - half (JS space: x = -east); tint: ((j*tintN + i)*2 + {0: tb, 1: td}), x = i*tintCell - half", "size": 2048, "tintCell": 8, "tintN": 257},
+  "layers": "CanonData v1 formats: heights and base float32, surface (Grass 0, Dirt 1, Sand 2, Rock 3, Road 4, Gravel 5, Concrete 6, Track 7, Mud 8), wear, roadd (x 0.5 m) and mud (/ 255) u8, tint float32 pairs; y = elevation - Y0",
+  "town": {"id": "stockport-oh", "manifestSha256": "7c334898ed465e2521d358625defa35b24e671a98d4ae07d5558a563a9db80a4", "version": 1},
+  "version": 1,
+  "world": "millbrook"
+}
