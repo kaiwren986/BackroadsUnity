@@ -1,8 +1,8 @@
 {
   "format": "backroads-world-places",
-  "note": "T3.3 provisional game places (W7 is lane G's in M9): pois as CanonData v1's world.json has them, parking bays as placements.json; JS space (x_js = -x, yaw_js = -yaw_unity)",
+  "note": "T3.3 provisional game places (W7 is lane G's in M9): pois as CanonData v1's world.json has them, parking bays as placements.json; JS space (x_js = -x, yaw_js = -yaw_unity); street view: 16.0 (buildings ahead, both sides, along the carriageway)",
   "cameras": [
-    {"fov": 55, "id": "street", "name": "Village street", "pos": [-334.718, 21.264, 483.085], "target": [-302.898, 24.117, 451.265]},
+    {"fov": 55, "id": "street", "name": "Village street", "pos": [-425, 18.191, 409], "target": [-365, 18.588, 409]},
     {"fov": 50, "id": "overview", "name": "Overview", "pos": [-952.898, 239.795, 451.265], "target": [-302.898, 21.117, 451.265]},
     {"fov": 55, "id": "dam", "name": "Mill and dam", "pos": [-734.54, 18.03, 301.926], "target": [-624.54, 9.301, 301.926]},
     {"fov": 55, "id": "bridge", "name": "Bridge", "pos": [-782.91, 14.359, 346.551], "target": [-662.91, 14.998, 346.551]},
