@@ -104,7 +104,7 @@ namespace Backroads.Sites.Editor
         public Paths64 Free(double clear)
         {
             var b = new Paths64();
-            foreach (var x in buildings) b.AddRange(Clip.Region(x.poly));
+            foreach (var x in buildings) if (!x.OpenRoof) b.AddRange(Clip.Region(x.poly));
             if (b.Count == 0) return region;
             return Clip.Difference(region, Clip.Inflate(Clip.Union(b), clear, JoinType.Miter));
         }
@@ -120,7 +120,7 @@ namespace Backroads.Sites.Editor
             {
                 if (m_Blocked != null) return m_Blocked;
                 var b = new Paths64();
-                foreach (var x in buildings) b.AddRange(Clip.Region(x.poly));
+                foreach (var x in buildings) if (!x.OpenRoof) b.AddRange(Clip.Region(x.poly));   // surfaces run under canopies and carports
                 m_Blocked = Clip.Union(b);
                 return m_Blocked;
             }

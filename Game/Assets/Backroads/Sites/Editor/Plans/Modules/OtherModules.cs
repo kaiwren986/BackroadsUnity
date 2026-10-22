@@ -27,8 +27,7 @@ namespace Backroads.Sites.Editor
             {
                 double cu = shop != null ? 0.5 * (pb.Box(shop).minU + pb.Box(shop).maxU) : 0;
                 canopy = pb.frame.Rect(cu - 8.2, cu + 8.2, 9.0, 16.8);
-                pb.Model("fuel.canopy", canopy, 5.0f, "design §7a: the canopy at its measured size (lane A)");
-                pb.Block(canopy);
+                pb.Model("fuel.canopy", canopy, 5.0f, "design §7a: the canopy at its measured size (lane A)");   // a roof: the forecourt runs under it
             }
             var cbox = pb.frame.Box(canopy);
             var rect = Poly2.MinAreaRect(canopy);

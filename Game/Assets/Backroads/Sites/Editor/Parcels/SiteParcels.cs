@@ -201,7 +201,7 @@ namespace Backroads.Sites.Editor
     }
 
     /// <summary>Batchmode entry points of the site program (PLAN §1.9; tools\ci\sites-bake.ps1 comes with sites-S5).</summary>
-    public static class SitesBakeCli
+    public static partial class SitesBakeCli
     {
         /// <summary>Builds every town's site plans twice, checks the hashes match and nothing is wrong, writes the report, maps and
         /// door specs (also to tools/world/sites/(town)/doors.json for lane A). Exit 1 on failure.</summary>

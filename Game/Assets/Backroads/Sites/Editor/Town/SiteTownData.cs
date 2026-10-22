@@ -98,6 +98,7 @@ namespace Backroads.Sites.Editor
                     form = Str(d, "form") == "streetfront" ? BuildingForm.Streetfront : Str(d, "form") == "standalone" ? BuildingForm.Standalone : BuildingForm.None,
                 };
                 if (d.TryGetValue("setback", out var st) && st is double sd) sb.setback = (float)sd;
+                if (d.TryGetValue("y", out var fy) && fy is double fyd) sb.floorY = fyd;
                 sb.centroid = d.TryGetValue("c", out var c) ? Pt(c) : Poly2.Centroid(sb.poly);
                 sb.tags = Tags(d);
                 t.buildings.Add(sb);
