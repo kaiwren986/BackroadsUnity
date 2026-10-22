@@ -16,7 +16,7 @@ namespace Backroads.Roads.Editor
     ///   menu: Backroads > Roads > Write debug maps  ->  artifacts/roads/graph-town.png, graph-overview.png (canon) and
     ///         artifacts/roads/(town)/graph-overview.png, graph-village.png (TownData towns)
     /// </summary>
-    public static class RoadGraphMap
+    public static partial class RoadGraphMap
     {
         /// <summary>What the map draws under the roads.</summary>
         public sealed class Background
