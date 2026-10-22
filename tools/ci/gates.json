@@ -1128,8 +1128,7 @@
           "gateJson": true,
           "heavy": true,
           "headline": true,
-          "hard": false,
-          "pending": "Sites.Validation, Sites.MatchesProfile (sites-S5) (lane S) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "hard": true,
           "owner": "S"
         },
         {
@@ -1167,8 +1166,7 @@
           "gateJson": true,
           "heavy": true,
           "headline": true,
-          "hard": false,
-          "pending": "Vehicle.BuildingImpact on both worlds (T3.6) (lane V) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "hard": true,
           "owner": "V"
         },
         {
@@ -1243,8 +1241,7 @@
           "gateJson": true,
           "heavy": true,
           "headline": true,
-          "hard": false,
-          "pending": "m3.shots.junctions (roads-R3) (lane R) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "hard": true,
           "owner": "R"
         },
         {
@@ -1261,8 +1258,7 @@
           "gateJson": true,
           "heavy": true,
           "headline": true,
-          "hard": false,
-          "pending": "m3.shots.sites (sites-S5) (lane S) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "hard": true,
           "owner": "S"
         },
         {
@@ -1653,8 +1649,7 @@
           "gateJson": true,
           "heavy": true,
           "headline": true,
-          "hard": false,
-          "pending": "Sites.Validation, Sites.MatchesProfile (sites-S5) (lane S) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "hard": true,
           "owner": "S"
         },
         {
@@ -1692,8 +1687,7 @@
           "gateJson": true,
           "heavy": true,
           "headline": true,
-          "hard": false,
-          "pending": "Vehicle.BuildingImpact on both worlds (T3.6) (lane V) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "hard": true,
           "owner": "V"
         },
         {
@@ -1768,8 +1762,7 @@
           "gateJson": true,
           "heavy": true,
           "headline": true,
-          "hard": false,
-          "pending": "m3.shots.junctions (roads-R3) (lane R) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "hard": true,
           "owner": "R"
         },
         {
@@ -1786,8 +1779,7 @@
           "gateJson": true,
           "heavy": true,
           "headline": true,
-          "hard": false,
-          "pending": "m3.shots.sites (sites-S5) (lane S) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "hard": true,
           "owner": "S"
         },
         {
