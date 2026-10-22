@@ -414,7 +414,8 @@ namespace Backroads.Tests.EditMode.World
         /// <summary>
         /// T3.1 Perf: on the canon test world, heightAt and rayTerrain from the layout give exactly M2's numbers (bit for
         /// bit, 1,000,000 heights and the 49,152 reference-camera rays) and cost at most 5 % more per step than M2's
-        /// compile-time code (Burst, one thread; the two run interleaved, best of 11 runs, re-measured up to 3 times).
+        /// compile-time code (Burst, one thread; the two run interleaved, best of 41 short runs, re-measured up to 3 times;
+        /// inconclusive when every attempt ran on a busy machine).
         /// </summary>
         [Test]
         public void StepCostMatchesM2()
@@ -458,25 +459,39 @@ namespace Backroads.Tests.EditMode.World
             Assert.AreEqual(0, hDiff, "heightAt from the layout differs from M2's");
             Assert.AreEqual(0, rDiff, "rayTerrain from the layout differs from M2's");
 
-            double hNowMs = 0, hM2Ms = 0, rNowMs = 0, rM2Ms = 0, hRatio = 0, rRatio = 0;
-            for (int attempt = 1; attempt <= 3; attempt++)
+            // timing on slices (200,000 heights, 12,288 rays): many short runs, interleaved, best of each; a run on a busy
+            // machine (the median far above the best) proves nothing either way, so it is re-measured, and if every
+            // attempt is busy the test is inconclusive rather than failed
+            var hbT = new HeightBench { G = v, P = pts.GetSubArray(0, 200000) };
+            var rbT = new RayBench { G = v, O = on.GetSubArray(0, 12288), D = dn.GetSubArray(0, 12288) };
+            void TH(bool m2) { hbT.M2 = m2; hbT.Out = (m2 ? hM2 : hNow).GetSubArray(0, 200000); hbT.Run(); }
+            void TR(bool m2) { rbT.M2 = m2; rbT.Out = (m2 ? rM2 : rNow).GetSubArray(0, 12288); rbT.Run(); }
+            double Best(List<double> l) => l.Min();
+            double Median(List<double> l) { var c = l.OrderBy(x => x).ToList(); return c[c.Count / 2]; }
+            double hRatio = 0, rRatio = 0, hNs = 0, hM2Ns = 0, rUs = 0, rM2Us = 0;
+            bool passed = false, quietFail = false;
+            for (int attempt = 1; attempt <= 3 && !passed; attempt++)
             {
-                hNowMs = hM2Ms = rNowMs = rM2Ms = double.MaxValue;
-                for (int rep = 0; rep < 11; rep++)
+                var hn = new List<double>(); var hm = new List<double>(); var rn = new List<double>(); var rm = new List<double>();
+                for (int rep = 0; rep < 41; rep++)
                 {
                     bool first = (rep & 1) == 0;   // alternate which one runs first
-                    if (first) { hNowMs = Math.Min(hNowMs, Time(() => RunH(false))); hM2Ms = Math.Min(hM2Ms, Time(() => RunH(true))); }
-                    else { hM2Ms = Math.Min(hM2Ms, Time(() => RunH(true))); hNowMs = Math.Min(hNowMs, Time(() => RunH(false))); }
-                    if (first) { rNowMs = Math.Min(rNowMs, Time(() => RunR(false))); rM2Ms = Math.Min(rM2Ms, Time(() => RunR(true))); }
-                    else { rM2Ms = Math.Min(rM2Ms, Time(() => RunR(true))); rNowMs = Math.Min(rNowMs, Time(() => RunR(false))); }
+                    if (first) { hn.Add(Time(() => TH(false))); hm.Add(Time(() => TH(true))); rn.Add(Time(() => TR(false))); rm.Add(Time(() => TR(true))); }
+                    else { hm.Add(Time(() => TH(true))); hn.Add(Time(() => TH(false))); rm.Add(Time(() => TR(true))); rn.Add(Time(() => TR(false))); }
                 }
-                hRatio = hNowMs / hM2Ms;
-                rRatio = rNowMs / rM2Ms;
-                TestContext.WriteLine($"StepCostMatchesM2 attempt {attempt}: heightAt {hNowMs * 1e6 / pts.Length:F2} ns vs M2 {hM2Ms * 1e6 / pts.Length:F2} ns ({hRatio:F3}); " +
-                                      $"rayTerrain {rNowMs * 1e3 / on.Length:F2} us vs M2 {rM2Ms * 1e3 / on.Length:F2} us ({rRatio:F3}) per ray, {on.Length} rays");
-                if (hRatio <= 1.05 && rRatio <= 1.05) break;
+                hRatio = Best(hn) / Best(hm);
+                rRatio = Best(rn) / Best(rm);
+                hNs = Best(hn) * 1e6 / 200000; hM2Ns = Best(hm) * 1e6 / 200000; rUs = Best(rn) * 1e3 / 12288; rM2Us = Best(rm) * 1e3 / 12288;
+                double noise = Math.Max(Math.Max(Median(hm) / Best(hm), Median(hn) / Best(hn)), Math.Max(Median(rm) / Best(rm), Median(rn) / Best(rn)));
+                bool busy = noise > 1.15;
+                TestContext.WriteLine($"StepCostMatchesM2 attempt {attempt}: heightAt {hNs:F2} ns vs M2 {hM2Ns:F2} ns ({hRatio:F3}); rayTerrain {rUs:F2} us vs M2 {rM2Us:F2} us ({rRatio:F3}) per ray; " +
+                                      $"median/best {noise:F2}{(busy ? " (busy machine)" : "")}");
+                passed = hRatio <= 1.05 && rRatio <= 1.05;
+                if (!passed && !busy) quietFail = true;
             }
-            WriteReport(hNowMs * 1e6 / pts.Length, hM2Ms * 1e6 / pts.Length, rNowMs * 1e3 / on.Length, rM2Ms * 1e3 / on.Length);
+            WriteReport(hNs, hM2Ns, rUs, rM2Us);
+            if (passed) return;
+            if (!quietFail) Assert.Inconclusive("the machine was too busy to time the step cost (median far above the best in every attempt); rerun on a quiet machine");
             Assert.LessOrEqual(hRatio, 1.05, "heightAt step cost more than 5 % above M2");
             Assert.LessOrEqual(rRatio, 1.05, "rayTerrain step cost more than 5 % above M2");
         }

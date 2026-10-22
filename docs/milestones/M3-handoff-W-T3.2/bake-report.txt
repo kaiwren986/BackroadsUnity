@@ -1,0 +1,26 @@
+Backroads world bake (T3.2) of millbrook from TownData/stockport-oh/v1: worldBake v1, plates v1; written to WorldData/millbrook/v1
+grid: 4097x4097 at 0.5 m over 2048 m, tint 257x257 at 8 m
+times (ms): town source 43, dem 1230, river 915, surfaces 424, road plates (lane R) 5153, plates 957, road distance 649
+
+river:
+  relation/20612248: level 5.401 m, 390418 carved vertices
+  relation/20612249: level 2.033 m, 766266 carved vertices
+  lock: level 2.033 m, 0 carved vertices
+  weir crest 5.301 m on 1 line(s); lock chambers 1 (level 2.033, walls to 6.401); 31725 vertices beside the water lifted to 5 cm over it
+surfaces (vertices before plates): farmland 1422718, wood 543369, marsh 136170, quarry gravel 26889, rock 836654, river banks 41374, riverbed 1159056
+plates: 88290 (roads 88024, pads 266, extra 0; by stage 88024/0/266); vertices set by stage 712236/0/200318; blended by stage 260857/0/113539; plates covering no vertex 16557; 705 ms, Burst True; list sha256 695131da04f947689593203ae7cc8190a4ceb203b13dc20d0b0f0c4729f13e91
+road distance: 473129 carriageway vertices
+surface counts (final): 0:12304969, 1:1646860, 2:1158956, 3:828356, 4:423137, 5:135582, 6:110285, 7:0, 8:177264
+heights -0.97 .. 113.54 m
+decks: #0 way/433243199 over  225.9 m
+
+files:
+  structures.json  eb42b3b043e7018c96b25f5decc0ac4290869602d585e6053fb6ec53e6f3b295
+  terrain/base.f32  9e9616d87198445ee6f7fb6a6183d858911cb11a414bcd56361cf8ac0535386e
+  terrain/heights.f32  7f7051d79c0265f19f451bbc6ecac6afc3493a1f698ded57fd5d0e0e60b293a9
+  terrain/mud.u8  581330f7a379dbd9485bd3a499e87b3b6160fe886168d6fe346cc45b566940c7
+  terrain/roadd.u8  1bc1d2573295bdaa234012d82b6a262d67bd60407f8e3e353ba69968304f2c00
+  terrain/surface.u8  4a07a904fa72f2ef113ddbc0f77528d6270aea3487e1f633d20ba830ebcb0226
+  terrain/tint.f32  3baccab615a17af2940175a498b3c9deea76178c87aa654098fc56b86840bb79
+  terrain/wear.u8  13c221e09654eea2a6e65561e1f264c3ed1b96c22efff0b79ca4b58b76c1a51a
+  water.json  7645bdff7fc5d77cbe7fd9635c91aaafacba245a12e20ea09a37d6cd2e4f2043
