@@ -1,0 +1,26 @@
+{
+    "name": "Backroads.World.Editor",
+    "rootNamespace": "Backroads.World.Bake",
+    "references": [
+        "Backroads.Core",
+        "Backroads.World",
+        "Backroads.Roads",
+        "Backroads.Roads.Editor",
+        "Backroads.Canon.Editor",
+        "Backroads.Build.Editor",
+        "Unity.Mathematics",
+        "Unity.Collections",
+        "Unity.Burst"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

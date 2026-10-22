@@ -18,7 +18,7 @@ namespace Backroads.Tests.EditMode.World
     /// path, the collider grid and the server canary line. Probes and rays come from CanonData/v1/terrain/probes.json.
     /// </summary>
     [TestFixture, Category("World")]
-    public class World
+    public partial class World
     {
         WorldGridView _g;
 

@@ -1,0 +1,28 @@
+{
+    "name": "Backroads.Tests.Perf.Vehicles",
+    "rootNamespace": "Backroads.Tests.Perf",
+    "references": [
+        "Backroads.Core",
+        "Backroads.World",
+        "Backroads.Vehicles",
+        "Backroads.Tests.Perf.EngineSim",
+        "Unity.Mathematics",
+        "Unity.Collections",
+        "Unity.Burst",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

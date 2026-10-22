@@ -16,7 +16,10 @@ namespace Backroads.Vehicles
     /// </summary>
     public sealed unsafe class BrvFleet : IDisposable
     {
-        public const int Capacity = 16;
+        public const int DefaultCapacity = 16;
+
+        /// <summary>How many vehicles this fleet can hold.</summary>
+        public int Capacity { get; }
 
         NativeArray<BrvState> _states;
         NativeArray<BrvDef> _defs;
@@ -43,10 +46,12 @@ namespace Backroads.Vehicles
         public long StepsRun { get; private set; }
         public BrvWorldData World => _world;
 
-        public BrvFleet(BrvWorldData world, bool ownsWorld = false)
+        public BrvFleet(BrvWorldData world, bool ownsWorld = false, int capacity = DefaultCapacity)
         {
             _world = world ?? throw new ArgumentNullException(nameof(world));
             _ownsWorld = ownsWorld;
+            if (capacity < 1) throw new ArgumentOutOfRangeException(nameof(capacity));
+            Capacity = capacity;
             _states = new NativeArray<BrvState>(Capacity, Allocator.Persistent);
             _defs = new NativeArray<BrvDef>(Capacity, Allocator.Persistent);
             _inputs = new NativeArray<BrvInput>(Capacity, Allocator.Persistent);
@@ -67,6 +72,8 @@ namespace Backroads.Vehicles
         {
             if (Count >= Capacity) throw new InvalidOperationException("fleet full");
             var d = BrvDef.Create(def);
+            // BRV v2 (T3.5) behind its flag; tracked vehicles stay on V0 until the dozer moves to v2 (M7)
+            d.v2 = BrvFeatures.V2Driveline && def.hasEngine && !def.hasSimple;
             _defs[Count] = d;
             _states[Count] = BrvSim.Create(d);
             _inputs[Count] = default;
@@ -112,6 +119,24 @@ namespace Backroads.Vehicles
         }
 
         public void Park(int i) => BrvSim.Park(ref State(i));
+
+        /// <summary>Vehicle i steps with BRV v2.</summary>
+        public bool IsV2(int i) => Def(i).v2;
+
+        /// <summary>BRV v2 lockers (no effect on V0, or on an axle without a locker).</summary>
+        public void SetLockers(int i, bool front, bool rear)
+        {
+            ref var s = ref State(i);
+            s.dl.lockFront = front;
+            s.dl.lockRear = rear;
+            BrvSim.Wake(ref s);
+        }
+
+        /// <summary>BRV v2 ABS switch (on by default).</summary>
+        public void SetAbs(int i, bool on) => State(i).dl.absOff = !on;
+
+        /// <summary>Sets vehicle i rolling straight ahead at <paramref name="speed"/> m/s (wheels, gear and driveline matched).</summary>
+        public void SetRolling(int i, double speed) => BrvSim.SetRolling(ref State(i), Def(i), speed);
 
         public void ResetUpright(int i)
         {

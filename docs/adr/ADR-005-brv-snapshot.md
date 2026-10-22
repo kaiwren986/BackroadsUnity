@@ -1,4 +1,4 @@
-# ADR-005: BRV V0 snapshot format v1 (draft)
+# ADR-005: BRV snapshot format (v1 frozen at m2; v2 for BRV v2, draft until m4)
 
 - **Status:** **accepted and frozen** at the `m2` tag (2026-10-19; M2 milestone gate 22/22, `docs\gates\M2.json`). Lane V, M2, card
   T2.1. BRV v2 adds version 2 with a v1 reader (below); other changes need a new ADR.
@@ -48,6 +48,29 @@ Not in the snapshot, by design: the world's own state (deformation lives in `Wor
 lane W; knocked-over trees in `BrvWorldData.TreeDown`), the engine-sim instance (rebuilt from `EngineState`), and the
 presentation. A winch `target` is a fleet index, valid only inside the same fleet; network or save code maps it to a
 stable vehicle id (open question below).
+
+## Version 2 (BRV v2, card T3.5, M3)
+
+BRV v2 (behind `BrvFeatures.V2Driveline`) keeps shafts and solver state that V0 does not have. Version 2 is
+**version 1, byte for byte, plus a shaft block appended at the end** (only the version field differs in the first
+1,659 bytes of a four-wheel vehicle):
+
+- `u8 flags` (bit 0 the block is valid, 1 front locker, 2 rear locker, 3 ABS off);
+- driveline: `crankOmega`, `crankAngle`, `driveOmega` (gearbox output; the input is lumped into it), `clutch`
+  (auto-clutch engagement), the warm-start impulses `lamClutch`, `lamDiffFront`, `lamDiffRear`, `engineTorque` (last
+  substep, report), `tcCut` (crawl control's engine cut) - 9 x f64;
+- per wheel, in the vehicle.js layout order: `lamB`, `lamT`, `lamL`, `lamM` (warm starts of the brake, tyre long, tyre
+  lat and mud rows), `anchorL`, `anchorS`, `anchorB` (low-speed anchors), `absCut` (ABS diagnostics), `kappa`, `alpha`
+  - 10 x f64. Wheel shaft speeds are the wheels' `omega` of version 1.
+- 2,052 bytes for a four-wheel vehicle.
+
+Writers write version 2 (V0 vehicles too: the block is then empty, `flags` bit 0 clear); readers take versions 1 and 2.
+A version 1 snapshot loaded into a v2 vehicle leaves the block invalid, and the first v2 step re-syncs it from the
+version 1 fields (crank from `rpm`, gearbox output from the driven wheels). Version 2 stays a **draft until the m4
+tag**: M4's SLAVED_CRANK coupling may add engine-coupling state to the shaft block (then still version 2 if no `m3`
+save exists, else version 3 with a version 2 reader). Tests: EditMode `VehicleV2Core.SnapshotV2RoundTripAndV1Reader`
+(layout, the version 1 prefix, the version 1 reader, refusals), PlayMode `Vehicle.SnapshotRoundTripV2` (restored mid-drive
+on the test track: 0 m, byte-identical end state).
 
 ## Consequences
 

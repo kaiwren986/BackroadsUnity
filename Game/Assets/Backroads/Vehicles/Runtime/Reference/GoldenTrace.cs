@@ -130,6 +130,32 @@ namespace Backroads.Vehicles.Reference
             return t;
         }
 
+        /// <summary>
+        /// The samples in the oracle's trace format (what <see cref="LoadReference"/> reads), values to 9 significant
+        /// digits: the Unity self-trace baselines [S17] are written this way.
+        /// </summary>
+        public string ToJson(string about = null)
+        {
+            var ci = System.Globalization.CultureInfo.InvariantCulture;
+            string N(double v) => double.IsNaN(v) ? "null" : v.ToString("G9", ci);
+            var sb = new System.Text.StringBuilder();
+            sb.Append("{\n  \"id\": \"").Append(id).Append("\",\n  \"vehicle\": \"").Append(vehicle).Append("\",\n  \"inputSha256\": \"").Append(inputSha256).Append("\",\n");
+            if (about != null) sb.Append("  \"about\": \"").Append(about.Replace("\\", "\\\\").Replace("\"", "\\\"")).Append("\",\n");
+            sb.Append("  \"fields\": [").Append(string.Join(", ", Array.ConvertAll(Fields, f => "\"" + f + "\""))).Append("],\n  \"samples\": [\n");
+            for (int i = 0; i < rows.Count; i++)
+            {
+                sb.Append("    [").Append(string.Join(", ", Array.ConvertAll(rows[i], N))).Append(i + 1 < rows.Count ? "],\n" : "]\n");
+            }
+            sb.Append("  ],\n  \"events\": [");
+            if (winchHookStep >= 0)
+                sb.Append("{\"step\": ").Append(winchHookStep).Append(", \"winch\": {\"anchor\": [").Append(N(winchAnchorX)).Append(", ").Append(N(winchAnchorY)).Append(", ")
+                  .Append(N(winchAnchorZ)).Append("], \"len\": ").Append(N(winchLenAtHook)).Append("}}");
+            sb.Append("],\n  \"final\": {");
+            if (!double.IsNaN(finalWinchLen)) sb.Append("\"winch\": {\"len\": ").Append(N(finalWinchLen)).Append(", \"tension\": ").Append(N(finalWinchTension)).Append("}, ");
+            sb.Append("\"fuel\": ").Append(N(finalFuel)).Append(", \"dirt\": ").Append(N(finalDirt)).Append("}\n}\n");
+            return sb.ToString();
+        }
+
         public double At(int row, int field) => rows[row][field];
 
         /// <summary>First time a field reaches a value (linear interpolation between samples), or NaN.</summary>

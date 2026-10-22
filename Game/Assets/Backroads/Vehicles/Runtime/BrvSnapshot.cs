@@ -5,21 +5,24 @@ using Unity.Mathematics;
 namespace Backroads.Vehicles
 {
     /// <summary>
-    /// The byte form of a <see cref="BrvState"/> (draft ADR-005): little-endian, explicit field order, every value at
-    /// full precision (IEEE doubles), so restoring a snapshot continues the simulation exactly as if it had never
-    /// stopped. Layout: magic "BRVS", u16 version, u16 wheel count, then the body, controls, controller, winch and
-    /// per-wheel blocks in the order written below. Readers reject other magics, unknown versions and wheel counts
-    /// that differ from the vehicle definition.
+    /// The byte form of a <see cref="BrvState"/> (ADR-005): little-endian, explicit field order, every value at full
+    /// precision (IEEE doubles), so restoring a snapshot continues the simulation exactly as if it had never stopped.
+    /// Layout: magic "BRVS", u16 version, u16 wheel count, then the body, controls, controller, winch and per-wheel
+    /// blocks in the order written below (version 1, frozen at m2); version 2 (BRV v2, T3.5) appends the shaft block:
+    /// the driveline (crank, gearbox output, clutch, lockers, warm starts) and per wheel the v2 solver state. Readers
+    /// take versions 1 and 2 (a version 1 snapshot leaves the v2 block empty; the first v2 step re-syncs it), and
+    /// reject other magics, unknown versions and wheel counts that differ from the vehicle definition.
     /// </summary>
     public static class BrvSnapshot
     {
         public const uint Magic = 0x53565242; // "BRVS" little-endian
-        public const ushort Version = 1;
+        public const ushort Version = 2;
+        public const ushort Version1 = 1;
 
-        public static byte[] ToBytes(in BrvState s)
+        public static byte[] ToBytes(in BrvState s, ushort version = Version)
         {
-            using var ms = new MemoryStream(1024);
-            using (var w = new BinaryWriter(ms)) Write(w, s);
+            using var ms = new MemoryStream(2048);
+            using (var w = new BinaryWriter(ms)) Write(w, s, version);
             return ms.ToArray();
         }
 
@@ -30,10 +33,11 @@ namespace Backroads.Vehicles
             return Read(r, expectedWheels);
         }
 
-        public static void Write(BinaryWriter w, in BrvState s)
+        public static void Write(BinaryWriter w, in BrvState s, ushort version = Version)
         {
+            if (version != Version1 && version != Version) throw new ArgumentOutOfRangeException(nameof(version));
             w.Write(Magic);
-            w.Write(Version);
+            w.Write(version);
             w.Write((ushort)s.wheels.Length);
             W3(w, s.pos); W3(w, s.vel); W3(w, s.angVel); W3(w, s.prevPos);
             W4(w, s.quat); W4(w, s.prevQuat);
@@ -65,13 +69,26 @@ namespace Backroads.Vehicles
                 W3(w, h.fd); W3(w, h.sd); W3(w, h.arm); W3(w, h.rS);
                 w.Write(h.kF); w.Write(h.kS); w.Write(h.accL); w.Write(h.accS); w.Write(h.longLim); w.Write(h.latLim); w.Write(h.vsPre);
             }
+            if (version < 2) return;
+            // ---- version 2: the shaft block (BRV v2)
+            var dl = s.dl;
+            w.Write((byte)((dl.init ? 1 : 0) | (dl.lockFront ? 2 : 0) | (dl.lockRear ? 4 : 0) | (dl.absOff ? 8 : 0)));
+            w.Write(dl.crankOmega); w.Write(dl.crankAngle); w.Write(dl.driveOmega); w.Write(dl.clutch);
+            w.Write(dl.lamClutch); w.Write(dl.lamDiffFront); w.Write(dl.lamDiffRear); w.Write(dl.engineTorque); w.Write(dl.tcCut);
+            for (int i = 0; i < s.wheels.Length; i++)
+            {
+                var h = s.wheels[i];
+                w.Write(h.lamB); w.Write(h.lamT); w.Write(h.lamL); w.Write(h.lamM);
+                w.Write(h.anchorL); w.Write(h.anchorS); w.Write(h.anchorB); w.Write(h.absCut);
+                w.Write(h.kappa); w.Write(h.alpha);
+            }
         }
 
         public static BrvState Read(BinaryReader r, int expectedWheels = -1)
         {
             if (r.ReadUInt32() != Magic) throw new InvalidDataException("not a BRV snapshot");
             ushort v = r.ReadUInt16();
-            if (v != Version) throw new InvalidDataException($"BRV snapshot version {v}, this build reads {Version}");
+            if (v != Version1 && v != Version) throw new InvalidDataException($"BRV snapshot version {v}, this build reads {Version1} and {Version}");
             int n = r.ReadUInt16();
             if (n > BrvDef.MaxWheels || (expectedWheels >= 0 && n != expectedWheels))
                 throw new InvalidDataException($"BRV snapshot has {n} wheels, expected {expectedWheels}");
@@ -110,6 +127,18 @@ namespace Backroads.Vehicles
                 h.kF = r.ReadDouble(); h.kS = r.ReadDouble(); h.accL = r.ReadDouble(); h.accS = r.ReadDouble();
                 h.longLim = r.ReadDouble(); h.latLim = r.ReadDouble(); h.vsPre = r.ReadDouble();
                 s.wheels.Add(h);
+            }
+            if (v < 2) return s;
+            byte fl = r.ReadByte();
+            s.dl.init = (fl & 1) != 0; s.dl.lockFront = (fl & 2) != 0; s.dl.lockRear = (fl & 4) != 0; s.dl.absOff = (fl & 8) != 0;
+            s.dl.crankOmega = r.ReadDouble(); s.dl.crankAngle = r.ReadDouble(); s.dl.driveOmega = r.ReadDouble(); s.dl.clutch = r.ReadDouble();
+            s.dl.lamClutch = r.ReadDouble(); s.dl.lamDiffFront = r.ReadDouble(); s.dl.lamDiffRear = r.ReadDouble(); s.dl.engineTorque = r.ReadDouble(); s.dl.tcCut = r.ReadDouble();
+            for (int i = 0; i < n; i++)
+            {
+                ref var h = ref s.wheels.ElementAt(i);
+                h.lamB = r.ReadDouble(); h.lamT = r.ReadDouble(); h.lamL = r.ReadDouble(); h.lamM = r.ReadDouble();
+                h.anchorL = r.ReadDouble(); h.anchorS = r.ReadDouble(); h.anchorB = r.ReadDouble(); h.absCut = r.ReadDouble();
+                h.kappa = r.ReadDouble(); h.alpha = r.ReadDouble();
             }
             return s;
         }
