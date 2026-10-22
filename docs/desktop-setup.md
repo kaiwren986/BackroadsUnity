@@ -31,12 +31,18 @@ git clone https://github.com/kaiwren986/Backroads.git D:/Backroads
 ```
 
 ```bash
-git clone https://github.com/ange-yaghi/engine-sim.git D:/Backroads-ref/engine-sim
+git clone --recurse-submodules https://github.com/ange-yaghi/engine-sim.git D:/Backroads-ref/engine-sim
 ```
 
 The first is this project. The second is the browser game, the physics reference; it is only ever read, never
 changed from the Unity project. The third is the upstream engine-sim, which only the vendor check reads (it compares
-our vendored copy against commit `85f7c3b`); skip it if you won't run the full gates.
+our vendored copy against commit `85f7c3b` and its submodules: piranha, the constraint solver and three more); skip it
+if you won't run the full gates. It needs its submodules: without them `vendor-check.ps1` (and so the merge tier)
+fails with "fatal: not a tree object". If you cloned it without `--recurse-submodules`, fetch them once:
+
+```bash
+git -C D:/Backroads-ref/engine-sim submodule update --init --recursive
+```
 
 If Windows shows a GitHub sign-in window during a clone, sign in there yourself.
 

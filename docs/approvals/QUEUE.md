@@ -32,6 +32,7 @@ Everything waiting for you, newest at the bottom. Each item has a decision id (P
 | U8e | The two steep approaches at nodes 5 and 17 (about -9 %): keep them and put each stop line on the flattest spot | R1, M3 | Keep them (lane R recommends) | **superseded by U25** (the old square and nodes are gone) |
 | U5a | Feel sign-off: does M2 drive like the browser game? Play the M2 build and answer F10 | end of M2 | The build ships with the measured deltas; the question stays open | waiting (M2) |
 | Licence texts | `licenses\` holds the standard texts of MIT, BSD-2/3-Clause, Apache-2.0, OFL-1.1, ODbL-1.0 and BSL-1.0, written by an agent from memory and marked as such (no download was allowed). Either let an agent fetch the 7 canonical text files from opensource.org, apache.org, openfontlicense.org, opendatacommons.org and boost.org to replace them, or compare them yourself. ODbL is the long one most likely to differ in wording | before any public build (friends-only builds are fine meanwhile) | The marked copies stay; `notices.ps1` reports them as unverified in every gate | waiting |
+| U32 | Fetch engine-sim's submodules into the desktop's reference clone `D:\Backroads-ref\engine-sim` (5 public GitHub repos; read only by `vendor-check.ps1`, so the merge tier can run there) | M3 (desktop) | n/a | **approved 2026-10-21**: fetched with `git submodule update --init --recursive`; vendor check 584 files, 0 differences. `docs\desktop-setup.md` now clones with `--recurse-submodules` |
 
 ## Draft email to Synty (U10)
 
