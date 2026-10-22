@@ -106,16 +106,14 @@ To rewrite the fixture snapshots after reviewing the maps: `$env:BR_SITES_SNAPSH
 
 ## Merge
 
-`$env:BR_OWNERS_BASE = 'main'; $env:BR_OWNERS_LANE = 'S'; tools\ci\gate.ps1 -Tier merge` on `55c2aad` (S3 with main
-merged in): **not passed yet, blocked by the machine, not by S3.** Two runs (2026-10-22): oracle.hash, vendor.check
-and native.ctest pass both times; in unity.editmode every Sites test and every other test passed except one of lane
-W's each time:
+`$env:BR_OWNERS_BASE = 'main'; $env:BR_OWNERS_LANE = 'S'; tools\ci\gate.ps1 -Tier merge` (lane S paths only; the
+diff against main holds S3): **pass, 8 of 8 steps** (2026-10-22, run `artifacts\20261022-1318\gate-merge`, on
+`214c7c3`, S3 with main at `22a87a6` merged in): oracle.hash; vendor.check (584 files, 0 differences); native.ctest;
+unity.editmode 304 passed, 1 skipped (ServerContents: no server build), 0 failed; unity.playmode 20 of 20;
+build.servercompile; build.dev (231 MiB); autotest.smoke. The native step's `EngineSimPlugin.dll` was restored
+afterwards (lane V's).
 
-- run `artifacts\20261022-1302\gate-merge-2`: 303 passed, 1 skipped (ServerContents), 0 failed, but
-  `World.GridLayout.StepCostMatchesM2` was *Inconclusive* ("the machine was too busy to time the step cost") and Unity
-  exits with 2 on that;
-- run `artifacts\20261022-1309\gate-merge`: `World.Canon.MismatchAbortsImport` failed with "There is not enough space
-  on the disk" writing to `%TEMP%`: drive C: has 0 bytes free.
-
-The later steps (playmode, server compile, dev build, smoke) did not run. To finish: free space on C:, rerun the
-gate, update this section. The native step's `EngineSimPlugin.dll` was restored after each run (lane V's).
+Two earlier runs failed on lane W's tests, not on S3, and are kept for the record: `artifacts\20261022-1302\gate-merge-2`
+(`World.GridLayout.StepCostMatchesM2` *Inconclusive*, "the machine was too busy to time the step cost", and Unity
+exits with 2 on that) and `artifacts\20261022-1309\gate-merge` (`World.Canon.MismatchAbortsImport`: "not enough space
+on the disk"; drive C: had 0 bytes free until the space was freed).
