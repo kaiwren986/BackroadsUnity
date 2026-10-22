@@ -28,8 +28,8 @@ namespace Backroads.World.Bake
     /// </summary>
     public static class WorldDataImporter
     {
-        /// <summary>1: T3.3; 2: open roofs (canopies on posts), lane S's site chunks and props.</summary>
-        public const int ImporterVersion = 2;
+        /// <summary>1: T3.3; 2: open roofs (canopies on posts), lane S's site chunks and props; 3: canopy normals.</summary>
+        public const int ImporterVersion = 3;
         public const string DefaultWorld = "millbrook";
         public const string ImportedRoot = "Assets/Backroads/World/Imported";
 
@@ -454,42 +454,46 @@ namespace Backroads.World.Bake
             }
         }
 
-        /// <summary>An open roof: a slab over the footprint from under to under + 0.5 m (both faces and the edge), and the
-        /// four posts from 0.6 m under the ground to the slab.</summary>
+        /// <summary>An open roof: a closed slab over the footprint from under to under + 0.5 m (top, bottom, edges) and four
+        /// closed posts from 0.6 m under the ground to the slab, every face single-sided and facing out (its own vertices,
+        /// so the normals are flat).</summary>
         static Mesh Canopy(string name, Vector2[] fp, float padY, float under, (Vector2 wall, Vector2 roof) sw)
         {
             var v = new List<Vector3>();
             var uv = new List<Vector2>();
             var t = new List<int>();
+            double area = 0;
+            for (int k = 0, l = fp.Length - 1; k < fp.Length; l = k++) area += fp[l].x * fp[k].y - fp[k].x * fp[l].y;
+            bool ccw = area >= 0;
             float y0 = padY + under, y1 = y0 + 0.5f;
-            var poly = fp.Select(p => new double2(p.x, p.y)).ToArray();
-            var tris = PlateSink.Triangulate(poly);
-            foreach (var y in new[] { y0, y1 })
+            var tris = PlateSink.Triangulate(fp.Select(p => new double2(p.x, p.y)).ToArray());
+            // top (up) and bottom (down)
+            foreach (var (y, up) in new[] { (y1, true), (y0, false) })
             {
                 int b = v.Count;
                 foreach (var p in fp) { v.Add(new Vector3(p.x, y, p.y)); uv.Add(sw.roof); }
-                foreach (var tri in tris) t.AddRange(new[] { b + tri.x, b + tri.y, b + tri.z, b + tri.x, b + tri.z, b + tri.y });
+                foreach (var tri in tris)
+                    if (ccw == up) t.AddRange(new[] { b + tri.x, b + tri.z, b + tri.y });
+                    else t.AddRange(new[] { b + tri.x, b + tri.y, b + tri.z });
             }
-            for (int k = 0; k < fp.Length; k++)
+            void Walls(Vector2[] ring, bool ringCcw, float lo, float hi, Vector2 swatch)
             {
-                var p = fp[k]; var q = fp[(k + 1) % fp.Length];
-                int b = v.Count;
-                v.Add(new Vector3(p.x, y0, p.y)); v.Add(new Vector3(q.x, y0, q.y)); v.Add(new Vector3(q.x, y1, q.y)); v.Add(new Vector3(p.x, y1, p.y));
-                for (int n = 0; n < 4; n++) uv.Add(sw.wall);
-                t.AddRange(new[] { b, b + 1, b + 2, b, b + 2, b + 3, b, b + 2, b + 1, b, b + 3, b + 2 });
+                for (int k = 0; k < ring.Length; k++)
+                {
+                    var p = ring[k]; var q = ring[(k + 1) % ring.Length];
+                    int b = v.Count;
+                    v.Add(new Vector3(p.x, lo, p.y)); v.Add(new Vector3(q.x, lo, q.y)); v.Add(new Vector3(q.x, hi, q.y)); v.Add(new Vector3(p.x, hi, p.y));
+                    for (int n = 0; n < 4; n++) uv.Add(swatch);
+                    if (ringCcw) t.AddRange(new[] { b, b + 2, b + 1, b, b + 3, b + 2 });
+                    else t.AddRange(new[] { b, b + 1, b + 2, b, b + 2, b + 3 });
+                }
             }
+            Walls(fp, ccw, y0, y1, sw.roof);
             foreach (var (c, u) in Posts(fp))
             {
                 var w = new Vector2(-u.y, u.x);
-                var corners = new[] { c - u * 0.15f - w * 0.15f, c + u * 0.15f - w * 0.15f, c + u * 0.15f + w * 0.15f, c - u * 0.15f + w * 0.15f };
-                for (int k = 0; k < 4; k++)
-                {
-                    var p = corners[k]; var q = corners[(k + 1) % 4];
-                    int b = v.Count;
-                    v.Add(new Vector3(p.x, padY - 0.6f, p.y)); v.Add(new Vector3(q.x, padY - 0.6f, q.y)); v.Add(new Vector3(q.x, y0, q.y)); v.Add(new Vector3(p.x, y0, p.y));
-                    for (int n = 0; n < 4; n++) uv.Add(sw.wall);
-                    t.AddRange(new[] { b, b + 1, b + 2, b, b + 2, b + 3, b, b + 2, b + 1, b, b + 3, b + 2 });
-                }
+                // counter-clockwise in (u, w), which is right-handed like (x, z)
+                Walls(new[] { c - u * 0.15f - w * 0.15f, c + u * 0.15f - w * 0.15f, c + u * 0.15f + w * 0.15f, c - u * 0.15f + w * 0.15f }, true, padY - 0.6f, y0, sw.wall);
             }
             var m = new Mesh { name = name };
             m.SetVertices(v);
