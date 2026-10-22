@@ -18,7 +18,8 @@ namespace Backroads.World.Bake
     /// surface.u8, wear.u8, roadd.u8, mud.u8, tint.f32 (TintN^2 x 2); water.json (river reaches with their flat levels, the
     /// weir, the lock) and structures.json (the bridge decks, for dropping the ground's collision under them), both in JS
     /// space; and manifest.json (format, the grid block that WorldGridLayout reads, the frame, the TownData manifest's
-    /// hash, the bake's commit and versions, the plate list's hash, and bytes + SHA-256 of every other file). Only
+    /// hash (not its folder name, which is the real town's) and in-game name, the bake's commit and versions, the plate
+    /// list's hash, and bytes + SHA-256 of every other file). Only
     /// manifest.json carries the commit, so the other files' hashes depend on the inputs alone.
     /// </summary>
     public static class WorldDataExport
@@ -194,7 +195,8 @@ namespace Backroads.World.Bake
             sb.Append(", \"layout\": \"k = j*VN + i; x = i*cell - half; z = j*cell - half (JS space: x = -east); tint: ((j*tintN + i)*2 + {0: tb, 1: td}), x = i*tintCell - half\"");
             sb.Append(", \"size\": ").Append(N(L.Size)).Append(", \"tintCell\": ").Append(N(L.TintCell)).Append(", \"tintN\": ").Append(L.TintN).Append("},\n");
             sb.Append("  \"layers\": \"CanonData v1 formats: heights and base float32, surface (Grass 0, Dirt 1, Sand 2, Rock 3, Road 4, Gravel 5, Concrete 6, Track 7, Mud 8), wear, roadd (x 0.5 m) and mud (/ 255) u8, tint float32 pairs; y = elevation - Y0\",\n");
-            sb.Append("  \"town\": {\"id\": ").Append(Q(t.townId)).Append(", \"manifestSha256\": ").Append(Q(t.manifestSha256)).Append(", \"version\": 1},\n");
+            // the extract by its manifest's hash and the in-game name: the real town's id never ships (ADR-006 section 6)
+            sb.Append("  \"town\": {\"manifestSha256\": ").Append(Q(t.manifestSha256)).Append(", \"name\": ").Append(Q(t.townName)).Append(", \"version\": 1},\n");
             sb.Append("  \"version\": ").Append(FormatVersion).Append(",\n");
             sb.Append("  \"world\": ").Append(Q(r.options.worldId)).Append("\n}\n");
             return sb.ToString();

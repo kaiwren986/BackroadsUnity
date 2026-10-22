@@ -10,7 +10,9 @@ namespace Backroads.World.Bake
 {
     public sealed class WorldBakeOptions
     {
-        public string townId = "stockport-oh";
+        /// <summary>The TownData extract (its folder name); null = the only one (TownSource.DefaultTownId). Real names never
+        /// appear in code (Town.NoRealNames), so the id comes from the data.</summary>
+        public string townId;
         public string worldId = "millbrook";
         public bool useBurst = true;
         /// <summary>Lane R's road plates (RoadPlateBuilder) and decks; off for fast tests of the terrain alone.</summary>
@@ -74,6 +76,7 @@ namespace Backroads.World.Bake
                 sw.Restart();
             }
 
+            o.townId = o.townId ?? TownSource.DefaultTownId();
             res.town = TownSource.Load(o.townId);
             Lap("town source");
             var g = res.grid = new BakeGrid(LayoutFor(res.town));

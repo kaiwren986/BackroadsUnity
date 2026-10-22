@@ -112,6 +112,26 @@ namespace Backroads.World.Bake
 
         public static string TownDir(string townId) => RepoPaths.InRepo("TownData/" + townId + "/v1");
 
+        /// <summary>The TownData extracts (folder names with a v1 manifest), sorted.</summary>
+        public static List<string> Towns()
+        {
+            var root = RepoPaths.InRepo("TownData");
+            var l = new List<string>();
+            if (!Directory.Exists(root)) return l;
+            foreach (var d in Directory.GetDirectories(root))
+                if (File.Exists(Path.Combine(d, "v1", "manifest.json"))) l.Add(Path.GetFileName(d));
+            l.Sort(StringComparer.Ordinal);
+            return l;
+        }
+
+        /// <summary>The town to bake when none is named: the only extract (an error when there are none or several).</summary>
+        public static string DefaultTownId()
+        {
+            var t = Towns();
+            if (t.Count != 1) throw new InvalidOperationException($"{t.Count} TownData extracts: name the town to bake (-town)");
+            return t[0];
+        }
+
         public static TownSource Load(string townId) => Load(townId, TownDir(townId));
 
         public static TownSource Load(string townId, string dir)

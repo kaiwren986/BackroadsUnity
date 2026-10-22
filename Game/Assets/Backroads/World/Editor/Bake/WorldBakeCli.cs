@@ -45,7 +45,7 @@ namespace Backroads.World.Bake
         {
             try
             {
-                var o = new WorldBakeOptions { townId = Arg("-town", "stockport-oh"), worldId = Arg("-world", "millbrook"), log = s => Debug.Log("[BR] " + s) };
+                var o = new WorldBakeOptions { townId = Arg("-town", null), worldId = Arg("-world", "millbrook"), log = s => Debug.Log("[BR] " + s) };
                 var r = WorldBake.Run(o);
                 var dir = Arg("-out", null) ?? WorldDataExport.WorldDir(o.worldId);
                 var art = Path.Combine(RepoPaths.Artifacts, "world", o.worldId);

@@ -93,7 +93,8 @@ namespace Backroads.Tests.EditMode.World
                 if (Array.IndexOf(bytes, (byte)'\r') >= 0 && kv.Key.EndsWith(".json")) fails.Add(kv.Key + " has CR bytes");
             }
             var town = CanonJson.Obj(CanonJson.Get(m, "town"), "town");
-            Assert.AreEqual(TownSource.Sha256File(Path.Combine(TownSource.TownDir("stockport-oh"), "manifest.json")), CanonJson.Str(town, "manifestSha256"), "TownData manifest hash");
+            Assert.AreEqual(TownSource.Sha256File(Path.Combine(TownSource.TownDir(TownSource.DefaultTownId()), "manifest.json")), CanonJson.Str(town, "manifestSha256"), "TownData manifest hash");
+            Assert.IsFalse(File.ReadAllText(mPath).Contains(TownSource.DefaultTownId()), "the manifest names the real town");
             var L = WorldGridLayout.Millbrook;
             Assert.AreEqual((long)L.Count * 4, new FileInfo(Path.Combine(dir, "terrain", "heights.f32")).Length);
             Assert.AreEqual((long)L.TintN * L.TintN * 8, new FileInfo(Path.Combine(dir, "terrain", "tint.f32")).Length);
