@@ -52,8 +52,7 @@ statics or each other).
 
 ## Waiting on you
 
-- **Drive C: is full** (about 0.5 GB free). Whatever fills it is not this project's temp or cache data. Until there is
-  room, Unity jobs that write temp files to C: fail; lane V works around it (For I 3). Nothing else to decide.
+Nothing to decide. (Drive C: ran full during this card; you freed it, 247 GB free since. See For I 3.)
 
 ## Where this differs from the card and research 06
 
@@ -77,10 +76,10 @@ statics or each other).
    half passes now); `Backroads.Tests.PlayMode.Vehicles.Vehicle.BuildingImpact` is the name.
 2. **The perf runner for Unity tests** (T3.5 For I 2) would also make `FollowInVehicle`'s RTF budget a real gate again
    (it reads `BR_PERF_GATE=1`).
-3. **Drive C: is full** (about 0.5 GB free during this card, 930 GB used by other data; the lanes' temp and caches are
-   under 2 GB). Unity runs that write `%TEMP%` fail ("not enough space on the disk": a T3.6 gate failed on lane W's canon
-   test). Lane V ran its last gates with `$env:TEMP` and `$env:TMP` pointed at `artifacts\tmp` on D:. Freeing C: is
-   the user's call; nothing was deleted.
+3. **Drive C: ran full** during this card (about 0.5 GB free; the lanes' temp and caches were under 2 GB, the rest
+   was the user's data and a 25 GB page file). Unity runs that write `%TEMP%` failed ("not enough space on the disk":
+   a T3.6 gate failed on lane W's canon test). Lane V ran its passing gate with `$env:TEMP` and `$env:TMP` pointed at
+   `artifacts\tmp` on D:. The user has since freed C: (247 GB free); nothing was deleted by lane V.
 
 ## For W
 
