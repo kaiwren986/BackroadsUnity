@@ -15,6 +15,8 @@ namespace Backroads.Roads.Editor
         public sealed class Checks
         {
             public int controlled, signs, stopSigns, yieldSigns, signals, plaques, blades;
+            /// <summary>Roundabout entries (RoundaboutYield approaches): each has a YIELD on its right (and one on its raised splitter) and a yield line.</summary>
+            public int roundaboutEntries, roundaboutYieldLines;
             public readonly List<string> signProblems = new List<string>(), signExceptions = new List<string>(), lineProblems = new List<string>(), tagProblems = new List<string>(), centreOnJunction = new List<string>();
             public double maxFromEdge, minFromKerb = double.MaxValue, maxFromKerb;
             public double townKm2, trianglesPerKm2;
@@ -59,6 +61,24 @@ namespace Backroads.Roads.Editor
                     bool controlled = a.control != Control.None && a.control != Control.RoundaboutYield;
                     byApproach.TryGetValue((ns.node, k), out var l);
                     int n = l?.Count ?? 0;
+                    if (a.control == Control.RoundaboutYield)
+                    {
+                        // roads-R4: a YIELD right of the entry and, with a raised splitter wide enough, one on the splitter
+                        c.roundaboutEntries++;
+                        var leg = ns.roundabout != null && k < ns.roundabout.legs.Count ? ns.roundabout.legs[k] : null;
+                        int most = leg != null && leg.splitters.Count > 0 ? 2 : 1;
+                        if (n < 1 || n > most) c.signProblems.Add($"node {ns.node} arm {k}: {n} signs at a roundabout entry (1 to {most})");
+                        if (l != null && l.Any(x => x.kind != RoadPropKind.Yield)) c.signProblems.Add($"node {ns.node} arm {k}: a sign other than YIELD at a roundabout entry");
+                        if (n >= 1)
+                        {
+                            a.frame.ToFrame(new D2(l[0].position.x, l[0].position.z), out _, out double ur);
+                            if (ur <= 0) c.signProblems.Add($"node {ns.node} arm {k}: the entry's YIELD is on the approach's left");
+                        }
+                        bool line = meshes.parts.Any(p => p.marking == MarkingKind.YieldLine && p.material == RoadMaterial.Paint && p.node == ns.node && p.arm == k);
+                        if (line) c.roundaboutYieldLines++;
+                        else c.lineProblems.Add($"node {ns.node} arm {k}: a roundabout entry without a yield line");
+                        continue;
+                    }
                     if (controlled) c.controlled++;
                     if (controlled && n != 1) c.signProblems.Add($"node {ns.node} arm {k}: {n} signs for one {a.control} approach");
                     if (!controlled && n > 0) c.signProblems.Add($"node {ns.node} arm {k}: a sign on an uncontrolled approach");
