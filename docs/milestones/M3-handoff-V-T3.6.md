@@ -92,9 +92,12 @@ statics or each other).
 
 ## Next
 
-- **Millbrook part (after T3.3 is on main)**: merge main; make `VehicleSimSystem` bind the Millbrook world's statics
-  (its scene colliders on `Static`, and a collider grid for the trees if W provides one); run `Vehicle.BuildingImpact`
-  on a Millbrook grey-box building (the same test, the world as a parameter); re-run the gates; finish this handoff.
+- **Millbrook part (after T3.3 is on main)**: merge main; switch `VehicleSpawner` (scene name and garage bays) and
+  `VehicleSimSystem.Bind` from `CanonRuntime` to lane W's `Backroads.World.ActiveWorld` (Grid, Colliders, Vegetation,
+  garage bays; the contract is in W's T3.3 handoff under "For V"), so both the canon test world and Millbrook bind the
+  same way; take the Millbrook statics from the world (its scene colliders on `Static`, and a collider grid for the
+  trees if W provides one); run `Vehicle.BuildingImpact` on a Millbrook grey-box building (the same test, the world as
+  a parameter); re-run the gates; finish this handoff.
 - **M4**: wheel spherecasts against kerbs and road colliders; remote vehicles as kinematic puppets (`Puppet`).
 
 ## Resume
