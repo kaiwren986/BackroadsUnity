@@ -22,7 +22,9 @@ namespace Backroads.Vehicles
     /// the solver's residual creep, so a vehicle holds on a 35 % slope.</item>
     /// </list>
     /// The engine is a torque map on a real crank (the JS torque curve, idle governor, soft limiter, engine drag) until
-    /// engine-sim's indicated torque replaces it in M4; the gearbox is the JS automatic (shift on ground speed) as an AMT.
+    /// engine-sim's indicated torque replaces it in M4; the gearbox is the JS automatic (shift on ground speed) as an AMT
+    /// (fuel cut and rev-matching while the clutch is open). Driver aids: ABS (implicit, on by default) and crawl control
+    /// in low range (driven-wheel slip capped at the tyre's peak by the brake, engine torque cut while a wheel slips).
     /// JS world space and doubles, like V0; Burst-compatible (stack scratch, no allocations).
     /// </summary>
     public static partial class BrvSim
@@ -208,7 +210,11 @@ namespace Backroads.Vehicles
             double lo = v.idleRpm + 0.04 * (v.redlineRpm - v.idleRpm);
             double hi = v.idleRpm + Math.Max(0.15, thr) * (v.redlineRpm * 0.55 - v.idleRpm);
             double target = s.engineOn ? SmoothStep(lo, Math.Max(hi, lo + 50), rpm) : 0;
-            double e = s.dl.clutch;
+            // overspeed protection: the AMT opens the clutch rather than let the wheels drag the crank past 115 % of
+            // redline (rolling fast in a low gear, low range picked at speed)
+            bool overspeed = Math.Abs(V2Ratio(s, d) * s.dl.driveOmega) * 30 / Math.PI > 1.15 * v.redlineRpm;
+            if (overspeed) target = 0;
+            double e = overspeed ? 0 : s.dl.clutch;
             // closes fast when the crank already turns with the gearbox (after a rev-matched shift), gently otherwise
             double slip = Math.Abs(s.dl.crankOmega - V2Ratio(s, d) * s.dl.driveOmega);
             double up = slip < 0.08 * Math.Max(Math.Abs(s.dl.crankOmega), 1) ? 20 : 6;
@@ -423,7 +429,7 @@ namespace Backroads.Vehicles
                     // AMT shift (06 section 4.2.2): fuel cut while the clutch is open, and the ECU matches the crank to the
                     // new gear's speed so the clutch closes without a jerk
                     Tc = 0;
-                    double sync = Math.Max(idle, R * s.dl.driveOmega);
+                    double sync = Clamp(R * s.dl.driveOmega, idle, v.redlineRpm * Math.PI / 30);
                     Ti = Clamp((sync - w0) * v.crankInertia / 0.05, -0.5 * v.engineTorque, 0.5 * v.engineTorque);
                 }
                 double Td = v.engineTorque * (0.02 + 0.22 * Math.Abs(x) * (1 - thr));
