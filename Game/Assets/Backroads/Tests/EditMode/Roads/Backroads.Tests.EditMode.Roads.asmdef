@@ -7,7 +7,9 @@
         "Backroads.Roads",
         "Backroads.Roads.Editor",
         "Backroads.Canon.Editor",
+        "Backroads.Build.Editor",
         "Backroads.Client.Rendering",
+        "Unity.Mathematics",
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner"
     ],

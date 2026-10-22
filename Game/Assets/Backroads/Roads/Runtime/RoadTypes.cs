@@ -11,6 +11,12 @@ namespace Backroads.Roads
     /// <summary>Traffic control at a node (05 §4, §6.2). R0 assigns a provisional control from the §6.2 rules; overrides come with R4/R5.</summary>
     public enum Control : byte { None, Yield, MinorStop, AllWayStop, Signal, RoundaboutYield }
 
+    /// <summary>Where a control came from (roads-R0o step 5): a mapped sign or signal, or 05 §6.2's rules where the map is silent.</summary>
+    public enum ControlSource : byte { None, Rule, Tag }
+
+    /// <summary>A mapped OSM point feature on a road (roads-R0o step 5): signs, signals and crossings.</summary>
+    public enum RoadFeatureKind : byte { Stop, AllWayStop, GiveWay, Signals, Crossing }
+
     /// <summary>Corner between two neighbouring arms (05 §4 Corner.Kind, §5.3).</summary>
     public enum CornerKind : byte { Fillet, Straight, Miter, Nose }
 
@@ -33,6 +39,10 @@ namespace Backroads.Roads
         Downtown = 1 << 3,
         /// <summary>The smallest angle between two arms is under 60 degrees (an acute Y).</summary>
         AcuteArms = 1 << 4,
+        /// <summary>A road cut at the play-area edge (EDGE_RULE: 50 m inside the edge, the terrain closes it off; lane W).</summary>
+        PlayAreaEdge = 1 << 5,
+        /// <summary>Mapped controls disagree with the class-first major road (the tags win; listed in the report).</summary>
+        TagOverridesRule = 1 << 6,
     }
 
     public static class RoadClasses

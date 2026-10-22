@@ -146,11 +146,16 @@ namespace Backroads.Roads
         }
     }
 
-    /// <summary>Convex hull and the buffered "town kerb zone" of 05 §5.1 step 3.</summary>
+    /// <summary>
+    /// The "town kerb zone" of 05 §5.1 step 3: the canon's convex hull of the street centrelines + a buffer, or a town's
+    /// measured zone polygon (TownData manifest zones.kerbZone, any simple polygon, no buffer).
+    /// </summary>
     public sealed class TownZone
     {
         public readonly D2[] Hull;   // counter-clockwise
         public readonly double Buffer;
+        /// <summary>True when Hull is a given polygon (point-in-polygon test, no buffer) rather than a computed convex hull.</summary>
+        public readonly bool IsPolygon;
 
         public TownZone(IEnumerable<D2> points, double buffer)
         {
@@ -158,10 +163,33 @@ namespace Backroads.Roads
             Buffer = buffer;
         }
 
-        public bool Contains(D2 p) => InHull(p) || DistanceToHull(p) <= Buffer;
+        TownZone(D2[] polygon)
+        {
+            Hull = (D2[])polygon.Clone();
+            Buffer = 0;
+            IsPolygon = true;
+        }
+
+        /// <summary>A zone that is exactly this polygon.</summary>
+        public static TownZone FromPolygon(D2[] polygon) => new TownZone(polygon);
+
+        public bool Contains(D2 p) => IsPolygon ? InPolygon(Hull, p) : InHull(p) || DistanceToHull(p) <= Buffer;
+
+        /// <summary>Even-odd point-in-polygon test (any simple polygon, either winding).</summary>
+        public static bool InPolygon(IReadOnlyList<D2> poly, D2 p)
+        {
+            bool inside = false;
+            for (int i = 0, j = poly.Count - 1; i < poly.Count; j = i++)
+            {
+                D2 a = poly[i], b = poly[j];
+                if ((a.z > p.z) != (b.z > p.z) && p.x < (b.x - a.x) * (p.z - a.z) / (b.z - a.z) + a.x) inside = !inside;
+            }
+            return inside;
+        }
 
         public bool InHull(D2 p)
         {
+            if (IsPolygon) return InPolygon(Hull, p);
             if (Hull.Length < 3) return false;
             for (int i = 0; i < Hull.Length; i++)
                 if ((Hull[(i + 1) % Hull.Length] - Hull[i]).Cross(p - Hull[i]) < 0) return false;
@@ -179,6 +207,7 @@ namespace Backroads.Roads
         /// <summary>The buffered boundary as a closed polygon (hull edges pushed out by Buffer, round corners every 10 degrees).</summary>
         public List<D2> Outline()
         {
+            if (IsPolygon) return new List<D2>(Hull);
             var o = new List<D2>();
             int n = Hull.Length;
             for (int i = 0; i < n; i++)
