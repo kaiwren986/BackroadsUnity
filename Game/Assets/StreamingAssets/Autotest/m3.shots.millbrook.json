@@ -1,0 +1,15 @@
+{
+  "id": "m3.shots.millbrook",
+  "kind": "shots-millbrook",
+  "seconds": 0,
+  "screenshot": false,
+  "childTimeoutSeconds": 600,
+  "width": 1600,
+  "height": 900,
+  "settleFrames": 6,
+  "loadTimeoutSeconds": 240,
+  "hours": [12, 19.5],
+  "views": ["street", "dam", "bridge", "landing", "fuel", "quarry", "marsh", "overview", "garage", "farm", "depot", "river"],
+  "minShots": 24,
+  "notes": "T3.3 done-when: the 12 fixed views of the new Millbrook (WorldData places.json cameras) at noon and at dusk, 1600x900, for the contact sheet."
+}

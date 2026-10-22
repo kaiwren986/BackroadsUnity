@@ -10,7 +10,13 @@
         "Backroads.Build.Editor",
         "Unity.Mathematics",
         "Unity.Collections",
-        "Unity.Burst"
+        "Unity.Burst",
+        "Backroads.Client",
+        "Backroads.Client.Rendering",
+        "Backroads.Client.Editor",
+        "Backroads.Roads.Client.Editor",
+        "Unity.RenderPipelines.Core.Runtime",
+        "Unity.RenderPipelines.Universal.Runtime"
     ],
     "includePlatforms": [
         "Editor"
