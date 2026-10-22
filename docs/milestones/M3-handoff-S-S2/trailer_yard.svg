@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="432" height="424" viewBox="0 0 432 424" font-family="sans-serif">
+<rect width="100%" height="100%" fill="#cfd8c4"/>
+<text x="6" y="16" font-size="13" fill="#222">trailer_yard: 28 stalls (0 accessible, 0 van), aisles 90 deg, stalls 90 deg, mode 0</text>
+<polygon points="36,388 396,388 396,58 36,58 " fill="#9a9a96" stroke="#555" stroke-width="1.5"/>
+<polygon points="267,388 267,58 177,58 177,388 " fill="#7f7f7c" stroke="none" stroke-width="0"/>
+<polygon points="363,385 363,362.8 267,362.8 267,385 " fill="#a59c7c" stroke="#333" stroke-width="0.6"/>
+<polygon points="363,362.8 363,340.6 267,340.6 267,362.8 " fill="#a59c7c" stroke="#333" stroke-width="0.6"/>
+<polygon points="363,340.6 363,318.4 267,318.4 267,340.6 " fill="#a59c7c" stroke="#333" stroke-width="0.6"/>
+<polygon points="363,318.4 363,296.2 267,296.2 267,318.4 " fill="#a59c7c" stroke="#333" stroke-width="0.6"/>
+<polygon points="363,296.2 363,274 267,274 267,296.2 " fill="#a59c7c" stroke="#333" stroke-width="0.6"/>
+<polygon points="363,274 363,251.8 267,251.8 267,274 " fill="#a59c7c" stroke="#333" stroke-width="0.6"/>
+<polygon points="363,251.8 363,229.6 267,229.6 267,251.8 " fill="#a59c7c" stroke="#333" stroke-width="0.6"/>
+<polygon points="363,229.6 363,207.4 267,207.4 267,229.6 " fill="#a59c7c" stroke="#333" stroke-width="0.6"/>
+<polygon points="363,207.4 363,185.2 267,185.2 267,207.4 " fill="#a59c7c" stroke="#333" stroke-width="0.6"/>
+<polygon points="363,185.2 363,163 267,163 267,185.2 " fill="#a59c7c" stroke="#333" stroke-width="0.6"/>
+<polygon points="363,163 363,140.8 267,140.8 267,163 " fill="#a59c7c" stroke="#333" stroke-width="0.6"/>
+<polygon points="363,140.8 363,118.6 267,118.6 267,140.8 " fill="#a59c7c" stroke="#333" stroke-width="0.6"/>
+<polygon points="363,118.6 363,96.4 267,96.4 267,118.6 " fill="#a59c7c" stroke="#333" stroke-width="0.6"/>
+<polygon points="363,96.4 363,74.2 267,74.2 267,96.4 " fill="#a59c7c" stroke="#333" stroke-width="0.6"/>
+<polygon points="177,385 177,362.8 81,362.8 81,385 " fill="#a59c7c" stroke="#333" stroke-width="0.6"/>
+<polygon points="177,362.8 177,340.6 81,340.6 81,362.8 " fill="#a59c7c" stroke="#333" stroke-width="0.6"/>
+<polygon points="177,340.6 177,318.4 81,318.4 81,340.6 " fill="#a59c7c" stroke="#333" stroke-width="0.6"/>
+<polygon points="177,318.4 177,296.2 81,296.2 81,318.4 " fill="#a59c7c" stroke="#333" stroke-width="0.6"/>
+<polygon points="177,296.2 177,274 81,274 81,296.2 " fill="#a59c7c" stroke="#333" stroke-width="0.6"/>
+<polygon points="177,274 177,251.8 81,251.8 81,274 " fill="#a59c7c" stroke="#333" stroke-width="0.6"/>
+<polygon points="177,251.8 177,229.6 81,229.6 81,251.8 " fill="#a59c7c" stroke="#333" stroke-width="0.6"/>
+<polygon points="177,229.6 177,207.4 81,207.4 81,229.6 " fill="#a59c7c" stroke="#333" stroke-width="0.6"/>
+<polygon points="177,207.4 177,185.2 81,185.2 81,207.4 " fill="#a59c7c" stroke="#333" stroke-width="0.6"/>
+<polygon points="177,185.2 177,163 81,163 81,185.2 " fill="#a59c7c" stroke="#333" stroke-width="0.6"/>
+<polygon points="177,163 177,140.8 81,140.8 81,163 " fill="#a59c7c" stroke="#333" stroke-width="0.6"/>
+<polygon points="177,140.8 177,118.6 81,118.6 81,140.8 " fill="#a59c7c" stroke="#333" stroke-width="0.6"/>
+<polygon points="177,118.6 177,96.4 81,96.4 81,118.6 " fill="#a59c7c" stroke="#333" stroke-width="0.6"/>
+<polygon points="177,96.4 177,74.2 81,74.2 81,96.4 " fill="#a59c7c" stroke="#333" stroke-width="0.6"/>
+<circle cx="363" cy="296.2" r="2.7" fill="#ffd23a"/>
+<circle cx="363" cy="96.4" r="2.7" fill="#ffd23a"/>
+<circle cx="81" cy="296.2" r="2.7" fill="#ffd23a"/>
+<circle cx="81" cy="96.4" r="2.7" fill="#ffd23a"/>
+<circle cx="258" cy="382" r="1.8" fill="#d03030"/>
+<line x1="180" y1="388" x2="252" y2="388" stroke="#e03030" stroke-width="3"/>
+<line x1="12" y1="412" x2="72" y2="412" stroke="#111" stroke-width="2"/>
+<text x="12" y="406" font-size="10" fill="#111">10 m</text>
+</svg>

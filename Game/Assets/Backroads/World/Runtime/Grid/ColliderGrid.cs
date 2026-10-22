@@ -6,15 +6,19 @@ using Unity.Mathematics;
 namespace Backroads.World
 {
     /// <summary>
-    /// The JS static collider grid (props.js lines 12-55, 03 section 4.7): 16 m cells, 64 x 64, circles and rotated
-    /// boxes with a height span. Records stay in JS space; Query flips Unity positions at the boundary. Used by the V0
-    /// vehicle statics (M2) and traffic clearance. Built once from PlacementSet.colliders; flat NativeArrays so Burst
-    /// jobs can read it.
+    /// The JS static collider grid (props.js lines 12-55, 03 section 4.7): 16 m cells over the world's grid (64 x 64 on
+    /// the canon test world, 128 x 128 on the new Millbrook; T3.1, from the WorldGridLayout), circles and rotated boxes
+    /// with a height span. Records stay in JS space; Query flips Unity positions at the boundary. Used by the V0 vehicle
+    /// statics (M2) and traffic clearance. Built once from PlacementSet.colliders; flat NativeArrays so Burst jobs can
+    /// read it (cell c = j * CellsPerSide + i covers JS x in [i * 16 - Half, +16]).
     /// </summary>
     public sealed class ColliderGrid : IDisposable
     {
         public const float CellSize = 16f;
-        public const int Cells = 64;
+
+        /// <summary>16 m cells per side (layout.ColliderCellsPerSide) and the world's half size in metres.</summary>
+        public int CellsPerSide { get; private set; }
+        public float Half { get; private set; }
 
         public struct Record
         {
@@ -43,12 +47,14 @@ namespace Backroads.World
             return i < 0 ? 255 : i;
         }
 
-        public static ColliderGrid Build(PlacementSet.Collider[] src, Allocator allocator = Allocator.Persistent)
+        public static ColliderGrid Build(PlacementSet.Collider[] src, WorldGridLayout layout, Allocator allocator = Allocator.Persistent)
         {
-            var g = new ColliderGrid();
+            if (!layout.IsValid) throw new ArgumentException("invalid WorldGridLayout");
+            var g = new ColliderGrid { CellsPerSide = layout.ColliderCellsPerSide, Half = layout.Half };
+            int cells = g.CellsPerSide;
             int n = src?.Length ?? 0;
             g.Records = new NativeArray<Record>(n, allocator);
-            var cellLists = new List<int>[Cells * Cells];
+            var cellLists = new List<int>[cells * cells];
             for (int c = 0; c < cellLists.Length; c++) cellLists[c] = new List<int>();
             for (int i = 0; i < n; i++)
             {
@@ -63,15 +69,15 @@ namespace Backroads.World
                 // insert() uses the circle radius, or Math.hypot(hw, hd) for boxes
                 rec.r = box ? (float)Math.Sqrt((double)s.hw * s.hw + (double)s.hd * s.hd) : s.r;
                 g.Records[i] = rec;
-                CellRange(s.x, s.z, rec.r, out int i0, out int i1, out int j0, out int j1);
+                g.CellRange(s.x, s.z, rec.r, out int i0, out int i1, out int j0, out int j1);
                 for (int j = j0; j <= j1; j++)
                     for (int ii = i0; ii <= i1; ii++)
-                        cellLists[j * Cells + ii].Add(i);
+                        cellLists[j * cells + ii].Add(i);
             }
-            g.CellStart = new NativeArray<int>(Cells * Cells + 1, allocator);
+            g.CellStart = new NativeArray<int>(cells * cells + 1, allocator);
             int total = 0;
             for (int c = 0; c < cellLists.Length; c++) { g.CellStart[c] = total; total += cellLists[c].Count; }
-            g.CellStart[Cells * Cells] = total;
+            g.CellStart[cells * cells] = total;
             g.CellItems = new NativeArray<int>(total, allocator);
             int p = 0;
             foreach (var l in cellLists) foreach (var idx in l) g.CellItems[p++] = idx;
@@ -79,12 +85,14 @@ namespace Backroads.World
             return g;
         }
 
-        static void CellRange(float x, float z, float r, out int i0, out int i1, out int j0, out int j1)
+        void CellRange(float x, float z, float r, out int i0, out int i1, out int j0, out int j1)
         {
-            i0 = Math.Max(0, (int)Math.Floor((x - r + WorldGrid.Half) / CellSize));
-            i1 = Math.Min(Cells - 1, (int)Math.Floor((x + r + WorldGrid.Half) / CellSize));
-            j0 = Math.Max(0, (int)Math.Floor((z - r + WorldGrid.Half) / CellSize));
-            j1 = Math.Min(Cells - 1, (int)Math.Floor((z + r + WorldGrid.Half) / CellSize));
+            float half = Half;
+            int last = CellsPerSide - 1;
+            i0 = Math.Max(0, (int)Math.Floor((x - r + half) / CellSize));
+            i1 = Math.Min(last, (int)Math.Floor((x + r + half) / CellSize));
+            j0 = Math.Max(0, (int)Math.Floor((z - r + half) / CellSize));
+            j1 = Math.Min(last, (int)Math.Floor((z + r + half) / CellSize));
         }
 
         /// <summary>queryColliders(x, z, r): every record whose cells overlap the query square, deduplicated (JS space).</summary>
@@ -96,7 +104,7 @@ namespace Backroads.World
             for (int j = j0; j <= j1; j++)
                 for (int i = i0; i <= i1; i++)
                 {
-                    int c = j * Cells + i;
+                    int c = j * CellsPerSide + i;
                     for (int q = CellStart[c]; q < CellStart[c + 1]; q++)
                     {
                         int idx = CellItems[q];

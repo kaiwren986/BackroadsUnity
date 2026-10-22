@@ -12,16 +12,17 @@ using Object = UnityEngine.Object;
 namespace Backroads.Client.Rendering
 {
     /// <summary>
-    /// T1.3: the terrain as 256 chunk meshes of 64 m (03 section 4.3, terrain.js Terrain): LOD steps 1/2/4/8 chosen at
-    /// 110/250/470 m x lodScale with +-10 m hysteresis, at most buildsPerFrame builds per frame, nearest first, the
+    /// T1.3: the terrain as chunk meshes of 64 m (03 section 4.3, terrain.js Terrain), as many as the grid's layout
+    /// has (T3.1: 16 x 16 = 256 on the canon test world, 32 x 32 = 1,024 on the new Millbrook): LOD steps 1/2/4/8 chosen
+    /// at 110/250/470 m x lodScale with +-10 m hysteresis, at most buildsPerFrame builds per frame, nearest first, the
     /// current LOD +-1 kept cached. Builds run as one Burst job per batch (TerrainChunkBuildJob, Mesh.MeshDataArray).
-    /// Chunk logic stays in JS space (chunk (cx, cz) covers JS x in [cx*64 - 512, +64]).
+    /// Chunk logic stays in JS space (chunk (cx, cz) covers JS x in [cx*64 - Half, +64]).
     /// </summary>
     public sealed class TerrainChunkSystem : IDisposable
     {
-        public const int ChunksPerSide = TerrainChunkBuildJob.ChunksPerSide;
-        public const int ChunkCount = ChunksPerSide * ChunksPerSide;
         public const float ChunkSize = 64f;
+        /// <summary>Chunks per side and in all (from the grid's layout).</summary>
+        public readonly int ChunksPerSide, ChunkCount;
         public static readonly float[] Thresholds = { 110f, 250f, 470f };
 
         sealed class Chunk
@@ -36,7 +37,7 @@ namespace Backroads.Client.Rendering
         }
 
         readonly WorldGrid _grid;
-        readonly Chunk[] _chunks = new Chunk[ChunkCount];
+        readonly Chunk[] _chunks;
         readonly TerrainPalette _pal = TerrainPalette.Create();
         NativeArray<VertexAttributeDescriptor> _layout;
         readonly List<Chunk> _queue = new List<Chunk>();
@@ -48,7 +49,7 @@ namespace Backroads.Client.Rendering
         public int MaxShadowLod = 1;
         public int BuildsPerFrame = 2;
         public Transform Root { get; }
-        /// <summary>Wall time of the last BuildAll (all 256 chunks at their LOD for the camera), milliseconds.</summary>
+        /// <summary>Wall time of the last BuildAll (every chunk at its LOD for the camera), milliseconds.</summary>
         public double LastBuildAllMs { get; private set; }
         public int BuildsLastFrame { get; private set; }
         public int TotalBuilds { get; private set; }
@@ -68,23 +69,31 @@ namespace Backroads.Client.Rendering
 
         public TerrainChunkSystem(WorldGrid grid, Material material, Transform parent)
         {
-            _grid = grid;
+            _grid = grid ?? throw new ArgumentNullException(nameof(grid));
+            var gl = grid.Layout;
+            if (gl.Cell * TerrainChunkBuildJob.CellsPerChunk != ChunkSize)
+                throw new ArgumentException($"terrain chunks are {ChunkSize} m: a {gl.Cell} m grid is not supported yet");
+            ChunksPerSide = gl.ChunksPerSide;
+            ChunkCount = ChunksPerSide * ChunksPerSide;
+            _chunks = new Chunk[ChunkCount];
             _layout = TerrainChunkBuildJob.CreateLayout(Allocator.Persistent);
             Root = new GameObject("Terrain").transform;
             Root.SetParent(parent, false);
             var h = grid.H;
+            const int CH = TerrainChunkBuildJob.CellsPerChunk;
+            int vn = gl.VN;
             for (int cz = 0; cz < ChunksPerSide; cz++)
                 for (int cx = 0; cx < ChunksPerSide; cx++)
                 {
                     float mn = float.PositiveInfinity, mx = float.NegativeInfinity;
-                    for (int j = cz * 128; j <= cz * 128 + 128; j += 4)
-                        for (int i = cx * 128; i <= cx * 128 + 128; i += 4)
+                    for (int j = cz * CH; j <= cz * CH + CH; j += 4)
+                        for (int i = cx * CH; i <= cx * CH + CH; i += 4)
                         {
-                            float v = h[j * WorldGrid.VN + i];
+                            float v = h[j * vn + i];
                             if (v < mn) mn = v;
                             if (v > mx) mx = v;
                         }
-                    var c = new Chunk { cx = cx, cz = cz, x0 = cx * ChunkSize - 512f, z0 = cz * ChunkSize - 512f, minY = mn - 16, maxY = mx + 16 };
+                    var c = new Chunk { cx = cx, cz = cz, x0 = cx * ChunkSize - gl.Half, z0 = cz * ChunkSize - gl.Half, minY = mn - 16, maxY = mx + 16 };
                     c.go = new GameObject($"chunk_{cx:00}_{cz:00}");
                     c.go.transform.SetParent(Root, false);
                     c.filter = c.go.AddComponent<MeshFilter>();
@@ -205,7 +214,8 @@ namespace Backroads.Client.Rendering
         public void MarkDirty(int i0, int j0, int i1, int j1)
         {
             i0 = Math.Max(0, i0 - DirtyMargin); j0 = Math.Max(0, j0 - DirtyMargin);
-            i1 = Math.Min(WorldGrid.N, i1 + DirtyMargin); j1 = Math.Min(WorldGrid.N, j1 + DirtyMargin);
+            int n = _grid.Layout.N;
+            i1 = Math.Min(n, i1 + DirtyMargin); j1 = Math.Min(n, j1 + DirtyMargin);
             if (i0 > i1 || j0 > j1) return;
             const int CH = TerrainChunkBuildJob.CellsPerChunk;
             int cx0 = Math.Max(0, (i0 - 1) / CH), cx1 = Math.Min(ChunksPerSide - 1, i1 / CH);

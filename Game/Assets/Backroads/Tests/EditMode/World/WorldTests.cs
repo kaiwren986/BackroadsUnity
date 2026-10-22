@@ -286,7 +286,8 @@ namespace Backroads.Tests.EditMode.World
         public void ColliderGridQueries()
         {
             var a = WorldTestUtil.Canon();
-            using var grid = ColliderGrid.Build(a.placements.colliders);
+            using var grid = ColliderGrid.Build(a.placements.colliders, WorldGrid.LayoutOf(a));
+            Assert.AreEqual(64, grid.CellsPerSide, "16 m cells over the canon test world");
             Assert.AreEqual(4013, grid.Count);
             var rng = new Unity.Mathematics.Random(7);
             var res = new List<int>();
@@ -319,9 +320,9 @@ namespace Backroads.Tests.EditMode.World
         public void DeltaZeroMeansCanon()
         {
             var g = WorldTestUtil.Grid();
-            for (int k = 0; k < WorldGrid.Count; k += 997) Assert.AreEqual(0, g.DeltaUm[k]);
-            g.RebuildH(0, 0, WorldGrid.N, WorldGrid.N);
-            for (int k = 0; k < WorldGrid.Count; k += 13)
+            for (int k = 0; k < g.Layout.Count; k += 997) Assert.AreEqual(0, g.DeltaUm[k]);
+            g.RebuildH(0, 0, g.Layout.N, g.Layout.N);
+            for (int k = 0; k < g.Layout.Count; k += 13)
                 Assert.AreEqual(BitConverter.SingleToInt32Bits(g.H0[k]), BitConverter.SingleToInt32Bits(g.H[k]), "H != H0 at " + k);
         }
     }

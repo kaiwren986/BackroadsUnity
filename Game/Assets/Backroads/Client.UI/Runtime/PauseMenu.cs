@@ -8,7 +8,8 @@ namespace Backroads.Client.UI
 {
     /// <summary>
     /// T2.6 Esc menu (PLAN 6.1 M2 [S13]), replacing the M1 stand-in: Resume / Controls / Settings / Credits / Quit, plus
-    /// the playtest checklist, the debug overlay and the scenes in the build (Millbrook, the Engine Bench, the test yard).
+    /// the playtest checklist, the debug overlay and the scenes in the build (Millbrook, the canon test world in Dev
+    /// builds, the Engine Bench, the test yard; a scene not in the build is not listed).
     /// Opening it pauses the game (time scale 0, audio paused, driving input off, mouse free); Controls, Settings and
     /// Credits open over it and come back to it. Gamepad: Start opens it, the D-pad or stick moves, A presses.
     /// </summary>
@@ -17,6 +18,7 @@ namespace Backroads.Client.UI
         public static readonly (string label, string scene)[] Scenes =
         {
             ("Drive in Millbrook", "Millbrook"),
+            ("Canon test world", "CanonTestWorld"),
             ("Engine Bench", "EngineBench"),
             ("Test yard", "TestYard"),
         };

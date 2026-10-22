@@ -5,7 +5,7 @@ namespace Backroads.Client.Rendering
 {
     /// <summary>
     /// The committed materials and look constants of the M1 static world (Client.Rendering/Materials/MillbrookLook.asset,
-    /// written by the Backroads.Client.Editor scene builder). Millbrook.unity references it, so every material and shader
+    /// written by the Backroads.Client.Editor scene builder). CanonTestWorld.unity references it, so every material and shader
     /// variant ships; spawners clone the templates (one instance per recolourable building slot, one per tree species).
     /// Values follow props.js / terrain.js / roads.js / water.js / sky.js (03 sections 4.3-4.11).
     /// </summary>

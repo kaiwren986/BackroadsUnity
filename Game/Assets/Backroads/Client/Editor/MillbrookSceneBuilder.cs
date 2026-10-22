@@ -13,22 +13,23 @@ namespace Backroads.Client.Editor
 {
     /// <summary>
     /// Writes lane W's committed M1 assets: the materials and MillbrookLook.asset under Client.Rendering/Materials, the
-    /// post-processing profile, and Scenes/Millbrook.unity (camera with FreeFlyCamera + CameraBookmarks, the sun, a global
-    /// volume and the MillbrookWorld composition root; everything else is built at run time from canon).
-    ///   menu: Backroads > Build Millbrook scene
+    /// post-processing profile, and Scenes/CanonTestWorld.unity, the canon test world (the old Millbrook.unity, renamed in
+    /// T3.1, ADR-006 section 1: camera with FreeFlyCamera + CameraBookmarks, the sun, a global volume and the
+    /// MillbrookWorld composition root; everything else is built at run time from CanonData v1).
+    ///   menu: Backroads > Build canon test world scene
     ///   batchmode: -executeMethod Backroads.Client.Editor.MillbrookSceneBuilder.Build
     /// Re-running keeps every GUID (assets are updated in place).
     /// </summary>
     public static class MillbrookSceneBuilder
     {
-        public const string ScenePath = "Assets/Backroads/Scenes/Millbrook.unity";
+        public const string ScenePath = "Assets/Backroads/Scenes/CanonTestWorld.unity";
         public const string MatDir = "Assets/Backroads/Client.Rendering/Materials";
         public const string LookPath = MatDir + "/MillbrookLook.asset";
         public const string VolumePath = MatDir + "/MillbrookVolume.asset";
         public const string ClientConfigPath = "Assets/Backroads/Client/Resources/BrClientConfig.asset";
         public const string BindingsPath = "Assets/Content/core/bindings.json";
 
-        [MenuItem("Backroads/Build Millbrook scene")]
+        [MenuItem("Backroads/Build canon test world scene")]
         public static void BuildMenu() => BuildAll();
 
         public static void Build()
@@ -46,7 +47,7 @@ namespace Backroads.Client.Editor
             CreateClientConfig();
             CreateScene(look);
             AssetDatabase.SaveAssets();
-            Debug.Log("[BR] Millbrook scene and look assets written");
+            Debug.Log("[BR] canon test world scene and look assets written");
         }
 
         // ------------------------------------------------------------------ materials
