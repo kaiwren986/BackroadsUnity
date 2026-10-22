@@ -1,0 +1,19 @@
+{
+    "name": "Backroads.Sites.Client.Editor",
+    "rootNamespace": "Backroads.Sites.Client.Editor",
+    "references": [
+        "Backroads.Core",
+        "Backroads.Sites"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,37 @@
+{
+  "format": "backroads-world-places",
+  "note": "T3.3 provisional game places (W7 is lane G's in M9): pois as CanonData v1's world.json has them, parking bays as placements.json; JS space (x_js = -x, yaw_js = -yaw_unity); street view: 16.0 (buildings ahead, both sides, along the carriageway)",
+  "cameras": [
+    {"fov": 55, "id": "street", "name": "Village street", "pos": [-425, 18.191, 409], "target": [-365, 18.588, 409]},
+    {"fov": 50, "id": "overview", "name": "Overview", "pos": [-952.898, 239.795, 451.265], "target": [-302.898, 21.117, 451.265]},
+    {"fov": 55, "id": "dam", "name": "Mill and dam", "pos": [-734.54, 18.03, 301.926], "target": [-624.54, 9.301, 301.926]},
+    {"fov": 55, "id": "bridge", "name": "Bridge", "pos": [-782.91, 14.359, 346.551], "target": [-662.91, 14.998, 346.551]},
+    {"fov": 55, "id": "landing", "name": "River landing", "pos": [-726.543, 9.342, 178.663], "target": [-681.543, 3.984, 178.663]},
+    {"fov": 55, "id": "fuel", "name": "Fuel station", "pos": [-972.007, 18.544, 337.106], "target": [-932.007, 15.299, 337.106]},
+    {"fov": 55, "id": "quarry", "name": "Quarry hollow", "pos": [366.719, 50.321, -12.733], "target": [456.719, 58.803, -12.733]},
+    {"fov": 55, "id": "marsh", "name": "Marsh", "pos": [-763.281, 22.312, 827.267], "target": [-663.281, 7.048, 827.267]},
+    {"fov": 55, "id": "garage", "name": "Garage", "pos": [-295.581, 23.07, 393.256], "target": [-260.581, 22.922, 393.256]},
+    {"fov": 55, "id": "farm", "name": "Farm", "pos": [-997.248, 34.357, -94.267], "target": [-867.248, 15.03, -94.267]},
+    {"fov": 55, "id": "depot", "name": "Depot", "pos": [-463.281, 12.294, -252.733], "target": [-403.281, 11.77, -252.733]},
+    {"fov": 55, "id": "river", "name": "River from the hill", "pos": [-903.634, 54.805, 7.528], "target": [-553.634, -0.967, 7.528]}
+  ],
+  "parking": [
+    {"x": -271.683, "y": 19.866, "yaw": -3.135237, "z": 408.699},
+    {"x": -266.083, "y": 19.912, "yaw": -3.135237, "z": 408.663},
+    {"x": -260.483, "y": 19.951, "yaw": -3.135237, "z": 408.628},
+    {"x": -254.883, "y": 19.986, "yaw": -3.135237, "z": 408.592},
+    {"x": -249.284, "y": 20.018, "yaw": -3.135237, "z": 408.556}
+  ],
+  "pois": [
+    {"fall": 24, "id": "garage", "kind": "garage", "name": "Millbrook Garage", "r": 30, "x": -260.581, "y": 19.922, "z": 393.256},
+    {"fall": 32, "id": "mill", "kind": "mill", "name": "Pine Hollow Mill", "r": 44, "x": -552.026, "y": 4.921, "z": 352.809},
+    {"fall": 24, "id": "fuel", "kind": "fuel", "name": "Route 9 Fuel", "r": 30, "x": -932.007, "y": 12.299, "z": 337.106},
+    {"fall": 26, "id": "landing", "kind": "landing", "name": "River Landing", "r": 34, "x": -681.543, "y": 1.984, "z": 178.663},
+    {"fall": 36, "id": "farm", "kind": "farm", "name": "Harlow Farm", "r": 44, "x": -867.248, "y": 13.03, "z": -94.267},
+    {"fall": 110, "id": "town", "kind": "town", "name": "Millbrook", "r": 80, "x": -302.898, "y": 21.117, "z": 451.265},
+    {"fall": 34, "id": "quarry", "kind": "quarry", "name": "Greystone Quarry", "r": 52, "x": 456.719, "y": 56.803, "z": -12.733},
+    {"fall": 34, "id": "depot", "kind": "depot", "name": "Freight Depot", "r": 46, "x": -403.281, "y": 9.77, "z": -252.733},
+    {"fall": 40, "id": "bog", "kind": "bog", "name": "Blackwater Bog", "r": 60, "x": -663.281, "y": 6.048, "z": 827.267}
+  ],
+  "version": 1
+}

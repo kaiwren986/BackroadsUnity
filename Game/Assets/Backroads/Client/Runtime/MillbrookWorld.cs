@@ -127,6 +127,7 @@ namespace Backroads.Client
             Log.Info($"Millbrook ready in {TotalLoadMs:F0} ms: canon {CanonLoadMs:F0} ms, terrain {Terrain.ChunkCount} chunks {TerrainBuildAllMs:F0} ms, " +
                      $"{Buildings.Buildings} buildings ({Buildings.Panes} panes, {Buildings.LitPanes} lit) {BuildingsMs:F0} ms, " +
                      $"{Vegetation.Trees} trees + {Vegetation.Rocks} rocks {VegetationMs:F0} ms, {Props.Chunks} prop chunks, {roads} paved roads; quality {q.Tier}");
+            ActiveWorld.Set("canon", grid, CanonRuntime.Colliders, Canon.vegetation, Canon.placements.parking, Canon.world.pois);
             Ready = true;
         }
 

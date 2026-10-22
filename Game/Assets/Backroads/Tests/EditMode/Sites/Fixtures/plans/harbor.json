@@ -1,0 +1,19 @@
+{
+  "fixture": "harbor",
+  "type": "Harbor",
+  "source": "Rules",
+  "template": "",
+  "downtown": false,
+  "surfaces": {"Lot:Gravel": 2880, "Yard:Gravel": 707},
+  "lots": 1,
+  "stalls": 27,
+  "accessible": 0,
+  "driveways": ["Truck 7.3 m"],
+  "doors": {"Bay": 1},
+  "props": {"bench": 1, "sign.warning": 1},
+  "models": {"harbor.pier": 2, "harbor.ramp": 1},
+  "fences": 0,
+  "gates": 0,
+  "notes": [],
+  "hash": "43c218cf05d71b49aea474343bc9ac786ea887f0e01afc5f5f5fcdd60a7b4de3"
+}

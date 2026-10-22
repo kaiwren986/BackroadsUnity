@@ -1,0 +1,19 @@
+{
+  "fixture": "downtown",
+  "type": "Retail",
+  "source": "Rules",
+  "template": "",
+  "downtown": true,
+  "surfaces": {"Lot:Asphalt": 263},
+  "lots": 1,
+  "stalls": 4,
+  "accessible": 1,
+  "driveways": ["Commercial 6.0 m"],
+  "doors": {"Main": 1, "Service": 1},
+  "props": {"dumpster": 1},
+  "models": {},
+  "fences": 0,
+  "gates": 0,
+  "notes": [],
+  "hash": "2acadb11f1e183e93cc09468d651f3397a38b766d70638691c68730b9b1f525b"
+}

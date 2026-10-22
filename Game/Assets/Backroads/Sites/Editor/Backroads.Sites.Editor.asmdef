@@ -6,6 +6,8 @@
         "Backroads.Sites",
         "Backroads.Roads",
         "Backroads.Roads.Editor",
+        "Backroads.World",
+        "Backroads.World.Editor",
         "Backroads.Canon.Editor",
         "Backroads.Build.Editor",
         "Clipper2Lib",

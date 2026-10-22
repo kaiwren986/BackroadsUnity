@@ -1,0 +1,19 @@
+{
+  "fixture": "civic",
+  "type": "Civic",
+  "source": "Rules",
+  "template": "",
+  "downtown": false,
+  "surfaces": {"Lot:Asphalt": 544, "Walk:Concrete": 32},
+  "lots": 1,
+  "stalls": 10,
+  "accessible": 1,
+  "driveways": ["Commercial 7.3 m"],
+  "doors": {"Main": 1, "Service": 1},
+  "props": {"dumpster": 1, "trash.bin": 1},
+  "models": {},
+  "fences": 0,
+  "gates": 0,
+  "notes": [],
+  "hash": "64f7fa4fb659e43749f0afeefeaa3af7b185671607222e36c4f07d099001f5a0"
+}

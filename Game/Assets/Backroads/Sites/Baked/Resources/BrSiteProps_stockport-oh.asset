@@ -1,0 +1,2651 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44929f80bf8b05d4f8585b3b1606ec1a, type: 3}
+  m_Name: BrSiteProps_stockport-oh
+  m_EditorClassIdentifier: Backroads.Sites::Backroads.Sites.SitePropSet
+  formatVersion: 1
+  bakeVersion: 1
+  source: sites:stockport-oh
+  plansHash: c506a505345cf0d451533b5679ace36c235c1e88a01298a7d7000ba1b70ff0bd
+  contentHash: c0907b89b767c7154f1d2b7222c2ef70eead471d560df2e37ffc4bdfa1192324
+  props:
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 80.90988, y: 21.525673, z: 768.64166}
+    yaw: 273.56885
+    parcel: 0
+    reason: "design \xA77: bin by the garage or pad"
+  - key: mailbox
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Mailbox_01.prefab
+    position: {x: -256.80078, y: 17.976639, z: 410.25558}
+    yaw: 94.89642
+    parcel: 1
+    reason: "design \xA77: mailbox at the road on rural streets"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: -260.41464, y: 18.226454, z: 410.36444}
+    yaw: 94.89642
+    parcel: 1
+    reason: "design \xA77: bin by the garage or pad"
+  - key: mailbox
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Mailbox_01.prefab
+    position: {x: -344.16202, y: 20.895044, z: 430.36124}
+    yaw: 170.65968
+    parcel: 2
+    reason: "design \xA77: mailbox at the road on rural streets"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: -350.74567, y: 21.450523, z: 440.8132}
+    yaw: 170.65968
+    parcel: 2
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_03.prefab
+    position: {x: -345.51144, y: 22.654625, z: 452.73917}
+    yaw: 80.65968
+    parcel: 2
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: -33.32921, y: 25.563148, z: 390.80054}
+    yaw: 1.8759252
+    parcel: 3
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 20.977997, y: 25.0724, z: 330.80713}
+    yaw: 182.53181
+    parcel: 4
+    reason: "design \xA77: bin by the door"
+  - key: dumpster
+    prefabs:
+    - Assets/Synty/PolygonProRacer/Prefabs/Props/SM_Prop_Dumpster_01.prefab
+    position: {x: -1.8084339, y: 25.182215, z: 341.08127}
+    yaw: 272.56845
+    parcel: 4
+    reason: "design \xA77: dumpster behind every commercial building"
+  - key: sign.vanAccessible
+    prefabs: []
+    position: {x: 2.6358445, y: 25.088179, z: 324.66287}
+    yaw: 92.53182
+    parcel: 4
+    reason: 'ADA 216.5: accessible stall sign at the stall head'
+  - key: sign.parking
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Sign_Parking_01.prefab
+    position: {x: 32.598835, y: 24.833525, z: 328.4493}
+    yaw: 5.3710427
+    parcel: 4
+    reason: "design \xA77: sign at the entrance"
+  - key: lamp
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Base_01.prefab
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Lights_01.prefab
+    position: {x: 36.577198, y: 24.949926, z: 318.93958}
+    yaw: 0
+    parcel: 4
+    reason: "design \xA77: lamp poles in islands (S2)"
+  - key: lamp
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Base_01.prefab
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Lights_01.prefab
+    position: {x: 3.1246176, y: 25.154709, z: 328.67545}
+    yaw: 0
+    parcel: 4
+    reason: "design \xA77: lamp poles in islands (S2)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 587.2136, y: 9.188741, z: 427.0699}
+    yaw: 300.18768
+    parcel: 6
+    reason: "design \xA77: bin by the garage or pad"
+  - key: dumpster
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Skip_01.prefab
+    position: {x: 615.5504, y: 6.7298355, z: 446.9333}
+    yaw: 118.42824
+    parcel: 7
+    reason: "design \xA77: dumpster behind every commercial building"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 296.3655, y: 17.658445, z: -38.72526}
+    yaw: 276.40906
+    parcel: 9
+    reason: "design \xA77: bin by the garage or pad"
+  - key: mailbox
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Mailbox_01.prefab
+    position: {x: 268.92026, y: 17.043331, z: -58.223866}
+    yaw: 94.075714
+    parcel: 11
+    reason: "design \xA77: mailbox at the road on rural streets"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 244.0243, y: 16.818644, z: -61.262077}
+    yaw: 94.075714
+    parcel: 11
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 304.7665, y: 17.780262, z: 23.223791}
+    yaw: 276.40906
+    parcel: 14
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 308.0134, y: 17.624819, z: 52.84118}
+    yaw: 274.94025
+    parcel: 15
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_04.prefab
+    position: {x: 326.1338, y: 16.609756, z: 58.14063}
+    yaw: 184.94023
+    parcel: 15
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 273.55368, y: 17.182707, z: 61.54335}
+    yaw: 94.931114
+    parcel: 16
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 278.62088, y: 17.313969, z: 128.326}
+    yaw: 94.931114
+    parcel: 17
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 277.46094, y: 17.205496, z: 165.71016}
+    yaw: 100.58109
+    parcel: 19
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 309.59576, y: 16.643309, z: 153.40578}
+    yaw: 280.5811
+    parcel: 20
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 289.59573, y: 17.171911, z: 174.24454}
+    yaw: 108.23747
+    parcel: 23
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_02.prefab
+    position: {x: 279.8043, y: 17.563133, z: 195.27417}
+    yaw: 18.237473
+    parcel: 23
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 243.50708, y: 18.377893, z: 214.56766}
+    yaw: 23.050852
+    parcel: 24
+    reason: "design \xA77: bin by the door"
+  - key: bench
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_ParkBench_01.prefab
+    position: {x: 247.963, y: 18.348621, z: 212.78024}
+    yaw: 23.050852
+    parcel: 24
+    reason: "design \xA77: bench by the shop front"
+  - key: dumpster
+    prefabs:
+    - Assets/Synty/PolygonProRacer/Prefabs/Props/SM_Prop_Dumpster_01.prefab
+    position: {x: 236.02097, y: 18.209232, z: 188.77472}
+    yaw: 203.06891
+    parcel: 24
+    reason: "design \xA77: dumpster behind every commercial building"
+  - key: pallets
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_CardboardBox_01.prefab
+    position: {x: 230.69667, y: 18.361094, z: 191.58577}
+    yaw: 203.06891
+    parcel: 24
+    reason: "design \xA77: pallets and boxes behind"
+  - key: dumpster
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Skip_01.prefab
+    position: {x: 288.68625, y: 17.270367, z: 219.78525}
+    yaw: 204.68263
+    parcel: 25
+    reason: "design \xA77: dumpster behind every commercial building"
+  - key: sign.vanAccessible
+    prefabs: []
+    position: {x: 299.15454, y: 16.832878, z: 209.02925}
+    yaw: 294.68298
+    parcel: 25
+    reason: 'ADA 216.5: accessible stall sign at the stall head'
+  - key: sign.parking
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Sign_Parking_01.prefab
+    position: {x: 264.97995, y: 18.108576, z: 230.63393}
+    yaw: 24.682629
+    parcel: 25
+    reason: "design \xA77: sign at the entrance"
+  - key: lamp
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Base_01.prefab
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Lights_01.prefab
+    position: {x: 278.38696, y: 17.367552, z: 214.96777}
+    yaw: 0
+    parcel: 25
+    reason: "design \xA77: lamp poles in islands (S2)"
+  - key: lamp
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Base_01.prefab
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Lights_01.prefab
+    position: {x: 297.7241, y: 16.82076, z: 205.54726}
+    yaw: 0
+    parcel: 25
+    reason: "design \xA77: lamp poles in islands (S2)"
+  - key: lamp
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Base_01.prefab
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Lights_01.prefab
+    position: {x: 251.02994, y: 18.04492, z: 235.688}
+    yaw: 0
+    parcel: 25
+    reason: "design \xA77: lamp poles in islands (S2)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 343.5882, y: 15.637666, z: 222.90105}
+    yaw: 322.61755
+    parcel: 26
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 310.7001, y: 16.838196, z: 235.87878}
+    yaw: 205.52037
+    parcel: 28
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 324.11282, y: 16.995913, z: 269.34732}
+    yaw: 114.447655
+    parcel: 29
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 358.22903, y: 15.310842, z: 259.27673}
+    yaw: 294.44766
+    parcel: 30
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 329.64975, y: 16.832458, z: 268.8506}
+    yaw: 114.447655
+    parcel: 31
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 298.5732, y: 18.057316, z: 315.7458}
+    yaw: 23.14399
+    parcel: 32
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: -262.4065, y: 20.191021, z: 523.95526}
+    yaw: 40.55711
+    parcel: 34
+    reason: "design \xA77: bin by the door"
+  - key: bench
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_ParkBench_01.prefab
+    position: {x: -258.69464, y: 20.188772, z: 520.9102}
+    yaw: 40.55711
+    parcel: 34
+    reason: "design \xA77: bench by the shop front"
+  - key: dumpster
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Skip_01.prefab
+    position: {x: -280.36508, y: 20.191751, z: 495.62357}
+    yaw: 220.59183
+    parcel: 34
+    reason: "design \xA77: dumpster behind every commercial building"
+  - key: sign.vanAccessible
+    prefabs: []
+    position: {x: -259.0598, y: 19.855642, z: 496.45712}
+    yaw: 146.97449
+    parcel: 34
+    reason: 'ADA 216.5: accessible stall sign at the stall head'
+  - key: sign.parking
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Sign_Parking_01.prefab
+    position: {x: -252.64864, y: 19.788605, z: 494.1258}
+    yaw: 56.993347
+    parcel: 34
+    reason: "design \xA77: sign at the entrance"
+  - key: lamp
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Base_01.prefab
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Lights_01.prefab
+    position: {x: -255.48463, y: 19.847443, z: 498.36148}
+    yaw: 0
+    parcel: 34
+    reason: "design \xA77: lamp poles in islands (S2)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: -219.31268, y: 19.987476, z: 521.71814}
+    yaw: 0.91690916
+    parcel: 35
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: -285.19583, y: 19.64081, z: 467.69992}
+    yaw: 158.16751
+    parcel: 36
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_02.prefab
+    position: {x: -282.5522, y: 19.646238, z: 479.52094}
+    yaw: 68.16751
+    parcel: 36
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: -259.77768, y: 20.75581, z: 542.72894}
+    yaw: 182.76947
+    parcel: 37
+    reason: "design \xA77: bin by the door"
+  - key: bench
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_ParkBench_01.prefab
+    position: {x: -264.5769, y: 20.708883, z: 542.86096}
+    yaw: 182.76947
+    parcel: 37
+    reason: "design \xA77: bench by the shop front"
+  - key: dumpster
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Skip_01.prefab
+    position: {x: -242.96388, y: 21.62267, z: 560.81915}
+    yaw: 2.772404
+    parcel: 37
+    reason: "design \xA77: dumpster behind every commercial building"
+  - key: pallets
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_CardboardBox_01.prefab
+    position: {x: -236.80376, y: 21.273687, z: 560.49146}
+    yaw: 2.772404
+    parcel: 37
+    reason: "design \xA77: pallets and boxes behind"
+  - key: sign.vanAccessible
+    prefabs: []
+    position: {x: -296.38528, y: 24.645264, z: 563.5708}
+    yaw: 92.76947
+    parcel: 37
+    reason: 'ADA 216.5: accessible stall sign at the stall head'
+  - key: sign.parking
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Sign_Parking_01.prefab
+    position: {x: -226.67581, y: 20.889545, z: 561.4831}
+    yaw: 180.91692
+    parcel: 37
+    reason: "design \xA77: sign at the entrance"
+  - key: lamp
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Base_01.prefab
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Lights_01.prefab
+    position: {x: -243.58084, y: 22.046997, z: 569.3804}
+    yaw: 0
+    parcel: 37
+    reason: "design \xA77: lamp poles in islands (S2)"
+  - key: lamp
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Base_01.prefab
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Lights_01.prefab
+    position: {x: -295.25955, y: 24.883226, z: 573.4284}
+    yaw: 0
+    parcel: 37
+    reason: "design \xA77: lamp poles in islands (S2)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: -197.80933, y: 20.622034, z: 553.5118}
+    yaw: 97.73706
+    parcel: 38
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: -162.01195, y: 22.364408, z: 603.5158}
+    yaw: 276.37238
+    parcel: 39
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: -286.58557, y: 32.369377, z: 697.8854}
+    yaw: 109.55442
+    parcel: 40
+    reason: "design \xA77: bin by the door"
+  - key: bench
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_ParkBench_01.prefab
+    position: {x: -288.09793, y: 32.35081, z: 693.32874}
+    yaw: 109.55442
+    parcel: 40
+    reason: "design \xA77: bench by the shop front"
+  - key: dumpster
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Skip_01.prefab
+    position: {x: -306.53665, y: 34.22862, z: 683.1738}
+    yaw: 289.5725
+    parcel: 40
+    reason: "design \xA77: dumpster behind every commercial building"
+  - key: sign.vanAccessible
+    prefabs: []
+    position: {x: -323.236, y: 44.323006, z: 684.32733}
+    yaw: 255.29604
+    parcel: 40
+    reason: 'ADA 216.5: accessible stall sign at the stall head'
+  - key: sign.accessible
+    prefabs: []
+    position: {x: -324.71072, y: 44.591118, z: 689.9471}
+    yaw: 255.29604
+    parcel: 40
+    reason: 'ADA 216.5: accessible stall sign at the stall head'
+  - key: sign.parking
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Sign_Parking_01.prefab
+    position: {x: -331.6738, y: 42.250477, z: 713.5267}
+    yaw: 75.29605
+    parcel: 40
+    reason: "design \xA77: sign at the entrance"
+  - key: lamp
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Base_01.prefab
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Lights_01.prefab
+    position: {x: -331.5881, y: 45.77294, z: 704.13855}
+    yaw: 0
+    parcel: 40
+    reason: "design \xA77: lamp poles in islands (S2)"
+  - key: lamp
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Base_01.prefab
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Lights_01.prefab
+    position: {x: -344.96527, y: 48.204964, z: 755.1149}
+    yaw: 0
+    parcel: 40
+    reason: "design \xA77: lamp poles in islands (S2)"
+  - key: lamp
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Base_01.prefab
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Lights_01.prefab
+    position: {x: -314.51227, y: 42.748837, z: 651.8072}
+    yaw: 0
+    parcel: 40
+    reason: "design \xA77: lamp poles in islands (S2)"
+  - key: lamp
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Base_01.prefab
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Lights_01.prefab
+    position: {x: -322.0185, y: 44.1136, z: 680.41125}
+    yaw: 0
+    parcel: 40
+    reason: "design \xA77: lamp poles in islands (S2)"
+  - key: lamp
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Base_01.prefab
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Lights_01.prefab
+    position: {x: -335.29474, y: 46.527256, z: 731.003}
+    yaw: 0
+    parcel: 40
+    reason: "design \xA77: lamp poles in islands (S2)"
+  - key: mailbox
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Mailbox_01.prefab
+    position: {x: -261.4576, y: 31.049068, z: 707.0174}
+    yaw: 11.300298
+    parcel: 41
+    reason: "design \xA77: mailbox at the road on rural streets"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: -262.1253, y: 30.61277, z: 702.65533}
+    yaw: 11.300298
+    parcel: 41
+    reason: "design \xA77: bin by the garage or pad"
+  - key: mailbox
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Mailbox_01.prefab
+    position: {x: -214.62282, y: 25.698652, z: 697.6586}
+    yaw: 11.300298
+    parcel: 42
+    reason: "design \xA77: mailbox at the road on rural streets"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: -215.54282, y: 25.406733, z: 692.034}
+    yaw: 11.300298
+    parcel: 42
+    reason: "design \xA77: bin by the garage or pad"
+  - key: mailbox
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Mailbox_01.prefab
+    position: {x: -84.73551, y: 22.931208, z: 788.19476}
+    yaw: 200.65532
+    parcel: 43
+    reason: "design \xA77: mailbox at the road on rural streets"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: -83.35307, y: 22.46946, z: 805.4695}
+    yaw: 200.65532
+    parcel: 43
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_01.prefab
+    position: {x: -63.13605, y: 22.370125, z: 825.8533}
+    yaw: 110.65532
+    parcel: 43
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: mailbox
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Mailbox_01.prefab
+    position: {x: -7.050937, y: 18.219858, z: 796.9186}
+    yaw: 306.42822
+    parcel: 44
+    reason: "design \xA77: mailbox at the road on rural streets"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: -25.61939, y: 19.935196, z: 810.8711}
+    yaw: 306.42822
+    parcel: 44
+    reason: "design \xA77: bin by the garage or pad"
+  - key: mailbox
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Mailbox_01.prefab
+    position: {x: -143.71442, y: 22.306833, z: 884.49347}
+    yaw: 293.29507
+    parcel: 45
+    reason: "design \xA77: mailbox at the road on rural streets"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: -134.8174, y: 22.374674, z: 885.88873}
+    yaw: 293.29507
+    parcel: 45
+    reason: "design \xA77: bin by the garage or pad"
+  - key: mailbox
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Mailbox_01.prefab
+    position: {x: -123.65514, y: 22.354479, z: 797.3584}
+    yaw: 26.970211
+    parcel: 46
+    reason: "design \xA77: mailbox at the road on rural streets"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: -121.38158, y: 22.494452, z: 791.2426}
+    yaw: 26.970211
+    parcel: 46
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: -144.67686, y: 23.607254, z: 756.82245}
+    yaw: 271.96912
+    parcel: 47
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: -149.55386, y: 24.923067, z: 735.15643}
+    yaw: 271.96912
+    parcel: 48
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: -150.05614, y: 25.092672, z: 727.8711}
+    yaw: 271.96912
+    parcel: 49
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: -157.47415, y: 24.67579, z: 656.0842}
+    yaw: 273.36584
+    parcel: 51
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_04.prefab
+    position: {x: -139.30957, y: 24.622356, z: 663.7332}
+    yaw: 183.36586
+    parcel: 51
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: -160.93553, y: 23.29178, z: 624.8265}
+    yaw: 274.80487
+    parcel: 52
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: -194.47035, y: 23.90974, z: 628.3603}
+    yaw: 94.804855
+    parcel: 55
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: -182.86472, y: 24.154081, z: 670.33307}
+    yaw: 93.36585
+    parcel: 56
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_01.prefab
+    position: {x: -198.32214, y: 23.950966, z: 658.3493}
+    yaw: 3.3658547
+    parcel: 56
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_02.prefab
+    position: {x: -231.25539, y: 23.436218, z: 579.0077}
+    yaw: 4.867135
+    parcel: 57
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: -191.79874, y: 22.905033, z: 599.0171}
+    yaw: 94.804855
+    parcel: 58
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_01.prefab
+    position: {x: -234.77988, y: 23.330301, z: 615.9584}
+    yaw: 5.5034966
+    parcel: 59
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: -132.46053, y: 22.020117, z: 577.06445}
+    yaw: 181.99664
+    parcel: 60
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: -79.31505, y: 23.028728, z: 573.50073}
+    yaw: 182.52356
+    parcel: 61
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_04.prefab
+    position: {x: -91.491005, y: 22.531336, z: 589.9554}
+    yaw: 92.52357
+    parcel: 61
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_03.prefab
+    position: {x: -72.34787, y: 22.821543, z: 623.0066}
+    yaw: 91.7438
+    parcel: 62
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: -49.177505, y: 23.778555, z: 597.41736}
+    yaw: 182.52356
+    parcel: 63
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 13.223379, y: 24.97468, z: 569.92847}
+    yaw: 181.90984
+    parcel: 64
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_03.prefab
+    position: {x: 4.3248124, y: 24.783268, z: 593.14246}
+    yaw: 91.90984
+    parcel: 64
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 42.865067, y: 24.12282, z: 566.4096}
+    yaw: 181.56818
+    parcel: 65
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_03.prefab
+    position: {x: 57.96128, y: 24.138672, z: 576.77997}
+    yaw: 91.56818
+    parcel: 65
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 68.1957, y: 23.511896, z: 594.13214}
+    yaw: 92.56929
+    parcel: 66
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_01.prefab
+    position: {x: 53.468258, y: 23.59579, z: 608.6627}
+    yaw: 2.5692883
+    parcel: 66
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 69.04375, y: 22.990088, z: 661.35474}
+    yaw: 93.96303
+    parcel: 67
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 70.992134, y: 22.367739, z: 719.8709}
+    yaw: 93.96303
+    parcel: 68
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_04.prefab
+    position: {x: 52.368004, y: 22.075186, z: 704.5346}
+    yaw: 3.9630258
+    parcel: 68
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 113.78739, y: 22.461348, z: 674.0319}
+    yaw: 273.963
+    parcel: 69
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_02.prefab
+    position: {x: 129.40012, y: 22.402655, z: 682.8953}
+    yaw: 183.96303
+    parcel: 69
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 225.38495, y: 20.412731, z: 717.55444}
+    yaw: 93.31589
+    parcel: 70
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 234.16483, y: 20.645233, z: 772.5644}
+    yaw: 93.46562
+    parcel: 71
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_03.prefab
+    position: {x: 217.9683, y: 20.545092, z: 759.07153}
+    yaw: 3.4656248
+    parcel: 71
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 318.1949, y: 20.25853, z: 778.03326}
+    yaw: 180.10481
+    parcel: 72
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_03.prefab
+    position: {x: 225.98735, y: 20.714903, z: 846.08704}
+    yaw: 70.76367
+    parcel: 74
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 263.98566, y: 20.665062, z: 781.0048}
+    yaw: 181.32994
+    parcel: 75
+    reason: "design \xA77: bin by the garage or pad"
+  - key: mailbox
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Mailbox_01.prefab
+    position: {x: 94.866905, y: 23.241209, z: 596.1609}
+    yaw: 90.94219
+    parcel: 76
+    reason: "design \xA77: mailbox at the road on rural streets"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 93.76376, y: 23.241924, z: 595.979}
+    yaw: 90.94219
+    parcel: 76
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 138.38359, y: 21.928038, z: 634.19965}
+    yaw: 183.75035
+    parcel: 77
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 201.19786, y: 20.092953, z: 622.4785}
+    yaw: 181.51723
+    parcel: 78
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 382.30005, y: 17.195206, z: 661.4032}
+    yaw: 2.6327002
+    parcel: 79
+    reason: "design \xA77: bin by the door"
+  - key: bench
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_ParkBench_01.prefab
+    position: {x: 387.09958, y: 16.863909, z: 661.2826}
+    yaw: 2.6327002
+    parcel: 79
+    reason: "design \xA77: bench by the shop front"
+  - key: dumpster
+    prefabs:
+    - Assets/Synty/PolygonProRacer/Prefabs/Props/SM_Prop_Dumpster_01.prefab
+    position: {x: 395.31705, y: 16.794582, z: 649.04614}
+    yaw: 92.66149
+    parcel: 79
+    reason: "design \xA77: dumpster behind every commercial building"
+  - key: sign.vanAccessible
+    prefabs: []
+    position: {x: 387.53992, y: 16.720861, z: 676.1768}
+    yaw: 182.64195
+    parcel: 79
+    reason: 'ADA 216.5: accessible stall sign at the stall head'
+  - key: sign.parking
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Sign_Parking_01.prefab
+    position: {x: 353.77823, y: 16.664274, z: 666.4582}
+    yaw: 273.74066
+    parcel: 79
+    reason: "design \xA77: sign at the entrance"
+  - key: lamp
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Base_01.prefab
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Lights_01.prefab
+    position: {x: 362.19397, y: 16.867935, z: 674.29315}
+    yaw: 0
+    parcel: 79
+    reason: "design \xA77: lamp poles in islands (S2)"
+  - key: lamp
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Base_01.prefab
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Lights_01.prefab
+    position: {x: 389.09836, y: 16.720985, z: 676.1745}
+    yaw: 0
+    parcel: 79
+    reason: "design \xA77: lamp poles in islands (S2)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 418.57907, y: 16.61901, z: 663.4019}
+    yaw: 271.10666
+    parcel: 80
+    reason: "design \xA77: bin by the door"
+  - key: bench
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_ParkBench_01.prefab
+    position: {x: 418.5718, y: 16.870264, z: 668.20294}
+    yaw: 271.10666
+    parcel: 80
+    reason: "design \xA77: bench by the shop front"
+  - key: dumpster
+    prefabs:
+    - Assets/Synty/PolygonProRacer/Prefabs/Props/SM_Prop_Dumpster_01.prefab
+    position: {x: 453.03296, y: 16.581299, z: 667.6332}
+    yaw: 91.137535
+    parcel: 80
+    reason: "design \xA77: dumpster behind every commercial building"
+  - key: pallets
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_CardboardBox_03.prefab
+    position: {x: 452.41394, y: 16.528973, z: 661.6443}
+    yaw: 91.137535
+    parcel: 80
+    reason: "design \xA77: pallets and boxes behind"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 351.0352, y: 19.407436, z: 570.8529}
+    yaw: 273.42508
+    parcel: 81
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_04.prefab
+    position: {x: 363.58173, y: 18.586393, z: 558.368}
+    yaw: 183.42508
+    parcel: 81
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 392.89594, y: 18.271238, z: 562.5494}
+    yaw: 178.98036
+    parcel: 82
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 418.62878, y: 19.012884, z: 558.3293}
+    yaw: 178.98036
+    parcel: 83
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 450.59116, y: 19.689518, z: 560.7577}
+    yaw: 180.66302
+    parcel: 84
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 452.16125, y: 19.813076, z: 561.0888}
+    yaw: 180.66302
+    parcel: 85
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 483.48892, y: 19.675987, z: 559.5647}
+    yaw: 181.9977
+    parcel: 86
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_02.prefab
+    position: {x: 478.89944, y: 19.806276, z: 576.26746}
+    yaw: 91.997696
+    parcel: 86
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 500.62244, y: 18.50017, z: 557.45325}
+    yaw: 181.9977
+    parcel: 87
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 519.6481, y: 17.927464, z: 558.5837}
+    yaw: 181.9977
+    parcel: 88
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 521.0252, y: 17.208311, z: 552.0891}
+    yaw: 183.1176
+    parcel: 89
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 573.99744, y: 15.882959, z: 550.14404}
+    yaw: 181.59499
+    parcel: 90
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_03.prefab
+    position: {x: 547.68054, y: 17.304533, z: 578.20294}
+    yaw: 89.91974
+    parcel: 91
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 613.835, y: 13.3792305, z: 566.99005}
+    yaw: 188.17589
+    parcel: 92
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_04.prefab
+    position: {x: 635.0293, y: 12.28457, z: 586.77893}
+    yaw: 98.17589
+    parcel: 92
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 613.2084, y: 16.818321, z: 631.5928}
+    yaw: 183.02771
+    parcel: 93
+    reason: "design \xA77: bin by the door"
+  - key: bench
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_ParkBench_01.prefab
+    position: {x: 608.4098, y: 16.692442, z: 631.7464}
+    yaw: 183.02771
+    parcel: 93
+    reason: "design \xA77: bench by the shop front"
+  - key: dumpster
+    prefabs:
+    - Assets/Synty/PolygonProRacer/Prefabs/Props/SM_Prop_Dumpster_01.prefab
+    position: {x: 602.77026, y: 17.020103, z: 669.376}
+    yaw: 2.991774
+    parcel: 93
+    reason: "design \xA77: dumpster behind every commercial building"
+  - key: pallets
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_CardboardBox_01.prefab
+    position: {x: 608.73596, y: 16.979523, z: 668.56354}
+    yaw: 2.991774
+    parcel: 93
+    reason: "design \xA77: pallets and boxes behind"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 131.07751, y: 18.386158, z: 114.42601}
+    yaw: 278.97308
+    parcel: 94
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 82.40411, y: 18.98581, z: 115.764305}
+    yaw: 98.9731
+    parcel: 95
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 89.633354, y: 21.644676, z: 200.49579}
+    yaw: 93.07619
+    parcel: 96
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_04.prefab
+    position: {x: 68.70412, y: 21.807343, z: 191.80656}
+    yaw: 3.0761847
+    parcel: 96
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 135.59105, y: 19.880487, z: 171.19054}
+    yaw: 273.09207
+    parcel: 97
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_02.prefab
+    position: {x: 152.32684, y: 19.412104, z: 159.70407}
+    yaw: 183.09206
+    parcel: 97
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 181.45312, y: 19.873224, z: 254.2888}
+    yaw: 5.714664
+    parcel: 98
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 101.81606, y: 22.166857, z: 276.2293}
+    yaw: 93.09077
+    parcel: 99
+    reason: "design \xA77: bin by the garage or pad"
+  - key: dumpster
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Skip_01.prefab
+    position: {x: 277.3613, y: 19.146036, z: 301.72876}
+    yaw: 207.34213
+    parcel: 100
+    reason: "design \xA77: dumpster behind every commercial building"
+  - key: sign.vanAccessible
+    prefabs: []
+    position: {x: 295.1062, y: 18.432055, z: 287.02643}
+    yaw: 297.31183
+    parcel: 100
+    reason: 'ADA 216.5: accessible stall sign at the stall head'
+  - key: sign.parking
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Sign_Parking_01.prefab
+    position: {x: 255.78015, y: 19.301367, z: 311.4584}
+    yaw: 27.314058
+    parcel: 100
+    reason: "design \xA77: sign at the entrance"
+  - key: lamp
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Base_01.prefab
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Lights_01.prefab
+    position: {x: 278.9132, y: 18.73168, z: 290.69724}
+    yaw: 0
+    parcel: 100
+    reason: "design \xA77: lamp poles in islands (S2)"
+  - key: lamp
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Base_01.prefab
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Lights_01.prefab
+    position: {x: 289.4827, y: 18.367067, z: 276.30634}
+    yaw: 0
+    parcel: 100
+    reason: "design \xA77: lamp poles in islands (S2)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 201.12625, y: 20.240993, z: 302.82922}
+    yaw: 93.13761
+    parcel: 101
+    reason: "design \xA77: bin by the door"
+  - key: bench
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_ParkBench_01.prefab
+    position: {x: 200.96338, y: 20.289816, z: 298.03094}
+    yaw: 93.13761
+    parcel: 101
+    reason: "design \xA77: bench by the shop front"
+  - key: dumpster
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Skip_01.prefab
+    position: {x: 183.33769, y: 20.32349, z: 311.4543}
+    yaw: 3.0995193
+    parcel: 101
+    reason: "design \xA77: dumpster behind every commercial building"
+  - key: pallets
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Pallet_01.prefab
+    position: {x: 189.30188, y: 20.358643, z: 310.6306}
+    yaw: 3.0995193
+    parcel: 101
+    reason: "design \xA77: pallets and boxes behind"
+  - key: sign.vanAccessible
+    prefabs: []
+    position: {x: 209.41116, y: 20.213717, z: 301.64972}
+    yaw: 185.72282
+    parcel: 101
+    reason: 'ADA 216.5: accessible stall sign at the stall head'
+  - key: sign.parking
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Sign_Parking_01.prefab
+    position: {x: 200.52763, y: 20.138042, z: 273.2196}
+    yaw: 275.7228
+    parcel: 101
+    reason: "design \xA77: sign at the entrance"
+  - key: lamp
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Base_01.prefab
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Lights_01.prefab
+    position: {x: 204.87257, y: 20.306044, z: 301.77798}
+    yaw: 0
+    parcel: 101
+    reason: "design \xA77: lamp poles in islands (S2)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 403.19147, y: 14.531515, z: 273.96915}
+    yaw: 27.686579
+    parcel: 102
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 457.89648, y: 10.913453, z: 283.862}
+    yaw: 27.046461
+    parcel: 103
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 249.22461, y: 20.152887, z: 307.00217}
+    yaw: 2.878043
+    parcel: 104
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 68.2308, y: 22.962452, z: 316.2472}
+    yaw: 1.9364023
+    parcel: 105
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 133.2591, y: 20.82204, z: 324.86273}
+    yaw: 1.9364023
+    parcel: 106
+    reason: "design \xA77: bin by the garage or pad"
+  - key: bollard
+    prefabs:
+    - Assets/Synty/PolygonProRacer/Prefabs/Props/SM_Prop_Bollard_01.prefab
+    position: {x: 932.42664, y: 12.492838, z: 333.57193}
+    yaw: 173.22769
+    parcel: 143
+    reason: "design \xA77: bollard at the island end"
+  - key: bollard
+    prefabs:
+    - Assets/Synty/PolygonProRacer/Prefabs/Props/SM_Prop_Bollard_01.prefab
+    position: {x: 931.5874, y: 12.399071, z: 340.63907}
+    yaw: 353.2277
+    parcel: 143
+    reason: "design \xA77: bollard at the island end"
+  - key: trash.island
+    prefabs:
+    - Assets/Synty/PolygonProRacer/Prefabs/Props/SM_Prop_Rubbish_Bin_01.prefab
+    position: {x: 932.3087, y: 12.477013, z: 334.56494}
+    yaw: 173.22769
+    parcel: 143
+    reason: "design \xA77: bin at the island"
+  - key: fuel.air
+    prefabs:
+    - Assets/Synty/PolygonProRacer/Prefabs/Props/SM_Prop_Air_Gun_01.prefab
+    position: {x: 914.6628, y: 11.7161, z: 344.0583}
+    yaw: 174.44046
+    parcel: 143
+    reason: "design \xA77: air by the shop"
+  - key: fuel.cans
+    prefabs:
+    - Assets/Synty/PolygonProRacer/Prefabs/Props/SM_Prop_Fuel_Can_01.prefab
+    position: {x: 909.711, y: 11.5567, z: 345.3848}
+    yaw: 174.44046
+    parcel: 143
+    reason: "design \xA77: fuel cans by the shop"
+  - key: water.barrel
+    prefabs:
+    - Assets/Synty/PolygonProRacer/Prefabs/Props/SM_Prop_Water_Barrel_01.prefab
+    position: {x: 905.33167, y: 11.346958, z: 344.95853}
+    yaw: 174.44046
+    parcel: 143
+    reason: "design \xA77: water barrel by the shop"
+  - key: dumpster
+    prefabs:
+    - Assets/Synty/PolygonProRacer/Prefabs/Props/SM_Prop_Dumpster_01.prefab
+    position: {x: 907.3836, y: 11.636066, z: 368.20547}
+    yaw: 354.4533
+    parcel: 143
+    reason: "design \xA77: dumpster behind"
+  - key: sign.vanAccessible
+    prefabs: []
+    position: {x: 901.58185, y: 11.453722, z: 381.2347}
+    yaw: 174.44046
+    parcel: 143
+    reason: 'ADA 216.5: accessible stall sign at the stall head'
+  - key: sign.parking
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Sign_Parking_01.prefab
+    position: {x: 924.24896, y: 11.924043, z: 377.9445}
+    yaw: 82.98818
+    parcel: 143
+    reason: "design \xA77: sign at the entrance"
+  - key: lamp
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Base_01.prefab
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Lights_01.prefab
+    position: {x: 914.43555, y: 11.702386, z: 382.5036}
+    yaw: 0
+    parcel: 143
+    reason: "design \xA77: lamp poles in islands (S2)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 1012.755, y: 17.466862, z: 267.69403}
+    yaw: 173.33792
+    parcel: 144
+    reason: "design \xA77: bin by the door"
+  - key: bench
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_ParkBench_01.prefab
+    position: {x: 1007.999, y: 17.452147, z: 267.03784}
+    yaw: 173.33792
+    parcel: 144
+    reason: "design \xA77: bench by the shop front"
+  - key: dumpster
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Skip_01.prefab
+    position: {x: 1023.4335, y: 17.512434, z: 289.21002}
+    yaw: 83.2831
+    parcel: 144
+    reason: "design \xA77: dumpster behind every commercial building"
+  - key: sign.vanAccessible
+    prefabs: []
+    position: {x: 1008.6988, y: 17.02774, z: 248.8214}
+    yaw: 353.31598
+    parcel: 144
+    reason: 'ADA 216.5: accessible stall sign at the stall head'
+  - key: sign.parking
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Sign_Parking_01.prefab
+    position: {x: 964.8494, y: 15.378732, z: 246.94034}
+    yaw: 263.32217
+    parcel: 144
+    reason: "design \xA77: sign at the entrance"
+  - key: lamp
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Base_01.prefab
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Lights_01.prefab
+    position: {x: 970.7312, y: 15.665942, z: 247.44284}
+    yaw: 0
+    parcel: 144
+    reason: "design \xA77: lamp poles in islands (S2)"
+  - key: lamp
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Base_01.prefab
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Lights_01.prefab
+    position: {x: 1013.4886, y: 17.208351, z: 252.45358}
+    yaw: 0
+    parcel: 144
+    reason: "design \xA77: lamp poles in islands (S2)"
+  - key: lamp
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Base_01.prefab
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Lights_01.prefab
+    position: {x: 987.9795, y: 16.328836, z: 246.38322}
+    yaw: 0
+    parcel: 144
+    reason: "design \xA77: lamp poles in islands (S2)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 813.5703, y: 8.341664, z: 356.8442}
+    yaw: 105.259094
+    parcel: 145
+    reason: "design \xA77: bin by the door"
+  - key: bench
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_ParkBench_01.prefab
+    position: {x: 812.4035, y: 8.380029, z: 352.18713}
+    yaw: 105.259094
+    parcel: 145
+    reason: "design \xA77: bench by the shop front"
+  - key: dumpster
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Skip_01.prefab
+    position: {x: 799.2224, y: 7.9931526, z: 369.07028}
+    yaw: 15.14824
+    parcel: 145
+    reason: "design \xA77: dumpster behind every commercial building"
+  - key: sign.vanAccessible
+    prefabs: []
+    position: {x: 819.97107, y: 8.249919, z: 354.3042}
+    yaw: 195.14883
+    parcel: 145
+    reason: 'ADA 216.5: accessible stall sign at the stall head'
+  - key: sign.parking
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Sign_Parking_01.prefab
+    position: {x: 818.8829, y: 7.880183, z: 329.04596}
+    yaw: 200.931
+    parcel: 145
+    reason: "design \xA77: sign at the entrance"
+  - key: lamp
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Base_01.prefab
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Lights_01.prefab
+    position: {x: 821.3768, y: 7.97176, z: 337.43533}
+    yaw: 0
+    parcel: 145
+    reason: "design \xA77: lamp poles in islands (S2)"
+  - key: lamp
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Base_01.prefab
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Lights_01.prefab
+    position: {x: 817.6832, y: 8.282969, z: 354.54514}
+    yaw: 0
+    parcel: 145
+    reason: "design \xA77: lamp poles in islands (S2)"
+  - key: sign.vanAccessible
+    prefabs: []
+    position: {x: 712.07684, y: 4.7205224, z: 212.40395}
+    yaw: 295.70602
+    parcel: 151
+    reason: 'ADA 216.5: accessible stall sign at the stall head'
+  - key: sign.accessible
+    prefabs: []
+    position: {x: 714.847, y: 4.840228, z: 217.63893}
+    yaw: 295.70602
+    parcel: 151
+    reason: 'ADA 216.5: accessible stall sign at the stall head'
+  - key: sign.parking
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Sign_Parking_01.prefab
+    position: {x: 708.5796, y: 5.637958, z: 256.98758}
+    yaw: 25.620928
+    parcel: 151
+    reason: "design \xA77: sign at the entrance"
+  - key: lamp
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Base_01.prefab
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Lights_01.prefab
+    position: {x: 712.7684, y: 4.8910675, z: 220.87207}
+    yaw: 0
+    parcel: 151
+    reason: "design \xA77: lamp poles in islands (S2)"
+  - key: lamp
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Base_01.prefab
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Lights_01.prefab
+    position: {x: 711.203, y: 5.4456115, z: 247.13019}
+    yaw: 0
+    parcel: 151
+    reason: "design \xA77: lamp poles in islands (S2)"
+  - key: lamp
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Base_01.prefab
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Lights_01.prefab
+    position: {x: 704.6204, y: 4.365726, z: 196.5678}
+    yaw: 0
+    parcel: 151
+    reason: "design \xA77: lamp poles in islands (S2)"
+  - key: lamp
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Base_01.prefab
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Lights_01.prefab
+    position: {x: 682.07556, y: 4.173321, z: 193.82352}
+    yaw: 0
+    parcel: 151
+    reason: "design \xA77: lamp poles in islands (S2)"
+  - key: lamp
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Base_01.prefab
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Lights_01.prefab
+    position: {x: 689.66626, y: 4.5269136, z: 209.59157}
+    yaw: 0
+    parcel: 151
+    reason: "design \xA77: lamp poles in islands (S2)"
+  - key: mailbox
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Mailbox_01.prefab
+    position: {x: 848.88104, y: 8.169488, z: 924.67395}
+    yaw: 139.1489
+    parcel: 152
+    reason: "design \xA77: mailbox at the road on rural streets"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 858.55005, y: 7.159392, z: 913.1867}
+    yaw: 139.1489
+    parcel: 152
+    reason: "design \xA77: bin by the garage or pad"
+  - key: mailbox
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Mailbox_01.prefab
+    position: {x: -258.32227, y: 39.46579, z: 845.47107}
+    yaw: 298.8224
+    parcel: 156
+    reason: "design \xA77: mailbox at the road on rural streets"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: -252.83945, y: 38.93816, z: 842.6823}
+    yaw: 298.8224
+    parcel: 156
+    reason: "design \xA77: bin by the garage or pad"
+  - key: mailbox
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Mailbox_01.prefab
+    position: {x: -209.78683, y: 25.395458, z: 705.2583}
+    yaw: 191.3003
+    parcel: 160
+    reason: "design \xA77: mailbox at the road on rural streets"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: -213.62303, y: 25.682129, z: 710.55646}
+    yaw: 191.3003
+    parcel: 160
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: -180.6187, y: 24.854628, z: 734.0213}
+    yaw: 91.9691
+    parcel: 161
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: -185.99565, y: 24.947866, z: 771.31824}
+    yaw: 91.9691
+    parcel: 164
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_02.prefab
+    position: {x: -199.09096, y: 26.188248, z: 756.18054}
+    yaw: 1.9691048
+    parcel: 164
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: -164.88707, y: 19.011337, z: 432.7124}
+    yaw: 180.84282
+    parcel: 166
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_01.prefab
+    position: {x: -177.59126, y: 18.492569, z: 455.03217}
+    yaw: 90.84282
+    parcel: 166
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: -134.36879, y: 20.24585, z: 441.77798}
+    yaw: 180.84282
+    parcel: 167
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_04.prefab
+    position: {x: -144.32278, y: 19.175812, z: 458.13373}
+    yaw: 90.84282
+    parcel: 167
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: -117.4157, y: 22.30694, z: 439.44284}
+    yaw: 180.84282
+    parcel: 168
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_04.prefab
+    position: {x: -106.1269, y: 22.133013, z: 456.1448}
+    yaw: 90.84282
+    parcel: 168
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: -170.93373, y: 20.08249, z: 475.9154}
+    yaw: 1.9925008
+    parcel: 169
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: -145.38062, y: 20.540968, z: 479.86996}
+    yaw: 1.4462785
+    parcel: 170
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: -109.32106, y: 22.243698, z: 476.75018}
+    yaw: 1.4462785
+    parcel: 171
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: -158.37094, y: 21.818748, z: 506.47946}
+    yaw: 181.44627
+    parcel: 172
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: -160.86406, y: 21.232477, z: 548.71594}
+    yaw: 1.996644
+    parcel: 173
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: -100.07943, y: 23.218546, z: 502.0094}
+    yaw: 181.44627
+    parcel: 175
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: -97.83885, y: 23.297134, z: 529.664}
+    yaw: 90.31047
+    parcel: 176
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: -145.11269, y: 22.022907, z: 547.26166}
+    yaw: 1.996644
+    parcel: 177
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: -64.455315, y: 24.331774, z: 429.06366}
+    yaw: 181.47261
+    parcel: 178
+    reason: "design \xA77: bin by the door"
+  - key: bench
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_ParkBench_01.prefab
+    position: {x: -69.2563, y: 24.147007, z: 429.08704}
+    yaw: 181.47261
+    parcel: 178
+    reason: "design \xA77: bench by the shop front"
+  - key: dumpster
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Skip_01.prefab
+    position: {x: -68.8938, y: 24.013214, z: 446.9481}
+    yaw: 1.4721402
+    parcel: 178
+    reason: "design \xA77: dumpster behind every commercial building"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: -70.322754, y: 23.827768, z: 459.92245}
+    yaw: 270.92032
+    parcel: 179
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: -42.167778, y: 24.3179, z: 454.68408}
+    yaw: 93.39544
+    parcel: 180
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: -40.07453, y: 24.20789, z: 530.48236}
+    yaw: 94.184555
+    parcel: 181
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: -71.31201, y: 24.079885, z: 520.38727}
+    yaw: 270.31046
+    parcel: 183
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: -19.040655, y: 23.926828, z: 530.63745}
+    yaw: 274.18457
+    parcel: 186
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 9.2119255, y: 24.643517, z: 516.4643}
+    yaw: 92.9521
+    parcel: 187
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 41.042862, y: 25.13441, z: 451.98117}
+    yaw: 3.1506073
+    parcel: 188
+    reason: "design \xA77: bin by the door"
+  - key: bench
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_ParkBench_01.prefab
+    position: {x: 45.841103, y: 25.148464, z: 451.8172}
+    yaw: 3.1506073
+    parcel: 188
+    reason: "design \xA77: bench by the shop front"
+  - key: dumpster
+    prefabs:
+    - Assets/Synty/PolygonProRacer/Prefabs/Props/SM_Prop_Dumpster_01.prefab
+    position: {x: 29.558855, y: 24.901363, z: 438.59348}
+    yaw: 273.17697
+    parcel: 188
+    reason: "design \xA77: dumpster behind every commercial building"
+  - key: pallets
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Pallet_01.prefab
+    position: {x: 30.39061, y: 24.933617, z: 444.55655}
+    yaw: 273.17697
+    parcel: 188
+    reason: "design \xA77: pallets and boxes behind"
+  - key: sign.vanAccessible
+    prefabs: []
+    position: {x: 43.786247, y: 24.342165, z: 458.04324}
+    yaw: 3.1769865
+    parcel: 188
+    reason: 'ADA 216.5: accessible stall sign at the stall head'
+  - key: sign.parking
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Sign_Parking_01.prefab
+    position: {x: 61.229595, y: 23.960466, z: 470.66785}
+    yaw: 91.26919
+    parcel: 188
+    reason: "design \xA77: sign at the entrance"
+  - key: lamp
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Base_01.prefab
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Lights_01.prefab
+    position: {x: 54.55934, y: 24.445826, z: 460.51382}
+    yaw: 0
+    parcel: 188
+    reason: "design \xA77: lamp poles in islands (S2)"
+  - key: lamp
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Base_01.prefab
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Lights_01.prefab
+    position: {x: 30.918753, y: 24.111221, z: 477.77313}
+    yaw: 0
+    parcel: 188
+    reason: "design \xA77: lamp poles in islands (S2)"
+  - key: lamp
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Base_01.prefab
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Lights_01.prefab
+    position: {x: 36.680122, y: 24.311344, z: 458.3788}
+    yaw: 0
+    parcel: 188
+    reason: "design \xA77: lamp poles in islands (S2)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 50.288944, y: 24.05305, z: 519.38}
+    yaw: 91.35295
+    parcel: 189
+    reason: "design \xA77: bin by the door"
+  - key: bench
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_ParkBench_01.prefab
+    position: {x: 50.27558, y: 24.218805, z: 514.579}
+    yaw: 91.35295
+    parcel: 189
+    reason: "design \xA77: bench by the shop front"
+  - key: dumpster
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Skip_01.prefab
+    position: {x: 32.284695, y: 24.21478, z: 514.9067}
+    yaw: 271.36884
+    parcel: 189
+    reason: "design \xA77: dumpster behind every commercial building"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 66.02721, y: 25.191818, z: 383.10492}
+    yaw: 271.2737
+    parcel: 190
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_02.prefab
+    position: {x: 80.44939, y: 25.770994, z: 394.86346}
+    yaw: 181.27371
+    parcel: 190
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 82.29732, y: 25.05251, z: 400.0796}
+    yaw: 1.4725685
+    parcel: 191
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 119.69958, y: 24.018074, z: 382.4122}
+    yaw: 93.22126
+    parcel: 192
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 79.82175, y: 24.812992, z: 450.63995}
+    yaw: 271.278
+    parcel: 194
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 121.263855, y: 24.294935, z: 456.8753}
+    yaw: 88.45771
+    parcel: 195
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_01.prefab
+    position: {x: 105.41153, y: 24.645103, z: 467.0367}
+    yaw: 358.4577
+    parcel: 195
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 94.085526, y: 24.700447, z: 427.72897}
+    yaw: 181.47256
+    parcel: 196
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 82.857506, y: 24.350657, z: 515.58966}
+    yaw: 272.19467
+    parcel: 198
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 131.80753, y: 22.740236, z: 582.46594}
+    yaw: 92.585396
+    parcel: 199
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_03.prefab
+    position: {x: 118.5954, y: 22.757624, z: 593.442}
+    yaw: 2.585398
+    parcel: 199
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 169.60837, y: 21.965677, z: 436.753}
+    yaw: 92.02568
+    parcel: 200
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 155.65773, y: 22.570688, z: 468.117}
+    yaw: 1.759749
+    parcel: 201
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_02.prefab
+    position: {x: 167.74469, y: 22.284222, z: 457.15588}
+    yaw: 271.75974
+    parcel: 201
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 150.73965, y: 22.943756, z: 579.9618}
+    yaw: 272.5854
+    parcel: 203
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 175.90396, y: 21.116339, z: 577.97565}
+    yaw: 93.93988
+    parcel: 204
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 164.2721, y: 20.75136, z: 385.5491}
+    yaw: 273.22125
+    parcel: 205
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 195.10986, y: 20.033298, z: 384.8399}
+    yaw: 91.0387
+    parcel: 206
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_02.prefab
+    position: {x: 181.76398, y: 20.186285, z: 394.4318}
+    yaw: 1.0387001
+    parcel: 206
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 197.49008, y: 19.380556, z: 362.73483}
+    yaw: 90.20649
+    parcel: 207
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_04.prefab
+    position: {x: 183.8108, y: 19.464357, z: 373.37082}
+    yaw: 0.20649129
+    parcel: 207
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 201.8883, y: 20.591997, z: 425.58795}
+    yaw: 181.25085
+    parcel: 208
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 191.42436, y: 22.052248, z: 452.945}
+    yaw: 270.8365
+    parcel: 209
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_04.prefab
+    position: {x: 202.55951, y: 21.351461, z: 464.03287}
+    yaw: 180.83649
+    parcel: 209
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: dumpster
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Skip_01.prefab
+    position: {x: 205.75754, y: 21.91021, z: 506.38342}
+    yaw: 92.29195
+    parcel: 211
+    reason: "design \xA77: dumpster behind every commercial building"
+  - key: sign.vanAccessible
+    prefabs: []
+    position: {x: 205.58276, y: 21.861177, z: 501.9982}
+    yaw: 92.271484
+    parcel: 211
+    reason: 'ADA 216.5: accessible stall sign at the stall head'
+  - key: sign.parking
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Sign_Parking_01.prefab
+    position: {x: 219.25862, y: 21.445183, z: 507.3159}
+    yaw: 91.946594
+    parcel: 211
+    reason: "design \xA77: sign at the entrance"
+  - key: lamp
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Base_01.prefab
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Lights_01.prefab
+    position: {x: 205.69861, y: 21.913517, z: 506.36652}
+    yaw: 0
+    parcel: 211
+    reason: "design \xA77: lamp poles in islands (S2)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 205.66084, y: 21.031816, z: 534.8389}
+    yaw: 1.7651877
+    parcel: 212
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_04.prefab
+    position: {x: 215.25417, y: 21.823883, z: 517.7293}
+    yaw: 271.7652
+    parcel: 212
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 197.10071, y: 20.10375, z: 585.482}
+    yaw: 273.93988
+    parcel: 213
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 231.91342, y: 18.936138, z: 599.32983}
+    yaw: 2.7112944
+    parcel: 214
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 228.91765, y: 19.509148, z: 558.27466}
+    yaw: 181.75671
+    parcel: 215
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 213.58115, y: 19.57773, z: 381.94843}
+    yaw: 271.8933
+    parcel: 216
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 234.22696, y: 19.624882, z: 353.47458}
+    yaw: 269.79044
+    parcel: 218
+    reason: "design \xA77: bin by the door"
+  - key: bench
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_ParkBench_01.prefab
+    position: {x: 234.1094, y: 19.500635, z: 358.2742}
+    yaw: 269.79044
+    parcel: 218
+    reason: "design \xA77: bench by the shop front"
+  - key: dumpster
+    prefabs:
+    - Assets/Synty/PolygonProRacer/Prefabs/Props/SM_Prop_Dumpster_01.prefab
+    position: {x: 241.77406, y: 19.521526, z: 367.70044}
+    yaw: 359.7702
+    parcel: 218
+    reason: "design \xA77: dumpster behind every commercial building"
+  - key: sign.vanAccessible
+    prefabs: []
+    position: {x: 232.66364, y: 19.596027, z: 353.14175}
+    yaw: 269.7702
+    parcel: 218
+    reason: 'ADA 216.5: accessible stall sign at the stall head'
+  - key: sign.parking
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Sign_Parking_01.prefab
+    position: {x: 230.7445, y: 19.68443, z: 339.281}
+    yaw: 181.3336
+    parcel: 218
+    reason: "design \xA77: sign at the entrance"
+  - key: lamp
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Base_01.prefab
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Lights_01.prefab
+    position: {x: 229.39423, y: 19.730358, z: 345.50958}
+    yaw: 0
+    parcel: 218
+    reason: "design \xA77: lamp poles in islands (S2)"
+  - key: lamp
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Base_01.prefab
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Lights_01.prefab
+    position: {x: 232.57442, y: 19.49921, z: 362.92047}
+    yaw: 0
+    parcel: 218
+    reason: "design \xA77: lamp poles in islands (S2)"
+  - key: dumpster
+    prefabs:
+    - Assets/Synty/PolygonProRacer/Prefabs/Props/SM_Prop_Dumpster_01.prefab
+    position: {x: 260.92105, y: 19.550638, z: 378.36475}
+    yaw: 183.35999
+    parcel: 219
+    reason: "design \xA77: dumpster behind every commercial building"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 250.37613, y: 20.385399, z: 424.55814}
+    yaw: 181.16354
+    parcel: 220
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 236.94576, y: 20.718138, z: 467.8897}
+    yaw: 2.1191103
+    parcel: 221
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_01.prefab
+    position: {x: 227.51851, y: 20.677029, z: 452.87494}
+    yaw: 272.1191
+    parcel: 221
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 241.12112, y: 20.555668, z: 465.24622}
+    yaw: 2.1191103
+    parcel: 222
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_02.prefab
+    position: {x: 245.13193, y: 20.534256, z: 449.73422}
+    yaw: 272.1191
+    parcel: 222
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 273.076, y: 20.096956, z: 465.77283}
+    yaw: 1.9719799
+    parcel: 223
+    reason: "design \xA77: bin by the garage or pad"
+  - key: dumpster
+    prefabs:
+    - Assets/Synty/PolygonProRacer/Prefabs/Props/SM_Prop_Dumpster_01.prefab
+    position: {x: 258.8663, y: 20.178257, z: 425.00284}
+    yaw: 270.97534
+    parcel: 224
+    reason: "design \xA77: dumpster behind every commercial building"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 237.02336, y: 20.094292, z: 536.36005}
+    yaw: 1.756718
+    parcel: 225
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 235.52501, y: 20.863289, z: 493.86243}
+    yaw: 182.11911
+    parcel: 226
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 264.1213, y: 19.241873, z: 654.5624}
+    yaw: 182.56735
+    parcel: 227
+    reason: "design \xA77: bin by the door"
+  - key: bench
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_ParkBench_01.prefab
+    position: {x: 259.32162, y: 19.36201, z: 654.6775}
+    yaw: 182.56735
+    parcel: 227
+    reason: "design \xA77: bench by the shop front"
+  - key: dumpster
+    prefabs:
+    - Assets/Synty/PolygonProRacer/Prefabs/Props/SM_Prop_Dumpster_01.prefab
+    position: {x: 277.24203, y: 18.881872, z: 664.4484}
+    yaw: 92.57072
+    parcel: 227
+    reason: "design \xA77: dumpster behind every commercial building"
+  - key: sign.vanAccessible
+    prefabs: []
+    position: {x: 267.5446, y: 18.989141, z: 645.69183}
+    yaw: 272.56738
+    parcel: 227
+    reason: 'ADA 216.5: accessible stall sign at the stall head'
+  - key: sign.parking
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Sign_Parking_01.prefab
+    position: {x: 243.99397, y: 19.146658, z: 639.76404}
+    yaw: 277.78177
+    parcel: 227
+    reason: "design \xA77: sign at the entrance"
+  - key: lamp
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Base_01.prefab
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Lights_01.prefab
+    position: {x: 251.81508, y: 19.339153, z: 648.7339}
+    yaw: 0
+    parcel: 227
+    reason: "design \xA77: lamp poles in islands (S2)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 304.3058, y: 17.768164, z: 668.36206}
+    yaw: 2.8449678
+    parcel: 228
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_04.prefab
+    position: {x: 290.8861, y: 17.968365, z: 653.8302}
+    yaw: 272.84497
+    parcel: 228
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 332.8534, y: 17.322922, z: 630.8682}
+    yaw: 93.743286
+    parcel: 229
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 285.02112, y: 18.115488, z: 616.74365}
+    yaw: 182.71092
+    parcel: 230
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 248.37656, y: 18.633598, z: 620.1321}
+    yaw: 182.71129
+    parcel: 231
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 279.28195, y: 19.228922, z: 734.1593}
+    yaw: 1.3299435
+    parcel: 232
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 312.46658, y: 17.982338, z: 694.6011}
+    yaw: 182.84497
+    parcel: 233
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 277.2334, y: 19.330292, z: 517.57825}
+    yaw: 1.7702488
+    parcel: 235
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 286.48972, y: 19.534967, z: 506.79156}
+    yaw: 93.0253
+    parcel: 236
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 276.8691, y: 18.477879, z: 556.5877}
+    yaw: 180.50342
+    parcel: 237
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 290.22855, y: 18.436592, z: 578.46027}
+    yaw: 95.44377
+    parcel: 238
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 315.968, y: 19.870255, z: 394.328}
+    yaw: 25.976423
+    parcel: 239
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_02.prefab
+    position: {x: 301.5709, y: 19.410652, z: 379.79846}
+    yaw: 295.9764
+    parcel: 239
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 369.29953, y: 16.232576, z: 350.10104}
+    yaw: 114.98954
+    parcel: 242
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 309.77042, y: 17.184738, z: 345.86514}
+    yaw: 188.62907
+    parcel: 243
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 336.60342, y: 17.027313, z: 329.55725}
+    yaw: 202.18073
+    parcel: 244
+    reason: "design \xA77: bin by the garage or pad"
+  - key: dumpster
+    prefabs:
+    - Assets/Synty/PolygonProRacer/Prefabs/Props/SM_Prop_Dumpster_01.prefab
+    position: {x: 314.0285, y: 19.807579, z: 428.3154}
+    yaw: 92.28978
+    parcel: 245
+    reason: "design \xA77: dumpster behind every commercial building"
+  - key: sign.vanAccessible
+    prefabs: []
+    position: {x: 327.6171, y: 18.740906, z: 423.90543}
+    yaw: 273.15216
+    parcel: 245
+    reason: 'ADA 216.5: accessible stall sign at the stall head'
+  - key: sign.parking
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Sign_Parking_01.prefab
+    position: {x: 314.23022, y: 19.877539, z: 430.21185}
+    yaw: 273.151
+    parcel: 245
+    reason: "design \xA77: sign at the entrance"
+  - key: lamp
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Base_01.prefab
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Lights_01.prefab
+    position: {x: 326.42114, y: 19.898798, z: 462.19537}
+    yaw: 0
+    parcel: 245
+    reason: "design \xA77: lamp poles in islands (S2)"
+  - key: lamp
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Base_01.prefab
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_LightPole_Lights_01.prefab
+    position: {x: 328.25656, y: 19.582468, z: 436.43298}
+    yaw: 0
+    parcel: 245
+    reason: "design \xA77: lamp poles in islands (S2)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 316.37082, y: 19.817297, z: 491.38318}
+    yaw: 273.0253
+    parcel: 246
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 318.86792, y: 19.10333, z: 534.0652}
+    yaw: 1.7518684
+    parcel: 247
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 348.51465, y: 18.83961, z: 433.3673}
+    yaw: 270.75406
+    parcel: 249
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 368.80832, y: 19.92067, z: 464.73672}
+    yaw: 3.272587
+    parcel: 253
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 403.40298, y: 18.725943, z: 448.76926}
+    yaw: 91.48916
+    parcel: 254
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 350.86563, y: 19.168335, z: 513.4423}
+    yaw: 271.88086
+    parcel: 255
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 366.87924, y: 18.288996, z: 533.4462}
+    yaw: 358.98035
+    parcel: 257
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_03.prefab
+    position: {x: 355.89035, y: 18.596344, z: 519.1921}
+    yaw: 268.98035
+    parcel: 257
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 408.37076, y: 19.454906, z: 506.45496}
+    yaw: 93.41043
+    parcel: 258
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 374.93393, y: 19.692348, z: 489.3162}
+    yaw: 181.8447
+    parcel: 259
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_04.prefab
+    position: {x: 384.9066, y: 19.261467, z: 505.0797}
+    yaw: 91.844696
+    parcel: 259
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 392.4392, y: 18.094585, z: 523.4878}
+    yaw: 358.98035
+    parcel: 260
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 394.20587, y: 15.390801, z: 338.0647}
+    yaw: 294.26477
+    parcel: 262
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_01.prefab
+    position: {x: 415.61066, y: 15.496601, z: 341.8247}
+    yaw: 204.26476
+    parcel: 262
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 439.50323, y: 12.830331, z: 342.70853}
+    yaw: 26.116993
+    parcel: 265
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 415.57703, y: 13.921975, z: 292.23962}
+    yaw: 207.68658
+    parcel: 266
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_02.prefab
+    position: {x: 435.33698, y: 17.516617, z: 424.7652}
+    yaw: 160.50146
+    parcel: 267
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 451.27692, y: 17.544561, z: 418.83054}
+    yaw: 182.41707
+    parcel: 268
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 432.18866, y: 19.267513, z: 446.455}
+    yaw: 274.20367
+    parcel: 269
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 428.90994, y: 19.533422, z: 501.1529}
+    yaw: 272.2747
+    parcel: 271
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 441.04828, y: 19.116617, z: 484.77835}
+    yaw: 183.67456
+    parcel: 274
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 434.6748, y: 19.666916, z: 531.7999}
+    yaw: 0.6630249
+    parcel: 275
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 457.09412, y: 13.07995, z: 358.35718}
+    yaw: 206.11699
+    parcel: 279
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 485.39767, y: 15.990469, z: 417.6726}
+    yaw: 184.38777
+    parcel: 281
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 503.11237, y: 14.273929, z: 413.25214}
+    yaw: 91.785255
+    parcel: 282
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 498.9394, y: 10.600261, z: 353.2354}
+    yaw: 130.75287
+    parcel: 285
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 545.19257, y: 11.258583, z: 421.3942}
+    yaw: 137.83426
+    parcel: 286
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 563.1413, y: 11.416203, z: 456.72974}
+    yaw: 120.18769
+    parcel: 288
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 565.0533, y: 11.7968445, z: 480.24167}
+    yaw: 183.58463
+    parcel: 291
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 571.6494, y: 10.517123, z: 478.60757}
+    yaw: 182.11237
+    parcel: 292
+    reason: "design \xA77: bin by the garage or pad"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_02.prefab
+    position: {x: 550.9047, y: 16.303856, z: 528.6491}
+    yaw: 1.5949861
+    parcel: 294
+    reason: "design \xA77: bin by the garage or pad"
+  - key: washing.line
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Washingline_03.prefab
+    position: {x: 560.0163, y: 15.804276, z: 514.2755}
+    yaw: 271.595
+    parcel: 294
+    reason: "design \xA77: washing line in the back yard (30 %)"
+  - key: trash.bin
+    prefabs:
+    - Assets/Synty/PolygonCity/Prefabs/Props/SM_Prop_Trashbin_01.prefab
+    position: {x: 607.99243, y: 12.644418, z: 529.59766}
+    yaw: 2.7254794
+    parcel: 296
+    reason: "design \xA77: bin by the garage or pad"
+  fences: []
+  gates: []
+  models:
+  - key: fuel.island
+    footprint:
+    - {x: 931.0623, y: 339.9725}
+    - {x: 931.7601, y: 334.097}
+    - {x: 932.95166, y: 334.2385}
+    - {x: 932.25397, y: 340.114}
+    y: 12.435517
+    height: 0.15
+    parcel: 143
+    reason: "design \xA74.2: pump island under the canopy (lane A)"
+  - key: fuel.dispenser
+    footprint:
+    - {x: 931.42346, y: 339.4755}
+    - {x: 931.5296, y: 338.58176}
+    - {x: 932.12537, y: 338.65253}
+    - {x: 932.0193, y: 339.54623}
+    y: 12.415391
+    height: 1.8
+    parcel: 143
+    reason: "design \xA77: fuel dispenser (lane A; Synty has none)"
+  - key: fuel.dispenser
+    footprint:
+    - {x: 931.8886, y: 335.55847}
+    - {x: 931.99475, y: 334.66476}
+    - {x: 932.5906, y: 334.7355}
+    - {x: 932.48444, y: 335.62924}
+    y: 12.467556
+    height: 1.8
+    parcel: 143
+    reason: "design \xA77: fuel dispenser (lane A; Synty has none)"
+  - key: fuel.pylon
+    footprint:
+    - {x: 940.7301, y: 346.54132}
+    - {x: 939.1421, y: 346.34595}
+    - {x: 939.21533, y: 345.75043}
+    - {x: 940.8034, y: 345.94583}
+    y: 12.648446
+    height: 6
+    parcel: 143
+    reason: "design \xA77a: price pylon by the way in (lane A)"

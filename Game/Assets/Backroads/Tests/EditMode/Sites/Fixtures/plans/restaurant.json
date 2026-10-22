@@ -1,0 +1,19 @@
+{
+  "fixture": "restaurant",
+  "type": "Restaurant",
+  "source": "Rules",
+  "template": "",
+  "downtown": false,
+  "surfaces": {"Drive:Asphalt": 4, "Lot:Asphalt": 585, "Walk:Concrete": 11},
+  "lots": 1,
+  "stalls": 9,
+  "accessible": 1,
+  "driveways": ["Commercial 7.3 m"],
+  "doors": {"Main": 1, "Service": 1},
+  "props": {"bench": 1, "dumpster": 1, "trash.bin": 1},
+  "models": {},
+  "fences": 0,
+  "gates": 0,
+  "notes": [],
+  "hash": "5eef98025b6fd59d9ec8e764e2cb6f6040c2fa61f272917d39be76ffac506b27"
+}

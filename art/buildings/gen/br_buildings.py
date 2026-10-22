@@ -190,7 +190,9 @@ def main(argv):
         'format': 'backroads-building-models', 'version': 1, 'generator': 'art/buildings/gen (version %d)' % GENERATOR_VERSION,
         'town': town.manifest.get('townName', 'Millbrook'),
         'frame': 'TownFrame local metres = Unity axes (x east, y up, z north). Place each FBX at origin, no rotation.',
-        'doors': P.doors_src or 'placeholder (art/buildings/millbrook/doors.placeholder.json) until sites-S3',
+        'doors': 'sites-S3' if P.doors_src else 'placeholder',
+        'doorsFile': P.doors_src or (args['--plan-out'].replace('\\', '/').rstrip('/') + '/doors.placeholder.json' if '--plan-out' in args else None),
+        'fallbackDoors': P.fallback_doors,
         'lods': 'Body_LOD0..2 + Panes_LOD0..2 (one LOD Group on the root, BackroadsModelPostprocessor)',
         'buildings': entries,
     }

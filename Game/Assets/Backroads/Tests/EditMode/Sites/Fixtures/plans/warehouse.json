@@ -1,0 +1,19 @@
+{
+  "fixture": "warehouse",
+  "type": "Warehouse",
+  "source": "Rules",
+  "template": "",
+  "downtown": false,
+  "surfaces": {"Apron:Concrete": 1368, "Drive:Asphalt": 736, "Lot:Asphalt": 405, "Lot:Gravel": 5116},
+  "lots": 2,
+  "stalls": 30,
+  "accessible": 1,
+  "driveways": ["Truck 12.0 m", "Commercial 7.3 m"],
+  "doors": {"Main": 1, "Dock": 6},
+  "props": {"barrier.short": 2, "boom.gate": 1, "cone": 1, "pallets": 2, "skip": 2},
+  "models": {"dock.leveller": 6},
+  "fences": 1,
+  "gates": 1,
+  "notes": [],
+  "hash": "5fd8cf36ad93d722eec9e61307a0ee2556cbe0b644dc9e299ac5d200abc6a474"
+}

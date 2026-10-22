@@ -1,0 +1,19 @@
+{
+  "fixture": "mapped_lot",
+  "type": "Unknown",
+  "source": "Mapped",
+  "template": "",
+  "downtown": false,
+  "surfaces": {"Drive:Asphalt": 4, "Lot:Asphalt": 1326},
+  "lots": 1,
+  "stalls": 39,
+  "accessible": 2,
+  "driveways": ["Commercial 7.3 m"],
+  "doors": {},
+  "props": {},
+  "models": {},
+  "fences": 0,
+  "gates": 0,
+  "notes": ["a mapped lot or yard of its own"],
+  "hash": "ea346bf5a570f8c1ee1f48ef22e5450c95245846cf03409686d65fecd1cbb293"
+}

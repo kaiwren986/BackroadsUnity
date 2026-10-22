@@ -79,7 +79,7 @@ namespace Backroads.Tests.EditMode.World
             Assert.AreEqual(WorldDataExport.Format, CanonJson.Str(m, "format"));
             Assert.AreEqual(WorldGridLayout.Millbrook, WorldGridLayout.FromManifestFile(mPath), "grid block");
             var files = CanonJson.Obj(CanonJson.Get(m, "files"), "files");
-            var want = new[] { "structures.json", "water.json" }.Concat(WorldDataExport.LayerFiles).OrderBy(s => s, StringComparer.Ordinal).ToList();
+            var want = WorldDataExport.OtherFiles.Concat(WorldDataExport.LayerFiles).OrderBy(s => s, StringComparer.Ordinal).ToList();
             CollectionAssert.AreEqual(want, files.Keys.OrderBy(s => s, StringComparer.Ordinal).ToList(), "file list");
             var fails = new List<string>();
             foreach (var kv in files)

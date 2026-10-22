@@ -138,10 +138,10 @@ namespace Backroads.Client
             float dist = CamDistance * zoom * (1f + Mathf.Min(speed, 40f) * 0.006f);
             float cx = Mathf.Sin(yaw) * Mathf.Cos(pitch), cy = Mathf.Sin(pitch), cz = Mathf.Cos(yaw) * Mathf.Cos(pitch);
             float d = dist;
-            bool haveGround = CanonRuntime.IsLoaded;
+            bool haveGround = ActiveWorld.TryGrid(out var grid);
             if (haveGround)
             {
-                var g = CanonRuntime.Grid.View;
+                var g = grid.View;
                 // JS space: x flipped; the Unity direction (-cx, cy, -cz) is (cx, cy, -cz) there
                 float hit = WorldGridQueries.RayTerrainJs(g, new float3(-tgt.x, tgt.y, tgt.z), new float3(cx, cy, -cz), dist, 0.6f);
                 if (hit > 0f) d = Mathf.Max(1.5f, hit - 0.5f);
@@ -149,7 +149,7 @@ namespace Backroads.Client
             var p = new Vector3(tgt.x - cx * d, tgt.y + cy * d + CamHeight * 0.35f, tgt.z - cz * d);
             if (haveGround)
             {
-                var g = CanonRuntime.Grid.View;
+                var g = grid.View;
                 float ground = WorldGridQueries.HeightAt(g, p);
                 if (p.y < ground + 0.6f) p.y = ground + 0.6f;
                 if (p.y < 0.3f && ground < 0f) p.y = 0.3f;

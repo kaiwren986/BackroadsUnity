@@ -1,0 +1,19 @@
+{
+  "fixture": "fuel_no_canopy",
+  "type": "Fuel",
+  "source": "Rules",
+  "template": "",
+  "downtown": false,
+  "surfaces": {"Forecourt:Concrete": 671, "Lot:Asphalt": 331, "Walk:Concrete": 18},
+  "lots": 1,
+  "stalls": 7,
+  "accessible": 1,
+  "driveways": ["FuelIn 10.0 m", "FuelOut 10.0 m"],
+  "doors": {"Main": 1, "Service": 1},
+  "props": {"bollard": 2, "dumpster": 1, "fuel.air": 1, "fuel.cans": 1, "trash.island": 1, "water.barrel": 1},
+  "models": {"fuel.canopy": 1, "fuel.dispenser": 2, "fuel.island": 1, "fuel.pylon": 1},
+  "fences": 0,
+  "gates": 0,
+  "notes": [],
+  "hash": "b99288192ae104f5f3550cf49200efcb360084977f61e46316df09f11843d45e"
+}

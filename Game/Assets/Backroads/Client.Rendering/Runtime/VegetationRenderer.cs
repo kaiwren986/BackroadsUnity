@@ -38,18 +38,19 @@ namespace Backroads.Client.Rendering
         public int Resnapped { get; private set; }
 
         public VegetationRenderer(CanonAsset canon, MillbrookLook look, Transform parent, float nearRadius)
+            : this(canon.vegetation, canon.trees, WorldGrid.LayoutOf(canon), look, parent, nearRadius) { }
+
+        /// <summary>Any world's vegetation (T3.3: a baked world's vegetation.json) with the canon's tree models.</summary>
+        public VegetationRenderer(VegetationSet veg, CanonModelSet models, WorldGridLayout layout, MillbrookLook look, Transform parent, float nearRadius)
         {
-            var layout = WorldGrid.LayoutOf(canon);
             SnapCells = layout.ColliderCellsPerSide;
             _half = layout.Half;
             _treeCells = new List<int>[SnapCells * SnapCells];
             Root = new GameObject("Vegetation").transform;
             Root.SetParent(parent, false);
-            var veg = canon.vegetation;
             _veg = veg;
             _treeTf = new Transform[veg.trees.Length];
             _treeY = new float[veg.trees.Length];
-            var models = canon.trees;
             var lod0 = new Mesh[veg.species.Length];
             var lod1 = new Mesh[veg.species.Length];
             var mats = new Material[veg.species.Length];

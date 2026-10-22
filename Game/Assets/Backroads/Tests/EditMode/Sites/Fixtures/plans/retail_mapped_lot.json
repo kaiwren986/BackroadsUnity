@@ -1,0 +1,19 @@
+{
+  "fixture": "retail_mapped_lot",
+  "type": "Retail",
+  "source": "Mapped",
+  "template": "",
+  "downtown": false,
+  "surfaces": {"Drive:Asphalt": 15, "Lot:Asphalt": 1505, "Walk:Concrete": 23},
+  "lots": 1,
+  "stalls": 38,
+  "accessible": 2,
+  "driveways": ["Commercial 7.3 m"],
+  "doors": {"Main": 1, "Service": 1},
+  "props": {"bench": 1, "dumpster": 1, "trash.bin": 1},
+  "models": {},
+  "fences": 0,
+  "gates": 0,
+  "notes": [],
+  "hash": "3d794c9cf3ff3f837341178ce49c2745b898764ea47122ce265e474d08543f64"
+}

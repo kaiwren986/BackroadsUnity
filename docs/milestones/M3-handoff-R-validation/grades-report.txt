@@ -1,0 +1,286 @@
+Backroads roads 05 §8.3 grade report of TownData/stockport-oh/v1: importer v2, surfaces v2, kerbs v2
+Listed, not failed: the real ground is steep in places. Running slopes include the street's grade under the ramp.
+
+== Summary
+92 stop lines, 10 with the approach over 6 % within 10 m (worst 16.4 %); 93 junction surfaces, 31 leaning over 3 % (worst 13.2 %; 0 planes, worst 0.0 %, 0 over); 18226 levels across walks, 83 faces with a cross slope over 2.1 % (worst 65.80 %), 3 faces whose walk meets another face's more than 5 cm apart (worst 0.12 m); 458 ramp runs, 135 over 8.33 % (worst 30.2 %); 12 flares, 7 over 10 % (worst 13.0 %)
+
+== Approaches steeper than 6 % within 10 m of a stop line (10)
+  node 1 arm 1 (R48, Street, MinorStop): 11.5 % at 7.2 m from the node, rising towards the junction; stop line at 16.7 m (moved to the flattest spot within 4 m)
+  node 2 arm 0 (R176, Yard, MinorStop): 15.4 % at 21.1 m from the node, falling towards the junction; stop line at 13.6 m (moved to the flattest spot within 4 m)
+  node 24 arm 1 (R16, Street, MinorStop): 7.3 % at 10.1 m from the node, rising towards the junction; stop line at 16.1 m
+  node 33 arm 2 (R152, Yard, MinorStop): 16.4 % at 15.6 m from the node, falling towards the junction; stop line at 13.1 m
+  node 40 arm 2 (R146, Street, MinorStop): 6.3 % at 6.7 m from the node, falling towards the junction; stop line at 16.7 m (moved to the flattest spot within 4 m)
+  node 60 arm 1 (R98, Street, MinorStop): 10.1 % at 22.4 m from the node, rising towards the junction; stop line at 12.4 m
+  node 86 arm 0 (R87, Street, MinorStop): 6.6 % at 6.4 m from the node, falling towards the junction; stop line at 16.4 m (moved to the flattest spot within 4 m)
+  node 89 arm 0 (R95, Street, MinorStop): 13.2 % at 22.8 m from the node, falling towards the junction; stop line at 12.8 m
+  node 108 arm 0 (R135, Street, MinorStop): 9.2 % at 10.0 m from the node, rising towards the junction; stop line at 17.5 m
+  node 108 arm 2 (R134, Street, MinorStop): 8.0 % at 10.0 m from the node, rising towards the junction; stop line at 16.0 m
+
+== Junction surfaces leaning more than 3 % (least-squares plane through the mesh) (31)
+  node 1 (Junction, 3 arms, Major) at (910, -720): 6.1 % falling towards 6 degrees; carries R0's grade through the node
+  node 2 (Junction, 3 arms, Major) at (501, -445): 4.8 % falling towards 146 degrees; carries R1's grade through the node
+  node 8 (Junction, 3 arms, Major) at (158, 414): 4.0 % falling towards -24 degrees; carries R59's grade through the node
+  node 9 (Junction, 3 arms, Major) at (568, 414): 3.3 % falling towards 79 degrees; carries R134's grade through the node
+  node 10 (Junction, 4 arms, Major) at (514, 432): 4.9 % falling towards -95 degrees; carries R49's grade through the node
+  node 11 (Junction, 4 arms, Major) at (463, 434): 4.8 % falling towards -90 degrees; carries R13's grade through the node
+  node 12 (Junction, 4 arms, Major) at (413, 439): 4.7 % falling towards -94 degrees; carries R71's grade through the node
+  node 13 (Junction, 3 arms, Major) at (224, 547): 3.7 % falling towards -21 degrees; carries R33's grade through the node
+  node 20 (Junction, 3 arms, Major) at (466, 473): 4.0 % falling towards -19 degrees; carries R99's grade through the node
+  node 21 (Junction, 3 arms, Major) at (462, 404): 3.9 % falling towards 7 degrees; carries R162's grade through the node
+  node 22 (Junction, 3 arms, Major) at (338, 443): 3.8 % falling towards -76 degrees; carries R143's grade through the node
+  node 23 (Junction, 4 arms, Major) at (336, 409): 3.9 % falling towards -3 degrees; carries R54's grade through the node
+  node 25 (Junction, 4 arms, Major) at (429, 357): 5.5 % falling towards -24 degrees; carries R17's grade through the node
+  node 26 (Junction, 4 arms, Major) at (462, 342): 6.3 % falling towards -27 degrees; carries R136's grade through the node
+  node 28 (Junction, 3 arms, Major) at (-194, 465): 3.7 % falling towards -117 degrees; carries R18's grade through the node
+  node 43 (Junction, 4 arms, Major) at (185, 548): 3.4 % falling towards 0 degrees; carries R34's grade through the node
+  node 53 (Junction, 3 arms, Major) at (349, 744): 3.3 % falling towards -112 degrees; carries R148's grade through the node
+  node 59 (Junction, 3 arms, Major) at (510, 398): 5.5 % falling towards 0 degrees; carries R160's grade through the node
+  node 66 (Junction, 3 arms, Major) at (181, 413): 3.3 % falling towards 20 degrees; carries R58's grade through the node
+  node 67 (Junction, 3 arms, Major) at (137, 414): 4.2 % falling towards 19 degrees; carries R60's grade through the node
+  node 71 (Junction, 3 arms, Major) at (-87, 421): 5.5 % falling towards 163 degrees; carries R65's grade through the node
+  node 75 (Junction, 3 arms, Major) at (-331, 427): 3.6 % falling towards 14 degrees; carries R91's grade through the node
+  node 84 (Junction, 3 arms, Major) at (489, 402): 5.6 % falling towards -16 degrees; carries R161's grade through the node
+  node 87 (Junction, 3 arms, Major) at (142, 614): 4.0 % falling towards -22 degrees; carries R141's grade through the node
+  node 90 (Junction, 3 arms, Major) at (960, 242): 3.8 % falling towards 113 degrees; carries R178's grade through the node
+  node 91 (Junction, 3 arms, Major) at (929, 251): 3.7 % falling towards 169 degrees; carries R92's grade through the node
+  node 101 (Junction, 3 arms, Major) at (189, 613): 3.4 % falling towards -24 degrees; carries R140's grade through the node
+  node 110 (Junction, 3 arms, Major) at (344, 606): 5.0 % falling towards 103 degrees; carries R146's grade through the node
+  node 113 (Junction, 3 arms, Major) at (-260, 711): 10.1 % falling towards -10 degrees; carries R150's grade through the node
+  node 114 (Junction, 3 arms, Major) at (-195, 837): 13.2 % falling towards -51 degrees; carries R152's grade through the node
+  node 126 (Junction, 3 arms, Major) at (964, 211): 3.4 % falling towards 106 degrees; carries R173's grade through the node
+
+== Walk cross slopes over 2.1 % (a 0.61 m level across the walk; the worst reading per face) (83)
+  face 32 (edge 15, Street) at (360.3, 397.9): cross slope 2.9 %
+  face 33 (edge 15, Street) at (379.9, 371.2): cross slope 3.8 %
+  face 34 (edge 16, Street) at (427.4, 365.9): cross slope 11.2 %
+  face 35 (edge 16, Street) at (421.7, 353.2): cross slope 7.8 %
+  face 36 (edge 17, Street) at (460.2, 350.2): cross slope 12.0 %
+  face 37 (edge 17, Street) at (431.3, 348.3): cross slope 6.0 %
+  face 39 (edge 18, MainStreet) at (-190.2, 440.8): cross slope 4.4 %
+  face 43 (edge 20, MainStreet) at (-183.9, 498.6): cross slope 3.5 %
+  face 60 (edge 29, Street) at (510.7, 535.9): cross slope 4.0 %
+  face 62 (edge 30, Street) at (350.9, 535.4): cross slope 3.5 %
+  face 63 (edge 30, Street) at (349.5, 552.1): cross slope 8.6 %
+  face 64 (edge 31, Street) at (333.9, 535.5): cross slope 4.1 %
+  face 66 (edge 32, Street) at (264.0, 538.5): cross slope 8.2 %
+  face 68 (edge 33, Street) at (251.9, 538.0): cross slope 46.5 %
+  face 69 (edge 33, Street) at (255.2, 553.4): cross slope 3.7 %
+  face 70 (edge 34, Street) at (219.0, 540.3): cross slope 6.3 %
+  face 86 (edge 42, Street) at (310.5, 219.2): cross slope 4.2 %
+  face 97 (edge 47, Street) at (81.7, 558.7): cross slope 3.8 %
+  face 100 (edge 49, Street) at (505.7, 426.8): cross slope 8.1 %
+  face 101 (edge 49, Street) at (520.8, 426.4): cross slope 10.4 %
+  face 102 (edge 50, Street) at (506.9, 437.7): cross slope 7.6 %
+  face 103 (edge 50, Street) at (521.8, 438.4): cross slope 35.8 %
+  face 104 (edge 51, Street) at (509.7, 506.2): cross slope 7.3 %
+  face 105 (edge 51, Street) at (524.0, 480.2): cross slope 7.2 %
+  face 106 (edge 52, Street) at (512.2, 534.0): cross slope 4.7 %
+  face 110 (edge 54, MainStreet) at (362.5, 398.1): cross slope 2.5 %
+  face 111 (edge 54, MainStreet) at (346.2, 419.3): cross slope 8.7 %
+  face 112 (edge 55, MainStreet) at (287.9, 401.8): cross slope 6.8 %
+  face 114 (edge 56, MainStreet) at (276.6, 402.0): cross slope 16.9 %
+  face 115 (edge 56, MainStreet) at (224.1, 421.0): cross slope 5.5 %
+  face 120 (edge 59, MainStreet) at (180.1, 408.6): cross slope 6.0 %
+  face 121 (edge 59, MainStreet) at (174.2, 419.5): cross slope 2.1 %
+  face 125 (edge 61, MainStreet) at (128.8, 421.7): cross slope 3.7 %
+  face 144 (edge 71, Street) at (405.4, 433.8): cross slope 6.4 %
+  face 145 (edge 71, Street) at (420.6, 416.6): cross slope 9.8 %
+  face 146 (edge 72, Street) at (406.7, 444.5): cross slope 7.7 %
+  face 147 (edge 72, Street) at (420.7, 443.2): cross slope 10.6 %
+  face 148 (edge 73, Street) at (409.4, 483.0): cross slope 4.3 %
+  face 149 (edge 73, Street) at (423.9, 509.7): cross slope 5.5 %
+  face 150 (edge 74, Street) at (410.2, 536.4): cross slope 5.1 %
+  face 151 (edge 74, Street) at (424.3, 520.0): cross slope 8.6 %
+  face 153 (edge 75, Street) at (405.9, 289.4): cross slope 4.1 %
+  face 155 (edge 76, Street) at (396.5, 294.3): cross slope 9.5 %
+  face 159 (edge 78, Street) at (273.3, 335.8): cross slope 9.2 %
+  face 161 (edge 79, Street) at (198.8, 338.2): cross slope 2.8 %
+  face 165 (edge 81, Street) at (57.7, 342.8): cross slope 14.1 %
+  face 199 (edge 98, Street) at (593.9, 475.4): cross slope 9.0 %
+  face 200 (edge 99, Street) at (470.4, 465.3): cross slope 7.3 %
+  face 201 (edge 99, Street) at (507.2, 479.4): cross slope 11.3 %
+  face 202 (edge 100, Street) at (461.5, 466.4): cross slope 13.6 %
+  face 205 (edge 101, Street) at (407.7, 483.8): cross slope 21.2 %
+  face 207 (edge 102, Street) at (331.2, 484.5): cross slope 6.3 %
+  face 209 (edge 103, Street) at (260.8, 487.0): cross slope 4.5 %
+  face 210 (edge 104, Street) at (226.5, 473.7): cross slope 8.5 %
+  face 211 (edge 104, Street) at (251.4, 487.6): cross slope 9.3 %
+  face 212 (edge 105, Street) at (216.0, 474.3): cross slope 5.7 %
+  face 213 (edge 105, Street) at (217.4, 488.8): cross slope 9.1 %
+  face 214 (edge 106, Street) at (173.6, 475.6): cross slope 3.9 %
+  face 224 (edge 111, Street) at (-177.6, 485.6): cross slope 2.9 %
+  face 232 (edge 115, Street) at (175.4, 473.8): cross slope 4.9 %
+  face 233 (edge 115, Street) at (192.1, 470.5): cross slope 7.6 %
+  face 235 (edge 116, Street) at (189.4, 490.3): cross slope 5.2 %
+  face 251 (edge 124, Street) at (299.5, 421.3): cross slope 2.2 %
+  face 260 (edge 129, MainStreet) at (310.9, 218.4): cross slope 3.5 %
+  face 264 (edge 131, MainStreet) at (380.3, 370.5): cross slope 3.0 %
+  face 269 (edge 133, Street) at (564.8, 421.9): cross slope 4.1 %
+  face 270 (edge 134, Street) at (558.1, 393.5): cross slope 3.9 %
+  face 271 (edge 134, Street) at (559.3, 413.5): cross slope 18.6 %
+  face 274 (edge 136, Street) at (462.2, 333.0): cross slope 5.6 %
+  face 275 (edge 136, Street) at (469.7, 345.1): cross slope 6.8 %
+  face 278 (edge 138, Street) at (266.1, 603.3): cross slope 3.1 %
+  face 289 (edge 143, Street) at (344.0, 436.6): cross slope 4.5 %
+  face 291 (edge 144, Street) at (345.3, 447.7): cross slope 9.8 %
+  face 292 (edge 145, Street) at (334.1, 535.4): cross slope 7.7 %
+  face 293 (edge 145, Street) at (347.7, 488.5): cross slope 8.5 %
+  face 295 (edge 146, Street) at (349.1, 552.3): cross slope 6.5 %
+  face 326 (edge 161, MainStreet) at (490.7, 392.2): cross slope 5.9 %
+  face 327 (edge 161, MainStreet) at (504.2, 408.2): cross slope 6.8 %
+  face 328 (edge 162, MainStreet) at (478.8, 393.7): cross slope 65.8 %
+  face 329 (edge 162, MainStreet) at (467.8, 412.3): cross slope 4.7 %
+  face 330 (edge 163, MainStreet) at (450.9, 397.2): cross slope 4.0 %
+  face 332 (edge 164, MainStreet) at (440.4, 395.9): cross slope 6.3 %
+  face 333 (edge 164, MainStreet) at (421.9, 416.4): cross slope 3.7 %
+
+== Steps where two faces' walks meet (a 0.61 m level across one face's walk ending on another's more than 5 cm apart; the worst per face) (3)
+  face 32 (edge 15, Street) at (361.6, 399.0): its walk meets face 110's 0.08 m higher or lower within 0.61 m
+  face 199 (edge 98, Street) at (525.6, 479.9): its walk meets face 105's 0.06 m higher or lower within 0.61 m
+  face 355 (edge 175, MainStreet) at (558.4, 393.2): its walk meets face 270's 0.12 m higher or lower within 0.61 m
+
+== Kerb ramps (depressed corners, alley mouths, tapers) with a running slope over 8.33 % (a 0.61 m level along the kerb top) (135)
+  corner 0 at node 50 (Depressed), far ramp at (309.7, 222.4): running slope 11.0 %, the gutter under it 4.1 % (limit 8.33 %)
+  corner 1 at node 50 (Depressed), near ramp at (312.8, 230.8): running slope 11.1 %, the gutter under it 4.2 % (limit 8.33 %)
+  corner 2 at node 80 (Depressed), far ramp at (343.9, 304.2): running slope 13.2 %, the gutter under it 6.4 % (limit 8.33 %)
+  corner 3 at node 68 (Depressed), far ramp at (43.2, 412.6): running slope 9.4 %, the gutter under it 2.5 % (limit 8.33 %)
+  corner 4 at node 72 (Depressed), near ramp at (-242.5, 419.6): running slope 8.3 %, the gutter under it 1.5 % (limit 8.33 %)
+  corner 5 at node 72 (Depressed), far ramp at (-260.3, 420.3): running slope 9.8 %, the gutter under it 3.0 % (limit 8.33 %)
+  corner 9 at node 17 (Depressed), near ramp at (-242.2, 472.5): running slope 8.9 %, the gutter under it 2.1 % (limit 8.33 %)
+  corner 10 at node 17 (Depressed), far ramp at (-224.5, 479.3): running slope 9.4 %, the gutter under it 2.6 % (limit 8.33 %)
+  corner 11 at node 29 (Depressed), far ramp at (-195.5, 494.3): running slope 9.8 %, the gutter under it 3.0 % (limit 8.33 %)
+  corner 13 at node 3 (Depressed), far ramp at (-190.0, 535.0): running slope 11.4 %, the gutter under it 4.6 % (limit 8.33 %)
+  corner 16 at node 33 (Depressed), far ramp at (-167.0, 836.6): running slope 9.6 %, the gutter under it 2.8 % (limit 8.33 %)
+  corner 17 at node 32 (Depressed), near ramp at (-161.2, 812.6): running slope 8.5 %, the gutter under it 1.7 % (limit 8.33 %)
+  corner 21 at node 32 (Depressed), far ramp at (-162.2, 798.1): running slope 9.8 %, the gutter under it 2.9 % (limit 8.33 %)
+  corner 22 at node 30 (Depressed), near ramp at (-176.7, 569.7): running slope 10.7 %, the gutter under it 3.9 % (limit 8.33 %)
+  corner 23 at node 46 (Depressed), near ramp at (67.8, 556.4): running slope 10.1 %, the gutter under it 3.3 % (limit 8.33 %)
+  corner 25 at node 45 (Depressed), near ramp at (91.5, 556.0): running slope 10.7 %, the gutter under it 3.9 % (limit 8.33 %)
+  corner 26 at node 102 (Depressed), near ramp at (224.2, 617.0): running slope 11.0 %, the gutter under it 4.1 % (limit 8.33 %)
+  corner 27 at node 54 (Depressed), near ramp at (250.6, 756.3): running slope 10.2 %, the gutter under it 3.4 % (limit 8.33 %)
+  corner 28 at node 53 (Depressed), far ramp at (343.8, 754.3): running slope 11.3 %, the gutter under it 4.4 % (limit 8.33 %)
+  corner 40 at node 28 (Depressed), far ramp at (-197.5, 470.3): running slope 11.7 %, the gutter under it 4.9 % (limit 8.33 %)
+  corner 48 at node 27 (Depressed), near ramp at (-205.7, 428.6): running slope 9.8 %, the gutter under it 2.9 % (limit 8.33 %)
+  corner 49 at node 33 (Depressed), near ramp at (-168.8, 820.9): running slope 8.9 %, the gutter under it 2.1 % (limit 8.33 %)
+  corner 52 at node 31 (Depressed), far ramp at (-176.0, 703.4): running slope 9.8 %, the gutter under it 2.9 % (limit 8.33 %)
+  corner 55 at node 27 (Depressed), far ramp at (-184.3, 427.3): running slope 10.9 %, the gutter under it 4.1 % (limit 8.33 %)
+  corner 56 at node 71 (Depressed), far ramp at (-91.9, 429.9): running slope 8.8 %, the gutter under it 1.9 % (limit 8.33 %)
+  corner 59 at node 29 (Depressed), near ramp at (-186.5, 500.1): running slope 10.4 %, the gutter under it 3.6 % (limit 8.33 %)
+  corner 62 at node 94 (Depressed), near ramp at (-75.5, 484.4): running slope 10.5 %, the gutter under it 3.6 % (limit 8.33 %)
+  corner 63 at node 71 (Depressed), far ramp at (-77.6, 425.2): running slope 13.5 %, the gutter under it 6.6 % (limit 8.33 %)
+  corner 66 at node 49 (Depressed), near ramp at (-74.8, 551.6): running slope 11.0 %, the gutter under it 4.1 % (limit 8.33 %)
+  corner 67 at node 94 (Depressed), far ramp at (-75.4, 494.3): running slope 10.4 %, the gutter under it 3.6 % (limit 8.33 %)
+  corner 69 at node 99 (Depressed), far ramp at (12.9, 482.1): running slope 8.5 %, the gutter under it 1.7 % (limit 8.33 %)
+  corner 70 at node 92 (Depressed), near ramp at (-22.4, 483.4): running slope 9.3 %, the gutter under it 2.5 % (limit 8.33 %)
+  corner 71 at node 70 (Depressed), far ramp at (-26.6, 423.8): running slope 9.6 %, the gutter under it 2.8 % (limit 8.33 %)
+  corner 72 at node 69 (Depressed), near ramp at (9.4, 422.4): running slope 9.2 %, the gutter under it 2.4 % (limit 8.33 %)
+  corner 73 at node 47 (Depressed), far ramp at (15.8, 548.1): running slope 8.8 %, the gutter under it 1.9 % (limit 8.33 %)
+  corner 74 at node 48 (Depressed), near ramp at (-18.6, 549.4): running slope 9.1 %, the gutter under it 2.3 % (limit 8.33 %)
+  corner 75 at node 92 (Depressed), far ramp at (-22.5, 493.2): running slope 9.5 %, the gutter under it 2.6 % (limit 8.33 %)
+  corner 76 at node 99 (Depressed), near ramp at (13.4, 492.0): running slope 8.4 %, the gutter under it 1.5 % (limit 8.33 %)
+  corner 77 at node 99 (Depressed), near ramp at (32.0, 481.7): running slope 9.0 %, the gutter under it 2.2 % (limit 8.33 %)
+  corner 78 at node 69 (Depressed), far ramp at (28.6, 421.9): running slope 8.4 %, the gutter under it 1.5 % (limit 8.33 %)
+  corner 80 at node 56 (Depressed), far ramp at (59.3, 480.8): running slope 9.2 %, the gutter under it 2.4 % (limit 8.33 %)
+  corner 81 at node 46 (Depressed), far ramp at (61.6, 546.8): running slope 10.0 %, the gutter under it 3.2 % (limit 8.33 %)
+  corner 82 at node 47 (Depressed), near ramp at (34.6, 547.5): running slope 8.6 %, the gutter under it 1.8 % (limit 8.33 %)
+  corner 83 at node 99 (Depressed), far ramp at (32.6, 491.5): running slope 9.2 %, the gutter under it 2.3 % (limit 8.33 %)
+  corner 84 at node 56 (Depressed), near ramp at (59.3, 490.7): running slope 9.2 %, the gutter under it 2.4 % (limit 8.33 %)
+  corner 85 at node 8 (Depressed), far ramp at (150.2, 409.8): running slope 12.4 %, the gutter under it 5.6 % (limit 8.33 %)
+  corner 87 at node 82 (Depressed), near ramp at (55.4, 344.1): running slope 10.4 %, the gutter under it 3.5 % (limit 8.33 %)
+  corner 88 at node 7 (Depressed), near ramp at (144.7, 337.9): running slope 11.4 %, the gutter under it 4.5 % (limit 8.33 %)
+  corner 89 at node 86 (Depressed), far ramp at (127.0, 478.8): running slope 10.9 %, the gutter under it 4.0 % (limit 8.33 %)
+  corner 92 at node 67 (Depressed), near ramp at (127.3, 419.0): running slope 12.7 %, the gutter under it 5.9 % (limit 8.33 %)
+  corner 93 at node 44 (Depressed), far ramp at (129.4, 544.9): running slope 9.9 %, the gutter under it 3.1 % (limit 8.33 %)
+  corner 96 at node 86 (Depressed), near ramp at (127.0, 488.7): running slope 10.8 %, the gutter under it 3.9 % (limit 8.33 %)
+  corner 97 at node 87 (Depressed), far ramp at (133.9, 609.3): running slope 12.2 %, the gutter under it 5.4 % (limit 8.33 %)
+  corner 99 at node 44 (Depressed), near ramp at (131.3, 554.6): running slope 9.7 %, the gutter under it 2.9 % (limit 8.33 %)
+  corner 100 at node 98 (Depressed), far ramp at (174.7, 477.6): running slope 10.6 %, the gutter under it 3.7 % (limit 8.33 %)
+  corner 103 at node 66 (Depressed), near ramp at (173.5, 417.4): running slope 11.8 %, the gutter under it 5.0 % (limit 8.33 %)
+  corner 104 at node 43 (Depressed), far ramp at (175.1, 543.7): running slope 11.4 %, the gutter under it 4.6 % (limit 8.33 %)
+  corner 107 at node 98 (Depressed), near ramp at (172.7, 487.2): running slope 10.6 %, the gutter under it 3.8 % (limit 8.33 %)
+  corner 108 at node 101 (Depressed), far ramp at (179.2, 608.1): running slope 12.0 %, the gutter under it 5.2 % (limit 8.33 %)
+  corner 111 at node 43 (Depressed), near ramp at (175.7, 553.5): running slope 11.3 %, the gutter under it 4.5 % (limit 8.33 %)
+  corner 112 at node 19 (Depressed), far ramp at (196.5, 406.4): running slope 9.0 %, the gutter under it 2.1 % (limit 8.33 %)
+  corner 115 at node 18 (Depressed), near ramp at (198.0, 336.3): running slope 9.3 %, the gutter under it 2.5 % (limit 8.33 %)
+  corner 116 at node 14 (AlleyMouth), far ramp at (213.9, 477.0): running slope 8.5 %, the gutter under it 1.7 % (limit 8.33 %)
+  corner 120 at node 13 (AlleyMouth), far ramp at (217.8, 542.9): running slope 10.4 %, the gutter under it 3.5 % (limit 8.33 %)
+  corner 123 at node 14 (AlleyMouth), near ramp at (215.3, 485.9): running slope 8.5 %, the gutter under it 1.7 % (limit 8.33 %)
+  corner 124 at node 111 (AlleyMouth), far ramp at (254.4, 606.4): running slope 8.4 %, the gutter under it 1.5 % (limit 8.33 %)
+  corner 127 at node 42 (AlleyMouth), near ramp at (252.3, 550.8): running slope 9.5 %, the gutter under it 2.7 % (limit 8.33 %)
+  corner 130 at node 18 (Depressed), far ramp at (215.1, 336.0): running slope 8.4 %, the gutter under it 1.5 % (limit 8.33 %)
+  corner 131 at node 81 (AlleyMouth), near ramp at (271.1, 333.2): running slope 9.7 %, the gutter under it 2.9 % (limit 8.33 %)
+  corner 132 at node 96 (Depressed), far ramp at (284.6, 474.1): running slope 9.8 %, the gutter under it 2.9 % (limit 8.33 %)
+  corner 135 at node 65 (Depressed), far ramp at (287.0, 425.2): running slope 11.0 %, the gutter under it 4.2 % (limit 8.33 %)
+  corner 136 at node 42 (AlleyMouth), far ramp at (252.7, 541.8): running slope 9.5 %, the gutter under it 2.7 % (limit 8.33 %)
+  corner 141 at node 63 (Depressed), far ramp at (246.0, 671.4): running slope 8.3 %, the gutter under it 1.5 % (limit 8.33 %)
+  corner 146 at node 63 (Depressed), near ramp at (247.1, 689.6): running slope 9.0 %, the gutter under it 2.2 % (limit 8.33 %)
+  corner 147 at node 62 (Depressed), far ramp at (342.4, 686.2): running slope 10.2 %, the gutter under it 3.4 % (limit 8.33 %)
+  corner 148 at node 41 (Depressed), far ramp at (288.1, 540.2): running slope 9.4 %, the gutter under it 2.6 % (limit 8.33 %)
+  corner 151 at node 96 (Depressed), near ramp at (285.1, 483.9): running slope 9.6 %, the gutter under it 2.8 % (limit 8.33 %)
+  corner 152 at node 105 (Depressed), far ramp at (292.8, 604.1): running slope 9.4 %, the gutter under it 2.5 % (limit 8.33 %)
+  corner 155 at node 41 (Depressed), near ramp at (289.0, 550.0): running slope 9.1 %, the gutter under it 2.3 % (limit 8.33 %)
+  corner 156 at node 24 (Depressed), far ramp at (378.2, 375.0): running slope 12.3 %, the gutter under it 5.5 % (limit 8.33 %)
+  corner 157 at node 23 (Depressed), far ramp at (322.9, 403.4): running slope 10.5 %, the gutter under it 3.6 % (limit 8.33 %)
+  corner 160 at node 80 (Depressed), near ramp at (346.7, 312.8): running slope 13.3 %, the gutter under it 6.5 % (limit 8.33 %)
+  corner 161 at node 95 (Depressed), far ramp at (329.3, 472.8): running slope 9.3 %, the gutter under it 2.5 % (limit 8.33 %)
+  corner 163 at node 65 (Depressed), near ramp at (296.0, 425.3): running slope 11.4 %, the gutter under it 4.6 % (limit 8.33 %)
+  corner 164 at node 23 (Depressed), near ramp at (323.1, 416.0): running slope 10.5 %, the gutter under it 3.6 % (limit 8.33 %)
+  corner 164 at node 23 (Depressed), far ramp at (332.0, 424.4): running slope 16.6 %, the gutter under it 9.8 % (limit 8.33 %)
+  corner 165 at node 40 (Depressed), far ramp at (334.9, 539.0): running slope 8.9 %, the gutter under it 2.1 % (limit 8.33 %)
+  corner 166 at node 41 (Depressed), near ramp at (307.3, 539.8): running slope 9.0 %, the gutter under it 2.1 % (limit 8.33 %)
+  corner 167 at node 96 (Depressed), far ramp at (304.2, 483.4): running slope 8.3 %, the gutter under it 1.5 % (limit 8.33 %)
+  corner 168 at node 95 (Depressed), near ramp at (331.8, 482.4): running slope 9.1 %, the gutter under it 2.3 % (limit 8.33 %)
+  corner 169 at node 110 (Depressed), near ramp at (338.2, 597.7): running slope 14.4 %, the gutter under it 7.6 % (limit 8.33 %)
+  corner 171 at node 41 (Depressed), far ramp at (308.1, 549.6): running slope 9.3 %, the gutter under it 2.5 % (limit 8.33 %)
+  corner 172 at node 40 (Depressed), near ramp at (330.7, 548.8): running slope 8.5 %, the gutter under it 1.7 % (limit 8.33 %)
+  corner 176 at node 64 (Depressed), far ramp at (407.5, 420.1): running slope 16.4 %, the gutter under it 9.5 % (limit 8.33 %)
+  corner 178 at node 22 (AlleyMouth), near ramp at (342.4, 449.9): running slope 9.5 %, the gutter under it 2.6 % (limit 8.33 %)
+  corner 179 at node 12 (AlleyMouth), far ramp at (409.2, 445.1): running slope 11.7 %, the gutter under it 4.8 % (limit 8.33 %)
+  corner 180 at node 76 (Depressed), far ramp at (405.9, 470.3): running slope 9.9 %, the gutter under it 3.1 % (limit 8.33 %)
+  corner 184 at node 76 (Depressed), near ramp at (408.8, 480.0): running slope 9.8 %, the gutter under it 3.0 % (limit 8.33 %)
+  corner 187 at node 24 (Depressed), near ramp at (382.3, 383.0): running slope 12.0 %, the gutter under it 5.1 % (limit 8.33 %)
+  corner 188 at node 25 (AlleyMouth), far ramp at (420.7, 356.1): running slope 12.5 %, the gutter under it 5.7 % (limit 8.33 %)
+  corner 191 at node 79 (AlleyMouth), near ramp at (393.2, 292.6): running slope 9.0 %, the gutter under it 2.2 % (limit 8.33 %)
+  corner 192 at node 85 (AlleyMouth), far ramp at (439.4, 398.5): running slope 9.1 %, the gutter under it 2.2 % (limit 8.33 %)
+  corner 195 at node 25 (AlleyMouth), near ramp at (425.3, 364.0): running slope 12.5 %, the gutter under it 5.7 % (limit 8.33 %)
+  corner 196 at node 26 (AlleyMouth), far ramp at (454.0, 340.4): running slope 13.2 %, the gutter under it 6.3 % (limit 8.33 %)
+  corner 203 at node 21 (AlleyMouth), near ramp at (460.6, 410.2): running slope 10.8 %, the gutter under it 3.9 % (limit 8.33 %)
+  corner 204 at node 20 (AlleyMouth), far ramp at (461.1, 468.7): running slope 10.2 %, the gutter under it 3.4 % (limit 8.33 %)
+  corner 206 at node 12 (AlleyMouth), near ramp at (418.1, 444.4): running slope 11.7 %, the gutter under it 4.8 % (limit 8.33 %)
+  corner 209 at node 77 (AlleyMouth), far ramp at (421.3, 508.8): running slope 8.4 %, the gutter under it 1.5 % (limit 8.33 %)
+  corner 211 at node 60 (Depressed), far ramp at (511.0, 478.8): running slope 12.6 %, the gutter under it 5.8 % (limit 8.33 %)
+  corner 212 at node 39 (Depressed), near ramp at (426.5, 539.8): running slope 10.9 %, the gutter under it 4.1 % (limit 8.33 %)
+  corner 214 at node 61 (AlleyMouth), far ramp at (513.4, 517.6): running slope 8.5 %, the gutter under it 1.7 % (limit 8.33 %)
+  corner 215 at node 38 (Depressed), far ramp at (511.6, 537.9): running slope 11.4 %, the gutter under it 4.6 % (limit 8.33 %)
+  corner 216 at node 84 (AlleyMouth), far ramp at (479.5, 396.2): running slope 12.1 %, the gutter under it 5.3 % (limit 8.33 %)
+  corner 219 at node 26 (AlleyMouth), near ramp at (458.2, 348.4): running slope 13.2 %, the gutter under it 6.3 % (limit 8.33 %)
+  corner 223 at node 59 (Depressed), near ramp at (501.1, 406.1): running slope 12.6 %, the gutter under it 5.7 % (limit 8.33 %)
+  corner 223 at node 59 (Depressed), far ramp at (507.3, 412.0): running slope 14.3 %, the gutter under it 7.5 % (limit 8.33 %)
+  corner 226 at node 10 (AlleyMouth), far ramp at (509.4, 439.0): running slope 11.2 %, the gutter under it 4.4 % (limit 8.33 %)
+  corner 228 at node 108 (Depressed), far ramp at (526.5, 387.6): running slope 11.1 %, the gutter under it 4.3 % (limit 8.33 %)
+  corner 231 at node 109 (Depressed), near ramp at (492.5, 331.2): running slope 11.9 %, the gutter under it 5.1 % (limit 8.33 %)
+  corner 232 at node 9 (AlleyMouth), near ramp at (559.5, 410.0): running slope 10.8 %, the gutter under it 3.9 % (limit 8.33 %)
+  corner 234 at node 59 (Depressed), near ramp at (516.3, 411.4): running slope 19.8 %, the gutter under it 13.0 % (limit 8.33 %)
+  corner 235 at node 108 (Depressed), near ramp at (529.6, 399.8): running slope 11.1 %, the gutter under it 4.3 % (limit 8.33 %)
+  corner 237 at node 10 (AlleyMouth), near ramp at (518.4, 438.3): running slope 11.2 %, the gutter under it 4.4 % (limit 8.33 %)
+  corner 239 at node 36 (Depressed), near ramp at (585.9, 455.4): running slope 10.1 %, the gutter under it 3.3 % (limit 8.33 %)
+  corner 240 at node 37 (Depressed), far ramp at (625.4, 532.4): running slope 23.3 %, the gutter under it 16.5 % (limit 8.33 %)
+  corner 242 at node 60 (Depressed), near ramp at (520.6, 479.2): running slope 12.6 %, the gutter under it 5.8 % (limit 8.33 %)
+  face 36 (edge 17) kerb taper at its end at (460.7, 348.1): running slope 8.7 %, the gutter under it 8.7 % (limit 8.33 %)
+  face 37 (edge 17) kerb taper at its start at (455.7, 338.7): running slope 8.7 %, the gutter under it 8.7 % (limit 8.33 %)
+  face 106 (edge 52) kerb taper at its start at (511.1, 514.1): running slope 10.3 %, the gutter under it 6.2 % (limit 8.33 %)
+  face 155 (edge 76) kerb taper at its end at (398.2, 292.9): running slope 8.4 %, the gutter under it 5.0 % (limit 8.33 %)
+  face 202 (edge 100) kerb taper at its start at (463.7, 466.4): running slope 10.5 %, the gutter under it 6.4 % (limit 8.33 %)
+  face 271 (edge 134) kerb taper at its end at (561.6, 413.5): running slope 16.3 %, the gutter under it 16.3 % (limit 8.33 %)
+  face 331 (edge 163) kerb taper at its end at (460.6, 410.2): running slope 10.8 %, the gutter under it 4.0 % (limit 8.33 %)
+  face 338 (edge 167) kerb taper at its end at (-247.8, 412.3): running slope 24.5 %, the gutter under it 19.5 % (limit 8.33 %)
+  face 339 (edge 167) kerb taper at its start at (-256.8, 413.1): running slope 30.2 %, the gutter under it 25.2 % (limit 8.33 %)
+
+== Flares beside perpendicular ramp openings over 10 % (7)
+  corner 175 at node 23 (perpendicular), first opening, near flare at (341.0, 421.1): running slope 10.9 %, the gutter under it 0.9 % (limit 10.00 %)
+  corner 175 at node 23 (perpendicular), second opening, near flare at (344.1, 416.4): running slope 10.0 %, the gutter under it 0.0 % (limit 10.00 %)
+  corner 183 at node 95 (perpendicular), first opening, near flare at (344.4, 487.6): running slope 10.1 %, the gutter under it 0.1 % (limit 10.00 %)
+  corner 183 at node 95 (perpendicular), second opening, far flare at (349.6, 481.9): running slope 11.0 %, the gutter under it 1.0 % (limit 10.00 %)
+  corner 202 at node 64 (perpendicular), first opening, near flare at (416.5, 416.9): running slope 10.1 %, the gutter under it 0.1 % (limit 10.00 %)
+  corner 202 at node 64 (perpendicular), first opening, far flare at (417.5, 414.4): running slope 13.0 %, the gutter under it 3.0 % (limit 10.00 %)
+  corner 202 at node 64 (perpendicular), second opening, far flare at (420.9, 412.0): running slope 10.4 %, the gutter under it 0.4 % (limit 10.00 %)
