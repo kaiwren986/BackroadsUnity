@@ -180,10 +180,13 @@ namespace Backroads.World.Bake
             sb.Append("  \"bake\": {");
             sb.Append("\"commit\": ").Append(Q(commit)).Append(", \"dirty\": ").Append(status.Trim().Length > 0 ? "true" : "false");
             sb.Append(", \"plates\": {\"byStage\": [").Append(string.Join(", ", r.applied.platesByStage)).Append("], \"count\": ").Append(r.applied.plates);
+            sb.Append(", \"aprons\": ").Append(r.apronPlates);
             sb.Append(", \"extra\": ").Append(r.extraPlates).Append(", \"pads\": ").Append(r.padPlates).Append(", \"roads\": ").Append(r.roadPlates);
             sb.Append(", \"sha256\": ").Append(Q(r.platesHash));
             sb.Append(", \"sources\": {").Append(string.Join(", ", r.sourcePlates.Select(kv => Q(kv.Key) + ": " + kv.Value))).Append("}}");
             sb.Append(", \"seed\": ").Append(r.options.seed.ToString(Inv));
+            sb.Append(", \"driveways\": {\"cuts\": ").Append(r.drivewayCuts).Append(", \"requests\": ").Append(r.drivewayRequests)
+              .Append(", \"sha256\": ").Append(r.drivewaysSha256 == null ? "null" : Q(r.drivewaysSha256)).Append('}');
             sb.Append(", \"versions\": {\"bridgeBuilder\": ").Append(BridgeBuilder.Version).Append(", \"plateSink\": ").Append(PlateSink.Version);
             sb.Append(", \"roadPlateBuilder\": ").Append(RoadPlateBuilder.Version).Append(", \"worldBake\": ").Append(WorldBake.Version).Append("}},\n");
             sb.Append("  \"files\": {");

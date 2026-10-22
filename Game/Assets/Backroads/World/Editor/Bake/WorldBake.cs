@@ -21,8 +21,12 @@ namespace Backroads.World.Bake
         public bool pads = true;
         /// <summary>More plates to submit (tests).</summary>
         public List<Plate> extraPlates;
-        /// <summary>Plates from the registered sources (WorldBakePlateSources: lane S's lots when S4 lands).</summary>
+        /// <summary>Plates from the registered sources (WorldBakePlateSources: lane S's site plates).</summary>
         public bool registeredSources = true;
+        /// <summary>Lane S's driveway requests (DrivewaySource) resolved by lane R's cutter, for R's apron plates. They come
+        /// with the registered sources (lane S's site plates): a caller that brings its own site plates and aprons as
+        /// extraPlates (lane S's terrain test) turns registeredSources off and gets neither twice.</summary>
+        public bool driveways = true;
         public uint seed = 20261022u;
         public Action<string> log;
     }
@@ -37,6 +41,9 @@ namespace Backroads.World.Bake
         public PlateSink plates;
         public PlateSink.Result applied;
         public int roadPlates, padPlates, extraPlates, carriageway;
+        /// <summary>Driveways: requests read, cuts resolved, apron plates made; the driveways file's hash (null: none).</summary>
+        public int drivewayRequests, drivewayCuts, apronPlates;
+        public string drivewaysSha256;
         /// <summary>Plates per registered source, by name.</summary>
         public readonly SortedDictionary<string, int> sourcePlates = new SortedDictionary<string, int>(StringComparer.Ordinal);
         public List<BridgeDeck> decks = new List<BridgeDeck>();
@@ -57,8 +64,9 @@ namespace Backroads.World.Bake
     /// </summary>
     public static class WorldBake
     {
-        /// <summary>1: T3.2 (terrain, river, surfaces, plates); 2: T3.3 (nature, places, buildings, the map).</summary>
-        public const int Version = 2;
+        /// <summary>1: T3.2 (terrain, river, surfaces, plates); 2: T3.3 (nature, places, buildings, the map); 3: T3.3
+        /// follow-ups (lane S's site plates and driveway aprons, no pads under open roofs, five garage bays).</summary>
+        public const int Version = 3;
 
         public static WorldGridLayout LayoutFor(TownSource t)
         {
@@ -97,7 +105,18 @@ namespace Backroads.World.Bake
             if (o.roadPlates)
             {
                 var kb = KerbBaker.BuildTown(o.townId);
-                var plates = RoadPlateBuilder.Build(kb.roads.graph, kb.roads.surfaces, kb.kerbs, kb.roads.source?.dem, kb.settings);
+                IReadOnlyList<DrivewayCut> cuts = null;
+                DrivewayCutter cutter = null;
+                var requests = o.driveways && o.registeredSources ? DrivewaySource.Load(o.townId, out res.drivewaysSha256) : null;
+                if (requests != null && requests.Count > 0)
+                {
+                    cutter = new DrivewayCutter(KerbFrontageSource.LoadTown(o.townId));
+                    cuts = cutter.Resolve(requests);
+                    res.drivewayRequests = requests.Count;
+                    res.drivewayCuts = cuts.Count;
+                }
+                var plates = RoadPlateBuilder.Build(kb.roads.graph, kb.roads.surfaces, kb.kerbs, kb.roads.source?.dem, kb.settings, cuts, cutter);
+                foreach (var p in plates) if (p.id.StartsWith("apron:", StringComparison.Ordinal)) res.apronPlates++;
                 foreach (var p in plates) sink.Submit(p);
                 res.roadPlates = plates.Count;
                 res.decks = BridgeBuilder.Build(kb.roads.graph, kb.roads.source?.dem);

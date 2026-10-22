@@ -34,6 +34,34 @@ namespace Backroads.Tests.EditMode.World
             return inside;
         }
 
+        /// <summary>
+        /// T3.3 follow-ups (lane S's S4 requests 1-3): the committed WorldData was baked with lane S's site plates (source
+        /// "sites"), lane R's apron plates for lane S's driveway requests (the driveways file's hash in the manifest), and no
+        /// pad under an open roof (building=roof, canopy, carport), which buildings.json marks "open".
+        /// </summary>
+        [Test]
+        public void SitesInWorldData()
+        {
+            var m = WorldJson("manifest.json");
+            var bake = CanonJson.Obj(CanonJson.Get(m, "bake"), "bake");
+            var plates = CanonJson.Obj(CanonJson.Get(bake, "plates"), "plates");
+            var sources = CanonJson.Obj(CanonJson.Get(plates, "sources"), "sources");
+            Assert.IsTrue(sources.ContainsKey("sites"), "lane S's site plates (source \"sites\") are in the bake");
+            Assert.Greater(CanonJson.I(sources, "sites", 0), 0, "site plates");
+            Assert.Greater(CanonJson.I(plates, "aprons", 0), 0, "apron plates for the driveways");
+            var dw = CanonJson.Obj(CanonJson.Get(bake, "driveways"), "driveways");
+            Assert.AreEqual(TownSource.Sha256File(DrivewaySource.PathFor(TownSource.DefaultTownId())), CanonJson.Str(dw, "sha256"), "the driveways file the bake read is the committed one");
+            Assert.Greater(CanonJson.I(dw, "cuts", 0), 0, "driveway cuts");
+
+            var t = TownSource.Load(TownSource.DefaultTownId());
+            var inPlay = t.buildings.Where(b => b.inPlay && b.poly != null && b.poly.Length >= 3).ToList();
+            int openRoofs = inPlay.Count(b => b.OpenRoof);
+            Assert.Greater(openRoofs, 0, "the fuel canopy is an open roof");
+            Assert.AreEqual(inPlay.Count - openRoofs, CanonJson.I(plates, "pads", 0), "a pad under every building but the open roofs");
+            var bj = CanonJson.Arr(CanonJson.Get(WorldJson("buildings.json"), "buildings")).Select(o => CanonJson.Obj(o)).ToList();
+            Assert.AreEqual(openRoofs, bj.Count(b => CanonJson.Bool(b, "open")), "buildings.json marks the open roofs");
+        }
+
         [Test]
         public void ImportMatchesData()
         {
@@ -75,7 +103,11 @@ namespace Backroads.Tests.EditMode.World
             var veg = WorldJson("vegetation.json");
             Assert.AreEqual(CanonJson.Arr(CanonJson.Get(veg, "trees")).Count, a.vegetation.trees.Length, "trees");
             int trunks = a.vegetation.trees.Count(t => a.vegetation.species[t.sp].trunk > 0);
-            Assert.AreEqual(a.buildings.Count(b => b.footprint != null && b.footprint.Length >= 3) + trunks, a.colliders.Length, "a collider per building and per trunk");
+            int walled = a.buildings.Count(b => !b.open && b.footprint != null && b.footprint.Length >= 3), open = a.buildings.Count(b => b.open);
+            Assert.AreEqual(walled + 4 * open + trunks, a.colliders.Length, "a box per building, four posts per open roof, a circle per trunk");
+            Assert.AreEqual(4 * open, a.colliders.Count(c => c.kind == "post"), "the open roofs' posts");
+            foreach (var b in a.buildings.Where(b => b.open))
+                Assert.IsTrue(b.model == null && b.greyBox != null && b.greyBox.name.StartsWith("canopy", System.StringComparison.Ordinal), $"open roof {b.osm} is a canopy");
 
             var ids = new HashSet<string>(a.bookmarks.Select(b => b.id));
             foreach (var id in new[] { "street", "overview", "dam", "bridge", "landing", "fuel", "quarry", "marsh", "garage", "farm", "depot", "river" })
@@ -93,6 +125,8 @@ namespace Backroads.Tests.EditMode.World
             Assert.NotNull(a.map, "map");
             Assert.AreEqual(2048, a.map.width, "map size");
             Assert.NotNull(a.roadChunks, "lane R's road chunks");
+            Assert.NotNull(a.siteChunks, "lane S's site chunks");
+            Assert.NotNull(a.siteProps, "lane S's site props");
         }
     }
 }

@@ -112,12 +112,13 @@ namespace Backroads.World.Bake
                 first = false;
                 sb.Append("{\"area\": ").Append(N(b.area, 2)).Append(", \"business\": ").Append(Q(b.business));
                 sb.Append(", \"holes\": [").Append(string.Join(", ", b.holes.Select(Ring))).Append(']');
-                sb.Append(", \"levels\": ").Append(Q(b.Tag("building:levels"))).Append(", \"osm\": ").Append(Q(b.osm)).Append(", \"padY\": ").Append(N(b.y, 3));
+                sb.Append(", \"levels\": ").Append(Q(b.Tag("building:levels"))).Append(", \"open\": ").Append(b.OpenRoof ? "true" : "false");
+                sb.Append(", \"osm\": ").Append(Q(b.osm)).Append(", \"padY\": ").Append(N(b.y, 3));
                 sb.Append(", \"part\": ").Append(b.part).Append(", \"poly\": ").Append(Ring(b.poly)).Append(", \"roof\": ").Append(Q(b.Tag("roof:shape")));
                 sb.Append(", \"type\": ").Append(Q(b.type)).Append('}');
             }
             sb.Append("\n  ],\n  \"format\": \"backroads-world-buildings\",\n");
-            sb.Append("  \"note\": \"T3.3: the footprints in the play area (TownData buildings.json, outer CCW in the local frame), JS space; padY = the flat pad under the footprint (W's PadStep)\",\n");
+            sb.Append("  \"note\": \"T3.3: the footprints in the play area (TownData buildings.json, outer CCW in the local frame), JS space; padY = the flat pad under the footprint (W's PadStep), or for an open roof (open: building=roof|canopy|carport, no pad) the DEM at its centroid\",\n");
             sb.Append("  \"version\": 1\n}\n");
             return sb.ToString();
         }

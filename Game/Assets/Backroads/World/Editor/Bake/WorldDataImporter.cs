@@ -5,6 +5,7 @@ using System.Linq;
 using Backroads.Build.Editor;
 using Backroads.Canon.Editor;
 using Backroads.Roads;
+using Backroads.Sites;
 using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
@@ -27,7 +28,8 @@ namespace Backroads.World.Bake
     /// </summary>
     public static class WorldDataImporter
     {
-        public const int ImporterVersion = 1;
+        /// <summary>1: T3.3; 2: open roofs (canopies on posts), lane S's site chunks and props.</summary>
+        public const int ImporterVersion = 2;
         public const string DefaultWorld = "millbrook";
         public const string ImportedRoot = "Assets/Backroads/World/Imported";
 
@@ -165,6 +167,8 @@ namespace Backroads.World.Bake
             a.map = map;
             var townId = TownSource.Towns().Count == 1 ? TownSource.DefaultTownId() : null;
             a.roadChunks = townId != null ? RoadChunkSet.LoadTown(townId) : null;
+            a.siteChunks = townId != null ? SiteChunks.LoadTown(townId) : null;
+            a.siteProps = townId != null ? SitePropSet.LoadTown(townId) : null;
             a.importedAtUtc = DateTime.UtcNow.ToString("o");
 
             var path = AssetPath(world);
@@ -393,11 +397,20 @@ namespace Backroads.World.Bake
                 var rec = new WorldDataAsset.Building
                 {
                     osm = CanonJson.Str(b, "osm"), part = CanonJson.I(b, "part", 0), type = CanonJson.Str(b, "type"), business = CanonJson.Str(b, "business"),
-                    padY = CanonJson.F(b, "padY"), area = CanonJson.F(b, "area"), footprint = fp,
+                    padY = CanonJson.F(b, "padY"), area = CanonJson.F(b, "area"), footprint = fp, open = CanonJson.Bool(b, "open"),
                 };
                 if (models.TryGetValue(rec.osm + ":" + rec.part, out var m))
                 {
                     rec.model = m.go; rec.origin = m.origin; rec.height = m.height;
+                }
+                else if (rec.open)
+                {
+                    // a canopy: a 0.5 m roof slab over the footprint at 5 m (fuel) or 2.6 m (carports, roofs), on four posts
+                    float under = rec.type == "fuel_canopy" ? 5.0f : 2.6f;
+                    rec.height = under + 0.5f;
+                    rec.origin = new Vector3(fp.Average(p => p.x), rec.padY, fp.Average(p => p.y));
+                    rec.greyBox = Canopy($"canopy {rec.osm}:{rec.part}", fp, rec.padY, under, Swatches(rec.type));
+                    meshes.Add(rec.greyBox);
                 }
                 else
                 {
@@ -412,6 +425,79 @@ namespace Backroads.World.Bake
                 list.Add(rec);
             }
             a.buildings = list.ToArray();
+        }
+
+        /// <summary>The four posts of an open roof: 0.3 m square, 0.5 m inside the corners of its oriented rectangle.</summary>
+        internal static List<(Vector2 c, Vector2 u)> Posts(Vector2[] fp)
+        {
+            Rect(fp, out var u, out var w, out float umin, out float umax, out float wmin, out float wmax);
+            float du = Mathf.Min(0.5f, (umax - umin) * 0.25f), dw = Mathf.Min(0.5f, (wmax - wmin) * 0.25f);
+            var l = new List<(Vector2, Vector2)>();
+            foreach (var a in new[] { umin + du, umax - du })
+                foreach (var c in new[] { wmin + dw, wmax - dw })
+                    l.Add((u * a + w * c, u));
+            return l;
+        }
+
+        /// <summary>The oriented bounding rectangle along the footprint's longest edge.</summary>
+        static void Rect(Vector2[] fp, out Vector2 u, out Vector2 w, out float umin, out float umax, out float wmin, out float wmax)
+        {
+            int e = 0; float best = -1;
+            for (int k = 0; k < fp.Length; k++) { float len = (fp[(k + 1) % fp.Length] - fp[k]).sqrMagnitude; if (len > best) { best = len; e = k; } }
+            u = (fp[(e + 1) % fp.Length] - fp[e]).normalized;
+            w = new Vector2(-u.y, u.x);
+            umin = float.MaxValue; umax = float.MinValue; wmin = float.MaxValue; wmax = float.MinValue;
+            foreach (var p in fp)
+            {
+                float a = Vector2.Dot(p, u), c = Vector2.Dot(p, w);
+                umin = Mathf.Min(umin, a); umax = Mathf.Max(umax, a); wmin = Mathf.Min(wmin, c); wmax = Mathf.Max(wmax, c);
+            }
+        }
+
+        /// <summary>An open roof: a slab over the footprint from under to under + 0.5 m (both faces and the edge), and the
+        /// four posts from 0.6 m under the ground to the slab.</summary>
+        static Mesh Canopy(string name, Vector2[] fp, float padY, float under, (Vector2 wall, Vector2 roof) sw)
+        {
+            var v = new List<Vector3>();
+            var uv = new List<Vector2>();
+            var t = new List<int>();
+            float y0 = padY + under, y1 = y0 + 0.5f;
+            var poly = fp.Select(p => new double2(p.x, p.y)).ToArray();
+            var tris = PlateSink.Triangulate(poly);
+            foreach (var y in new[] { y0, y1 })
+            {
+                int b = v.Count;
+                foreach (var p in fp) { v.Add(new Vector3(p.x, y, p.y)); uv.Add(sw.roof); }
+                foreach (var tri in tris) t.AddRange(new[] { b + tri.x, b + tri.y, b + tri.z, b + tri.x, b + tri.z, b + tri.y });
+            }
+            for (int k = 0; k < fp.Length; k++)
+            {
+                var p = fp[k]; var q = fp[(k + 1) % fp.Length];
+                int b = v.Count;
+                v.Add(new Vector3(p.x, y0, p.y)); v.Add(new Vector3(q.x, y0, q.y)); v.Add(new Vector3(q.x, y1, q.y)); v.Add(new Vector3(p.x, y1, p.y));
+                for (int n = 0; n < 4; n++) uv.Add(sw.wall);
+                t.AddRange(new[] { b, b + 1, b + 2, b, b + 2, b + 3, b, b + 2, b + 1, b, b + 3, b + 2 });
+            }
+            foreach (var (c, u) in Posts(fp))
+            {
+                var w = new Vector2(-u.y, u.x);
+                var corners = new[] { c - u * 0.15f - w * 0.15f, c + u * 0.15f - w * 0.15f, c + u * 0.15f + w * 0.15f, c - u * 0.15f + w * 0.15f };
+                for (int k = 0; k < 4; k++)
+                {
+                    var p = corners[k]; var q = corners[(k + 1) % 4];
+                    int b = v.Count;
+                    v.Add(new Vector3(p.x, padY - 0.6f, p.y)); v.Add(new Vector3(q.x, padY - 0.6f, q.y)); v.Add(new Vector3(q.x, y0, q.y)); v.Add(new Vector3(p.x, y0, p.y));
+                    for (int n = 0; n < 4; n++) uv.Add(sw.wall);
+                    t.AddRange(new[] { b, b + 1, b + 2, b, b + 2, b + 3, b, b + 2, b + 1, b, b + 3, b + 2 });
+                }
+            }
+            var m = new Mesh { name = name };
+            m.SetVertices(v);
+            m.SetUVs(0, uv);
+            m.SetTriangles(t, 0);
+            m.RecalculateNormals();
+            m.RecalculateBounds();
+            return m;
         }
 
         /// <summary>
@@ -489,6 +575,17 @@ namespace Backroads.World.Bake
             {
                 var fp = b.footprint;
                 if (fp == null || fp.Length < 3) continue;
+                if (b.open)
+                {
+                    // an open roof stops a vehicle only at its posts
+                    foreach (var (pc, pu) in Posts(fp))
+                        l.Add(new PlacementSet.Collider
+                        {
+                            type = PlacementSet.ColliderType.Box, kind = "post", x = -pc.x, z = pc.y, hw = 0.15f, hd = 0.15f,
+                            rot = Mathf.Atan2(-pu.y, -pu.x), y0 = b.padY - 0.6f, y1 = b.padY + b.height, tree = -1,
+                        });
+                    continue;
+                }
                 int e = 0; float best = -1;
                 for (int k = 0; k < fp.Length; k++) { float len = (fp[(k + 1) % fp.Length] - fp[k]).sqrMagnitude; if (len > best) { best = len; e = k; } }
                 var u = (fp[(e + 1) % fp.Length] - fp[e]).normalized;

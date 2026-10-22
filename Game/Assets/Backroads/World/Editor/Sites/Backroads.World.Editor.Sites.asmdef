@@ -1,0 +1,20 @@
+{
+    "name": "Backroads.World.Editor.Sites",
+    "rootNamespace": "Backroads.World.Bake",
+    "references": [
+        "Backroads.Core",
+        "Backroads.World.Editor",
+        "Backroads.Sites.Editor"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
