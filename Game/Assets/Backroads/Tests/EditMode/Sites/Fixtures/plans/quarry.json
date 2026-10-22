@@ -1,0 +1,19 @@
+{
+  "fixture": "quarry",
+  "type": "Quarry",
+  "source": "Rules",
+  "template": "",
+  "downtown": false,
+  "surfaces": {"Apron:Asphalt": 135, "Drive:Gravel": 439, "Yard:Gravel": 3672},
+  "lots": 0,
+  "stalls": 0,
+  "accessible": 0,
+  "driveways": ["Truck 12.0 m"],
+  "doors": {"Bay": 1},
+  "props": {"barrier": 4, "boom.gate": 1, "cone": 3, "portaloo": 1},
+  "models": {"quarry.crusher": 1, "quarry.scale": 1},
+  "fences": 0,
+  "gates": 1,
+  "notes": [],
+  "hash": "c80367e44c4c57fc27beabddd4c7bcfe4a18ad179aa9bc3a4034b845f6ae7802"
+}

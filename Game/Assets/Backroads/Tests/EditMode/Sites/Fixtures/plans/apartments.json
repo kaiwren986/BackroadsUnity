@@ -1,0 +1,19 @@
+{
+  "fixture": "apartments",
+  "type": "Apartments",
+  "source": "Rules",
+  "template": "",
+  "downtown": false,
+  "surfaces": {"Drive:Asphalt": 151, "Lot:Asphalt": 659, "Walk:Concrete": 15},
+  "lots": 1,
+  "stalls": 11,
+  "accessible": 1,
+  "driveways": ["Commercial 6.0 m"],
+  "doors": {"Main": 1, "Service": 1},
+  "props": {"dumpster": 1, "trash.bin": 1},
+  "models": {},
+  "fences": 0,
+  "gates": 0,
+  "notes": [],
+  "hash": "e307cfa9f9d6b76dc58a8bd8821a21785ab910f78b872aea1277a03b6b7f811d"
+}

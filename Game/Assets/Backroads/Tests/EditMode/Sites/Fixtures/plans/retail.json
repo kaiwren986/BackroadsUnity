@@ -1,0 +1,19 @@
+{
+  "fixture": "retail",
+  "type": "Retail",
+  "source": "Rules",
+  "template": "",
+  "downtown": false,
+  "surfaces": {"Drive:Asphalt": 4, "Lot:Asphalt": 733, "Walk:Concrete": 60},
+  "lots": 1,
+  "stalls": 14,
+  "accessible": 1,
+  "driveways": ["Commercial 7.3 m"],
+  "doors": {"Main": 1, "Service": 1},
+  "props": {"bench": 1, "dumpster": 1, "trash.bin": 1},
+  "models": {},
+  "fences": 0,
+  "gates": 0,
+  "notes": [],
+  "hash": "d8cd16cc2aff85e374b21e9474295915d241cddbc0539bc8fd4b09cc93481701"
+}

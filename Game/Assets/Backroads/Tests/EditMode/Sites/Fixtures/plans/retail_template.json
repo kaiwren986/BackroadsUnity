@@ -1,0 +1,19 @@
+{
+  "fixture": "retail_template",
+  "type": "Restaurant",
+  "source": "Template",
+  "template": "retail_front-01",
+  "downtown": false,
+  "surfaces": {"Drive:Gravel": 37, "Lot:Gravel": 1171},
+  "lots": 1,
+  "stalls": 21,
+  "accessible": 1,
+  "driveways": ["Commercial 7.3 m", "Commercial 4.5 m"],
+  "doors": {"Main": 1, "Service": 1},
+  "props": {"dumpster": 1},
+  "models": {},
+  "fences": 0,
+  "gates": 0,
+  "notes": [],
+  "hash": "72dc37ef0adde1d6ae82d330d36342a006dc04a5731568f302436b032651324c"
+}

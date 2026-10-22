@@ -82,6 +82,9 @@ namespace Backroads.Sites
         public double2 frontageDir;
         /// <summary>From the lot towards the street; zero = towards the first entrance.</summary>
         public double2 toStreet;
+        /// <summary>A mapped aisle's direction (sites-S3: lots keep their mapped aisles); zero = none. Tried first and
+        /// preferred by a small score bonus.</summary>
+        public double2 preferredAisle;
         /// <summary>Areas where no stall may go (mapped no-parking zones, a neighbour's apron).</summary>
         public List<double2[]> noPark = new List<double2[]>();
         public LotTargets targets = new LotTargets();

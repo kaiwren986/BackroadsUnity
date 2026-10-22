@@ -1,0 +1,19 @@
+{
+  "fixture": "farm",
+  "type": "Farm",
+  "source": "Rules",
+  "template": "",
+  "downtown": false,
+  "surfaces": {"Drive:Gravel": 99, "Yard:Gravel": 4173},
+  "lots": 0,
+  "stalls": 0,
+  "accessible": 0,
+  "driveways": ["Field 5.0 m"],
+  "doors": {"Main": 1, "Bay": 2},
+  "props": {"barrel.wood": 1, "mailbox": 1, "sack.stack": 1},
+  "models": {"farm.grainbin": 2, "farm.haybales": 1},
+  "fences": 1,
+  "gates": 0,
+  "notes": [],
+  "hash": "9273c284b02b057fd3cb112f5291e098aca0ff775a41c518801f28cc41aad8fc"
+}

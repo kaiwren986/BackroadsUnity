@@ -31,6 +31,10 @@ namespace Backroads.Sites
         }
 
         public static LotLayout Pack(LotInput input, ParkingDims dims = null) => new ParkingSearch(input, dims ?? ParkingDims.Default).Run();
+
+        /// <summary>A drive-through lane round a footprint (the lot's own drive-through, on its own: sites-S3's fast food).</summary>
+        public static DriveThroughLane DriveThrough(double2[] footprint, double2 toStreet, ParkingDims dims = null) =>
+            ParkingSearch.DriveThrough(Poly2.Ccw(footprint), toStreet, dims ?? ParkingDims.Default);
     }
 
     sealed partial class ParkingSearch
@@ -298,6 +302,7 @@ namespace Backroads.Sites
                 }
                 dirs.Add(d);
             }
+            if (math.lengthsq(m_In.preferredAisle) > 1e-12) Add(m_In.preferredAisle);
             var r = Poly2.MinAreaRect(m_Lot);
             Add(r.axis);
             Add(Poly2.Perp(r.axis));
@@ -650,7 +655,13 @@ namespace Backroads.Sites
                 double c = math.dot(f.d, m_BldgRect.axis);
                 align = Math.Abs(2 * c * c - 1);   // |cos 2x|: 1 parallel or perpendicular, 0 at 45 degrees
             }
-            double score = capScore + 2.0 * align - 0.5 * dead - 0.05 * avgHops - (g.squeeze ? 1.5 : 0) - (g.oneWay ? 0.5 : 0);
+            double mapped = 0;
+            if (math.lengthsq(m_In.preferredAisle) > 1e-12)
+            {
+                double c = math.dot(f.d, math.normalize(m_In.preferredAisle));
+                mapped = c * c > 0.999 ? 1.5 : 0;   // aisles along the mapped one (within ~2 degrees)
+            }
+            double score = capScore + 2.0 * align + mapped - 0.5 * dead - 0.05 * avgHops - (g.squeeze ? 1.5 : 0) - (g.oneWay ? 0.5 : 0);
             if (cap == 0) score = -1e9 + capScore;
             if (record) plan.Finish(this, f, g);
             return new Score { score = score, cap = cap, deadEnds = dead, avgHops = avgHops };

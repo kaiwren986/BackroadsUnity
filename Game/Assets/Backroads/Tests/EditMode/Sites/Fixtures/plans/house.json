@@ -1,0 +1,19 @@
+{
+  "fixture": "house",
+  "type": "House",
+  "source": "Rules",
+  "template": "",
+  "downtown": false,
+  "surfaces": {"Drive:Gravel": 57, "Walk:Concrete": 8},
+  "lots": 0,
+  "stalls": 0,
+  "accessible": 0,
+  "driveways": ["Residential 3.6 m"],
+  "doors": {"Main": 1, "Service": 1},
+  "props": {"trash.bin": 1},
+  "models": {},
+  "fences": 0,
+  "gates": 0,
+  "notes": [],
+  "hash": "93a9a020e86c2f9be1620683f8f774642ab8549a9c28ddbbbf71c02164d51a23"
+}

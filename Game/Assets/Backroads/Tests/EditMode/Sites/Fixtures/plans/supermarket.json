@@ -1,0 +1,19 @@
+{
+  "fixture": "supermarket",
+  "type": "Supermarket",
+  "source": "Rules",
+  "template": "",
+  "downtown": false,
+  "surfaces": {"Apron:Concrete": 451, "Drive:Asphalt": 4, "Lot:Asphalt": 2349, "Walk:Concrete": 109},
+  "lots": 1,
+  "stalls": 52,
+  "accessible": 3,
+  "driveways": ["Commercial 7.3 m"],
+  "doors": {"Main": 1, "Service": 1, "Dock": 2},
+  "props": {"dumpster": 1, "trash.bin": 1},
+  "models": {"dock.leveller": 2},
+  "fences": 0,
+  "gates": 0,
+  "notes": [],
+  "hash": "0d93846d84ff390938f4010108eafc37be43e67e90437d94b19f42331211ab6e"
+}

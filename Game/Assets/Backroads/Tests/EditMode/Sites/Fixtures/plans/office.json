@@ -1,0 +1,19 @@
+{
+  "fixture": "office",
+  "type": "Office",
+  "source": "Template",
+  "template": "retail_side-06",
+  "downtown": false,
+  "surfaces": {"Drive:Gravel": 64, "Lot:Gravel": 262},
+  "lots": 1,
+  "stalls": 4,
+  "accessible": 1,
+  "driveways": ["Commercial 4.5 m"],
+  "doors": {"Main": 1, "Service": 1},
+  "props": {"dumpster": 1},
+  "models": {},
+  "fences": 0,
+  "gates": 0,
+  "notes": [],
+  "hash": "ca81132e10b14bdad84a26edbb4560cca50d869e31d01dfbd58abf14ec36ff53"
+}

@@ -1,0 +1,19 @@
+{
+  "fixture": "mill",
+  "type": "Mill",
+  "source": "Rules",
+  "template": "",
+  "downtown": false,
+  "surfaces": {"Apron:Concrete": 14, "Drive:Gravel": 27, "Yard:Gravel": 2709},
+  "lots": 0,
+  "stalls": 0,
+  "accessible": 0,
+  "driveways": ["Truck 12.0 m"],
+  "doors": {"Bay": 2},
+  "props": {},
+  "models": {"mill.elevatorLeg": 1, "mill.truckScale": 1},
+  "fences": 0,
+  "gates": 0,
+  "notes": [],
+  "hash": "8ef75ee82abf9468f8980b75ea1e5cf53ed62965939aa13974514fc4c38f9853"
+}

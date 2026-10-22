@@ -203,6 +203,37 @@ namespace Backroads.Sites.Editor
     /// <summary>Batchmode entry points of the site program (PLAN §1.9; tools\ci\sites-bake.ps1 comes with sites-S5).</summary>
     public static class SitesBakeCli
     {
+        /// <summary>Builds every town's site plans twice, checks the hashes match and nothing is wrong, writes the report, maps and
+        /// door specs (also to tools/world/sites/(town)/doors.json for lane A). Exit 1 on failure.</summary>
+        public static void Plans()
+        {
+            int code = 0;
+            try
+            {
+                foreach (var town in SiteParcels.Towns())
+                {
+                    var parcels = SiteParcels.BuildTown(town);
+                    var a = SitePlans.BuildTown(town, parcels);
+                    var b = SitePlans.BuildTown(town, SiteParcels.BuildTown(town));
+                    Debug.Log("[BR] sites: " + SitePlans.Summary(a));
+                    if (a.hash != b.hash) { Debug.LogError($"[BR] sites: {town}: two plan builds differ ({a.hash} vs {b.hash})"); code = 1; }
+                    foreach (var p in a.problems.Take(20)) Debug.LogError("[BR] sites: " + p);
+                    if (a.problems.Count > 0) code = 1;
+                    Debug.Log("[BR] sites: report " + SitePlans.WriteArtifacts(a));
+                    var doors = SitePlans.DoorsPath(town);
+                    Directory.CreateDirectory(Path.GetDirectoryName(doors));
+                    File.WriteAllText(doors, SitePlans.DoorsJson(a), new UTF8Encoding(false));
+                    Debug.Log("[BR] sites: door specs " + doors);
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogError("[BR] sites: Plans FAILED: " + e);
+                code = 1;
+            }
+            if (Application.isBatchMode) EditorApplication.Exit(code);
+        }
+
         /// <summary>Builds every town's parcels twice, checks the hashes match, writes the report and maps. Exit 1 on failure.</summary>
         public static void Parcels()
         {
