@@ -8,27 +8,27 @@ namespace Backroads.World
     /// rayTerrain (lines 68-118) with JavaScript's number arithmetic (IEEE doubles over the float32 H array, the same
     /// operation order, Math.round semantics). Plain C# on purpose: no Burst, no FMA contraction. Parity tests compare it
     /// with terrain/probes.json. The *Js methods take JS space; the others take Unity space and flip at the boundary.
+    /// The grid's size comes from the view's Layout (T3.1).
     /// </summary>
     public static class WorldGridQueriesRef
     {
-        const int N = WorldGrid.N, VN = WorldGrid.VN;
-        const double Half = 512.0, Cell = 0.5;
-
         public static double HeightAtJs(in WorldGridView g, double x, double z)
         {
-            double fx = (x + Half) / Cell, fz = (z + Half) / Cell;
-            if (fx < 0) fx = 0; else if (fx > N - 1e-4) fx = N - 1e-4;
-            if (fz < 0) fz = 0; else if (fz > N - 1e-4) fz = N - 1e-4;
+            double half = g.Layout.Half, cell = g.Layout.Cell, max = g.Layout.N - 1e-4;
+            int vn = g.Layout.VN;
+            double fx = (x + half) / cell, fz = (z + half) / cell;
+            if (fx < 0) fx = 0; else if (fx > max) fx = max;
+            if (fz < 0) fz = 0; else if (fz > max) fz = max;
             int i = (int)fx, j = (int)fz;
             double tx = fx - i, tz = fz - j;
-            int k = j * VN + i;
-            double a = g.H[k], b = g.H[k + 1], c = g.H[k + VN], d = g.H[k + VN + 1];
+            int k = j * vn + i;
+            double a = g.H[k], b = g.H[k + 1], c = g.H[k + vn], d = g.H[k + vn + 1];
             return (a + (b - a) * tx) * (1 - tz) + (c + (d - c) * tx) * tz;
         }
 
         public static double3 NormalAtJs(in WorldGridView g, double x, double z)
         {
-            const double e = Cell;
+            double e = g.Layout.Cell;
             double nx = HeightAtJs(g, x - e, z) - HeightAtJs(g, x + e, z);
             double nz = HeightAtJs(g, x, z - e) - HeightAtJs(g, x, z + e);
             double ny = 2 * e;
@@ -63,22 +63,24 @@ namespace Backroads.World
             return v - f >= 0.5 ? f + 1 : f;
         }
 
-        public static int NearestKJs(double x, double z)
+        public static int NearestKJs(in WorldGridLayout l, double x, double z)
         {
-            double i = JsRound((x + Half) / Cell), j = JsRound((z + Half) / Cell);
-            i = i < 0 ? 0 : i > N ? N : i;
-            j = j < 0 ? 0 : j > N ? N : j;
-            return (int)j * VN + (int)i;
+            double half = l.Half, cell = l.Cell;
+            int n = l.N;
+            double i = JsRound((x + half) / cell), j = JsRound((z + half) / cell);
+            i = i < 0 ? 0 : i > n ? n : i;
+            j = j < 0 ? 0 : j > n ? n : j;
+            return (int)j * l.VN + (int)i;
         }
 
-        public static byte SurfaceAtJs(in WorldGridView g, double x, double z) => g.Surface[NearestKJs(x, z)];
-        public static byte WearAtJs(in WorldGridView g, double x, double z) => g.Wear[NearestKJs(x, z)];
-        public static double RoadDistAtJs(in WorldGridView g, double x, double z) => g.RoadD[NearestKJs(x, z)] * 0.5;
-        public static double MudAtJs(in WorldGridView g, double x, double z) => g.Mud[NearestKJs(x, z)] * (WorldGrid.MudMax / 255.0);
+        public static byte SurfaceAtJs(in WorldGridView g, double x, double z) => g.Surface[NearestKJs(g.Layout, x, z)];
+        public static byte WearAtJs(in WorldGridView g, double x, double z) => g.Wear[NearestKJs(g.Layout, x, z)];
+        public static double RoadDistAtJs(in WorldGridView g, double x, double z) => g.RoadD[NearestKJs(g.Layout, x, z)] * 0.5;
+        public static double MudAtJs(in WorldGridView g, double x, double z) => g.Mud[NearestKJs(g.Layout, x, z)] * (WorldGrid.MudMax / 255.0);
 
         public static double SinkAtJs(in WorldGridView g, double x, double z)
         {
-            int k = NearestKJs(x, z);
+            int k = NearestKJs(g.Layout, x, z);
             return (double)g.Base[k] - g.H[k];
         }
 

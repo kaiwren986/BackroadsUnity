@@ -25,9 +25,11 @@ namespace Backroads.Tests.EditMode.World
         public void TerrainLod0BitExact()
         {
             var grid = WorldTestUtil.Grid();
-            var chunks = new int2[TerrainChunkSystem.ChunkCount];
+            int side = grid.Layout.ChunksPerSide, VN = grid.Layout.VN;
+            Assert.AreEqual(16, side, "the canon test world has 16 x 16 chunks");
+            var chunks = new int2[side * side];
             var lods = new int[chunks.Length];
-            for (int i = 0; i < chunks.Length; i++) chunks[i] = new int2(i % 16, i / 16);
+            for (int i = 0; i < chunks.Length; i++) chunks[i] = new int2(i % side, i / side);
             var sw = Stopwatch.StartNew();
             var meshes = TerrainChunkSystem.BuildMeshes(grid.View, chunks, lods);
             double ms = sw.Elapsed.TotalMilliseconds;
@@ -44,7 +46,7 @@ namespace Backroads.Tests.EditMode.World
                     for (int r = 0; r <= 128; r++)
                         for (int c = 0; c <= 128; c++)
                         {
-                            int i = iB + c, j = jB + r, k = j * WorldGrid.VN + i;
+                            int i = iB + c, j = jB + r, k = j * VN + i;
                             var want = BrCoords.Pos(i * 0.5f - 512f, grid.H[k], j * 0.5f - 512f);
                             var got = v[r * vn + c];
                             checkedVerts++;
@@ -56,11 +58,11 @@ namespace Backroads.Tests.EditMode.World
                         }
                     // skirts: edge 0, first vertex sits 1.9 m below (step 1)
                     int s0 = vn * vn;
-                    float skirtWant = (float)((double)grid.H[jB * WorldGrid.VN + iB] - 1.9);
+                    float skirtWant = (float)((double)grid.H[jB * VN + iB] - 1.9);
                     if (Bits(v[s0].y) != Bits(skirtWant)) fails.Add($"chunk {chunks[m]} skirt y {v[s0].y:R} vs {skirtWant:R}");
                     // normals: unit, and the flat-ish ground faces up; JS normal x flipped
-                    int kc = (jB + 64) * WorldGrid.VN + iB + 64;
-                    float nx = grid.H[kc - 1] - grid.H[kc + 1], nz = grid.H[kc - WorldGrid.VN] - grid.H[kc + WorldGrid.VN];
+                    int kc = (jB + 64) * VN + iB + 64;
+                    float nx = grid.H[kc - 1] - grid.H[kc + 1], nz = grid.H[kc - VN] - grid.H[kc + VN];
                     var nWant = new Vector3(-nx, 1, nz).normalized;
                     if ((nrm[64 * vn + 64] - nWant).magnitude > 1e-5f) fails.Add($"chunk {chunks[m]} normal {nrm[64 * vn + 64]} vs {nWant}");
                     // winding: the first grid triangle's geometric normal points up (front face toward the sky)

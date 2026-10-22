@@ -2,7 +2,8 @@
     "name": "Backroads.Art.Editor",
     "rootNamespace": "Backroads.Art.Editor",
     "references": [
-        "Backroads.Core"
+        "Backroads.Core",
+        "Backroads.Build.Editor"
     ],
     "includePlatforms": [
         "Editor"

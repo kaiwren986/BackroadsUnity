@@ -1,0 +1,349 @@
+{
+ "format": "backroads-doorspecs",
+ "version": 1,
+ "note": "Placeholder DoorSpecs (Backroads.Core.WorldBake.DoorSpec fields) by lane A, T3.4, from the rules of site-layouts 7a, until sites-S3 writes the real ones. wallEdge indexes the building polygon of buildings.json; offset is metres from that vertex to the door centre; sillY null = NaN.",
+ "doors": [
+  {
+   "building": "fixture/barn_gable",
+   "part": 0,
+   "kind": "Bay",
+   "wallEdge": 0,
+   "offset": 5.5,
+   "width": 4.2,
+   "sillY": null
+  },
+  {
+   "building": "fixture/barn_gable",
+   "part": 0,
+   "kind": "Bay",
+   "wallEdge": 2,
+   "offset": 5.5,
+   "width": 4.2,
+   "sillY": null
+  },
+  {
+   "building": "fixture/barn_gambrel",
+   "part": 0,
+   "kind": "Bay",
+   "wallEdge": 0,
+   "offset": 6.0,
+   "width": 4.2,
+   "sillY": null
+  },
+  {
+   "building": "fixture/barn_gambrel",
+   "part": 0,
+   "kind": "Bay",
+   "wallEdge": 2,
+   "offset": 6.0,
+   "width": 4.2,
+   "sillY": null
+  },
+  {
+   "building": "fixture/cottage",
+   "part": 0,
+   "kind": "Main",
+   "wallEdge": 0,
+   "offset": 6.12,
+   "width": 0.95,
+   "sillY": null
+  },
+  {
+   "building": "fixture/cottage",
+   "part": 0,
+   "kind": "Service",
+   "wallEdge": 2,
+   "offset": 5.04,
+   "width": 0.9,
+   "sillY": null
+  },
+  {
+   "building": "fixture/garage",
+   "part": 0,
+   "kind": "Garage",
+   "wallEdge": 0,
+   "offset": 3.5,
+   "width": 4.9,
+   "sillY": null
+  },
+  {
+   "building": "fixture/garage",
+   "part": 0,
+   "kind": "Service",
+   "wallEdge": 2,
+   "offset": 4.2,
+   "width": 0.85,
+   "sillY": null
+  },
+  {
+   "building": "fixture/house_hip",
+   "part": 0,
+   "kind": "Main",
+   "wallEdge": 0,
+   "offset": 6.8,
+   "width": 0.95,
+   "sillY": null
+  },
+  {
+   "building": "fixture/house_l",
+   "part": 0,
+   "kind": "Main",
+   "wallEdge": 0,
+   "offset": 3.84,
+   "width": 0.95,
+   "sillY": null
+  },
+  {
+   "building": "fixture/house_t",
+   "part": 0,
+   "kind": "Main",
+   "wallEdge": 0,
+   "offset": 8.16,
+   "width": 0.95,
+   "sillY": null
+  },
+  {
+   "building": "fixture/machineshed",
+   "part": 0,
+   "kind": "Bay",
+   "wallEdge": 0,
+   "offset": 4.0,
+   "width": 4.2,
+   "sillY": null
+  },
+  {
+   "building": "fixture/machineshed",
+   "part": 0,
+   "kind": "Bay",
+   "wallEdge": 0,
+   "offset": 12.0,
+   "width": 4.2,
+   "sillY": null
+  },
+  {
+   "building": "fixture/machineshed",
+   "part": 0,
+   "kind": "Bay",
+   "wallEdge": 0,
+   "offset": 20.0,
+   "width": 4.2,
+   "sillY": null
+  },
+  {
+   "building": "fixture/machineshed",
+   "part": 0,
+   "kind": "Service",
+   "wallEdge": 2,
+   "offset": 12.0,
+   "width": 0.9,
+   "sillY": null
+  },
+  {
+   "building": "fixture/mill",
+   "part": 0,
+   "kind": "Main",
+   "wallEdge": 0,
+   "offset": 15.0,
+   "width": 1.6,
+   "sillY": null
+  },
+  {
+   "building": "fixture/mill",
+   "part": 0,
+   "kind": "Service",
+   "wallEdge": 3,
+   "offset": 4.0,
+   "width": 1.8,
+   "sillY": null
+  },
+  {
+   "building": "fixture/row_office",
+   "part": 0,
+   "kind": "Main",
+   "wallEdge": 0,
+   "offset": 5.5,
+   "width": 1.8,
+   "sillY": null
+  },
+  {
+   "building": "fixture/row_office",
+   "part": 0,
+   "kind": "Service",
+   "wallEdge": 2,
+   "offset": 4.62,
+   "width": 1.0,
+   "sillY": null
+  },
+  {
+   "building": "fixture/row_restaurant",
+   "part": 0,
+   "kind": "Main",
+   "wallEdge": 0,
+   "offset": 3.5,
+   "width": 1.1,
+   "sillY": null
+  },
+  {
+   "building": "fixture/row_restaurant",
+   "part": 0,
+   "kind": "Service",
+   "wallEdge": 2,
+   "offset": 2.66,
+   "width": 1.0,
+   "sillY": null
+  },
+  {
+   "building": "fixture/row_shop",
+   "part": 0,
+   "kind": "Main",
+   "wallEdge": 0,
+   "offset": 4.0,
+   "width": 1.8,
+   "sillY": null
+  },
+  {
+   "building": "fixture/row_shop",
+   "part": 0,
+   "kind": "Service",
+   "wallEdge": 2,
+   "offset": 3.6,
+   "width": 1.0,
+   "sillY": null
+  },
+  {
+   "building": "fixture/shed",
+   "part": 0,
+   "kind": "Main",
+   "wallEdge": 0,
+   "offset": 1.5,
+   "width": 1.0,
+   "sillY": null
+  },
+  {
+   "building": "fixture/warehouse_flat",
+   "part": 0,
+   "kind": "Main",
+   "wallEdge": 0,
+   "offset": 3.0,
+   "width": 1.0,
+   "sillY": null
+  },
+  {
+   "building": "fixture/warehouse_flat",
+   "part": 0,
+   "kind": "Dock",
+   "wallEdge": 2,
+   "offset": 14.0,
+   "width": 2.7,
+   "sillY": null
+  },
+  {
+   "building": "fixture/warehouse_flat",
+   "part": 0,
+   "kind": "Dock",
+   "wallEdge": 2,
+   "offset": 18.0,
+   "width": 2.7,
+   "sillY": null
+  },
+  {
+   "building": "fixture/warehouse_flat",
+   "part": 0,
+   "kind": "Dock",
+   "wallEdge": 2,
+   "offset": 22.0,
+   "width": 2.7,
+   "sillY": null
+  },
+  {
+   "building": "fixture/warehouse_flat",
+   "part": 0,
+   "kind": "Dock",
+   "wallEdge": 2,
+   "offset": 26.0,
+   "width": 2.7,
+   "sillY": null
+  },
+  {
+   "building": "fixture/warehouse_flat",
+   "part": 0,
+   "kind": "Dock",
+   "wallEdge": 2,
+   "offset": 30.0,
+   "width": 2.7,
+   "sillY": null
+  },
+  {
+   "building": "fixture/warehouse_flat",
+   "part": 0,
+   "kind": "Dock",
+   "wallEdge": 2,
+   "offset": 34.0,
+   "width": 2.7,
+   "sillY": null
+  },
+  {
+   "building": "fixture/warehouse_gable",
+   "part": 0,
+   "kind": "Main",
+   "wallEdge": 0,
+   "offset": 3.0,
+   "width": 1.0,
+   "sillY": null
+  },
+  {
+   "building": "fixture/warehouse_gable",
+   "part": 0,
+   "kind": "Dock",
+   "wallEdge": 2,
+   "offset": 5.0,
+   "width": 2.7,
+   "sillY": null
+  },
+  {
+   "building": "fixture/warehouse_gable",
+   "part": 0,
+   "kind": "Dock",
+   "wallEdge": 2,
+   "offset": 9.0,
+   "width": 2.7,
+   "sillY": null
+  },
+  {
+   "building": "fixture/warehouse_gable",
+   "part": 0,
+   "kind": "Dock",
+   "wallEdge": 2,
+   "offset": 13.0,
+   "width": 2.7,
+   "sillY": null
+  },
+  {
+   "building": "fixture/warehouse_gable",
+   "part": 0,
+   "kind": "Dock",
+   "wallEdge": 2,
+   "offset": 17.0,
+   "width": 2.7,
+   "sillY": null
+  },
+  {
+   "building": "fixture/warehouse_gable",
+   "part": 0,
+   "kind": "Dock",
+   "wallEdge": 2,
+   "offset": 21.0,
+   "width": 2.7,
+   "sillY": null
+  },
+  {
+   "building": "fixture/warehouse_gable",
+   "part": 0,
+   "kind": "Dock",
+   "wallEdge": 2,
+   "offset": 25.0,
+   "width": 2.7,
+   "sillY": null
+  }
+ ]
+}

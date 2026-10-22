@@ -56,7 +56,7 @@ namespace Backroads.World
                 if (s_Colliders == null)
                 {
                     var a = Asset ?? throw new InvalidOperationException(NotImportedMessage);
-                    s_Colliders = ColliderGrid.Build(a.placements.colliders);
+                    s_Colliders = ColliderGrid.Build(a.placements.colliders, WorldGrid.LayoutOf(a));
                 }
                 return s_Colliders;
             }
@@ -82,7 +82,7 @@ namespace Backroads.World
                 s_QuitHooked = true;
             }
             double ms = sw.Elapsed.TotalMilliseconds;
-            Log.Info($"canon v1 loaded: WorldGrid {WorldGrid.VN}x{WorldGrid.VN} in {ms:F0} ms (manifest {Short(a.manifestSha256)})");
+            Log.Info($"canon v1 loaded: WorldGrid {s_Grid.Layout.VN}x{s_Grid.Layout.VN} in {ms:F0} ms (manifest {Short(a.manifestSha256)})");
             return ms;
         }
 

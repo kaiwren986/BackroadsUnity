@@ -13,7 +13,7 @@ namespace Backroads.Tests.EditMode.Art
     /// BackroadsModelPostprocessor; and the fixture VH_LodFixture.fbx from art/pipeline/br_lod_fixture.py.
     /// </summary>
     [TestFixture, Category("Art")]
-    public class Art
+    public partial class Art
     {
         const string TruckDir = ArtBatch.TruckDir;
         const string Fixture = "Assets/Art/Vehicles/_Fixtures/VH_LodFixture.fbx";

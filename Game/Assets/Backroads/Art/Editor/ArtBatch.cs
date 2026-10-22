@@ -65,6 +65,16 @@ namespace Backroads.Art.Editor
                                      $"rotation {r.maxRotationDeltaDeg:G3} deg, bounds {r.maxBoundsDelta * 1000f:G3} mm");
                             break;
                         case "capture": ArtCapture.Truck(outDir); break;
+                        case "synty-style":
+                            SyntyStyleAudit.Run(Path.Combine(RepoRoot, "artifacts", "art", "synty-style.json"));
+                            break;
+                        case "building-materials": BuildingMaterials.CreateBuildingMaterials(); break;
+                        case "reimport-buildings":
+                            foreach (var g in AssetDatabase.FindAssets("t:Model", new[] { BuildingMaterials.BuildingRoot.TrimEnd('/') }))
+                                AssetDatabase.ImportAsset(AssetDatabase.GUIDToAssetPath(g), ImportAssetOptions.ForceSynchronousImport | ImportAssetOptions.ForceUpdate);
+                            break;
+                        case "building-capture": BuildingCapture.Review(Path.Combine(RepoRoot, Arg("-brArtOut", "art/buildings/review"))); break;
+                        case "contact-sheet": BuildingCapture.ContactSheet(Path.Combine(RepoRoot, "artifacts", "art", "contact-sheet.png")); break;
                         default: throw new ArgumentException("unknown step " + step);
                     }
                     Log.Info("art step " + step + " ok");

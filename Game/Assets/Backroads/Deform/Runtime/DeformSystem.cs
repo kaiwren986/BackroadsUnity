@@ -43,20 +43,22 @@ namespace Backroads.Deform
         {
             Grid = grid ?? throw new ArgumentNullException(nameof(grid));
             const Allocator A = Allocator.Persistent;
-            _h0Um = new NativeArray<int>(WorldGrid.Count, A, NativeArrayOptions.UninitializedMemory);
-            _baseUm = new NativeArray<int>(WorldGrid.Count, A, NativeArrayOptions.UninitializedMemory);
-            new MicrometreJob { Src = grid.H0, Dst = _h0Um }.Schedule(WorldGrid.Count, 4096).Complete();
-            new MicrometreJob { Src = grid.Base, Dst = _baseUm }.Schedule(WorldGrid.Count, 4096).Complete();
+            int count = grid.Layout.Count;
+            _h0Um = new NativeArray<int>(count, A, NativeArrayOptions.UninitializedMemory);
+            _baseUm = new NativeArray<int>(count, A, NativeArrayOptions.UninitializedMemory);
+            new MicrometreJob { Src = grid.H0, Dst = _h0Um }.Schedule(count, 4096).Complete();
+            new MicrometreJob { Src = grid.Base, Dst = _baseUm }.Schedule(count, 4096).Complete();
             _falloff = new NativeArray<int>(StampKernels.BrushFalloffQ20, A);
             _result = new NativeArray<StampResult>(1, A);
             _ranManaged = new NativeArray<byte>(1, A);
             Dirty = new DirtyRectQueue();
-            Tiles = new TileTable();
+            Tiles = new TileTable(grid.Layout);
         }
 
         /// <summary>The raw layer pointers the kernels use (valid while this system and its grid live).</summary>
         public DeformLayers Layers => new DeformLayers
         {
+            N = Grid.Layout.N, VN = Grid.Layout.VN, CellShift = Grid.Layout.CellShift, OriginQ20 = Grid.Layout.OriginQ20,
             Delta = (int*)Grid.DeltaUm.GetUnsafePtr(),
             H = (float*)Grid.H.GetUnsafePtr(),
             Wear = (byte*)Grid.Wear.GetUnsafePtr(),
@@ -193,14 +195,27 @@ namespace Backroads.Deform
     }
 
     /// <summary>
-    /// 64 x 64 tiles of 32 x 32 cells (16 m; PLAN 2.6): a version per tile, bumped by every stamp that touches it, and an
-    /// xxHash3 over the tile's DeltaUm, WEAR and SURFACE on demand. Tile (tx, tz) owns vertices i in [32 tx, 32 tx + 31]
-    /// (the last tile of a row also owns i = 2048), likewise j.
+    /// Tiles of 32 x 32 cells (16 m; PLAN 2.6), N / 32 per side (64 x 64 on the canon test world, 128 x 128 on the new
+    /// Millbrook; T3.1): a version per tile, bumped by every stamp that touches it, and an xxHash3 over the tile's
+    /// DeltaUm, WEAR and SURFACE on demand. Tile (tx, tz) owns vertices i in [32 tx, 32 tx + 31] (the last tile of a row
+    /// also owns i = N), likewise j.
     /// </summary>
     public sealed class TileTable
     {
-        public const int TileCells = 32, TilesPerSide = 64, Count = TilesPerSide * TilesPerSide;
-        readonly uint[] _version = new uint[Count];
+        public const int TileCells = 32;
+        public readonly int TilesPerSide, Count;
+        readonly int _n, _vn;
+        readonly uint[] _version;
+
+        public TileTable(WorldGridLayout layout)
+        {
+            if (layout.N % TileCells != 0) throw new ArgumentException($"grid N {layout.N} is not a multiple of {TileCells}");
+            _n = layout.N;
+            _vn = layout.VN;
+            TilesPerSide = layout.N / TileCells;
+            Count = TilesPerSide * TilesPerSide;
+            _version = new uint[Count];
+        }
 
         public uint Version(int tx, int tz) => _version[tz * TilesPerSide + tx];
 
@@ -212,10 +227,10 @@ namespace Backroads.Deform
                 for (int tx = tx0; tx <= tx1; tx++) _version[tz * TilesPerSide + tx]++;
         }
 
-        public static void VertexRange(int t, out int v0, out int v1)
+        public void VertexRange(int t, out int v0, out int v1)
         {
             v0 = t * TileCells;
-            v1 = t == TilesPerSide - 1 ? WorldGrid.N : v0 + TileCells - 1;
+            v1 = t == TilesPerSide - 1 ? _n : v0 + TileCells - 1;
         }
 
         public unsafe ulong Hash(WorldGrid g, int tx, int tz)
@@ -230,17 +245,17 @@ namespace Backroads.Deform
             int o = 0;
             for (int j = j0; j <= j1; j++)
             {
-                UnsafeUtility.MemCpy(p + o, d + (j * WorldGrid.VN + i0), w * 4);
+                UnsafeUtility.MemCpy(p + o, d + (j * _vn + i0), w * 4);
                 o += w * 4;
             }
-            for (int j = j0; j <= j1; j++) { UnsafeUtility.MemCpy(p + o, wear + (j * WorldGrid.VN + i0), w); o += w; }
-            for (int j = j0; j <= j1; j++) { UnsafeUtility.MemCpy(p + o, surf + (j * WorldGrid.VN + i0), w); o += w; }
+            for (int j = j0; j <= j1; j++) { UnsafeUtility.MemCpy(p + o, wear + (j * _vn + i0), w); o += w; }
+            for (int j = j0; j <= j1; j++) { UnsafeUtility.MemCpy(p + o, surf + (j * _vn + i0), w); o += w; }
             var hh = xxHash3.Hash64(p, o);
             buf.Dispose();
             return ((ulong)hh.y << 32) | hh.x;
         }
 
-        /// <summary>All 4,096 tile hashes, row by row.</summary>
+        /// <summary>All tile hashes (4,096 on the canon test world), row by row.</summary>
         public ulong[] HashAll(WorldGrid g)
         {
             var all = new ulong[Count];

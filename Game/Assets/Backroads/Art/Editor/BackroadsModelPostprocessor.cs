@@ -44,7 +44,7 @@ namespace Backroads.Art.Editor
         /// </summary>
         public static RemapHook Hook = RemapHook.AssignMaterialModel;
 
-        public override uint GetVersion() => 2; // bump whenever the import rules change (A1: remap, LODs, UCX_)
+        public override uint GetVersion() => 3; // bump whenever the import rules change (A1: remap, LODs, UCX_; T3.4: buildings)
 
         public static bool Applies(string assetPath) =>
             assetPath.StartsWith(ArtRoot, System.StringComparison.Ordinal) &&
@@ -71,6 +71,23 @@ namespace Backroads.Art.Editor
                 mi.animationType = ModelImporterAnimationType.None;
                 mi.importAnimation = false;
                 mi.materialImportMode = ModelImporterMaterialImportMode.None;
+            }
+            if (BuildingMaterials.IsBuilding(assetPath))
+            {
+                // Buildings (card T3.4): static models on two project materials, no tangents (no normal maps), colliders
+                // only from UCX_ hulls, vertex colours kept (pane ids in Panes_LOD*).
+                mi.animationType = ModelImporterAnimationType.None;
+                mi.importAnimation = false;
+                mi.importBlendShapes = false;
+                mi.importTangents = ModelImporterTangents.None;
+                mi.isReadable = false;
+                mi.addCollider = false;
+                mi.importVisibility = false;
+                mi.materialImportMode = ModelImporterMaterialImportMode.ImportStandard;
+                mi.materialLocation = ModelImporterMaterialLocation.InPrefab;
+                if (context != null)
+                    foreach (var p in BuildingMaterials.SlotPaths()) context.DependsOnSourceAsset(p);
+                return;
             }
             if (!IsVehicle(assetPath)) return;
 
@@ -101,7 +118,9 @@ namespace Backroads.Art.Editor
 
         Material OnAssignMaterialModel(Material material, Renderer renderer)
         {
-            if (Hook == RemapHook.AddRemap || material == null || !IsVehicle(assetPath)) return null;
+            if (material == null) return null;
+            if (BuildingMaterials.IsBuilding(assetPath)) return BuildingMaterials.Target(material.name);
+            if (Hook == RemapHook.AddRemap || !IsVehicle(assetPath)) return null;
             return VehicleMaterialSlots.Target(material.name);
         }
 

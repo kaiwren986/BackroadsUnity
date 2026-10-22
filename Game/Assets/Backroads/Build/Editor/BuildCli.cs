@@ -29,23 +29,45 @@ namespace Backroads.Build.Editor
         public const string TestingDefine = "BACKROADS_TESTING";
         public const string ServerDefine = "UNITY_SERVER";
 
-        /// <summary>Millbrook (lane W, M1) is the first scene when it exists; the test yard stays in the build.</summary>
+        /// <summary>
+        /// The canon test world (lane W; the old Millbrook.unity, renamed in T3.1, ADR-006 section 1): CanonData v1, where
+        /// every parity test and the M2 autotests run. The first scene of Dev builds. From M3 on it is Dev-only: Client
+        /// builds leave it out once the new Millbrook scene exists.
+        /// </summary>
+        public const string CanonTestWorldScenePath = "Assets/Backroads/Scenes/CanonTestWorld.unity";
+
+        /// <summary>The new Millbrook (lane W, T3.3, ADR-006): the real town, in every build once its file exists.</summary>
         public const string MillbrookScenePath = "Assets/Backroads/Scenes/Millbrook.unity";
 
         /// <summary>The Engine Bench (lane V, M1): a camera and a light; EngineBench builds itself when the scene loads.</summary>
         public const string EngineBenchScenePath = "Assets/Backroads/Scenes/EngineBench.unity";
 
-        /// <summary>Millbrook, EngineBench, TestYard: each only when its file exists (the test yard always does).</summary>
+        /// <summary>
+        /// CanonTestWorld, Millbrook, EngineBench, TestYard: each only when its file exists (the test yard always does).
+        /// The editor's build settings list these; a build takes ScenesFor(profile).
+        /// </summary>
         public static string[] Scenes
         {
             get
             {
                 var list = new List<string>();
+                if (File.Exists(Path.Combine(RepoPaths.Game, CanonTestWorldScenePath))) list.Add(CanonTestWorldScenePath);
                 if (File.Exists(Path.Combine(RepoPaths.Game, MillbrookScenePath))) list.Add(MillbrookScenePath);
                 if (File.Exists(Path.Combine(RepoPaths.Game, EngineBenchScenePath))) list.Add(EngineBenchScenePath);
                 list.Add(TestYardBuilder.ScenePath);
                 return list.ToArray();
             }
+        }
+
+        /// <summary>
+        /// The scenes of one build profile: Scenes, except that Client builds leave the canon test world out once the new
+        /// Millbrook scene exists (T3.1 step 2: Dev-only from M3 on; until T3.3 it is the only drivable world).
+        /// </summary>
+        public static string[] ScenesFor(Profile profile)
+        {
+            var list = new List<string>(Scenes);
+            if (profile == Profile.Client && list.Contains(MillbrookScenePath)) list.Remove(CanonTestWorldScenePath);
+            return list.ToArray();
         }
 
         public sealed class Outcome
@@ -111,7 +133,7 @@ namespace Backroads.Build.Editor
 
             var options = new BuildPlayerOptions
             {
-                scenes = Scenes,
+                scenes = ScenesFor(profile),
                 locationPathName = o.exe,
                 target = BuildTarget.StandaloneWindows64,
                 targetGroup = BuildTargetGroup.Standalone,

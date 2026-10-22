@@ -1,4 +1,5 @@
 using System;
+using Backroads.World;
 
 namespace Backroads.Deform
 {
@@ -8,12 +9,13 @@ namespace Backroads.Deform
     /// arithmetic is JS's: every expression in doubles, every store to H rounded to float32 (Float32Array), every store
     /// to WEAR truncated (Uint8Array). Tests replay CanonData/v1/reference/deform/calls.json through it, prove it
     /// bit-exact against the per-call fnv1a hashes, and then measure the integer kernels (StampKernels) against it at
-    /// every call. Never used by the game.
+    /// every call. Never used by the game. The grid's size is a WorldGridLayout (the canon test world's by default; T3.1).
     /// </summary>
     public sealed class JsDeformReference
     {
-        public const int N = 2048, VN = 2049;
-        public const double Half = 512, Cell = 0.5, WaterY = 0;
+        public const double WaterY = 0;
+        readonly int N, VN;
+        readonly double Half, Cell;
         public const byte GRASS = 0, DIRT = 1, ROAD = 4, CONCRETE = 6, TRACK = 7;
 
         /// <summary>world.js SOFTNESS and DIG_RATE are Float32Arrays: these are their float32 values.</summary>
@@ -33,7 +35,12 @@ namespace Backroads.Deform
         public bool Dirty;
 
         public JsDeformReference(float[] h, float[] baseHeights, byte[] surface, byte[] wear)
+            : this(WorldGridLayout.CanonV1, h, baseHeights, surface, wear) { }
+
+        public JsDeformReference(WorldGridLayout layout, float[] h, float[] baseHeights, byte[] surface, byte[] wear)
         {
+            if (h.Length != layout.Count) throw new ArgumentException($"heights: {h.Length} values for a {layout.VN}^2 grid");
+            N = layout.N; VN = layout.VN; Half = layout.Half; Cell = layout.Cell;
             H = h; Base = baseHeights; Surface = surface; Wear = wear;
         }
 
