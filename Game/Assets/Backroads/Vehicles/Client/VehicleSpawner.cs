@@ -8,15 +8,16 @@ using UnityEngine.SceneManagement;
 namespace Backroads.Vehicles.Client
 {
     /// <summary>
-    /// Puts the four M2 vehicles on the Millbrook garage bays when the Millbrook scene loads (built in code; the scene
-    /// file is lane W's): pickup, hatch, rally and truck on parking bays 0-3 in VEHICLE_ORDER (the dozer's bay 4 stays
+    /// Puts the four M2 vehicles on the Millbrook garage bays when the canon test world (CanonTestWorld.unity, the old
+    /// Millbrook scene, renamed in T3.1) loads (built in code; the scene file is lane W's): pickup, hatch, rally and truck
+    /// on parking bays 0-3 in VEHICLE_ORDER (the dozer's bay 4 stays
     /// empty until M7), each settled for 240 steps before it is shown, and the player in the truck
     /// (PlayerVehicle.Current). E (get in/out) at standstill moves the player into the nearest vehicle within 12 m.
     /// -br-no-vehicles leaves them out.
     /// </summary>
     public sealed class VehicleSpawner : MonoBehaviour
     {
-        public const string SceneName = "Millbrook";
+        public const string SceneName = "CanonTestWorld";
         public const string NoVehiclesFlag = "-br-no-vehicles";
         public const string StartVehicle = "truck";
 
