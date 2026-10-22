@@ -41,7 +41,8 @@ namespace Backroads.Roads
                 {
                     var a = ns.arms[k];
                     var c = a.control;
-                    if (c == Control.None || c == Control.RoundaboutYield) continue;
+                    if (c == Control.RoundaboutYield) { RoundaboutYields(ns, k, faces, streetOfEdge, props, st); continue; }
+                    if (c == Control.None) continue;
                     var kind = c == Control.Yield ? RoadPropKind.Yield : c == Control.Signal ? RoadPropKind.Signal : RoadPropKind.Stop;
                     double sEdge = double.IsNaN(a.sEdge) ? IntersectedEdge(ns, a) : a.sEdge;
                     double s = a.sStop >= 0 ? a.sStop : Math.Min(Math.Max(a.sT + 0.3, sEdge + 1.22), sEdge + 9.14);
@@ -78,6 +79,44 @@ namespace Backroads.Roads
                 Blades(g, ns, n, streetOfEdge, faces, stops, props, st);
             }
             return props;
+        }
+
+        /// <summary>
+        /// roads-R4 (05 §5.11): a roundabout entry gets a YIELD on its right just outside the yield line, behind the
+        /// (flared) kerb, and a second on the raised splitter on its left, 0.6 m in from the splitter's kerb.
+        /// </summary>
+        static void RoundaboutYields(NodeSurface ns, int k, Dictionary<(int, int), List<KerbFace>> faces, Dictionary<int, int> streetOfEdge, List<RoadNetworkAsset.Prop> props, KerbSettings st)
+        {
+            var a = ns.arms[k];
+            var G = ns.roundabout;
+            if (G == null) return;
+            var L = G.legs[k];
+            var sst = new SurfaceSettings();
+            double s = G.Ro + 1.5;
+            int side = a.atA ? 0 : 1;
+            var face = FaceAt(faces, a.edge, side, a.frame.P(s, L.EdgeL(s)), out double fs);
+            bool kerbed = face != null ? face.kerbed : a.kerbed;
+            double off = kerbed ? SignBehindKerb : st.shoulder + SignBehindKerb;
+            var p2 = a.frame.P(s, L.EdgeL(s) + off);
+            double y = face != null ? GroundBeside(face, fs, off, kerbed, a, s, st) : SurfaceBuilder.JunctionHeight(ns, p2, sst);
+            var dir = a.frame.Dir(s);
+            float facing = (float)(Math.Atan2(dir.x, dir.z) / Geo.Deg);
+            props.Add(new RoadNetworkAsset.Prop
+            {
+                kind = RoadPropKind.Yield, position = new Vector3((float)p2.x, (float)y, (float)p2.z), yawDeg = Wrap(facing - (float)SignTurnDeg), mount = (float)(kerbed ? MountTown : MountRural),
+                node = ns.node, arm = k, street = Street(streetOfEdge, a.edge), street2 = -1, fromKerb = (float)off, fromEdge = (float)(s - G.Ro),
+            });
+            if (L.splitters.Count == 0) return;
+            double ss = L.splitterS0 + 1.5;
+            double half = Math.Min(L.flare, L.FlareAt(ss));
+            if (half < SignBehindKerb + 0.2) return;
+            var q = a.frame.P(ss, half - SignBehindKerb);
+            props.Add(new RoadNetworkAsset.Prop
+            {
+                kind = RoadPropKind.Yield, position = new Vector3((float)q.x, (float)(SurfaceBuilder.JunctionHeight(ns, q, sst) + sst.roundabout.islandKerb), (float)q.z),
+                yawDeg = Wrap(facing + (float)SignTurnDeg), mount = (float)MountTown, node = ns.node, arm = k, street = Street(streetOfEdge, a.edge), street2 = -1,
+                fromKerb = (float)SignBehindKerb, fromEdge = (float)(ss - G.Ro),
+            });
         }
 
         static float Wrap(float deg)

@@ -16,7 +16,7 @@ namespace Backroads.Roads.Client.Editor
     /// views to artifacts/roads/(town)/r3-*.png. Needs a graphics device (batchmode without -nographics):
     ///   Unity.exe -batchmode -projectPath Game -executeMethod Backroads.Roads.Client.Editor.RoadPreview.Shots -quit
     /// </summary>
-    public static class RoadPreview
+    public static partial class RoadPreview
     {
         public const string ResDir = "Assets/Backroads/Roads/Client/Resources";
 

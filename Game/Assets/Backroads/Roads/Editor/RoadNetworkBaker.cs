@@ -134,9 +134,10 @@ namespace Backroads.Roads.Editor
             var names = StreetNameList.Load();
             kerbs.streets = StreetNamer.Assign(b.graph, names.names, names.approved);
             kerbs.props = RoadPropBuilder.Build(b.graph, b.surfaces, kerbs.kerbs, kerbs.streets, kerbs.settings);
+            kerbs.bridges = BridgeBuilder.Build(b.graph, b.source?.dem, null, b.source?.bridgeOver);
             var a = ScriptableObject.CreateInstance<RoadNetworkAsset>();
             a.name = RoadNetworkAsset.TownResourceName(townId);
-            a.SetFrom(b.graph, b.import, b.surfaces, kerbs.streets, kerbs.props, RoadPropBuilder.Version);
+            a.SetFrom(b.graph, b.import, b.surfaces, kerbs.streets, kerbs.props, RoadPropBuilder.Version, kerbs.bridges);
             frontage = KerbBaker.ToAsset(kerbs, a.contentHash);
             return a;
         }
@@ -144,7 +145,7 @@ namespace Backroads.Roads.Editor
         /// <summary>roads-R3: the chunked road meshes of a kerb bake (not saved), linked to the network and frontage it was built from.</summary>
         public static RoadChunkSet BakeMeshes(KerbBaker.Bake k, string roadHash, string frontageHash, out byte[] packed)
         {
-            k.meshes = RoadMeshBuilder.Build(k.roads.graph, k.roads.surfaces, k.kerbs, k.streets, k.settings);
+            k.meshes = RoadMeshBuilder.Build(k.roads.graph, k.roads.surfaces, k.kerbs, k.streets, k.settings, k.bridges, k.roads.source?.dem);
             double half = k.roads.source?.playHalf ?? 1024;
             return RoadChunkBaker.Build(k.meshes, half, k.roads.graph.source, roadHash, frontageHash, out _, out packed);
         }
@@ -194,7 +195,9 @@ namespace Backroads.Roads.Editor
             var chunkSet = BakeMeshes(kerbs, asset.contentHash, frontageHash, out var packed);
             int tris = chunkSet.lod0Triangles, nChunks = chunkSet.chunks.Length;
             var chunkPath = RoadChunkBaker.Save(townId, chunkSet, packed);
-            message = $"roads R0o + R1 + R2 + R3 baked {townId} in {sw.Elapsed.TotalMilliseconds:F0} ms: {RoadGraphReport.Summary(graph)}; {SurfaceChecks.Summary(bake.checks)}; {KerbBaker.Summary(kerbs)}; {nChunks} road chunks, {tris} triangles; content {asset.contentHash.Substring(0, 12)} -> {path}, {kerbPath}, {chunkPath}; reports {reportPath}, {surfPath}";
+            var r4Plates = RoadPlateBuilder.Build(graph, bake.surfaces, kerbs.kerbs, bake.source?.dem, kerbs.settings);
+            var r4Path = RoadR4Report.Write(kerbs, r4Plates);
+            message = $"roads R0o + R1 + R2 + R3 baked {townId} in {sw.Elapsed.TotalMilliseconds:F0} ms: {RoadGraphReport.Summary(graph)}; {SurfaceChecks.Summary(bake.checks)}; {KerbBaker.Summary(kerbs)}; {nChunks} road chunks, {tris} triangles; content {asset.contentHash.Substring(0, 12)} -> {path}, {kerbPath}, {chunkPath}; reports {reportPath}, {surfPath}, {r4Path}";
             return true;
         }
 
@@ -395,6 +398,8 @@ namespace Backroads.Roads.Editor
                     var a = RoadNetworkBaker.BakeTownWithKerbs(town, out _, out var k, out var f);
                     var c = RoadNetworkBaker.BakeMeshes(k, a.contentHash, f.contentHash, out var packed);
                     Debug.Log($"[BR] {town}: R3 in {sw.Elapsed.TotalMilliseconds:F0} ms: {k.streets.Count} streets, {k.props.Count} props; {c.chunks.Length} chunks, LOD0 {c.lod0Triangles} / LOD1 {c.lod1Triangles} / collider {c.colliderTriangles} triangles, {packed.Length / 1024} KiB packed; report {RoadMeshReport.Write(k, c, a)}");
+                    var plates = RoadPlateBuilder.Build(k.roads.graph, k.roads.surfaces, k.kerbs, k.roads.source?.dem, k.settings);
+                    Debug.Log($"[BR] {town}: R4 {RoadR4Report.Summary(RoadR4Report.Run(k, plates))}; report {RoadR4Report.Write(k, plates)}");
                     UnityEngine.Object.DestroyImmediate(a); UnityEngine.Object.DestroyImmediate(f); UnityEngine.Object.DestroyImmediate(c);
                 }
             }

@@ -27,6 +27,8 @@ namespace Backroads.Roads.Editor
             /// <summary>roads-R3: the named streets and the road props (filled by RoadNetworkBaker.BakeTownWithKerbs).</summary>
             public List<StreetInfo> streets;
             public List<RoadNetworkAsset.Prop> props;
+            /// <summary>roads-R4: the bridge decks (filled by RoadNetworkBaker.BakeTownWithKerbs).</summary>
+            public List<BridgeDeck> bridges;
             /// <summary>roads-R3: the road meshes before chunking (filled by RoadNetworkBaker.BakeMeshes).</summary>
             public RoadMeshes meshes;
             public string town => roads.town;

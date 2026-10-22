@@ -54,6 +54,7 @@ namespace Backroads.Roads
                 inputRoads = input.roads.Count,
                 inputPoints = input.PointCount,
                 roads = input.roads,
+                roundabouts = input.roundabouts,
                 downtown = input.downtownPolygon,
             };
             // a town without a kerb zone gives an empty polygon: no MainStreet at all (never the canon's street hull)
@@ -75,6 +76,7 @@ namespace Backroads.Roads
                 BuildNodes(g, input, settings);
                 BuildArms(g, settings);
                 Classify(g, settings);
+                MarkRoundabouts(g, settings);
                 if (pass >= 8 || !RemoveSameRoadJoins(g, input, splits)) break;
             }
             FindComplexPairs(g, settings);
@@ -383,6 +385,28 @@ namespace Backroads.Roads
             }
         }
 
+        /// <summary>
+        /// roads-R4 step 1: the node at each mapped roundabout's centre (the importer ran every leg to it) or at a mini node
+        /// becomes a Roundabout. Its legs must be at least minRoundaboutLegGap apart; closer legs are reported, not fixed.
+        /// </summary>
+        static void MarkRoundabouts(RoadGraph g, RoadGraphSettings st)
+        {
+            for (int k = 0; k < g.roundabouts.Count; k++)
+            {
+                var rb = g.roundabouts[k];
+                GraphNode best = null;
+                double bd = 1.0;
+                foreach (var n in g.nodes)
+                {
+                    double d = D2.Distance(n.p.XZ, rb.center);
+                    if (d < bd && n.Degree >= 1) { bd = d; best = n; }
+                }
+                if (best == null) continue;
+                best.kind = NodeKind.Roundabout;
+                best.roundabout = k;
+            }
+        }
+
         /// <summary>Join nodes between two pieces of the same road: drop that split and rebuild. True when one was dropped.</summary>
         static bool RemoveSameRoadJoins(RoadGraph g, RoadGraphInput input, List<Split>[] splits)
         {
@@ -427,6 +451,8 @@ namespace Backroads.Roads
             {
                 n.majorA = n.majorB = -1;
                 n.control = Control.None;
+                // roads-R4: every roundabout entry yields to the circulating traffic; no through road
+                if (n.kind == NodeKind.Roundabout) { n.control = Control.RoundaboutYield; continue; }
                 if (n.kind == NodeKind.DeadEnd || n.kind == NodeKind.Bend || n.kind == NodeKind.Join || n.kind == NodeKind.ClassChange) continue;
                 int deg = n.arms.Count;
                 if (deg < 3)
@@ -486,7 +512,7 @@ namespace Backroads.Roads
                     Control c = Control.None;
                     switch (n.control)
                     {
-                        case Control.AllWayStop: case Control.Signal: c = n.control; break;
+                        case Control.AllWayStop: case Control.Signal: case Control.RoundaboutYield: c = n.control; break;
                         case Control.MinorStop: case Control.Yield:
                             if (n.HasMajor) c = major ? Control.None : n.control;
                             else if (n.kind == NodeKind.DirtApron) c = a.cls == RoadClass.Dirt ? n.control : Control.None;
@@ -615,6 +641,12 @@ namespace Backroads.Roads
                 var (hn, ha, hd) = hit.Value;
                 gf.node = hn.id;
                 gf.arm = ha.id;
+                // roads-R4: a roundabout's entries yield by rule; a mapped give-way agrees, anything else is reported
+                if (hn.kind == NodeKind.Roundabout)
+                {
+                    if (f.kind != RoadFeatureKind.GiveWay) gf.problem = "at a roundabout entry, which yields to the ring (RoundaboutYield)";
+                    continue;
+                }
                 if (ha.controlSource == ControlSource.Tag)
                     g.notes.Add(string.Format(inv, "two mapped controls on one approach: node {0} arm R{1}: osm node {2} and {3}; the nearer is kept", hn.id, ha.sourceRoad, ha.controlOsmNode, f.osmNode));
                 if (ha.controlSource == ControlSource.Tag && ha.controlDistance <= hd) continue;
@@ -873,6 +905,13 @@ namespace Backroads.Roads
             foreach (var p in g.complexPairs)
                 g.notes.Add(string.Format(inv, "complex pair: nodes {0} and {1} are {2:F2} m apart (< {3:F0} m); two junctions, each shaped and controlled by the usual rules (roads-R4)",
                     p.a, p.b, p.distance, st.complexJunctionDistance));
+            for (int k = 0; k < g.roundabouts.Count; k++)
+            {
+                var n = g.nodes.Find(q => q.roundabout == k);
+                if (n == null) { g.notes.Add(string.Format(inv, "roundabout {0} ({1}): no graph node at ({2:F1}, {3:F1})", k, g.roundabouts[k].osm, g.roundabouts[k].center.x, g.roundabouts[k].center.z)); continue; }
+                if (n.Degree >= 2 && n.minArmGap < st.minRoundaboutLegGap * Geo.Deg)
+                    g.notes.Add(string.Format(inv, "roundabout exception: node {0} ({1}) has legs only {2:F1} degrees apart (< {3:F0}); its splitter islands are narrowed", n.id, g.roundabouts[k].osm, n.minArmGap / Geo.Deg, st.minRoundaboutLegGap));
+            }
             foreach (var n in g.nodes)
             {
                 foreach (var id in n.arms)

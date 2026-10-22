@@ -21,11 +21,13 @@ namespace Backroads.Roads
     /// Format 4 (roads-R3): streets (one fictional name per chain of edges, a placeholder until the list is approved;
     /// each edge's street) and the road props (STOP, YIELD and all-way plaques, signals, street-name blades) with their
     /// stands, facing and mounting height; the Synty prefabs are placed from them by RoadPropPlacer.
+    /// Format 5 (roads-R4): bridge decks (footprint, abutment zones, piers, clearance; lane W drops the ground's collision
+    /// under a deck where water runs below) and roundabouts (the ring's dimensions and legs).
     /// </summary>
     public sealed class RoadNetworkAsset : ScriptableObject
     {
         public const string ResourceName = "BrRoadNetwork";
-        public const int FormatVersion = 4;
+        public const int FormatVersion = 5;
 
         /// <summary>The Resources name of a town's network (TownData/(town)/v1).</summary>
         public static string TownResourceName(string townId) => ResourceName + "_" + townId;
@@ -233,6 +235,34 @@ namespace Backroads.Roads
             public float fromKerb, fromEdge;
         }
 
+        /// <summary>A bridge deck (roads-R4): one edge on a bridge=* road. Arc lengths along the edge, heights in Unity y.</summary>
+        [Serializable]
+        public struct Deck
+        {
+            public int edge, sourceRoad;
+            /// <summary>Every edge of the deck in order (a zone or class change on the bridge splits the road, not the deck).</summary>
+            public int[] edges;
+            public string osmWay, over;
+            public float length, sA, sB, yMin, yMax, width, clearanceMin;
+            public float[] piers;
+            /// <summary>The deck footprint (x, z) between the outer faces of the parapets, CCW.</summary>
+            public Vector2[] outline;
+        }
+
+        /// <summary>A roundabout (roads-R4): the plan RoundaboutBuilder made for a Roundabout node, for the traffic lanes (R5).</summary>
+        [Serializable]
+        public struct Roundabout
+        {
+            public int node;
+            public string osm;
+            public Vector2 centre;
+            public bool mini;
+            /// <summary>Inscribed circle diameter, its radius, the circulatory roadway's inner edge, the central island's edge.</summary>
+            public float icd, ro, ri, ra;
+            /// <summary>Per leg (the node's arms in order): the mouth, the crosswalk band's near edge (-1: none), and how far the leg flares.</summary>
+            public float[] legMouth, legCrosswalk, legFlare;
+        }
+
         [Serializable]
         public struct Pair
         {
@@ -268,6 +298,11 @@ namespace Backroads.Roads
         public Street[] streets = Array.Empty<Street>();
         public Prop[] props = Array.Empty<Prop>();
 
+        [Header("Bridges and roundabouts (R4)")]
+        public int bridgeVersion;
+        public Deck[] decks = Array.Empty<Deck>();
+        public Roundabout[] roundabouts = Array.Empty<Roundabout>();
+
         [Header("Findings")]
         public Pair[] complexPairs = Array.Empty<Pair>();
         /// <summary>The town kerb zone outline (canon: street hull + buffer; towns: KERB_ZONE), (x, z).</summary>
@@ -301,7 +336,8 @@ namespace Backroads.Roads
         }
 
         /// <summary>Fills this asset from a built graph (float conversion) and, for a town, its import report and R1 surfaces; stamps the content hash.</summary>
-        public void SetFrom(RoadGraph g, OsmImportReport report = null, RoadSurfaces surf = null, IReadOnlyList<StreetInfo> streetList = null, IReadOnlyList<Prop> propList = null, int propBuilderVersion = 0)
+        public void SetFrom(RoadGraph g, OsmImportReport report = null, RoadSurfaces surf = null, IReadOnlyList<StreetInfo> streetList = null, IReadOnlyList<Prop> propList = null, int propBuilderVersion = 0,
+            IReadOnlyList<BridgeDeck> bridgeList = null)
         {
             formatVersion = FormatVersion;
             builderVersion = RoadGraphBuilder.Version;
@@ -464,6 +500,35 @@ namespace Backroads.Roads
             streets = st.ToArray();
             props = propList != null ? new List<Prop>(propList).ToArray() : Array.Empty<Prop>();
             propVersion = propBuilderVersion;
+            var dl = new List<Deck>();
+            if (bridgeList != null)
+                foreach (var d in bridgeList)
+                {
+                    var o = new Vector2[d.outline.Length];
+                    for (int i = 0; i < o.Length; i++) o[i] = V2(d.outline[i]);
+                    dl.Add(new Deck
+                    {
+                        edge = d.edge, edges = d.pieces.ConvertAll(x => x.edge).ToArray(), sourceRoad = d.sourceRoad, osmWay = d.osmWay ?? "", over = d.over ?? "", length = (float)d.length, sA = (float)d.sA, sB = (float)d.sB,
+                        yMin = (float)d.yMin, yMax = (float)d.yMax, width = (float)(d.outerL + d.outerR), clearanceMin = double.IsNaN(d.clearanceMin) ? -1f : (float)d.clearanceMin,
+                        piers = d.piers.ConvertAll(x => (float)x).ToArray(), outline = o,
+                    });
+                }
+            decks = dl.ToArray();
+            bridgeVersion = bridgeList != null ? BridgeBuilder.Version : 0;
+            var rl = new List<Roundabout>();
+            if (surf != null)
+                foreach (var ns in surf.nodes)
+                {
+                    var G = ns.roundabout;
+                    if (ns.mode != SurfaceMode.Roundabout || G == null) continue;
+                    rl.Add(new Roundabout
+                    {
+                        node = ns.node, osm = G.osm ?? "", centre = V2(G.c), mini = G.mini, icd = (float)G.icd, ro = (float)G.Ro, ri = (float)G.Ri, ra = (float)G.Ra,
+                        legMouth = G.legs.ConvertAll(L => (float)L.sMouth).ToArray(), legCrosswalk = G.legs.ConvertAll(L => (float)L.sCwInner).ToArray(),
+                        legFlare = G.legs.ConvertAll(L => (float)L.flare).ToArray(),
+                    });
+                }
+            roundabouts = rl.ToArray();
             contentHash = ComputeHash();
         }
 
@@ -573,6 +638,31 @@ namespace Backroads.Roads
                 {
                     w.Write((byte)p.kind); W(w, p.position); w.Write(p.yawDeg); w.Write(p.mount); w.Write(p.node); w.Write(p.arm);
                     w.Write(p.street); w.Write(p.street2); w.Write(p.fromKerb); w.Write(p.fromEdge);
+                }
+                // format 5: bridge decks
+                w.Write(bridgeVersion);
+                w.Write(decks.Length);
+                foreach (var d in decks)
+                {
+                    w.Write(d.edge); w.Write(d.edges?.Length ?? 0);
+                    if (d.edges != null) foreach (var x in d.edges) w.Write(x);
+                    w.Write(d.sourceRoad); w.Write(d.osmWay ?? ""); w.Write(d.over ?? ""); w.Write(d.length); w.Write(d.sA); w.Write(d.sB);
+                    w.Write(d.yMin); w.Write(d.yMax); w.Write(d.width); w.Write(d.clearanceMin);
+                    w.Write(d.piers?.Length ?? 0);
+                    if (d.piers != null) foreach (var x in d.piers) w.Write(x);
+                    w.Write(d.outline?.Length ?? 0);
+                    if (d.outline != null) foreach (var v in d.outline) W(w, v);
+                }
+                // format 5: roundabouts
+                w.Write(roundabouts.Length);
+                foreach (var r in roundabouts)
+                {
+                    w.Write(r.node); w.Write(r.osm ?? ""); W(w, r.centre); w.Write(r.mini); w.Write(r.icd); w.Write(r.ro); w.Write(r.ri); w.Write(r.ra);
+                    foreach (var arr in new[] { r.legMouth, r.legCrosswalk, r.legFlare })
+                    {
+                        w.Write(arr?.Length ?? 0);
+                        if (arr != null) foreach (var x in arr) w.Write(x);
+                    }
                 }
                 w.Flush();
                 using (var sha = SHA256.Create())

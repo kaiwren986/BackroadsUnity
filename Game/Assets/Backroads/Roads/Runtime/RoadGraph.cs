@@ -20,6 +20,8 @@ namespace Backroads.Roads
         public double joinDeflectionDeg = 25.0;
         /// <summary>Two junctions closer than this need an override (§5.1 step 5).</summary>
         public double complexJunctionDistance = 30.0;
+        /// <summary>roads-R4 (05 §5.11): a roundabout's legs at least this many degrees apart, else a reported exception.</summary>
+        public double minRoundaboutLegGap = 70.0;
         /// <summary>No major road if the best pair bends more than this, in radians (§5.1 step 7; trafficNet's 0.6).</summary>
         public double majorMaxBend = 0.6;
         /// <summary>Arm direction sampled at max(this, 1.5 hw) along the arm (§5.2).</summary>
@@ -69,6 +71,8 @@ namespace Backroads.Roads
         public double bestPairBend = double.NaN;
         /// <summary>Smallest angle between neighbouring arms (radians); NaN below 2 arms.</summary>
         public double minArmGap = double.NaN;
+        /// <summary>roads-R4: the index in <see cref="RoadGraph.roundabouts"/> when kind is Roundabout, else -1.</summary>
+        public int roundabout = -1;
         public int Degree => arms.Count;
         public bool IsJunctionLike => arms.Count >= 3;
         public bool HasMajor => majorA >= 0;
@@ -177,6 +181,8 @@ namespace Backroads.Roads
         public D2[] downtown;
         /// <summary>The input roads (edges point at them through sourceRoad); the asset keeps their tag data.</summary>
         public List<RoadGraphInput.Road> roads = new List<RoadGraphInput.Road>();
+        /// <summary>roads-R4: the mapped roundabouts (the input's); a Roundabout node points at its entry.</summary>
+        public List<RoadGraphInput.Roundabout> roundabouts = new List<RoadGraphInput.Roundabout>();
         public string source = "", sourceManifestSha256 = "";
         public int inputRoads, inputPoints;
 

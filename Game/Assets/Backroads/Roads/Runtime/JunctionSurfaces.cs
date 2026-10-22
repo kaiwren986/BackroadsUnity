@@ -18,10 +18,12 @@ namespace Backroads.Roads
         Override = 4,
         /// <summary>No surface: the ribbons run to the node and overlap (the last resort, always reported).</summary>
         Fallback = 5,
+        /// <summary>roads-R4: a roundabout (RoundaboutBuilder's plan): the plane through the mouths, the ring falling 2 % outward.</summary>
+        Roundabout = 6,
     }
 
     /// <summary>Why a corner has the radius it has (the report lists every reduced corner and why).</summary>
-    public enum CornerReason : byte { ClassPair = 0, MaxTangent = 1, ShortArm = 2, BuildingClearance = 3, Override = 4, NoFillet = 5 }
+    public enum CornerReason : byte { ClassPair = 0, MaxTangent = 1, ShortArm = 2, BuildingClearance = 3, Override = 4, NoFillet = 5, Roundabout = 6 }
 
     /// <summary>The R1 numbers: 05 §5.2-§5.6 and the card's CORNER_R.</summary>
     public sealed class SurfaceSettings
@@ -45,6 +47,8 @@ namespace Backroads.Roads
         public double inletUpstream = 1.5, inletSpacing = 90.0;
         /// <summary>roads-R4 step 3 (05 §5.12): a gravel or dirt road meeting a paved junction is paved this far from the mouth.</summary>
         public double apron = 12.0;
+        /// <summary>roads-R4 step 1: the roundabout generator's numbers.</summary>
+        public RoundaboutSettings roundabout = new RoundaboutSettings();
     }
 
     /// <summary>One arm of a node with a surface, in its own frame (s outward from the node, +u = left of outward).</summary>
@@ -107,6 +111,8 @@ namespace Backroads.Roads
         public double throughNodeS;
         public int majorArmA = -1, majorArmB = -1;
         public string problem = "";
+        /// <summary>roads-R4: the plan of a Roundabout node (mode Roundabout), else null.</summary>
+        public RoundaboutGeometry roundabout;
     }
 
     /// <summary>A road between two mouths: stations along the edge, each a row of vertices right to left across the road.</summary>
@@ -237,6 +243,7 @@ namespace Backroads.Roads
                 if (a.maxMouth < st.minMouth + st.mouthPad)
                     return ov?.polygon != null ? OverridePolygon(g, n, ns, ov, st, notes) : Fallback(ns, string.Format(Inv, "arm R{0} has {1:F1} m of room (another node too close)", g.edges[a.edge].sourceRoad, a.maxMouth), notes, n);
             if (ov?.polygon != null) return OverridePolygon(g, n, ns, ov, st, notes);
+            if (n.kind == NodeKind.Roundabout && n.roundabout >= 0 && n.roundabout < g.roundabouts.Count) return RoundaboutNode(g, n, ns, st, notes);
 
             // corners
             for (int i = 0; i < n.Degree; i++)
@@ -621,6 +628,13 @@ namespace Backroads.Roads
         /// <summary>The surface height at a plan point (05 §5.6 JunctionHeight).</summary>
         public static double JunctionHeight(NodeSurface ns, D2 q, SurfaceSettings st)
         {
+            if (ns.mode == SurfaceMode.Roundabout && ns.roundabout != null)
+            {
+                // the plane through the mouths; the circulatory roadway falls outward from the island (05 §5.11)
+                var G = ns.roundabout;
+                double r = D2.Distance(q, G.c);
+                return ns.planeA * q.x + ns.planeB * q.z + ns.planeC + st.roundabout.outwardSlope * (G.Ro - Math.Max(G.Ri, Math.Min(G.Ro, r)));
+            }
             if (ns.mode == SurfaceMode.Plane || ns.mode == SurfaceMode.Override || ns.through == null)
                 return ns.planeA * q.x + ns.planeB * q.z + ns.planeC;
             ns.through.ToFrame(q, out double s, out double u);
@@ -707,6 +721,12 @@ namespace Backroads.Roads
                 for (int k = 0; k < b.frame.Count; k++)
                     if (b.frame.s[k] > startB + 1e-9 && b.frame.s[k] < b.sMouth - 1e-9) P.Add(new OutlinePoint { p = right[k] });
             }
+            return FinishOutline(ns, P, st, out why);
+        }
+
+        /// <summary>Welds the outline points (never dropping a mouth vertex), checks it, and sets the polygon and boundary vertices.</summary>
+        static bool FinishOutline(NodeSurface ns, List<OutlinePoint> P, SurfaceSettings st, out string why)
+        {
             // weld: drop near-duplicates, never a mouth vertex
             var W = new List<OutlinePoint>();
             foreach (var q in P)
@@ -769,6 +789,88 @@ namespace Backroads.Roads
 
         /// <summary>Adds a triangle given counter-clockwise in plan, in Unity's front-face order (clockwise seen from above).</summary>
         static void Up(List<int> t, int a, int b, int c) { t.Add(a); t.Add(c); t.Add(b); }
+
+        // ------------------------------------------------------------------ roundabouts (roads-R4 step 1, 05 §5.11)
+
+        /// <summary>
+        /// A Roundabout node: RoundaboutBuilder's plan (inscribed circle, flared legs, entry and exit curves) as the
+        /// surface outline, each gap between legs one corner (entry curve, ring arc, exit curve), every entry a yield (no
+        /// stop line), a crosswalk 6 m behind the yield line on legs with walks. Heights: the plane through the mouths,
+        /// the circulatory roadway falling 2 % outward from the island.
+        /// </summary>
+        static NodeSurface RoundaboutNode(RoadGraph g, GraphNode n, NodeSurface ns, SurfaceSettings st, List<string> notes)
+        {
+            var rb = g.roundabouts[n.roundabout];
+            var arms = new List<(RoadFrame frame, double hwL, double hwR, double angle, double maxMouth, bool walk)>();
+            foreach (var a in ns.arms)
+            {
+                var d = a.frame.Dir(0);
+                var e = g.edges[a.edge];
+                var road = g.RoadOf(e.sourceRoad);
+                bool walk = KerbRules.Walk(road, e.cls, 0) || KerbRules.Walk(road, e.cls, 1);
+                arms.Add((a.frame, a.hwL, a.hwR, Math.Atan2(d.z, d.x), a.maxMouth, walk));
+            }
+            var G = RoundaboutBuilder.Build(n.id, n.roundabout, n.p.XZ, rb, arms, st.roundabout);
+            ns.roundabout = G;
+            foreach (var x in G.notes) notes.Add(string.Format(Inv, "node {0} roundabout ({1}): {2}", n.id, rb.osm, x));
+            int deg = n.Degree;
+            for (int i = 0; i < deg; i++)
+            {
+                var a = ns.arms[i];
+                var L = G.legs[i];
+                a.tangentL = L.tEntry; a.tangentR = L.tExit;
+                a.sT = Math.Max(L.tEntry, L.tExit);
+                a.sMouth = L.sMouth;
+                a.sEdge = G.Ro;
+                a.sStop = -1;
+                a.crosswalk = L.sCwInner > 0;
+                a.sCwInner = L.sCwInner; a.sCwOuter = L.sCwOuter;
+            }
+            for (int i = 0; i < deg; i++)
+            {
+                int j = (i + 1) % deg;
+                var c = new CornerSurface
+                {
+                    node = n.id, armI = i, armJ = j, kind = CornerKind.Fillet, baseRadius = G.gapEntryRadius[i], radius = G.gapEntryRadius[i],
+                    reason = CornerReason.Roundabout, sI = G.legs[i].tEntry, sJ = G.legs[j].tExit, centre = G.c,
+                };
+                c.arc.AddRange(G.gaps[i]);
+                ns.corners.Add(c);
+            }
+            ns.majorArmA = ns.majorArmB = -1;
+            Heights(n, ns, st);
+            ns.mode = SurfaceMode.Roundabout;
+            foreach (var a in ns.arms) MouthLine(ns, a, st);
+
+            var P = new List<OutlinePoint>();
+            for (int i = 0; i < deg; i++)
+            {
+                var a = ns.arms[i];
+                var L = G.legs[i];
+                foreach (var v in a.mouth) P.Add(new OutlinePoint { p = v.XZ, mouth = true, v = v });
+                var ss = EdgeStations(a.frame, L.tEntry, a.sMouth, L.sFlare);
+                for (int k = ss.Count - 1; k >= 0; k--) P.Add(new OutlinePoint { p = a.frame.P(ss[k], L.EdgeL(ss[k])) });
+                foreach (var q in G.gaps[i]) P.Add(new OutlinePoint { p = q });
+                var b = ns.arms[(i + 1) % deg];
+                var M = G.legs[(i + 1) % deg];
+                foreach (var s in EdgeStations(b.frame, M.tExit, b.sMouth, M.sFlare)) P.Add(new OutlinePoint { p = b.frame.P(s, -M.EdgeR(s)) });
+            }
+            if (!FinishOutline(ns, P, st, out string why))
+                return Fallback(ns, "the roundabout outline is not simple: " + why, notes, n);
+            Mesh(n, ns, st);
+            ns.corridorArea = CorridorArea(ns);
+            return ns;
+        }
+
+        /// <summary>Stations strictly between a and b: the frame's vertices and `extra`.</summary>
+        static List<double> EdgeStations(RoadFrame f, double a, double b, double extra)
+        {
+            var l = new List<double>();
+            for (int k = 0; k < f.Count; k++) if (f.s[k] > a + 1e-6 && f.s[k] < b - 1e-6) l.Add(f.s[k]);
+            if (extra > a + 1e-6 && extra < b - 1e-6) l.Add(extra);
+            l.Sort();
+            return l;
+        }
 
         // ------------------------------------------------------------------ overrides
 

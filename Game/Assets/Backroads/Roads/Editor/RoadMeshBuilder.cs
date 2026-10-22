@@ -38,7 +38,8 @@ namespace Backroads.Roads.Editor
         static readonly Vector3 Up = new Vector3(0, 1, 0);
         static readonly CultureInfo Inv = CultureInfo.InvariantCulture;
 
-        public static RoadMeshes Build(RoadGraph g, RoadSurfaces surf, KerbNetwork kn, IReadOnlyList<StreetInfo> streets, KerbSettings st = null)
+        public static RoadMeshes Build(RoadGraph g, RoadSurfaces surf, KerbNetwork kn, IReadOnlyList<StreetInfo> streets, KerbSettings st = null,
+            IReadOnlyList<BridgeDeck> bridges = null, IHeightField dem = null)
         {
             st = st ?? new KerbSettings();
             var m = new RoadMeshes();
@@ -46,7 +47,9 @@ namespace Backroads.Roads.Editor
             Ribbons(g, surf, m, asphalt);
             Junctions(g, surf, m, asphalt);
             Concrete(kn, st, m);
+            BridgeMeshBuilder.Build(bridges, dem, null, m);
             Markings(g, surf, kn, streets, st, m, asphalt);
+            RoundaboutMeshBuilder.Build(surf, m, asphalt);
             Normals(m, asphalt);
             return m;
         }
@@ -332,6 +335,13 @@ namespace Backroads.Roads.Editor
                     {
                         bool downtown = g.downtown != null && g.downtown.Length >= 3 && TownZone.InPolygon(g.downtown, g.nodes[ns.node].p.XZ);
                         double uL = a.hwL - 0.15, uR = -a.hwR + 0.15;
+                        if (ns.roundabout != null)
+                        {
+                            // across a roundabout leg's flared width (the splitter's cut-through lies on it)
+                            var L = ns.roundabout.legs[k];
+                            double sc = 0.5 * (a.sCwInner + a.sCwOuter);
+                            uL = L.EdgeL(sc) - 0.15; uR = -L.EdgeR(sc) + 0.15;
+                        }
                         if (downtown)
                         {
                             // continental: 0.6 m bars along the road, 0.6 m apart, one centred on the centre line

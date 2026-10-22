@@ -15,12 +15,13 @@ namespace Backroads.Roads.Editor
     /// 0.06 m, kerb and walk 0.05 m; the walk plate runs from the asphalt's level at the kerb face up to the walk's back
     /// edge, so a coarse terrain grid never pokes through the gutter) and take no ruts; gravel and dirt are the ground
     /// itself. Priorities: verge and shoulder 0, walks 10, ribbons 20, junctions 30, driveway aprons 40 (later wins), so
-    /// asphalt wins wherever pieces overlap. Bridges and tunnels get none (the ground stays under the deck).
+    /// asphalt wins wherever pieces overlap. Bridges and tunnels get none (the ground stays under the deck) but for the
+    /// abutment plates at bridge ends (roads-R4, priority 25).
     /// </summary>
     public static class RoadPlateBuilder
     {
         public const int Version = 2;
-        public const int PriorityVerge = 0, PriorityWalk = 10, PriorityRibbon = 20, PriorityJunction = 30, PriorityApron = 40;
+        public const int PriorityVerge = 0, PriorityWalk = 10, PriorityRibbon = 20, PriorityAbutment = 25, PriorityJunction = 30, PriorityIsland = 35, PriorityApron = 40;
         public const byte Grass = 0, Gravel = 5, Concrete = 6;
         static readonly CultureInfo Inv = CultureInfo.InvariantCulture;
 
@@ -33,7 +34,92 @@ namespace Backroads.Roads.Editor
             Junctions(g, surf, st, plates);
             Pieces(kn, ground, plates);
             if (cuts != null && cutter != null) Aprons(kn, cuts, cutter, st, plates);
+            Abutments(BridgeBuilder.Build(g, ground), new BridgeSettings(), st, plates);
+            Islands(surf, st, plates);
             return plates;
+        }
+
+        /// <summary>
+        /// roads-R4: a roundabout's raised islands over its junction plate (priority 35): the central island is grass at its
+        /// kerb height (2 cm under the concrete band), the truck apron and the splitters concrete under their tops. A
+        /// mini-roundabout's dome is on the asphalt plate.
+        /// </summary>
+        static void Islands(RoadSurfaces surf, KerbSettings st, List<Plate> plates)
+        {
+            var sst = new SurfaceSettings();
+            foreach (var ns in surf.nodes)
+            {
+                if (ns.mode != SurfaceMode.Roundabout || ns.roundabout == null) continue;
+                var G = ns.roundabout;
+                var rs = sst.roundabout;
+                D3 V(double r, double a, double dy)
+                {
+                    var p = G.c + new D2(Math.Cos(a), Math.Sin(a)) * r;
+                    return new D3(p.x, SurfaceBuilder.JunctionHeight(ns, p, sst) + dy, p.z);
+                }
+                if (!G.mini)
+                {
+                    int N = Math.Max(24, (int)Math.Ceiling(2 * Math.PI * G.Ri / 2.0));
+                    var c = new D3(G.c.x, SurfaceBuilder.JunctionHeight(ns, G.c, sst) + rs.islandKerb - 0.02, G.c.z);
+                    for (int k = 0; k < N; k++)
+                    {
+                        double a0 = 2 * Math.PI * k / N, a1 = 2 * Math.PI * (k + 1) / N;
+                        Piece(plates, string.Format(Inv, "island:n{0:D4}:{1:D3}", ns.node, k), PlateKind.Road, Grass, false, PriorityIsland, 2f,
+                            new[] { c, V(G.Ra, a0, rs.islandKerb - 0.02), V(G.Ra, a1, rs.islandKerb - 0.02) }, 0);
+                        if (G.Ri - G.Ra > 0.05)
+                            Piece(plates, string.Format(Inv, "truckapron:n{0:D4}:{1:D3}", ns.node, k), PlateKind.Road, Concrete, true, PriorityIsland, 2f,
+                                new[] { V(G.Ri, a0, rs.apronKerb), V(G.Ri, a1, rs.apronKerb), V(G.Ra, a1, rs.apronKerb), V(G.Ra, a0, rs.apronKerb) }, st.sinkWalk);
+                    }
+                }
+                foreach (var L in G.legs)
+                    for (int q = 0; q < L.splitters.Count; q++)
+                    {
+                        var poly = L.splitters[q];
+                        var tris = Geom2.EarClip(poly);
+                        for (int k = 0; k + 2 < tris.Count; k += 3)
+                        {
+                            D3 W(D2 p) => new D3(p.x, SurfaceBuilder.JunctionHeight(ns, p, sst) + rs.islandKerb, p.z);
+                            Piece(plates, string.Format(Inv, "splitter:n{0:D4}:{1}:{2}:{3:D3}", ns.node, L.arm, q, k / 3), PlateKind.Road, Concrete, true, PriorityIsland, 2f,
+                                new[] { W(poly[tris[k]]), W(poly[tris[k + 1]]), W(poly[tris[k + 2]]) }, st.sinkWalk);
+                        }
+                    }
+            }
+        }
+
+        /// <summary>
+        /// roads-R4 step 2: under each bridge end's abutment zone (where the ground does not fall clear of the soffit) the
+        /// fill is held at road level across the deck and its wing walls: pavement-edge heights at the edges and wings, the
+        /// centreline's in the middle, 0.06 m under the pavement like a ribbon. The DEM under the free span is untouched.
+        /// </summary>
+        public static void Abutments(IReadOnlyList<BridgeDeck> decks, BridgeSettings bst, KerbSettings st, List<Plate> plates)
+        {
+            foreach (var d in decks)
+            {
+                if (d.FreeSpan <= 0 && d.sA <= 0) continue;
+                var ss = BridgeBuilder.Stations(d, 2.0, d.sA, d.length - d.sB);
+                // lateral lines: the right wing, the right pavement edge, the centre, the left pavement edge, the left wing
+                double U(double s, int k) => k == 0 ? -(d.Outer(s, -1) + bst.wing) : k == 1 ? -d.Hw(s, -1) : k == 2 ? 0.0 : k == 3 ? d.Hw(s, 1) : d.Outer(s, 1) + bst.wing;
+                for (int i = 0; i + 1 < ss.Count; i++)
+                {
+                    double s0 = ss[i], s1 = ss[i + 1];
+                    bool zone = s1 <= d.sA + 1e-6 || s0 >= d.length - d.sB - 1e-6;
+                    if (!zone) continue;
+                    for (int k = 0; k < 4; k++)
+                    {
+                        D3 V(double s, int j)
+                        {
+                            double u = U(s, j);
+                            var p = d.frame.P(s, u);
+                            double y = j == 2 ? d.frame.Y(s) : d.EdgeY(s, j > 2 ? 1 : -1);
+                            return new D3(p.x, y, p.z);
+                        }
+                        bool pavement = k == 1 || k == 2;
+                        string id = string.Format(Inv, "abutment:d{0:D2}:e{1:D4}:{2:D4}:{3}", d.id, d.edge, i, k);
+                        Piece(plates, id, PlateKind.Road, pavement ? (byte)4 : Concrete, true, PriorityAbutment, 2f,
+                            new[] { V(s0, k), V(s1, k), V(s1, k + 1), V(s0, k + 1) }, st.sinkAsphalt);
+                    }
+                }
+            }
         }
 
         public static int Submit(IEnumerable<Plate> plates, IPlateSink sink)

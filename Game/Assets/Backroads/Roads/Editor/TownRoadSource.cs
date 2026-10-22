@@ -79,6 +79,15 @@ namespace Backroads.Roads.Editor
                 });
             }
 
+            if (roads.TryGetValue("bridgeSpans", out var spans) && spans != null)
+                foreach (var so in Arr(spans, "bridgeSpans"))
+                {
+                    var sp = Obj(so);
+                    string what = sp.TryGetValue("over", out var ov) ? ov as string ?? "" : "";
+                    if (sp.TryGetValue("ways", out var wl) && wl != null)
+                        foreach (var w in Arr(wl)) if (w is string ws) src.bridgeOver[ws] = what;
+                }
+
             var bb = Read("buildings.json", optional: true);
             if (bb != null)
             {

@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 236a4a59903a9e140b14fd9b2669c3e2, type: 3}
   m_Name: BrRoadNetwork
   m_EditorClassIdentifier: Backroads.Roads::Backroads.Roads.RoadNetworkAsset
-  formatVersion: 4
+  formatVersion: 5
   builderVersion: 3
   importerVersion: 0
   surfaceVersion: 0
   source: CanonData/v1
   sourceManifestSha256: a112c66d5c517e52673ed84197fb692202177e52e02ade57ac3c607b42825b2b
-  contentHash: 411af22d8b818ba3128f7b82d00a84ab49b2d8b6c8fb6658b103c7e2d28d622a
+  contentHash: 400cb7bc12a29d7878ae5c498a4f99e7d63cdb68b548f09e116d4b3acc05c214
   inputRoads: 24
   inputPoints: 1722
   nodes:
@@ -8299,6 +8299,9 @@ MonoBehaviour:
   propVersion: 0
   streets: []
   props: []
+  bridgeVersion: 0
+  decks: []
+  roundabouts: []
   complexPairs:
   - a: 0
     b: 1

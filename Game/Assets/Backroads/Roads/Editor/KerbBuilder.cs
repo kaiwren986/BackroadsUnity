@@ -694,6 +694,27 @@ namespace Backroads.Roads.Editor
                 kc.dep1 = kc.t1;
                 return;
             }
+            // a roundabout (roads-R4): the crossings are on the legs, one car length behind the yield lines; a perpendicular
+            // ramp opens at each crosswalk that lands on this kerb (else at the curve's end)
+            if (ns.mode == SurfaceMode.Roundabout && ns.roundabout != null)
+            {
+                double OpenAt(int armPos, int side, double fallback)
+                {
+                    var X = ns.arms[armPos];
+                    var L = ns.roundabout.legs[armPos];
+                    if (L.sCwInner < 0) return fallback;
+                    double sq = 0.5 * (L.sCwInner + L.sCwOuter);
+                    var p = X.frame.P(sq, side > 0 ? L.EdgeL(sq) : -L.EdgeR(sq));
+                    return LoopPosition(loop, p, kc.t0 - 20, kc.t1 + 20, out double tp, out double d) && d < 1.0 ? tp : fallback;
+                }
+                double oJ = OpenAt(c.armJ, -1, kc.t0 + 1.0), oI = OpenAt(c.armI, 1, kc.t1 - 1.0);
+                kc.ramp = RampKind.Perpendicular;
+                kc.open0 = Math.Min(oJ, oI);
+                kc.open1 = Math.Max(oJ, oI);
+                kc.dep0 = kc.open0 - 0.5 * st.perpRampWidth;
+                kc.dep1 = kc.open1 + 0.5 * st.perpRampWidth;
+                return;
+            }
             // a perpendicular ramp only where the walk is deep enough on the whole arc
             double minDepth = double.MaxValue;
             foreach (int fid in new[] { FaceAt(kn, loop, kc.t0 + 1e-6), FaceAt(kn, loop, kc.t1 - 1e-6) })
