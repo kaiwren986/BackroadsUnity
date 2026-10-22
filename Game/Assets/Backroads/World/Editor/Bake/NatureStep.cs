@@ -264,9 +264,61 @@ namespace Backroads.World.Bake
                 foreach (var p in r.pois) if (p.id == id) return new double2(p.x, p.z);
                 return null;
             }
+            // The village street: standing on a carriageway within 150 m of the town centre (every 4 m), looking along it
+            // (one of 16 directions): the most buildings 8-90 m ahead within 35 degrees, both sides counted twice, times
+            // how much of the 60 m ahead is still carriageway; eye height 1.7 m, looking level.
+            bool StreetView(double2 town)
+            {
+                if (plates.carriageway == null) return false;
+                var near = t.buildings.Where(b => b.inPlay && math.lengthsq(b.centroid - town) < 250.0 * 250.0).Select(b => b.centroid).ToList();
+                g.Box(town.x, town.y, town.x, town.y, 150, out int i0, out int j0, out int i1, out int j1);
+                double best = 0;
+                double2 bc = default, bd = default;
+                const double Cos35 = 0.81915204428899179;
+                for (int j = j0; j <= j1; j += 8)
+                    for (int i = i0; i <= i1; i += 8)
+                    {
+                        if (plates.carriageway[j * g.VN + i] == 0 || river.wet[j * g.VN + i] != 0) continue;
+                        var c = g.Local(i, j);
+                        if (math.lengthsq(c - town) > 150.0 * 150.0) continue;
+                        for (int a = 0; a < 16; a++)
+                        {
+                            var dir = Dir16(a);
+                            int onRoad = 0;
+                            for (int s = 1; s <= 12; s++)
+                            {
+                                var p = c + dir * (5.0 * s);
+                                if (Math.Abs(p.x) >= g.Half || Math.Abs(p.y) >= g.Half) break;
+                                if (plates.carriageway[Nearest(g, p)] != 0) onRoad++;
+                            }
+                            if (onRoad < 6) continue;
+                            int left = 0, right = 0;
+                            foreach (var b in near)
+                            {
+                                var v = b - c;
+                                double d2 = math.lengthsq(v);
+                                if (d2 < 64 || d2 > 8100) continue;
+                                if (math.dot(v, dir) < Cos35 * Math.Sqrt(d2)) continue;
+                                if (dir.x * v.y - dir.y * v.x > 0) left++; else right++;
+                            }
+                            double score = (left + right + 2.0 * Math.Min(left, right)) * onRoad / 12.0;
+                            if (score > best + 1e-9) { best = score; bc = c; bd = dir; }
+                        }
+                    }
+                if (best <= 0) return false;
+                var tgt = bc + bd * 60;
+                r.cameras.Add(new PlacesResult.Camera
+                {
+                    id = "street", name = "Village street", fov = 55,
+                    pos = new double3(Math.Round(bc.x, 3), Math.Round(Ground(bc) + 1.7, 3), Math.Round(bc.y, 3)),
+                    target = new double3(Math.Round(tgt.x, 3), Math.Round(Ground(bc) + 1.7 + (Ground(tgt) - Ground(bc)) * 0.5, 3), Math.Round(tgt.y, 3)),
+                });
+                r.notes.Add($"street view: {best:F1} (buildings ahead, both sides, along the carriageway)");
+                return true;
+            }
             if (Poi("town") is double2 town)
             {
-                View("street", "Village street", town, 3, 45, 1.8, onRoad: true);
+                if (!StreetView(town)) View("street", "Village street", town, 3, 45, 1.8, onRoad: true);
                 View("overview", "Overview", town, 0, 650, 230, fov: 50);
             }
             if (t.weirs.Count > 0)

@@ -8,8 +8,8 @@
   "height": 900,
   "settleFrames": 6,
   "loadTimeoutSeconds": 240,
-  "hours": [12, 19.5],
+  "hours": [12, 20],
   "views": ["street", "dam", "bridge", "landing", "fuel", "quarry", "marsh", "overview", "garage", "farm", "depot", "river"],
   "minShots": 24,
-  "notes": "T3.3 done-when: the 12 fixed views of the new Millbrook (WorldData places.json cameras) at noon and at dusk, 1600x900, for the contact sheet."
+  "notes": "T3.3 done-when: the 12 fixed views of the new Millbrook (WorldData places.json cameras) at noon and at dusk (20:00, sunset), 1600x900, for the contact sheet."
 }

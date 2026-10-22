@@ -77,7 +77,7 @@ namespace Backroads.Testing
             public int height = 900;
             public int settleFrames = 6;
             public float loadTimeoutSeconds = 240f;
-            public float[] hours = { 12f, 19.5f };
+            public float[] hours = { 12f, 20f };
             public string[] views = { "street", "dam", "bridge", "landing", "fuel", "quarry", "marsh", "overview", "garage", "farm", "depot", "river" };
             public int minShots = 24;
         }
