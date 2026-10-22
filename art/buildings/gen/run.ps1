@@ -7,18 +7,22 @@
   (TownData\<town>\v1, the only one with a manifest) so no script names the real town.
     art\buildings\gen\run.ps1                    # palette + every building of the five types + fixtures
     art\buildings\gen\run.ps1 -Only way/123,way/456
-    art\buildings\gen\run.ps1 -Doors <sites-S3 doors.json>   # real door specs when lane S writes them
+    art\buildings\gen\run.ps1 -PlaceholderDoors  # lane A's rule doors instead of the site plan's
+  Doors: the site plan's door specs (sites-S3, tools\world\sites\<town>\doors.json) when that file exists, else lane
+  A's placeholder doors; -Doors <file> picks another file. Buildings the site plan gives no door (accessory buildings,
+  buildings outside the play area) keep lane A's rule doors, marked DOOR_<Kind>_A<NN>.
   Outputs:
     Game\Assets\Art\Buildings\Textures\T_Bld_Palette.png     the palette atlas (art\buildings\palette\palette.json lists it)
     Game\Assets\Art\Buildings\Millbrook\BLD_*.fbx + buildings.index.json
     Game\Assets\Art\Buildings\_Fixtures\BLD_fixture_*.fbx + buildings.index.json
-    art\buildings\millbrook\instances.json, doors.placeholder.json (and the same under art\buildings\fixtures)
+    art\buildings\millbrook\instances.json (doors.placeholder.json only with placeholder doors); art\buildings\fixtures\ the same
   Then import in Unity (art\pipeline\unity-art.ps1 -Steps building-materials,reimport-buildings) and run the tests.
 #>
 [CmdletBinding()]
 param(
     [string]$Only = '',
     [string]$Doors = '',
+    [switch]$PlaceholderDoors,
     [switch]$NoFixtures,
     [switch]$NoTown
 )
@@ -31,6 +35,10 @@ if ($towns.Count -ne 1) { throw "expected one TownData\<town>\v1, found $($towns
 $townDir = 'TownData/' + $towns[0].Name + '/v1'
 $profPath = 'Game/Assets/Content/sites/buildingProfile.json'
 $gen = 'art/buildings/gen'
+if (-not $Doors -and -not $PlaceholderDoors) {
+    $s3 = 'tools/world/sites/' + $towns[0].Name + '/doors.json'
+    if (Test-Path -LiteralPath $s3) { $Doors = $s3 }
+}
 
 function Invoke-Blender([string[]]$a) {
     $all = @('-b', '--factory-startup', '--python') + $a

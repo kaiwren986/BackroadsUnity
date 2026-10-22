@@ -78,7 +78,19 @@ namespace Backroads.World.Bake
         public double2 centroid;
         public double y;
         public bool inPlay;
-        public string type;
+        public string type, business;
+        public double area;
+        public Dictionary<string, string> tags = new Dictionary<string, string>();
+        public string Tag(string k) => tags.TryGetValue(k, out var v) ? v : null;
+    }
+
+    /// <summary>A service way of sites.json (driveways, alleys, the slipway), local plan.</summary>
+    public sealed class ServiceWay
+    {
+        public string osm;
+        public double2[] pts;
+        public Dictionary<string, string> tags = new Dictionary<string, string>();
+        public string Tag(string k) => tags.TryGetValue(k, out var v) ? v : null;
     }
 
     /// <summary>An added place of the scout's list (tools/scout/towns.json "sites"): marsh, quarry, depot, track.</summary>
@@ -109,6 +121,7 @@ namespace Backroads.World.Bake
         public readonly List<LanduseArea> landuse = new List<LanduseArea>();
         public readonly List<BuildingFootprint> buildings = new List<BuildingFootprint>();
         public readonly List<ScoutSite> scoutSites = new List<ScoutSite>();
+        public readonly List<ServiceWay> serviceWays = new List<ServiceWay>();
 
         public static string TownDir(string townId) => RepoPaths.InRepo("TownData/" + townId + "/v1");
 
@@ -156,6 +169,8 @@ namespace Backroads.World.Bake
             LoadLanduse(t, CanonJson.Obj(CanonJson.Parse(File.ReadAllText(Path.Combine(dir, "landuse.json"))), "landuse.json"));
             LoadBuildings(t, CanonJson.Obj(CanonJson.Parse(File.ReadAllText(Path.Combine(dir, "buildings.json"))), "buildings.json"));
             LoadScoutSites(t, f);
+            var sitesPath = Path.Combine(dir, "sites.json");
+            if (File.Exists(sitesPath)) LoadSites(t, CanonJson.Obj(CanonJson.Parse(File.ReadAllText(sitesPath)), "sites.json"));
             return t;
         }
 
@@ -270,7 +285,7 @@ namespace Backroads.World.Bake
                 {
                     osm = CanonJson.Str(b, "osm"), part = CanonJson.I(b, "part", 0), poly = Pts(CanonJson.Get(b, "poly")),
                     centroid = P(CanonJson.Get(b, "c")), y = CanonJson.Num(b, "y"), inPlay = CanonJson.Bool(b, "inPlay"),
-                    type = CanonJson.Str(b, "type"),
+                    type = CanonJson.Str(b, "type"), business = CanonJson.Str(b, "business"), area = CanonJson.Num(b, "area", 0), tags = Tags(b),
                 };
                 if (CanonJson.Has(b, "holes"))
                 {
@@ -311,5 +326,16 @@ namespace Backroads.World.Bake
         }
 
         public ScoutSite Site(string cat) => scoutSites.Find(s => s.cat == cat);
+
+        static void LoadSites(TownSource t, Dictionary<string, object> sj)
+        {
+            foreach (var so in CanonJson.Arr(CanonJson.Get(sj, "service")))
+            {
+                var s = CanonJson.Obj(so);
+                if (!CanonJson.Has(s, "pts")) continue;
+                t.serviceWays.Add(new ServiceWay { osm = CanonJson.Str(s, "osm"), pts = Pts(CanonJson.Get(s, "pts")), tags = Tags(s) });
+            }
+            t.serviceWays.Sort((a, b) => string.CompareOrdinal(a.osm, b.osm));
+        }
     }
 }

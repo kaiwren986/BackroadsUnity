@@ -40,6 +40,9 @@ namespace Backroads.World.Bake
         /// <summary>Plates per registered source, by name.</summary>
         public readonly SortedDictionary<string, int> sourcePlates = new SortedDictionary<string, int>(StringComparer.Ordinal);
         public List<BridgeDeck> decks = new List<BridgeDeck>();
+        /// <summary>T3.3: first nature (W6) and the provisional places (W7).</summary>
+        public NatureResult nature;
+        public PlacesResult places;
         /// <summary>The ground before the river step and the plates (DEM + micro-noise), for reports and tests.</summary>
         public float[] natural;
         public readonly Dictionary<string, double> ms = new Dictionary<string, double>();
@@ -54,7 +57,8 @@ namespace Backroads.World.Bake
     /// </summary>
     public static class WorldBake
     {
-        public const int Version = 1;
+        /// <summary>1: T3.2 (terrain, river, surfaces, plates); 2: T3.3 (nature, places, buildings, the map).</summary>
+        public const int Version = 2;
 
         public static WorldGridLayout LayoutFor(TownSource t)
         {
@@ -113,6 +117,11 @@ namespace Backroads.World.Bake
             Lap("plates");
             res.carriageway = RoadDistanceStep.Run(g, res.applied.carriageway);
             Lap("road distance");
+            res.nature = NatureStep.Run(g, res.town, res.river, res.surfaces, res.applied, res.natural, o.seed);
+            Lap("nature");
+            res.places = PlacesStep.Run(g, res.town, res.river, res.applied);
+            PlacesStep.Cameras(g, res.town, res.river, res.applied, res.decks, res.places);
+            Lap("places");
             return res;
         }
     }

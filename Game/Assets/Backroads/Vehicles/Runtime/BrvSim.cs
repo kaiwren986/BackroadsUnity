@@ -308,6 +308,8 @@ namespace Backroads.Vehicles
             if (wl > 14) s.angVel *= 14 / wl;
 
             // integrate
+            s.prePos = s.pos;
+            s.preQuat = s.quat;
             s.pos.x += s.vel.x * dt; s.pos.y += s.vel.y * dt; s.pos.z += s.vel.z * dt;
             {
                 double4 q = s.quat; double3 wv = s.angVel;
@@ -792,6 +794,9 @@ namespace Backroads.Vehicles
             var buf = new FixedList4096Bytes<int>();
             QueryColliders(w, bx, bz, Hypot(hw, hl) + 3, ref buf);
             int treeKind = 0; // ColliderGrid.Kinds[0] == "tree"
+            // with the PhysX chassis (T3.6) PhysX resolves every static contact; BRV keeps only the browser game's
+            // tree knock-over (a fast enough vehicle snaps the tree and drives on), decided before PhysX sees the tree
+            bool physx = w.physx;
             for (int bi = 0; bi < buf.Length; bi++)
             {
                 int ci = buf[bi];
@@ -819,6 +824,7 @@ namespace Backroads.Vehicles
                     // world normal pointing from vehicle towards obstacle
                     double nx = lx * nlx + fx * nlz, nz = lz * nlx + fz * nlz;
                     double cpx = bx + lx * qx + fx * qz, cpz = bz + lz * qx + fz * qz;
+                    if (physx && !(c.kind == treeKind && c.tree >= 0)) continue;
                     if (c.kind == treeKind && c.tree >= 0)
                     {
                         double vn = VelDot(s, cpx - s.pos.x, 0, cpz - s.pos.z, nx, 0, nz);
@@ -839,10 +845,12 @@ namespace Backroads.Vehicles
                             continue;
                         }
                     }
+                    if (physx) continue;
                     ResolveStatic(ref s, -nx, -nz, pen, cpx, s.pos.y, cpz, c.kind == treeKind ? 0.15 : 0.25);
                 }
                 else
                 {
+                    if (physx) continue;
                     // OBB vs OBB in the ground plane (separating axis test)
                     double cs = Math.Cos(c.rot), sn = Math.Sin(c.rot);
                     double c1x = cs, c1z = -sn, c2x = sn, c2z = cs;

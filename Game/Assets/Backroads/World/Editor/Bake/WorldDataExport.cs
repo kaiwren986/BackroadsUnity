@@ -30,6 +30,10 @@ namespace Backroads.World.Bake
         public static readonly string[] LayerFiles =
             { "terrain/heights.f32", "terrain/base.f32", "terrain/surface.u8", "terrain/wear.u8", "terrain/roadd.u8", "terrain/mud.u8", "terrain/tint.f32" };
 
+        /// <summary>The other files beside the layers (T3.2: water, structures; T3.3: vegetation, places, buildings, the map).</summary>
+        public static readonly string[] OtherFiles =
+            { "buildings.json", "map.png", "places.json", "structures.json", "vegetation.json", "water.json" };
+
         public static string WorldDir(string worldId) => RepoPaths.InRepo("WorldData/" + worldId + "/v1");
 
         static readonly CultureInfo Inv = CultureInfo.InvariantCulture;
@@ -50,6 +54,10 @@ namespace Backroads.World.Bake
                 ["water.json"] = Encoding.UTF8.GetBytes(WaterJson(r)),
                 ["structures.json"] = Encoding.UTF8.GetBytes(StructuresJson(r)),
             };
+            if (r.nature != null) f["vegetation.json"] = Encoding.UTF8.GetBytes(WorldDataExtras.Vegetation(r.nature));
+            if (r.places != null) f["places.json"] = Encoding.UTF8.GetBytes(WorldDataExtras.Places(r.places));
+            f["buildings.json"] = Encoding.UTF8.GetBytes(WorldDataExtras.Buildings(r.town));
+            f["map.png"] = WorldDataExtras.Map(r);
             return f;
         }
 

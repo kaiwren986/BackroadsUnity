@@ -132,6 +132,7 @@ namespace Backroads.World
 
         public static void Unload()
         {
+            if (s_Grid != null) ActiveWorld.Clear(s_Grid);
             s_Grid?.Dispose();
             s_Grid = null;
             s_Colliders?.Dispose();

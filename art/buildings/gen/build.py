@@ -397,6 +397,7 @@ class Building:
             for d in self.doors_by_edge.get(i, []):
                 y0, y1 = self.door_dims(d)
                 u0, u1 = d['u'] - d['width'] / 2, d['u'] + d['width'] / 2
+                y1 = min(y1, top_min(u0, u1) - 0.12)   # a door in a low wall (a lean-to) stays under its roof
                 ops.append({'u0': u0, 'u1': u1, 'y0': y0, 'y1': y1, 'kind': 'door', 'door': d, 'storey': 0})
                 door_iv.append((u0 - 0.45, u1 + 0.45))
                 if fam == 'block' and d['kind'] == 'Main' and y1 + 0.55 < self.groundH - 1.0:
@@ -630,7 +631,9 @@ class Building:
             self.door_trim(body, panes, wf, o, dep)
             if kind == 'door':
                 d = o['door']
-                self.markers.append(('DOOR_%s_%02d' % (d['kind'], d['spec']), wf.P((u0 + u1) / 2, y0, 0.0),
+                # NN = the spec's index among its building's site door specs; lane A's own rule doors (no site spec) are A<NN>
+                tag = ('A%02d' if d.get('fallback') else '%02d') % d['spec']
+                self.markers.append(('DOOR_%s_%s' % (d['kind'], tag), wf.P((u0 + u1) / 2, y0, 0.0),
                                      {'kind': d['kind'], 'width': round(u1 - u0, 4), 'height': round(y1 - y0, 4), 'spec': d['spec']}))
 
     def leaf_swatch(self, o):

@@ -108,5 +108,12 @@ namespace Backroads.Vehicles
 
         /// <summary>Fixed steps simulated since spawn (not in the JS; for diagnostics and the snapshot test).</summary>
         public long steps;
+
+        /// <summary>
+        /// The pose of the last step just before it was integrated (after the hull and static corrections): where the
+        /// PhysX chassis starts its own integration (T3.6). Transient, rewritten every step, not in snapshots.
+        /// </summary>
+        public double3 prePos;
+        public double4 preQuat;
     }
 }

@@ -1148,8 +1148,7 @@
           "gateJson": true,
           "heavy": true,
           "headline": true,
-          "hard": false,
-          "pending": "World.BakeDeterministic, ManifestHashes, RiverLevels, DemFidelity (T3.2) (lane W) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "hard": true,
           "owner": "W"
         },
         {
@@ -1280,8 +1279,7 @@
           "gateJson": true,
           "heavy": true,
           "headline": true,
-          "hard": false,
-          "pending": "m3.shots.millbrook (T3.3) (lane W) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "hard": true,
           "owner": "W"
         },
         {
@@ -1299,8 +1297,7 @@
           ],
           "gateJson": true,
           "heavy": true,
-          "hard": false,
-          "pending": "Art.BuildingsBudget, BuildingsDeterministic, DoorsMatchSites (T3.4) (lane A) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "hard": true,
           "owner": "A"
         },
         {
@@ -1316,8 +1313,7 @@
           ],
           "gateJson": true,
           "heavy": true,
-          "hard": false,
-          "pending": "the BRV v2 lane gates (T3.5; the category name is a placeholder until T3.5 names them) (lane V) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "hard": true,
           "owner": "V"
         },
         {
@@ -1339,7 +1335,6 @@
           "heavy": true,
           "perf": true,
           "hard": false,
-          "pending": "m3.perf.flythrough on Millbrook, report only until the M5 budget (T3.3) (lane W) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
           "owner": "W"
         },
         {
@@ -1678,8 +1673,7 @@
           "gateJson": true,
           "heavy": true,
           "headline": true,
-          "hard": false,
-          "pending": "World.BakeDeterministic, ManifestHashes, RiverLevels, DemFidelity (T3.2) (lane W) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "hard": true,
           "owner": "W"
         },
         {
@@ -1810,8 +1804,7 @@
           "gateJson": true,
           "heavy": true,
           "headline": true,
-          "hard": false,
-          "pending": "m3.shots.millbrook (T3.3) (lane W) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "hard": true,
           "owner": "W"
         },
         {
@@ -1829,8 +1822,7 @@
           ],
           "gateJson": true,
           "heavy": true,
-          "hard": false,
-          "pending": "Art.BuildingsBudget, BuildingsDeterministic, DoorsMatchSites (T3.4) (lane A) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "hard": true,
           "owner": "A"
         },
         {
@@ -1846,8 +1838,7 @@
           ],
           "gateJson": true,
           "heavy": true,
-          "hard": false,
-          "pending": "the BRV v2 lane gates (T3.5; the category name is a placeholder until T3.5 names them) (lane V) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "hard": true,
           "owner": "V"
         },
         {
@@ -1869,7 +1860,6 @@
           "heavy": true,
           "perf": true,
           "hard": false,
-          "pending": "m3.perf.flythrough on Millbrook, report only until the M5 budget (T3.3) (lane W) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
           "owner": "W"
         },
         {
