@@ -53,6 +53,8 @@ namespace Backroads.Vehicles
         public bool absOff;
         /// <summary>Engine torque at the crank in the last substep (N m, for reports).</summary>
         public double engineTorque;
+        /// <summary>Crawl control's engine torque cut in low range, 0..1 (a driven wheel slipping past the tyre's peak).</summary>
+        public double tcCut;
     }
 
     /// <summary>The winch rope (vehicle.js this.winch): pull only; the drum takes in slack and reels while W is held.</summary>

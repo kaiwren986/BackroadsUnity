@@ -254,10 +254,10 @@ namespace Backroads.Tests.PlayMode.Vehicles
 
         // ------------------------------------------------------------------ locked diff, turning circle
 
-        static double TurningRadius(BrvWorldData world, string id, bool lockRear, bool lockFront, double speed, out double measuredSpeed)
+        static double TurningRadius(BrvWorldData world, string id, bool lockRear, bool lockFront, double speed, out double measuredSpeed, bool v2 = true)
         {
             using var rig = new TrackRig(2, world);
-            int i = rig.Add(id);
+            int i = rig.Add(id, v2);
             rig.Place(i, BrvTestTrack.SkidpadCentre.x, BrvTestTrack.SkidpadCentre.y, 0);
             rig.Fleet.SetLockers(i, lockFront, lockRear);
             double sumV = 0, sumW = 0; int n = 0;

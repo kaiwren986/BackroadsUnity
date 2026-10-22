@@ -111,7 +111,7 @@ namespace Backroads.Tests.EditMode.Vehicles
             s.dl = new BrvDriveline
             {
                 init = true, crankOmega = 245.75, crankAngle = 1.25, driveOmega = 61.5, clutch = 0.875,
-                lamClutch = 0.0625, lamDiffFront = -0.03125, lamDiffRear = 0.5, lockRear = true, absOff = true, engineTorque = 301.25,
+                lamClutch = 0.0625, lamDiffFront = -0.03125, lamDiffRear = 0.5, lockRear = true, absOff = true, engineTorque = 301.25, tcCut = 0.375,
             };
             for (int i = 0; i < s.wheels.Length; i++)
             {
@@ -131,13 +131,14 @@ namespace Backroads.Tests.EditMode.Vehicles
             var back = BrvSnapshot.FromBytes(v2, d.WheelCount);
             CollectionAssert.AreEqual(v2, BrvSnapshot.ToBytes(back), "version 2 round trip");
             Assert.AreEqual(s.dl.crankOmega, back.dl.crankOmega);
+            Assert.AreEqual(s.dl.tcCut, back.dl.tcCut);
             Assert.IsTrue(back.dl.lockRear && back.dl.absOff && back.dl.init);
             Assert.AreEqual(s.wheels[3].absCut, back.wheels[3].absCut);
 
             // version 1 (frozen at m2): the same bytes as before T3.5, and readable by this build
             var v1 = BrvSnapshot.ToBytes(s, BrvSnapshot.Version1);
             Assert.AreEqual(1659, v1.Length, "ADR-005: 1,659 bytes for a four-wheel vehicle");
-            Assert.AreEqual(1659 + 1 + 8 * 8 + 4 * 10 * 8, v2.Length, "version 2 = version 1 + the shaft block");
+            Assert.AreEqual(1659 + 1 + 9 * 8 + 4 * 10 * 8, v2.Length, "version 2 = version 1 + the shaft block");
             for (int i = 6; i < v1.Length; i++) Assert.AreEqual(v1[i], v2[i], $"byte {i}: version 2 must start with the version 1 layout");
             var old = BrvSnapshot.FromBytes(v1, d.WheelCount);
             Assert.AreEqual(s.pos, old.pos); Assert.AreEqual(s.gear, old.gear); Assert.AreEqual(s.steps, old.steps);

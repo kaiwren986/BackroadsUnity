@@ -209,8 +209,28 @@ namespace Backroads.Vehicles
             double hi = v.idleRpm + Math.Max(0.15, thr) * (v.redlineRpm * 0.55 - v.idleRpm);
             double target = s.engineOn ? SmoothStep(lo, Math.Max(hi, lo + 50), rpm) : 0;
             double e = s.dl.clutch;
-            e += Clamp(target - e, -12 * dt, 6 * dt);
+            // closes fast when the crank already turns with the gearbox (after a rev-matched shift), gently otherwise
+            double slip = Math.Abs(s.dl.crankOmega - V2Ratio(s, d) * s.dl.driveOmega);
+            double up = slip < 0.08 * Math.Max(Math.Abs(s.dl.crankOmega), 1) ? 20 : 6;
+            e += Clamp(target - e, -12 * dt, up * dt);
             s.dl.clutch = s.shiftT > 0 ? 0 : Clamp(e, 0, 1);
+
+            // crawl control in low range: cut the engine's torque while a driven wheel slips past the tyre's peak in the
+            // driving direction (with an open diff the brake alone cannot hold the lighter wheel), restore it as it grips
+            double worst = 0;
+            if (s.lowRange && s.gear != 0)
+            {
+                bool front = V2FrontDriven(s, d), rear = V2RearDriven(d);
+                double dir = s.gear > 0 ? 1 : -1;
+                for (int i = 0; i < s.wheels.Length; i++)
+                {
+                    var l = d.wheels[i];
+                    var wh = s.wheels[i];
+                    if (wh.contact && ((l.front && front) || (!l.front && rear))) worst = Math.Max(worst, wh.kappa * dir);
+                }
+            }
+            double over = worst / v.mfLong.peak - 1.5;
+            s.dl.tcCut = over > 0 ? Math.Min(0.9, s.dl.tcCut + Math.Min(over, 4) * 2 * dt) : Math.Max(0, s.dl.tcCut - 1.5 * dt);
         }
 
         static double SmoothStep(double a, double b, double x)
@@ -395,8 +415,17 @@ namespace Backroads.Vehicles
                 double thr = on ? Clamp(s.ctrl.throttle, 0, 1) : 0;
                 double Tc = on && s.inWater <= 0.65 ? v.engineTorque * LegacyJsEngine.TorqueCurve(Clamp(x, 0, 1)) * thr * v.drivelineEfficiency : 0;
                 Tc *= Clamp((1.02 - x) / 0.04, 0, 1);          // soft limiter between 98 and 102 % of redline
+                Tc *= 1 - s.dl.tcCut;                           // crawl control (low range)
                 double idle = v.idleRpm * Math.PI / 30;
                 double Ti = on && w0 < idle ? Math.Min((idle - w0) * v.crankInertia / 0.1, 0.5 * v.engineTorque) : 0;
+                if (on && s.shiftT > 0)
+                {
+                    // AMT shift (06 section 4.2.2): fuel cut while the clutch is open, and the ECU matches the crank to the
+                    // new gear's speed so the clutch closes without a jerk
+                    Tc = 0;
+                    double sync = Math.Max(idle, R * s.dl.driveOmega);
+                    Ti = Clamp((sync - w0) * v.crankInertia / 0.05, -0.5 * v.engineTorque, 0.5 * v.engineTorque);
+                }
                 double Td = v.engineTorque * (0.02 + 0.22 * Math.Abs(x) * (1 - thr));
                 double wn = w0 + (Tc + Ti) * hs * invI[ShCrank];
                 double dd = Td * hs * invI[ShCrank];
@@ -456,6 +485,9 @@ namespace Backroads.Vehicles
                 double Trest = v.bearingTorque + (q.contact ? q.crr * Fz * r : 0);
                 double Tfoot = v.brakeTorque * foot;
                 bool absMode = absOn && q.contact && Tfoot > 0 && !q.hand && Math.Abs(vx) > 1.0;
+                // crawl control in low range (06 section 3.6, the JS "low range claws instead of digging"): a driven wheel
+                // may not spin past the tyre's peak slip in the driving direction; its brake takes the excess
+                bool crawl = !absMode && s.lowRange && q.drive && q.contact && Tfoot == 0 && !q.hand && s.gear != 0 && s.ctrl.throttle > 0.05;
                 q.rB = nr;
                 V2Row rb;
                 if (absMode)
@@ -466,6 +498,15 @@ namespace Backroads.Vehicles
                     rb.bias = wt;
                     wh.anchorB = 0;
                 }
+                else if (crawl)
+                {
+                    double dir = s.gear > 0 ? 1 : -1;
+                    double T = (v.brakeTorque + Trest) * hs;
+                    double wcap = (vx + dir * AbsSlip * v.mfLong.peak * vref) / r;
+                    rb = dir > 0 ? ShaftRow(sh, 1, -1, 0, -1, 0, -T, 0, invI, wh.lamB * ws0) : ShaftRow(sh, 1, -1, 0, -1, 0, 0, T, invI, wh.lamB * ws0);
+                    rb.bias = wcap;
+                    wh.anchorB = 0;
+                }
                 else
                 {
                     double Tb = Tfoot + (q.hand ? v.handbrakeTorque : 0) + Trest;
@@ -474,7 +515,7 @@ namespace Backroads.Vehicles
                     rb.bias = -brakeStatic * wh.anchorB / AnchorTau;
                     if (brakeStatic == 0) wh.anchorB = 0;
                 }
-                q.abs = absMode;
+                q.abs = absMode || crawl;
                 q.brakeMax = absMode ? Tfoot * hs : 0;
                 rows[nr++] = rb;
 

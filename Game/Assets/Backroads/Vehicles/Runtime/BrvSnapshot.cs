@@ -74,7 +74,7 @@ namespace Backroads.Vehicles
             var dl = s.dl;
             w.Write((byte)((dl.init ? 1 : 0) | (dl.lockFront ? 2 : 0) | (dl.lockRear ? 4 : 0) | (dl.absOff ? 8 : 0)));
             w.Write(dl.crankOmega); w.Write(dl.crankAngle); w.Write(dl.driveOmega); w.Write(dl.clutch);
-            w.Write(dl.lamClutch); w.Write(dl.lamDiffFront); w.Write(dl.lamDiffRear); w.Write(dl.engineTorque);
+            w.Write(dl.lamClutch); w.Write(dl.lamDiffFront); w.Write(dl.lamDiffRear); w.Write(dl.engineTorque); w.Write(dl.tcCut);
             for (int i = 0; i < s.wheels.Length; i++)
             {
                 var h = s.wheels[i];
@@ -132,7 +132,7 @@ namespace Backroads.Vehicles
             byte fl = r.ReadByte();
             s.dl.init = (fl & 1) != 0; s.dl.lockFront = (fl & 2) != 0; s.dl.lockRear = (fl & 4) != 0; s.dl.absOff = (fl & 8) != 0;
             s.dl.crankOmega = r.ReadDouble(); s.dl.crankAngle = r.ReadDouble(); s.dl.driveOmega = r.ReadDouble(); s.dl.clutch = r.ReadDouble();
-            s.dl.lamClutch = r.ReadDouble(); s.dl.lamDiffFront = r.ReadDouble(); s.dl.lamDiffRear = r.ReadDouble(); s.dl.engineTorque = r.ReadDouble();
+            s.dl.lamClutch = r.ReadDouble(); s.dl.lamDiffFront = r.ReadDouble(); s.dl.lamDiffRear = r.ReadDouble(); s.dl.engineTorque = r.ReadDouble(); s.dl.tcCut = r.ReadDouble();
             for (int i = 0; i < n; i++)
             {
                 ref var h = ref s.wheels.ElementAt(i);

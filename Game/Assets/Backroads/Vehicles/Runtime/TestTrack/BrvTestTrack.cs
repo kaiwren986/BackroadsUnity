@@ -10,7 +10,8 @@ namespace Backroads.Vehicles
     /// built straight into WorldGrid layers (no canon). JS world space, metres; the ground is at <see cref="Ground"/>
     /// (above the water line), grass unless a feature says otherwise.
     /// <list type="bullet">
-    /// <item>Flat asphalt pad 300 x 320 m (launch, ABS stops, turning circles) with the 30 m skidpad on it;</item>
+    /// <item>Flat asphalt pad 300 x 400 m (launch lane along its east edge, ABS stops, turning circles) with the 30 m
+    /// skidpad on it;</item>
     /// <item>four asphalt ramp lanes at 10, 20, 30 and 35 % (40 m up, a 12 m plateau, 40 m down);</item>
     /// <item>a concrete lane of ten 150 mm steps every 3 m;</item>
     /// <item>a mud patch 40 x 50 m, 0.6 m of mud;</item>
@@ -24,7 +25,9 @@ namespace Backroads.Vehicles
         public const double Ground = 5.0;
 
         // flat pad (asphalt)
-        public const double PadX0 = -150, PadX1 = 150, PadZ0 = -420, PadZ1 = -100;
+        public const double PadX0 = -150, PadX1 = 150, PadZ0 = -500, PadZ1 = -100;
+        /// <summary>The launch lane runs north (+z) along x = LaunchX, clear of the skidpad and the ABS lane.</summary>
+        public const double LaunchX = 120;
         public static readonly double2 PadStart = new double2(0, -400);
         public static readonly double2 SkidpadCentre = new double2(0, -260);
         public const double SkidpadRadius = 30;
