@@ -2,12 +2,12 @@
 
 Branch `m3/v-brv-core` in `D:\Backroads-Unity-wt\v`, cut from `main` at `bbe542f`. Commits `4743413` (shafts, MF tyres,
 ABS, test track, lane gates), `06cd934` (conformance suite v0, self-traces, perf, crawl control), `47b5d98` (overspeed
-protection, ADR-005 version 2), `2ae0cc6` (the perf tests' CPU helper out of the vehicles path) and this handoff.
-Nothing was pushed, installed, downloaded or signed into; Unity ran only through `tools\ci\*.ps1`. `D:\Backroads`,
+protection, ADR-005 version 2), `2ae0cc6` (the perf tests' CPU helper out of the vehicles path), `3dc6eff` (this
+handoff, first version), `0b0736d` (main `c5c147f` merged in: T3.1, S2, T3.4), `bc242dd` (step 2: the track on its own
+`WorldGridLayout`, the `BrvTestTrack` scene) and this update. Nothing was pushed, installed, downloaded or signed into; Unity ran only through `tools\ci\*.ps1`. `D:\Backroads`,
 `CanonData\v1` and the shared contracts are untouched.
 
-**Card status: steps 1 and 3 done; step 2 (the `BrvTestTrack` scene on a `WorldGridLayout`) waits for lane W's T3.1 on
-main** (see Next).
+**Card status: done** (steps 1, 2 and 3).
 
 ## In plain words
 
@@ -19,8 +19,9 @@ the clutch, gears, differentials, brakes and tyres together, four times per phys
 Magic Formula tables, so grip peaks and falls off with slip like a real tyre. ABS holds braking wheels just under that
 peak, and in low range a crawl control stops the driven wheels digging in.
 
-On a new test track (flat pad and skidpad, 10/20/30/35 % ramps, 150 mm steps, a mud patch, a wheel pit), every M2
-vehicle stands still on a 35 % ramp with the driver's feet off the pedals. The hatch stops from 100 km/h in 40 m with
+A new scene, `BrvTestTrack`, holds the test track: a flat pad with a skidpad, 10/20/30/35 % ramps, 150 mm steps, a mud
+patch and a wheel pit, on a world grid of its own. Open it in the editor and drive the four vehicles there on v2. On
+that track every M2 vehicle stands still on a 35 % ramp with the driver's feet off the pedals. The hatch stops from 100 km/h in 40 m with
 ABS. With one wheel in the air, the open differential spins that wheel up smoothly to the engine's limit. A locked
 differential widens the turning circle by 7-12 %. 1,000 random 60-second runs never produce a NaN or a runaway.
 
@@ -41,7 +42,9 @@ game's 1.0-1.2 g), stops longer and launches slower. Tuning that is M4's job (`V
 | 3 | **Snapshot version 2 with the version 1 reader** (ADR-005 updated): version 1, byte for byte, plus the shaft block (driveline, warm starts, anchors, crawl cut; 2,052 bytes for four wheels); version 1 snapshots still load (the first v2 step re-syncs the shafts) | `BrvSnapshot.cs`, `docs/adr/ADR-005-brv-snapshot.md` |
 | 3 | **Vehicle conformance suite v0** (`Vehicle.ConformanceV0`): every M2 vehicle, V0 and v2 side by side on the track: 0-60 km/h, speed after 380 m, 80-0 km/h, skidpad lateral g on the 30 m circle (a path-following driver), full-lock radius at 2 m/s, hill starts on 20 % and 35 % (low range), the 150 mm steps, 15 s of mud; `artifacts\vehicles\conformance-v0.md` | `Tests/PlayMode/Vehicles/VehicleV2SuiteTests.cs` |
 | 3 | **Unity self-trace baseline [S17]** (`Vehicle.SelfTraces`): the six golden-trace inputs replayed by Unity on canon v1 with V0 and with v2, against a committed baseline in the oracle's JSON format (12 files, 0.5 MB; `GoldenTraceSamples.ToJson`); gates within 2 %, positions within 5 cm off the mud. Re-record with `BR_RECORD_SELF_TRACES=1` | `Tests/PlayMode/Vehicles/SelfTraces~/v0`, `v2`, `Vehicles/Runtime/Reference/GoldenTrace.cs` |
-| (2) | **The test track itself** (without the scene): `BrvTestTrack` builds an analytic WorldGrid on the canon grid size: asphalt pad 300 x 400 m with a launch lane and the 30 m skidpad, four asphalt ramp lanes at 10/20/30/35 % (40 m up, 12 m plateau, 40 m down), ten 150 mm concrete steps, a 40 x 50 m patch of 0.6 m mud, a 2 m deep wheel pit in an asphalt apron. `BrvSim.PlaceAligned` places a vehicle on a slope. `BrvFleet` takes a capacity (50 for the perf gate), `SetLockers`, `SetAbs`, `SetRolling`; a world without static colliders gets empty collider arrays (jobs need valid containers) | `Vehicles/Runtime/TestTrack/BrvTestTrack.cs`, `BrvFleet.cs`, `BrvWorld.cs` |
+| 2 | **The test track**: `BrvTestTrack` builds an analytic WorldGrid on a `WorldGridLayout` of its own (`BrvTestTrack.Layout`, 1,024 m at 0.5 m; T3.1), or on any layout that holds it: asphalt pad 300 x 400 m with a launch lane and the 30 m skidpad, four asphalt ramp lanes at 10/20/30/35 % (40 m up, 12 m plateau, 40 m down), ten 150 mm concrete steps, a 40 x 50 m patch of 0.6 m mud, a 2 m deep wheel pit in an asphalt apron. `BrvSim.PlaceAligned` places a vehicle on a slope. `BrvFleet` takes a capacity (50 for the perf gate), `SetLockers`, `SetAbs`, `SetRolling`; a world without static colliders gets empty collider arrays (jobs need valid containers) | `Vehicles/Runtime/TestTrack/BrvTestTrack.cs`, `BrvFleet.cs`, `BrvWorld.cs` |
+| 2 | **BRV reads the world's size from its grid** (T3.1): the browser game's island clamp is `layout.Half - 6` (was 512 - 6) and the static-collider lookup uses the collider grid's `CellsPerSide` (`BrvWorld.colliderCells`, was 64); `JsRutSink` and the tests index through the grid's layout. V0 on canon v1 is unchanged (golden traces 8.2e-13 m as before); `Vehicle.WorldEdgeFollowsLayout` holds V0 and v2 at 250 m on a 512 m layout | `BrvSim.cs`, `BrvWorld.cs`, `Tests/PlayMode/Vehicles/JsRutSink.cs` |
+| 2 | **The `BrvTestTrack` scene** (`Scenes/BrvTestTrack.unity`: a camera, a sun, the default sky and `BrvTestTrackWorld`; written by `BrvTestTrackSceneBuilder`, menu *Backroads > Vehicles > Build BrvTestTrack scene*). When it loads it builds the track, draws it with lane W's `TerrainChunkSystem` (`MillbrookLook`'s terrain material), keeps ruts with lane W's `DeformSystem`, puts the four M2 vehicles on the south end of the pad on BRV v2 (`-br-brv-v0` keeps them on V0 for a comparison) and the player in the truck; lane W's camera rig and input follow `PlayerVehicle.Current` as in the canon test world. `Vehicle.TestTrackScene` loads the scene file and drives the truck off (13.5 m in 4 s). Pictures: `M3-handoff-V-T3.5/t35-00-testtrack-chase.png` (behind the truck on the pad, the ramps ahead) and `t35-01-testtrack-ramps.png` (the four ramps and the step lane) | `Vehicles/Client/BrvTestTrackWorld.cs`, `Vehicles/Editor/BrvTestTrackSceneBuilder.cs`, `Scenes/BrvTestTrack.unity`, `Tests/PlayMode/Vehicles/TestTrackSceneTests.cs` |
 
 ## Done when, expected vs measured
 
@@ -101,8 +104,10 @@ deltas as M2, `SnapshotRoundTrip`, `SettleParked`, `BurstMatchesManaged`).
 7. **Lockers** have no key yet (M7: lockers and the transfer case); `BrvFleet.SetLockers` for tests and tools.
 8. The **dozer** (tracked) stays on V0 until M7.
 9. **Perf** numbers are provisional (see For I 2), and this CPU has no E-cores.
-10. **Self-traces** run on canon v1 (pure v1, like the M2 golden traces), the test world until T3.1 renames it.
+10. **Self-traces** run on canon v1 (pure v1, like the M2 golden traces), the canon test world's data.
 11. **Snapshot version 2** is a draft until the `m4` tag (M4's coupling may add to the shaft block; ADR-005).
+12. **The test-track scene's camera** has no ground collision: lane W's `VehicleCameraRig` and `FreeFlyCamera` read the
+    ground from `CanonRuntime` only (For W). The terrain shader blends surfaces, so the asphalt edges look soft.
 
 ## For I
 
@@ -115,20 +120,23 @@ deltas as M2, `SnapshotRoundTrip`, `SettleParked`, `BurstMatchesManaged`).
    `machine.lock`, every slot and the GPU lock, waits for an idle machine, refuses on battery, and sets `BR_PERF_GATE=1`
    for Unity. The test then asserts the budget itself (outside such a run it allows 3x the budget). Then a gate step
    (`perf: true`) for M3.
-3. **T3.1's scene rename**: lane W's patch changes `Vehicles/Client/VehicleSpawner.cs` (`SceneName = "CanonTestWorld"`),
-   a lane V file. Lane V agrees: apply it with T3.1, or lane V makes the one-line change on its branch after T3.1 lands.
+3. **`BuildCli.Scenes`**: add `Assets/Backroads/Scenes/BrvTestTrack.unity` to Dev builds if you want the test track
+   in the player (then an autotest can drive it); today it opens in the editor and in PlayMode tests.
 4. Two new test assemblies (lane V paths): `Backroads.Tests.Perf.Vehicles` (PlayMode, `Tests/Perf/Vehicles/`) and
    `Backroads.Tests.Perf.EngineSim` (`Tests/Perf/EngineSim/`: `CpuCores`, P-core/E-core detection and thread pinning
    for perf tests; it lives there because Architecture rule 3 allows no `DllImport` under a `/Vehicles/` path).
 
+## For W
+
+- `VehicleCameraRig`, `FreeFlyCamera` and `Ground` take the ground from `CanonRuntime` only, so on the test track (and
+  on any other grid) the camera has no ground collision. A "current world grid" that scenes register would fix both.
+
 ## Next
 
-- **Step 2, as soon as T3.1 is on main**: merge main into this branch; port `BrvTestTrack` to a `WorldGridLayout` of
-  its own (`WorldGrid.FromFunctions` plus the mud layer; the instance `Index`); make `BrvSim.HALF` / `CGN` read the
-  grid's layout and the collider grid's `CellsPerSide`; switch `JsRutSink` to `WorldGridLayout.CanonV1`. Then the
-  `BrvTestTrack.unity` scene (lane V path): the track rendered by lane W's `TerrainChunkSystem`, the four vehicles on
-  v2, the player in the truck. Re-run the gates and finish this handoff.
-- **T3.6** (PhysX chassis), cut from this branch once T3.5 is done.
+- **T3.6** (PhysX chassis), on `m3/v-physx-chassis` cut from this branch: the test-world part first (PhysX statics from
+  the 4,013 canon colliders, `Vehicle.BuildingImpact` on the canon test world); the Millbrook statics after T3.3.
+- **M4**: SLAVED_CRANK coupling into BRV v2 (engine-sim's indicated torque replaces the torque map), the truck driveline
+  and AMT/manual of PLAN M4, launch and grip tuning on the test track (`Vehicle.LaunchContinuity`).
 
 ## Resume
 
@@ -142,12 +150,21 @@ tools\ci\unity-tests.ps1 -Platform PlayMode -Category "BrvV2" -NoGraphics -Timeo
 $env:BR_RECORD_SELF_TRACES='1'; tools\ci\unity-tests.ps1 -Platform PlayMode -NoGraphics -TestFilter "Backroads.Tests.PlayMode.Vehicles.Vehicle.SelfTraces"   # only after an intended v2 change
 ```
 
-Run the game on v2 with `-br-brv-v2`.
+Rewrite the scene only after changing its builder: `tools\ci\project-unity.ps1 -Method
+Backroads.Vehicles.Editor.BrvTestTrackSceneBuilder.BuildCli`. Run the game on v2 with `-br-brv-v2`; open
+`Scenes/BrvTestTrack.unity` in the editor and press Play to drive the track.
 
 ## Merge gate
 
-`$env:BR_OWNERS_BASE = 'main'; $env:BR_OWNERS_LANE = 'V'; tools\ci\gate.ps1 -Tier merge` (lane V paths only):
-**pass, 8 of 8 steps** (2026-10-22, run `artifacts\20261022-1139\gate-merge`, on `2ae0cc6`): oracle.hash; vendor.check
+`$env:BR_OWNERS_BASE = 'main'; $env:BR_OWNERS_LANE = 'V'; tools\ci\gate.ps1 -Tier merge` (lane V paths only), on the
+finished card: **pass, 8 of 8 steps** (2026-10-22, run `artifacts\20261022-1223\gate-merge`, on `bc242dd`, main
+`c5c147f` merged in): oracle.hash; vendor.check (584 files, 0 differences); native.ctest; unity.editmode 253 passed,
+1 skipped, 0 failed (with `Repo.OwnersRespected`); unity.playmode 20 of 20 (the BrvV2 lane gates except the 1,000-seed
+fuzz, the test-track scene, the world-edge test, `Perf.Vehicles.StepCost`, every M2 vehicle test); build.servercompile;
+build.dev (231 MiB); autotest.smoke. `EngineSimPlugin.dll` restored afterwards. Then the nightly
+`Vehicle.StabilityFuzz` on the same code: 1,000 seeds x 60 s, 0 failures (the same numbers as before the port).
+
+Before step 2 (steps 1 and 3 only): **pass, 8 of 8** (run `artifacts\20261022-1139\gate-merge`, on `2ae0cc6`): oracle.hash; vendor.check
 (584 files, 0 differences); native.ctest; unity.editmode 211 passed, 1 skipped, 0 failed (with `Repo.OwnersRespected`);
 unity.playmode 18 of 18 (the BrvV2 lane gates except the 1,000-seed fuzz, `Perf.Vehicles.StepCost`, every M2 vehicle
 test); build.servercompile; build.dev (231 MiB); autotest.smoke. The native step's `EngineSimPlugin.dll` was restored
