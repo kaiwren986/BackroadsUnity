@@ -60,6 +60,12 @@ namespace Backroads.Roads
         /// <summary>Cross sections (card step 2): lane widths by class, parking lane, gutter pan, class defaults (kerb to kerb).</summary>
         public double laneHighway = 3.6, laneMain = 3.3, laneStreet = 3.3, laneDirt = 2.7, laneYard = 3.0, parkingLane = 2.4, gutter = 0.6;
         public double streetWidth = 9.0, ruralStreetWidth = 6.2, dirtWidth = 5.4, yardWidth = 6.0;
+        /// <summary>
+        /// Fitting to buildings (roads-R1): a side whose half-width would reach within fitMargin of a mapped building
+        /// narrows to clear it, but never below one lane (floors by class; yards and alleys 1.5 m); buildings beyond a
+        /// piece's ends (or within fitEnds of them) belong to the cross street and do not count.
+        /// </summary>
+        public double fitMargin = 0.3, fitEnds = 0.0, floorThrough = 3.3, floorStreet = 2.75, floorDirt = 1.8, floorYard = 1.5;
         /// <summary>Speeds by class (km/h) where maxspeed is not tagged: 55 mph highways, 25 mph in town, 10 mph yards.</summary>
         public double speedHighway = 88.5, speedTown = 40.2, speedDirt = 40.2, speedYard = 16.1;
     }
@@ -127,6 +133,9 @@ namespace Backroads.Roads
         /// <summary>Final centreline height minus the bare-earth DEM, outside bridge decks (metres).</summary>
         public double demMeanAbs, demP95Abs, demMaxAbs;
         public int featuresPlaced, featuresOutside;
+        /// <summary>Road sides narrowed to clear a building, and sides that cannot clear one even at one lane.</summary>
+        public readonly List<string> fitted = new List<string>();
+        public readonly List<string> cannotClear = new List<string>();
     }
 
     /// <summary>
@@ -183,6 +192,10 @@ namespace Backroads.Roads
             public readonly List<(OsmRoadSource.Way way, bool reversed)> segWays = new List<(OsmRoadSource.Way, bool)>();
             public bool cutStart, cutEnd, deck;
             public bool inKerb, inDowntown;
+            /// <summary>The nearest building corner to the centreline on each side (away from the ends), +inf when none.</summary>
+            public double nearL = double.PositiveInfinity, nearR = double.PositiveInfinity;
+            /// <summary>A mapped building stands inside the road's one-lane floor: no width clears it (reported).</summary>
+            public bool buildingConflict;
             public double[] S()
             {
                 var s = new double[p.Count];
@@ -229,6 +242,7 @@ namespace Backroads.Roads
             var clipped = new List<Chain>();
             foreach (var c in pieces) clipped.AddRange(Clip(c, src.playHalf - st.edgeInset, st, report));
             clipped = Groups(clipped, report);
+            NearestBuildings(clipped, src, st);
 
             var input = new RoadGraphInput
             {
@@ -236,7 +250,7 @@ namespace Backroads.Roads
                 zonePolygon = src.kerbZone ?? Array.Empty<D2>(), downtownPolygon = src.downtownZone,
             };
             for (int i = 0; i < clipped.Count; i++) clipped[i].id = i;
-            foreach (var c in clipped) input.roads.Add(ToRoad(c, st));
+            foreach (var c in clipped) input.roads.Add(ToRoad(c, st, report));
             report.roads = input.roads.Count;
             for (int i = 0; i < report.edgeCuts.Count; i++)
             {
@@ -1158,12 +1172,49 @@ namespace Backroads.Roads
 
         // ------------------------------------------------------------------ 5 roads and cross sections
 
-        static RoadGraphInput.Road ToRoad(Chain c, OsmImportSettings st)
+        /// <summary>For each piece, the nearest building corner on each side of the centreline, ignoring the ends (the cross streets' buildings).</summary>
+        static void NearestBuildings(List<Chain> pieces, OsmRoadSource src, OsmImportSettings st)
+        {
+            if (src.footprints.Count == 0) return;
+            foreach (var c in pieces)
+            {
+                var s = c.S();
+                double L = s[s.Length - 1];
+                double lo = Math.Min(st.fitEnds, 0.25 * L), hi = L - lo;
+                double minX = double.MaxValue, minZ = double.MaxValue, maxX = double.MinValue, maxZ = double.MinValue;
+                foreach (var p in c.p) { minX = Math.Min(minX, p.x); maxX = Math.Max(maxX, p.x); minZ = Math.Min(minZ, p.z); maxZ = Math.Max(maxZ, p.z); }
+                foreach (var b in src.footprints)
+                {
+                    bool near = false;
+                    foreach (var v in b) if (v.x > minX - 15 && v.x < maxX + 15 && v.z > minZ - 15 && v.z < maxZ + 15) { near = true; break; }
+                    if (!near) continue;
+                    foreach (var v in b)
+                    {
+                        // the foot of the perpendicular on the centreline, and the side
+                        double best = double.MaxValue, sv = 0, side = 0;
+                        for (int i = 0; i + 1 < c.p.Count; i++)
+                        {
+                            D2 a = c.p[i], e = c.p[i + 1] - a;
+                            double l2 = e.Dot(e);
+                            double t = l2 > 0 ? Math.Max(0, Math.Min(1, (v - a).Dot(e) / l2)) : 0;
+                            double d = D2.Distance(a + e * t, v);
+                            if (d < best) { best = d; sv = s[i] + t * (s[i + 1] - s[i]); side = e.Cross(v - a); }
+                        }
+                        // beyond either end (the foot clamps to an end point): the cross street's building, not this road's
+                        if (sv <= lo + 1e-9 || sv >= hi - 1e-9) continue;
+                        if (side >= 0) c.nearL = Math.Min(c.nearL, best); else c.nearR = Math.Min(c.nearR, best);
+                    }
+                }
+            }
+        }
+
+        static RoadGraphInput.Road ToRoad(Chain c, OsmImportSettings st, OsmImportReport report)
         {
             var t = c.first.tags;
             var pts = new D3[c.p.Count];
             for (int i = 0; i < pts.Length; i++) pts[i] = new D3(c.p[i].x, c.y[i], c.p[i].z);
             var xs = CrossSectionOf(c, st);
+            FitToBuildings(c, xs, st, report);
             int ow = Oneway(t);
             if (c.firstReversed) ow = -ow;
             // the ways this piece really covers (a piece of a chain may cover only some of the chain's ways)
@@ -1181,6 +1232,7 @@ namespace Backroads.Roads
                 roundabout = Tag(t, "junction") == "roundabout" || Tag(t, "junction") == "circular", surface = Tag(t, "surface"),
                 sidewalk = SidewalkTag(t, c.firstReversed), parking = ParkingTag(t, c.firstReversed), speedKmh = Speed(t, c.cls, st),
                 inKerbZone = c.inKerb, inDowntown = c.inDowntown, cutStart = c.cutStart, cutEnd = c.cutEnd,
+                osmStart = c.nid[0], osmEnd = c.nid[c.nid.Count - 1], buildingConflict = c.buildingConflict,
             };
             int.TryParse(Tag(t, "layer"), NumberStyles.Integer, Inv, out r.layer);
             return r;
@@ -1274,6 +1326,32 @@ namespace Backroads.Roads
             xs.hwLeft = w / 2;
             xs.hwRight = w / 2;
             return xs;
+        }
+
+        /// <summary>Narrows a side that would reach a building (keeping fitMargin clear), down to one lane; reports both outcomes.</summary>
+        static void FitToBuildings(Chain c, CrossSection xs, OsmImportSettings st, OsmImportReport report)
+        {
+            double floor = c.cls == RoadClass.Yard ? st.floorYard : c.cls == RoadClass.Dirt ? st.floorDirt
+                : c.cls == RoadClass.Street ? st.floorStreet : st.floorThrough;
+            for (int side = 0; side < 2; side++)
+            {
+                double near = side == 0 ? c.nearL : c.nearR, hw = side == 0 ? xs.hwLeft : xs.hwRight;
+                if (double.IsInfinity(near) || hw <= near - st.fitMargin) continue;
+                double want = near - st.fitMargin;
+                double fit = Math.Max(floor, want);
+                if (fit >= hw) continue;
+                string where = string.Format(Inv, "{0} {1} side ({2}) at ({3:F0}, {4:F0})", c.cls, side == 0 ? "left" : "right", c.ways.Count > 0 ? c.ways[0] : "?", c.p[c.p.Count / 2].x, c.p[c.p.Count / 2].z);
+                if (side == 0) { xs.hwLeft = fit; xs.parkingLeft = Math.Min(xs.parkingLeft, Math.Max(0, fit - 0.5 * xs.lanes * xs.laneWidth - xs.gutter)); }
+                else { xs.hwRight = fit; xs.parkingRight = Math.Min(xs.parkingRight, Math.Max(0, fit - 0.5 * xs.lanes * xs.laneWidth - xs.gutter)); }
+                if (!xs.source.EndsWith("+buildings", StringComparison.Ordinal)) xs.source += "+buildings";
+                report.fitted.Add(string.Format(Inv, "{0}: {1:F2} -> {2:F2} m (building {3:F2} m from the centreline{4})", where, hw, fit, near,
+                    want < floor && near > floor ? string.Format(Inv, "; one lane leaves only {0:F2} m clear", near - floor) : ""));
+                if (near <= floor)
+                {
+                    report.cannotClear.Add(string.Format(Inv, "{0}: a building {1:F2} m from the centreline, inside one lane ({2:F2} m)", where, near, floor));
+                    c.buildingConflict = true;
+                }
+            }
         }
 
         /// <summary>OSM width: metres ("7", "7.5 m"), feet ("24'", "24 ft"), feet and inches ("24'6\""); 0 when unreadable.</summary>

@@ -1,0 +1,7 @@
+{
+  "format": "backroads-road-overrides",
+  "version": 1,
+  "town": "stockport-oh",
+  "note": "Hand-authored road fixes for this town, keyed by OSM node id (roads-R1 step 7). Every entry needs a reason; the bake report lists each one used.",
+  "nodes": []
+}

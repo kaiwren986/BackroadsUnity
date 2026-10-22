@@ -16,7 +16,7 @@ namespace Backroads.Tests.EditMode.Roads
     /// (traffic.json's) where the legacy network had the node; JS coordinates are quoted as 05 quotes them.
     /// </summary>
     [TestFixture, Category("Roads")]
-    public class Roads
+    public partial class Roads
     {
         static RoadGraph s_Graph;
         static RoadGraphInput s_Input;

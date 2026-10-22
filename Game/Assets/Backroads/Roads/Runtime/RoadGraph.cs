@@ -51,6 +51,8 @@ namespace Backroads.Roads
         public int id;
         /// <summary>traffic.json node id when one is within settings.legacyMatchRadius, else -1.</summary>
         public int legacyId = -1;
+        /// <summary>The OSM node at this graph node (towns), or 0: the stable key of roads-overrides.</summary>
+        public long osmNode;
         public D3 p;
         public NodeKind kind;
         public Control control;
