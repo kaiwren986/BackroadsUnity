@@ -5,6 +5,7 @@
         "Backroads.Core",
         "Backroads.World",
         "Backroads.Vehicles",
+        "Backroads.Vehicles.Editor",
         "Backroads.Canon.Editor",
         "Unity.Mathematics",
         "Unity.Collections",

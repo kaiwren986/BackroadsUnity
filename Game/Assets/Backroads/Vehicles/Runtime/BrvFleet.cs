@@ -38,6 +38,12 @@ namespace Backroads.Vehicles
         public IStampSink Sink;
         public bool NoDeformation;
 
+        /// <summary>
+        /// Static and vehicle-vehicle contacts are PhysX's (a <see cref="BrvPhysxChassis"/> on this fleet, T3.6): the
+        /// step skips the browser game's 2D statics (tree knock-over stays) and the vehicle pairs.
+        /// </summary>
+        public bool PhysxCollisions;
+
         /// <summary>A vehicle knocked a tree over (props.js knockTree): for the vegetation presenter.</summary>
         public event Action<TreeKnock> TreeKnocked;
 
@@ -172,9 +178,11 @@ namespace Backroads.Vehicles
         {
             _ruts.Clear();
             _knocks.Clear();
+            var world = _world.View;
+            world.physx = PhysxCollisions;
             var job = new VehicleStepJob
             {
-                States = _states, Defs = _defs, Inputs = _inputs, Events = _events, World = _world.View,
+                States = _states, Defs = _defs, Inputs = _inputs, Events = _events, World = world,
                 Ruts = _ruts, Knocks = _knocks, Count = Count, Only = only, Dt = BrvSim.STEP,
             };
             if (UseBurst) job.Run();

@@ -207,6 +207,11 @@ namespace Backroads.Vehicles.Reference
             public bool UseBurst = true;
             /// <summary>Called after every step with the trace vehicle's state (diagnostics).</summary>
             public Action<int, BrvState> OnStep;
+            /// <summary>
+            /// Called once the boot is done (every vehicle placed and settled), before the trace's first step: attach a
+            /// PhysX chassis here (T3.6). The returned action, if any, runs after every fleet step (the physics step).
+            /// </summary>
+            public Func<BrvFleet, Action> Attach;
         }
 
         public static GoldenTraceSamples Run(GoldenTraceInput input, Options opt)
@@ -246,6 +251,7 @@ namespace Backroads.Vehicles.Reference
                 s.driven = true; s.engineOn = true; s.lightsOn = false; s.fuel = 1;
             }
 
+            var afterStep = opt.Attach?.Invoke(fleet);
             var o = new GoldenTraceSamples { id = input.id, vehicle = input.vehicle, inputSha256 = input.sha256 };
             Sample(o, 0, fleet.State(v));
             var hits = new Dictionary<int, List<string>>();
@@ -272,6 +278,7 @@ namespace Backroads.Vehicles.Reference
                 fleet.SetInput(v, inp);
                 bool hadWinch = fleet.State(v).winch.active;
                 fleet.Step();
+                afterStep?.Invoke();
                 for (int i = 0; i < fleet.Count; i++) fleet.State(i).impact = 0;
                 ref var s = ref fleet.State(v);
                 if (!hadWinch && s.winch.active && o.winchHookStep < 0)

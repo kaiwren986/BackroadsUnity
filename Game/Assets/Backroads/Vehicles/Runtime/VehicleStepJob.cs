@@ -51,6 +51,7 @@ namespace Backroads.Vehicles
                 ref var d = ref UnsafeUtility.ArrayElementAsRef<BrvDef>(dp, i);
                 BrvSim.Step(ref s, d, World, Dt, i, ref Ruts, ref Knocks, States, Count);
             }
+            if (World.physx) return;   // the PhysX chassis resolves vehicle against vehicle (T3.6)
             for (int i = 0; i < Count; i++)
                 for (int j = i + 1; j < Count; j++)
                 {
