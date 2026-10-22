@@ -1,0 +1,88 @@
+Backroads roads R4 (roundabouts, bridges, aprons, class changes, alleys, close pairs) of TownData/stockport-oh/v1: importer v2, builder v3, surfaces v2, kerbs v2, bridges v1, meshes v2
+
+== Summary
+16 close pairs (0 problems); alleys 9 in the map = 9 in the graph + 0 skipped, 54 alley mouths (0 problems); 7 unpaved meetings (0 problems); 76 kerb tapers (0 problems); 1 bridges (0 problems); 0 roundabouts built (0 problems)
+
+== Close junction pairs (merged under 8 m along a way; else two junctions under the usual rules) (16)
+  merged: osm nodes 198869519 and 198876567 (4.5 m apart on way/19180664) became one junction at (413.2, 438.6)
+  merged: osm nodes 198911981 and 13071715411 (5.0 m apart on way/19180376) became one junction at (288.4, 410.8)
+  kept: nodes 21 and 85, 11.9 m apart: surfaces Major / Major; controls - - - / - - -
+  kept: nodes 15 and 19, 12.0 m apart: surfaces Major / Major; controls - MinorStop - / MinorStop - -
+  kept: nodes 55 and 68, 14.6 m apart: surfaces Major / Major; controls - MinorStop - / MinorStop - -
+  kept: nodes 8 and 67, 20.6 m apart: surfaces Major / Major; controls MinorStop - - / - MinorStop -
+  kept: nodes 32 and 33, 20.9 m apart: surfaces Major / Major; controls - MinorStop - / - - MinorStop
+  kept: nodes 59 and 84, 21.3 m apart: surfaces Major / Major; controls - MinorStop - / - - -
+  kept: nodes 28 and 29, 23.2 m apart: surfaces Major / Major; controls MinorStop - - / MinorStop - MinorStop -
+  kept: nodes 8 and 66, 23.6 m apart: surfaces Major / Major; controls MinorStop - - / - MinorStop -
+  kept: nodes 45 and 46, 24.5 m apart: surfaces Major / Major; controls - MinorStop - / MinorStop - MinorStop -
+  kept: nodes 19 and 66, 25.6 m apart: surfaces Major / Major; controls MinorStop - - / - MinorStop -
+  kept: nodes 21 and 84, 26.5 m apart: surfaces Major / Major; controls - - - / - - -
+  kept: nodes 102 and 111, 28.9 m apart: surfaces Major / Major; controls - MinorStop - / - - -
+  kept: nodes 39 and 77, 29.5 m apart: surfaces Major / Major; controls - MinorStop - / - - -
+  kept: nodes 11 and 21, 29.9 m apart: surfaces Major / Major; controls - - - - / - - -
+
+== Alleys (9 mapped in the play area: 9 in the graph, 0 skipped; 54 dropped-kerb mouths) (31)
+  node 9 arm R5: no control
+  node 10 arm R5: no control
+  node 10 arm R6: no control
+  node 11 arm R13: no control
+  node 11 arm R6: no control
+  node 11 arm R12: no control
+  node 11 arm R7: no control
+  node 12 arm R7: no control
+  node 12 arm R14: no control
+  node 13 arm R8: no control
+  node 14 arm R9: no control
+  node 14 arm R8: no control
+  node 15 arm R9: MinorStop (a mapped sign)
+  node 20 arm R12: no control
+  node 21 arm R13: no control
+  node 22 arm R14: no control
+  node 25 arm R85: no control
+  node 25 arm R86: no control
+  node 26 arm R83: no control
+  node 26 arm R84: no control
+  node 42 arm R170: no control
+  node 42 arm R169: no control
+  node 61 arm R171: no control
+  node 65 arm R174: MinorStop (a mapped sign)
+  node 77 arm R171: no control
+  node 79 arm R85: no control
+  node 81 arm R174: no control
+  node 84 arm R84: no control
+  node 85 arm R86: no control
+  node 97 arm R170: no control
+  node 111 arm R169: no control
+
+== Unpaved roads meeting paved ones (paved apron, STOP) (7)
+  node 5 arm R3 (Yard, ): apron 12.0 m, MinorStop, STOP sign
+  node 28 arm R172 (Yard, ): apron 12.0 m, MinorStop, STOP sign
+  node 31 arm R150 (Yard, ): apron 12.0 m, MinorStop, STOP sign
+  node 32 arm R153 (Yard, ): apron 10.1 m, MinorStop, STOP sign
+  node 33 arm R152 (Yard, ): apron 5.9 m, MinorStop, STOP sign
+  node 45 arm R142 (Yard, ): apron 12.0 m, MinorStop, STOP sign
+  node 74 arm R172 (Yard, ): apron 12.0 m, MinorStop, STOP sign
+
+== Kerb tapers at the town edge (76 tapers in all, alley mouths and rural corners included) (15)
+  face 50 (edge 24) at the town edge: far end tapers to 0.000 m
+  face 52 (edge 25) at the town edge: far end tapers to 0.000 m
+  face 53 (edge 25) at the town edge: near end tapers to 0.000 m
+  face 138 (edge 68) at the town edge: far end tapers to 0.000 m
+  face 139 (edge 68) at the town edge: near end tapers to 0.000 m
+  face 152 (edge 75) at the town edge: near end tapers to 0.000 m
+  face 153 (edge 75) at the town edge: far end tapers to 0.000 m
+  face 155 (edge 76) at the town edge: far end tapers to 0.000 m
+  face 244 (edge 121) at the town edge: near end tapers to 0.000 m
+  face 245 (edge 121) at the town edge: far end tapers to 0.000 m
+  face 258 (edge 128) at the town edge: near end tapers to 0.000 m
+  face 259 (edge 128) at the town edge: far end tapers to 0.000 m
+  face 322 (edge 159) at the town edge: near end tapers to 0.000 m
+  face 323 (edge 159) at the town edge: far end tapers to 0.000 m
+  face 339 (edge 167) at the town edge: near end tapers to 0.000 m
+
+== Bridges (2)
+  deck 0 edges 159 158 157 (R159, way/433243199) over river: 225.9 m, pavement 11.38-14.00 m, deck up to 13.50 m wide; abutments 10.5 m and 8.5 m on fill, free span 206.9 m, 4 piers at 51.9, 93.2, 134.6, 176.0 m; least clearance under the soffit 0.53 m at s 10.5; 3 edges (159 158 157) joined into one deck
+    roads under deck 0: edges 3 (their plates stay)
+
+== Roundabouts (1)
+  the map has no junction=roundabout ring and no mini-roundabout node: none built (none is invented)
