@@ -93,7 +93,10 @@ namespace Backroads.Vehicles
             rb.sleepThreshold = 0;
             rb.interpolation = RigidbodyInterpolation.None;      // VehicleView interpolates BRV's poses
             rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
-            rb.excludeLayers = (1 << Layer("Road")) | (1 << Layer("TerrainProxy")) | (1 << Layer("Trigger")) | (1 << Layer("Water"));
+            // The ground is BRV's, so no Road, TerrainProxy, Trigger or Water contacts. Default is left out too: the new
+            // Millbrook's road chunks (kerb faces included) and grey-box buildings carry MeshColliders on Default; the
+            // chassis meets the world's statics as PhysxStatics on Static (built from ActiveWorld.Colliders) and props on Prop.
+            rb.excludeLayers = (1 << 0) | (1 << Layer("Road")) | (1 << Layer("TerrainProxy")) | (1 << Layer("Trigger")) | (1 << Layer("Water"));
             SetMass(rb, s);
             rb.position = BrvFleet.UnityPos(s.pos);
             rb.rotation = BrvFleet.UnityRot(s.quat);

@@ -92,11 +92,13 @@ namespace Backroads.Tests.PlayMode.Vehicles
 
         /// <summary>
         /// A building face with a clear, nearly flat 14 m approach above the water: the first in collider order (the
-        /// same one every run). JS space.
+        /// same one every run). JS space. Above <paramref name="minGround"/> (the canon's sea level is 0 m), and at least
+        /// 12 m from the garage bays (the parked vehicles stay out of the way).
         /// </summary>
-        static Approach FindBuildingApproach(ColliderGrid g, in BrvWorld w)
+        static Approach FindBuildingApproach(ColliderGrid g, in BrvWorld w, double minGround, PlacementSet.Parking[] avoid)
         {
             int bk = ColliderGrid.KindIndex("building");
+            double lim = w.grid.Layout.Half - 40;
             var near = new List<int>();
             for (int ci = 0; ci < g.Count; ci++)
             {
@@ -109,13 +111,17 @@ namespace Backroads.Tests.PlayMode.Vehicles
                     if (width < 6) continue;
                     var fc = new double2(c.x, c.z) + n * half;
                     var start = fc + n * 8;
-                    if (Math.Abs(start.x) > 480 || Math.Abs(start.y) > 480) continue;
+                    if (Math.Abs(start.x) > lim || Math.Abs(start.y) > lim) continue;
                     double h0 = WorldGridQueriesRef.HeightAtJs(w.grid, start.x, start.y);
-                    if (h0 < 1.0) continue;
+                    if (h0 < minGround) continue;
                     bool ok = true;
                     for (double t = 0.5; t <= 14 && ok; t += 1)
                     {
                         var p = fc + n * t;
+                        if (avoid != null)
+                            foreach (var b in avoid)
+                                if (math.distance(new double2(b.x, b.z), p) < 12) { ok = false; break; }
+                        if (!ok) break;
                         if (Math.Abs(WorldGridQueriesRef.HeightAtJs(w.grid, p.x, p.y) - h0) > 0.35) ok = false;
                         near.Clear();
                         g.QueryJs((float)p.x, (float)p.y, 4f, near);
@@ -132,29 +138,83 @@ namespace Backroads.Tests.PlayMode.Vehicles
             return new Approach { collider = -1 };
         }
 
+        public static readonly string[] Worlds = { "canon", "millbrook" };
+
         /// <summary>
-        /// Vehicle.BuildingImpact (PLAN 6.1 M3 headline, card T3.6) on the canon test world: the truck, V0 and v2, driven
-        /// square into a building at 10 and at 20 m/s stops at the wall: PhysX takes the contact, the truck's front never
-        /// gets more than 0.15 m into the wall, its speed into the wall is gone within 0.25 s, and it never comes out on
-        /// the other side. (Millbrook's statics come with T3.3.)
+        /// A world for the chassis tests, loaded as its scene's root loads it: "canon" (CanonData v1: a private copy of the
+        /// grid, so nothing deforms the shared one) or a WorldData world ("millbrook": WorldDataRuntime's grid and collider
+        /// grid, unloaded afterwards if the test loaded it). Inconclusive when the world is not imported.
+        /// </summary>
+        sealed class TestWorld : IDisposable
+        {
+            public string Name;
+            public WorldGrid Grid;
+            public ColliderGrid Colliders;
+            public VegetationSet Vegetation;
+            public PlacementSet.Parking[] Bays;
+            public WorldInfo.Poi[] Pois;
+            public BrvWorldData Data;
+            public double MinGround;
+            bool _ownsGrid, _unloadWorldData;
+
+            public static TestWorld Load(string name)
+            {
+                if (name == "canon")
+                {
+                    var a = Canon();
+                    var g = WorldGrid.FromCanon(a);
+                    var c = CanonRuntime.Colliders;
+                    return new TestWorld
+                    {
+                        Name = name, Grid = g, Colliders = c, Vegetation = a.vegetation, Bays = a.placements.parking, Pois = a.world.pois,
+                        Data = BrvWorldData.Create(g, c, a.vegetation), MinGround = 1.0, _ownsGrid = true,
+                    };
+                }
+                var asset = WorldDataRuntime.Asset(name);
+                if (asset == null) Assert.Inconclusive(WorldDataRuntime.NotImportedMessage(name));
+                bool was = WorldDataRuntime.IsLoaded && WorldDataRuntime.Loaded == asset;
+                WorldDataRuntime.Load(asset);
+                var grid = WorldDataRuntime.Grid;
+                var col = WorldDataRuntime.Colliders;
+                return new TestWorld
+                {
+                    Name = name, Grid = grid, Colliders = col, Vegetation = asset.vegetation, Bays = asset.parking, Pois = asset.pois,
+                    Data = BrvWorldData.Create(grid, col, asset.vegetation), MinGround = double.NegativeInfinity, _unloadWorldData = !was,
+                };
+            }
+
+            public void Dispose()
+            {
+                Data?.Dispose();
+                if (_ownsGrid) Grid?.Dispose();
+                if (_unloadWorldData) WorldDataRuntime.Unload();
+            }
+        }
+
+        /// <summary>
+        /// Vehicle.BuildingImpact (PLAN 6.1 M3 headline, card T3.6) in both worlds, the canon test world and the new
+        /// Millbrook (their static colliders as PhysX statics): the truck, V0 and v2, driven square into a building at 10
+        /// and at 20 m/s stops at the wall: PhysX takes the contact, the truck's front never gets more than 0.15 m into the
+        /// wall, its speed into the wall is gone within 0.25 s, and it never comes out on the other side.
         /// </summary>
         [Test]
         public void BuildingImpact()
         {
-            var a = Canon();
-            var colliders = CanonRuntime.Colliders;
-            var world = FreshWorld(a);
             var sb = new StringBuilder();
             var ci = CultureInfo.InvariantCulture;
-            sb.AppendLine("# Vehicle.BuildingImpact (PhysX chassis, canon test world)").AppendLine();
+            sb.AppendLine("# Vehicle.BuildingImpact (PhysX chassis, both worlds)").AppendLine();
             var fails = new List<string>();
-            try
+            foreach (var worldName in Worlds)
             {
-                var ap = FindBuildingApproach(colliders, world.View);
-                Assert.GreaterOrEqual(ap.collider, 0, "no building with a clear approach on the canon test world");
+                using var tw = TestWorld.Load(worldName);
+                var colliders = tw.Colliders;
+                Assert.NotNull(colliders, worldName + ": no static colliders");
+                var ap = FindBuildingApproach(colliders, tw.Data.View, tw.MinGround, tw.Bays);
+                Assert.GreaterOrEqual(ap.collider, 0, worldName + ": no building with a clear approach");
                 var bc = colliders.Records[ap.collider];
-                sb.AppendLine(string.Format(ci, "Building collider {0} at ({1:F1}, {2:F1}) JS, face {3:F1} m wide, approach along ({4:F3}, {5:F3}); the truck starts with its centre 8 m from the face.",
-                    ap.collider, bc.x, bc.z, ap.width, -ap.n.x, -ap.n.y)).AppendLine();
+                sb.AppendLine($"## {worldName}").AppendLine();
+                sb.AppendLine(string.Format(ci, "{0} static colliders. Building collider {1} at ({2:F1}, {3:F1}) JS, face {4:F1} m wide, approach along ({5:F3}, {6:F3}); the truck starts with its centre 8 m from the face.",
+                    colliders.Count, ap.collider, bc.x, bc.z, ap.width, -ap.n.x, -ap.n.y)).AppendLine();
                 sb.AppendLine("| Model | Speed (m/s) | At contact (m/s) | Deepest into the wall (m) | Speed into the wall 0.25 s later (m/s) | Rebound (m/s) | Contact steps | Result |");
                 sb.AppendLine("|---|---:|---:|---:|---:|---:|---:|---|");
                 foreach (bool v2 in new[] { false, true })
@@ -162,14 +222,14 @@ namespace Backroads.Tests.PlayMode.Vehicles
                     {
                         using var rig = new PhysxRig("impact");
                         using var statics = PhysxStatics.Build(colliders, rig.Root.transform);
-                        using var fleet = new BrvFleet(world) { NoDeformation = true };
+                        using var fleet = new BrvFleet(tw.Data) { NoDeformation = true };
                         bool was = BrvFeatures.V2Driveline;
                         BrvFeatures.V2Driveline = v2;
                         int i;
                         try { i = fleet.Add(ClassicVehicleDefs.Get("truck")); } finally { BrvFeatures.V2Driveline = was; }
                         var start = ap.face + ap.n * 8;
                         var head = -ap.n;
-                        var wv = world.View;
+                        var wv = tw.Data.View;
                         BrvSim.PlaceAligned(ref fleet.State(i), fleet.Def(i), wv, start.x, start.y, Math.Atan2(head.x, head.y));
                         fleet.State(i).engineOn = true;
                         fleet.Settle(i, 120);
@@ -204,11 +264,11 @@ namespace Backroads.Tests.PlayMode.Vehicles
                         bool ok = finite && contactStep >= 0 && deepest <= 0.15 && after <= 0.1;
                         sb.AppendLine(string.Format(ci, "| {0} | {1:F0} | {2:F2} | {3:F3} | {4:F2} | {5:F2} | {6} | {7} |",
                             v2 ? "v2" : "V0", speed, atContact, deepest, after, rebound, contacts, ok ? "pass" : "FAIL"));
-                        if (!ok) fails.Add(string.Format(ci, "{0} at {1} m/s: contact step {2}, deepest {3:F3} m, speed into the wall 0.25 s after contact {4:F2} m/s, finite {5}",
-                            v2 ? "v2" : "V0", speed, contactStep, deepest, after, finite));
+                        if (!ok) fails.Add(string.Format(ci, "{0}, {1} at {2} m/s: contact step {3}, deepest {4:F3} m, speed into the wall 0.25 s after contact {5:F2} m/s, finite {6}",
+                            worldName, v2 ? "v2" : "V0", speed, contactStep, deepest, after, finite));
                     }
+                sb.AppendLine();
             }
-            finally { DisposeWorld(world); }
             Report("building-impact.md", sb.ToString());
             TestContext.WriteLine(sb.ToString());
             Assert.IsEmpty(fails, string.Join("\n", fails));
@@ -221,50 +281,91 @@ namespace Backroads.Tests.PlayMode.Vehicles
         }
 
         /// <summary>
-        /// The game's path for the same impact: VehicleSimSystem on the canon test world (the 4,013 canon colliders as
-        /// PhysX statics, the chassis in the default physics scene, Unity's own physics step after FixedUpdate and the
-        /// read-back after it). The truck rolls into the building at 15 m/s and stops at the wall.
+        /// The game's path in both worlds (T3.6): the world set as its scene's root sets it (ActiveWorld), VehicleSpawner
+        /// puts the four M2 vehicles on that world's garage bays (settled, within 1.5 m of the bays, parked still, the
+        /// player in the truck), VehicleSimSystem binds that world (every static collider a PhysX static, the chassis in
+        /// the default physics scene, Unity's own physics step and the read-back after it); then the truck, taken to a
+        /// building, rolls into it at 15 m/s and stops at the wall. Clearing the world removes the vehicles.
         /// </summary>
         [UnityEngine.TestTools.UnityTest]
-        public System.Collections.IEnumerator BuildingImpactInGame()
+        public System.Collections.IEnumerator WorldsInGame()
         {
-            var a = Canon();
-            var host = new GameObject("BuildingImpactInGame");
-            try
+            foreach (var worldName in Worlds)
             {
-                var sys = VehicleSimSystem.Create(host);
-                Assert.NotNull(sys.Chassis, "the PhysX chassis is on by default");
-                Assert.NotNull(sys.Statics);
-                Assert.AreEqual(CanonRuntime.Colliders.Count, sys.Statics.Count, "every canon collider is a PhysX static");
-                TestContext.WriteLine($"canon statics: {sys.Statics.Count} ({sys.Statics.Boxes} boxes, {sys.Statics.Capsules} capsules)");
-                var ap = FindBuildingApproach(CanonRuntime.Colliders, sys.Fleet.World.View);
-                var start = ap.face + ap.n * 8;
-                var head = -ap.n;
-                var truck = sys.SpawnAtJs(ClassicVehicleDefs.Get("truck"), start.x, start.y, Math.Atan2(head.x, head.y), 120);
-                sys.Fleet.SetRolling(truck.Index, 15);
-                ReleaseBrakes(truck);
-                var d = sys.Fleet.Def(truck.Index);
-                double deepest = 0;
-                long t0 = sys.TotalSteps;
-                while (sys.TotalSteps - t0 < 360)
+                var tw = TestWorld.Load(worldName);
+                try
                 {
-                    yield return new WaitForFixedUpdate();
-                    var s = truck.State;
-                    Assert.IsTrue(TrackRig.Finite(s));
-                    for (int sx = -1; sx <= 1; sx += 2)
+                    ActiveWorld.Set(worldName, tw.Grid, tw.Colliders, tw.Vegetation, tw.Bays, tw.Pois);
+                    float t0 = Time.realtimeSinceStartup;
+                    while ((Backroads.Vehicles.Client.VehicleSpawner.Current == null || (!Backroads.Vehicles.Client.VehicleSpawner.Current.Ready && Backroads.Vehicles.Client.VehicleSpawner.Current.Error == null))
+                           && Time.realtimeSinceStartup - t0 < 30) yield return null;
+                    var sp = Backroads.Vehicles.Client.VehicleSpawner.Current;
+                    Assert.NotNull(sp, worldName + ": no VehicleSpawner for the world");
+                    Assert.IsNull(sp.Error, sp.Error);
+                    Assert.IsTrue(sp.Ready, worldName + ": the vehicles did not spawn within 30 s");
+                    var sys = sp.SimSystem;
+                    Assert.AreEqual(worldName, sys.WorldName);
+                    Assert.AreEqual(ClassicVehicleDefs.M2.Length, sys.Vehicles.Count);
+                    Assert.AreEqual(BrvFeatures.V2Driveline, sys.Fleet.IsV2(0));
+                    Assert.NotNull(sys.Statics, worldName + ": no PhysX statics");
+                    Assert.AreEqual(tw.Colliders.Count, sys.Statics.Count, worldName + ": every static collider is a PhysX static");
+                    Assert.AreEqual(Backroads.Vehicles.Client.VehicleSpawner.StartVehicle, sys.Player.Def.id);
+                    long s0 = sys.TotalSteps;
+                    while (sys.TotalSteps - s0 < 120) yield return new WaitForFixedUpdate();
+                    float worstBay = 0, worstV = 0;
+                    foreach (var v in sys.Vehicles)
                     {
-                        var p = BrvSim.ToWorld(s, sx * d.bhw, d.bcy, d.bcz + d.bhl);
-                        deepest = Math.Max(deepest, -math.dot(new double2(p.x, p.z) - ap.face, ap.n));
+                        var b = tw.Bays[Array.IndexOf(ClassicVehicleDefs.Order, v.Def.id)];
+                        var pos = v.Position; pos.y = 0;
+                        worstBay = Mathf.Max(worstBay, Vector3.Distance(pos, new Vector3(-b.x, 0, b.z)));
+                        worstV = Mathf.Max(worstV, v.Velocity.magnitude);
                     }
+                    TestContext.WriteLine($"{worldName}: {sys.Vehicles.Count} vehicles on the garage bays (worst {worstBay:F3} m off, parked {worstV:F4} m/s), " +
+                                          $"{sys.Statics.Count} PhysX statics ({sys.Statics.Boxes} boxes, {sys.Statics.Capsules} capsules), PhysX contact steps while parked {sys.Chassis.ContactSteps}");
+                    Assert.LessOrEqual(worstBay, 1.5f, worldName + ": a vehicle is off its bay");
+                    Assert.Less(worstV, 0.01f, worldName + ": a parked vehicle moves");
+
+                    // the truck into a building, through the game's step
+                    var ap = FindBuildingApproach(tw.Colliders, sys.Fleet.World.View, tw.MinGround, tw.Bays);
+                    Assert.GreaterOrEqual(ap.collider, 0, worldName + ": no building with a clear approach");
+                    var truck = sys.Player;
+                    var start = ap.face + ap.n * 8;
+                    var head = -ap.n;
+                    var wv = sys.Fleet.World.View;
+                    BrvSim.PlaceAligned(ref truck.State, sys.Fleet.Def(truck.Index), wv, start.x, start.y, Math.Atan2(head.x, head.y));
+                    sys.Fleet.Settle(truck.Index, 120);
+                    sys.Fleet.SetRolling(truck.Index, 15);
+                    ReleaseBrakes(truck);
+                    long c0 = sys.Chassis.ContactSteps;
+                    var d = sys.Fleet.Def(truck.Index);
+                    double deepest = 0;
+                    s0 = sys.TotalSteps;
+                    while (sys.TotalSteps - s0 < 360)
+                    {
+                        yield return new WaitForFixedUpdate();
+                        var s = truck.State;
+                        Assert.IsTrue(TrackRig.Finite(s));
+                        for (int sx = -1; sx <= 1; sx += 2)
+                        {
+                            var p = BrvSim.ToWorld(s, sx * d.bhw, d.bcy, d.bcz + d.bhl);
+                            deepest = Math.Max(deepest, -math.dot(new double2(p.x, p.z) - ap.face, ap.n));
+                        }
+                    }
+                    double vIn = math.dot(new double2(truck.State.vel.x, truck.State.vel.z), head);
+                    TestContext.WriteLine($"{worldName} in game: the truck into building collider {ap.collider} at 15 m/s: PhysX contact steps {sys.Chassis.ContactSteps - c0}, " +
+                                          $"deepest into the wall {deepest:F3} m, speed into the wall at the end {vIn:F2} m/s");
+                    Assert.Greater(sys.Chassis.ContactSteps - c0, 0, worldName + ": the truck never touched the wall");
+                    Assert.LessOrEqual(deepest, 0.15, worldName + ": the truck went into the wall");
+                    Assert.LessOrEqual(vIn, 0.1, worldName + ": the truck is still going into the wall");
                 }
-                double vIn = math.dot(new double2(truck.State.vel.x, truck.State.vel.z), head);
-                TestContext.WriteLine($"in game: {sys.TotalSteps - t0} steps, PhysX contact steps {sys.Chassis.ContactSteps}, deepest into the wall {deepest:F3} m, speed into the wall at the end {vIn:F2} m/s");
-                Assert.Greater(sys.Chassis.ContactSteps, 0, "the truck never touched the wall");
-                Assert.LessOrEqual(deepest, 0.15, "the truck went into the wall");
-                Assert.LessOrEqual(vIn, 0.1, "the truck is still going into the wall");
+                finally
+                {
+                    ActiveWorld.Clear(tw.Grid);
+                }
+                yield return null;
+                Assert.IsNull(Backroads.Vehicles.Client.VehicleSpawner.Current, worldName + ": the vehicles stayed after the world was cleared");
+                tw.Dispose();
             }
-            finally { UnityEngine.Object.Destroy(host); }
-            yield return null;
         }
 
         // ------------------------------------------------------------------ the M2 traces through PhysX

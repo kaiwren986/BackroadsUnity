@@ -57,7 +57,7 @@ namespace Backroads.Testing
             var truck = sys.Player;
 
             // parked and settled on the bays
-            var bays = Backroads.World.CanonRuntime.Asset.placements.parking;
+            var bays = Backroads.World.ActiveWorld.IsSet ? Backroads.World.ActiveWorld.GarageBays : Backroads.World.CanonRuntime.Asset.placements.parking;
             float worstBay = 0, worstV = 0;
             foreach (var v in sys.Vehicles)
             {

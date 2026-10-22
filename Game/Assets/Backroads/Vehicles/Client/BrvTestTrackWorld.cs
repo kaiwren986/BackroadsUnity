@@ -22,6 +22,8 @@ namespace Backroads.Vehicles.Client
         public const string SceneName = "BrvTestTrack";
         public const string V0Flag = "-br-brv-v0";
         public const string StartVehicle = "truck";
+        /// <summary>ActiveWorld.Name while the test track is loaded.</summary>
+        public const string WorldName = "brv-test-track";
 
         [Tooltip("Lane W's look (the terrain material).")]
         public MillbrookLook look;
@@ -88,6 +90,9 @@ namespace Backroads.Vehicles.Client
                 }
                 finally { BrvFeatures.V2Driveline = was; }
                 SimSystem.PlayerChanged += (_, now) => PlayerVehicle.Current = ViewOf(now);
+                // the track is the world the game is in: cameras and ground queries read it (no garage: VehicleSpawner
+                // leaves it alone, these vehicles are ours)
+                ActiveWorld.Set(WorldName, Grid, null, null, null, null);
                 var start = SimSystem.Find(StartVehicle) ?? (SimSystem.Vehicles.Count > 0 ? SimSystem.Vehicles[0] : null);
                 if (start != null)
                 {
@@ -122,6 +127,7 @@ namespace Backroads.Vehicles.Client
             foreach (var v in _views.Values)
                 if (v != null && ReferenceEquals(PlayerVehicle.Current, v)) PlayerVehicle.Current = null;
             if (ReferenceEquals(StampSinks.Current, Deform)) StampSinks.Current = null;
+            if (Grid != null) ActiveWorld.Clear(Grid);
             Terrain?.Dispose();
             Deform?.Dispose();
             // the fleet (VehicleSimSystem, on this object) never disposes the grid it was bound to: the grid is ours

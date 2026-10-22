@@ -53,13 +53,29 @@ namespace Backroads.Vehicles
         public double SimMsLastFrame { get; private set; }
         public long TotalSteps { get; private set; }
 
-        /// <summary>Creates the system on a GameObject, bound to the loaded canon world (CanonRuntime).</summary>
+        /// <summary>
+        /// Creates the system on a GameObject, bound to the world the game is in (T3.6: <see cref="ActiveWorld"/>, the canon
+        /// test world or the new Millbrook: its grid, static colliders and vegetation); with no active world set, to the
+        /// canon (CanonRuntime, the M2 path: tests and tools that load the canon themselves).
+        /// </summary>
         public static VehicleSimSystem Create(GameObject host)
         {
             var sys = host.AddComponent<VehicleSimSystem>();
-            sys.Bind(CanonRuntime.Grid, CanonRuntime.Colliders, CanonRuntime.Asset != null ? CanonRuntime.Asset.vegetation : null);
+            if (ActiveWorld.IsSet)
+            {
+                sys.WorldName = ActiveWorld.Name;
+                sys.Bind(ActiveWorld.Grid, ActiveWorld.Colliders, ActiveWorld.Vegetation);
+            }
+            else
+            {
+                sys.WorldName = "canon";
+                sys.Bind(CanonRuntime.Grid, CanonRuntime.Colliders, CanonRuntime.Asset != null ? CanonRuntime.Asset.vegetation : null);
+            }
             return sys;
         }
+
+        /// <summary>The world this system was bound to by <see cref="Create"/> ("canon", "millbrook", ...).</summary>
+        public string WorldName { get; private set; }
 
         public void Bind(WorldGrid grid, ColliderGrid colliders, VegetationSet vegetation)
         {
