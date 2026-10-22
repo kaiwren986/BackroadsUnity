@@ -18,11 +18,14 @@ namespace Backroads.Roads
     /// mapped features, the downtown zone, the play-area edge cuts, mapped driveways and steep stretches.
     /// Format 3 (roads-R1): OSM node ids, per-approach mouth / stop line / crosswalk distances, the junction surfaces
     /// (outline, height mode, corners with radius and reason) and the curb inlets. The meshes are baked by R3.
+    /// Format 4 (roads-R3): streets (one fictional name per chain of edges, a placeholder until the list is approved;
+    /// each edge's street) and the road props (STOP, YIELD and all-way plaques, signals, street-name blades) with their
+    /// stands, facing and mounting height; the Synty prefabs are placed from them by RoadPropPlacer.
     /// </summary>
     public sealed class RoadNetworkAsset : ScriptableObject
     {
         public const string ResourceName = "BrRoadNetwork";
-        public const int FormatVersion = 3;
+        public const int FormatVersion = 4;
 
         /// <summary>The Resources name of a town's network (TownData/(town)/v1).</summary>
         public static string TownResourceName(string townId) => ResourceName + "_" + townId;
@@ -199,6 +202,35 @@ namespace Backroads.Roads
             /// <summary>Centreline from nodeA to nodeB (canon heights) and its 2D arc length.</summary>
             public Vector3[] points;
             public float[] s;
+            /// <summary>The street this edge belongs to (index into streets), or -1 (service roads, driveways).</summary>
+            public int street = -1;
+        }
+
+        /// <summary>A named street (roads-R3): its name (a "Street NN" placeholder until the list is approved) and its edges.</summary>
+        [Serializable]
+        public sealed class Street
+        {
+            public int id;
+            public string name = "";
+            public bool placeholder;
+            public string firstWay = "";
+            public int[] edges = Array.Empty<int>();
+        }
+
+        /// <summary>
+        /// A road prop (roads-R3, 05 §6.3): where its post stands (ground height at the stand), which way its face looks
+        /// (yaw in degrees about +y, 0 = facing +z), how high its sign hangs, and the approach it serves (node, arm
+        /// position in the node, or -1). Street-name blades carry the two streets they name.
+        /// </summary>
+        [Serializable]
+        public struct Prop
+        {
+            public RoadPropKind kind;
+            public Vector3 position;
+            public float yawDeg, mount;
+            public int node, arm, street, street2;
+            /// <summary>Metres from the kerb face (or the pavement edge) and from the intersected edge, for the checks.</summary>
+            public float fromKerb, fromEdge;
         }
 
         [Serializable]
@@ -230,6 +262,11 @@ namespace Backroads.Roads
         [Header("Surfaces (R1)")]
         public Surface[] surfaces = Array.Empty<Surface>();
         public InletProp[] inlets = Array.Empty<InletProp>();
+
+        [Header("Streets and props (R3)")]
+        public int propVersion;
+        public Street[] streets = Array.Empty<Street>();
+        public Prop[] props = Array.Empty<Prop>();
 
         [Header("Findings")]
         public Pair[] complexPairs = Array.Empty<Pair>();
@@ -264,7 +301,7 @@ namespace Backroads.Roads
         }
 
         /// <summary>Fills this asset from a built graph (float conversion) and, for a town, its import report and R1 surfaces; stamps the content hash.</summary>
-        public void SetFrom(RoadGraph g, OsmImportReport report = null, RoadSurfaces surf = null)
+        public void SetFrom(RoadGraph g, OsmImportReport report = null, RoadSurfaces surf = null, IReadOnlyList<StreetInfo> streetList = null, IReadOnlyList<Prop> propList = null, int propBuilderVersion = 0)
         {
             formatVersion = FormatVersion;
             builderVersion = RoadGraphBuilder.Version;
@@ -417,6 +454,16 @@ namespace Backroads.Roads
             townZone = new Vector2[outline.Count];
             for (int i = 0; i < townZone.Length; i++) townZone[i] = V2(outline[i]);
             notes = g.notes.ToArray();
+            var st = new List<Street>();
+            if (streetList != null)
+                foreach (var s in streetList)
+                {
+                    st.Add(new Street { id = s.id, name = s.name ?? "", placeholder = s.placeholder, firstWay = s.firstWay ?? "", edges = s.edges.ToArray() });
+                    foreach (int e in s.edges) edges[e].street = s.id;
+                }
+            streets = st.ToArray();
+            props = propList != null ? new List<Prop>(propList).ToArray() : Array.Empty<Prop>();
+            propVersion = propBuilderVersion;
             contentHash = ComputeHash();
         }
 
@@ -511,6 +558,22 @@ namespace Backroads.Roads
                 foreach (var p in townZone) W(w, p);
                 w.Write(notes.Length);
                 foreach (var s in notes) w.Write(s ?? "");
+                // format 4: streets, each edge's street, props
+                w.Write(propVersion);
+                w.Write(streets.Length);
+                foreach (var s in streets)
+                {
+                    w.Write(s.id); w.Write(s.name ?? ""); w.Write(s.placeholder); w.Write(s.firstWay ?? "");
+                    w.Write(s.edges.Length);
+                    foreach (int e in s.edges) w.Write(e);
+                }
+                foreach (var e in edges) w.Write(e.street);
+                w.Write(props.Length);
+                foreach (var p in props)
+                {
+                    w.Write((byte)p.kind); W(w, p.position); w.Write(p.yawDeg); w.Write(p.mount); w.Write(p.node); w.Write(p.arm);
+                    w.Write(p.street); w.Write(p.street2); w.Write(p.fromKerb); w.Write(p.fromEdge);
+                }
                 w.Flush();
                 using (var sha = SHA256.Create())
                 {

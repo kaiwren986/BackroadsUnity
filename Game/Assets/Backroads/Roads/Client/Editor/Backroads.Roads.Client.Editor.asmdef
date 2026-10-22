@@ -10,6 +10,7 @@
         "Backroads.Client",
         "Backroads.Client.Rendering",
         "Backroads.Client.Editor",
+        "Backroads.Build.Editor",
         "Unity.RenderPipelines.Core.Runtime",
         "Unity.RenderPipelines.Universal.Runtime"
     ],
