@@ -1,0 +1,16 @@
+{
+  "id": "m3.shots.junctions",
+  "kind": "shots-junctions",
+  "seconds": 0,
+  "screenshot": false,
+  "childTimeoutSeconds": 600,
+  "width": 1600,
+  "height": 900,
+  "settleFrames": 8,
+  "loadTimeoutSeconds": 240,
+  "hours": [12, 22],
+  "fov": 60,
+  "minClearance": 1.5,
+  "minShots": 16,
+  "notes": "M3 headline gate (lane R, 05 §8.8): fixed cameras on 8 road places of the new Millbrook picked from the baked road network (downtown main-street junction, residential X, alley mouth, gravel apron with its STOP, the river bridge's end, the town-edge kerb taper, a close junction pair, a rural T) at noon and at night, 1600x900, for the contact sheet; junctions.txt lists each camera and why."
+}
