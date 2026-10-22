@@ -1,0 +1,19 @@
+{
+  "fixture": "house_garage",
+  "type": "House",
+  "source": "Rules",
+  "template": "",
+  "downtown": false,
+  "surfaces": {"Apron:Concrete": 18, "Drive:Gravel": 86, "Walk:Concrete": 7},
+  "lots": 0,
+  "stalls": 0,
+  "accessible": 0,
+  "driveways": ["Residential 3.6 m"],
+  "doors": {"Main": 1, "Service": 1, "Garage": 1},
+  "props": {"trash.bin": 1},
+  "models": {},
+  "fences": 0,
+  "gates": 0,
+  "notes": [],
+  "hash": "939eec861d828bd6ef4c6a87c646826a2ada5937951133a44f75d23f49b94e8f"
+}

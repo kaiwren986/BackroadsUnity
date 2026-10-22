@@ -1,0 +1,19 @@
+{
+  "fixture": "industrial",
+  "type": "Industrial",
+  "source": "Rules",
+  "template": "",
+  "downtown": false,
+  "surfaces": {"Apron:Concrete": 1496, "Drive:Asphalt": 547, "Lot:Asphalt": 581, "Lot:Gravel": 2381},
+  "lots": 2,
+  "stalls": 17,
+  "accessible": 1,
+  "driveways": ["Truck 12.0 m", "Commercial 7.3 m"],
+  "doors": {"Main": 1, "Dock": 8},
+  "props": {"barrier.short": 2, "boom.gate": 1, "cone": 1},
+  "models": {"dock.leveller": 8},
+  "fences": 1,
+  "gates": 1,
+  "notes": [],
+  "hash": "6d11acd29e9cfc0f9548ff4bb798567538f2de1e7659211133df27c6c00ba933"
+}

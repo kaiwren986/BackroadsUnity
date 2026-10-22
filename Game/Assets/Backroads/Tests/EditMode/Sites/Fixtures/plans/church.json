@@ -1,0 +1,19 @@
+{
+  "fixture": "church",
+  "type": "Church",
+  "source": "Rules",
+  "template": "",
+  "downtown": false,
+  "surfaces": {"Drive:Asphalt": 295, "Lot:Asphalt": 992, "Walk:Concrete": 23},
+  "lots": 1,
+  "stalls": 28,
+  "accessible": 2,
+  "driveways": ["Commercial 6.0 m"],
+  "doors": {"Main": 1, "Service": 1},
+  "props": {"dumpster": 1, "trash.bin": 1},
+  "models": {},
+  "fences": 0,
+  "gates": 0,
+  "notes": [],
+  "hash": "3115dcb834a4c3167327ec2b05e5e3f35ae105003b44abb59707fc92e5d28f64"
+}

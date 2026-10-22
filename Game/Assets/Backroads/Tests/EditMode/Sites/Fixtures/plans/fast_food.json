@@ -1,0 +1,19 @@
+{
+  "fixture": "fast_food",
+  "type": "FastFood",
+  "source": "Rules",
+  "template": "",
+  "downtown": false,
+  "surfaces": {"Drive:Asphalt": 226, "Lot:Asphalt": 689, "Walk:Concrete": 42},
+  "lots": 1,
+  "stalls": 13,
+  "accessible": 1,
+  "driveways": ["Commercial 7.3 m"],
+  "doors": {"Main": 1, "Service": 1, "DriveThroughWindow": 1},
+  "props": {"dumpster": 1, "menu.board": 1, "trash.bin": 1},
+  "models": {},
+  "fences": 0,
+  "gates": 0,
+  "notes": [],
+  "hash": "380fd4517dd575e0c72ecea29a96ecf74e8b1e057094d333058b38cb0ccbf842"
+}

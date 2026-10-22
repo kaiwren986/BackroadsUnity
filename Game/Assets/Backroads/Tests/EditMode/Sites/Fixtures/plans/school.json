@@ -1,0 +1,19 @@
+{
+  "fixture": "school",
+  "type": "School",
+  "source": "Rules",
+  "template": "",
+  "downtown": false,
+  "surfaces": {"Apron:Asphalt": 114, "Drive:Asphalt": 535, "Lot:Asphalt": 1610, "Walk:Concrete": 35},
+  "lots": 1,
+  "stalls": 36,
+  "accessible": 2,
+  "driveways": ["Commercial 6.0 m"],
+  "doors": {"Main": 1, "Service": 1},
+  "props": {"bench": 1, "dumpster": 1, "trash.bin": 1},
+  "models": {},
+  "fences": 0,
+  "gates": 0,
+  "notes": [],
+  "hash": "b2f43e279a532c677bd96800dce339ffb76deeaad8218e8e8953ef5ff709828a"
+}

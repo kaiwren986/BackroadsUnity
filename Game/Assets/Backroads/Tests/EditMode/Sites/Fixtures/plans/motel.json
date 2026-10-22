@@ -1,0 +1,19 @@
+{
+  "fixture": "motel",
+  "type": "Motel",
+  "source": "Rules",
+  "template": "",
+  "downtown": false,
+  "surfaces": {"Lot:Asphalt": 918, "Walk:Concrete": 22},
+  "lots": 1,
+  "stalls": 19,
+  "accessible": 1,
+  "driveways": ["Commercial 7.3 m"],
+  "doors": {"Main": 1, "Service": 10},
+  "props": {"dumpster": 1, "trash.bin": 1},
+  "models": {},
+  "fences": 0,
+  "gates": 0,
+  "notes": [],
+  "hash": "291568b9bad7fdbec6e304f919c318a23cd12ea7a784bd5a07cde4f2d996f6f2"
+}

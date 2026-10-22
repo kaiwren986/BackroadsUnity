@@ -502,14 +502,33 @@ namespace Backroads.Sites
         void MakeDriveThrough(LotReport rep)
         {
             if (m_Bldg == null) { rep.notes.Add("drive-through asked for without a building"); return; }
-            var r = m_BldgRect;
-            double width = m_D.driveThroughWidth, off = 1.0 + width * 0.5;
+            var toStreet = m_In.toStreet;
+            if (math.lengthsq(toStreet) < 1e-12) toStreet = m_Ents.Count > 0 ? m_Ents[0].Mid - m_BldgRect.centre : new double2(0, -1);
+            var dt = DriveThrough(m_Bldg, toStreet, m_D);
+            foreach (var piece in dt.pieces)
+            {
+                m_StallObs.Add(new Obs { poly = piece, clear = 0.3 });
+                m_LaneObs.Add(new Obs { poly = piece, clear = 0.3 });
+            }
+            if (dt.stackCars < m_D.stackMin) rep.notes.Add($"drive-through stacks {dt.stackCars} cars (< {m_D.stackMin})");
+            foreach (var p in dt.path)
+                if (!Poly2.Contains(m_Lot, p)) { rep.notes.Add("drive-through lane leaves the lot"); break; }
+            m_Dt = dt;
+        }
+
+        /// <summary>
+        /// The drive-through lane round a building (design §4.2): one-way, driveThroughWidth wide, 1 m off the building's
+        /// oriented box, entering along the side before the rear (as far as 7 cars of stacking need), round the rear and
+        /// along the next side, where the pickup window is (the building on the driver's left), out past the front corner.
+        /// </summary>
+        internal static DriveThroughLane DriveThrough(double2[] footprint, double2 toStreet, ParkingDims dims)
+        {
+            var r = Poly2.MinAreaRect(footprint);
+            double width = dims.driveThroughWidth, off = 1.0 + width * 0.5;
             var rr = r;
             rr.halfLong += off;
             rr.halfShort += off;
             var cs = rr.Corners();
-            var toStreet = m_In.toStreet;
-            if (math.lengthsq(toStreet) < 1e-12) toStreet = m_Ents.Count > 0 ? m_Ents[0].Mid - r.centre : new double2(0, -1);
             int rear = 0;
             double bestDot = double.MaxValue;
             for (int k = 0; k < 4; k++)
@@ -522,7 +541,7 @@ namespace Backroads.Sites
             int prev = (rear + 3) % 4, win = (rear + 1) % 4;
             double Len(int k) => math.distance(cs[k], cs[(k + 1) % 4]);
             double2 Dir(int k) => math.normalize(cs[(k + 1) % 4] - cs[k]);
-            double need = 0.5 * (m_D.stackMin + m_D.stackMax) * m_D.carSpacing;
+            double need = 0.5 * (dims.stackMin + dims.stackMax) * dims.carSpacing;
             double winAt = 0.6 * Len(win);
             double have = Len(rear) + winAt;
             double x = math.clamp(need - have, 0, Len(prev));
@@ -533,10 +552,10 @@ namespace Backroads.Sites
             var exitCorner = cs[(win + 1) % 4];
             path.Add(exitCorner);
             path.Add(exitCorner + Dir(win) * 4.0);
-            var dt = new DriveThroughLane { path = path.ToArray(), width = (float)width, stackCars = (int)Math.Floor((x + have) / m_D.carSpacing + 1e-9) };
+            var dt = new DriveThroughLane { path = path.ToArray(), width = (float)width, stackCars = (int)Math.Floor((x + have) / dims.carSpacing + 1e-9) };
             var winOut = math.normalize(new double2(Dir(win).y, -Dir(win).x));
             dt.window = cs[win] + Dir(win) * winAt - winOut * off;
-            double boardAt = x + have - 3 * m_D.carSpacing;
+            double boardAt = x + have - 3 * dims.carSpacing;
             dt.orderBoard = AlongPath(path, boardAt, out var boardDir) + Poly2.Perp(boardDir) * (width * 0.5 + 0.5);
             for (int i = 0; i + 1 < path.Count; i++)
             {
@@ -546,15 +565,9 @@ namespace Backroads.Sites
                 var nn = Poly2.Perp(d) * (width * 0.5);
                 var a2 = a - d * (width * 0.5);
                 var b2 = b + d * (width * 0.5);
-                var piece = Poly2.Ccw(new[] { a2 - nn, b2 - nn, b2 + nn, a2 + nn });
-                dt.pieces.Add(piece);
-                m_StallObs.Add(new Obs { poly = piece, clear = 0.3 });
-                m_LaneObs.Add(new Obs { poly = piece, clear = 0.3 });
+                dt.pieces.Add(Poly2.Ccw(new[] { a2 - nn, b2 - nn, b2 + nn, a2 + nn }));
             }
-            if (dt.stackCars < m_D.stackMin) rep.notes.Add($"drive-through stacks {dt.stackCars} cars (< {m_D.stackMin})");
-            foreach (var p in path)
-                if (!Poly2.Contains(m_Lot, p)) { rep.notes.Add("drive-through lane leaves the lot"); break; }
-            m_Dt = dt;
+            return dt;
         }
 
         static double2 AlongPath(List<double2> path, double t, out double2 dir)

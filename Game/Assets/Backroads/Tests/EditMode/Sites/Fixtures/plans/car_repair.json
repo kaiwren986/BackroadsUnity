@@ -1,0 +1,19 @@
+{
+  "fixture": "car_repair",
+  "type": "CarRepair",
+  "source": "Rules",
+  "template": "",
+  "downtown": false,
+  "surfaces": {"Apron:Concrete": 129, "Drive:Asphalt": 145, "Lot:Asphalt": 527, "Walk:Concrete": 18, "Yard:Gravel": 195},
+  "lots": 1,
+  "stalls": 8,
+  "accessible": 1,
+  "driveways": ["Commercial 6.0 m"],
+  "doors": {"Main": 1, "Service": 1, "Bay": 3},
+  "props": {"dumpster": 1, "jack.stand": 1, "trash.bin": 1, "tyre.stack": 3},
+  "models": {},
+  "fences": 1,
+  "gates": 0,
+  "notes": [],
+  "hash": "329703db4b0b6cf77d8c29231e47586b182e9e817ca4a12e1a173f57b7429a4d"
+}

@@ -1,0 +1,652 @@
+sites-S3 site plans report (SitePlanner v1, ParkingPacker v1)
+stockport-oh: 255 site plans (Mapped 17, Rules 238), 17 lots with 209 stalls, 218 driveway requests (Baked 214, Merged 3, Rejected 1), 464 doors, 302 props, 4 model requests, 0 problems, 2 passes; hash 419d01e1bc15
+TownData manifest 7c334898ed465e2521d358625defa35b24e671a98d4ae07d5558a563a9db80a4; siteProfile 5410ecc6918cdc1c04d6dbe0a99d981f70364417dfd8bc396281c3398d3a6dab; siteTemplates f83f16e99c7c95520b35641d41d02d5ed4bc9cccff99a8b967a694e717fdcd5a; parcels d65873a9394b2b8c0f959dcf799e83c5c99dcf13c8f71621e68d0985aa7ebdef
+
+Sources per type (plans: mapped / template / rules):
+  Downtown       10: mapped   0, template   0, rules  10
+  Fuel            1: mapped   0, template   0, rules   1
+  House         221: mapped   9, template   0, rules 212
+  Retail         15: mapped   1, template   0, rules  14
+  School          1: mapped   0, template   0, rules   1
+  Unknown         7: mapped   7, template   0, rules   0
+
+Templates used:
+
+Templates rejected (every one tried, with the reason):
+  parcel 4 (School):
+    civic-01: scale 0.12 x 0.42 outside 0.75-1.33
+    civic-02: scale 0.33 x 0.90 outside 0.75-1.33
+    civic-03: 13 % of the lot falls off the parcel
+    civic-03 mirrored: 31 % of the lot falls off the parcel
+    civic-04: scale 0.45 x 0.69 outside 0.75-1.33
+  parcel 5 (Restaurant):
+    downtown_alley-01: scale 1.46 x 0.67 outside 0.75-1.33
+    downtown_alley-02: 100 % of the lot falls off the parcel
+    downtown_alley-02 mirrored: 100 % of the lot falls off the parcel
+    downtown_alley-03: scale 1.02 x 1.48 outside 0.75-1.33
+    downtown_alley-04: 98 % of the lot falls off the parcel
+    downtown_alley-04 mirrored: 64 % of the lot falls off the parcel
+    downtown_rear-01: 100 % of the lot falls off the parcel
+    downtown_rear-01 mirrored: 100 % of the lot falls off the parcel
+    downtown_rear-02: scale 0.69 x 1.20 outside 0.75-1.33
+    downtown_rear-03: 82 % of the lot falls off the parcel
+    downtown_rear-03 mirrored: 98 % of the lot falls off the parcel
+    downtown_rear-04: scale 0.72 x 0.88 outside 0.75-1.33
+    downtown_side-01: scale 0.78 x 0.67 outside 0.75-1.33
+    downtown_side-02: scale 0.53 x 1.31 outside 0.75-1.33
+    downtown_side-03: scale 0.29 x 0.46 outside 0.75-1.33
+  parcel 7 (Restaurant):
+    downtown_alley-01: scale 0.72 x 0.36 outside 0.75-1.33
+    downtown_alley-02: scale 0.50 x 0.47 outside 0.75-1.33
+    downtown_alley-03: scale 0.50 x 0.80 outside 0.75-1.33
+    downtown_alley-04: scale 0.50 x 0.46 outside 0.75-1.33
+    downtown_rear-01: scale 0.43 x 0.61 outside 0.75-1.33
+    downtown_rear-02: scale 0.34 x 0.65 outside 0.75-1.33
+    downtown_rear-03: scale 0.49 x 0.53 outside 0.75-1.33
+    downtown_rear-04: scale 0.36 x 0.48 outside 0.75-1.33
+    downtown_side-01: scale 0.38 x 0.36 outside 0.75-1.33
+    downtown_side-02: scale 0.26 x 0.71 outside 0.75-1.33
+    downtown_side-03: scale 0.14 x 0.25 outside 0.75-1.33
+  parcel 25 (Retail):
+    downtown_alley-01: scale 2.24 x 0.24 outside 0.75-1.33
+    downtown_alley-02: scale 1.54 x 0.30 outside 0.75-1.33
+    downtown_alley-03: scale 1.55 x 0.52 outside 0.75-1.33
+    downtown_alley-04: scale 1.55 x 0.30 outside 0.75-1.33
+    downtown_rear-01: scale 1.34 x 0.40 outside 0.75-1.33
+    downtown_rear-02: scale 1.06 x 0.42 outside 0.75-1.33
+    downtown_rear-03: scale 1.52 x 0.34 outside 0.75-1.33
+    downtown_rear-04: scale 1.10 x 0.31 outside 0.75-1.33
+    downtown_side-01: scale 1.20 x 0.24 outside 0.75-1.33
+    downtown_side-02: scale 0.82 x 0.46 outside 0.75-1.33
+    downtown_side-03: scale 0.44 x 0.16 outside 0.75-1.33
+  parcel 37 (Retail):
+    retail_front-01: 19 % of the lot falls off the parcel
+    retail_front-01 mirrored: 43 % of the lot falls off the parcel
+    retail_front-02: scale 1.18 x 0.43 outside 0.75-1.33
+    retail_front-03: scale 0.44 x 0.24 outside 0.75-1.33
+    retail_front-04: scale 0.51 x 0.51 outside 0.75-1.33
+    retail_front-05: scale 2.23 x 0.68 outside 0.75-1.33
+    retail_front-06: scale 4.27 x 0.67 outside 0.75-1.33
+    retail_rear-01: scale 0.82 x 0.37 outside 0.75-1.33
+    retail_rear-02: scale 0.53 x 0.29 outside 0.75-1.33
+    retail_rear-03: the lot overlaps a building by 2 m²
+    retail_rear-03 mirrored: the lot overlaps a building by 16 m²
+    retail_rear-04: scale 2.94 x 1.29 outside 0.75-1.33
+    retail_rear-05: scale 2.65 x 0.61 outside 0.75-1.33
+    retail_rear-06: scale 1.52 x 1.20 outside 0.75-1.33
+    retail_side-01: scale 0.79 x 0.20 outside 0.75-1.33
+    retail_side-02: scale 0.85 x 0.22 outside 0.75-1.33
+    retail_side-03: scale 0.54 x 0.17 outside 0.75-1.33
+    retail_side-04: scale 1.76 x 0.24 outside 0.75-1.33
+    retail_side-05: scale 0.74 x 0.26 outside 0.75-1.33
+    retail_side-06: scale 2.98 x 0.71 outside 0.75-1.33
+  parcel 40 (Retail):
+    retail_front-01: scale 1.63 x 2.38 outside 0.75-1.33
+    retail_front-02: scale 1.56 x 1.25 outside 0.75-1.33
+    retail_front-03: scale 0.58 x 0.70 outside 0.75-1.33
+    retail_front-04: scale 0.68 x 1.47 outside 0.75-1.33
+    retail_front-05: scale 2.97 x 1.96 outside 0.75-1.33
+    retail_front-06: scale 5.68 x 1.92 outside 0.75-1.33
+    retail_rear-01: 50 % of the lot falls off the parcel
+    retail_rear-01 mirrored: 49 % of the lot falls off the parcel
+    retail_rear-02: scale 0.70 x 0.83 outside 0.75-1.33
+    retail_rear-03: scale 1.71 x 3.35 outside 0.75-1.33
+    retail_rear-04: scale 3.91 x 3.73 outside 0.75-1.33
+    retail_rear-05: scale 3.53 x 1.75 outside 0.75-1.33
+    retail_rear-06: scale 2.02 x 3.46 outside 0.75-1.33
+    retail_side-01: scale 1.05 x 0.59 outside 0.75-1.33
+    retail_side-02: scale 1.14 x 0.64 outside 0.75-1.33
+    retail_side-03: scale 0.71 x 0.48 outside 0.75-1.33
+    retail_side-04: scale 2.33 x 0.70 outside 0.75-1.33
+    retail_side-05: scale 0.98 x 0.74 outside 0.75-1.33
+    retail_side-06: scale 3.97 x 2.04 outside 0.75-1.33
+  parcel 79 (Retail):
+    retail_front-01: the lot overlaps a building by 34 m²
+    retail_front-01 mirrored: the lot overlaps a building by 34 m²
+    retail_front-02: scale 0.72 x 0.52 outside 0.75-1.33
+    retail_front-03: scale 0.27 x 0.29 outside 0.75-1.33
+    retail_front-04: scale 0.31 x 0.61 outside 0.75-1.33
+    retail_front-05: scale 1.38 x 0.81 outside 0.75-1.33
+    retail_front-06: scale 2.63 x 0.80 outside 0.75-1.33
+    retail_rear-01: scale 0.51 x 0.44 outside 0.75-1.33
+    retail_rear-02: scale 0.33 x 0.35 outside 0.75-1.33
+    retail_rear-03: scale 0.79 x 1.39 outside 0.75-1.33
+    retail_rear-04: scale 1.81 x 1.55 outside 0.75-1.33
+    retail_rear-05: scale 1.64 x 0.73 outside 0.75-1.33
+    retail_rear-06: scale 0.94 x 1.44 outside 0.75-1.33
+    retail_side-01: scale 0.48 x 0.24 outside 0.75-1.33
+    retail_side-02: scale 0.53 x 0.27 outside 0.75-1.33
+    retail_side-03: scale 0.33 x 0.20 outside 0.75-1.33
+    retail_side-04: scale 1.08 x 0.29 outside 0.75-1.33
+    retail_side-05: scale 0.46 x 0.31 outside 0.75-1.33
+    retail_side-06: scale 1.84 x 0.85 outside 0.75-1.33
+  parcel 100 (Retail):
+    downtown_alley-01: scale 1.80 x 0.33 outside 0.75-1.33
+    downtown_alley-02: scale 1.24 x 0.42 outside 0.75-1.33
+    downtown_alley-03: scale 1.25 x 0.72 outside 0.75-1.33
+    downtown_alley-04: scale 1.25 x 0.42 outside 0.75-1.33
+    downtown_rear-01: scale 1.07 x 0.55 outside 0.75-1.33
+    downtown_rear-02: scale 0.85 x 0.59 outside 0.75-1.33
+    downtown_rear-03: scale 1.22 x 0.47 outside 0.75-1.33
+    downtown_rear-04: scale 0.89 x 0.43 outside 0.75-1.33
+    downtown_side-01: scale 0.96 x 0.33 outside 0.75-1.33
+    downtown_side-02: scale 0.66 x 0.64 outside 0.75-1.33
+    downtown_side-03: scale 0.35 x 0.23 outside 0.75-1.33
+  parcel 101 (Retail):
+    retail_front-01: 7 % of the lot falls off the parcel
+    retail_front-01 mirrored: 12 % of the lot falls off the parcel
+    retail_front-02: scale 0.76 x 0.42 outside 0.75-1.33
+    retail_front-03: scale 0.28 x 0.23 outside 0.75-1.33
+    retail_front-04: scale 0.33 x 0.49 outside 0.75-1.33
+    retail_front-05: scale 1.44 x 0.65 outside 0.75-1.33
+    retail_front-06: scale 2.75 x 0.64 outside 0.75-1.33
+    retail_rear-01: scale 0.53 x 0.36 outside 0.75-1.33
+    retail_rear-02: scale 0.34 x 0.28 outside 0.75-1.33
+    retail_rear-03: the lot overlaps a building by 2 m²
+    retail_rear-03 mirrored: the lot overlaps a building by 10 m²
+    retail_rear-04: scale 1.89 x 1.25 outside 0.75-1.33
+    retail_rear-05: scale 1.71 x 0.58 outside 0.75-1.33
+    retail_rear-06: 58 % of the lot falls off the parcel
+    retail_rear-06 mirrored: 54 % of the lot falls off the parcel
+    retail_side-01: scale 0.51 x 0.20 outside 0.75-1.33
+    retail_side-02: scale 0.55 x 0.21 outside 0.75-1.33
+    retail_side-03: scale 0.35 x 0.16 outside 0.75-1.33
+    retail_side-04: scale 1.13 x 0.23 outside 0.75-1.33
+    retail_side-05: scale 0.48 x 0.25 outside 0.75-1.33
+    retail_side-06: scale 1.92 x 0.68 outside 0.75-1.33
+  parcel 109 (Motel):
+    downtown_alley-01: scale 1.77 x 0.79 outside 0.75-1.33
+    downtown_alley-02: 100 % of the lot falls off the parcel
+    downtown_alley-02 mirrored: 100 % of the lot falls off the parcel
+    downtown_alley-03: scale 1.23 x 1.74 outside 0.75-1.33
+    downtown_alley-04: 78 % of the lot falls off the parcel
+    downtown_alley-04 mirrored: 99 % of the lot falls off the parcel
+    downtown_rear-01: 100 % of the lot falls off the parcel
+    downtown_rear-01 mirrored: 100 % of the lot falls off the parcel
+    downtown_rear-02: scale 0.84 x 1.41 outside 0.75-1.33
+    downtown_rear-03: 99 % of the lot falls off the parcel
+    downtown_rear-03 mirrored: 85 % of the lot falls off the parcel
+    downtown_rear-04: 100 % of the lot falls off the parcel
+    downtown_rear-04 mirrored: 100 % of the lot falls off the parcel
+    downtown_side-01: 100 % of the lot falls off the parcel
+    downtown_side-01 mirrored: 83 % of the lot falls off the parcel
+    downtown_side-02: scale 0.65 x 1.54 outside 0.75-1.33
+    downtown_side-03: scale 0.35 x 0.55 outside 0.75-1.33
+  parcel 144 (Retail):
+    retail_front-01: scale 0.88 x 1.34 outside 0.75-1.33
+    retail_front-02: scale 0.85 x 0.70 outside 0.75-1.33
+    retail_front-03: scale 0.31 x 0.39 outside 0.75-1.33
+    retail_front-04: scale 0.37 x 0.83 outside 0.75-1.33
+    retail_front-05: scale 1.60 x 1.10 outside 0.75-1.33
+    retail_front-06: scale 3.07 x 1.08 outside 0.75-1.33
+    retail_rear-01: scale 0.59 x 0.60 outside 0.75-1.33
+    retail_rear-02: scale 0.38 x 0.47 outside 0.75-1.33
+    retail_rear-03: scale 0.93 x 1.88 outside 0.75-1.33
+    retail_rear-04: scale 2.11 x 2.09 outside 0.75-1.33
+    retail_rear-05: scale 1.91 x 0.98 outside 0.75-1.33
+    retail_rear-06: scale 1.09 x 1.94 outside 0.75-1.33
+    retail_side-01: scale 0.56 x 0.33 outside 0.75-1.33
+    retail_side-02: scale 0.61 x 0.36 outside 0.75-1.33
+    retail_side-03: scale 0.39 x 0.27 outside 0.75-1.33
+    retail_side-04: scale 1.26 x 0.39 outside 0.75-1.33
+    retail_side-05: scale 0.53 x 0.41 outside 0.75-1.33
+    retail_side-06: scale 2.14 x 1.15 outside 0.75-1.33
+  parcel 145 (Retail):
+    retail_front-01: scale 0.74 x 0.91 outside 0.75-1.33
+    retail_front-02: scale 0.71 x 0.48 outside 0.75-1.33
+    retail_front-03: scale 0.26 x 0.27 outside 0.75-1.33
+    retail_front-04: scale 0.31 x 0.56 outside 0.75-1.33
+    retail_front-05: scale 1.35 x 0.75 outside 0.75-1.33
+    retail_front-06: scale 2.58 x 0.73 outside 0.75-1.33
+    retail_rear-01: scale 0.50 x 0.41 outside 0.75-1.33
+    retail_rear-02: scale 0.32 x 0.32 outside 0.75-1.33
+    retail_rear-03: 45 % of the lot falls off the parcel
+    retail_rear-03 mirrored: 61 % of the lot falls off the parcel
+    retail_rear-04: scale 1.78 x 1.42 outside 0.75-1.33
+    retail_rear-05: scale 1.61 x 0.67 outside 0.75-1.33
+    retail_rear-06: 74 % of the lot falls off the parcel
+    retail_rear-06 mirrored: 83 % of the lot falls off the parcel
+    retail_side-01: scale 0.48 x 0.22 outside 0.75-1.33
+    retail_side-02: scale 0.52 x 0.24 outside 0.75-1.33
+    retail_side-03: scale 0.32 x 0.18 outside 0.75-1.33
+    retail_side-04: scale 1.06 x 0.27 outside 0.75-1.33
+    retail_side-05: scale 0.45 x 0.28 outside 0.75-1.33
+    retail_side-06: scale 1.80 x 0.78 outside 0.75-1.33
+  parcel 178 (Retail):
+    retail_front-01: scale 0.70 x 0.74 outside 0.75-1.33
+    retail_front-02: scale 0.68 x 0.39 outside 0.75-1.33
+    retail_front-03: scale 0.25 x 0.22 outside 0.75-1.33
+    retail_front-04: scale 0.29 x 0.46 outside 0.75-1.33
+    retail_front-05: scale 1.29 x 0.61 outside 0.75-1.33
+    retail_front-06: scale 2.46 x 0.60 outside 0.75-1.33
+    retail_rear-01: scale 0.47 x 0.33 outside 0.75-1.33
+    retail_rear-02: scale 0.30 x 0.26 outside 0.75-1.33
+    retail_rear-03: scale 0.74 x 1.04 outside 0.75-1.33
+    retail_rear-04: scale 1.69 x 1.16 outside 0.75-1.33
+    retail_rear-05: scale 1.53 x 0.54 outside 0.75-1.33
+    retail_rear-06: 75 % of the lot falls off the parcel
+    retail_rear-06 mirrored: 75 % of the lot falls off the parcel
+    retail_side-01: scale 0.45 x 0.18 outside 0.75-1.33
+    retail_side-02: scale 0.49 x 0.20 outside 0.75-1.33
+    retail_side-03: scale 0.31 x 0.15 outside 0.75-1.33
+    retail_side-04: scale 1.01 x 0.22 outside 0.75-1.33
+    retail_side-05: scale 0.43 x 0.23 outside 0.75-1.33
+    retail_side-06: scale 1.72 x 0.63 outside 0.75-1.33
+  parcel 188 (Retail):
+    retail_front-01: scale 0.76 x 1.46 outside 0.75-1.33
+    retail_front-02: scale 0.73 x 0.77 outside 0.75-1.33
+    retail_front-03: scale 0.27 x 0.43 outside 0.75-1.33
+    retail_front-04: scale 0.32 x 0.90 outside 0.75-1.33
+    retail_front-05: scale 1.39 x 1.20 outside 0.75-1.33
+    retail_front-06: scale 2.65 x 1.18 outside 0.75-1.33
+    retail_rear-01: scale 0.51 x 0.65 outside 0.75-1.33
+    retail_rear-02: scale 0.33 x 0.51 outside 0.75-1.33
+    retail_rear-03: scale 0.80 x 2.06 outside 0.75-1.33
+    retail_rear-04: scale 1.83 x 2.29 outside 0.75-1.33
+    retail_rear-05: scale 1.65 x 1.07 outside 0.75-1.33
+    retail_rear-06: scale 0.95 x 2.12 outside 0.75-1.33
+    retail_side-01: scale 0.49 x 0.36 outside 0.75-1.33
+    retail_side-02: scale 0.53 x 0.39 outside 0.75-1.33
+    retail_side-03: scale 0.33 x 0.29 outside 0.75-1.33
+    retail_side-04: scale 1.09 x 0.43 outside 0.75-1.33
+    retail_side-05: scale 0.46 x 0.45 outside 0.75-1.33
+    retail_side-06: scale 1.85 x 1.25 outside 0.75-1.33
+  parcel 189 (Retail):
+    retail_front-01: 32 % of the lot falls off the parcel
+    retail_front-01 mirrored: 26 % of the lot falls off the parcel
+    retail_front-02: scale 0.98 x 0.40 outside 0.75-1.33
+    retail_front-03: scale 0.36 x 0.23 outside 0.75-1.33
+    retail_front-04: scale 0.43 x 0.48 outside 0.75-1.33
+    retail_front-05: scale 1.86 x 0.64 outside 0.75-1.33
+    retail_front-06: scale 3.55 x 0.62 outside 0.75-1.33
+    retail_rear-01: scale 0.69 x 0.35 outside 0.75-1.33
+    retail_rear-02: scale 0.44 x 0.27 outside 0.75-1.33
+    retail_rear-03: 64 % of the lot falls off the parcel
+    retail_rear-03 mirrored: 65 % of the lot falls off the parcel
+    retail_rear-04: scale 2.45 x 1.21 outside 0.75-1.33
+    retail_rear-05: scale 2.21 x 0.57 outside 0.75-1.33
+    retail_rear-06: 93 % of the lot falls off the parcel
+    retail_rear-06 mirrored: 94 % of the lot falls off the parcel
+    retail_side-01: scale 0.65 x 0.19 outside 0.75-1.33
+    retail_side-02: scale 0.71 x 0.21 outside 0.75-1.33
+    retail_side-03: scale 0.45 x 0.15 outside 0.75-1.33
+    retail_side-04: scale 1.46 x 0.23 outside 0.75-1.33
+    retail_side-05: scale 0.62 x 0.24 outside 0.75-1.33
+    retail_side-06: scale 2.48 x 0.66 outside 0.75-1.33
+  parcel 211 (Retail):
+    downtown_alley-01: scale 1.46 x 0.36 outside 0.75-1.33
+    downtown_alley-02: scale 1.01 x 0.47 outside 0.75-1.33
+    downtown_alley-03: 100 % of the lot falls off the parcel
+    downtown_alley-03 mirrored: 100 % of the lot falls off the parcel
+    downtown_alley-04: scale 1.02 x 0.46 outside 0.75-1.33
+    downtown_rear-01: scale 0.87 x 0.61 outside 0.75-1.33
+    downtown_rear-02: scale 0.69 x 0.65 outside 0.75-1.33
+    downtown_rear-03: scale 0.99 x 0.52 outside 0.75-1.33
+    downtown_rear-04: scale 0.72 x 0.47 outside 0.75-1.33
+    downtown_side-01: scale 0.78 x 0.36 outside 0.75-1.33
+    downtown_side-02: scale 0.53 x 0.70 outside 0.75-1.33
+    downtown_side-03: scale 0.29 x 0.25 outside 0.75-1.33
+  parcel 218 (Retail):
+    retail_front-01: scale 0.54 x 1.09 outside 0.75-1.33
+    retail_front-02: scale 0.52 x 0.57 outside 0.75-1.33
+    retail_front-03: scale 0.19 x 0.32 outside 0.75-1.33
+    retail_front-04: scale 0.23 x 0.67 outside 0.75-1.33
+    retail_front-05: 49 % of the lot falls off the parcel
+    retail_front-05 mirrored: 50 % of the lot falls off the parcel
+    retail_front-06: scale 1.88 x 0.88 outside 0.75-1.33
+    retail_rear-01: scale 0.36 x 0.49 outside 0.75-1.33
+    retail_rear-02: scale 0.23 x 0.38 outside 0.75-1.33
+    retail_rear-03: scale 0.57 x 1.53 outside 0.75-1.33
+    retail_rear-04: scale 1.30 x 1.70 outside 0.75-1.33
+    retail_rear-05: 98 % of the lot falls off the parcel
+    retail_rear-05 mirrored: 94 % of the lot falls off the parcel
+    retail_rear-06: scale 0.67 x 1.58 outside 0.75-1.33
+    retail_side-01: scale 0.35 x 0.27 outside 0.75-1.33
+    retail_side-02: scale 0.38 x 0.29 outside 0.75-1.33
+    retail_side-03: scale 0.24 x 0.22 outside 0.75-1.33
+    retail_side-04: scale 0.77 x 0.32 outside 0.75-1.33
+    retail_side-05: scale 0.33 x 0.34 outside 0.75-1.33
+    retail_side-06: 21 % of the lot falls off the parcel
+    retail_side-06 mirrored: 76 % of the lot falls off the parcel
+  parcel 219 (CarRepair):
+    downtown_alley-01: scale 2.00 x 0.62 outside 0.75-1.33
+    downtown_alley-02: scale 1.38 x 0.80 outside 0.75-1.33
+    downtown_alley-03: scale 1.39 x 1.36 outside 0.75-1.33
+    downtown_alley-04: scale 1.39 x 0.79 outside 0.75-1.33
+    downtown_rear-01: 94 % of the lot falls off the parcel
+    downtown_rear-01 mirrored: 94 % of the lot falls off the parcel
+    downtown_rear-02: 100 % of the lot falls off the parcel
+    downtown_rear-02 mirrored: 100 % of the lot falls off the parcel
+    downtown_rear-03: scale 1.36 x 0.89 outside 0.75-1.33
+    downtown_rear-04: 95 % of the lot falls off the parcel
+    downtown_rear-04 mirrored: 93 % of the lot falls off the parcel
+    downtown_side-01: scale 1.07 x 0.62 outside 0.75-1.33
+    downtown_side-02: scale 0.73 x 1.20 outside 0.75-1.33
+    downtown_side-03: scale 0.39 x 0.43 outside 0.75-1.33
+  parcel 224 (Office):
+    downtown_alley-01: scale 0.87 x 0.50 outside 0.75-1.33
+    downtown_alley-02: scale 0.60 x 0.64 outside 0.75-1.33
+    downtown_alley-03: scale 0.61 x 1.10 outside 0.75-1.33
+    downtown_alley-04: scale 0.61 x 0.63 outside 0.75-1.33
+    downtown_rear-01: scale 0.52 x 0.83 outside 0.75-1.33
+    downtown_rear-02: scale 0.41 x 0.89 outside 0.75-1.33
+    downtown_rear-03: scale 0.59 x 0.72 outside 0.75-1.33
+    downtown_rear-04: scale 0.43 x 0.65 outside 0.75-1.33
+    downtown_side-01: scale 0.47 x 0.50 outside 0.75-1.33
+    downtown_side-02: scale 0.32 x 0.97 outside 0.75-1.33
+    downtown_side-03: scale 0.17 x 0.34 outside 0.75-1.33
+  parcel 227 (Retail):
+    retail_front-01: scale 0.46 x 1.35 outside 0.75-1.33
+    retail_front-02: scale 0.44 x 0.71 outside 0.75-1.33
+    retail_front-03: scale 0.16 x 0.40 outside 0.75-1.33
+    retail_front-04: scale 0.19 x 0.84 outside 0.75-1.33
+    retail_front-05: 94 % of the lot falls off the parcel
+    retail_front-05 mirrored: 93 % of the lot falls off the parcel
+    retail_front-06: scale 1.59 x 1.09 outside 0.75-1.33
+    retail_rear-01: scale 0.31 x 0.61 outside 0.75-1.33
+    retail_rear-02: scale 0.20 x 0.47 outside 0.75-1.33
+    retail_rear-03: scale 0.48 x 1.90 outside 0.75-1.33
+    retail_rear-04: scale 1.10 x 2.12 outside 0.75-1.33
+    retail_rear-05: 95 % of the lot falls off the parcel
+    retail_rear-05 mirrored: 100 % of the lot falls off the parcel
+    retail_rear-06: scale 0.57 x 1.97 outside 0.75-1.33
+    retail_side-01: scale 0.29 x 0.33 outside 0.75-1.33
+    retail_side-02: scale 0.32 x 0.36 outside 0.75-1.33
+    retail_side-03: scale 0.20 x 0.27 outside 0.75-1.33
+    retail_side-04: scale 0.65 x 0.40 outside 0.75-1.33
+    retail_side-05: scale 0.28 x 0.42 outside 0.75-1.33
+    retail_side-06: 100 % of the lot falls off the parcel
+    retail_side-06 mirrored: 33 % of the lot falls off the parcel
+  parcel 245 (Civic):
+    downtown_alley-01: scale 0.73 x 0.31 outside 0.75-1.33
+    downtown_alley-02: scale 0.51 x 0.41 outside 0.75-1.33
+    downtown_alley-03: scale 0.51 x 0.69 outside 0.75-1.33
+    downtown_alley-04: scale 0.51 x 0.40 outside 0.75-1.33
+    downtown_rear-01: scale 0.44 x 0.53 outside 0.75-1.33
+    downtown_rear-02: scale 0.35 x 0.56 outside 0.75-1.33
+    downtown_rear-03: scale 0.50 x 0.46 outside 0.75-1.33
+    downtown_rear-04: scale 0.36 x 0.41 outside 0.75-1.33
+    downtown_side-01: scale 0.39 x 0.31 outside 0.75-1.33
+    downtown_side-02: scale 0.27 x 0.61 outside 0.75-1.33
+    downtown_side-03: scale 0.14 x 0.22 outside 0.75-1.33
+  parcel 276 (Retail):
+    downtown_alley-01: scale 1.59 x 0.53 outside 0.75-1.33
+    downtown_alley-02: scale 1.10 x 0.68 outside 0.75-1.33
+    downtown_alley-03: 100 % of the lot falls off the parcel
+    downtown_alley-03 mirrored: 100 % of the lot falls off the parcel
+    downtown_alley-04: scale 1.11 x 0.68 outside 0.75-1.33
+    downtown_rear-01: 100 % of the lot falls off the parcel
+    downtown_rear-01 mirrored: 100 % of the lot falls off the parcel
+    downtown_rear-02: 87 % of the lot falls off the parcel
+    downtown_rear-02 mirrored: 100 % of the lot falls off the parcel
+    downtown_rear-03: 65 % of the lot falls off the parcel
+    downtown_rear-03 mirrored: 98 % of the lot falls off the parcel
+    downtown_rear-04: scale 0.79 x 0.70 outside 0.75-1.33
+    downtown_side-01: scale 0.85 x 0.53 outside 0.75-1.33
+    downtown_side-02: scale 0.58 x 1.03 outside 0.75-1.33
+    downtown_side-03: scale 0.31 x 0.37 outside 0.75-1.33
+
+Driveway answers from R2's cutter:
+  request   1025 face  258 Merged with 962
+  request   6083 face   88 Merged with 6082
+  request   9154 face    8 Merged with 9155
+  request  16897 face  332 Rejected: CornerReturn 17.5-33.5 m blocks the throat 17.2-20.8 m and no shift up to 3 m clears it
+
+Plans: parcel, type, source, surfaces, lots (stalls), driveways, doors, props, models, notes
+     0 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+     1 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  2 models  0
+     2 House        Rules    surf  1 lots 0 (  0) drives 1 doors  2 props  3 models  0
+     3 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+     4 School       Rules    surf  4 lots 1 (  6) drives 1 doors  2 props  2 models  0  no room for a bus bay in front
+     5 Restaurant * Rules    surf  0 lots 0 (  0) drives 0 doors  2 props  0 models  0
+     6 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+     7 Restaurant * Rules    surf  1 lots 0 (  0) drives 0 doors  2 props  1 models  0
+     8 House        Rules    surf  1 lots 0 (  0) drives 0 doors  1 props  0 models  0  no frontage: reached by an easement; no driveway of its own
+     9 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+    10 House        Rules    surf  1 lots 0 (  0) drives 0 doors  1 props  0 models  0  no frontage: reached by an easement; no driveway of its own
+    11 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  2 models  0
+    12 House        Rules    surf  1 lots 0 (  0) drives 0 doors  1 props  0 models  0  no frontage: reached by an easement; no driveway of its own
+    13 House        Rules    surf  1 lots 0 (  0) drives 0 doors  1 props  0 models  0  no frontage: reached by an easement; no driveway of its own
+    14 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+    15 House        Rules    surf  3 lots 0 (  0) drives 2 doors  2 props  2 models  0
+    16 House        Mapped   surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+    17 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+    18 House        Rules    surf  1 lots 0 (  0) drives 0 doors  1 props  0 models  0  no frontage: reached by an easement; no driveway of its own
+    19 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+    20 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+    21 House        Rules    surf  1 lots 0 (  0) drives 0 doors  1 props  0 models  0  no frontage: reached by an easement; no driveway of its own
+    22 House        Rules    surf  1 lots 0 (  0) drives 0 doors  1 props  0 models  0  no frontage: reached by an easement; no driveway of its own
+    23 House        Mapped   surf  1 lots 0 (  0) drives 1 doors  2 props  2 models  0
+    24 Retail       Rules    surf  1 lots 0 (  0) drives 0 doors  2 props  4 models  0  no room for a lot: customers park on the street
+    25 Retail     * Rules    surf  2 lots 1 (  6) drives 1 doors  2 props  1 models  0
+    26 House        Rules    surf  2 lots 0 (  0) drives 1 doors  3 props  1 models  0
+    27 House        Rules    surf  1 lots 0 (  0) drives 0 doors  1 props  0 models  0  no frontage: reached by an easement; no driveway of its own
+    28 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+    29 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+    30 House        Rules    surf  4 lots 0 (  0) drives 1 doors  3 props  1 models  0
+    31 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+    32 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+    33 House        Rules    surf  1 lots 0 (  0) drives 0 doors  1 props  0 models  0  no frontage: reached by an easement; no driveway of its own
+    34 Retail       Mapped   surf  2 lots 1 (  1) drives 1 doors  2 props  3 models  0
+    35 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+    36 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  2 models  0
+    37 Retail       Rules    surf  4 lots 1 (  6) drives 1 doors  2 props  4 models  0
+    38 House        Rules    surf  1 lots 0 (  0) drives 1 doors  2 props  1 models  0
+    39 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+    40 Retail       Rules    surf  3 lots 1 ( 39) drives 1 doors  2 props  3 models  0
+    41 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  2 models  0
+    42 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  2 models  0
+    43 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  3 models  0
+    44 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  2 models  0
+    45 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  2 models  0
+    46 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  2 models  0
+    47 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+    48 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+    49 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+    50 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+    51 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  2 models  0
+    52 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+    53 House        Rules    surf  1 lots 0 (  0) drives 0 doors  1 props  0 models  0  no frontage: reached by an easement; no driveway of its own
+    54 House        Rules    surf  1 lots 0 (  0) drives 0 doors  1 props  0 models  0  no frontage: reached by an easement; no driveway of its own
+    55 House        Rules    surf  4 lots 0 (  0) drives 1 doors  2 props  1 models  0
+    56 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  2 models  0
+    57 House        Rules    surf  1 lots 0 (  0) drives 0 doors  1 props  1 models  0  no frontage: reached by an easement; no driveway of its own
+    58 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+    59 House        Rules    surf  1 lots 0 (  0) drives 0 doors  1 props  1 models  0  no frontage: reached by an easement; no driveway of its own
+    60 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+    61 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  2 models  0
+    62 House        Rules    surf  1 lots 0 (  0) drives 0 doors  1 props  1 models  0  no frontage: reached by an easement; no driveway of its own
+    63 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+    64 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  2 models  0
+    65 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  2 models  0
+    66 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  2 models  0
+    67 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+    68 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  2 models  0
+    69 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  2 models  0
+    70 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+    71 House        Rules    surf  4 lots 0 (  0) drives 1 doors  3 props  2 models  0
+    72 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+    73 House        Rules    surf  1 lots 0 (  0) drives 0 doors  1 props  0 models  0  no frontage: reached by an easement; no driveway of its own
+    74 House        Rules    surf  1 lots 0 (  0) drives 0 doors  1 props  1 models  0  no frontage: reached by an easement; no driveway of its own
+    75 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+    76 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  2 models  0
+    77 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+    78 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+    79 Retail       Rules    surf  4 lots 1 ( 12) drives 1 doors  2 props  3 models  0
+    80 Retail       Rules    surf  1 lots 0 (  0) drives 0 doors  2 props  4 models  0  no room for a lot: customers park on the street
+    81 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  2 models  0
+    82 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+    83 House        Rules    surf  1 lots 0 (  0) drives 1 doors  2 props  1 models  0
+    84 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+    85 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+    86 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  2 models  0
+    87 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+    88 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+    89 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+    90 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+    91 House        Rules    surf  1 lots 0 (  0) drives 0 doors  1 props  1 models  0  no frontage: reached by an easement; no driveway of its own
+    92 House        Mapped   surf  3 lots 0 (  0) drives 2 doors  2 props  2 models  0
+    93 Retail       Rules    surf  1 lots 0 (  0) drives 0 doors  2 props  4 models  0  no room for a lot: customers park on the street
+    94 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+    95 House        Rules    surf  5 lots 0 (  0) drives 3 doors  2 props  1 models  0
+    96 House        Mapped   surf  2 lots 0 (  0) drives 1 doors  2 props  2 models  0
+    97 House        Mapped   surf  2 lots 0 (  0) drives 1 doors  2 props  2 models  0
+    98 House        Mapped   surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+    99 House        Mapped   surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   100 Retail     * Rules    surf  2 lots 1 ( 10) drives 1 doors  2 props  1 models  0
+   101 Retail       Rules    surf  4 lots 1 (  3) drives 1 doors  2 props  4 models  0
+   102 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   103 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   104 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   105 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   106 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   107 House        Mapped   surf  2 lots 0 (  0) drives 1 doors  2 props  0 models  0
+   108 House        Rules    surf  1 lots 0 (  0) drives 0 doors  1 props  0 models  0  no frontage: reached by an easement; no driveway of its own
+   109 Motel      * Rules    surf  0 lots 0 (  0) drives 0 doors  2 props  0 models  0
+   110 Unknown      Mapped   surf  2 lots 0 (  0) drives 2 doors  0 props  0 models  0  vacant land with a mapped driveway
+   129 Unknown      Mapped   surf  0 lots 0 (  0) drives 1 doors  0 props  0 models  0  vacant land with a mapped driveway
+   136 Unknown      Mapped   surf  1 lots 0 (  0) drives 1 doors  0 props  0 models  0  a mapped lot or yard of its own serving way/1272028959
+   143 Fuel         Rules    surf  8 lots 1 (  8) drives 4 doors  2 props  7 models  4
+   144 Retail       Rules    surf  4 lots 1 ( 17) drives 2 doors  2 props  3 models  0
+   145 Retail       Rules    surf  3 lots 1 (  5) drives 1 doors  2 props  3 models  0
+   146 House        Rules    surf  1 lots 0 (  0) drives 0 doors  1 props  0 models  0  no frontage: reached by an easement; no driveway of its own
+   151 Unknown      Mapped   surf  1 lots 1 ( 46) drives 1 doors  0 props  0 models  0  a mapped lot or yard of its own
+   152 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  2 models  0
+   153 House        Rules    surf  1 lots 0 (  0) drives 0 doors  1 props  0 models  0  no frontage: reached by an easement; no driveway of its own
+   156 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  2 models  0
+   158 Unknown      Mapped   surf  1 lots 0 (  0) drives 1 doors  0 props  0 models  0  a mapped lot or yard of its own serving way/1272028980
+   160 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  2 models  0
+   161 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   162 House        Rules    surf  1 lots 0 (  0) drives 0 doors  1 props  0 models  0  no frontage: reached by an easement; no driveway of its own
+   163 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   164 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  2 models  0
+   165 Unknown      Mapped   surf  1 lots 0 (  0) drives 1 doors  0 props  0 models  0  a mapped lot or yard of its own serving way/1272028980
+   166 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  2 models  0
+   167 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  2 models  0
+   168 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  2 models  0
+   169 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   170 House        Rules    surf  4 lots 0 (  0) drives 1 doors  3 props  1 models  0
+   171 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   172 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   173 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   174 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   175 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   176 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   177 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   178 Retail       Rules    surf  2 lots 0 (  0) drives 0 doors  2 props  3 models  0  no room for a lot: customers park on the street
+   179 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   180 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   181 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   182 House        Rules    surf  1 lots 0 (  0) drives 0 doors  1 props  0 models  0  no room for a driveway: parks on the street
+   183 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   184 House        Rules    surf  1 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   185 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   186 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   187 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   188 Retail       Rules    surf  5 lots 1 ( 19) drives 1 doors  2 props  4 models  0
+   189 Retail       Rules    surf  2 lots 0 (  0) drives 0 doors  2 props  3 models  0  no room for a lot: customers park on the street
+   190 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  2 models  0
+   191 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   192 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   194 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   195 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  2 models  0
+   196 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   197 House        Rules    surf  1 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   198 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   199 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  2 models  0
+   200 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   201 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  2 models  0
+   202 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   203 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   204 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   205 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   206 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  2 models  0
+   207 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  2 models  0
+   208 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   209 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  2 models  0
+   210 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  0 models  0
+   211 Retail     * Rules    surf  1 lots 1 (  6) drives 1 doors  2 props  1 models  0
+   212 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  2 models  0
+   213 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   214 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   215 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   216 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   217 House        Rules    surf  0 lots 0 (  0) drives 0 doors  1 props  0 models  0  no room for a driveway: parks on the street
+   218 Retail       Rules    surf  4 lots 1 (  6) drives 1 doors  2 props  3 models  0
+   219 CarRepair  * Rules    surf  1 lots 0 (  0) drives 1 doors  2 props  1 models  0  rear lot off the alley: lot of 187 m² holds 0 stalls (< 2): dropped
+   220 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   221 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  2 models  0
+   222 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  2 models  0
+   223 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   224 Office     * Rules    surf  1 lots 0 (  0) drives 0 doors  2 props  1 models  0
+   225 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   226 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   227 Retail       Rules    surf  5 lots 1 (  3) drives 1 doors  2 props  3 models  0
+   228 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  2 models  0
+   229 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   230 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   231 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   232 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   233 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   235 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   236 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   237 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   238 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   239 House        Rules    surf  1 lots 0 (  0) drives 1 doors  2 props  2 models  0
+   240 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  0 models  0
+   241 House        Rules    surf  1 lots 0 (  0) drives 0 doors  1 props  0 models  0  no frontage: reached by an easement; no driveway of its own
+   242 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   243 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   244 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   245 Civic      * Rules    surf  2 lots 1 ( 16) drives 1 doors  2 props  1 models  0
+   246 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   247 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   249 House        Rules    surf  1 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   250 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  0 models  0
+   251 House        Rules    surf  0 lots 0 (  0) drives 0 doors  1 props  0 models  0  no room for a driveway: parks on the street
+   252 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  0 models  0
+   253 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   254 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   255 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   256 House        Rules    surf  0 lots 0 (  0) drives 0 doors  1 props  0 models  0  no room for a driveway: parks on the street
+   257 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  2 models  0
+   258 House        Rules    surf  1 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   259 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  2 models  0
+   260 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   262 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  2 models  0
+   264 House        Rules    surf  1 lots 0 (  0) drives 1 doors  1 props  0 models  0  driveway on face 332 at 19.0 m rejected (CornerReturn: CornerReturn 17.5-33.5 m blocks the throat 17.2-20.8 m and no shift up to 3 m clears it); no other spot; driveway refused by the street: parks on the street
+   265 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   266 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   267 House        Rules    surf  0 lots 0 (  0) drives 0 doors  1 props  1 models  0  no room for a driveway: parks on the street
+   268 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   269 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   270 House        Rules    surf  0 lots 0 (  0) drives 0 doors  1 props  0 models  0  no room for a driveway: parks on the street
+   271 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   272 House        Rules    surf  0 lots 0 (  0) drives 0 doors  1 props  0 models  0  no room for a driveway: parks on the street
+   273 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   274 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   275 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   276 Retail     * Rules    surf  0 lots 0 (  0) drives 0 doors  2 props  0 models  0
+   277 House        Rules    surf  0 lots 0 (  0) drives 0 doors  1 props  0 models  0  no room for a driveway: parks on the street
+   278 House        Rules    surf  0 lots 0 (  0) drives 0 doors  1 props  0 models  0  no room for a driveway: parks on the street
+   279 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   280 House        Rules    surf  0 lots 0 (  0) drives 0 doors  1 props  0 models  0  no room for a driveway: parks on the street
+   281 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   282 House        Rules    surf  0 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   283 House        Mapped   surf  2 lots 0 (  0) drives 1 doors  2 props  0 models  0
+   284 Unknown      Mapped   surf  1 lots 0 (  0) drives 0 doors  0 props  0 models  0  way/1271520105: no way in (the parcel has no frontage); mapped lot way/1271520105: lot of 376 m² holds 0 stalls (< 1): dropped; a mapped lot or yard of its own
+   285 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   286 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   287 House        Rules    surf  0 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   288 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   289 House        Rules    surf  0 lots 0 (  0) drives 0 doors  1 props  0 models  0  no room for a driveway: parks on the street
+   290 House        Rules    surf  0 lots 0 (  0) drives 0 doors  1 props  0 models  0  no room for a driveway: parks on the street
+   291 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   292 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   293 House        Rules    surf  2 lots 0 (  0) drives 1 doors  2 props  0 models  0
+   294 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  2 models  0
+   295 House        Rules    surf  1 lots 0 (  0) drives 0 doors  1 props  0 models  0  no room for a driveway: parks on the street
+   296 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  1 models  0
+   297 House        Rules    surf  3 lots 0 (  0) drives 1 doors  2 props  0 models  0
+
+Problems:
