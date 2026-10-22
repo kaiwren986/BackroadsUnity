@@ -184,7 +184,9 @@ namespace Backroads.Vehicles.Client
         Renderer AddBox(Transform parent, ClassicVehicleDef def)
         {
             var go = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            Destroy(go.GetComponent<Collider>());
+            var col = go.GetComponent<Collider>();
+            col.enabled = false;            // at once: the PhysX chassis must never meet the view (Destroy waits a frame)
+            Destroy(col);
             go.name = "BoxBody";
             go.transform.SetParent(parent, false);
             go.transform.localPosition = new Vector3(0, (float)def.boxY, (float)def.boxZ);

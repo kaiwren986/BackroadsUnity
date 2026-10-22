@@ -177,6 +177,16 @@ namespace Backroads.Tests.EditMode.Vehicles
             Assert.AreEqual(grid.H[k], grid.Base[k], "BASE = H at the start (no sinkage)");
         }
 
+        /// <summary>Card T3.6: no prefab or scene has a vehicle Rigidbody with gravity on (BRV applies gravity itself).</summary>
+        [Test]
+        public void ChassisGravityValidation()
+        {
+            var bad = Backroads.Vehicles.Editor.BrvChassisValidator.ValidateProject(out int prefabs, out int scenes);
+            TestContext.WriteLine($"chassis validation: {prefabs} prefabs, {scenes} scenes, {bad.Count} problems");
+            Assert.Greater(scenes, 0, "no scenes checked");
+            Assert.IsEmpty(bad, string.Join("\n", bad));
+        }
+
         [Test]
         public void AlignedPlacementFollowsTheSlope()
         {

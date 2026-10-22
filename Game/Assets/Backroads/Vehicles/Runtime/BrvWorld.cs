@@ -38,6 +38,11 @@ namespace Backroads.Vehicles
         [NativeDisableContainerSafetyRestriction] public NativeArray<byte> treeDown;
         /// <summary>16 m collider cells per side (ColliderGrid.CellsPerSide: 64 on canon v1, 128 on Millbrook).</summary>
         public int colliderCells;
+        /// <summary>
+        /// The PhysX chassis resolves static and vehicle-vehicle contacts (T3.6): BRV skips the browser game's 2D statics
+        /// (except tree knock-over) and the vehicle pairs. Set by BrvFleet.PhysxCollisions.
+        /// </summary>
+        public bool physx;
 
         public bool HasColliders => colliders.IsCreated && colliders.Length > 0;
     }

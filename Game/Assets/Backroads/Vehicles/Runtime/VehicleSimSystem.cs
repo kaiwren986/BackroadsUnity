@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Backroads.Core;
@@ -27,6 +28,12 @@ namespace Backroads.Vehicles
         SimVehicle _player;
 
         public BrvFleet Fleet { get; private set; }
+        /// <summary>The PhysX chassis (T3.6; null with -br-js-statics) and the world's static colliders as PhysX statics.</summary>
+        public BrvPhysxChassis Chassis { get; private set; }
+        public PhysxStatics Statics { get; private set; }
+
+        /// <summary>Fallback (PLAN M3): the browser game's 2D statics and vehicle-vehicle SAT instead of the PhysX chassis.</summary>
+        public const string JsStaticsFlag = "-br-js-statics";
         public IReadOnlyList<SimVehicle> Vehicles => _vehicles;
         public SimVehicle Player => _player;
         public bool Paused;
@@ -60,6 +67,12 @@ namespace Backroads.Vehicles
             _world = BrvWorldData.Create(grid, colliders, vegetation);
             Fleet = new BrvFleet(_world);
             Fleet.TreeKnocked += k => TreeKnocked?.Invoke(k);
+            if (!CommandLine.Has(JsStaticsFlag))
+            {
+                if (colliders != null) Statics = PhysxStatics.Build(colliders, transform);
+                Chassis = new BrvPhysxChassis(Fleet, transform);
+                Fleet.TreeKnocked += k => Statics?.Knock(k.collider);
+            }
         }
 
         void Awake()
@@ -73,6 +86,10 @@ namespace Backroads.Vehicles
             if (Current == this) Current = null;
             foreach (var v in _vehicles) v.Dispose();
             _vehicles.Clear();
+            Chassis?.Dispose();
+            Chassis = null;
+            Statics?.Dispose();
+            Statics = null;
             Fleet?.Dispose();
             Fleet = null;
             _world?.Dispose();
@@ -88,6 +105,7 @@ namespace Backroads.Vehicles
             Fleet.Place(i, -unityPos.x, unityPos.z, -unityYawDeg * Mathf.Deg2Rad);
             if (settleSteps > 0) Fleet.Settle(i, settleSteps);
             Fleet.Park(i);
+            Chassis?.Sync();
             return v;
         }
 
@@ -100,6 +118,7 @@ namespace Backroads.Vehicles
             Fleet.Place(i, xJs, zJs, yawJs);
             if (settleSteps > 0) Fleet.Settle(i, settleSteps);
             Fleet.Park(i);
+            Chassis?.Sync();
             return v;
         }
 
@@ -140,6 +159,7 @@ namespace Backroads.Vehicles
             _sw.Restart();
             for (int i = 0; i < _vehicles.Count; i++) Fleet.SetInput(i, _vehicles[i].TakeStepInput());
             Fleet.Step();
+            Chassis?.BeforeSimulate();   // Unity's physics step follows; ReadBack takes the contacts
             TotalSteps++;
             for (int i = 0; i < _vehicles.Count; i++)
             {
@@ -162,6 +182,19 @@ namespace Backroads.Vehicles
             _sw.Stop();
             _frameMs += _sw.Elapsed.TotalMilliseconds;
             _frameSteps++;
+        }
+
+        void OnEnable() => StartCoroutine(ReadBack());
+
+        /// <summary>Right after each of Unity's physics steps: vehicles that hit something take PhysX's result.</summary>
+        IEnumerator ReadBack()
+        {
+            var wait = new WaitForFixedUpdate();
+            while (true)
+            {
+                yield return wait;
+                Chassis?.AfterSimulate();
+            }
         }
 
         void Update()
