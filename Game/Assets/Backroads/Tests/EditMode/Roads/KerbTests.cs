@@ -423,12 +423,45 @@ namespace Backroads.Tests.EditMode.Roads
         [TestCase("town")]
         public void TerrainUnderAndBesideThePavement(string which)
         {
-            var b = Kerbs.Get(which);
+            var t = Terrain(Kerbs.Get(which));
+            TestContext.WriteLine(t.Summary);
+            foreach (var l in t.conflictAt.Take(40)) TestContext.WriteLine("  between: " + l);
+            foreach (var l in t.fails.Take(30)) TestContext.WriteLine("  " + l);
+            t.AssertPasses();
+        }
+
+        /// <summary>The terrain samples of 05 §8.7 over a bake (shared with Roads.Validation) and what the test asserts on them.</summary>
+        internal sealed class TerrainResult
+        {
+            public int inside, outside, skipped, conflicts, alleyConflicts, byBuilding, fallbacks, offWalk;
+            public readonly List<string> fails = new List<string>(), conflictAt = new List<string>();
+
+            public string Summary => $"{inside} points under the pavement, {outside} 1 m outside ({skipped} landed on another road's paving; {conflicts} between two edges at different heights, {alleyConflicts} more at alley mouths; {byBuilding} within 1 m of a building), {fallbacks} fallback nodes excused";
+
+            public void AssertPasses()
+            {
+                Assert.Less(offWalk, 50, "walk samples outside every walk piece");
+                Assert.Less(conflicts, outside / 200, "points between two paved edges at different heights stay rare");
+                Assert.Less(alleyConflicts, outside / 20, "and at alley mouths too");
+                Assert.IsEmpty(fails, $"{fails.Count} failures, first: {fails.FirstOrDefault()}");
+                Assert.Greater(inside, 100);
+                Assert.Greater(outside, 100);
+            }
+        }
+
+        /// <summary>
+        /// 0.25 m inside every paved footprint (ribbons, junctions, walks) the plates' ground is at least 0.03 m under the
+        /// surface; 1 m outside every paved edge it is within 0.1 m of the edge's height (points between two edges at
+        /// different heights, at alley mouths and beside buildings counted apart).
+        /// </summary>
+        internal static TerrainResult Terrain(Kerbs.Bake b)
+        {
+            var res = new TerrainResult();
             var field = new PlateField(b.plates);
             var st = b.k.settings;
             var g = b.g;
             int inside = 0, outside = 0, skipped = 0, conflicts = 0;
-            var fails = new List<string>();
+            var fails = res.fails;
             var fallbacks = b.s.nodes.Where(n => n.mode == SurfaceMode.Fallback).Select(n => g.nodes[n.node].p.XZ).ToList();
             bool NearFallback(D2 p) => fallbacks.Any(q => D2.Distance(p, q) < 25);
             bool Structure(int edge) { var r = g.RoadOf(g.edges[edge].sourceRoad); return r != null && (r.bridge || r.tunnel); }
@@ -491,7 +524,6 @@ namespace Backroads.Tests.EditMode.Roads
                         Under(p, surface, $"walk f{f.id}");
                     }
                 }
-            Assert.Less(offWalk, 50, "walk samples outside every walk piece");
             // 1 m outside: behind the walk on the verge, beside an unkerbed pavement on the shoulder, against the nearest
             // point of the paved edge (the walk's back edge drops along the ramps at corners)
             var backEdges = new List<(D2 a, D2 b, double ya, double yb)>();
@@ -523,7 +555,7 @@ namespace Backroads.Tests.EditMode.Roads
             var footprints = b.k.roads.input.footprints.Where(x => x.corners != null && x.corners.Length >= 3).Select(x => x.corners).ToList();
             bool NearBuilding(D2 p) => footprints.Any(c => c.Any(q => Math.Abs(q.x - p.x) < 40 && Math.Abs(q.z - p.z) < 40) && (TownZone.InPolygon(c, p) || Geom2.DistanceToBoundary(c, p) < 1.0));
             int byBuilding = 0, alleyConflicts = 0;
-            var conflictAt = new List<string>();
+            var conflictAt = res.conflictAt;
             // roads-R4: an alley mouth's 3 m kerb return is dropped on one side only, so the verge in the block corner behind
             // it lies between a lowered and a full-height walk edge; those points are counted apart
             var alleyNodes = g.nodes.Where(n => n.Degree >= 3 && n.arms.Any(id => RoadGraphBuilder.IsAlley(g, g.arms[id]))).Select(n => n.p.XZ).ToList();
@@ -547,14 +579,9 @@ namespace Backroads.Tests.EditMode.Roads
                     if (Math.Abs(y - edgeY) > 0.1) { if (conflict && NearAlleyMouth(p)) alleyConflicts++; else if (conflict) { conflicts++; conflictAt.Add($"face {f.id} e{f.edge} {(f.kerbed ? "kerbed" : "open")} at {p}: ground {y:F3}, edge {edgeY:F3} ({win.id})"); } else fails.Add($"1 m outside face {f.id} at {p}: ground {y:F3} vs the nearest edge {edgeY:F3} ({win.id})"); }
                 }
             }
-            TestContext.WriteLine($"{inside} points under the pavement, {outside} 1 m outside ({skipped} landed on another road's paving; {conflicts} between two edges at different heights, {alleyConflicts} more at alley mouths; {byBuilding} within 1 m of a building), {fallbacks.Count} fallback nodes excused");
-            foreach (var l in conflictAt.Take(40)) TestContext.WriteLine("  between: " + l);
-            Assert.Less(conflicts, outside / 200, "points between two paved edges at different heights stay rare");
-            Assert.Less(alleyConflicts, outside / 20, "and at alley mouths too");
-            foreach (var l in fails.Take(30)) TestContext.WriteLine("  " + l);
-            Assert.IsEmpty(fails, $"{fails.Count} failures, first: {fails.FirstOrDefault()}");
-            Assert.Greater(inside, 100);
-            Assert.Greater(outside, 100);
+            res.inside = inside; res.outside = outside; res.skipped = skipped; res.conflicts = conflicts; res.alleyConflicts = alleyConflicts;
+            res.byBuilding = byBuilding; res.fallbacks = fallbacks.Count; res.offWalk = offWalk;
+            return res;
         }
     }
 

@@ -1,0 +1,19 @@
+Roads.Validation (05 §8) on TownData/stockport-oh/v1: one fresh bake in 6.5 s (importer v2, graph v3, surfaces v2, kerbs v2, meshes v2, bridges v1)
+graph: 183 roads / 8402 points -> 134 nodes (93 junctions: 64 T + 29 X; 0 dirt aprons; 4 L-bends; 24 dead ends; 6 class changes; 7 joins), 366 arm ends, 183 edges, 14 complex pair(s)
+  connected: 128 of 134 nodes from node 0 (5 groups apart, 3 kept because they reach the play-area edge); grade conflicts 0
+§8.1 polygons: 110 junction surfaces, all simple and counter-clockwise: yes; fallbacks 0; areas off 0 (regular worst -4.2 %, 7 irregular within 15 %)
+§8.2 seams: 342 ribbon-to-mouth seams, 0 problems, worst 0.0E+000 m (bit-shared)
+§8.3 grades (listed exceptions): 92 stop lines, 10 with the approach over 6 % within 10 m (worst 16.4 %); 93 junction surfaces, 31 leaning over 3 % (worst 13.2 %; 0 planes, worst 0.0 %, 0 over); 18226 levels across walks, 83 faces with a cross slope over 2.1 % (worst 65.80 %), 3 faces whose walk meets another face's more than 5 cm apart (worst 0.12 m); 458 ramp runs, 135 over 8.33 % (worst 30.2 %); 12 flares, 7 over 10 % (worst 13.0 %)
+    node 1 arm 1 (R48, Street, MinorStop): 11.5 % at 7.2 m from the node, rising towards the junction; stop line at 16.7 m (moved to the flattest spot within 4 m)
+    node 2 arm 0 (R176, Yard, MinorStop): 15.4 % at 21.1 m from the node, falling towards the junction; stop line at 13.6 m (moved to the flattest spot within 4 m)
+    node 24 arm 1 (R16, Street, MinorStop): 7.3 % at 10.1 m from the node, rising towards the junction; stop line at 16.1 m
+    node 33 arm 2 (R152, Yard, MinorStop): 16.4 % at 15.6 m from the node, falling towards the junction; stop line at 13.1 m
+    node 40 arm 2 (R146, Street, MinorStop): 6.3 % at 6.7 m from the node, falling towards the junction; stop line at 16.7 m (moved to the flattest spot within 4 m)
+    node 60 arm 1 (R98, Street, MinorStop): 10.1 % at 22.4 m from the node, rising towards the junction; stop line at 12.4 m
+§8.4 kerbs: 370 faces (260 kerbed), 0 road sides without one: yes; kerbs in buildings 0 (+2 known map conflicts); 10 faces closer to a building than the walk needs (reported)
+§8.6 controls: 92 controlled approaches, 92 signs (92 STOP, 0 signals, 0 YIELD), 0 problems; 92 stop lines; 1 set back by a crosswalk; roundabout entries 0 (the town has none; synthetic ring: 4 entries, 8 YIELD, 4 yield lines, 0 problems)
+§8.7 terrain: 88024 plates; 32225 points under the pavement, 13646 1 m outside (142 landed on another road's paving; 7 between two edges at different heights, 81 more at alley mouths; 1023 within 1 m of a building), 0 fallback nodes excused; 0 failures
+R4: 16 close pairs (0 problems); alleys 9 in the map = 9 in the graph + 0 skipped, 54 alley mouths (0 problems); 7 unpaved meetings (0 problems); 76 kerb tapers (0 problems); 1 bridges (0 problems); 0 roundabouts built (0 problems)
+§8.9 determinism (7.0 s for the second bake): network 17799d4eebc6, frontage f7700ce35c52, chunks eff860536796, plates 6c641635544e: two bakes agree; committed: network current, frontage current, chunks current
+not here: §8.5 lanes (R5); §8.8 golden screenshots (the m3.shots.junctions autotest)
+errors: 0
