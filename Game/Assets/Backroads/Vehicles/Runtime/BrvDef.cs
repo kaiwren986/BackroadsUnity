@@ -54,6 +54,13 @@ namespace Backroads.Vehicles
         public FixedList512Bytes<double3> hull;
         public int nDriveStatic;
 
+        /// <summary>
+        /// This vehicle steps with BRV v2 (shafts, MF tyres; <see cref="BrvSim.StepV2"/>). Set by BrvFleet.Add from
+        /// <see cref="BrvFeatures.V2Driveline"/>; tracked vehicles ("simple") stay on V0 until the dozer moves to v2 (M7).
+        /// </summary>
+        public bool v2;
+        public BrvV2Def v2def;
+
         public int WheelCount => wheels.Length;
 
         public static BrvDef Create(ClassicVehicleDef def)
@@ -137,6 +144,7 @@ namespace Backroads.Vehicles
                 for (int i = 0; i < def.engineGears; i++) d.ratios.Add(top * Math.Pow(q, def.engineGears - 1 - i));
                 d.revRatio = first * 0.95;
             }
+            if (def.hasEngine && !def.hasSimple) d.v2def = BrvV2Def.FromClassic(def, d);
             return d;
         }
     }

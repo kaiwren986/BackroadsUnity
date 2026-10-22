@@ -275,6 +275,7 @@ namespace Backroads.Vehicles
                                 ref NativeList<RutCall> ruts, ref NativeList<TreeKnock> knocks,
                                 NativeArray<BrvState> fleet, int fleetCount)
         {
+            if (d.v2) { StepV2(ref s, d, w, dt, self, ref ruts, ref knocks, fleet, fleetCount); return; }
             if (s.asleep) return;
             s.steps++;
             s.prevPos = s.pos;
@@ -292,7 +293,14 @@ namespace Backroads.Vehicles
             HullContacts(ref s, d, w, dt, self, ref ruts);
             Statics(ref s, d, w, self, ref knocks);
             if (s.winch.active) WinchStep(ref s, d, dt, fleet, fleetCount);
+            StepTail(ref s, d, w, dt, self, ref ruts);
+        }
 
+        /// <summary>The end of step() after the contacts (shared by V0 and v2): drag, damping, integration, the island
+        /// clamp, ruts every 2nd step, mud on the body, the stuck timer, fuel and sleep.</summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static void StepTail(ref BrvState s, in BrvDef d, in BrvWorld w, double dt, int self, ref NativeList<RutCall> ruts)
+        {
             // aero drag & damping
             double sp = Length(s.vel);
             if (sp > 0.01) s.vel *= Math.Max(0, 1 - d.drag * sp * dt * s.invMass);

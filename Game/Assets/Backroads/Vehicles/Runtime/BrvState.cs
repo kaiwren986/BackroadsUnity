@@ -22,6 +22,37 @@ namespace Backroads.Vehicles
         public double omega, angle, spin, skid, vl, mudRes;
         public double3 fd, sd, arm, rS;
         public double kF, kS, accL, accS, longLim, latLim, vsPre;
+
+        // ---- BRV v2 only (V0 never reads or writes these; snapshot v2 block) ----
+        /// <summary>Warm-start impulses of the wheel's rows: brake + rolling resistance, tyre long, tyre lat, mud drag.</summary>
+        public double lamB, lamT, lamL, lamM;
+        /// <summary>Low-speed anchors: tyre contact deflection along fd and sd (m), brake slip angle (rad).</summary>
+        public double anchorL, anchorS, anchorB;
+        /// <summary>ABS: how much of the brake torque is released (0 = full brake).</summary>
+        public double absCut;
+        /// <summary>Longitudinal slip ratio and slip angle of the last substep (diagnostics, ABS, HUD).</summary>
+        public double kappa, alpha;
+    }
+
+    /// <summary>
+    /// BRV v2 driveline state (06 section 4.1): the crank and the gearbox output shaft (the gearbox input is lumped into
+    /// the output while a gear is engaged), the auto-clutch engagement and the warm-start impulses of the driveline
+    /// rows. Wheel shaft speeds are the wheels' own omega.
+    /// </summary>
+    public struct BrvDriveline
+    {
+        /// <summary>The v2 block is valid (false after a v1 snapshot or a V0 state: the first v2 step syncs it).</summary>
+        public bool init;
+        public double crankOmega, crankAngle, driveOmega;
+        /// <summary>Clutch engagement 0..1 (auto-clutch, 06 section 4.2.1).</summary>
+        public double clutch;
+        public double lamClutch, lamDiffFront, lamDiffRear;
+        /// <summary>Selectable lockers (the locked axle is lumped into one shaft, 06 section 4.1).</summary>
+        public bool lockFront, lockRear;
+        /// <summary>ABS off (driver aid switch); ABS is on by default where the vehicle has it.</summary>
+        public bool absOff;
+        /// <summary>Engine torque at the crank in the last substep (N m, for reports).</summary>
+        public double engineTorque;
     }
 
     /// <summary>The winch rope (vehicle.js this.winch): pull only; the drum takes in slack and reels while W is held.</summary>
@@ -69,6 +100,8 @@ namespace Backroads.Vehicles
         public int nContact;
         public double2 trackSpeed;
         public BrvWinch winch;
+        /// <summary>BRV v2 driveline (unused by V0).</summary>
+        public BrvDriveline dl;
         public FixedList4096Bytes<BrvWheel> wheels;
 
         /// <summary>Fixed steps simulated since spawn (not in the JS; for diagnostics and the snapshot test).</summary>

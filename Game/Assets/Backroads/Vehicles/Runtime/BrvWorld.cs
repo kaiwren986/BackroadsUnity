@@ -45,6 +45,9 @@ namespace Backroads.Vehicles
     {
         public NativeArray<double> TreeKnockMomentum;
         public NativeArray<byte> TreeDown;
+        // empty collider arrays for a world without static colliders (the BRV test track): jobs need valid containers
+        NativeArray<ColliderGrid.Record> _noRecords;
+        NativeArray<int> _noCells;
         public WorldGrid Grid { get; private set; }
         public ColliderGrid Colliders { get; private set; }
 
@@ -52,6 +55,11 @@ namespace Backroads.Vehicles
         {
             var d = new BrvWorldData { Grid = grid, Colliders = colliders };
             int n = colliders != null ? colliders.Count : 0;
+            if (colliders == null)
+            {
+                d._noRecords = new NativeArray<ColliderGrid.Record>(0, Allocator.Persistent);
+                d._noCells = new NativeArray<int>(0, Allocator.Persistent);
+            }
             d.TreeKnockMomentum = new NativeArray<double>(n, Allocator.Persistent);
             d.TreeDown = new NativeArray<byte>(n, Allocator.Persistent);
             int treeKind = ColliderGrid.KindIndex("tree");
@@ -69,9 +77,9 @@ namespace Backroads.Vehicles
         public BrvWorld View => new BrvWorld
         {
             grid = Grid.View,
-            colliders = Colliders != null ? Colliders.Records : default,
-            cellStart = Colliders != null ? Colliders.CellStart : default,
-            cellItems = Colliders != null ? Colliders.CellItems : default,
+            colliders = Colliders != null ? Colliders.Records : _noRecords,
+            cellStart = Colliders != null ? Colliders.CellStart : _noCells,
+            cellItems = Colliders != null ? Colliders.CellItems : _noCells,
             treeKnockMomentum = TreeKnockMomentum,
             treeDown = TreeDown,
         };
@@ -80,6 +88,8 @@ namespace Backroads.Vehicles
         {
             if (TreeKnockMomentum.IsCreated) TreeKnockMomentum.Dispose();
             if (TreeDown.IsCreated) TreeDown.Dispose();
+            if (_noRecords.IsCreated) _noRecords.Dispose();
+            if (_noCells.IsCreated) _noCells.Dispose();
         }
     }
 }
