@@ -6,6 +6,8 @@
         "Backroads.World",
         "Backroads.Deform",
         "Backroads.Vehicles",
+        "Backroads.Vehicles.Client",
+        "Backroads.Client.Rendering",
         "Unity.Mathematics",
         "Unity.Collections",
         "Unity.Burst",

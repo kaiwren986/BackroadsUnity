@@ -20,7 +20,7 @@ namespace Backroads.Tests.PlayMode.Vehicles
     /// without the engine-sim DLL (Architecture rule 3: the vehicles see engines only through IVehicleEngine).
     /// </summary>
     [TestFixture, Category("Vehicle")]
-    public class Vehicle
+    public partial class Vehicle
     {
         static readonly string[] TraceIds =
         {
