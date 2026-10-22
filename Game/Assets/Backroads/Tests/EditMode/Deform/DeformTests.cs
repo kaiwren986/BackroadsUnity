@@ -28,6 +28,10 @@ namespace Backroads.Tests.EditMode.Deform
     {
         // ------------------------------------------------------------------ helpers
 
+        // the canon test world's grid (CanonData v1): the reference calls were recorded on it
+        static readonly WorldGridLayout V1 = WorldGridLayout.CanonV1;
+        static readonly int N = V1.N, VN = V1.VN;
+
         static CanonAsset s_Canon;
         static List<Call> s_Calls;
 
@@ -144,7 +148,7 @@ namespace Backroads.Tests.EditMode.Deform
             double rad = c.Fn == "rut" ? c.A[2] + 0.55 : c.A[2];
             double gi = (c.A[0] + 512) / 0.5, gj = (c.A[1] + 512) / 0.5, rc = rad / 0.5 + 2;
             i0 = Math.Max(0, (int)Math.Floor(gi - rc)); j0 = Math.Max(0, (int)Math.Floor(gj - rc));
-            i1 = Math.Min(WorldGrid.N, (int)Math.Ceiling(gi + rc)); j1 = Math.Min(WorldGrid.N, (int)Math.Ceiling(gj + rc));
+            i1 = Math.Min(N, (int)Math.Ceiling(gi + rc)); j1 = Math.Min(N, (int)Math.Ceiling(gj + rc));
         }
 
         static uint Fnv(uint h, byte v) => (h ^ v) * 0x01000193u;
@@ -189,7 +193,7 @@ namespace Backroads.Tests.EditMode.Deform
                 for (int j = j0; j <= j1; j++)
                     for (int i = i0; i <= i1; i++)
                     {
-                        int k = j * WorldGrid.VN + i, l = (j - j0) * w + (i - i0);
+                        int k = j * VN + i, l = (j - j0) * w + (i - i0);
                         bh[l] = js.H[k]; bw[l] = js.Wear[k]; bs[l] = js.Surface[k];
                         if (seen.Add(k)) touched.Add(k);
                     }
@@ -199,7 +203,7 @@ namespace Backroads.Tests.EditMode.Deform
                 for (int j = j0; j <= j1; j++)
                     for (int i = i0; i <= i1; i++)
                     {
-                        int k = j * WorldGrid.VN + i, l = (j - j0) * w + (i - i0);
+                        int k = j * VN + i, l = (j - j0) * w + (i - i0);
                         if (bh[l] == js.H[k] && bw[l] == js.Wear[k] && bs[l] == js.Surface[k]) continue;
                         n++;
                         fh = FnvU32(fh, (uint)k); fh = FnvU32(fh, math.asuint(js.H[k])); fh = Fnv(fh, js.Wear[k]); fh = Fnv(fh, js.Surface[k]);
@@ -272,7 +276,7 @@ namespace Backroads.Tests.EditMode.Deform
                 double x = ci * 0.5 - 512 + 0.13, z = cj * 0.5 - 512 + 0.21;
                 double soft = JsDeformReference.Softness[surf];
                 int reachJs = -1, reachInt = -1;
-                int kc = cj * WorldGrid.VN + ci;
+                int kc = cj * VN + ci;
                 double fc = 1 - (0.13 * 0.13 + 0.21 * 0.21) / (radius * radius);
                 double targetC = depth * soft * fc;
                 for (int c = 0; c < 900; c++)
@@ -287,7 +291,7 @@ namespace Backroads.Tests.EditMode.Deform
                 for (int j = cj - 3; j <= cj + 3; j++)
                     for (int i = ci - 3; i <= ci + 3; i++)
                     {
-                        int k = j * WorldGrid.VN + i;
+                        int k = j * VN + i;
                         double dx = i * 0.5 - 512 - x, dz = j * 0.5 - 512 - z;
                         double diff = Math.Abs(((double)grid.Base[k] - h[k]) - ((double)js.Base[k] - js.H[k]));
                         if (Math.Sqrt(dx * dx + dz * dz) < radius) { worst = Math.Max(worst, diff); core++; }
@@ -315,7 +319,7 @@ namespace Backroads.Tests.EditMode.Deform
                 for (int j = cj - 3; j <= cj + 3; j++)
                     for (int i = ci - 8; i <= ci + 8; i++)
                     {
-                        int k = j * WorldGrid.VN + i;
+                        int k = j * VN + i;
                         double sJs = (double)js.Base[k] - js.H[k];
                         deepest = Math.Max(deepest, sJs);
                         worst = Math.Max(worst, Math.Abs(((double)grid.Base[k] - h[k]) - sJs));
@@ -329,14 +333,14 @@ namespace Backroads.Tests.EditMode.Deform
         /// <summary>A vertex whose (2r+1)^2 neighbourhood is all one surface with no mud, far from the map edge.</summary>
         static bool FindPatch(WorldGrid g, byte surf, int r, out int ci, out int cj)
         {
-            for (int j = 300; j < WorldGrid.N - 300; j += 7)
-                for (int i = 300; i < WorldGrid.N - 300; i += 7)
+            for (int j = 300; j < N - 300; j += 7)
+                for (int i = 300; i < N - 300; i += 7)
                 {
                     bool ok = true;
                     for (int dj = -r; dj <= r && ok; dj++)
                         for (int di = -r; di <= r && ok; di++)
                         {
-                            int k = (j + dj) * WorldGrid.VN + i + di;
+                            int k = (j + dj) * VN + i + di;
                             ok = g.Surface[k] == surf && g.Mud[k] == 0 && g.Wear[k] == 0 && g.DeltaUm[k] == 0;
                         }
                     if (!ok) continue;
@@ -385,7 +389,7 @@ namespace Backroads.Tests.EditMode.Deform
             for (int t = 0; t < a.Length; t++) { if (a[t] != b[t]) diffAB++; if (a[t] != c2[t]) diffAC++; }
             int deltaDiff = 0;
             for (int k = 0; k < da.Length; k++) if (da[k] != db[k] || da[k] != dc[k]) deltaDiff++;
-            TestContext.WriteLine($"Deform.Deterministic: {log.Count} stamps ({log.Count(s => s.Kind == StampKind.Relax)} relax); {changedTiles} of {TileTable.Count} tiles changed; " +
+            TestContext.WriteLine($"Deform.Deterministic: {log.Count} stamps ({log.Count(s => s.Kind == StampKind.Relax)} relax); {changedTiles} of {baseline.Length} tiles changed; " +
                                   $"Burst {msA:F0} ms (really Burst: {burstA}), managed {msB:F0} ms; tiles differing Burst/managed {diffAB}, Burst/Burst {diffAC}; DeltaUm differing at {deltaDiff} vertices");
             Assert.IsTrue(burstA, "the Burst path ran managed code (is Burst compilation enabled?)");
             Assert.Greater(changedTiles, 0, "the log changed no tile");
@@ -500,7 +504,7 @@ namespace Backroads.Tests.EditMode.Deform
             Assert.NotNull(look, "MillbrookLook.asset");
             using var grid = FreshGrid();
             using var sink = new DeformSystem(grid);
-            using var colliders = ColliderGrid.Build(canon.placements.colliders);
+            using var colliders = ColliderGrid.Build(canon.placements.colliders, grid.Layout);
             var root = new GameObject("deform-trees");
             try
             {
@@ -510,7 +514,7 @@ namespace Backroads.Tests.EditMode.Deform
                 for (int i = 0; i < canon.vegetation.trees.Length && picked.Count < 3; i++)
                 {
                     var t = canon.vegetation.trees[i];
-                    int k = (int)Math.Round((t.z + 512) / 0.5) * WorldGrid.VN + (int)Math.Round((t.x + 512) / 0.5);
+                    int k = (int)Math.Round((t.z + 512) / 0.5) * VN + (int)Math.Round((t.x + 512) / 0.5);
                     if (grid.Surface[k] == 0 || grid.Surface[k] == 1) picked.Add(i);
                 }
                 Assert.AreEqual(3, picked.Count);

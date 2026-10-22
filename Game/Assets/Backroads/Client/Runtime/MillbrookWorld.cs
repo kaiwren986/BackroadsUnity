@@ -124,7 +124,7 @@ namespace Backroads.Client
             Sky = new DayNightPresenter(sun, look, Canon.placements, transform, volume) { LampLightCount = Mathf.Max(6, q.LampLights) };
             Sky.SetHour(startHour, cam.transform.position);
             TotalLoadMs = total.Elapsed.TotalMilliseconds;
-            Log.Info($"Millbrook ready in {TotalLoadMs:F0} ms: canon {CanonLoadMs:F0} ms, terrain 256 chunks {TerrainBuildAllMs:F0} ms, " +
+            Log.Info($"Millbrook ready in {TotalLoadMs:F0} ms: canon {CanonLoadMs:F0} ms, terrain {Terrain.ChunkCount} chunks {TerrainBuildAllMs:F0} ms, " +
                      $"{Buildings.Buildings} buildings ({Buildings.Panes} panes, {Buildings.LitPanes} lit) {BuildingsMs:F0} ms, " +
                      $"{Vegetation.Trees} trees + {Vegetation.Rocks} rocks {VegetationMs:F0} ms, {Props.Chunks} prop chunks, {roads} paved roads; quality {q.Tier}");
             Ready = true;
