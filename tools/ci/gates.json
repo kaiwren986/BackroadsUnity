@@ -1109,8 +1109,7 @@
           "gateJson": true,
           "heavy": true,
           "headline": true,
-          "hard": false,
-          "pending": "Roads.Validation (roads-R1..R3) (lane R) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "hard": true,
           "owner": "R"
         },
         {
@@ -1640,8 +1639,7 @@
           "gateJson": true,
           "heavy": true,
           "headline": true,
-          "hard": false,
-          "pending": "Roads.Validation (roads-R1..R3) (lane R) is not on main yet: reported, never fails the tier; T3.7 drops \"pending\" and sets hard when it lands",
+          "hard": true,
           "owner": "R"
         },
         {
