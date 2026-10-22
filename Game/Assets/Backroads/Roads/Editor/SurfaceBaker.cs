@@ -23,12 +23,14 @@ namespace Backroads.Roads.Editor
             public OsmImportReport import;
             public RoadSurfaces surfaces;
             public SurfaceChecks.Result checks;
+            /// <summary>The town source (DEM, zones, footprints); null when the bake came from elsewhere.</summary>
+            public OsmRoadSource source;
         }
 
         public static Bake BuildTown(string townId)
         {
             var b = new Bake { town = townId };
-            b.graph = RoadNetworkBaker.BuildTown(townId, out b.input, out b.import);
+            b.graph = RoadNetworkBaker.BuildTown(townId, out b.input, out b.import, out b.source);
             b.surfaces = SurfaceBuilder.Build(b.graph, b.input, RoadOverrides.Load(townId));
             b.checks = SurfaceChecks.Run(b.graph, b.input, b.surfaces);
             return b;

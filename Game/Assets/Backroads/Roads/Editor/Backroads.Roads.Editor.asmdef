@@ -6,7 +6,9 @@
         "Backroads.World",
         "Backroads.Roads",
         "Backroads.Canon.Editor",
-        "Backroads.Build.Editor"
+        "Backroads.Build.Editor",
+        "Clipper2Lib",
+        "Unity.Mathematics"
     ],
     "includePlatforms": [
         "Editor"

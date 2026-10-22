@@ -195,7 +195,7 @@ namespace Backroads.Roads
                 arm = a.id, edge = e.id, node = n.id, atA = a.atA, cls = e.cls,
                 frame = a.atA ? frames[e.id] : frames[e.id].Reversed(),
                 hwL = a.atA ? eL : eR, hwR = a.atA ? eR : eL,
-                kerbed = road != null && road.inKerbZone && (e.cls == RoadClass.Street || e.cls == RoadClass.MainStreet),
+                kerbed = KerbRules.Kerbed(road, e.cls),
                 gravel = e.cls == RoadClass.Dirt, control = a.control,
             };
             var far = g.nodes[g.FarNode(a)];
@@ -918,7 +918,7 @@ namespace Backroads.Roads
         {
             var road = g.RoadOf(e.sourceRoad);
             double hwL = road?.xs?.hwLeft ?? e.hw, hwR = road?.xs?.hwRight ?? e.hw;
-            bool kerbed = road != null && road.inKerbZone && (e.cls == RoadClass.Street || e.cls == RoadClass.MainStreet), gravel = e.cls == RoadClass.Dirt;
+            bool kerbed = KerbRules.Kerbed(road, e.cls), gravel = e.cls == RoadClass.Dirt;
             ArmSurface armA = null, armB = null;
             var nA = res.Of(e.nodeA);
             var nB = res.Of(e.nodeB);
