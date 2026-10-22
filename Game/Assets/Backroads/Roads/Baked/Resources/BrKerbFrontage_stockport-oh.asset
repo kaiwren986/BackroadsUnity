@@ -16,8 +16,8 @@ MonoBehaviour:
   kerbVersion: 1
   source: TownData/stockport-oh/v1
   sourceManifestSha256: 7c334898ed465e2521d358625defa35b24e671a98d4ae07d5558a563a9db80a4
-  roadContentHash: e8df69a1f26dadda8dbaae72ca50ef1eba6ea6d354f2540bcca6aae3a14c9238
-  contentHash: 0f337dbcaf811f9ca4eab2dd2779d229c4cc9abab30f8f2a3fe1c60582ccced9
+  roadContentHash: cd3a33e9df46f7e21303e8fd19dffbe9b0ff3cc28d724d756436c89ab5ad64bd
+  contentHash: 33185dff6cfa06104126b446c7ecc97d85c0143d2d7308a4e05d994d5e4549c3
   faces:
   - faceId: 0
     edge: 0

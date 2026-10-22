@@ -1,0 +1,21 @@
+{
+  "note": "Fictional street names for the new Millbrook (roads-R3 step 3, ADR-006 section 6: the town's real street names never ship). Streets take the names in order of their smallest OSM way id. Until the user approves the list (approvals queue), the bake gives every street a 'Street NN' placeholder. Invented to sound like a small Ohio river and mill town while avoiding the commonest real American street names; the user checks them against the real town before approving.",
+  "approved": false,
+  "decision": "",
+  "names": [
+    "Millrace Street", "Lockkeeper Street", "Towpath Road", "Bellwether Street", "Copperbeck Lane", "Dovecote Street",
+    "Fennel Street", "Foxglove Lane", "Gristmill Road", "Hearthstone Street", "Heronwood Avenue", "Hollyhock Street",
+    "Inkberry Lane", "Kettlewell Street", "Lamplighter Lane", "Larkspur Street", "Lodestone Road", "Marigold Street",
+    "Mossgate Lane", "Nettlebed Road", "Oarlock Street", "Pennyroyal Street", "Pickerel Road", "Plowshare Road",
+    "Quarrystone Road", "Quillwort Lane", "Saddlebrook Street", "Sorrel Street", "Starling Street", "Tanbark Road",
+    "Teasel Lane", "Thimbleberry Street", "Thornapple Road", "Tinkers Row", "Trillium Street", "Turnstone Lane",
+    "Vesper Street", "Wagonwright Street", "Waterwheel Street", "Weirgate Road", "Wheelwright Lane", "Whippoorwill Road",
+    "Willowherb Lane", "Yarrow Street", "Bramblewood Road", "Corncrake Road", "Dapplegrey Lane", "Elderbrook Street",
+    "Fairwick Street", "Fieldfare Lane", "Gooseberry Lane", "Hazelmere Street", "Juniper Hollow Road", "Kingfisher Bend",
+    "Meadowsweet Lane", "Nightjar Road", "Orchardgate Street", "Partridgeberry Lane", "Quicksilver Lane", "Rushlight Street",
+    "Sedgebank Street", "Shadbush Road", "Sweetfern Lane", "Tumbleweir Road", "Underbank Lane", "Vetchling Lane",
+    "Wickerwork Street", "Wintergreen Road", "Woodlark Lane", "Cinderhill Road", "Flaxmill Street", "Haybarn Road",
+    "Ropemaker Street", "Saltbox Lane", "Spindle Street", "Barrelhoop Lane", "Ferrylight Road", "Hopvine Lane",
+    "Bargeman Street", "Lanternwick Road"
+  ]
+}

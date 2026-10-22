@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 236a4a59903a9e140b14fd9b2669c3e2, type: 3}
   m_Name: BrRoadNetwork_stockport-oh
   m_EditorClassIdentifier: Backroads.Roads::Backroads.Roads.RoadNetworkAsset
-  formatVersion: 3
+  formatVersion: 4
   builderVersion: 2
   importerVersion: 1
   surfaceVersion: 1
   source: TownData/stockport-oh/v1
   sourceManifestSha256: 7c334898ed465e2521d358625defa35b24e671a98d4ae07d5558a563a9db80a4
-  contentHash: e8df69a1f26dadda8dbaae72ca50ef1eba6ea6d354f2540bcca6aae3a14c9238
+  contentHash: cd3a33e9df46f7e21303e8fd19dffbe9b0ff3cc28d724d756436c89ab5ad64bd
   inputRoads: 185
   inputPoints: 8404
   nodes:
@@ -16768,6 +16768,7 @@ MonoBehaviour:
     - 60.640278
     - 62.62527
     - 64.61026
+    street: 0
   - id: 1
     nodeA: 1
     nodeB: 2
@@ -17295,6 +17296,7 @@ MonoBehaviour:
     - 494.4011
     - 496.39224
     - 498.38342
+    street: 0
   - id: 2
     nodeA: 3
     nodeB: 4
@@ -17356,6 +17358,7 @@ MonoBehaviour:
     - 42.847736
     - 44.79536
     - 46.742985
+    street: 1
   - id: 3
     nodeA: 5
     nodeB: 6
@@ -17691,6 +17694,7 @@ MonoBehaviour:
     - 297.0059
     - 298.89673
     - 300.78757
+    street: -1
   - id: 4
     nodeA: 7
     nodeB: 8
@@ -17788,6 +17792,7 @@ MonoBehaviour:
     - 77.85251
     - 79.46743
     - 81.082344
+    street: 2
   - id: 5
     nodeA: 9
     nodeB: 10
@@ -17865,6 +17870,7 @@ MonoBehaviour:
     - 55.40201
     - 57.316677
     - 59.231342
+    street: -1
   - id: 6
     nodeA: 10
     nodeB: 11
@@ -17932,6 +17938,7 @@ MonoBehaviour:
     - 46.372562
     - 48.286995
     - 50.201427
+    street: -1
   - id: 7
     nodeA: 11
     nodeB: 12
@@ -17997,6 +18004,7 @@ MonoBehaviour:
     - 46.468246
     - 48.404427
     - 50.340603
+    street: -1
   - id: 8
     nodeA: 13
     nodeB: 14
@@ -18076,6 +18084,7 @@ MonoBehaviour:
     - 61.92019
     - 63.917614
     - 65.91504
+    street: -1
   - id: 9
     nodeA: 14
     nodeB: 15
@@ -18165,6 +18174,7 @@ MonoBehaviour:
     - 65.91177
     - 67.587814
     - 69.26386
+    street: -1
   - id: 10
     nodeA: 16
     nodeB: 17
@@ -18214,6 +18224,7 @@ MonoBehaviour:
     - 31.245775
     - 33.198635
     - 35.151497
+    street: 3
   - id: 11
     nodeA: 18
     nodeB: 19
@@ -18311,6 +18322,7 @@ MonoBehaviour:
     - 78.03953
     - 79.591156
     - 81.142784
+    street: 4
   - id: 12
     nodeA: 20
     nodeB: 11
@@ -18366,6 +18378,7 @@ MonoBehaviour:
     - 35.53875
     - 37.453396
     - 39.368042
+    street: -1
   - id: 13
     nodeA: 11
     nodeB: 21
@@ -18411,6 +18424,7 @@ MonoBehaviour:
     - 26.312866
     - 28.109743
     - 29.90662
+    street: -1
   - id: 14
     nodeA: 22
     nodeB: 23
@@ -18500,6 +18514,7 @@ MonoBehaviour:
     - 71.66107
     - 73.65166
     - 75.64224
+    street: -1
   - id: 15
     nodeA: 24
     nodeB: 25
@@ -18585,6 +18600,7 @@ MonoBehaviour:
     - 64.00573
     - 65.36614
     - 66.726555
+    street: 5
   - id: 16
     nodeA: 25
     nodeB: 26
@@ -18640,6 +18656,7 @@ MonoBehaviour:
     - 37.290108
     - 39.252747
     - 41.21538
+    street: 5
   - id: 17
     nodeA: 26
     nodeB: 27
@@ -18689,6 +18706,7 @@ MonoBehaviour:
     - 31.72054
     - 33.70307
     - 35.685604
+    street: 5
   - id: 18
     nodeA: 28
     nodeB: 29
@@ -18748,6 +18766,7 @@ MonoBehaviour:
     - 39.13775
     - 41.03715
     - 42.936554
+    street: 6
   - id: 19
     nodeA: 29
     nodeB: 30
@@ -18785,6 +18804,7 @@ MonoBehaviour:
     - 19.297325
     - 21.227058
     - 23.15679
+    street: 6
   - id: 20
     nodeA: 30
     nodeB: 3
@@ -18838,6 +18858,7 @@ MonoBehaviour:
     - 34.207787
     - 36.12339
     - 38.03899
+    street: 6
   - id: 21
     nodeA: 3
     nodeB: 31
@@ -18885,6 +18906,7 @@ MonoBehaviour:
     - 28.923012
     - 30.851212
     - 32.77941
+    street: 6
   - id: 22
     nodeA: 31
     nodeB: 32
@@ -19036,6 +19058,7 @@ MonoBehaviour:
     - 131.19481
     - 133.19374
     - 135.19267
+    street: 6
   - id: 23
     nodeA: 32
     nodeB: 33
@@ -19165,6 +19188,7 @@ MonoBehaviour:
     - 108.89353
     - 110.86799
     - 112.842445
+    street: 6
   - id: 24
     nodeA: 33
     nodeB: 34
@@ -19200,6 +19224,7 @@ MonoBehaviour:
     - 17.087456
     - 18.986063
     - 20.884668
+    street: 6
   - id: 25
     nodeA: 34
     nodeB: 35
@@ -19233,6 +19258,7 @@ MonoBehaviour:
     - 15.154954
     - 17.049324
     - 17.736753
+    street: 6
   - id: 26
     nodeA: 35
     nodeB: 36
@@ -19390,6 +19416,7 @@ MonoBehaviour:
     - 135.2221
     - 137.20314
     - 139.1418
+    street: 6
   - id: 27
     nodeA: 37
     nodeB: 38
@@ -19489,6 +19516,7 @@ MonoBehaviour:
     - 77.595856
     - 79.391426
     - 81.18699
+    street: 5
   - id: 28
     nodeA: 38
     nodeB: 39
@@ -19624,6 +19652,7 @@ MonoBehaviour:
     - 113.30052
     - 115.26908
     - 117.23764
+    street: 5
   - id: 29
     nodeA: 39
     nodeB: 40
@@ -19743,6 +19772,7 @@ MonoBehaviour:
     - 98.680466
     - 100.602394
     - 102.52432
+    street: 5
   - id: 30
     nodeA: 40
     nodeB: 41
@@ -19832,6 +19862,7 @@ MonoBehaviour:
     - 70.379776
     - 72.33477
     - 74.289764
+    street: 5
   - id: 31
     nodeA: 41
     nodeB: 42
@@ -19891,6 +19922,7 @@ MonoBehaviour:
     - 40.976456
     - 42.927715
     - 44.878975
+    street: 5
   - id: 32
     nodeA: 42
     nodeB: 43
@@ -19944,6 +19976,7 @@ MonoBehaviour:
     - 34.815117
     - 36.74929
     - 38.683464
+    street: 5
   - id: 33
     nodeA: 43
     nodeB: 13
@@ -19993,6 +20026,7 @@ MonoBehaviour:
     - 31.199553
     - 33.149525
     - 35.099495
+    street: 5
   - id: 34
     nodeA: 13
     nodeB: 44
@@ -20046,6 +20080,7 @@ MonoBehaviour:
     - 35.44082
     - 37.40975
     - 39.378685
+    street: 5
   - id: 35
     nodeA: 44
     nodeB: 45
@@ -20107,6 +20142,7 @@ MonoBehaviour:
     - 42.293495
     - 44.215927
     - 46.13836
+    street: 5
   - id: 36
     nodeA: 45
     nodeB: 46
@@ -20162,6 +20198,7 @@ MonoBehaviour:
     - 36.9256
     - 38.86905
     - 40.8125
+    street: 5
   - id: 37
     nodeA: 46
     nodeB: 47
@@ -20201,6 +20238,7 @@ MonoBehaviour:
     - 20.742327
     - 22.627993
     - 24.513659
+    street: 5
   - id: 38
     nodeA: 47
     nodeB: 48
@@ -20264,6 +20302,7 @@ MonoBehaviour:
     - 44.678135
     - 46.620663
     - 48.563187
+    street: 5
   - id: 39
     nodeA: 48
     nodeB: 49
@@ -20331,6 +20370,7 @@ MonoBehaviour:
     - 48.703907
     - 50.65206
     - 52.60022
+    street: 5
   - id: 40
     nodeA: 49
     nodeB: 50
@@ -20402,6 +20442,7 @@ MonoBehaviour:
     - 52.863266
     - 54.821167
     - 56.779064
+    street: 5
   - id: 41
     nodeA: 50
     nodeB: 31
@@ -20515,6 +20556,7 @@ MonoBehaviour:
     - 94.28917
     - 96.230125
     - 98.17109
+    street: 5
   - id: 42
     nodeA: 51
     nodeB: 52
@@ -20926,6 +20968,7 @@ MonoBehaviour:
     - 375.5349
     - 377.50845
     - 378.75522
+    street: 7
   - id: 43
     nodeA: 52
     nodeB: 53
@@ -20945,6 +20988,7 @@ MonoBehaviour:
     - 0.7267516
     - 2.7002792
     - 4.673807
+    street: 7
   - id: 44
     nodeA: 54
     nodeB: 55
@@ -21066,6 +21110,7 @@ MonoBehaviour:
     - 99.8818
     - 101.80807
     - 103.73434
+    street: 8
   - id: 45
     nodeA: 56
     nodeB: 57
@@ -21153,6 +21198,7 @@ MonoBehaviour:
     - 65.51023
     - 67.4861
     - 69.46197
+    street: 9
   - id: 46
     nodeA: 57
     nodeB: 47
@@ -21234,6 +21280,7 @@ MonoBehaviour:
     - 62.796715
     - 64.61271
     - 66.4287
+    street: 9
   - id: 47
     nodeA: 47
     nodeB: 58
@@ -21475,6 +21522,7 @@ MonoBehaviour:
     - 218.07573
     - 220.01636
     - 221.95699
+    street: 9
   - id: 48
     nodeA: 1
     nodeB: 59
@@ -21896,6 +21944,7 @@ MonoBehaviour:
     - 382.631
     - 384.49442
     - 386.35782
+    street: 10
   - id: 49
     nodeA: 60
     nodeB: 10
@@ -21945,6 +21994,7 @@ MonoBehaviour:
     - 30.385994
     - 32.293507
     - 34.20102
+    street: 11
   - id: 50
     nodeA: 10
     nodeB: 61
@@ -22000,6 +22050,7 @@ MonoBehaviour:
     - 35.447636
     - 37.180637
     - 38.913643
+    street: 11
   - id: 51
     nodeA: 61
     nodeB: 62
@@ -22055,6 +22106,7 @@ MonoBehaviour:
     - 36.280838
     - 38.187435
     - 40.09403
+    street: 11
   - id: 52
     nodeA: 62
     nodeB: 39
@@ -22100,6 +22152,7 @@ MonoBehaviour:
     - 27.482197
     - 29.44521
     - 31.408224
+    street: 11
   - id: 53
     nodeA: 63
     nodeB: 64
@@ -22223,6 +22276,7 @@ MonoBehaviour:
     - 102.1518
     - 103.783195
     - 105.41459
+    street: 12
   - id: 54
     nodeA: 65
     nodeB: 24
@@ -22310,6 +22364,7 @@ MonoBehaviour:
     - 67.96162
     - 69.91878
     - 71.875946
+    street: 13
   - id: 55
     nodeA: 24
     nodeB: 66
@@ -22369,6 +22424,7 @@ MonoBehaviour:
     - 41.12871
     - 43.087223
     - 45.04573
+    street: 13
   - id: 56
     nodeA: 66
     nodeB: 67
@@ -22388,6 +22444,7 @@ MonoBehaviour:
     - 1.6612589
     - 3.3225179
     - 4.983777
+    street: 13
   - id: 57
     nodeA: 67
     nodeB: 15
@@ -22469,6 +22526,7 @@ MonoBehaviour:
     - 63.099255
     - 65.071106
     - 67.04296
+    street: 13
   - id: 58
     nodeA: 15
     nodeB: 19
@@ -22496,6 +22554,7 @@ MonoBehaviour:
     - 8.580788
     - 10.296945
     - 12.013103
+    street: 13
   - id: 59
     nodeA: 19
     nodeB: 68
@@ -22535,6 +22594,7 @@ MonoBehaviour:
     - 21.667547
     - 23.637325
     - 25.607101
+    street: 13
   - id: 60
     nodeA: 68
     nodeB: 8
@@ -22572,6 +22632,7 @@ MonoBehaviour:
     - 19.694996
     - 21.664495
     - 23.633995
+    street: 13
   - id: 61
     nodeA: 8
     nodeB: 69
@@ -22607,6 +22668,7 @@ MonoBehaviour:
     - 16.883928
     - 18.75992
     - 20.635912
+    street: 13
   - id: 62
     nodeA: 69
     nodeB: 56
@@ -22690,6 +22752,7 @@ MonoBehaviour:
     - 65.78413
     - 67.77758
     - 69.77104
+    street: 13
   - id: 63
     nodeA: 56
     nodeB: 70
@@ -22719,6 +22782,7 @@ MonoBehaviour:
     - 10.95848
     - 12.784893
     - 14.611306
+    street: 13
   - id: 64
     nodeA: 70
     nodeB: 71
@@ -22766,6 +22830,7 @@ MonoBehaviour:
     - 29.808447
     - 31.795677
     - 33.782906
+    street: 13
   - id: 65
     nodeA: 71
     nodeB: 72
@@ -22835,6 +22900,7 @@ MonoBehaviour:
     - 51.796547
     - 53.78872
     - 55.780895
+    street: 13
   - id: 66
     nodeA: 72
     nodeB: 73
@@ -22900,6 +22966,7 @@ MonoBehaviour:
     - 46.643665
     - 48.58715
     - 50.53064
+    street: 13
   - id: 67
     nodeA: 73
     nodeB: 28
@@ -23021,6 +23088,7 @@ MonoBehaviour:
     - 102.58495
     - 104.55774
     - 106.530525
+    street: 13
   - id: 68
     nodeA: 28
     nodeB: 74
@@ -23092,6 +23160,7 @@ MonoBehaviour:
     - 53.441227
     - 55.420532
     - 57.399837
+    street: 13
   - id: 69
     nodeA: 74
     nodeB: 75
@@ -23127,6 +23196,7 @@ MonoBehaviour:
     - 17.422586
     - 19.358429
     - 19.390472
+    street: 13
   - id: 70
     nodeA: 75
     nodeB: 76
@@ -23156,6 +23226,7 @@ MonoBehaviour:
     - 11.583014
     - 13.518856
     - 15.4546995
+    street: 13
   - id: 71
     nodeA: 76
     nodeB: 77
@@ -23215,6 +23286,7 @@ MonoBehaviour:
     - 40.60591
     - 42.55575
     - 44.505592
+    street: 13
   - id: 72
     nodeA: 65
     nodeB: 12
@@ -23262,6 +23334,7 @@ MonoBehaviour:
     - 27.498209
     - 29.384232
     - 31.270254
+    street: 14
   - id: 73
     nodeA: 12
     nodeB: 22
@@ -23281,6 +23354,7 @@ MonoBehaviour:
     - 1.4880542
     - 2.9761083
     - 4.4641623
+    street: 14
   - id: 74
     nodeA: 22
     nodeB: 78
@@ -23332,6 +23406,7 @@ MonoBehaviour:
     - 30.705082
     - 32.48668
     - 34.268276
+    street: 14
   - id: 75
     nodeA: 78
     nodeB: 79
@@ -23387,6 +23462,7 @@ MonoBehaviour:
     - 36.48281
     - 38.42996
     - 40.37711
+    street: 14
   - id: 76
     nodeA: 79
     nodeB: 40
@@ -23430,6 +23506,7 @@ MonoBehaviour:
     - 25.587187
     - 27.555431
     - 29.523678
+    street: 14
   - id: 77
     nodeA: 80
     nodeB: 81
@@ -23461,6 +23538,7 @@ MonoBehaviour:
     - 12.546298
     - 14.338626
     - 16.130955
+    street: 15
   - id: 78
     nodeA: 81
     nodeB: 82
@@ -23516,6 +23594,7 @@ MonoBehaviour:
     - 37.544796
     - 39.520836
     - 41.49688
+    street: 15
   - id: 79
     nodeA: 82
     nodeB: 83
@@ -23607,6 +23686,7 @@ MonoBehaviour:
     - 69.814186
     - 71.80129
     - 73.78839
+    street: 15
   - id: 80
     nodeA: 83
     nodeB: 18
@@ -23706,6 +23786,7 @@ MonoBehaviour:
     - 80.99596
     - 82.929474
     - 84.86299
+    street: 15
   - id: 81
     nodeA: 18
     nodeB: 7
@@ -23771,6 +23852,7 @@ MonoBehaviour:
     - 47.596146
     - 49.57932
     - 51.562492
+    street: 15
   - id: 82
     nodeA: 7
     nodeB: 84
@@ -23890,6 +23972,7 @@ MonoBehaviour:
     - 99.98816
     - 101.82605
     - 103.66395
+    street: 15
   - id: 83
     nodeA: 84
     nodeB: 70
@@ -23987,6 +24070,7 @@ MonoBehaviour:
     - 77.39812
     - 79.396095
     - 81.394066
+    street: 15
   - id: 84
     nodeA: 80
     nodeB: 85
@@ -24018,6 +24102,7 @@ MonoBehaviour:
     - 12.432489
     - 14.22316
     - 16.01383
+    street: -1
   - id: 85
     nodeA: 85
     nodeB: 27
@@ -24109,6 +24194,7 @@ MonoBehaviour:
     - 72.78277
     - 74.755455
     - 76.72814
+    street: -1
   - id: 86
     nodeA: 27
     nodeB: 86
@@ -24190,6 +24276,7 @@ MonoBehaviour:
     - 62.945686
     - 64.447464
     - 65.94924
+    street: -1
   - id: 87
     nodeA: 81
     nodeB: 26
@@ -24289,6 +24376,7 @@ MonoBehaviour:
     - 74.79602
     - 76.75891
     - 78.7218
+    street: -1
   - id: 88
     nodeA: 26
     nodeB: 87
@@ -24356,6 +24444,7 @@ MonoBehaviour:
     - 48.136673
     - 49.696484
     - 51.256294
+    street: -1
   - id: 89
     nodeA: 69
     nodeB: 88
@@ -24443,6 +24532,7 @@ MonoBehaviour:
     - 65.68855
     - 67.44561
     - 69.20266
+    street: 16
   - id: 90
     nodeA: 88
     nodeB: 45
@@ -24526,6 +24616,7 @@ MonoBehaviour:
     - 63.04431
     - 64.570984
     - 66.09766
+    street: 16
   - id: 91
     nodeA: 45
     nodeB: 89
@@ -24605,6 +24696,7 @@ MonoBehaviour:
     - 60.467136
     - 62.280277
     - 64.093414
+    street: 16
   - id: 92
     nodeA: 90
     nodeB: 91
@@ -24726,6 +24818,7 @@ MonoBehaviour:
     - 100.7102
     - 102.69114
     - 104.67208
+    street: 13
   - id: 93
     nodeA: 91
     nodeB: 77
@@ -25331,6 +25424,7 @@ MonoBehaviour:
     - 576.5399
     - 578.43396
     - 580.328
+    street: 13
   - id: 94
     nodeA: 92
     nodeB: 93
@@ -25378,6 +25472,7 @@ MonoBehaviour:
     - 28.322514
     - 30.218016
     - 32.11352
+    street: 13
   - id: 95
     nodeA: 72
     nodeB: 94
@@ -25465,6 +25560,7 @@ MonoBehaviour:
     - 65.96083
     - 67.52761
     - 69.09439
+    street: 17
   - id: 96
     nodeA: 94
     nodeB: 49
@@ -25546,6 +25642,7 @@ MonoBehaviour:
     - 62.124825
     - 64.10458
     - 66.08435
+    street: 17
   - id: 97
     nodeA: 95
     nodeB: 91
@@ -25713,6 +25810,7 @@ MonoBehaviour:
     - 140.50694
     - 142.31033
     - 144.11372
+    street: 18
   - id: 98
     nodeA: 73
     nodeB: 96
@@ -25798,6 +25896,7 @@ MonoBehaviour:
     - 65.369965
     - 66.94345
     - 68.51693
+    street: 19
   - id: 99
     nodeA: 96
     nodeB: 50
@@ -25881,6 +25980,7 @@ MonoBehaviour:
     - 64.262276
     - 65.89364
     - 67.524994
+    street: 19
   - id: 100
     nodeA: 37
     nodeB: 61
@@ -25982,6 +26082,7 @@ MonoBehaviour:
     - 80.24669
     - 82.091545
     - 83.93641
+    street: 20
   - id: 101
     nodeA: 61
     nodeB: 20
@@ -26047,6 +26148,7 @@ MonoBehaviour:
     - 45.984966
     - 47.969814
     - 49.954662
+    street: 20
   - id: 102
     nodeA: 20
     nodeB: 78
@@ -26110,6 +26212,7 @@ MonoBehaviour:
     - 45.356163
     - 47.32817
     - 49.300175
+    street: 20
   - id: 103
     nodeA: 78
     nodeB: 97
@@ -26201,6 +26304,7 @@ MonoBehaviour:
     - 73.385315
     - 75.3687
     - 77.35209
+    street: 20
   - id: 104
     nodeA: 97
     nodeB: 98
@@ -26260,6 +26364,7 @@ MonoBehaviour:
     - 40.755585
     - 42.696327
     - 44.63707
+    street: 20
   - id: 105
     nodeA: 98
     nodeB: 99
@@ -26313,6 +26418,7 @@ MonoBehaviour:
     - 35.491817
     - 37.46359
     - 39.435356
+    street: 20
   - id: 106
     nodeA: 99
     nodeB: 14
@@ -26360,6 +26466,7 @@ MonoBehaviour:
     - 29.207327
     - 31.154482
     - 33.10164
+    street: 20
   - id: 107
     nodeA: 14
     nodeB: 100
@@ -26413,6 +26520,7 @@ MonoBehaviour:
     - 35.73695
     - 37.722336
     - 39.70772
+    street: 20
   - id: 108
     nodeA: 100
     nodeB: 88
@@ -26472,6 +26580,7 @@ MonoBehaviour:
     - 41.714718
     - 43.701134
     - 45.687546
+    street: 20
   - id: 109
     nodeA: 88
     nodeB: 57
@@ -26553,6 +26662,7 @@ MonoBehaviour:
     - 63.84509
     - 65.84025
     - 67.83541
+    street: 20
   - id: 110
     nodeA: 57
     nodeB: 101
@@ -26614,6 +26724,7 @@ MonoBehaviour:
     - 42.184708
     - 44.102196
     - 46.019684
+    street: 20
   - id: 111
     nodeA: 101
     nodeB: 94
@@ -26683,6 +26794,7 @@ MonoBehaviour:
     - 50.61467
     - 52.561386
     - 54.508102
+    street: 20
   - id: 112
     nodeA: 94
     nodeB: 96
@@ -26750,6 +26862,7 @@ MonoBehaviour:
     - 49.16841
     - 51.135147
     - 53.101883
+    street: 20
   - id: 113
     nodeA: 96
     nodeB: 30
@@ -26875,6 +26988,7 @@ MonoBehaviour:
     - 103.91965
     - 105.67101
     - 107.42237
+    street: 20
   - id: 114
     nodeA: 30
     nodeB: 17
@@ -26932,6 +27046,7 @@ MonoBehaviour:
     - 37.361076
     - 39.33686
     - 41.31265
+    street: 20
   - id: 115
     nodeA: 17
     nodeB: 102
@@ -27017,6 +27132,7 @@ MonoBehaviour:
     - 66.84656
     - 68.8085
     - 70.19454
+    street: 20
   - id: 116
     nodeA: 102
     nodeB: 77
@@ -27074,6 +27190,7 @@ MonoBehaviour:
     - 37.437622
     - 39.295784
     - 41.153942
+    street: 20
   - id: 117
     nodeA: 68
     nodeB: 100
@@ -27161,6 +27278,7 @@ MonoBehaviour:
     - 65.3209
     - 67.21111
     - 69.10132
+    street: 21
   - id: 118
     nodeA: 100
     nodeB: 44
@@ -27242,6 +27360,7 @@ MonoBehaviour:
     - 62.520702
     - 64.43892
     - 66.35714
+    street: 21
   - id: 119
     nodeA: 44
     nodeB: 103
@@ -27323,6 +27442,7 @@ MonoBehaviour:
     - 61.02409
     - 62.91217
     - 64.800255
+    street: 21
   - id: 120
     nodeA: 104
     nodeB: 64
@@ -27410,6 +27530,7 @@ MonoBehaviour:
     - 65.181526
     - 67.0573
     - 68.93306
+    street: 22
   - id: 121
     nodeA: 64
     nodeB: 55
@@ -27493,6 +27614,7 @@ MonoBehaviour:
     - 62.896576
     - 64.84108
     - 66.78558
+    street: 22
   - id: 122
     nodeA: 55
     nodeB: 105
@@ -27560,6 +27682,7 @@ MonoBehaviour:
     - 49.29107
     - 51.26271
     - 53.234352
+    street: 22
   - id: 123
     nodeA: 106
     nodeB: 89
@@ -27611,6 +27734,7 @@ MonoBehaviour:
     - 32.669632
     - 34.62994
     - 36.590252
+    street: 23
   - id: 124
     nodeA: 71
     nodeB: 101
@@ -27698,6 +27822,7 @@ MonoBehaviour:
     - 65.83054
     - 67.43285
     - 69.03517
+    street: 24
   - id: 125
     nodeA: 101
     nodeB: 48
@@ -27781,6 +27906,7 @@ MonoBehaviour:
     - 62.787006
     - 64.410835
     - 66.03467
+    street: 24
   - id: 126
     nodeA: 66
     nodeB: 98
@@ -27868,6 +27994,7 @@ MonoBehaviour:
     - 64.99091
     - 66.55197
     - 68.11302
+    street: 25
   - id: 127
     nodeA: 98
     nodeB: 42
@@ -27949,6 +28076,7 @@ MonoBehaviour:
     - 62.929665
     - 64.60446
     - 66.27927
+    street: 25
   - id: 128
     nodeA: 42
     nodeB: 107
@@ -28030,6 +28158,7 @@ MonoBehaviour:
     - 60.788403
     - 62.329285
     - 63.870167
+    street: 25
   - id: 129
     nodeA: 2
     nodeB: 108
@@ -28569,6 +28698,7 @@ MonoBehaviour:
     - 507.28116
     - 509.26974
     - 511.22104
+    street: 0
   - id: 130
     nodeA: 108
     nodeB: 109
@@ -28820,6 +28950,7 @@ MonoBehaviour:
     - 226.17278
     - 227.99252
     - 229.43492
+    street: 0
   - id: 131
     nodeA: 109
     nodeB: 51
@@ -28877,6 +29008,7 @@ MonoBehaviour:
     - 37.040894
     - 38.965057
     - 40.88922
+    street: 0
   - id: 132
     nodeA: 51
     nodeB: 82
@@ -28982,6 +29114,7 @@ MonoBehaviour:
     - 85.16178
     - 87.11915
     - 89.076515
+    street: 0
   - id: 133
     nodeA: 82
     nodeB: 25
@@ -29073,6 +29206,7 @@ MonoBehaviour:
     - 73.181854
     - 75.159744
     - 77.137634
+    street: 0
   - id: 134
     nodeA: 25
     nodeB: 65
@@ -29126,6 +29260,7 @@ MonoBehaviour:
     - 33.852444
     - 35.488884
     - 37.125324
+    street: 0
   - id: 135
     nodeA: 37
     nodeB: 9
@@ -29199,6 +29334,7 @@ MonoBehaviour:
     - 53.222404
     - 55.15664
     - 57.090874
+    street: 5
   - id: 136
     nodeA: 9
     nodeB: 110
@@ -29250,6 +29386,7 @@ MonoBehaviour:
     - 31.76229
     - 33.70802
     - 35.65375
+    street: 5
   - id: 137
     nodeA: 110
     nodeB: 111
@@ -29347,6 +29484,7 @@ MonoBehaviour:
     - 77.09424
     - 79.00837
     - 80.9225
+    street: 5
   - id: 138
     nodeA: 111
     nodeB: 27
@@ -29400,6 +29538,7 @@ MonoBehaviour:
     - 34.490776
     - 36.406933
     - 38.323086
+    street: 5
   - id: 139
     nodeA: 112
     nodeB: 107
@@ -29457,6 +29596,7 @@ MonoBehaviour:
     - 37.63934
     - 39.539516
     - 41.43969
+    street: 23
   - id: 140
     nodeA: 107
     nodeB: 113
@@ -29512,6 +29652,7 @@ MonoBehaviour:
     - 36.518154
     - 38.440163
     - 40.36217
+    street: 23
   - id: 141
     nodeA: 113
     nodeB: 104
@@ -29555,6 +29696,7 @@ MonoBehaviour:
     - 25.008795
     - 26.932549
     - 28.856302
+    street: 23
   - id: 142
     nodeA: 104
     nodeB: 103
@@ -29612,6 +29754,7 @@ MonoBehaviour:
     - 39.999477
     - 41.99945
     - 43.999428
+    street: 23
   - id: 143
     nodeA: 103
     nodeB: 89
@@ -29673,6 +29816,7 @@ MonoBehaviour:
     - 43.712135
     - 45.69905
     - 47.685966
+    street: 23
   - id: 144
     nodeA: 46
     nodeB: 106
@@ -29754,6 +29898,7 @@ MonoBehaviour:
     - 62.433918
     - 63.541225
     - 64.64854
+    street: -1
   - id: 145
     nodeA: 24
     nodeB: 23
@@ -29805,6 +29950,7 @@ MonoBehaviour:
     - 29.817411
     - 31.749166
     - 33.680923
+    street: 28
   - id: 146
     nodeA: 23
     nodeB: 97
@@ -29856,6 +30002,7 @@ MonoBehaviour:
     - 31.235657
     - 32.924667
     - 34.613674
+    street: 28
   - id: 147
     nodeA: 97
     nodeB: 41
@@ -29939,6 +30086,7 @@ MonoBehaviour:
     - 62.923805
     - 64.55714
     - 66.19046
+    street: 28
   - id: 148
     nodeA: 41
     nodeB: 112
@@ -30018,6 +30166,7 @@ MonoBehaviour:
     - 59.78008
     - 61.72562
     - 63.671165
+    street: 28
   - id: 149
     nodeA: 112
     nodeB: 63
@@ -30101,6 +30250,7 @@ MonoBehaviour:
     - 63.94107
     - 65.884384
     - 67.8277
+    street: 28
   - id: 150
     nodeA: 63
     nodeB: 54
@@ -30186,6 +30336,7 @@ MonoBehaviour:
     - 66.43129
     - 68.36977
     - 70.30824
+    street: 28
   - id: 151
     nodeA: 54
     nodeB: 114
@@ -30227,6 +30378,7 @@ MonoBehaviour:
     - 22.736599
     - 24.631315
     - 26.526031
+    street: 28
   - id: 152
     nodeA: 32
     nodeB: 115
@@ -30330,6 +30482,7 @@ MonoBehaviour:
     - 85.81171
     - 87.807335
     - 89.802956
+    street: -1
   - id: 153
     nodeA: 115
     nodeB: 116
@@ -30625,6 +30778,7 @@ MonoBehaviour:
     - 262.19492
     - 263.68594
     - 265.17697
+    street: -1
   - id: 154
     nodeA: 116
     nodeB: 34
@@ -30674,6 +30828,7 @@ MonoBehaviour:
     - 28.878769
     - 30.74368
     - 32.60859
+    street: -1
   - id: 155
     nodeA: 33
     nodeB: 117
@@ -30729,6 +30884,7 @@ MonoBehaviour:
     - 36.01883
     - 37.51415
     - 39.00947
+    street: -1
   - id: 156
     nodeA: 117
     nodeB: 118
@@ -30830,6 +30986,7 @@ MonoBehaviour:
     - 80.63845
     - 82.55607
     - 84.47368
+    street: -1
   - id: 157
     nodeA: 117
     nodeB: 119
@@ -30993,6 +31150,7 @@ MonoBehaviour:
     - 138.60239
     - 140.48343
     - 142.36449
+    street: -1
   - id: 158
     nodeA: 115
     nodeB: 116
@@ -31158,6 +31316,7 @@ MonoBehaviour:
     - 143.4368
     - 145.37189
     - 147.30699
+    street: -1
   - id: 159
     nodeA: 120
     nodeB: 121
@@ -31347,6 +31506,7 @@ MonoBehaviour:
     - 171.89825
     - 173.89708
     - 174.49182
+    street: 13
   - id: 160
     nodeA: 121
     nodeB: 122
@@ -31372,6 +31532,7 @@ MonoBehaviour:
     - 7.40052
     - 9.399337
     - 10.030496
+    street: 13
   - id: 161
     nodeA: 122
     nodeB: 123
@@ -31427,6 +31588,7 @@ MonoBehaviour:
     - 37.346363
     - 39.34518
     - 41.343998
+    street: 13
   - id: 162
     nodeA: 110
     nodeB: 60
@@ -31478,6 +31640,7 @@ MonoBehaviour:
     - 31.103502
     - 32.904392
     - 34.70528
+    street: 13
   - id: 163
     nodeA: 60
     nodeB: 86
@@ -31513,6 +31676,7 @@ MonoBehaviour:
     - 17.389236
     - 19.321373
     - 21.253511
+    street: 13
   - id: 164
     nodeA: 86
     nodeB: 21
@@ -31554,6 +31718,7 @@ MonoBehaviour:
     - 22.743229
     - 24.638498
     - 26.533768
+    street: 13
   - id: 165
     nodeA: 21
     nodeB: 87
@@ -31579,6 +31744,7 @@ MonoBehaviour:
     - 7.955441
     - 9.944302
     - 11.933162
+    street: 13
   - id: 166
     nodeA: 87
     nodeB: 65
@@ -31636,6 +31802,7 @@ MonoBehaviour:
     - 38.671677
     - 40.605263
     - 42.538845
+    street: 13
   - id: 167
     nodeA: 124
     nodeB: 5
@@ -31869,6 +32036,7 @@ MonoBehaviour:
     - 208.45284
     - 210.43228
     - 212.41173
+    street: 29
   - id: 168
     nodeA: 5
     nodeB: 92
@@ -31920,6 +32088,7 @@ MonoBehaviour:
     - 33.61419
     - 35.600777
     - 37.587368
+    street: 29
   - id: 169
     nodeA: 74
     nodeB: 125
@@ -31949,6 +32118,7 @@ MonoBehaviour:
     - 11.787488
     - 13.7520685
     - 14.734246
+    street: 30
   - id: 170
     nodeA: 125
     nodeB: 126
@@ -32050,6 +32220,7 @@ MonoBehaviour:
     - 81.530235
     - 83.49482
     - 85.4594
+    street: 30
   - id: 171
     nodeA: 113
     nodeB: 43
@@ -32129,6 +32300,7 @@ MonoBehaviour:
     - 60.56053
     - 62.5141
     - 64.46767
+    street: -1
   - id: 172
     nodeA: 43
     nodeB: 99
@@ -32210,6 +32382,7 @@ MonoBehaviour:
     - 62.26936
     - 64.21528
     - 66.161194
+    street: -1
   - id: 173
     nodeA: 79
     nodeB: 62
@@ -32325,6 +32498,7 @@ MonoBehaviour:
     - 96.716934
     - 98.69074
     - 100.66456
+    street: -1
   - id: 174
     nodeA: 29
     nodeB: 76
@@ -32440,6 +32614,7 @@ MonoBehaviour:
     - 96.55642
     - 98.52696
     - 100.4975
+    street: -1
   - id: 175
     nodeA: 127
     nodeB: 128
@@ -32523,6 +32698,7 @@ MonoBehaviour:
     - 63.36999
     - 65.07757
     - 66.78514
+    street: 29
   - id: 176
     nodeA: 83
     nodeB: 67
@@ -32642,6 +32818,7 @@ MonoBehaviour:
     - 96.44673
     - 98.05462
     - 99.66251
+    street: -1
   - id: 177
     nodeA: 123
     nodeB: 110
@@ -32673,6 +32850,7 @@ MonoBehaviour:
     - 13.757238
     - 15.722559
     - 17.687878
+    street: 13
   - id: 178
     nodeA: 129
     nodeB: 2
@@ -33766,6 +33944,7 @@ MonoBehaviour:
     - 1034.6697
     - 1036.4136
     - 1038.1575
+    street: -1
   - id: 179
     nodeA: 93
     nodeB: 128
@@ -33837,6 +34016,7 @@ MonoBehaviour:
     - 49.695263
     - 51.561123
     - 53.426983
+    street: 31
   - id: 180
     nodeA: 128
     nodeB: 92
@@ -33882,6 +34062,7 @@ MonoBehaviour:
     - 27.058899
     - 28.991678
     - 30.924458
+    street: 29
   - id: 181
     nodeA: 93
     nodeB: 120
@@ -34063,6 +34244,7 @@ MonoBehaviour:
     - 162.32751
     - 164.29823
     - 166.26897
+    street: 13
   - id: 182
     nodeA: 130
     nodeB: 131
@@ -34178,6 +34360,7 @@ MonoBehaviour:
     - 95.83773
     - 97.766785
     - 99.01535
+    street: 26
   - id: 183
     nodeA: 132
     nodeB: 133
@@ -35217,6 +35400,7 @@ MonoBehaviour:
     - 986.72943
     - 988.679
     - 990.5988
+    street: 27
   - id: 184
     nodeA: 134
     nodeB: 135
@@ -35532,6 +35716,7 @@ MonoBehaviour:
     - 272.6403
     - 274.53873
     - 276.43716
+    street: -1
   roads:
   - id: 0
     cls: 0
@@ -55927,6 +56112,2409 @@ MonoBehaviour:
     edge: 147
     node: -1
     why: flowline low point
+  propVersion: 1
+  streets:
+  - id: 0
+    name: Street 01
+    placeholder: 1
+    firstWay: way/19176823
+    edges: 0000000001000000810000008200000083000000840000008500000086000000
+  - id: 1
+    name: Street 02
+    placeholder: 1
+    firstWay: way/19176893
+    edges: 02000000
+  - id: 2
+    name: Street 03
+    placeholder: 1
+    firstWay: way/19177566
+    edges: 04000000
+  - id: 3
+    name: Street 04
+    placeholder: 1
+    firstWay: way/19178185
+    edges: 0a000000
+  - id: 4
+    name: Street 05
+    placeholder: 1
+    firstWay: way/19178334
+    edges: 0b000000
+  - id: 5
+    name: Street 06
+    placeholder: 1
+    firstWay: way/19178554
+    edges: 0f00000010000000110000001b0000001c0000001d0000001e0000001f000000200000002100000022000000230000002400000025000000260000002700000028000000290000008700000088000000890000008a000000
+  - id: 6
+    name: Street 07
+    placeholder: 1
+    firstWay: way/19178707
+    edges: 12000000130000001400000015000000160000001700000018000000190000001a000000
+  - id: 7
+    name: Street 08
+    placeholder: 1
+    firstWay: way/19179177
+    edges: 2a0000002b000000
+  - id: 8
+    name: Street 09
+    placeholder: 1
+    firstWay: way/19179374
+    edges: 2c000000
+  - id: 9
+    name: Street 10
+    placeholder: 1
+    firstWay: way/19179856
+    edges: 2d0000002e0000002f000000
+  - id: 10
+    name: Street 11
+    placeholder: 1
+    firstWay: way/19179888
+    edges: 30000000
+  - id: 11
+    name: Street 12
+    placeholder: 1
+    firstWay: way/19180049
+    edges: 31000000320000003300000034000000
+  - id: 12
+    name: Street 13
+    placeholder: 1
+    firstWay: way/19180325
+    edges: 35000000
+  - id: 13
+    name: Street 14
+    placeholder: 1
+    firstWay: way/19180376
+    edges: 360000003700000038000000390000003a0000003b0000003c0000003d0000003e0000003f00000040000000410000004200000043000000440000004500000046000000470000005c0000005d0000005e0000009f000000a0000000a1000000a2000000a3000000a4000000a5000000a6000000b1000000b5000000
+  - id: 14
+    name: Street 15
+    placeholder: 1
+    firstWay: way/19180664
+    edges: 48000000490000004a0000004b0000004c000000
+  - id: 15
+    name: Street 16
+    placeholder: 1
+    firstWay: way/19180693
+    edges: 4d0000004e0000004f00000050000000510000005200000053000000
+  - id: 16
+    name: Street 17
+    placeholder: 1
+    firstWay: way/19180700
+    edges: 590000005a0000005b000000
+  - id: 17
+    name: Street 18
+    placeholder: 1
+    firstWay: way/19180955
+    edges: 5f00000060000000
+  - id: 18
+    name: Street 19
+    placeholder: 1
+    firstWay: way/19180958
+    edges: 61000000
+  - id: 19
+    name: Street 20
+    placeholder: 1
+    firstWay: way/19181219
+    edges: 6200000063000000
+  - id: 20
+    name: Street 21
+    placeholder: 1
+    firstWay: way/19181349
+    edges: 6400000065000000660000006700000068000000690000006a0000006b0000006c0000006d0000006e0000006f0000007000000071000000720000007300000074000000
+  - id: 21
+    name: Street 22
+    placeholder: 1
+    firstWay: way/19181967
+    edges: 750000007600000077000000
+  - id: 22
+    name: Street 23
+    placeholder: 1
+    firstWay: way/19181968
+    edges: 78000000790000007a000000
+  - id: 23
+    name: Street 24
+    placeholder: 1
+    firstWay: way/19181970
+    edges: 7b0000008b0000008c0000008d0000008e0000008f000000
+  - id: 24
+    name: Street 25
+    placeholder: 1
+    firstWay: way/19182111
+    edges: 7c0000007d000000
+  - id: 25
+    name: Street 26
+    placeholder: 1
+    firstWay: way/19182301
+    edges: 7e0000007f00000080000000
+  - id: 26
+    name: Street 27
+    placeholder: 1
+    firstWay: way/19182433
+    edges: b6000000
+  - id: 27
+    name: Street 28
+    placeholder: 1
+    firstWay: way/19182733
+    edges: b7000000
+  - id: 28
+    name: Street 29
+    placeholder: 1
+    firstWay: way/19183277
+    edges: 91000000920000009300000094000000950000009600000097000000
+  - id: 29
+    name: Street 30
+    placeholder: 1
+    firstWay: way/525474944
+    edges: a7000000a8000000af000000b4000000
+  - id: 30
+    name: Street 31
+    placeholder: 1
+    firstWay: way/1024617013
+    edges: a9000000aa000000
+  - id: 31
+    name: Street 32
+    placeholder: 1
+    firstWay: way/1486185654
+    edges: b3000000
+  props:
+  - kind: 0
+    position: {x: 905.70215, y: 10.501573, z: -702.6206}
+    yawDeg: 358.5943
+    mount: 1.5
+    node: 1
+    arm: 1
+    street: 10
+    street2: -1
+    fromKerb: 1.8
+    fromEdge: 13.14
+  - kind: 4
+    position: {x: 916.087, y: 10.727963, z: -713.4297}
+    yawDeg: 93.94721
+    mount: 2.7
+    node: 1
+    arm: 0
+    street: 0
+    street2: 10
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 903.3503, y: 11.429116, z: -712.6858}
+    yawDeg: 3.5943
+    mount: 2.7
+    node: 1
+    arm: 1
+    street: 10
+    street2: 0
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 490.09543, y: 29.453432, z: -455.21152}
+    yawDeg: 251.96173
+    mount: 1.5
+    node: 2
+    arm: 0
+    street: -1
+    street2: -1
+    fromKerb: 1.8
+    fromEdge: 9.64
+  - kind: 0
+    position: {x: -197.30833, y: 20.632202, z: 522.95197}
+    yawDeg: 265.9169
+    mount: 2.1
+    node: 3
+    arm: 2
+    street: 1
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 6.40846
+  - kind: 4
+    position: {x: -192.26572, y: 20.793123, z: 533.06195}
+    yawDeg: 7.737062
+    mount: 2.7
+    node: 3
+    arm: 1
+    street: 6
+    street2: 1
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: -193.53253, y: 20.543846, z: 521.552}
+    yawDeg: 270.9169
+    mount: 2.7
+    node: 3
+    arm: 2
+    street: 1
+    street2: 6
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 941.8745, y: 14.154974, z: 276.13785}
+    yawDeg: 271.97058
+    mount: 1.5
+    node: 5
+    arm: 2
+    street: -1
+    street2: -1
+    fromKerb: 1.8
+    fromEdge: 9.14
+  - kind: 0
+    position: {x: 149.21692, y: 20.427946, z: 345.21393}
+    yawDeg: 356.19516
+    mount: 2.1
+    node: 7
+    arm: 1
+    street: 2
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 7.955881
+  - kind: 4
+    position: {x: 161.31027, y: 20.084473, z: 339.5757}
+    yawDeg: 91.4925
+    mount: 2.7
+    node: 7
+    arm: 0
+    street: 15
+    street2: 2
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 146.74225, y: 20.373623, z: 339.76788}
+    yawDeg: 1.1951629
+    mount: 2.7
+    node: 7
+    arm: 1
+    street: 2
+    street2: 15
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 162.22159, y: 21.60728, z: 404.92813}
+    yawDeg: 178.22127
+    mount: 2.1
+    node: 8
+    arm: 0
+    street: 2
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 4.544618
+  - kind: 4
+    position: {x: 163.49252, y: 21.50909, z: 407.87933}
+    yawDeg: 183.24216
+    mount: 2.7
+    node: 8
+    arm: 0
+    street: 2
+    street2: 13
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 151.3512, y: 21.942713, z: 408.2249}
+    yawDeg: 271.86337
+    mount: 2.7
+    node: 8
+    arm: 2
+    street: 13
+    street2: 2
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 554.45764, y: 9.705942, z: 417.3117}
+    yawDeg: 295.80078
+    mount: 1.5
+    node: 9
+    arm: 2
+    street: -1
+    street2: -1
+    fromKerb: 1.8
+    fromEdge: 9.14
+  - kind: 0
+    position: {x: 527.1884, y: 14.376215, z: 436.34766}
+    yawDeg: 92.71623
+    mount: 1.5
+    node: 10
+    arm: 1
+    street: -1
+    street2: -1
+    fromKerb: 1.8
+    fromEdge: 8.576564
+  - kind: 0
+    position: {x: 495.8335, y: 14.660045, z: 428.1374}
+    yawDeg: 266.88974
+    mount: 1.5
+    node: 10
+    arm: 3
+    street: -1
+    street2: -1
+    fromKerb: 1.8
+    fromEdge: 13.082186
+  - kind: 0
+    position: {x: 228.37303, y: 20.218203, z: 529.39014}
+    yawDeg: 176.9466
+    mount: 1.5
+    node: 13
+    arm: 0
+    street: -1
+    street2: -1
+    fromKerb: 1.8
+    fromEdge: 13.14
+  - kind: 0
+    position: {x: 225.5546, y: 20.49675, z: 467.31747}
+    yawDeg: 179.65887
+    mount: 1.5
+    node: 14
+    arm: 0
+    street: -1
+    street2: -1
+    fromKerb: 1.8
+    fromEdge: 9.14
+  - kind: 0
+    position: {x: 217.89052, y: 21.134785, z: 490.58878}
+    yawDeg: 356.9466
+    mount: 1.5
+    node: 14
+    arm: 2
+    street: -1
+    street2: -1
+    fromKerb: 1.8
+    fromEdge: 6.14
+  - kind: 0
+    position: {x: 214.11522, y: 20.06608, z: 428.71994}
+    yawDeg: 355.1842
+    mount: 1.5
+    node: 15
+    arm: 1
+    street: -1
+    street2: -1
+    fromKerb: 1.8
+    fromEdge: 10.240855
+  - kind: 0
+    position: {x: -241.50562, y: 19.558681, z: 480.74277}
+    yawDeg: 321.9745
+    mount: 2.1
+    node: 17
+    arm: 2
+    street: 3
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 9.14
+  - kind: 4
+    position: {x: -227.54208, y: 19.558012, z: 480.35645}
+    yawDeg: 68.427246
+    mount: 2.7
+    node: 17
+    arm: 1
+    street: 20
+    street2: 3
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: -241.12286, y: 19.424519, z: 475.56946}
+    yawDeg: 326.9745
+    mount: 2.7
+    node: 17
+    arm: 2
+    street: 3
+    street2: 20
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 200.54453, y: 19.732826, z: 343.39706}
+    yawDeg: 355.20648
+    mount: 2.1
+    node: 18
+    arm: 1
+    street: 4
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 7.566619
+  - kind: 4
+    position: {x: 212.69948, y: 19.583876, z: 338.22208}
+    yawDeg: 91.326195
+    mount: 2.7
+    node: 18
+    arm: 0
+    street: 15
+    street2: 4
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 199.17429, y: 19.682499, z: 337.5883}
+    yawDeg: 0.20649129
+    mount: 2.7
+    node: 18
+    arm: 1
+    street: 4
+    street2: 15
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 211.50084, y: 20.211487, z: 399.428}
+    yawDeg: 176.89331
+    mount: 2.1
+    node: 19
+    arm: 0
+    street: 4
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 6.546203
+  - kind: 4
+    position: {x: 208.32837, y: 20.36118, z: 405.51678}
+    yawDeg: 181.92976
+    mount: 2.7
+    node: 19
+    arm: 0
+    street: 4
+    street2: 13
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 200.46292, y: 20.404058, z: 404.3416}
+    yawDeg: 271.25085
+    mount: 2.7
+    node: 19
+    arm: 2
+    street: 13
+    street2: 4
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 469.6439, y: 17.57863, z: 459.1087}
+    yawDeg: 178.25235
+    mount: 1.5
+    node: 20
+    arm: 0
+    street: -1
+    street2: -1
+    fromKerb: 1.8
+    fromEdge: 9.14
+  - kind: 0
+    position: {x: 351.44003, y: 19.48774, z: 447.30222}
+    yawDeg: 86.53783
+    mount: 1.5
+    node: 23
+    arm: 1
+    street: -1
+    street2: -1
+    fromKerb: 1.8
+    fromEdge: 9.14
+  - kind: 0
+    position: {x: 361.10648, y: 17.311674, z: 395.44702}
+    yawDeg: 114.075935
+    mount: 2.1
+    node: 24
+    arm: 0
+    street: 5
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 20.713116
+  - kind: 0
+    position: {x: 331.42194, y: 18.527605, z: 425.0608}
+    yawDeg: 358.67398
+    mount: 2.1
+    node: 24
+    arm: 2
+    street: 28
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 9.206003
+  - kind: 4
+    position: {x: 358.46414, y: 17.306854, z: 399.4927}
+    yawDeg: 140.30403
+    mount: 2.7
+    node: 24
+    arm: 0
+    street: 5
+    street2: 13
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 329.0405, y: 18.379595, z: 418.31598}
+    yawDeg: 0.61903375
+    mount: 2.7
+    node: 24
+    arm: 2
+    street: 28
+    street2: 13
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 408.5495, y: 15.864663, z: 371.37268}
+    yawDeg: 106.93771
+    mount: 2.1
+    node: 25
+    arm: 1
+    street: 5
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 10.304122
+  - kind: 0
+    position: {x: 377.59824, y: 16.029537, z: 374.60355}
+    yawDeg: 294.11664
+    mount: 2.1
+    node: 25
+    arm: 3
+    street: 5
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 6.450548
+  - kind: 4
+    position: {x: 396.53033, y: 15.908816, z: 363.14432}
+    yawDeg: 204.26476
+    mount: 2.7
+    node: 25
+    arm: 0
+    street: 0
+    street2: 5
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 386.65747, y: 16.068775, z: 382.4326}
+    yawDeg: 25.945387
+    mount: 2.7
+    node: 25
+    arm: 2
+    street: 0
+    street2: 5
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 428.57553, y: 13.143012, z: 343.0195}
+    yawDeg: 197.88916
+    mount: 1.5
+    node: 26
+    arm: 0
+    street: -1
+    street2: -1
+    fromKerb: 1.8
+    fromEdge: 9.14
+  - kind: 0
+    position: {x: 428.76434, y: 14.007831, z: 367.75333}
+    yawDeg: 18.84858
+    mount: 1.5
+    node: 26
+    arm: 2
+    street: -1
+    street2: -1
+    fromKerb: 1.8
+    fromEdge: 6.14
+  - kind: 0
+    position: {x: 459.26895, y: 11.06222, z: 327.7127}
+    yawDeg: 200.25865
+    mount: 1.5
+    node: 27
+    arm: 0
+    street: -1
+    street2: -1
+    fromKerb: 1.8
+    fromEdge: 9.14
+  - kind: 0
+    position: {x: 463.3619, y: 11.388707, z: 355.4671}
+    yawDeg: 21.131676
+    mount: 1.5
+    node: 27
+    arm: 2
+    street: -1
+    street2: -1
+    fromKerb: 1.8
+    fromEdge: 10.14
+  - kind: 0
+    position: {x: -199.70294, y: 18.579784, z: 435.1526}
+    yawDeg: 349.2369
+    mount: 2.1
+    node: 28
+    arm: 1
+    street: 6
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 9.14
+  - kind: 4
+    position: {x: -187.22331, y: 18.34128, z: 429.88834}
+    yawDeg: 90.84282
+    mount: 2.7
+    node: 28
+    arm: 0
+    street: 13
+    street2: 6
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: -203.90651, y: 18.188454, z: 430.54346}
+    yawDeg: 354.23065
+    mount: 2.7
+    node: 28
+    arm: 1
+    street: 6
+    street2: 13
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: -196.92535, y: 19.788986, z: 480.22363}
+    yawDeg: 238.488
+    mount: 2.1
+    node: 30
+    arm: 0
+    street: 20
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 3.6223478
+  - kind: 0
+    position: {x: -179.71835, y: 20.19932, z: 496.31662}
+    yawDeg: 72.69475
+    mount: 2.1
+    node: 30
+    arm: 2
+    street: 20
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 9.14
+  - kind: 4
+    position: {x: -196.92535, y: 19.788986, z: 480.22363}
+    yawDeg: 243.45221
+    mount: 3
+    node: 30
+    arm: 0
+    street: 20
+    street2: 6
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: -184.73865, y: 20.110313, z: 498.0416}
+    yawDeg: 77.69475
+    mount: 2.7
+    node: 30
+    arm: 2
+    street: 20
+    street2: 6
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: -169.68562, y: 21.814905, z: 565.01666}
+    yawDeg: 79.31878
+    mount: 2.1
+    node: 31
+    arm: 1
+    street: 5
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 9.14
+  - kind: 4
+    position: {x: -177.68172, y: 21.512781, z: 553.26953}
+    yawDeg: 187.73706
+    mount: 2.7
+    node: 31
+    arm: 0
+    street: 6
+    street2: 5
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: -174.64459, y: 21.72383, z: 567.2642}
+    yawDeg: 84.31878
+    mount: 2.7
+    node: 31
+    arm: 1
+    street: 5
+    street2: 6
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: -185.35667, y: 24.340502, z: 691.1986}
+    yawDeg: 276.3003
+    mount: 1.5
+    node: 32
+    arm: 2
+    street: -1
+    street2: -1
+    fromKerb: 1.8
+    fromEdge: 9.14
+  - kind: 0
+    position: {x: 585.11975, y: 9.857584, z: 461.4848}
+    yawDeg: 268.83383
+    mount: 2.1
+    node: 37
+    arm: 2
+    street: 20
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 9.14
+  - kind: 4
+    position: {x: 595.57574, y: 9.312493, z: 470.5989}
+    yawDeg: 31.813519
+    mount: 2.7
+    node: 37
+    arm: 1
+    street: 5
+    street2: 20
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 584.51056, y: 9.31195, z: 458.25668}
+    yawDeg: 293.87463
+    mount: 2.7
+    node: 37
+    arm: 2
+    street: 20
+    street2: 5
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 523.83887, y: 17.087559, z: 530.2557}
+    yawDeg: 178.85933
+    mount: 2.1
+    node: 39
+    arm: 0
+    street: 11
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 7.3325095
+  - kind: 4
+    position: {x: 526.10205, y: 16.934435, z: 535.1962}
+    yawDeg: 183.85933
+    mount: 2.7
+    node: 39
+    arm: 0
+    street: 11
+    street2: 5
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 512.9922, y: 17.281752, z: 536.16644}
+    yawDeg: 271.99768
+    mount: 2.7
+    node: 39
+    arm: 2
+    street: 5
+    street2: 11
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 410.90408, y: 18.547585, z: 538.29877}
+    yawDeg: 268.98035
+    mount: 2.7
+    node: 40
+    arm: 0
+    street: 5
+    street2: 14
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 424.45, y: 18.739668, z: 537.9306}
+    yawDeg: 180.38814
+    mount: 2.7
+    node: 40
+    arm: 1
+    street: 14
+    street2: 5
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 347.30737, y: 18.665049, z: 533.22064}
+    yawDeg: 178.23792
+    mount: 2.1
+    node: 41
+    arm: 0
+    street: 28
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 5.5457516
+  - kind: 0
+    position: {x: 335.8577, y: 19.000717, z: 559.85596}
+    yawDeg: 358.42508
+    mount: 2.1
+    node: 41
+    arm: 2
+    street: 28
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 11.467175
+  - kind: 4
+    position: {x: 348.97195, y: 18.574463, z: 537.10675}
+    yawDeg: 183.2202
+    mount: 2.7
+    node: 41
+    arm: 0
+    street: 28
+    street2: 5
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 333.36685, y: 18.626944, z: 550.8815}
+    yawDeg: 331.749
+    mount: 2.7
+    node: 41
+    arm: 2
+    street: 28
+    street2: 5
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 302.3553, y: 18.612661, z: 532.0945}
+    yawDeg: 178.0253
+    mount: 2.1
+    node: 42
+    arm: 0
+    street: 25
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 8.06468
+  - kind: 0
+    position: {x: 294.08423, y: 18.62059, z: 558.43097}
+    yawDeg: 0.426328
+    mount: 2.1
+    node: 42
+    arm: 2
+    street: 25
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 8.586083
+  - kind: 4
+    position: {x: 304.61798, y: 18.51199, z: 537.6369}
+    yawDeg: 183.00334
+    mount: 2.7
+    node: 42
+    arm: 0
+    street: 25
+    street2: 5
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 291.60458, y: 18.531708, z: 552.0784}
+    yawDeg: 5.426328
+    mount: 2.7
+    node: 42
+    arm: 2
+    street: 25
+    street2: 5
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 263.18826, y: 18.77373, z: 532.41876}
+    yawDeg: 178.67697
+    mount: 1.5
+    node: 43
+    arm: 0
+    street: -1
+    street2: -1
+    fromKerb: 1.8
+    fromEdge: 8.905459
+  - kind: 0
+    position: {x: 255.05905, y: 18.89396, z: 559.9442}
+    yawDeg: 357.5062
+    mount: 1.5
+    node: 43
+    arm: 2
+    street: -1
+    street2: -1
+    fromKerb: 1.8
+    fromEdge: 9.14
+  - kind: 0
+    position: {x: 189.42473, y: 21.397429, z: 535.73883}
+    yawDeg: 177.22781
+    mount: 2.1
+    node: 44
+    arm: 0
+    street: 21
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 7.9679503
+  - kind: 0
+    position: {x: 180.60432, y: 21.687334, z: 561.4806}
+    yawDeg: 358.93988
+    mount: 2.1
+    node: 44
+    arm: 2
+    street: 21
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 8.261096
+  - kind: 4
+    position: {x: 190.79951, y: 21.293285, z: 541.9775}
+    yawDeg: 182.24077
+    mount: 2.7
+    node: 44
+    arm: 0
+    street: 21
+    street2: 5
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 178.27791, y: 21.65993, z: 555.5766}
+    yawDeg: 3.9415636
+    mount: 2.7
+    node: 44
+    arm: 2
+    street: 21
+    street2: 5
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 143.63525, y: 22.358475, z: 537.02246}
+    yawDeg: 177.24542
+    mount: 2.1
+    node: 45
+    arm: 0
+    street: 16
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 7.8265834
+  - kind: 0
+    position: {x: 134.16206, y: 22.453623, z: 562.30884}
+    yawDeg: 357.5854
+    mount: 2.1
+    node: 45
+    arm: 2
+    street: 16
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 8.043653
+  - kind: 4
+    position: {x: 145.82928, y: 22.230272, z: 542.28033}
+    yawDeg: 179.13678
+    mount: 2.7
+    node: 45
+    arm: 0
+    street: 16
+    street2: 5
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 132.74466, y: 22.414875, z: 556.0053}
+    yawDeg: 2.585398
+    mount: 2.7
+    node: 45
+    arm: 2
+    street: 16
+    street2: 5
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 75.91274, y: 23.434317, z: 538.87244}
+    yawDeg: 177.19467
+    mount: 2.1
+    node: 47
+    arm: 0
+    street: 9
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 7.9763975
+  - kind: 0
+    position: {x: 72.645424, y: 23.480852, z: 563.18365}
+    yawDeg: 1.3335344
+    mount: 2.1
+    node: 47
+    arm: 2
+    street: 9
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 7.040252
+  - kind: 4
+    position: {x: 78.085945, y: 23.28822, z: 544.2994}
+    yawDeg: 204.91397
+    mount: 2.7
+    node: 47
+    arm: 0
+    street: 9
+    street2: 5
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 70.28571, y: 23.42841, z: 558.4431}
+    yawDeg: 31.778385
+    mount: 2.7
+    node: 47
+    arm: 2
+    street: 9
+    street2: 5
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 30.2172, y: 23.859095, z: 539.97504}
+    yawDeg: 173.77977
+    mount: 2.1
+    node: 48
+    arm: 0
+    street: 24
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 8.393247
+  - kind: 4
+    position: {x: 32.559105, y: 23.74287, z: 545.609}
+    yawDeg: 178.84436
+    mount: 2.7
+    node: 48
+    arm: 0
+    street: 24
+    street2: 5
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 17.996655, y: 23.784487, z: 545.99713}
+    yawDeg: 271.90985
+    mount: 2.7
+    node: 48
+    arm: 2
+    street: 5
+    street2: 24
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: -23.556028, y: 23.805744, z: 541.52356}
+    yawDeg: 179.18456
+    mount: 2.1
+    node: 49
+    arm: 0
+    street: 17
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 8.151116
+  - kind: 4
+    position: {x: -21.205456, y: 23.717955, z: 547.2688}
+    yawDeg: 184.1784
+    mount: 2.7
+    node: 49
+    arm: 0
+    street: 17
+    street2: 5
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: -35.160225, y: 23.609325, z: 547.33}
+    yawDeg: 272.52356
+    mount: 2.7
+    node: 49
+    arm: 2
+    street: 5
+    street2: 17
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: -79.412766, y: 22.895555, z: 544.21484}
+    yawDeg: 175.31047
+    mount: 2.1
+    node: 50
+    arm: 0
+    street: 19
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 8.2693405
+  - kind: 4
+    position: {x: -76.94983, y: 22.831886, z: 549.7603}
+    yawDeg: 180.30438
+    mount: 2.7
+    node: 50
+    arm: 0
+    street: 19
+    street2: 5
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: -91.53017, y: 22.553307, z: 550.20807}
+    yawDeg: 271.99664
+    mount: 2.7
+    node: 50
+    arm: 2
+    street: 5
+    street2: 19
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 308.92722, y: 16.309711, z: 222.06255}
+    yawDeg: 289.38525
+    mount: 2.1
+    node: 51
+    arm: 2
+    street: 7
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 6.193311
+  - kind: 4
+    position: {x: 317.78925, y: 16.203064, z: 230.46901}
+    yawDeg: 25.508432
+    mount: 2.7
+    node: 51
+    arm: 1
+    street: 0
+    street2: 7
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 312.37622, y: 16.248964, z: 219.00899}
+    yawDeg: 294.32983
+    mount: 2.7
+    node: 51
+    arm: 2
+    street: 7
+    street2: 0
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 335.65118, y: 18.549032, z: 739.93463}
+    yawDeg: 267.88275
+    mount: 2.1
+    node: 54
+    arm: 2
+    street: 8
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 8.304645
+  - kind: 4
+    position: {x: 341.2232, y: 18.758942, z: 751.6931}
+    yawDeg: 0.50544256
+    mount: 2.7
+    node: 54
+    arm: 1
+    street: 28
+    street2: 8
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 342.0562, y: 18.366081, z: 737.80524}
+    yawDeg: 272.88275
+    mount: 2.7
+    node: 54
+    arm: 2
+    street: 8
+    street2: 28
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 257.88278, y: 19.782906, z: 751.65356}
+    yawDeg: 86.32994
+    mount: 2.1
+    node: 55
+    arm: 1
+    street: 8
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 8.252717
+  - kind: 4
+    position: {x: 251.64827, y: 19.545101, z: 739.6568}
+    yawDeg: 183.29016
+    mount: 2.7
+    node: 55
+    arm: 0
+    street: 22
+    street2: 8
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 252.38513, y: 19.701193, z: 754.2109}
+    yawDeg: 91.32994
+    mount: 2.7
+    node: 55
+    arm: 1
+    street: 8
+    street2: 22
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 62.37355, y: 24.718668, z: 427.8817}
+    yawDeg: 356.278
+    mount: 2.1
+    node: 56
+    arm: 1
+    street: 9
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 7.759085
+  - kind: 4
+    position: {x: 74.46787, y: 24.450487, z: 422.43985}
+    yawDeg: 91.47257
+    mount: 2.7
+    node: 56
+    arm: 0
+    street: 13
+    street2: 9
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 62.825035, y: 24.72201, z: 420.56552}
+    yawDeg: 1.0450461
+    mount: 2.7
+    node: 56
+    arm: 1
+    street: 9
+    street2: 13
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 73.58371, y: 23.55358, z: 473.04758}
+    yawDeg: 176.27802
+    mount: 2.1
+    node: 57
+    arm: 0
+    street: 9
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 7.8977585
+  - kind: 0
+    position: {x: 64.14415, y: 23.641027, z: 498.1371}
+    yawDeg: 357.19467
+    mount: 2.1
+    node: 57
+    arm: 2
+    street: 9
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 7.89471
+  - kind: 4
+    position: {x: 76.05255, y: 23.419258, z: 478.47855}
+    yawDeg: 181.33401
+    mount: 2.7
+    node: 57
+    arm: 0
+    street: 9
+    street2: 20
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 61.946224, y: 23.55129, z: 492.83554}
+    yawDeg: 2.192754
+    mount: 2.7
+    node: 57
+    arm: 2
+    street: 9
+    street2: 20
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 517.82806, y: 12.581836, z: 405.5627}
+    yawDeg: 102.51112
+    mount: 2.7
+    node: 60
+    arm: 0
+    street: 13
+    street2: 11
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 505.07666, y: 13.251696, z: 406.9225}
+    yawDeg: 13.556087
+    mount: 2.7
+    node: 60
+    arm: 1
+    street: 11
+    street2: 13
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 528.27435, y: 15.664373, z: 475.3376}
+    yawDeg: 88.584625
+    mount: 2.1
+    node: 61
+    arm: 1
+    street: 20
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 7.945729
+  - kind: 0
+    position: {x: 498.86838, y: 15.873285, z: 466.4863}
+    yawDeg: 266.93002
+    mount: 2.1
+    node: 61
+    arm: 3
+    street: 20
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 12.003101
+  - kind: 4
+    position: {x: 522.6319, y: 15.346986, z: 463.7068}
+    yawDeg: 182.89081
+    mount: 2.7
+    node: 61
+    arm: 0
+    street: 11
+    street2: 20
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 509.29312, y: 15.682273, z: 477.3277}
+    yawDeg: 1.6640462
+    mount: 2.7
+    node: 61
+    arm: 2
+    street: 11
+    street2: 20
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 499.60336, y: 16.71638, z: 507.0225}
+    yawDeg: 267.43054
+    mount: 1.5
+    node: 62
+    arm: 2
+    street: -1
+    street2: -1
+    fromKerb: 1.8
+    fromEdge: 13.14
+  - kind: 0
+    position: {x: 334.05722, y: 16.824003, z: 672.07587}
+    yawDeg: 267.84497
+    mount: 2.1
+    node: 63
+    arm: 2
+    street: 12
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 8.261571
+  - kind: 4
+    position: {x: 339.78735, y: 16.810717, z: 683.6822}
+    yawDeg: 2.7964253
+    mount: 2.7
+    node: 63
+    arm: 1
+    street: 28
+    street2: 12
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 340.7314, y: 16.741278, z: 669.20154}
+    yawDeg: 285.3427
+    mount: 2.7
+    node: 63
+    arm: 2
+    street: 12
+    street2: 28
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 250.80284, y: 19.349304, z: 685.1854}
+    yawDeg: 82.21318
+    mount: 2.1
+    node: 64
+    arm: 1
+    street: 12
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 4.64
+  - kind: 4
+    position: {x: 248.43118, y: 19.36688, z: 673.53015}
+    yawDeg: 184.08635
+    mount: 2.7
+    node: 64
+    arm: 0
+    street: 22
+    street2: 12
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 248.97758, y: 19.355822, z: 687.59485}
+    yawDeg: 93.10385
+    mount: 2.7
+    node: 64
+    arm: 1
+    street: 12
+    street2: 22
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 405.9305, y: 16.539474, z: 387.29776}
+    yawDeg: 200.94539
+    mount: 2.1
+    node: 65
+    arm: 0
+    street: 0
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 10.756136
+  - kind: 0
+    position: {x: 406.96912, y: 16.634115, z: 420.26367}
+    yawDeg: 358.70377
+    mount: 2.1
+    node: 65
+    arm: 2
+    street: 14
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 7.8399744
+  - kind: 4
+    position: {x: 413.43472, y: 16.499384, z: 397.49362}
+    yawDeg: 208.02924
+    mount: 2.7
+    node: 65
+    arm: 0
+    street: 0
+    street2: 13
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 405.06567, y: 16.562088, z: 414.73557}
+    yawDeg: 27.413464
+    mount: 2.7
+    node: 65
+    arm: 2
+    street: 14
+    street2: 13
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 286.04044, y: 20.051163, z: 418.40875}
+    yawDeg: 357.0811
+    mount: 2.1
+    node: 66
+    arm: 1
+    street: 25
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 1.22
+  - kind: 0
+    position: {x: 287.66428, y: 19.617, z: 402.3624}
+    yawDeg: 198.43088
+    mount: 1.5
+    node: 67
+    arm: 0
+    street: -1
+    street2: -1
+    fromKerb: 1.8
+    fromEdge: 1.22
+  - kind: 0
+    position: {x: 176.31279, y: 21.11399, z: 425.59253}
+    yawDeg: 355.8365
+    mount: 2.1
+    node: 68
+    arm: 1
+    street: 21
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 8.624024
+  - kind: 4
+    position: {x: 188.01945, y: 20.679266, z: 421.31662}
+    yawDeg: 91.25086
+    mount: 2.7
+    node: 68
+    arm: 0
+    street: 13
+    street2: 21
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 174.77576, y: 21.094543, z: 418.7483}
+    yawDeg: 0.78497607
+    mount: 2.7
+    node: 68
+    arm: 1
+    street: 21
+    street2: 13
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 131.6596, y: 22.779968, z: 426.52127}
+    yawDeg: 353.4577
+    mount: 2.1
+    node: 69
+    arm: 1
+    street: 16
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 8.441163
+  - kind: 4
+    position: {x: 142.93329, y: 22.323738, z: 419.51013}
+    yawDeg: 91.863365
+    mount: 2.7
+    node: 69
+    arm: 0
+    street: 13
+    street2: 16
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 129.33841, y: 22.751816, z: 420.86447}
+    yawDeg: 359.6393
+    mount: 2.7
+    node: 69
+    arm: 1
+    street: 16
+    street2: 13
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 57.036964, y: 24.788212, z: 412.11847}
+    yawDeg: 181.24611
+    mount: 2.7
+    node: 70
+    arm: 0
+    street: 15
+    street2: 13
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 45.41178, y: 24.76867, z: 410.365}
+    yawDeg: 272.20026
+    mount: 2.7
+    node: 70
+    arm: 2
+    street: 13
+    street2: 15
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 14.3835745, y: 25.056404, z: 430.07947}
+    yawDeg: 358.3001
+    mount: 2.1
+    node: 71
+    arm: 1
+    street: 24
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 8.0311365
+  - kind: 4
+    position: {x: 26.056442, y: 24.886168, z: 424.47708}
+    yawDeg: 92.20025
+    mount: 2.7
+    node: 71
+    arm: 0
+    street: 13
+    street2: 24
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 12.101117, y: 24.966139, z: 424.5559}
+    yawDeg: 2.7200022
+    mount: 2.7
+    node: 71
+    arm: 1
+    street: 24
+    street2: 13
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: -40.49856, y: 24.9987, z: 432.90393}
+    yawDeg: 1.516152
+    mount: 2.1
+    node: 72
+    arm: 1
+    street: 17
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 8.798861
+  - kind: 4
+    position: {x: -29.041756, y: 25.015467, z: 426.497}
+    yawDeg: 91.87592
+    mount: 2.7
+    node: 72
+    arm: 0
+    street: 13
+    street2: 17
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: -42.390984, y: 24.919819, z: 425.36774}
+    yawDeg: 6.5636125
+    mount: 2.7
+    node: 72
+    arm: 1
+    street: 17
+    street2: 13
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: -91.90208, y: 23.017221, z: 433.2381}
+    yawDeg: 357.8
+    mount: 2.1
+    node: 73
+    arm: 1
+    street: 19
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 8.071288
+  - kind: 4
+    position: {x: -80.174194, y: 23.491802, z: 427.72983}
+    yawDeg: 91.51391
+    mount: 2.7
+    node: 73
+    arm: 0
+    street: 13
+    street2: 19
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: -94.12, y: 22.786627, z: 427.569}
+    yawDeg: 2.7999756
+    mount: 2.7
+    node: 73
+    arm: 1
+    street: 19
+    street2: 13
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: -247.14915, y: 18.359404, z: 412.791}
+    yawDeg: 179.89642
+    mount: 2.1
+    node: 74
+    arm: 0
+    street: 30
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 7.127442
+  - kind: 4
+    position: {x: -244.84274, y: 18.250502, z: 417.64923}
+    yawDeg: 184.89642
+    mount: 2.7
+    node: 74
+    arm: 0
+    street: 30
+    street2: 13
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: -258.36572, y: 18.346085, z: 418.10284}
+    yawDeg: 272.46228
+    mount: 2.7
+    node: 74
+    arm: 2
+    street: 13
+    street2: 30
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: -273.81165, y: 18.499607, z: 436.21445}
+    yawDeg: 61.76413
+    mount: 1.5
+    node: 76
+    arm: 1
+    street: -1
+    street2: -1
+    fromKerb: 1.8
+    fromEdge: 7.1340575
+  - kind: 0
+    position: {x: -321.78195, y: 19.794376, z: 440.2564}
+    yawDeg: 63.167507
+    mount: 1.5
+    node: 77
+    arm: 2
+    street: 20
+    street2: -1
+    fromKerb: 1.8
+    fromEdge: 9.14
+  - kind: 4
+    position: {x: -315.48007, y: 19.773142, z: 432.08994}
+    yawDeg: 91.50533
+    mount: 2.7
+    node: 77
+    arm: 1
+    street: 13
+    street2: 20
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: -331.93976, y: 20.320375, z: 431.29486}
+    yawDeg: 45.04724
+    mount: 2.7
+    node: 77
+    arm: 2
+    street: 20
+    street2: 13
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 420.0121, y: 19.015966, z: 461.70074}
+    yawDeg: 179.40234
+    mount: 2.1
+    node: 78
+    arm: 0
+    street: 14
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 8.424816
+  - kind: 0
+    position: {x: 411.4075, y: 19.11959, z: 487.00195}
+    yawDeg: 355.7099
+    mount: 2.1
+    node: 78
+    arm: 2
+    street: 14
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 7.4738145
+  - kind: 4
+    position: {x: 422.4562, y: 18.88548, z: 467.7269}
+    yawDeg: 186.65273
+    mount: 2.7
+    node: 78
+    arm: 0
+    street: 14
+    street2: 20
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 409.9913, y: 19.07757, z: 481.27774}
+    yawDeg: 0.7144517
+    mount: 2.7
+    node: 78
+    arm: 2
+    street: 14
+    street2: 20
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 398.97775, y: 14.625096, z: 299.53235}
+    yawDeg: 14.087496
+    mount: 1.5
+    node: 81
+    arm: 1
+    street: -1
+    street2: -1
+    fromKerb: 1.8
+    fromEdge: 9.14
+  - kind: 0
+    position: {x: 376.08392, y: 15.797329, z: 300.80313}
+    yawDeg: 108.789635
+    mount: 2.1
+    node: 82
+    arm: 1
+    street: 15
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 9.544771
+  - kind: 0
+    position: {x: 343.13434, y: 15.916273, z: 303.91}
+    yawDeg: 287.18073
+    mount: 2.1
+    node: 82
+    arm: 3
+    street: 15
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 9.401763
+  - kind: 4
+    position: {x: 364.73022, y: 15.803304, z: 292.483}
+    yawDeg: 204.44765
+    mount: 2.7
+    node: 82
+    arm: 0
+    street: 0
+    street2: 15
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 354.49927, y: 15.785938, z: 311.89178}
+    yawDeg: 24.264763
+    mount: 2.7
+    node: 82
+    arm: 2
+    street: 0
+    street2: 15
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 275.21283, y: 18.357073, z: 335.38632}
+    yawDeg: 305.22083
+    mount: 1.5
+    node: 83
+    arm: 1
+    street: -1
+    street2: -1
+    fromKerb: 1.8
+    fromEdge: 9.14
+  - kind: 0
+    position: {x: 141.0951, y: 22.558575, z: 466.96585}
+    yawDeg: 177.01454
+    mount: 2.1
+    node: 88
+    arm: 0
+    street: 16
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 11.85683
+  - kind: 0
+    position: {x: 131.82239, y: 22.443497, z: 496.08868}
+    yawDeg: 357.24542
+    mount: 2.1
+    node: 88
+    arm: 2
+    street: 16
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 7.9020514
+  - kind: 4
+    position: {x: 143.43013, y: 22.11225, z: 476.16776}
+    yawDeg: 181.9814
+    mount: 2.7
+    node: 88
+    arm: 0
+    street: 16
+    street2: 20
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 129.6141, y: 22.384632, z: 490.80667}
+    yawDeg: 1.1715295
+    mount: 2.7
+    node: 88
+    arm: 2
+    street: 16
+    street2: 20
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 146.26466, y: 21.368134, z: 604.21436}
+    yawDeg: 177.5854
+    mount: 2.1
+    node: 89
+    arm: 0
+    street: 16
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 4.64
+  - kind: 4
+    position: {x: 148.30688, y: 21.289507, z: 606.46075}
+    yawDeg: 182.61583
+    mount: 2.7
+    node: 89
+    arm: 0
+    street: 16
+    street2: 23
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 135.09947, y: 21.789253, z: 607.7724}
+    yawDeg: 273.75037
+    mount: 2.7
+    node: 89
+    arm: 2
+    street: 23
+    street2: 16
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: -883.6135, y: 34.559856, z: 515.2127}
+    yawDeg: 194.78468
+    mount: 1.5
+    node: 91
+    arm: 0
+    street: 18
+    street2: -1
+    fromKerb: 1.8
+    fromEdge: 9.14
+  - kind: 4
+    position: {x: -880.4881, y: 34.667316, z: 518.8411}
+    yawDeg: 201.4921
+    mount: 2.7
+    node: 91
+    arm: 0
+    street: 18
+    street2: 13
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: -890.70636, y: 34.83721, z: 525.32935}
+    yawDeg: 299.899
+    mount: 2.7
+    node: 91
+    arm: 2
+    street: 13
+    street2: 18
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 945.6468, y: 15.154541, z: 240.26585}
+    yawDeg: 280.51166
+    mount: 1.5
+    node: 92
+    arm: 2
+    street: 13
+    street2: -1
+    fromKerb: 1.8
+    fromEdge: 9.082089
+  - kind: 4
+    position: {x: 952.245, y: 15.063778, z: 250.14078}
+    yawDeg: 353.3153
+    mount: 2.7
+    node: 92
+    arm: 1
+    street: 29
+    street2: 13
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 954.64716, y: 15.506522, z: 236.66411}
+    yawDeg: 285.47772
+    mount: 2.7
+    node: 92
+    arm: 2
+    street: 13
+    street2: 29
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 941.4519, y: 14.588304, z: 244.61235}
+    yawDeg: 124.77195
+    mount: 1.5
+    node: 93
+    arm: 0
+    street: 31
+    street2: -1
+    fromKerb: 1.8
+    fromEdge: 4.8939376
+  - kind: 4
+    position: {x: 941.4519, y: 14.588304, z: 244.61235}
+    yawDeg: 129.77194
+    mount: 3
+    node: 93
+    arm: 0
+    street: 31
+    street2: 13
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: -27.33492, y: 23.3953, z: 476.3098}
+    yawDeg: 178.39543
+    mount: 2.1
+    node: 94
+    arm: 0
+    street: 17
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 7.481157
+  - kind: 0
+    position: {x: -36.721382, y: 23.325695, z: 501.36618}
+    yawDeg: 359.18457
+    mount: 2.1
+    node: 94
+    arm: 2
+    street: 17
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 8.010577
+  - kind: 4
+    position: {x: -25.078934, y: 23.307987, z: 481.2987}
+    yawDeg: 183.4121
+    mount: 2.7
+    node: 94
+    arm: 0
+    street: 17
+    street2: 20
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: -38.94693, y: 23.201298, z: 495.76553}
+    yawDeg: 0.06675234
+    mount: 2.7
+    node: 94
+    arm: 2
+    street: 17
+    street2: 20
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: -79.917046, y: 22.721174, z: 476.8008}
+    yawDeg: 175.92032
+    mount: 2.1
+    node: 96
+    arm: 1
+    street: 19
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 8.109957
+  - kind: 0
+    position: {x: -89.85978, y: 22.438324, z: 498.65854}
+    yawDeg: 355.31046
+    mount: 2.1
+    node: 96
+    arm: 3
+    street: 19
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 4.64
+  - kind: 4
+    position: {x: -91.78838, y: 22.385395, z: 481.88593}
+    yawDeg: 269.44757
+    mount: 2.7
+    node: 96
+    arm: 0
+    street: 20
+    street2: 19
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: -77.679276, y: 22.653906, z: 496.4614}
+    yawDeg: 90.98731
+    mount: 2.7
+    node: 96
+    arm: 2
+    street: 20
+    street2: 19
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 343.53943, y: 19.54643, z: 464.9192}
+    yawDeg: 176.97516
+    mount: 2.1
+    node: 97
+    arm: 0
+    street: 28
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 7.8736424
+  - kind: 0
+    position: {x: 334.664, y: 19.58974, z: 490.3184}
+    yawDeg: 358.2379
+    mount: 2.1
+    node: 97
+    arm: 2
+    street: 28
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 8.094055
+  - kind: 4
+    position: {x: 345.7354, y: 19.428244, z: 470.12045}
+    yawDeg: 183.27533
+    mount: 2.7
+    node: 97
+    arm: 0
+    street: 28
+    street2: 20
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 333.19122, y: 19.54558, z: 483.82806}
+    yawDeg: 3.2255251
+    mount: 2.7
+    node: 97
+    arm: 2
+    street: 28
+    street2: 20
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 298.83624, y: 19.781235, z: 465.91388}
+    yawDeg: 178.15102
+    mount: 2.1
+    node: 98
+    arm: 0
+    street: 25
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 8.048486
+  - kind: 0
+    position: {x: 289.99942, y: 19.846384, z: 491.57236}
+    yawDeg: 358.0253
+    mount: 2.1
+    node: 98
+    arm: 2
+    street: 25
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 8.094437
+  - kind: 4
+    position: {x: 301.10202, y: 19.663158, z: 471.4755}
+    yawDeg: 183.11214
+    mount: 2.7
+    node: 98
+    arm: 0
+    street: 25
+    street2: 20
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 287.72775, y: 19.762146, z: 486.03616}
+    yawDeg: 3.0294566
+    mount: 2.7
+    node: 98
+    arm: 2
+    street: 25
+    street2: 20
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 252.18166, y: 20.059998, z: 493.9342}
+    yawDeg: 358.67697
+    mount: 1.5
+    node: 99
+    arm: 1
+    street: -1
+    street2: -1
+    fromKerb: 1.8
+    fromEdge: 9.14
+  - kind: 0
+    position: {x: 187.15718, y: 21.377077, z: 469.6542}
+    yawDeg: 175.83649
+    mount: 2.1
+    node: 100
+    arm: 0
+    street: 21
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 7.86157
+  - kind: 0
+    position: {x: 177.61197, y: 21.553831, z: 494.48047}
+    yawDeg: 357.2278
+    mount: 2.1
+    node: 100
+    arm: 2
+    street: 21
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 7.701547
+  - kind: 4
+    position: {x: 189.5756, y: 21.22687, z: 475.0968}
+    yawDeg: 180.84877
+    mount: 2.7
+    node: 100
+    arm: 0
+    street: 21
+    street2: 20
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 175.41185, y: 21.491722, z: 489.40308}
+    yawDeg: 2.2108
+    mount: 2.7
+    node: 100
+    arm: 2
+    street: 21
+    street2: 20
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 27.128403, y: 23.651123, z: 473.91953}
+    yawDeg: 178.30011
+    mount: 2.1
+    node: 101
+    arm: 0
+    street: 24
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 8.101369
+  - kind: 0
+    position: {x: 18.322468, y: 23.621235, z: 499.63968}
+    yawDeg: 357.95212
+    mount: 2.1
+    node: 101
+    arm: 2
+    street: 24
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 8.097532
+  - kind: 4
+    position: {x: 29.403986, y: 23.556713, z: 479.56686}
+    yawDeg: 183.33455
+    mount: 2.7
+    node: 101
+    arm: 0
+    street: 24
+    street2: 20
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 16.058601, y: 23.508741, z: 494.09317}
+    yawDeg: 2.9837751
+    mount: 2.7
+    node: 101
+    arm: 2
+    street: 24
+    street2: 20
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 193.46153, y: 19.868639, z: 599.71136}
+    yawDeg: 178.93988
+    mount: 2.1
+    node: 103
+    arm: 0
+    street: 21
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 8.504557
+  - kind: 4
+    position: {x: 195.80768, y: 19.69442, z: 605.84845}
+    yawDeg: 183.9481
+    mount: 2.7
+    node: 103
+    arm: 0
+    street: 21
+    street2: 23
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 181.77562, y: 20.112108, z: 605.5393}
+    yawDeg: 270.63922
+    mount: 2.7
+    node: 103
+    arm: 2
+    street: 23
+    street2: 21
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 239.7915, y: 18.607895, z: 618.02216}
+    yawDeg: 92.711296
+    mount: 2.7
+    node: 104
+    arm: 0
+    street: 23
+    street2: 22
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 226.70645, y: 18.822607, z: 619.0745}
+    yawDeg: 3.8982303
+    mount: 2.7
+    node: 104
+    arm: 1
+    street: 22
+    street2: 23
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 307.1005, y: 17.797396, z: 599.2533}
+    yawDeg: 177.46071
+    mount: 2.1
+    node: 107
+    arm: 0
+    street: 25
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 4.64
+  - kind: 4
+    position: {x: 307.1005, y: 17.797396, z: 599.2533}
+    yawDeg: 182.42697
+    mount: 3
+    node: 107
+    arm: 0
+    street: 25
+    street2: 23
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 294.98993, y: 17.879978, z: 601.8363}
+    yawDeg: 272.7109
+    mount: 2.7
+    node: 107
+    arm: 2
+    street: 23
+    street2: 25
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 539.1159, y: 11.348883, z: 370.61838}
+    yawDeg: 202.53192
+    mount: 2.1
+    node: 110
+    arm: 0
+    street: 5
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 11.602731
+  - kind: 0
+    position: {x: 551.6931, y: 11.054929, z: 403.76624}
+    yawDeg: 42.834267
+    mount: 2.1
+    node: 110
+    arm: 2
+    street: 5
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 9.081985
+  - kind: 4
+    position: {x: 545.8451, y: 11.300772, z: 379.51596}
+    yawDeg: 207.53192
+    mount: 2.7
+    node: 110
+    arm: 0
+    street: 5
+    street2: 13
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 542.59106, y: 11.529068, z: 397.05475}
+    yawDeg: 47.834267
+    mount: 2.7
+    node: 110
+    arm: 2
+    street: 5
+    street2: 13
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: 331.04608, y: 17.924965, z: 602.3843}
+    yawDeg: 267.2303
+    mount: 2.1
+    node: 112
+    arm: 2
+    street: 23
+    street2: -1
+    fromKerb: 0.6
+    fromEdge: 8.057704
+  - kind: 4
+    position: {x: 337.25192, y: 17.305634, z: 614.29517}
+    yawDeg: 4.0673113
+    mount: 2.7
+    node: 112
+    arm: 1
+    street: 28
+    street2: 23
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 336.46497, y: 17.935783, z: 599.7887}
+    yawDeg: 277.79755
+    mount: 2.7
+    node: 112
+    arm: 2
+    street: 23
+    street2: 28
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 0
+    position: {x: -258.2042, y: 31.167765, z: 723.4369}
+    yawDeg: 16.824484
+    mount: 1.5
+    node: 115
+    arm: 1
+    street: -1
+    street2: -1
+    fromKerb: 1.8
+    fromEdge: 9.14
+  - kind: 0
+    position: {x: -207.65704, y: 29.201181, z: 827.29364}
+    yawDeg: 202.16971
+    mount: 1.5
+    node: 116
+    arm: 0
+    street: -1
+    street2: -1
+    fromKerb: 1.8
+    fromEdge: 13.14
+  - kind: 0
+    position: {x: -114.90372, y: 22.605228, z: 803.00336}
+    yawDeg: 111.97021
+    mount: 1.5
+    node: 117
+    arm: 1
+    street: -1
+    street2: -1
+    fromKerb: 1.8
+    fromEdge: 9.14
+  - kind: 0
+    position: {x: 954.081, y: 16.115795, z: 218.15552}
+    yawDeg: 326.5831
+    mount: 1.5
+    node: 128
+    arm: 2
+    street: 31
+    street2: -1
+    fromKerb: 1.8
+    fromEdge: 4.0636096
+  - kind: 4
+    position: {x: 958.47833, y: 16.183563, z: 221.46062}
+    yawDeg: 351.6291
+    mount: 2.7
+    node: 128
+    arm: 1
+    street: 29
+    street2: 31
+    fromKerb: 0.6
+    fromEdge: 0
+  - kind: 4
+    position: {x: 959.4306, y: 16.437098, z: 212.48253}
+    yawDeg: 321.32422
+    mount: 2.7
+    node: 128
+    arm: 2
+    street: 31
+    street2: 29
+    fromKerb: 0.6
+    fromEdge: 0
   complexPairs:
   - a: 8
     b: 68

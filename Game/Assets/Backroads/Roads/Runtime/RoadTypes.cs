@@ -75,3 +75,21 @@ namespace Backroads.Roads
         }
     }
 }
+
+namespace Backroads.Roads
+{
+    /// <summary>Road furniture placed from the node model (roads-R3, 05 §6.3). Values are serialized; append only.</summary>
+    public enum RoadPropKind : byte
+    {
+        /// <summary>STOP (R1-1) on its own post at the stop line, near side right.</summary>
+        Stop = 0,
+        /// <summary>ALL WAY plaque (R1-3P) under the STOP sign on the same post.</summary>
+        AllWayPlaque = 1,
+        /// <summary>YIELD (R1-2), never sharing a post with a STOP.</summary>
+        Yield = 2,
+        /// <summary>A pole-mounted signal head facing its approach.</summary>
+        Signal = 3,
+        /// <summary>Street-name blades (D3-1) naming the two crossing streets, on a corner (on a STOP post where one stands there).</summary>
+        StreetName = 4,
+    }
+}

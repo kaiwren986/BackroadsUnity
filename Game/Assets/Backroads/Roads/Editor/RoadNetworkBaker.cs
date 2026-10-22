@@ -109,20 +109,18 @@ namespace Backroads.Roads.Editor
         public static RoadNetworkAsset BakeTownInMemory(string townId, out RoadGraph graph, out RoadGraphInput input, out OsmImportReport report) =>
             BakeTownInMemory(townId, out graph, out input, out report, out _);
 
-        /// <summary>R0o (the graph) and R1 (the junction surfaces, with the town's roads-overrides) into a fresh asset.</summary>
+        /// <summary>R0o, R1, R2 and R3's streets and props into a fresh road network asset (the same as BakeTownWithKerbs).</summary>
         public static RoadNetworkAsset BakeTownInMemory(string townId, out RoadGraph graph, out RoadGraphInput input, out OsmImportReport report, out RoadSurfaces surfaces)
         {
-            graph = BuildTown(townId, out input, out report);
-            surfaces = SurfaceBuilder.Build(graph, input, RoadOverrides.Load(townId));
-            var a = ScriptableObject.CreateInstance<RoadNetworkAsset>();
-            a.name = RoadNetworkAsset.TownResourceName(townId);
-            a.SetFrom(graph, report, surfaces);
+            var a = BakeTownWithKerbs(townId, out var b, out _, out var frontage);
+            UnityEngine.Object.DestroyImmediate(frontage);
+            graph = b.graph; input = b.input; report = b.import; surfaces = b.surfaces;
             return a;
         }
 
         /// <summary>
-        /// R0o + R1 + R2 in memory: the road network asset and the kerb frontage asset (fresh, not saved, the frontage
-        /// linked to the network's content hash) and the bakes behind them.
+        /// R0o + R1 + R2 + R3 (streets, props) in memory: the road network asset and the kerb frontage asset (fresh, not
+        /// saved, the frontage linked to the network's content hash) and the bakes behind them.
         /// </summary>
         public static RoadNetworkAsset BakeTownWithKerbs(string townId, out SurfaceBaker.Bake bake, out KerbBaker.Bake kerbs, out KerbFrontageAsset frontage)
         {
@@ -130,13 +128,24 @@ namespace Backroads.Roads.Editor
             b.graph = BuildTown(townId, out b.input, out b.import, out b.source);
             b.surfaces = SurfaceBuilder.Build(b.graph, b.input, RoadOverrides.Load(townId));
             b.checks = SurfaceChecks.Run(b.graph, b.input, b.surfaces);
-            var a = ScriptableObject.CreateInstance<RoadNetworkAsset>();
-            a.name = RoadNetworkAsset.TownResourceName(townId);
-            a.SetFrom(b.graph, b.import, b.surfaces);
             bake = b;
             kerbs = KerbBaker.FromRoads(b);
+            var names = StreetNameList.Load();
+            kerbs.streets = StreetNamer.Assign(b.graph, names.names, names.approved);
+            kerbs.props = RoadPropBuilder.Build(b.graph, b.surfaces, kerbs.kerbs, kerbs.streets, kerbs.settings);
+            var a = ScriptableObject.CreateInstance<RoadNetworkAsset>();
+            a.name = RoadNetworkAsset.TownResourceName(townId);
+            a.SetFrom(b.graph, b.import, b.surfaces, kerbs.streets, kerbs.props, RoadPropBuilder.Version);
             frontage = KerbBaker.ToAsset(kerbs, a.contentHash);
             return a;
+        }
+
+        /// <summary>roads-R3: the chunked road meshes of a kerb bake (not saved), linked to the network and frontage it was built from.</summary>
+        public static RoadChunkSet BakeMeshes(KerbBaker.Bake k, string roadHash, string frontageHash, out byte[] packed)
+        {
+            k.meshes = RoadMeshBuilder.Build(k.roads.graph, k.roads.surfaces, k.kerbs, k.streets, k.settings);
+            double half = k.roads.source?.playHalf ?? 1024;
+            return RoadChunkBaker.Build(k.meshes, half, k.roads.graph.source, roadHash, frontageHash, out _, out packed);
         }
 
         public static RoadNetworkAsset LoadBakedTown(string townId) => AssetDatabase.LoadAssetAtPath<RoadNetworkAsset>(TownAssetPath(townId));
@@ -179,8 +188,12 @@ namespace Backroads.Roads.Editor
             RoadGraphMap.WriteJunctions(bake);
             frontage.roadContentHash = asset.contentHash;
             frontage.contentHash = frontage.ComputeHash();
+            string frontageHash = frontage.contentHash;
             var kerbPath = KerbBaker.Save(kerbs, frontage);
-            message = $"roads R0o + R1 + R2 baked {townId} in {sw.Elapsed.TotalMilliseconds:F0} ms: {RoadGraphReport.Summary(graph)}; {SurfaceChecks.Summary(bake.checks)}; {KerbBaker.Summary(kerbs)}; content {asset.contentHash.Substring(0, 12)} -> {path}, {kerbPath}; reports {reportPath}, {surfPath}";
+            var chunkSet = BakeMeshes(kerbs, asset.contentHash, frontageHash, out var packed);
+            int tris = chunkSet.lod0Triangles, nChunks = chunkSet.chunks.Length;
+            var chunkPath = RoadChunkBaker.Save(townId, chunkSet, packed);
+            message = $"roads R0o + R1 + R2 + R3 baked {townId} in {sw.Elapsed.TotalMilliseconds:F0} ms: {RoadGraphReport.Summary(graph)}; {SurfaceChecks.Summary(bake.checks)}; {KerbBaker.Summary(kerbs)}; {nChunks} road chunks, {tris} triangles; content {asset.contentHash.Substring(0, 12)} -> {path}, {kerbPath}, {chunkPath}; reports {reportPath}, {surfPath}";
             return true;
         }
 
@@ -352,6 +365,32 @@ namespace Backroads.Roads.Editor
             if (Application.isBatchMode) EditorApplication.Exit(code);
         }
 
+        /// <summary>
+        /// roads-R3: every town's streets, props and road meshes in memory (nothing saved): counts and the mesh report.
+        ///   -executeMethod Backroads.Roads.Editor.RoadBakeCli.Meshes
+        /// </summary>
+        public static void Meshes()
+        {
+            int code = 0;
+            try
+            {
+                foreach (var town in TownRoadSource.Towns())
+                {
+                    var sw = System.Diagnostics.Stopwatch.StartNew();
+                    var a = RoadNetworkBaker.BakeTownWithKerbs(town, out _, out var k, out var f);
+                    var c = RoadNetworkBaker.BakeMeshes(k, a.contentHash, f.contentHash, out var packed);
+                    Debug.Log($"[BR] {town}: R3 in {sw.Elapsed.TotalMilliseconds:F0} ms: {k.streets.Count} streets, {k.props.Count} props; {c.chunks.Length} chunks, LOD0 {c.lod0Triangles} / LOD1 {c.lod1Triangles} / collider {c.colliderTriangles} triangles, {packed.Length / 1024} KiB packed; report {RoadMeshReport.Write(k, c, a)}");
+                    UnityEngine.Object.DestroyImmediate(a); UnityEngine.Object.DestroyImmediate(f); UnityEngine.Object.DestroyImmediate(c);
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+                code = 2;
+            }
+            if (Application.isBatchMode) EditorApplication.Exit(code);
+        }
+
         /// <summary>roads-R1: bakes every town's junction surfaces in memory and writes the report and the junction maps.</summary>
         public static void Surfaces()
         {
@@ -394,11 +433,17 @@ namespace Backroads.Roads.Editor
                     if (verify)
                     {
                         var a = RoadNetworkBaker.BakeTownWithKerbs(town, out var ba, out var ka, out var fa);
-                        var b = RoadNetworkBaker.BakeTownWithKerbs(town, out _, out _, out var fb);
+                        var b = RoadNetworkBaker.BakeTownWithKerbs(town, out _, out var kb, out var fb);
+                        var ca = RoadNetworkBaker.BakeMeshes(ka, a.contentHash, fa.contentHash, out _);
+                        var cb = RoadNetworkBaker.BakeMeshes(kb, b.contentHash, fb.contentHash, out _);
+                        var bakedC = RoadChunkBaker.LoadBakedTown(town);
                         var g = ba.graph;
                         var baked = RoadNetworkBaker.LoadBakedTown(town);
                         var bakedK = KerbBaker.LoadBakedTown(town);
-                        if (a.contentHash != b.contentHash) { Debug.LogError($"[BR] {town}: roads bake is not deterministic"); code = 1; }
+                        if (ca.contentHash != cb.contentHash) { Debug.LogError($"[BR] {town}: road mesh bake is not deterministic"); code = 1; }
+                        else if (bakedC == null) { Debug.LogError("[BR] no committed " + RoadChunkBaker.TownAssetPath(town)); code = 1; }
+                        else if (bakedC.contentHash != ca.contentHash) { Debug.LogError($"[BR] {town}: committed road chunks are stale: {bakedC.contentHash} vs fresh {ca.contentHash}"); code = 1; }
+                        else if (a.contentHash != b.contentHash) { Debug.LogError($"[BR] {town}: roads bake is not deterministic"); code = 1; }
                         else if (fa.contentHash != fb.contentHash) { Debug.LogError($"[BR] {town}: kerb frontage bake is not deterministic"); code = 1; }
                         else if (baked == null) { Debug.LogError("[BR] no committed " + RoadNetworkBaker.TownAssetPath(town)); code = 1; }
                         else if (bakedK == null) { Debug.LogError("[BR] no committed " + KerbBaker.TownAssetPath(town)); code = 1; }
@@ -406,7 +451,7 @@ namespace Backroads.Roads.Editor
                         else if (bakedK.ComputeHash() != bakedK.contentHash) { Debug.LogError($"[BR] {town}: committed kerb frontage content does not match its stored hash"); code = 1; }
                         else if (baked.contentHash != a.contentHash) { Debug.LogError($"[BR] {town}: committed road asset is stale: {baked.contentHash} vs fresh {a.contentHash}"); code = 1; }
                         else if (bakedK.contentHash != fa.contentHash) { Debug.LogError($"[BR] {town}: committed kerb frontage is stale: {bakedK.contentHash} vs fresh {fa.contentHash}"); code = 1; }
-                        else Debug.Log($"[BR] {town}: roads bake verified: {a.contentHash}, frontage {fa.contentHash}; {RoadGraphReport.Summary(g)}; {KerbBaker.Summary(ka)}");
+                        else Debug.Log($"[BR] {town}: roads bake verified: {a.contentHash}, frontage {fa.contentHash}, chunks {ca.contentHash}; {RoadGraphReport.Summary(g)}; {KerbBaker.Summary(ka)}; {ca.chunks.Length} chunks, {ca.lod0Triangles} triangles");
                     }
                     else
                     {

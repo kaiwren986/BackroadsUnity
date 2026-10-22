@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 236a4a59903a9e140b14fd9b2669c3e2, type: 3}
   m_Name: BrRoadNetwork
   m_EditorClassIdentifier: Backroads.Roads::Backroads.Roads.RoadNetworkAsset
-  formatVersion: 3
+  formatVersion: 4
   builderVersion: 2
   importerVersion: 0
   surfaceVersion: 0
   source: CanonData/v1
   sourceManifestSha256: a112c66d5c517e52673ed84197fb692202177e52e02ade57ac3c607b42825b2b
-  contentHash: 8a31cf81efb68a6f0ac17745a41b85234cf02e1c4a298ae433c418b05bce0e2b
+  contentHash: f22328f64d190799cf58b5df1749b29589043fef27439562d2107d5e65d1b858
   inputRoads: 24
   inputPoints: 1722
   nodes:
@@ -3683,6 +3683,7 @@ MonoBehaviour:
     - 9.998022
     - 11.997219
     - 13.996657
+    street: -1
   - id: 1
     nodeA: 1
     nodeB: 2
@@ -3762,6 +3763,7 @@ MonoBehaviour:
     - 61.998363
     - 63.998257
     - 65.99812
+    street: -1
   - id: 2
     nodeA: 2
     nodeB: 21
@@ -3797,6 +3799,7 @@ MonoBehaviour:
     - 17.999407
     - 19.99938
     - 21.080997
+    street: -1
   - id: 3
     nodeA: 21
     nodeB: 3
@@ -3904,6 +3907,7 @@ MonoBehaviour:
     - 88.917725
     - 90.917725
     - 93.75558
+    street: -1
   - id: 4
     nodeA: 0
     nodeB: 4
@@ -3991,6 +3995,7 @@ MonoBehaviour:
     - 69.99979
     - 71.99979
     - 73.99979
+    street: -1
   - id: 5
     nodeA: 4
     nodeB: 5
@@ -4082,6 +4087,7 @@ MonoBehaviour:
     - 73.99924
     - 75.99918
     - 77.99914
+    street: -1
   - id: 6
     nodeA: 5
     nodeB: 22
@@ -4117,6 +4123,7 @@ MonoBehaviour:
     - 17.998638
     - 19.998514
     - 20.254353
+    street: -1
   - id: 7
     nodeA: 22
     nodeB: 23
@@ -4210,6 +4217,7 @@ MonoBehaviour:
     - 75.74361
     - 77.74359
     - 79.743576
+    street: -1
   - id: 8
     nodeA: 23
     nodeB: 6
@@ -4277,6 +4285,7 @@ MonoBehaviour:
     - 49.99937
     - 51.998188
     - 53.988804
+    street: -1
   - id: 9
     nodeA: 0
     nodeB: 7
@@ -4342,6 +4351,7 @@ MonoBehaviour:
     - 47.99979
     - 49.99979
     - 51.99979
+    street: -1
   - id: 10
     nodeA: 7
     nodeB: 24
@@ -4377,6 +4387,7 @@ MonoBehaviour:
     - 18
     - 20
     - 20.576393
+    street: -1
   - id: 11
     nodeA: 24
     nodeB: 25
@@ -4504,6 +4515,7 @@ MonoBehaviour:
     - 109.41855
     - 111.41825
     - 113.417885
+    street: -1
   - id: 12
     nodeA: 25
     nodeB: 8
@@ -4613,6 +4625,7 @@ MonoBehaviour:
     - 91.991844
     - 93.99184
     - 95.720215
+    street: -1
   - id: 13
     nodeA: 1
     nodeB: 9
@@ -4672,6 +4685,7 @@ MonoBehaviour:
     - 41.999996
     - 43.999996
     - 45.999996
+    street: -1
   - id: 14
     nodeA: 9
     nodeB: 26
@@ -4759,6 +4773,7 @@ MonoBehaviour:
     - 69.99995
     - 71.99993
     - 72.852325
+    street: -1
   - id: 15
     nodeA: 26
     nodeB: 27
@@ -4860,6 +4875,7 @@ MonoBehaviour:
     - 83.131836
     - 85.13177
     - 87.1309
+    street: -1
   - id: 16
     nodeA: 27
     nodeB: 10
@@ -4875,6 +4891,7 @@ MonoBehaviour:
     s:
     - 0
     - 2.5172544
+    street: -1
   - id: 17
     nodeA: 3
     nodeB: 28
@@ -5002,6 +5019,7 @@ MonoBehaviour:
     - 109.99408
     - 111.99408
     - 113.99407
+    street: -1
   - id: 18
     nodeA: 28
     nodeB: 29
@@ -5165,6 +5183,7 @@ MonoBehaviour:
     - 145.9824
     - 147.98167
     - 149.9812
+    street: -1
   - id: 19
     nodeA: 29
     nodeB: 11
@@ -5184,6 +5203,7 @@ MonoBehaviour:
     - 1.9996201
     - 3.9990528
     - 6.002547
+    street: -1
   - id: 20
     nodeA: 3
     nodeB: 30
@@ -5385,6 +5405,7 @@ MonoBehaviour:
     - 183.95662
     - 185.95561
     - 187.95456
+    street: -1
   - id: 21
     nodeA: 30
     nodeB: 12
@@ -5464,6 +5485,7 @@ MonoBehaviour:
     - 61.995163
     - 63.995163
     - 66.59262
+    street: -1
   - id: 22
     nodeA: 25
     nodeB: 23
@@ -5779,6 +5801,7 @@ MonoBehaviour:
     - 297.98837
     - 299.98175
     - 301.5734
+    street: -1
   - id: 23
     nodeA: 29
     nodeB: 30
@@ -6084,6 +6107,7 @@ MonoBehaviour:
     - 287.91147
     - 289.91064
     - 291.45712
+    street: -1
   - id: 24
     nodeA: 27
     nodeB: 28
@@ -6351,6 +6375,7 @@ MonoBehaviour:
     - 249.9825
     - 251.97946
     - 253.02505
+    street: -1
   - id: 25
     nodeA: 13
     nodeB: 14
@@ -6438,6 +6463,7 @@ MonoBehaviour:
     - 70.7571
     - 72.77872
     - 74.80034
+    street: -1
   - id: 26
     nodeA: 9
     nodeB: 15
@@ -6519,6 +6545,7 @@ MonoBehaviour:
     - 63.220078
     - 65.19625
     - 67.171776
+    street: -1
   - id: 27
     nodeA: 9
     nodeB: 16
@@ -6614,6 +6641,7 @@ MonoBehaviour:
     - 78.418274
     - 80.429214
     - 82.44016
+    street: -1
   - id: 28
     nodeA: 16
     nodeB: 17
@@ -6701,6 +6729,7 @@ MonoBehaviour:
     - 70.75569
     - 72.77797
     - 74.79958
+    street: -1
   - id: 29
     nodeA: 7
     nodeB: 18
@@ -6782,6 +6811,7 @@ MonoBehaviour:
     - 64.339
     - 66.349724
     - 68.36111
+    street: -1
   - id: 30
     nodeA: 7
     nodeB: 19
@@ -6877,6 +6907,7 @@ MonoBehaviour:
     - 77.27975
     - 79.26148
     - 81.2433
+    street: -1
   - id: 31
     nodeA: 19
     nodeB: 20
@@ -6964,6 +6995,7 @@ MonoBehaviour:
     - 70.75635
     - 72.77797
     - 74.79959
+    street: -1
   - id: 32
     nodeA: 14
     nodeB: 17
@@ -7077,6 +7109,7 @@ MonoBehaviour:
     - 96.23065
     - 98.235245
     - 100.24059
+    street: -1
   - id: 33
     nodeA: 17
     nodeB: 5
@@ -7142,6 +7175,7 @@ MonoBehaviour:
     - 48.73464
     - 50.764915
     - 52.795822
+    street: -1
   - id: 34
     nodeA: 5
     nodeB: 20
@@ -7207,6 +7241,7 @@ MonoBehaviour:
     - 47.330414
     - 49.302174
     - 51.274612
+    street: -1
   - id: 35
     nodeA: 13
     nodeB: 16
@@ -7320,6 +7355,7 @@ MonoBehaviour:
     - 96.229996
     - 98.23459
     - 100.23994
+    street: -1
   - id: 36
     nodeA: 16
     nodeB: 4
@@ -7387,6 +7423,7 @@ MonoBehaviour:
     - 50.318798
     - 52.33179
     - 54.34478
+    street: -1
   - id: 37
     nodeA: 4
     nodeB: 19
@@ -7450,6 +7487,7 @@ MonoBehaviour:
     - 45.700478
     - 47.686974
     - 49.673466
+    street: -1
   - id: 38
     nodeA: 15
     nodeB: 2
@@ -7497,6 +7535,7 @@ MonoBehaviour:
     - 29.583431
     - 31.556461
     - 33.52808
+    street: -1
   - id: 39
     nodeA: 2
     nodeB: 18
@@ -7580,6 +7619,7 @@ MonoBehaviour:
     - 66.51714
     - 68.53261
     - 70.547935
+    street: -1
   roads:
   - id: 0
     cls: 0
@@ -8256,6 +8296,9 @@ MonoBehaviour:
   features: []
   surfaces: []
   inlets: []
+  propVersion: 0
+  streets: []
+  props: []
   complexPairs:
   - a: 0
     b: 1
