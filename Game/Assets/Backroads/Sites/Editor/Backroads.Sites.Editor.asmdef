@@ -1,0 +1,25 @@
+{
+    "name": "Backroads.Sites.Editor",
+    "rootNamespace": "Backroads.Sites.Editor",
+    "references": [
+        "Backroads.Core",
+        "Backroads.Sites",
+        "Backroads.Roads",
+        "Backroads.Roads.Editor",
+        "Backroads.Canon.Editor",
+        "Backroads.Build.Editor",
+        "Clipper2Lib",
+        "Unity.Mathematics"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
