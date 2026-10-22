@@ -83,6 +83,38 @@ namespace Backroads.Tests.PlayMode.Vehicles
             Assert.IsEmpty(fails, string.Join("\n", fails));
         }
 
+        // ------------------------------------------------------------------ the world's size comes from its layout (T3.1)
+
+        /// <summary>
+        /// On a 512 m flat world (a WorldGridLayout of half 256 m) a vehicle rolling at 15 m/s towards the edge is kept
+        /// inside at half - 6 = 250 m (the browser game's island clamp, which was a 512 m constant before T3.1), with V0
+        /// and with v2.
+        /// </summary>
+        [Test, Category("BrvV2")]
+        public void WorldEdgeFollowsLayout()
+        {
+            var layout = Backroads.World.WorldGridLayout.Create(1025, 0.5f, 256f, 65, 8f);
+            var grid = Backroads.World.WorldGrid.FromFunctions(layout, (x, z) => 5f, (x, z) => (byte)4);
+            var world = BrvWorldData.Create(grid, null, null);
+            try
+            {
+                Assert.AreEqual(16 * 2, world.View.colliderCells, "16 m collider cells across 512 m");
+                foreach (bool v2 in new[] { false, true })
+                {
+                    using var rig = new TrackRig(2, world);
+                    int i = rig.Add("pickup", v2);
+                    rig.Place(i, 235, 0, Math.PI / 2);          // heading +x (JS)
+                    rig.Fleet.SetRolling(i, 15);
+                    rig.S(i).ctrl.brake = 0; rig.S(i).ctrl.handbrake = 0;   // coasting (no driver)
+                    double maxX = 0;
+                    for (int k = 0; k < 360; k++) { rig.Step(); maxX = Math.Max(maxX, rig.S(i).pos.x); }
+                    TestContext.WriteLine($"{(v2 ? "v2" : "V0")}: largest x {maxX:F3} m (edge at {layout.Half - 6} m)");
+                    Assert.AreEqual(layout.Half - 6, maxX, 1e-9, $"{(v2 ? "v2" : "V0")}: held at the world edge of this layout");
+                }
+            }
+            finally { TrackRig.DisposeWorld(world); }
+        }
+
         // ------------------------------------------------------------------ v2 snapshot round trip
 
         /// <summary>

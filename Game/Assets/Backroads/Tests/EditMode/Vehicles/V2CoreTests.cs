@@ -171,7 +171,8 @@ namespace Backroads.Tests.EditMode.Vehicles
             Assert.Greater(BrvTestTrack.Ground, BrvSim.WATER_Y + 1, "the track is above the water line");
 
             using var grid = BrvTestTrack.Build();
-            int k = Backroads.World.WorldGrid.Index(1024 + 100 * 2, 1024 + 40 * 2);   // the pit centre vertex
+            Assert.AreEqual(BrvTestTrack.Layout, grid.Layout, "the track's own layout");
+            int k = grid.Index(1024 + 100 * 2, 1024 + 40 * 2);   // the pit centre vertex
             Assert.AreEqual((float)(BrvTestTrack.Ground - BrvTestTrack.PitDepth), grid.H[k]);
             Assert.AreEqual(grid.H[k], grid.Base[k], "BASE = H at the start (no sinkage)");
         }

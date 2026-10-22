@@ -18,7 +18,7 @@ namespace Backroads.Vehicles
     /// <item>a wheel pit (1 m across, 0.5 m along z, 2 m deep) in an asphalt apron: park one wheel over it and the
     /// body settles on its corner beside the pit with that wheel hanging free (a wheel in the air, as on a jack).</item>
     /// </list>
-    /// M3 builds it on the canon grid size (2,049 vertices at 0.5 m); with T3.1 it becomes a WorldGridLayout of its own.
+    /// The grid has a WorldGridLayout of its own (<see cref="Layout"/>, T3.1); the scene BrvTestTrack.unity drives on it.
     /// </summary>
     public static class BrvTestTrack
     {
@@ -98,35 +98,43 @@ namespace Backroads.Vehicles
             return 0;
         }
 
-        /// <summary>Builds the track as WorldGrid layers (the caller disposes the grid).</summary>
-        public static WorldGrid Build()
+        /// <summary>
+        /// The track's own grid layout (T3.1): 1,024 m square at 0.5 m (2,049 vertices), tint every 8 m. The same size
+        /// as canon v1, but nothing in BRV assumes it: the world edge and the collider cells come from the grid's layout.
+        /// </summary>
+        public static WorldGridLayout Layout => WorldGridLayout.Create(2049, 0.5f, 512f, 129, 8f);
+
+        /// <summary>Builds the track as WorldGrid layers on <see cref="Layout"/> (the caller disposes the grid).</summary>
+        public static WorldGrid Build() => Build(Layout);
+
+        /// <summary>Builds the track on any layout that holds it (features outside the grid are cut off).</summary>
+        public static WorldGrid Build(WorldGridLayout layout)
         {
-            const int VN = WorldGrid.VN;
-            const double Half = WorldGrid.Half, Cell = WorldGrid.Cell;
-            var h = new NativeArray<float>(WorldGrid.Count, Allocator.Temp, NativeArrayOptions.UninitializedMemory);
-            var surf = new NativeArray<byte>(WorldGrid.Count, Allocator.Temp);
-            var mud = new NativeArray<byte>(WorldGrid.Count, Allocator.Temp);
-            var wear = new NativeArray<byte>(WorldGrid.Count, Allocator.Temp);
-            var roadd = new NativeArray<byte>(WorldGrid.Count, Allocator.Temp);
-            var tint = new NativeArray<float>(WorldGrid.TintN * WorldGrid.TintN * 2, Allocator.Temp);
+            int vn = layout.VN, count = layout.Count;
+            var h = new NativeArray<float>(count, Allocator.Temp, NativeArrayOptions.UninitializedMemory);
+            var surf = new NativeArray<byte>(count, Allocator.Temp);
+            var mud = new NativeArray<byte>(count, Allocator.Temp);
+            var wear = new NativeArray<byte>(count, Allocator.Temp);
+            var roadd = new NativeArray<byte>(count, Allocator.Temp);
+            var tint = new NativeArray<float>(layout.TintN * layout.TintN * 2, Allocator.Temp);
             try
             {
                 byte mudByte = (byte)Math.Round(MudDepth / WorldGrid.MudMax * 255.0);
-                for (int j = 0; j < VN; j++)
+                for (int j = 0; j < vn; j++)
                 {
-                    double z = j * Cell - Half;
-                    for (int i = 0; i < VN; i++)
+                    double z = layout.X(j);
+                    for (int i = 0; i < vn; i++)
                     {
-                        double x = i * Cell - Half;
-                        int k = j * VN + i;
+                        double x = layout.X(i);
+                        int k = j * vn + i;
                         h[k] = (float)Height(x, z);
-                        byte s = Surface(x, z);
-                        surf[k] = s;
-                        mud[k] = s == 8 ? mudByte : (byte)0;
-                        roadd[k] = s == 4 || s == 6 ? (byte)0 : (byte)255;
+                        byte su = Surface(x, z);
+                        surf[k] = su;
+                        mud[k] = su == 8 ? mudByte : (byte)0;
+                        roadd[k] = su == 4 || su == 6 ? (byte)0 : (byte)255;
                     }
                 }
-                return WorldGrid.FromLayers(h, h, surf, wear, roadd, mud, tint);
+                return WorldGrid.FromLayers(layout, h, h, surf, wear, roadd, mud, tint);
             }
             finally
             {

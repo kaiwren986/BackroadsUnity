@@ -5,6 +5,7 @@
         "Backroads.Core",
         "Backroads.Vehicles",
         "Backroads.Vehicles.Client",
+        "Backroads.Client.Rendering",
         "Unity.Collections",
         "Unity.Mathematics"
     ],

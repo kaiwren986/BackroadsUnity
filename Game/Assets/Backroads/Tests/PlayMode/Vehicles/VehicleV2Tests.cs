@@ -151,13 +151,13 @@ namespace Backroads.Tests.PlayMode.Vehicles
         static void JackStand(BrvWorldData world, double x, double z, double half, float y)
         {
             var g = world.Grid;
-            const double H = Backroads.World.WorldGrid.Half, C = Backroads.World.WorldGrid.Cell;
+            double H = g.Layout.Half, C = g.Layout.Cell;
             int i0 = (int)Math.Ceiling((x - half + H) / C), i1 = (int)Math.Floor((x + half + H) / C);
             int j0 = (int)Math.Ceiling((z - half + H) / C), j1 = (int)Math.Floor((z + half + H) / C);
             for (int j = j0; j <= j1; j++)
                 for (int i = i0; i <= i1; i++)
                 {
-                    int k = Backroads.World.WorldGrid.Index(i, j);
+                    int k = g.Index(i, j);
                     g.H[k] = y; g.H0[k] = y; g.Base[k] = y;
                 }
         }

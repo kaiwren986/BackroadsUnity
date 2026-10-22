@@ -13,8 +13,8 @@ namespace Backroads.Tests.PlayMode.Vehicles
     /// </summary>
     sealed class JsRutSink : IStampSink
     {
-        const int N = WorldGrid.N, VN = WorldGrid.VN;
-        const double HALF = 512, CELL = 0.5;
+        readonly int N, VN;
+        readonly double HALF, CELL;
         readonly WorldGrid _g;
         readonly int[] _ring = new int[256];
         readonly float[] _ringW = new float[256];
@@ -22,7 +22,11 @@ namespace Backroads.Tests.PlayMode.Vehicles
         public long Calls { get; private set; }
         public double Removed { get; private set; }
 
-        public JsRutSink(WorldGrid grid) => _g = grid ?? throw new ArgumentNullException(nameof(grid));
+        public JsRutSink(WorldGrid grid)
+        {
+            _g = grid ?? throw new ArgumentNullException(nameof(grid));
+            N = grid.Layout.N; VN = grid.Layout.VN; HALF = grid.Layout.Half; CELL = grid.Layout.Cell;
+        }
 
         public void Rut(float x, float z, float radius, float depth, float rate, float wearAdd, float berm = 0.45f, float fx = 0, float fz = 0)
         {

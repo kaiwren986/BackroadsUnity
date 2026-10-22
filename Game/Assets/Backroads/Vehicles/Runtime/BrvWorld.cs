@@ -36,6 +36,8 @@ namespace Backroads.Vehicles
         [ReadOnly] public NativeArray<double> treeKnockMomentum;
         /// <summary>Per collider: 1 once knocked over (props.js sets c.r = 0, c.y1 = c.y0).</summary>
         [NativeDisableContainerSafetyRestriction] public NativeArray<byte> treeDown;
+        /// <summary>16 m collider cells per side (ColliderGrid.CellsPerSide: 64 on canon v1, 128 on Millbrook).</summary>
+        public int colliderCells;
 
         public bool HasColliders => colliders.IsCreated && colliders.Length > 0;
     }
@@ -82,6 +84,7 @@ namespace Backroads.Vehicles
             cellItems = Colliders != null ? Colliders.CellItems : _noCells,
             treeKnockMomentum = TreeKnockMomentum,
             treeDown = TreeDown,
+            colliderCells = Colliders != null ? Colliders.CellsPerSide : Grid.Layout.ColliderCellsPerSide,
         };
 
         public void Dispose()

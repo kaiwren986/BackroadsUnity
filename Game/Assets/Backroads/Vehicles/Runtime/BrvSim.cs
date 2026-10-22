@@ -20,7 +20,6 @@ namespace Backroads.Vehicles
     {
         public const double STEP = 1.0 / 120.0;
         public const double G = 9.81;
-        public const double HALF = 512.0;
         public const double WATER_Y = 0.0;
 
         // world.js SURF / SOFTNESS / GRIP (Float32Array values)
@@ -324,8 +323,8 @@ namespace Backroads.Vehicles
                 s.quat = q;
             }
 
-            // keep inside the island
-            double lim = HALF - 6;
+            // keep inside the island (the world's half size from its grid layout, T3.1: 512 m on canon v1)
+            double lim = (double)w.grid.Layout.Half - 6;
             if (Math.Abs(s.pos.x) > lim) { s.pos.x = Sign(s.pos.x) * lim; s.vel.x *= -0.2; }
             if (Math.Abs(s.pos.z) > lim) { s.pos.z = Sign(s.pos.z) * lim; s.vel.z *= -0.2; }
             double gy = HeightAt(w, s.pos.x, s.pos.z);
@@ -754,19 +753,20 @@ namespace Backroads.Vehicles
         // ------------------------------------------------------------------ statics (props.js collider grid)
 
         const float CG = 16f;
-        const int CGN = 64;
 
         /// <summary>queryColliders(x, z, r): the records of the cells overlapping the square, deduplicated, in JS order.</summary>
         static void QueryColliders(in BrvWorld w, double x, double z, double r, ref FixedList4096Bytes<int> o)
         {
             o.Clear();
             if (!w.HasColliders) return;
-            int i0 = Math.Max(0, (int)Math.Floor((x - r + HALF) / CG)), i1 = Math.Min(CGN - 1, (int)Math.Floor((x + r + HALF) / CG));
-            int j0 = Math.Max(0, (int)Math.Floor((z - r + HALF) / CG)), j1 = Math.Min(CGN - 1, (int)Math.Floor((z + r + HALF) / CG));
+            double half = w.grid.Layout.Half;
+            int cgn = w.colliderCells;
+            int i0 = Math.Max(0, (int)Math.Floor((x - r + half) / CG)), i1 = Math.Min(cgn - 1, (int)Math.Floor((x + r + half) / CG));
+            int j0 = Math.Max(0, (int)Math.Floor((z - r + half) / CG)), j1 = Math.Min(cgn - 1, (int)Math.Floor((z + r + half) / CG));
             for (int j = j0; j <= j1; j++)
                 for (int i = i0; i <= i1; i++)
                 {
-                    int c = j * CGN + i;
+                    int c = j * cgn + i;
                     for (int q = w.cellStart[c]; q < w.cellStart[c + 1]; q++)
                     {
                         int idx = w.cellItems[q];
